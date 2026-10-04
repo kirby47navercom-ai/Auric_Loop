@@ -1,0 +1,228 @@
+{
+  "version": 1,
+  "name": "BP_Garden",
+  "components": [
+    {
+      "id": "transform",
+      "name": "Transform",
+      "type": "Transform"
+    },
+    {
+      "id": "mesh",
+      "name": "Mesh renderer",
+      "type": "MeshRenderer"
+    },
+    {
+      "id": "collider",
+      "name": "Box collider",
+      "type": "BoxCollider"
+    }
+  ],
+  "variables": [
+    {
+      "id": "hasKey",
+      "name": "hasKey",
+      "type": "bool",
+      "container": "single",
+      "value": false
+    },
+    {
+      "id": "doorName",
+      "name": "doorName",
+      "type": "string",
+      "container": "single",
+      "value": "GardenDoor"
+    },
+    {
+      "id": "targetPosition",
+      "name": "targetPosition",
+      "type": "vec3",
+      "container": "single",
+      "value": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "speed",
+      "name": "speed",
+      "type": "float",
+      "container": "single",
+      "value": 3
+    },
+    {
+      "id": "waypoints",
+      "name": "waypoints",
+      "type": "vec3",
+      "container": "array",
+      "value": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ]
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "begin",
+      "key": "beginPlay",
+      "position": {
+        "x": 28,
+        "y": 30
+      },
+      "splitPins": []
+    },
+    {
+      "id": "print",
+      "key": "print",
+      "position": {
+        "x": 270,
+        "y": 30
+      },
+      "splitPins": []
+    },
+    {
+      "id": "overlap",
+      "key": "beginOverlap",
+      "position": {
+        "x": 28,
+        "y": 205
+      },
+      "splitPins": []
+    },
+    {
+      "id": "branch",
+      "key": "branch",
+      "position": {
+        "x": 270,
+        "y": 205
+      },
+      "splitPins": []
+    },
+    {
+      "id": "door",
+      "key": "door",
+      "position": {
+        "x": 512,
+        "y": 205
+      },
+      "splitPins": []
+    },
+    {
+      "id": "tick",
+      "key": "tick",
+      "position": {
+        "x": 28,
+        "y": 410
+      },
+      "splitPins": []
+    },
+    {
+      "id": "location",
+      "key": "location",
+      "position": {
+        "x": 512,
+        "y": 410
+      },
+      "splitPins": []
+    },
+    {
+      "id": "getKey",
+      "key": "getVariable",
+      "variableId": "hasKey",
+      "position": {
+        "x": 270,
+        "y": 395
+      },
+      "splitPins": []
+    }
+  ],
+  "edges": [
+    {
+      "from": {
+        "node": "begin",
+        "pin": "then"
+      },
+      "to": {
+        "node": "print",
+        "pin": "exec"
+      }
+    },
+    {
+      "from": {
+        "node": "overlap",
+        "pin": "then"
+      },
+      "to": {
+        "node": "branch",
+        "pin": "exec"
+      }
+    },
+    {
+      "from": {
+        "node": "branch",
+        "pin": "true"
+      },
+      "to": {
+        "node": "door",
+        "pin": "exec"
+      }
+    },
+    {
+      "from": {
+        "node": "getKey",
+        "pin": "value"
+      },
+      "to": {
+        "node": "branch",
+        "pin": "condition"
+      }
+    }
+  ],
+  "functions": [],
+  "macros": [],
+  "comments": [],
+  "construction": {
+    "nodes": [
+      {
+        "id": "construction",
+        "key": "construction",
+        "position": {
+          "x": 28,
+          "y": 50
+        },
+        "splitPins": []
+      },
+      {
+        "id": "setup",
+        "key": "setPosition",
+        "position": {
+          "x": 290,
+          "y": 50
+        },
+        "splitPins": []
+      }
+    ],
+    "edges": [
+      {
+        "from": {
+          "node": "construction",
+          "pin": "then"
+        },
+        "to": {
+          "node": "setup",
+          "pin": "exec"
+        }
+      }
+    ],
+    "comments": []
+  }
+}

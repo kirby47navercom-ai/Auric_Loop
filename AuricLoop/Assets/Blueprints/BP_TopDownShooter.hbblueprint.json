@@ -1,0 +1,358 @@
+{
+  "version": 1,
+  "name": "BP_TopDownShooter",
+  "components": [
+    {
+      "id": "component_0",
+      "name": "Transform",
+      "type": "Transform",
+      "properties": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "component_1",
+      "name": "MeshRenderer",
+      "type": "MeshRenderer",
+      "properties": {
+        "enabled": true,
+        "mesh": "",
+        "material": "",
+        "visible": true,
+        "castShadow": true,
+        "receiveShadow": true
+      }
+    }
+  ],
+  "variables": [
+    {
+      "id": "bullets",
+      "name": "Bullets",
+      "type": "object",
+      "container": "array",
+      "value": [
+        "Bullet0",
+        "Bullet1",
+        "Bullet2",
+        "Bullet3",
+        "Bullet4",
+        "Bullet5",
+        "Bullet6",
+        "Bullet7",
+        "Bullet8",
+        "Bullet9",
+        "Bullet10",
+        "Bullet11",
+        "Bullet12",
+        "Bullet13",
+        "Bullet14",
+        "Bullet15",
+        "Bullet16",
+        "Bullet17",
+        "Bullet18",
+        "Bullet19",
+        "Bullet20",
+        "Bullet21",
+        "Bullet22",
+        "Bullet23",
+        "Bullet24",
+        "Bullet25",
+        "Bullet26",
+        "Bullet27",
+        "Bullet28",
+        "Bullet29",
+        "Bullet30",
+        "Bullet31",
+        "Bullet32",
+        "Bullet33",
+        "Bullet34",
+        "Bullet35",
+        "Bullet36",
+        "Bullet37",
+        "Bullet38",
+        "Bullet39",
+        "Bullet40",
+        "Bullet41",
+        "Bullet42",
+        "Bullet43",
+        "Bullet44",
+        "Bullet45",
+        "Bullet46",
+        "Bullet47",
+        "Bullet48",
+        "Bullet49",
+        "Bullet50",
+        "Bullet51",
+        "Bullet52",
+        "Bullet53",
+        "Bullet54",
+        "Bullet55",
+        "Bullet56",
+        "Bullet57",
+        "Bullet58",
+        "Bullet59",
+        "Bullet60",
+        "Bullet61",
+        "Bullet62",
+        "Bullet63"
+      ]
+    },
+    {
+      "id": "enemies",
+      "name": "Enemies",
+      "type": "object",
+      "container": "array",
+      "value": [
+        "Enemy0",
+        "Enemy1",
+        "Enemy2",
+        "Enemy3",
+        "Enemy4",
+        "Enemy5",
+        "Enemy6",
+        "Enemy7",
+        "Enemy8",
+        "Enemy9",
+        "Enemy10",
+        "Enemy11"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "beginPlay",
+      "key": "beginPlay",
+      "position": {
+        "x": 70,
+        "y": 55
+      },
+      "splitPins": []
+    },
+    {
+      "id": "tick",
+      "key": "tick",
+      "position": {
+        "x": 70,
+        "y": 220
+      },
+      "splitPins": []
+    },
+    {
+      "id": "endPlay",
+      "key": "endPlay",
+      "position": {
+        "x": 70,
+        "y": 385
+      },
+      "splitPins": []
+    },
+    {
+      "id": "node_abe81add6a1f416d962fe08711cd17da",
+      "key": "tick",
+      "position": {
+        "x": 100,
+        "y": 240
+      },
+      "splitPins": []
+    },
+    {
+      "id": "node_b794159f1b434efdaafb115713487326",
+      "key": "nativeCall",
+      "position": {
+        "x": 430,
+        "y": 240
+      },
+      "splitPins": [],
+      "nativeId": "TopDownShooter.Update"
+    },
+    {
+      "id": "node_84488fc5287f4594991f1db0ff9018cd",
+      "key": "getVariable",
+      "position": {
+        "x": 130,
+        "y": 430
+      },
+      "splitPins": [],
+      "variableId": "bullets"
+    },
+    {
+      "id": "node_5be550c751ca42d6b7ff5f554cf90691",
+      "key": "getVariable",
+      "position": {
+        "x": 130,
+        "y": 550
+      },
+      "splitPins": [],
+      "variableId": "enemies"
+    }
+  ],
+  "edges": [
+    {
+      "from": {
+        "node": "node_abe81add6a1f416d962fe08711cd17da",
+        "pin": "then"
+      },
+      "to": {
+        "node": "node_b794159f1b434efdaafb115713487326",
+        "pin": "exec"
+      }
+    },
+    {
+      "from": {
+        "node": "node_abe81add6a1f416d962fe08711cd17da",
+        "pin": "delta"
+      },
+      "to": {
+        "node": "node_b794159f1b434efdaafb115713487326",
+        "pin": "delta"
+      }
+    },
+    {
+      "from": {
+        "node": "node_84488fc5287f4594991f1db0ff9018cd",
+        "pin": "value"
+      },
+      "to": {
+        "node": "node_b794159f1b434efdaafb115713487326",
+        "pin": "bullets"
+      }
+    },
+    {
+      "from": {
+        "node": "node_5be550c751ca42d6b7ff5f554cf90691",
+        "pin": "value"
+      },
+      "to": {
+        "node": "node_b794159f1b434efdaafb115713487326",
+        "pin": "enemies"
+      }
+    }
+  ],
+  "functions": [],
+  "macros": [],
+  "comments": [],
+  "construction": {
+    "nodes": [
+      {
+        "id": "construction",
+        "key": "construction",
+        "position": {
+          "x": 28,
+          "y": 50
+        },
+        "splitPins": []
+      },
+      {
+        "id": "setup",
+        "key": "setPosition",
+        "position": {
+          "x": 290,
+          "y": 50
+        },
+        "splitPins": []
+      }
+    ],
+    "edges": [
+      {
+        "from": {
+          "node": "construction",
+          "pin": "then"
+        },
+        "to": {
+          "node": "setup",
+          "pin": "exec"
+        }
+      }
+    ],
+    "comments": []
+  },
+  "dispatchers": [],
+  "interfaces": [],
+  "settings": {
+    "parentClass": "TopDownShooter",
+    "tickEnabled": true,
+    "tickInterval": 0,
+    "overlapEnabled": true
+  },
+  "native": {
+    "version": 1,
+    "classes": [
+      {
+        "name": "TopDownShooter",
+        "base": "Actor",
+        "blueprintable": true,
+        "properties": [],
+        "functions": [
+          {
+            "name": "Update",
+            "label": "Update",
+            "category": "탑다운 슈터",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [
+              {
+                "id": "delta",
+                "label": "delta",
+                "type": "float",
+                "array": false
+              },
+              {
+                "id": "bullets",
+                "label": "bullets",
+                "type": "object",
+                "array": true,
+                "className": "Actor"
+              },
+              {
+                "id": "enemies",
+                "label": "enemies",
+                "type": "object",
+                "array": true,
+                "className": "Actor"
+              }
+            ],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": [
+              {
+                "name": "delta",
+                "cppType": "float",
+                "out": false
+              },
+              {
+                "name": "bullets",
+                "cppType": "const std::vector<hb::Actor*>&",
+                "out": false
+              },
+              {
+                "name": "enemies",
+                "cppType": "const std::vector<hb::Actor*>&",
+                "out": false
+              }
+            ],
+            "ko": "조준·발사·탄환 재사용"
+          }
+        ]
+      }
+    ],
+    "header": "#pragma once\n#include <HBEngine/Game.hpp>\n#include <map>\nHB_CLASS(Blueprintable)\nclass TopDownShooter : public hb::Actor {\npublic:\n  HB_FUNCTION(BlueprintCallable, KoreanName=\"조준·발사·탄환 재사용\", Category=\"탑다운 슈터\")\n  void Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies);\nprivate:\n  float cooldown=0;\n  hb::Vec3 facing{1,0,0};\n  std::map<hb::Actor*,float> lifetime;\n};\n",
+    "source": "#include \"TopDownShooter.h\"\nvoid TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies){\n  for(auto it=lifetime.begin();it!=lifetime.end();){it->second-=delta;if(it->second<=0){hb::ActorPool::Release(it->first);it=lifetime.erase(it);}else ++it;}\n  auto* player=hb::Gameplay::GetPlayerPawn();if(!player)return;\n  const auto position=hb::Scene::GetPosition(player);\n  hb::Vec3 direction{hb::Input::GetAxis(\"d\")-hb::Input::GetAxis(\"a\"),hb::Input::GetAxis(\"w\")-hb::Input::GetAxis(\"s\"),0};\n  if(hb::VectorMath::VectorLengthSquared(direction)>.01f)facing=hb::VectorMath::NormalizeVector(direction);\n  hb::Vec3 aim;if(hb::Input::GetMouseWorldPosition(hb::Vec3{0,0,1},position,aim)){\n    direction=aim-position;if(hb::VectorMath::VectorLengthSquared(direction)>.01f)facing=hb::VectorMath::NormalizeVector(direction);\n  }\n  hb::Sprites::SetFlip(player,facing.x<0,false);\n  cooldown-=delta;if(hb::Input::IsKeyDown(\"LeftMouseButton\")&&cooldown<=0){\n    hb::Transform spawn;spawn.position=position+facing*.55f;\n    if(auto* bullet=hb::ActorPool::Acquire(bullets,spawn)){hb::Physics::SetVelocity(bullet,facing*12);lifetime[bullet]=1.5f;cooldown=.09f;}\n  }\n  for(auto* enemy:enemies){if(!hb::ActorPool::IsActive(enemy))continue;\n    const auto enemyPosition=hb::Scene::GetPosition(enemy);hb::Physics::SetVelocity(enemy,hb::VectorMath::NormalizeVector(position-enemyPosition)*1.2f);\n    for(auto* bullet:bullets)if(hb::ActorPool::IsActive(bullet)&&hb::VectorMath::DistanceSquared(enemyPosition,hb::Scene::GetPosition(bullet))<.25f){\n      hb::ActorPool::Release(bullet);lifetime.erase(bullet);hb::ActorPool::Release(enemy);lifetime[enemy]=2;break;\n    }\n  }\n  for(auto* enemy:enemies)if(!hb::ActorPool::IsActive(enemy)&&lifetime.find(enemy)==lifetime.end()){\n    hb::Transform spawn;spawn.position=hb::Vec3{-6,4,.1f};hb::ActorPool::Acquire(std::vector<hb::Actor*>{enemy},spawn);\n  }\n}\n",
+    "headerPath": "Source/TopDownShooter.h",
+    "sourcePath": "Source/TopDownShooter.cpp"
+  }
+}

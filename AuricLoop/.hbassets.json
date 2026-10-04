@@ -1,0 +1,17 @@
+{
+  "Source/TopDownShooter.h": {
+    "id": "a86b7948-36a6-4b2d-9833-a4b978e4ce79"
+  },
+  "Source/TopDownShooter.cpp": {
+    "id": "2d38b3dd-97ca-47d0-840b-ae07a5ee05ac"
+  },
+  "Assets/Blueprints/BP_TopDownShooter.hbblueprint.json": {
+    "id": "331a2838-07d0-44a8-b502-bd24657db9bc"
+  },
+  "Assets/UI/W_TopDown.hbwidget.json": {
+    "id": "c20de407-985a-46a2-85f6-ee56078bfd21"
+  },
+  "Assets/Scenes/Garden.hbscene.json": {
+    "id": "4fbbfe7f-d3b4-490d-b781-be4cf5cf735d"
+  }
+}
