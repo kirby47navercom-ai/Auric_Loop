@@ -17,7 +17,8 @@ public:
 private:
   void Hud(hb::Actor* player);
   float attackCooldown=0,dodgeTime=0,dodgeCooldown=0,invulnerable=0,gameOver=0;
-  bool dodgeHeld=false,started=false;
+  bool dodgeHeld=false,started=false,hudDirty=true;
+  int frame=0;
   hb::Vec3 facing{1,0,0};
   std::map<hb::Actor*,float> enemyHp,stun;
 };

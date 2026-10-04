@@ -13,5 +13,23 @@
   },
   "Assets/Scenes/Garden.hbscene.json": {
     "id": "4fbbfe7f-d3b4-490d-b781-be4cf5cf735d"
+  },
+  "Assets/Blueprints/BP_Garden.hbblueprint.json": {
+    "id": "a07173af-c8b1-4633-919d-258bacd47329"
+  },
+  "Assets/Materials/Moss_stone.hbmaterial.json": {
+    "id": "de5e7c48-30b3-4a7f-a571-d6d8abfd8c08"
+  },
+  "Assets/Models/Cube.obj": {
+    "id": "3fc52237-2b13-4449-b034-9eeb3d4a9f81"
+  },
+  "AuricLoop.hbproject": {
+    "id": "2eb37a92-f98b-456b-a602-d07cecce32bc"
+  },
+  "Source/DoorController.cpp": {
+    "id": "5bd2864a-5544-4a2c-913c-feb1799fb8c6"
+  },
+  "Source/DoorController.h": {
+    "id": "092734b6-0ab5-4647-9b84-6ec9a57403cf"
   }
 }

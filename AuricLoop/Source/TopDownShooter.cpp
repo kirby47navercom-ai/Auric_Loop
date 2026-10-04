@@ -24,11 +24,15 @@ constexpr float respawnDelay=3.0f;
 static float Length(const hb::Vec3& v){return std::sqrt(hb::VectorMath::VectorLengthSquared(v));}
 
 void TopDownShooter::Hud(hb::Actor* player){
+  // UIWidget 인스턴스는 첫 프레임 뒤에 생기므로 그 전에는 표시만 미룬다
+  if(frame<2){hudDirty=true;return;}
+  hudDirty=false;
   hb::UI::SetText(player,"HUD","Title",Hp>0?"HP "+std::to_string(Hp)+" / "+std::to_string(balance::playerHp)+"    탐색 1F":"쓰러졌다... 잠시 후 다시 일어난다");
 }
 
 void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies){
   auto* player=hb::Gameplay::GetPlayerPawn();if(!player)return;
+  frame++;if(hudDirty)Hud(player);
   if(!started){started=true;Hp=balance::playerHp;for(auto* e:enemies)enemyHp[e]=balance::enemyHp;Hud(player);}
   const auto position=hb::Scene::GetPosition(player);
 
