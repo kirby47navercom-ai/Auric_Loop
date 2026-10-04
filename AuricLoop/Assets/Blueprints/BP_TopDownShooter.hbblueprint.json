@@ -295,7 +295,36 @@
         "name": "TopDownShooter",
         "base": "Actor",
         "blueprintable": true,
-        "properties": [],
+        "properties": [
+          {
+            "name": "Hp",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Kills",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Swings",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Hits",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          }
+        ],
         "functions": [
           {
             "name": "Update",
@@ -350,8 +379,8 @@
         ]
       }
     ],
-    "header": "#pragma once\n#include <HBEngine/Game.hpp>\n#include <map>\nHB_CLASS(Blueprintable)\nclass TopDownShooter : public hb::Actor {\npublic:\n  HB_FUNCTION(BlueprintCallable, KoreanName=\"조준·발사·탄환 재사용\", Category=\"탑다운 슈터\")\n  void Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies);\nprivate:\n  float cooldown=0;\n  hb::Vec3 facing{1,0,0};\n  std::map<hb::Actor*,float> lifetime;\n};\n",
-    "source": "#include \"TopDownShooter.h\"\nvoid TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies){\n  for(auto it=lifetime.begin();it!=lifetime.end();){it->second-=delta;if(it->second<=0){hb::ActorPool::Release(it->first);it=lifetime.erase(it);}else ++it;}\n  auto* player=hb::Gameplay::GetPlayerPawn();if(!player)return;\n  const auto position=hb::Scene::GetPosition(player);\n  hb::Vec3 direction{hb::Input::GetAxis(\"d\")-hb::Input::GetAxis(\"a\"),hb::Input::GetAxis(\"w\")-hb::Input::GetAxis(\"s\"),0};\n  if(hb::VectorMath::VectorLengthSquared(direction)>.01f)facing=hb::VectorMath::NormalizeVector(direction);\n  hb::Vec3 aim;if(hb::Input::GetMouseWorldPosition(hb::Vec3{0,0,1},position,aim)){\n    direction=aim-position;if(hb::VectorMath::VectorLengthSquared(direction)>.01f)facing=hb::VectorMath::NormalizeVector(direction);\n  }\n  hb::Sprites::SetFlip(player,facing.x<0,false);\n  cooldown-=delta;if(hb::Input::IsKeyDown(\"LeftMouseButton\")&&cooldown<=0){\n    hb::Transform spawn;spawn.position=position+facing*.55f;\n    if(auto* bullet=hb::ActorPool::Acquire(bullets,spawn)){hb::Physics::SetVelocity(bullet,facing*12);lifetime[bullet]=1.5f;cooldown=.09f;}\n  }\n  for(auto* enemy:enemies){if(!hb::ActorPool::IsActive(enemy))continue;\n    const auto enemyPosition=hb::Scene::GetPosition(enemy);hb::Physics::SetVelocity(enemy,hb::VectorMath::NormalizeVector(position-enemyPosition)*1.2f);\n    for(auto* bullet:bullets)if(hb::ActorPool::IsActive(bullet)&&hb::VectorMath::DistanceSquared(enemyPosition,hb::Scene::GetPosition(bullet))<.25f){\n      hb::ActorPool::Release(bullet);lifetime.erase(bullet);hb::ActorPool::Release(enemy);lifetime[enemy]=2;break;\n    }\n  }\n  for(auto* enemy:enemies)if(!hb::ActorPool::IsActive(enemy)&&lifetime.find(enemy)==lifetime.end()){\n    hb::Transform spawn;spawn.position=hb::Vec3{-6,4,.1f};hb::ActorPool::Acquire(std::vector<hb::Actor*>{enemy},spawn);\n  }\n}\n",
+    "header": "#pragma once\r\n#include <HBEngine/Game.hpp>\r\n#include <map>\r\nHB_CLASS(Blueprintable)\r\nclass TopDownShooter : public hb::Actor {\r\npublic:\r\n  HB_FUNCTION(BlueprintCallable, KoreanName=\"조준·발사·탄환 재사용\", Category=\"탑다운 슈터\")\r\n  void Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies);\r\n  HB_PROPERTY(BlueprintReadWrite)\r\n  int Hp = 0;\r\n  HB_PROPERTY(BlueprintReadWrite)\r\n  int Kills = 0;\r\n  HB_PROPERTY(BlueprintReadWrite)\r\n  int Swings = 0;\r\n  HB_PROPERTY(BlueprintReadWrite)\r\n  int Hits = 0;\r\nprivate:\r\n  void Hud(hb::Actor* player);\r\n  float attackCooldown=0,dodgeTime=0,dodgeCooldown=0,invulnerable=0,gameOver=0;\r\n  bool dodgeHeld=false,started=false;\r\n  hb::Vec3 facing{1,0,0};\r\n  std::map<hb::Actor*,float> enemyHp,stun;\r\n};\r\n",
+    "source": "#include \"TopDownShooter.h\"\r\n#include <cmath>\r\n#include <string>\r\n\r\n// 수치는 docs/데모_기획서.md 4-1, 4-2, 5장 기준.\r\n// ponytail: 상수로 둠. 편집기에서 바꿔야 하면 HB_PROPERTY로 옮김.\r\nnamespace balance {\r\nconstexpr int playerHp=3;              // 기획: 체력 3\r\nconstexpr float invulnerableTime=1.0f; // 피격 후 무적 [제안]\r\nconstexpr float dodgeTime=1.0f;        // 기획: 1초 대시\r\nconstexpr float dodgeSpeed=12.0f;      // 기획: 이동속도 6의 2배\r\nconstexpr float dodgeCooldown=2.0f;    // 기획: 쿨타임 2초\r\nconstexpr float swordDamage=1.0f;      // 무기공격력 1 x 공격력 1\r\nconstexpr float swordInterval=0.35f;\r\nconstexpr float swordRange=2.5f;\r\nconstexpr float swordHalfAngle=50.0f;  // 부채꼴 100도\r\nconstexpr float swordStun=0.1f;        // 기획: 0.1초 경직\r\nconstexpr float enemyHp=3.5f;          // 검 4대\r\nconstexpr float enemySpeed=4.8f;       // 기획: 플레이어보다 20% 느림\r\nconstexpr float contactRange=0.75f;\r\nconstexpr float respawnDelay=3.0f;\r\n}\r\n\r\nstatic float Length(const hb::Vec3& v){return std::sqrt(hb::VectorMath::VectorLengthSquared(v));}\r\n\r\nvoid TopDownShooter::Hud(hb::Actor* player){\r\n  hb::UI::SetText(player,\"HUD\",\"Title\",Hp>0?\"HP \"+std::to_string(Hp)+\" / \"+std::to_string(balance::playerHp)+\"    탐색 1F\":\"쓰러졌다... 잠시 후 다시 일어난다\");\r\n}\r\n\r\nvoid TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies){\r\n  auto* player=hb::Gameplay::GetPlayerPawn();if(!player)return;\r\n  if(!started){started=true;Hp=balance::playerHp;for(auto* e:enemies)enemyHp[e]=balance::enemyHp;Hud(player);}\r\n  const auto position=hb::Scene::GetPosition(player);\r\n\r\n  if(Hp<=0){ // ponytail: 정산 화면이 생기면 거기로 보냄. 지금은 3초 뒤 체력만 회복\r\n    hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});gameOver-=delta;\r\n    for(auto* e:enemies)if(hb::ActorPool::IsActive(e))hb::Physics::SetVelocity(e,hb::Vec3{0,0,0});\r\n    if(gameOver<=0){Hp=balance::playerHp;invulnerable=balance::invulnerableTime*2;Hud(player);}\r\n    return;\r\n  }\r\n\r\n  // 조준: 마우스가 있으면 마우스 방향, 없으면 이동 방향\r\n  hb::Vec3 move{hb::Input::GetAxis(\"d\")-hb::Input::GetAxis(\"a\"),hb::Input::GetAxis(\"w\")-hb::Input::GetAxis(\"s\"),0};\r\n  if(hb::VectorMath::VectorLengthSquared(move)>.01f)facing=hb::VectorMath::NormalizeVector(move);\r\n  hb::Vec3 aim;if(hb::Input::GetMouseWorldPosition(hb::Vec3{0,0,1},position,aim)){\r\n    const auto d=aim-position;if(hb::VectorMath::VectorLengthSquared(d)>.01f)facing=hb::VectorMath::NormalizeVector(d);\r\n  }\r\n  hb::Sprites::SetFlip(player,facing.x<0,false);\r\n\r\n  attackCooldown-=delta;dodgeCooldown-=delta;invulnerable-=delta;\r\n\r\n  // 회피: Space를 누른 순간 바라보는 방향으로 대시, 대시 중 무적\r\n  const bool dodgeDown=hb::Input::IsKeyDown(\"space\")||hb::Input::IsKeyDown(\" \");\r\n  if(dodgeDown&&!dodgeHeld&&dodgeCooldown<=0&&dodgeTime<=0){dodgeTime=balance::dodgeTime;dodgeCooldown=balance::dodgeCooldown;}\r\n  dodgeHeld=dodgeDown;\r\n  if(dodgeTime>0){dodgeTime-=delta;hb::Physics::SetVelocity(player,facing*balance::dodgeSpeed);}\r\n\r\n  // 검 부채꼴 베기\r\n  if(hb::Input::IsKeyDown(\"LeftMouseButton\")&&attackCooldown<=0){\r\n    attackCooldown=balance::swordInterval;Swings++;\r\n    const float minDot=std::cos(balance::swordHalfAngle*3.14159265f/180);\r\n    for(auto* e:enemies){if(!hb::ActorPool::IsActive(e))continue;\r\n      const auto d=hb::Scene::GetPosition(e)-position;const float len=Length(d);\r\n      if(len>balance::swordRange||(len>.01f&&hb::VectorMath::DotProduct(d*(1/len),facing)<minDot))continue;\r\n      enemyHp[e]-=balance::swordDamage;Hits++;stun[e]=balance::swordStun;\r\n      hb::Physics::SetVelocity(e,(len>.01f?d*(1/len):facing)*6);\r\n      if(enemyHp[e]<=0){hb::ActorPool::Release(e);Kills++;}\r\n    }\r\n  }\r\n\r\n  // 해골: 플레이어를 쫓아오고 닿으면 피해 1\r\n  for(auto* e:enemies){if(!hb::ActorPool::IsActive(e))continue;\r\n    if(stun[e]>0){stun[e]-=delta;continue;}\r\n    const auto d=position-hb::Scene::GetPosition(e);const float len=Length(d);\r\n    hb::Physics::SetVelocity(e,len>.01f?d*(balance::enemySpeed/len):hb::Vec3{0,0,0});\r\n    if(len<balance::contactRange&&invulnerable<=0&&dodgeTime<=0){\r\n      Hp-=1;invulnerable=balance::invulnerableTime;if(Hp<=0)gameOver=balance::respawnDelay;Hud(player);\r\n    }\r\n  }\r\n}\r\n",
     "headerPath": "Source/TopDownShooter.h",
     "sourcePath": "Source/TopDownShooter.cpp"
   }

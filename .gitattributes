@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# 엔진이 C++ 원문 바이트를 BP 사본과 비교하므로 줄바꿈 변환을 하지 않는다
+AuricLoop/** -text
+tools/** -text

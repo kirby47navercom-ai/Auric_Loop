@@ -9,7 +9,7 @@
       "group": "WORLD",
       "position": [
         0,
-        0,
+        -8,
         0.1
       ],
       "rotation": [
@@ -56,9 +56,9 @@
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.91,
-              0.66,
-              0.29,
+              0.72,
+              0.2,
+              0.18,
               1
             ],
             "width": 0.7,
@@ -143,7 +143,7 @@
           "type": "TopDownMovement2D",
           "properties": {
             "enabled": true,
-            "speed": 5,
+            "speed": 6,
             "acceleration": 30,
             "autoPossess": true
           }
@@ -159,8 +159,7 @@
             "showOnStart": true
           }
         }
-      ],
-      "blueprintAsset": "Assets/Blueprints/BP_TopDownShooter.hbblueprint.json"
+      ]
     },
     {
       "id": "Camera",
@@ -214,15 +213,15 @@
             "enabled": true,
             "projection": "orthographic",
             "fieldOfView": 60,
-            "orthographicSize": 7,
+            "orthographicSize": 11.25,
             "near": 0.1,
             "far": 1000,
             "priority": 0,
             "main": true,
-            "followTarget": "",
+            "followTarget": "Player",
             "followOffset": [
               0,
-              2,
+              0,
               12
             ]
           }
@@ -9706,8 +9705,8 @@
       "name": "Enemy0",
       "kind": "sprite",
       "position": [
-        6,
-        0,
+        -6,
+        4,
         0.1
       ],
       "rotation": [
@@ -9754,9 +9753,9 @@
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.89,
-              0.27,
-              0.36,
+              0.9,
+              0.88,
+              0.8,
               1
             ],
             "width": 0.7,
@@ -9854,8 +9853,8 @@
       "name": "Enemy1",
       "kind": "sprite",
       "position": [
-        -4.424362293247473,
-        2.701852722204604,
+        0,
+        6,
         0.1
       ],
       "rotation": [
@@ -9902,9 +9901,9 @@
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.89,
-              0.27,
-              0.36,
+              0.9,
+              0.88,
+              0.8,
               1
             ],
             "width": 0.7,
@@ -10002,8 +10001,8 @@
       "name": "Enemy2",
       "kind": "sprite",
       "position": [
-        0.5249939006366784,
-        -3.9846584353433627,
+        6,
+        4,
         0.1
       ],
       "rotation": [
@@ -10050,9 +10049,9 @@
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.89,
-              0.27,
-              0.36,
+              0.9,
+              0.88,
+              0.8,
               1
             ],
             "width": 0.7,
@@ -10150,8 +10149,8 @@
       "name": "Enemy3",
       "kind": "sprite",
       "position": [
-        3.6501078871935313,
-        3.1746714553966107,
+        -8,
+        -2,
         0.1
       ],
       "rotation": [
@@ -10198,9 +10197,9 @@
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.89,
-              0.27,
-              0.36,
+              0.9,
+              0.88,
+              0.8,
               1
             ],
             "width": 0.7,
@@ -10298,8 +10297,8 @@
       "name": "Enemy4",
       "kind": "sprite",
       "position": [
-        -5.9081271347647615,
-        -0.6973071248919186,
+        8,
+        -2,
         0.1
       ],
       "rotation": [
@@ -10346,9 +10345,9 @@
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.89,
-              0.27,
-              0.36,
+              0.9,
+              0.88,
+              0.8,
               1
             ],
             "width": 0.7,
@@ -10446,8 +10445,8 @@
       "name": "Enemy5",
       "kind": "sprite",
       "position": [
-        5.063123752394953,
-        -2.1462916720017398,
+        0,
+        0,
         0.1
       ],
       "rotation": [
@@ -10494,9 +10493,9 @@
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.89,
-              0.27,
-              0.36,
+              0.9,
+              0.88,
+              0.8,
               1
             ],
             "width": 0.7,
@@ -10594,8 +10593,8 @@
       "name": "Enemy6",
       "kind": "sprite",
       "position": [
-        -1.5589041372825247,
-        3.862631106197112,
+        0,
+        40,
         0.1
       ],
       "rotation": [
@@ -10642,9 +10641,9 @@
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.89,
-              0.27,
-              0.36,
+              0.9,
+              0.88,
+              0.8,
               1
             ],
             "width": 0.7,
@@ -10732,7 +10731,7 @@
           "type": "PooledActor",
           "properties": {
             "enabled": true,
-            "initiallyActive": true
+            "initiallyActive": false
           }
         }
       ]
@@ -10742,8 +10741,8 @@
       "name": "Enemy7",
       "kind": "sprite",
       "position": [
-        -2.764071524468175,
-        -3.5502681343260183,
+        0,
+        40,
         0.1
       ],
       "rotation": [
@@ -10790,9 +10789,9 @@
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.89,
-              0.27,
-              0.36,
+              0.9,
+              0.88,
+              0.8,
               1
             ],
             "width": 0.7,
@@ -10880,7 +10879,7 @@
           "type": "PooledActor",
           "properties": {
             "enabled": true,
-            "initiallyActive": true
+            "initiallyActive": false
           }
         }
       ]
@@ -10890,8 +10889,8 @@
       "name": "Enemy8",
       "kind": "sprite",
       "position": [
-        5.635322080181225,
-        1.3732597152795816,
+        0,
+        40,
         0.1
       ],
       "rotation": [
@@ -10938,9 +10937,9 @@
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.89,
-              0.27,
-              0.36,
+              0.9,
+              0.88,
+              0.8,
               1
             ],
             "width": 0.7,
@@ -11028,7 +11027,7 @@
           "type": "PooledActor",
           "properties": {
             "enabled": true,
-            "initiallyActive": true
+            "initiallyActive": false
           }
         }
       ]
@@ -11038,8 +11037,8 @@
       "name": "Enemy9",
       "kind": "sprite",
       "position": [
-        -5.546830649484722,
-        1.5250019666197738,
+        0,
+        40,
         0.1
       ],
       "rotation": [
@@ -11086,9 +11085,9 @@
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.89,
-              0.27,
-              0.36,
+              0.9,
+              0.88,
+              0.8,
               1
             ],
             "width": 0.7,
@@ -11176,7 +11175,7 @@
           "type": "PooledActor",
           "properties": {
             "enabled": true,
-            "initiallyActive": true
+            "initiallyActive": false
           }
         }
       ]
@@ -11186,8 +11185,8 @@
       "name": "Enemy10",
       "kind": "sprite",
       "position": [
-        2.545074044021982,
-        -3.622313448026495,
+        0,
+        40,
         0.1
       ],
       "rotation": [
@@ -11234,9 +11233,9 @@
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.89,
-              0.27,
-              0.36,
+              0.9,
+              0.88,
+              0.8,
               1
             ],
             "width": 0.7,
@@ -11324,7 +11323,7 @@
           "type": "PooledActor",
           "properties": {
             "enabled": true,
-            "initiallyActive": true
+            "initiallyActive": false
           }
         }
       ]
@@ -11334,8 +11333,8 @@
       "name": "Enemy11",
       "kind": "sprite",
       "position": [
-        1.7933874381868296,
-        3.8171403779707878,
+        0,
+        40,
         0.1
       ],
       "rotation": [
@@ -11382,9 +11381,9 @@
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.89,
-              0.27,
-              0.36,
+              0.9,
+              0.88,
+              0.8,
               1
             ],
             "width": 0.7,
@@ -11472,7 +11471,582 @@
           "type": "PooledActor",
           "properties": {
             "enabled": true,
-            "initiallyActive": true
+            "initiallyActive": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "PlayerStart",
+      "name": "PlayerStart",
+      "kind": "playerStart",
+      "group": "WORLD",
+      "position": [
+        0,
+        -8,
+        0.1
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Director",
+      "name": "Director",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/BP_TopDownShooter.hbblueprint.json"
+    },
+    {
+      "id": "Floor",
+      "name": "Floor",
+      "kind": "sprite",
+      "position": [
+        0,
+        0,
+        -0.1
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.13,
+              0.17,
+              0.17,
+              1
+            ],
+            "width": 24.0,
+            "height": 24.0,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WallN",
+      "name": "WallN",
+      "kind": "sprite",
+      "position": [
+        0,
+        12.5,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.24,
+              0.3,
+              0.29,
+              1
+            ],
+            "width": 26.0,
+            "height": 1.0,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              13.0,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "WallS",
+      "name": "WallS",
+      "kind": "sprite",
+      "position": [
+        0,
+        -12.5,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.24,
+              0.3,
+              0.29,
+              1
+            ],
+            "width": 26.0,
+            "height": 1.0,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              13.0,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "WallW",
+      "name": "WallW",
+      "kind": "sprite",
+      "position": [
+        -12.5,
+        0,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.24,
+              0.3,
+              0.29,
+              1
+            ],
+            "width": 1.0,
+            "height": 24.0,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              12.0,
+              0.5
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "WallE",
+      "name": "WallE",
+      "kind": "sprite",
+      "position": [
+        12.5,
+        0,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.24,
+              0.3,
+              0.29,
+              1
+            ],
+            "width": 1.0,
+            "height": 24.0,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              12.0,
+              0.5
+            ]
           }
         }
       ]
