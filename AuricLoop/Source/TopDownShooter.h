@@ -157,6 +157,7 @@ private:
   // 장면 나누기: 거점·던전 방마다 장면이 따로라서, 다른 구역으로 넘어갈 때 상태를 파일에 적고 장면을 연다
   void SaveAndOpen(hb::Actor* player,const hb::Vec3& position,int area,const std::vector<hb::Actor*>& items);
   bool Restore(hb::Actor* player);
+  int AreaAt(float y) const;   // 지금 장면 좌표 y가 속한 구역 (-1 거점, 0~ 던전 방). 장면마다 구역 가운데가 (0, 0)
   void MoveCamera(hb::Actor* camera,const hb::Vec3& position,const hb::Vec3& aim,bool hasAim,float delta);
   int area=0;bool introHidden=false,leaving=false,oreTaken=false,herbTaken=false;
   hb::Vec3 cameraAt{0,0,0};bool cameraReady=false;

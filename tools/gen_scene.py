@@ -1,6 +1,7 @@
 """데모 장면 생성기. 템플릿 장면의 오브젝트를 바탕으로 거점·던전 방 장면을 만든다.
 
-장면은 구역마다 따로: Hub(거점), Dungeon_0~4(방 하나씩). 좌표는 한 세계 좌표를 그대로 쓰고,
+장면은 구역마다 따로: Hub(거점), Dungeon_0~4(방 하나씩). 장면마다 그 구역이 (0, 0)에 오게 옮겨서
+편집기에서 장면을 열면 바로 보인다. 어느 구역인지는 Director의 태그(Area.Hub / Area.Room0~4)로 C++에 알린다.
 C++가 구역 경계를 넘을 때 상태를 파일에 적고 다음 장면을 연다.
 
 실행: python tools/gen_scene.py
@@ -93,6 +94,7 @@ comp(objs["Camera"], "Camera")["properties"].update(orthographicSize=5.625, foll
 # ---- 탄, 적 (모두 풀에서 꺼내 쓴다. 처음엔 숨김) ----
 for i in range(64):
     comp(objs[f"Bullet{i}"], "SpriteRenderer")["properties"].update(color=[0.75, 0.45, 1.0, 1], width=0.3, height=0.3)
+    objs[f"Bullet{i}"]["position"] = [-15 + i % 16 * 2, -60 - i // 16, 0.1]  # 풀은 방 밖 (y -60) 에 모아 둠: 편집기에서 방을 가리지 않게
 for i in range(12):
     e = objs[f"Enemy{i}"]
     texture(e, "SkeletonMage_Idle.png" if i >= 4 else "Skeleton_Idle.png")  # C++ balance::rangedFrom = 4
@@ -239,20 +241,26 @@ hub_ids = {o["id"] for o in hub}
 geometry = [o for o in made if o["id"] not in pool_ids | hub_ids | {"PlayerStart", "Director"}]
 
 
-def write(name, objects, at):
+def write(name, objects, at, shift=0.0, area="Hub"):
+    """shift: 이 장면의 구역 가운데가 (0, 0)에 오도록 y를 옮기는 양. 풀(숨겨 둔 탄·적 등)은 그대로 화면 밖."""
     out = copy.deepcopy(scene)
     out["sceneName"] = name
     out["objects"] = copy.deepcopy(objects)
     for o in out["objects"]:
         if o["id"] in ("PlayerStart", "Player"):
             o["position"] = at
+        elif o["id"] == "Director":
+            o["tags"] = [f"Area.{area}"]
+        elif o["id"] not in pool_ids or o["id"].startswith("Door"):
+            o["position"] = [o["position"][0], round(o["position"][1] + shift, 4), o["position"][2]]
     (SCENE.parent / f"{name}.hbscene.json").write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return len(out["objects"])
 
 
 hub_director = copy.deepcopy(director)
 hub_director["blueprintAsset"] = "Assets/Blueprints/BP_Hub.hbblueprint.json"  # 거점엔 적·탄 풀이 없다 (tools/sync_cpp.mjs가 만듦)
-counts = {"Hub": write("Hub", [objs["Player"], objs["Camera"], start, hub_director, slash] + hub, [0, PLAZA[1] - 4, 0.1])}
+HUB_SHIFT = -PLAZA[1]  # 광장 가운데가 (0, 0)
+counts = {"Hub": write("Hub", [objs["Player"], objs["Camera"], start, hub_director, slash] + hub, [0, -4, 0.1], HUB_SHIFT)}
 
 
 def room_objects(i):  # 위아래 벽은 이웃 방과 같이 쓴다
@@ -266,7 +274,7 @@ def room_objects(i):  # 위아래 벽은 이웃 방과 같이 쓴다
 
 
 for i, (cy, half, _, _) in enumerate(rooms_cpp):
-    counts[f"Dungeon_{i}"] = write(f"Dungeon_{i}", room_objects(i), [0, cy - half + 3, 0.1])
+    counts[f"Dungeon_{i}"] = write(f"Dungeon_{i}", room_objects(i), [0, -half + 3, 0.1], -cy, f"Room{i}")
 scene["objects"] = base[:2] + [director] + spawned  # 템플릿은 복사 원본(플레이어·카메라·탄·적)만 남긴다
 SCENE.write_text(json.dumps(scene, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 for f in ("Room_Wall_H.png", "Room_Wall_V.png", "Room_Floor.png"):  # 이전 한 방 구조의 그림
@@ -274,17 +282,17 @@ for f in ("Room_Wall_H.png", "Room_Wall_V.png", "Room_Floor.png"):  # 이전 한
 print("장면 갱신:", counts)
 
 # 검사용 장면 (tools/check_demo.mjs): 채집방 광물 앞에서 시작
-write("Test_Gather", room_objects(2), [-3, rooms_cpp[2][0] - 1, 0.1])
+write("Test_Gather", room_objects(2), [-3, -1, 0.1], -rooms_cpp[2][0], "Room2")
 for test_name, who in (("Test_Sherry", 1), ("Test_Alea", 2)):  # 전투방1에서 셰리·알레아로 시작
     objects = copy.deepcopy(room_objects(0))
     next(o for o in objects if o["id"] == "Director")["blueprintAsset"] = f"Assets/Blueprints/BP_{test_name}.hbblueprint.json"  # tools/sync_cpp.mjs가 만듦
-    write(test_name, objects, [0, rooms_cpp[0][0] - rooms_cpp[0][1] + 3, 0.1])
+    write(test_name, objects, [0, -rooms_cpp[0][1] + 3, 0.1], -rooms_cpp[0][0], "Room0")
 
 
 # ---- C++ 방 표 ----
 spawn_rows, rows = [], []
 for cy, half, kind, spawns in rooms_cpp:
-    rows.append(f"{{{float(cy)}f,{float(half)}f,{kind},{len(spawn_rows)},{len(spawns)}}}")
+    rows.append(f"{{0.0f,{float(half)}f,{kind},{len(spawn_rows)},{len(spawns)}}}")  # 장면마다 방 가운데가 (0, 0)
     spawn_rows += [f"{{{float(x)}f,{float(sy)}f,{t}}}" for x, sy, t in spawns]
 block = ("// <rooms> tools/gen_scene.py가 만든 표. 손으로 고치지 말고 생성기를 고친다.\n"
          "struct Spawn{float x,y;int ranged;};\n"
@@ -295,12 +303,12 @@ block = ("// <rooms> tools/gen_scene.py가 만든 표. 손으로 고치지 말�
          "// </rooms>")
 src = SOURCE.read_text(encoding="utf-8")
 src = re.sub(r"// <rooms>.*?// </rooms>", lambda _: block, src, flags=re.S)
-hub_rows = ",".join(f'{{"{k}",{float(x)}f,{float(y)}f}}' for k, (_, x, y, _) in HUB_SPOTS.items())
+hub_rows = ",".join(f'{{"{k}",{float(x)}f,{float(y + HUB_SHIFT)}f}}' for k, (_, x, y, _) in HUB_SPOTS.items())
 hub_block = ("// <hub> tools/gen_scene.py가 만든 거점 상호작용 자리\n"
              "struct Spot{const char* id;float x,y;};\n"
              f"constexpr Spot hubSpots[]={{{hub_rows}}};\n"
-             f"constexpr float dungeonBottom={float(room0_bottom)}f;  // 이보다 아래는 거점\n"
+             f"constexpr float hubExit={float(room0_bottom + HUB_SHIFT)}f;  // 거점 장면에서 이보다 위(계단 끝)로 가면 던전 첫 방\n"
              "// </hub>")
 src = re.sub(r"// <hub>.*?// </hub>", lambda _: hub_block, src, flags=re.S)
-SOURCE.write_text(src, encoding="utf-8")
+SOURCE.write_bytes(src.replace("\r\n", "\n").encode("utf-8"))  # C++는 LF (편집기·빌드가 바이트를 비교)
 print("C++ 방 표 갱신:", len(rows), "rooms,", len(spawn_rows), "spawns")

@@ -26,7 +26,7 @@ assert.equal(stats.RoomIndex, 1, '열린 문을 지나 전투방2에 들어감')
 assert.equal(r.sceneHistory.at(-1).scene, 'Assets/Scenes/Dungeon_1.hbscene.json', '방을 넘어가면 다음 방 장면을 엶');
 assert.ok(stats.Kills >= 3 && stats.RoomClears >= 1, '장면을 넘어가도 기록이 이어짐');
 assert.deepEqual(doorsLocked, ['Door0', 'Door1'], '전투방2에 들어가면 앞뒤 문이 잠김');
-assert.ok(player.position[1] > 13, '플레이어가 전투방2 안에 있음');
+assert.ok(player.position[1] > -10, '플레이어가 전투방2 안에 있음 (장면마다 방 가운데가 0)');
 assert.equal(stats.FatigueMax, 20, '데모 피로도 한계 기본값 20');
 console.log('전투·문 검사 통과', JSON.stringify(stats), 'y', player.position[1].toFixed(1));
 
@@ -72,7 +72,7 @@ const by = b.objects.find(o => o.id === 'Player').position[1];
 assert.ok(boss.Shots >= 12, '해골 대장이 원형 탄막을 쏨');
 assert.ok(boss.BossHp <= 0, '해골 대장 처치');
 assert.ok(boss.Returning || boss.ReturnSuccess, 'Tab으로 [귀환] 사용 → 귀환 페이즈');
-assert.ok(by < 80, '잠긴 문을 10번 때려 열고 보스방 아래로 내려감');
+assert.ok(b.sceneHistory.some(h => h.scene.endsWith('Dungeon_3.hbscene.json')), '잠긴 문을 10번 때려 열고 상점 장면으로 내려감');
 console.log('보스·귀환 검사 통과', JSON.stringify(boss), 'y', by.toFixed(1));
 
 // 셰리(활: 1초 장전 단발)·알레아(마탄 연사·폭발)로 전투방1에서 위를 향해 공격
@@ -100,3 +100,10 @@ const m = await runProject(project, {scene: 'Assets/Scenes/Test_Alea.hbscene.jso
 const ms = m.objects.find(o => o.id === 'Director').nativeProperties;
 assert.ok(ms.Kills >= 3, '자동 조준으로 전투방1 해골 3마리를 모두 맞힘');
 console.log('모바일 자동 조준 검사 통과', 'kills', ms.Kills, 'hits', ms.Hits);
+
+// 첫 방에서 아래로 나가면 거점 장면 계단 끝에 섬 (장면마다 구역 가운데가 0이라 C++가 자리를 바꿔 줌)
+const h = await runProject(project, {scene: 'Assets/Scenes/Dungeon_0.hbscene.json', frames: 120, delta: 1 / 60, inputs: [{frame: 5, key: 's', value: 1}]});
+const hp = h.objects.find(o => o.id === 'Player').position;
+assert.equal(h.sceneHistory.at(-1).scene, 'Assets/Scenes/Hub.hbscene.json', '첫 방 아래 → 거점');
+assert.ok(hp[1] > 15 && hp[1] < 21, '거점 계단 끝에 섬');
+console.log('거점 이동 검사 통과', 'y', hp[1].toFixed(1));

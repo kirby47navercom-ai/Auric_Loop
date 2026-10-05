@@ -84,22 +84,33 @@ constexpr float doorReach=2.5f;        // 문까지 이 거리 안에서 베면 
 struct Spawn{float x,y;int ranged;};
 struct Room{float cy,half;int kind,first,count;};  // kind: 0 전투, 1 채집, 2 상점, 3 보스
 constexpr Spawn spawns[]={{-6.0f,4.0f,0},{0.0f,6.0f,0},{6.0f,4.0f,0},{-7.0f,3.0f,0},{7.0f,3.0f,0},{-5.0f,8.0f,1},{5.0f,8.0f,1}};
-constexpr Room rooms[]={{0.0f,12.0f,0,0,3},{25.0f,12.0f,0,3,4},{46.0f,8.0f,1,7,0},{67.0f,12.0f,2,7,0},{96.0f,16.0f,3,7,0}};
+constexpr Room rooms[]={{0.0f,12.0f,0,0,3},{0.0f,12.0f,0,3,4},{0.0f,8.0f,1,7,0},{0.0f,12.0f,2,7,0},{0.0f,16.0f,3,7,0}};
 constexpr int roomCount=5;
 // </rooms>
 
 // <hub> tools/gen_scene.py가 만든 거점 상호작용 자리
 struct Spot{const char* id;float x,y;};
-constexpr Spot hubSpots[]={{"DebtBoard",0.0f,-29.0f},{"Entrance",0.0f,-15.5f},{"Collector",16.0f,-29.0f},{"Interior",21.0f,-29.0f},{"ClosedRental",26.5f,-29.0f},{"ClosedCharm",15.5f,-39.5f},{"ClosedRecipe",21.0f,-39.5f},{"ClosedRelic",26.5f,-39.5f},{"Sofa",-19.0f,-30.0f},{"Bed",-23.0f,-37.0f},{"Fridge",-15.0f,-37.0f},{"TV",-19.0f,-37.5f}};
-constexpr float dungeonBottom=-13.0f;  // 이보다 아래는 거점
+constexpr Spot hubSpots[]={{"DebtBoard",0.0f,5.0f},{"Entrance",0.0f,18.5f},{"Collector",16.0f,5.0f},{"Interior",21.0f,5.0f},{"ClosedRental",26.5f,5.0f},{"ClosedCharm",15.5f,-5.5f},{"ClosedRecipe",21.0f,-5.5f},{"ClosedRelic",26.5f,-5.5f},{"Sofa",-19.0f,4.0f},{"Bed",-23.0f,-3.0f},{"Fridge",-15.0f,-3.0f},{"TV",-19.0f,-3.5f}};
+constexpr float hubExit=21.0f;  // 거점 장면에서 이보다 위(계단 끝)로 가면 던전 첫 방
 // </hub>
 
 static const char* koreanNames[]={"발렌","셰리","알레아"};
 static const char* faces[]={"valen","sherry","alea"};
 static const char* weapons[]={"검","활","지팡이"};
 
-static int RoomAt(float y){if(y<rooms[0].cy-rooms[0].half-1)return -1;  // 거점
-  for(int i=0;i<roomCount;++i)if(y<=rooms[i].cy+rooms[i].half+0.5f)return i;return roomCount-1;}
+int TopDownShooter::AreaAt(float y) const{
+  if(area<0)return y>hubExit?0:-1;  // 거점 계단 끝을 넘으면 첫 방
+  const float half=rooms[area].half;
+  if(y>half+0.5f&&area+1<roomCount)return area+1;  // 위쪽 문을 지나면 다음 방
+  if(y<-half-1)return area-1;                       // 아래쪽 문을 지나면 앞 방(첫 방이면 거점)
+  return area;
+}
+
+static float EntryY(int from,int to){
+  // 넘어간 장면에서 서는 자리: 지나온 문 바로 안쪽 (다시 넘어가지 않을 만큼)
+  if(to<0)return hubExit-0.6f;
+  return from<to?-rooms[to].half-0.4f:rooms[to].half+0.4f;
+}
 
 static float Length(const hb::Vec3& v){return std::sqrt(hb::VectorMath::VectorLengthSquared(v));}
 static hb::Vec3 Rotate(const hb::Vec3& v,float degrees){const float r=degrees*3.14159265f/180,c=std::cos(r),s=std::sin(r);return {v.x*c-v.y*s,v.x*s+v.y*c,0};}
@@ -465,7 +476,7 @@ void TopDownShooter::StunAll(const std::vector<hb::Actor*>& enemies,float second
 void TopDownShooter::UpdateReturn(hb::Actor* player,const hb::Vec3& position,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& doors){
   // 귀환 페이즈 (기획서 6-3): 지나온 방을 거꾸로 걸어 나간다. 방마다 무적 해골이 한꺼번에 나오고,
   // 아래쪽 문은 잠겨서 10번 때려야 열린다. 입구 근처에 닿으면 귀환 성공.
-  const int at=RoomAt(position.y);
+  const int at=AreaAt(position.y);
   if(at<0){  // 거점 계단에 닿으면 귀환 성공
     Returning=false;ReturnSuccess=true;for(auto* e:enemies)if(hb::ActorPool::IsActive(e))hb::ActorPool::Release(e);Settle(player);return;
   }
@@ -517,7 +528,7 @@ bool TopDownShooter::UpdateBoss(hb::Actor* player,float delta,const std::vector<
 void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& effects,const std::vector<hb::Actor*>& doors,const std::vector<hb::Actor*>& boss,const std::vector<hb::Actor*>& items,const std::vector<hb::Actor*>& shots){
   auto* player=hb::Gameplay::GetPlayerPawn();if(!player)return;
   frame++;if(hudDirty)Hud(player);
-  if(!started){started=true;Hp=MaxHp;area=RoomAt(hb::Scene::GetPosition(player).y);  // 이 장면이 맡은 구역 (-1 거점)
+  if(!started){started=true;Hp=MaxHp;area=-1;for(int i=0;i<roomCount;++i)if(hb::Tags::Has(this,"Area.Room"+std::to_string(i),true))area=i;  // 이 장면이 맡은 구역: Director 태그 (gen_scene.py)
     for(size_t i=0;i<enemies.size();++i){enemyHp[enemies[i]]=balance::enemyHp;shotTimer[enemies[i]]=1+0.3f*i;}
     if(Restore(player)||area>=0)Phase=std::max(Phase,2);  // 장면을 넘어왔거나 던전에서 바로 시작하면 로딩·타이틀 생략 (Hud에서 숨김)
     if(items.size()>=2){if(oreTaken&&items[0]&&hb::ActorPool::IsActive(items[0]))hb::ActorPool::Release(items[0]);
@@ -536,7 +547,7 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
    if(ending)return;
    if(Phase>=2&&!Returning&&!ReturnSuccess&&area>=0&&area<roomCount-1){runTime+=delta;
      if(runTime>=balance::runNotice){if(hint.empty()){hint="10분이 지났어요 - F10을 누르면 보스방 앞으로";Hud(player);}
-       if(hb::Input::IsKeyDown("F10")){runTime=0;const Room& b=rooms[roomCount-1];SaveAndOpen(player,hb::Vec3{0,b.cy-b.half+3,0},roomCount-1,items);return;}}}}
+       if(hb::Input::IsKeyDown("F10")){runTime=0;SaveAndOpen(player,hb::Vec3{0,-rooms[roomCount-1].half+3,0},roomCount-1,items);return;}}}}
   const auto position=hb::Scene::GetPosition(player);
   hb::Vec3 aim;const bool hasAim=hb::Input::GetMouseWorldPosition(hb::Vec3{0,0,1},position,aim);
   // 모바일 공격 버튼은 K로 들어온다. 터치 위치는 조준이 아니라서(버튼·조이스틱 자리) 자동 조준과 바라보는 방향으로 카메라를 끈다
@@ -546,12 +557,12 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
    const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
    if(frame>=2&&UpdateIntro(player,delta,pressed))return;
    if(UpdateDialog(player,delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}}  // 대화 중엔 행동·이동 막음
-  if(RoomAt(position.y)!=area){SaveAndOpen(player,position,RoomAt(position.y),items);return;}  // 다른 구역으로 넘어감
-  if(RoomAt(position.y)!=RoomIndex&&!Returning){RoomIndex=RoomAt(position.y);if(RoomIndex<0)Hud(player);}  // 거점이면 -1
+  if(AreaAt(position.y)!=area){const int to=AreaAt(position.y);SaveAndOpen(player,hb::Vec3{position.x,EntryY(area,to),0},to,items);return;}  // 다른 구역으로 넘어감
+  if(AreaAt(position.y)!=RoomIndex&&!Returning){RoomIndex=AreaAt(position.y);if(RoomIndex<0)Hud(player);}  // 거점이면 -1
   const Room& room=rooms[RoomIndex<0?0:RoomIndex];
 
   // 방 입장: 문을 지나 조금 들어오면 그 방의 적이 나오고 문이 잠긴다
-  if(RoomAt(position.y)>=0){const int at=RoomAt(position.y);const Room& r=rooms[at];
+  if(AreaAt(position.y)>=0){const int at=AreaAt(position.y);const Room& r=rooms[at];
    if(!Returning&&!ReturnSuccess&&(position.y>r.cy-r.half+balance::enterDepth||at==0))EnterRoom(at,enemies,doors,boss);}
 
   // 탄환 수명과 방 밖으로 나간 탄환 정리
@@ -598,7 +609,7 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
     Say({{faces[Character],koreanNames[Character],"던전이 놓아주지 않는다. 문을 10번 때려 열고, 막히면 E로 섬광탄!"}});}
   returnHeld=tab;
   const bool flash=hb::Input::IsKeyDown("e");
-  if(RoomAt(position.y)<0)HubInteract(player,position,flash&&!flashHeld);
+  if(AreaAt(position.y)<0)HubInteract(player,position,flash&&!flashHeld);
   else if(!Returning)Interact(player,position,items,flash&&!flashHeld);
   if(flash&&!flashHeld&&Returning&&(Flashbangs>0||Gold>=balance::flashPrice)){if(Flashbangs>0)Flashbangs--;else Gold-=balance::flashPrice;StunAll(enemies,balance::flashStun);Sfx(SfxFlash);
     for(auto& [b,life]:lifetime)life=0;Hud(player);}

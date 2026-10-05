@@ -9,7 +9,7 @@
       "group": "WORLD",
       "position": [
         0,
-        -38,
+        -4,
         0.1
       ],
       "rotation": [
@@ -168,7 +168,7 @@
       "group": "WORLD",
       "position": [
         0,
-        0,
+        34,
         12
       ],
       "rotation": [
@@ -235,7 +235,7 @@
       "group": "WORLD",
       "position": [
         0,
-        -38,
+        -4,
         0.1
       ],
       "rotation": [
@@ -319,7 +319,10 @@
           }
         }
       ],
-      "blueprintAsset": "Assets/Blueprints/BP_Hub.hbblueprint.json"
+      "blueprintAsset": "Assets/Blueprints/BP_Hub.hbblueprint.json",
+      "tags": [
+        "Area.Hub"
+      ]
     },
     {
       "id": "SlashFX",
@@ -410,7 +413,7 @@
       "kind": "sprite",
       "position": [
         0,
-        -34,
+        0,
         -0.1
       ],
       "rotation": [
@@ -484,7 +487,7 @@
       "kind": "sprite",
       "position": [
         -7.5,
-        -25.5,
+        8.5,
         0.0
       ],
       "rotation": [
@@ -586,7 +589,7 @@
       "kind": "sprite",
       "position": [
         7.5,
-        -25.5,
+        8.5,
         0.0
       ],
       "rotation": [
@@ -688,7 +691,7 @@
       "kind": "sprite",
       "position": [
         0,
-        -42.5,
+        -8.5,
         0.0
       ],
       "rotation": [
@@ -790,7 +793,7 @@
       "kind": "sprite",
       "position": [
         -12.5,
-        -39.0,
+        -5.0,
         0.0
       ],
       "rotation": [
@@ -892,7 +895,7 @@
       "kind": "sprite",
       "position": [
         -12.5,
-        -29.0,
+        5.0,
         0.0
       ],
       "rotation": [
@@ -994,7 +997,7 @@
       "kind": "sprite",
       "position": [
         12.5,
-        -39.0,
+        -5.0,
         0.0
       ],
       "rotation": [
@@ -1096,7 +1099,7 @@
       "kind": "sprite",
       "position": [
         12.5,
-        -29.0,
+        5.0,
         0.0
       ],
       "rotation": [
@@ -1198,7 +1201,7 @@
       "kind": "sprite",
       "position": [
         0,
-        -19.0,
+        15.0,
         -0.1
       ],
       "rotation": [
@@ -1272,7 +1275,7 @@
       "kind": "sprite",
       "position": [
         -2.5,
-        -19.0,
+        15.0,
         0.0
       ],
       "rotation": [
@@ -1374,7 +1377,7 @@
       "kind": "sprite",
       "position": [
         2.5,
-        -19.0,
+        15.0,
         0.0
       ],
       "rotation": [
@@ -1476,7 +1479,7 @@
       "kind": "sprite",
       "position": [
         -19,
-        -34,
+        0,
         -0.1
       ],
       "rotation": [
@@ -1550,7 +1553,7 @@
       "kind": "sprite",
       "position": [
         -19,
-        -27.5,
+        6.5,
         0.0
       ],
       "rotation": [
@@ -1652,7 +1655,7 @@
       "kind": "sprite",
       "position": [
         -19,
-        -40.5,
+        -6.5,
         0.0
       ],
       "rotation": [
@@ -1754,7 +1757,7 @@
       "kind": "sprite",
       "position": [
         -25.5,
-        -34,
+        0,
         0.0
       ],
       "rotation": [
@@ -1856,7 +1859,7 @@
       "kind": "sprite",
       "position": [
         -12.5,
-        -38.0,
+        -4.0,
         0.0
       ],
       "rotation": [
@@ -1958,7 +1961,7 @@
       "kind": "sprite",
       "position": [
         -12.5,
-        -30.0,
+        4.0,
         0.0
       ],
       "rotation": [
@@ -2060,7 +2063,7 @@
       "kind": "sprite",
       "position": [
         21,
-        -34,
+        0,
         -0.1
       ],
       "rotation": [
@@ -2134,7 +2137,7 @@
       "kind": "sprite",
       "position": [
         21,
-        -25.5,
+        8.5,
         0.0
       ],
       "rotation": [
@@ -2236,7 +2239,7 @@
       "kind": "sprite",
       "position": [
         21,
-        -42.5,
+        -8.5,
         0.0
       ],
       "rotation": [
@@ -2338,7 +2341,7 @@
       "kind": "sprite",
       "position": [
         12.5,
-        -39.0,
+        -5.0,
         0.0
       ],
       "rotation": [
@@ -2440,7 +2443,7 @@
       "kind": "sprite",
       "position": [
         12.5,
-        -29.0,
+        5.0,
         0.0
       ],
       "rotation": [
@@ -2542,7 +2545,7 @@
       "kind": "sprite",
       "position": [
         29.5,
-        -34,
+        0,
         0.0
       ],
       "rotation": [
@@ -2644,7 +2647,7 @@
       "kind": "sprite",
       "position": [
         -13.0,
-        -34,
+        0,
         -0.1
       ],
       "rotation": [
@@ -2718,7 +2721,7 @@
       "kind": "sprite",
       "position": [
         13.0,
-        -34,
+        0,
         -0.1
       ],
       "rotation": [
@@ -2792,7 +2795,7 @@
       "kind": "sprite",
       "position": [
         0,
-        -29,
+        5,
         0.05
       ],
       "rotation": [
@@ -2894,7 +2897,7 @@
       "kind": "sprite",
       "position": [
         0,
-        -15.5,
+        18.5,
         0.05
       ],
       "rotation": [
@@ -2968,7 +2971,7 @@
       "kind": "sprite",
       "position": [
         16,
-        -29,
+        5,
         0.05
       ],
       "rotation": [
@@ -3070,7 +3073,7 @@
       "kind": "sprite",
       "position": [
         21,
-        -29,
+        5,
         0.05
       ],
       "rotation": [
@@ -3172,7 +3175,7 @@
       "kind": "sprite",
       "position": [
         26.5,
-        -29,
+        5,
         0.05
       ],
       "rotation": [
@@ -3274,7 +3277,7 @@
       "kind": "sprite",
       "position": [
         15.5,
-        -39.5,
+        -5.5,
         0.05
       ],
       "rotation": [
@@ -3376,7 +3379,7 @@
       "kind": "sprite",
       "position": [
         21,
-        -39.5,
+        -5.5,
         0.05
       ],
       "rotation": [
@@ -3478,7 +3481,7 @@
       "kind": "sprite",
       "position": [
         26.5,
-        -39.5,
+        -5.5,
         0.05
       ],
       "rotation": [
@@ -3580,7 +3583,7 @@
       "kind": "sprite",
       "position": [
         -19,
-        -30,
+        4,
         0.05
       ],
       "rotation": [
@@ -3682,7 +3685,7 @@
       "kind": "sprite",
       "position": [
         -23,
-        -37,
+        -3,
         0.05
       ],
       "rotation": [
@@ -3784,7 +3787,7 @@
       "kind": "sprite",
       "position": [
         -15,
-        -37,
+        -3,
         0.05
       ],
       "rotation": [
@@ -3886,7 +3889,7 @@
       "kind": "sprite",
       "position": [
         -19,
-        -37.5,
+        -3.5,
         0.05
       ],
       "rotation": [
