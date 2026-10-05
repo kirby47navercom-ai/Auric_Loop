@@ -18,28 +18,64 @@ constexpr float swordStun=0.1f;        // 기획: 0.1초 경직
 constexpr float enemyHp=3.5f;          // 검 4대
 constexpr float enemySpeed=4.8f;       // 기획: 플레이어보다 20% 느림
 constexpr float contactRange=0.75f;
+constexpr int rangedFrom=4;            // 적 풀 4번째부터 원거리 해골 [제안: 방 구성]
+constexpr float rangedKeep=6.0f;       // 원거리 해골이 유지하는 거리
+constexpr float shotInterval=2.0f;     // 2초마다
+constexpr int shotCount=3;             // 3갈래
+constexpr float shotSpread=15.0f;      // 갈래 사이 각도
+constexpr float shotSpeed=7.0f;
+constexpr float shotLife=3.0f;
+constexpr float shotHitRange=0.45f;
+constexpr float roomHalf=12.0f;        // 중형 방 24m
 constexpr float respawnDelay=3.0f;
+constexpr float waveDelay=3.0f;        // ponytail: 문·다음 방이 생기기 전까지 같은 방에 다시 등장
 }
 
 static float Length(const hb::Vec3& v){return std::sqrt(hb::VectorMath::VectorLengthSquared(v));}
+static hb::Vec3 Rotate(const hb::Vec3& v,float degrees){const float r=degrees*3.14159265f/180,c=std::cos(r),s=std::sin(r);return {v.x*c-v.y*s,v.x*s+v.y*c,0};}
 
 void TopDownShooter::Hud(hb::Actor* player){
   // UIWidget 인스턴스는 첫 프레임 뒤에 생기므로 그 전에는 표시만 미룬다
   if(frame<2){hudDirty=true;return;}
   hudDirty=false;
-  hb::UI::SetText(player,"HUD","Title",Hp>0?"HP "+std::to_string(Hp)+" / "+std::to_string(balance::playerHp)+"    탐색 1F":"쓰러졌다... 잠시 후 다시 일어난다");
+  const std::string text=Hp<=0?(Fatigue>=FatigueMax?"지쳐 쓰러졌다... 잠시 후 다시 일어난다":"쓰러졌다... 잠시 후 다시 일어난다")
+    :"HP "+std::to_string(Hp)+" / "+std::to_string(balance::playerHp)+"    피로도 "+std::to_string(Fatigue)+" / "+std::to_string(FatigueMax)+"    탐색 1F";
+  hb::UI::SetText(player,"HUD","Title",text);
+}
+
+void TopDownShooter::Damage(hb::Actor* player,int amount){
+  if(invulnerable>0||dodgeTime>0)return;
+  Hp-=amount;invulnerable=balance::invulnerableTime;if(Hp<=0)gameOver=balance::respawnDelay;Hud(player);
+}
+
+void TopDownShooter::Fire(const std::vector<hb::Actor*>& bullets,const hb::Vec3& from,const hb::Vec3& dir){
+  for(int i=0;i<balance::shotCount;++i){
+    const auto d=Rotate(dir,(i-(balance::shotCount-1)/2.0f)*balance::shotSpread);
+    hb::Transform t;t.position=from+d*0.6f;
+    if(auto* b=hb::ActorPool::Acquire(bullets,t)){hb::Physics::SetVelocity(b,d*balance::shotSpeed);lifetime[b]=balance::shotLife;Shots++;}
+  }
 }
 
 void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies){
   auto* player=hb::Gameplay::GetPlayerPawn();if(!player)return;
   frame++;if(hudDirty)Hud(player);
-  if(!started){started=true;Hp=balance::playerHp;for(auto* e:enemies)enemyHp[e]=balance::enemyHp;Hud(player);}
+  if(!started){started=true;Hp=balance::playerHp;
+    for(size_t i=0;i<enemies.size();++i){auto* e=enemies[i];enemyHp[e]=balance::enemyHp;shotTimer[e]=1+0.3f*i;
+      if(hb::ActorPool::IsActive(e))spawn[e]=hb::Scene::GetPosition(e);}
+    Hud(player);}
   const auto position=hb::Scene::GetPosition(player);
 
-  if(Hp<=0){ // ponytail: 정산 화면이 생기면 거기로 보냄. 지금은 3초 뒤 체력만 회복
+  // 탄환 수명과 방 밖으로 나간 탄환 정리
+  for(auto it=lifetime.begin();it!=lifetime.end();){
+    const auto p=hb::Scene::GetPosition(it->first);it->second-=delta;
+    if(it->second<=0||std::fabs(p.x)>balance::roomHalf||std::fabs(p.y)>balance::roomHalf){hb::ActorPool::Release(it->first);it=lifetime.erase(it);}else ++it;
+  }
+
+  if(Hp<=0){ // ponytail: 정산 화면이 생기면 거기로 보냄. 지금은 3초 뒤 회복
     hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});gameOver-=delta;
     for(auto* e:enemies)if(hb::ActorPool::IsActive(e))hb::Physics::SetVelocity(e,hb::Vec3{0,0,0});
-    if(gameOver<=0){Hp=balance::playerHp;invulnerable=balance::invulnerableTime*2;Hud(player);}
+    for(auto& [b,life]:lifetime)hb::Physics::SetVelocity(b,hb::Vec3{0,0,0});
+    if(gameOver<=0){Hp=balance::playerHp;Fatigue=0;invulnerable=balance::invulnerableTime*2;Hud(player);}
     return;
   }
 
@@ -59,26 +95,44 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
   dodgeHeld=dodgeDown;
   if(dodgeTime>0){dodgeTime-=delta;hb::Physics::SetVelocity(player,facing*balance::dodgeSpeed);}
 
-  // 검 부채꼴 베기
+  // 검 부채꼴 베기: 적에게 피해, 범위 안의 적 탄환은 지움 (기획: 투사체 삭제)
   if(hb::Input::IsKeyDown("LeftMouseButton")&&attackCooldown<=0){
     attackCooldown=balance::swordInterval;Swings++;
     const float minDot=std::cos(balance::swordHalfAngle*3.14159265f/180);
+    auto inFan=[&](const hb::Vec3& at){const auto d=at-position;const float len=Length(d);
+      return len<=balance::swordRange&&(len<=balance::contactRange||hb::VectorMath::DotProduct(d*(1/len),facing)>=minDot);};  // 바로 붙은 적은 방향과 관계없이 맞음
     for(auto* e:enemies){if(!hb::ActorPool::IsActive(e))continue;
-      const auto d=hb::Scene::GetPosition(e)-position;const float len=Length(d);
-      if(len>balance::swordRange||(len>.01f&&hb::VectorMath::DotProduct(d*(1/len),facing)<minDot))continue;
+      const auto at=hb::Scene::GetPosition(e);if(!inFan(at))continue;
+      const auto d=at-position;const float len=Length(d);
       enemyHp[e]-=balance::swordDamage;Hits++;stun[e]=balance::swordStun;
       hb::Physics::SetVelocity(e,(len>.01f?d*(1/len):facing)*6);
       if(enemyHp[e]<=0){hb::ActorPool::Release(e);Kills++;}
     }
+    for(auto it=lifetime.begin();it!=lifetime.end();)
+      if(inFan(hb::Scene::GetPosition(it->first))){hb::ActorPool::Release(it->first);it=lifetime.erase(it);}else ++it;
   }
 
-  // 해골: 플레이어를 쫓아오고 닿으면 피해 1
-  for(auto* e:enemies){if(!hb::ActorPool::IsActive(e))continue;
+  // 해골: 근거리는 추격, 원거리는 거리를 두고 3갈래 탄 발사
+  int alive=0;
+  for(size_t i=0;i<enemies.size();++i){auto* e=enemies[i];if(!hb::ActorPool::IsActive(e))continue;alive++;
     if(stun[e]>0){stun[e]-=delta;continue;}
     const auto d=position-hb::Scene::GetPosition(e);const float len=Length(d);
-    hb::Physics::SetVelocity(e,len>.01f?d*(balance::enemySpeed/len):hb::Vec3{0,0,0});
-    if(len<balance::contactRange&&invulnerable<=0&&dodgeTime<=0){
-      Hp-=1;invulnerable=balance::invulnerableTime;if(Hp<=0)gameOver=balance::respawnDelay;Hud(player);
+    const auto dir=len>.01f?d*(1/len):hb::Vec3{0,0,0};
+    if((int)i<balance::rangedFrom){
+      hb::Physics::SetVelocity(e,dir*balance::enemySpeed);
+      if(len<balance::contactRange)Damage(player,1);
+    }else{
+      const float side=len>balance::rangedKeep+1?1.f:len<balance::rangedKeep-1?-1.f:0.f;
+      hb::Physics::SetVelocity(e,dir*(balance::enemySpeed*side));
+      if((shotTimer[e]-=delta)<=0){shotTimer[e]=balance::shotInterval;Fire(bullets,hb::Scene::GetPosition(e),dir);}
     }
+  }
+  for(auto& [b,life]:lifetime)if(Length(hb::Scene::GetPosition(b)-position)<balance::shotHitRange){Damage(player,1);life=0;}
+
+  // 방 클리어: 피로도 +1 (기획), 피로도가 가득 차면 쓰러짐
+  if(alive==0){
+    if(waveTimer<=0){waveTimer=balance::waveDelay;RoomClears++;Fatigue++;if(Fatigue>=FatigueMax){Hp=0;gameOver=balance::respawnDelay;}Hud(player);}
+    else if((waveTimer-=delta)<=0)
+      for(auto& [e,at]:spawn){hb::Transform t;t.position=at;enemyHp[e]=balance::enemyHp;hb::ActorPool::Acquire(std::vector<hb::Actor*>{e},t);}
   }
 }

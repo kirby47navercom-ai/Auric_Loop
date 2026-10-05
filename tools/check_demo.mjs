@@ -18,5 +18,7 @@ const stats = r.objects.find(o => o.id === 'Director').nativeProperties;
 assert.ok(Math.abs(player.position[1] - (-5.5)) < 0.1, 'PlayerStart(-8)에서 W 25프레임 = 이동속도 6으로 2.5m');
 assert.ok(stats.Swings >= 8, '검 공격 간격 0.35초');
 assert.ok(stats.Kills >= 3, '해골은 검 4대에 쓰러짐');
-assert.ok(stats.Hp > 0, '체력이 남아 있음');
+assert.ok(stats.Hp >= 0 && stats.Hp <= 3, '체력 0~3 (쓰러지면 3초 뒤 회복)');
+assert.ok(stats.Shots >= 3, '원거리 해골이 3갈래 탄을 쏨');
+assert.equal(stats.FatigueMax, 20, '데모 피로도 한계 기본값 20');
 console.log('데모 검사 통과', JSON.stringify(stats));

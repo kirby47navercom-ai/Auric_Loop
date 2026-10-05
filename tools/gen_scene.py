@@ -34,9 +34,13 @@ cam = comp(objs["Camera"], "Camera")["properties"]
 cam.update(orthographicSize=11.25, followTarget="Player", followOffset=[0, 0, 12])  # 세로 22.5m
 
 enemy_spots = [(-6, 4), (0, 6), (6, 4), (-8, -2), (8, -2), (0, 0)]
+for i in range(64):
+    comp(objs[f"Bullet{i}"], "SpriteRenderer")["properties"].update(color=[0.75, 0.45, 1.0, 1], width=0.3, height=0.3)  # 해골 탄
+
 for i in range(12):
     e = objs[f"Enemy{i}"]
-    comp(e, "SpriteRenderer")["properties"]["color"] = [0.9, 0.88, 0.8, 1]  # 해골 임시 색
+    ranged = i >= 4  # C++ balance::rangedFrom과 같은 값
+    comp(e, "SpriteRenderer")["properties"]["color"] = [0.62, 0.5, 0.85, 1] if ranged else [0.9, 0.88, 0.8, 1]  # 원거리 / 근거리 해골 임시 색
     active = i < len(enemy_spots)
     comp(e, "PooledActor")["properties"]["initiallyActive"] = active
     e["position"] = [*enemy_spots[i], 0.1] if active else [0, 40, 0.1]
