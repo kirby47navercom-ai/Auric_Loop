@@ -28,7 +28,6 @@ Start-Sleep 6
 # PowerShell 5는 외부 프로그램 인수의 따옴표를 지우므로 JSON은 파일(@경로)로 넘긴다
 $hb = { param($m, $p) $f = [IO.Path]::GetTempFileName(); [IO.File]::WriteAllText($f, $p); & $node (Join-Path $engine 'tools\hb.mjs') --url "http://127.0.0.1:$port" $m "@$f"; Remove-Item $f }
 & $hb viewport.configure '{"presentation":{"gameView":true}}' | Out-Null
-& $hb document.open '{"path":"Assets/Blueprints/BP_TopDownShooter.hbblueprint.json"}' | Out-Null
 & $hb native.build '{"path":"Assets/Blueprints/BP_TopDownShooter.hbblueprint.json"}' | Out-Null
 & $hb document.open ('{"path":"Assets/Scenes/' + $Scene + '.hbscene.json"}') | Out-Null
 & $hb runtime.play '{}' | Out-Null
