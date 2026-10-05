@@ -78,7 +78,7 @@ for who in ("valen", "sherry", "alea"):  # 캐릭터마다 공격 버튼 그림�
 image("DodgeButton", "btn_dodge.png", "br", 40 + 140 + 16, 24)
 image("InteractButton", "btn_interact.png", "br", 40 + 140 + 4, 40 + 96 + 8)
 image("CraftButton", "btn_craft.png", "br", 40 + 24, 40 + 140 + 16)
-touch("AttackTouch", "LeftMouseButton", "br", 40, 40, 140)
+touch("AttackTouch", "k", "br", 40, 40, 140)  # 모바일 공격은 K: C++가 자동 조준으로 바꾼다 (터치 위치는 조준이 아님)
 touch("DodgeTouch", "space", "br", 40 + 140 + 16, 24, 96)
 touch("InteractTouch", "e", "br", 40 + 140 + 4, 40 + 96 + 8, 88)
 touch("CraftTouch", "q", "br", 40 + 24, 40 + 140 + 16, 96)

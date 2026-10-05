@@ -178,6 +178,7 @@ private:
   void Sfx(const std::string& sound){if(!sound.empty()&&!Muted())OnPlaySfx(sound);}
   std::string currentMusic;
   float runTime=0;bool gatherTold=false;
+  bool touchMode=false;  // 모바일: 공격 버튼(K)을 쓰면 켜지고 마우스 클릭하면 꺼짐. 켜지면 자동 조준
   void SetDoors(const std::vector<hb::Actor*>& doors,int room,bool locked);
   float attackCooldown=0,dodgeTime=0,dodgeCooldown=0,invulnerable=0,gameOver=0;
   bool dodgeHeld=false,started=false,hudDirty=true;

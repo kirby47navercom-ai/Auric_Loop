@@ -2379,7 +2379,7 @@
         "fill": 0
       },
       "properties": {
-        "inputKey": "LeftMouseButton",
+        "inputKey": "k",
         "inputMode": "keys",
         "axisX": "MoveX",
         "axisY": "MoveY",

@@ -73,6 +73,7 @@ constexpr float slowRate=0.75f;
 constexpr float idleReset=60.0f;        // 부스: 입력이 없으면 처음으로 (기획서 10장)
 constexpr int flashPrice=10;            // 제작한 섬광탄이 없을 때 (기획서 6-3)
 constexpr float runNotice=600.0f;       // 부스: 한 판이 10분을 넘으면 보스방 앞으로 갈 수 있다고 안내 (기획서 10장)
+constexpr float autoAimRange=12.0f;     // 모바일 자동 조준 (소울 나이트처럼 가장 가까운 적)
 constexpr int doorHitsToOpen=10;       // 기획: 귀환 중 잠긴 문은 10번 때리면 열림
 constexpr float doorStun=1.0f;         // 기획: 문이 열리면 1초 전체 스턴
 constexpr float flashStun=1.0f;        // 기획: 섬광탄 1초 전체 스턴 + 탄막 제거
@@ -528,7 +529,7 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
    if((Phase>=2||selecting)&&music!=currentMusic&&!Muted()){OnPlayMusic(music,currentMusic);currentMusic=music;}}  // 브라우저 소리는 첫 입력(사용자 동작) 뒤에만 켜져서 타이틀에서 키를 누른 뒤 시작
   {// 부스 운영 (기획서 10장): F12 바로 처음으로, 60초 동안 입력이 없으면 처음으로, 엔딩 카드에서 아무 키나 누르면 처음으로
    bool any=hb::VectorMath::Vector2Length(hb::Input::GetMouseDelta())>0;
-   for(auto* k:{"w","a","s","d","e","q","space","enter","tab","LeftMouseButton","1","2","3","4","5"})any=any||hb::Input::IsKeyDown(k);
+   for(auto* k:{"w","a","s","d","e","q","space","enter","tab","LeftMouseButton","k","1","2","3","4","5"})any=any||hb::Input::IsKeyDown(k);
    const bool anyPressed=any&&!anyHeld;anyHeld=any;idleTime=any?0:idleTime+delta;
    const bool atTitle=Phase<2&&!selecting;
    if(hb::Input::IsKeyDown("F12")||(idleTime>=balance::idleReset&&!atTitle)||(ending&&anyPressed)){ResetToTitle();return;}
@@ -538,7 +539,9 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
        if(hb::Input::IsKeyDown("F10")){runTime=0;const Room& b=rooms[roomCount-1];SaveAndOpen(player,hb::Vec3{0,b.cy-b.half+3,0},roomCount-1,items);return;}}}}
   const auto position=hb::Scene::GetPosition(player);
   hb::Vec3 aim;const bool hasAim=hb::Input::GetMouseWorldPosition(hb::Vec3{0,0,1},position,aim);
-  MoveCamera(effects.size()>1?effects[1]:nullptr,position,aim,hasAim&&Phase>=2,delta);  // Effects[1]은 카메라
+  // 모바일 공격 버튼은 K로 들어온다. 터치 위치는 조준이 아니라서(버튼·조이스틱 자리) 자동 조준과 바라보는 방향으로 카메라를 끈다
+  if(hb::Input::IsKeyDown("k"))touchMode=true;else if(hb::Input::IsKeyDown("LeftMouseButton"))touchMode=false;
+  MoveCamera(effects.size()>1?effects[1]:nullptr,position,touchMode?position+facing*(balance::cameraLeadMax/balance::cameraLead*0.5f):aim,(hasAim||touchMode)&&Phase>=2,delta);  // Effects[1]은 카메라
   {const bool adv=hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("space");
    const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
    if(frame>=2&&UpdateIntro(player,delta,pressed))return;
@@ -568,7 +571,12 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
   // 조준: 마우스가 있으면 마우스 방향, 없으면 이동 방향
   hb::Vec3 move{hb::Input::GetAxis("d")-hb::Input::GetAxis("a"),hb::Input::GetAxis("w")-hb::Input::GetAxis("s"),0};
   if(hb::VectorMath::VectorLengthSquared(move)>.01f)facing=hb::VectorMath::NormalizeVector(move);
-  if(hasAim){
+  if(touchMode){  // 자동 조준: 가장 가까운 적·보스, 없으면 이동 방향
+    float best=balance::autoAimRange;hb::Actor* target=nullptr;
+    for(auto* e:enemies)if(hb::ActorPool::IsActive(e)){const float len=Length(hb::Scene::GetPosition(e)-position);if(len<best){best=len;target=e;}}
+    if(bossActor&&hb::ActorPool::IsActive(bossActor)&&Length(hb::Scene::GetPosition(bossActor)-position)<best)target=bossActor;
+    if(target){const auto d=hb::Scene::GetPosition(target)-position;if(hb::VectorMath::VectorLengthSquared(d)>.01f)facing=hb::VectorMath::NormalizeVector(d);}
+  }else if(hasAim){
     const auto d=aim-position;if(hb::VectorMath::VectorLengthSquared(d)>.01f)facing=hb::VectorMath::NormalizeVector(d);
   }
   hb::Sprites::SetFlip(player,facing.x<0,false);
@@ -601,7 +609,7 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
    Craft(player,q&&!craftKeyHeld,pick,enter&&!confirmHeld);craftKeyHeld=q;confirmHeld=enter;}
 
   // 검 부채꼴 베기: 적에게 피해, 범위 안의 적 탄환은 지움 (기획: 투사체 삭제)
-  const bool attackDown=hb::Input::IsKeyDown("LeftMouseButton");
+  const bool attackDown=hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("k");
   if(Character==1){  // 셰리: 누르고 있으면 1초 장전 후 발사, 계속 누르면 다시 장전
     if(attackDown&&attackCooldown<=0){charge+=delta;if(charge>=balance::arrowCharge){Shoot(shots,position);charge=0;attackAnim=0.1f;attackCooldown=0.15f;}}
     else charge=0;

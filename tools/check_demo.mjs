@@ -92,3 +92,11 @@ const f = await runProject(project, {scene: 'Assets/Scenes/Dungeon_3.hbscene.jso
 assert.equal(f.sceneHistory.at(-1).scene, 'Assets/Scenes/Hub.hbscene.json', 'F12로 처음으로');
 assert.equal(f.objects.find(o => o.id === 'Director').nativeProperties.Phase, 0, '처음으로 가면 로딩부터');
 console.log('F12 검사 통과');
+
+// 모바일: 공격 버튼(K)은 터치 위치 대신 가장 가까운 해골을 자동 조준
+const m = await runProject(project, {scene: 'Assets/Scenes/Test_Alea.hbscene.json', frames: 600, delta: 1 / 60, inputs: [
+  {frame: 5, key: 'w', value: 1}, {frame: 30, key: 'w', value: 0}, {frame: 31, key: 'k', value: 1}, {frame: 590, key: 'k', value: 0},
+]});
+const ms = m.objects.find(o => o.id === 'Director').nativeProperties;
+assert.ok(ms.Kills >= 3, '자동 조준으로 전투방1 해골 3마리를 모두 맞힘');
+console.log('모바일 자동 조준 검사 통과', 'kills', ms.Kills, 'hits', ms.Hits);
