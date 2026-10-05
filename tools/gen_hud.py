@@ -137,7 +137,11 @@ for i, ((sx, sy), icon) in enumerate(zip(SLOTS, ICONS), 1):
     panel_text(f"CraftKey{i}", str(i), sx + 8, sy + 4, 20, 18, size=12)
     t = panel(f"CraftSlot{i}", "TouchButton", sx, sy, 104, 104, 44, inputKey=str(i), inputMode="keys",
               background="#00000000", pressed="#ffffff22", hover="#ffffff11")
-panel_image("CraftSelect", "craft_select.png", 32, 128, z=43)
+for i, (sx, sy) in enumerate(SLOTS, 1):  # 선택 테두리: C++가 고른 칸 것만 보인다
+    panel_image(f"CraftSelect{i}", "craft_select.png", sx, sy, z=43)
+for i, icon in enumerate(["craft_detail_potion.png"] + ICONS[1:], 1):  # 오른쪽 설명 아이콘
+    iw, ih = Image.open(PROJECT / KIT / icon).size
+    panel_image(f"CraftDetail{i}", icon, 480 + (72 - iw) // 2, 176 + (72 - ih) // 2)
 panel_text("CraftName", "회복 물약", 480, 136, 380, 26, size=20)
 panel_text("CraftEffect", "체력 1 회복", 568, 190, 300, 22)
 panel_text("CraftType", "소모 아이템", 568, 220, 300, 20, size=13)
@@ -211,10 +215,11 @@ node("SelectConfirm", "TouchButton", "c", 0, 312, 240, 48, 84, text="결정", fo
 # ---- 엔딩 카드 (기획서 2장 흐름 13, 8장): 키아트·로고 위에 Coming Soon. 아무 키나 누르면 타이틀로 ----
 full("EndingBack", "Panel", 97, background="#05090aff", visible=False)
 full("EndingArt", "Image", 98, texture=KIT + "title_v2.png", visible=False)
-full("EndingShade", "Panel", 99, background="#05090a99", visible=False)
-node("EndingTitle", "Text", "c", 0, 120, 800, 60, 100, text="Coming Soon", fontSize=44, color="#ffd666", align="center", visible=False)
-node("EndingText", "Text", "c", 0, 180, 900, 30, 100, text="", fontSize=18, color="#fff3e5", align="center", visible=False)
-node("EndingHint", "Text", "c", 0, 300, 600, 26, 100, text="아무 키나 눌러 처음으로", fontSize=15, color="#cdb98a", align="center", visible=False)
+full("EndingShade", "Panel", 99, background="#05090aee", visible=False)
+nodes[-1]["slot"]["anchors"] = [0, 0.74, 1, 1]  # 타이틀 그림의 "Tap To Start" 줄을 가림
+node("EndingTitle", "Text", "c", 0, 225, 800, 60, 100, text="Coming Soon", fontSize=40, color="#ffd666", align="center", visible=False)
+node("EndingText", "Text", "c", 0, 275, 900, 30, 100, text="", fontSize=18, color="#fff3e5", align="center", visible=False)
+node("EndingHint", "Text", "c", 0, 318, 600, 26, 100, text="아무 키나 눌러 처음으로", fontSize=15, color="#cdb98a", align="center", visible=False)
 
 w["nodes"] = nodes
 WIDGET.write_text(json.dumps(w, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

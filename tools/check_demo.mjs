@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
 
+process.env.AURIC_MUTE = '1';  // 화면 없는 검사기는 소리 노드를 실행하지 못함 (C++ Muted)
 const ENGINE = process.env.HB_ENGINE || 'C:/Users/kirby/HBEngine/Versions/d4de30b46c28bab7';
 const {runProject} = await import(pathToFileURL(path.join(ENGINE, 'tools/run-project.mjs')).href);
 const project = path.join(path.dirname(fileURLToPath(import.meta.url)), '../AuricLoop/AuricLoop.hbproject');
@@ -32,6 +33,7 @@ console.log('전투·문 검사 통과', JSON.stringify(stats), 'y', player.posi
 // 채집방 광물 앞에서 시작: E로 광물 채집 → 오른쪽으로 걸어가 E로 약초 채집
 const g = await runProject(project, {scene: 'Assets/Scenes/Test_Gather.hbscene.json', frames: 240, delta: 1 / 60, inputs: [
   {frame: 10, key: 'e', value: 1}, {frame: 12, key: 'e', value: 0},
+  {frame: 14, key: 'e', value: 1}, {frame: 15, key: 'e', value: 0}, {frame: 17, key: 'e', value: 1}, {frame: 18, key: 'e', value: 0},  // 첫 채집 안내 대사 닫기
   {frame: 20, key: 'd', value: 1}, {frame: 80, key: 'd', value: 0},
   {frame: 120, key: 'e', value: 1}, {frame: 122, key: 'e', value: 0},
 ]});
@@ -44,13 +46,14 @@ console.log('채집 검사 통과', 'ore', gs.Ore, 'herb', gs.Herb, 'fatigue', g
 // 채집 뒤 Q로 제작 창 → 2(섬광탄) → Enter
 const k = await runProject(project, {scene: 'Assets/Scenes/Test_Gather.hbscene.json', frames: 120, delta: 1 / 60, inputs: [
   {frame: 10, key: 'e', value: 1}, {frame: 12, key: 'e', value: 0},
+  {frame: 14, key: 'e', value: 1}, {frame: 15, key: 'e', value: 0}, {frame: 17, key: 'e', value: 1}, {frame: 18, key: 'e', value: 0},  // 첫 채집 안내 대사 닫기
   {frame: 20, key: 'q', value: 1}, {frame: 22, key: 'q', value: 0},
   {frame: 30, key: '2', value: 1}, {frame: 32, key: '2', value: 0},
   {frame: 40, key: 'enter', value: 1}, {frame: 42, key: 'enter', value: 0},
 ]});
 const ks = k.objects.find(o => o.id === 'Director').nativeProperties;
 assert.equal(ks.Ore, 0, '광물 1개를 써서');
-assert.equal(ks.Flashbangs, 4, '섬광탄 1개 제작 (3 + 1)');
+assert.equal(ks.Flashbangs, 1, '섬광탄 1개 제작');
 console.log('제작 검사 통과', 'flashbangs', ks.Flashbangs);
 
 // 보스방 입구에서 시작: 해골 대장 처치 → Tab으로 [귀환] 사용 → 아래로 걸으며 잠긴 문 때리기
@@ -61,6 +64,7 @@ const b = await runProject(project, {scene: 'Assets/Scenes/Dungeon_4.hbscene.jso
   {frame: 30, key: 'e', value: 1}, {frame: 32, key: 'e', value: 0},  // 대사 닫기
   {frame: 41, key: 'LeftMouseButton', value: 1, pointer: aimUp}, {frame: 2400, key: 'LeftMouseButton', value: 0},
   {frame: 2410, key: 'tab', value: 1}, {frame: 2415, key: 'tab', value: 0},
+  {frame: 2416, key: 'e', value: 1}, {frame: 2417, key: 'e', value: 0}, {frame: 2418, key: 'e', value: 1}, {frame: 2419, key: 'e', value: 0},  // 귀환 안내 대사 닫기
   {frame: 2420, key: 's', value: 1}, {frame: 2421, key: 'LeftMouseButton', value: 1, pointer: down}, {frame: 4190, key: 's', value: 0},
 ]});
 const boss = b.objects.find(o => o.id === 'Director').nativeProperties;

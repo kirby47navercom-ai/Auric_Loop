@@ -3,6 +3,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <cstdlib>
 HB_CLASS(Blueprintable)
 class TopDownShooter : public hb::Actor {
 public:
@@ -38,7 +39,7 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   int DoorHits = 0;
   HB_PROPERTY(BlueprintReadWrite)
-  int Flashbangs = 3;          // ponytail: 골드가 생기면 기획대로 골드 10씩 소모
+  int Flashbangs = 0;          // 제작한 섬광탄. 없으면 한 번에 골드 10 (기획서 6-3)
   // 재화·소재 (기획서 6-1). 광물 30kg/40G, 약초 5kg/5G, 마물형 15kg/30G
   HB_PROPERTY(BlueprintReadWrite)
   int Gold = 0;
@@ -70,6 +71,68 @@ public:
   int Phase = 0;               // 0 로딩, 1 타이틀·캐릭터 선택, 2 게임
   HB_PROPERTY(BlueprintReadWrite)
   int Character = 0;           // 0 발렌(검), 1 셰리(활), 2 알레아(마탄)
+  // ---- 에셋 경로: 언리얼 UPROPERTY처럼 BP 기본값(편집기 속성)에서 바꾼다. C++ 안에는 경로를 박지 않는다 ----
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string ValenSprites = "Assets/Sprites/Valen/S_Valen_";     // + Idle_0 / Walk_0~3 / Attack_0~2 + .hbsprite.json
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SherrySprites = "Assets/Sprites/Sherry/S_Sherry_";
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string AleaSprites = "Assets/Sprites/Alea/S_Alea_";
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string ArrowSprite = "Assets/Sprites/FX/S_Arrow.hbsprite.json";
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string BoltSprite = "Assets/Sprites/FX/S_Bolt.hbsprite.json";
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string BoomSprite = "Assets/Sprites/FX/S_Boom.hbsprite.json";
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string HubScene = "Assets/Scenes/Hub.hbscene.json";
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string DungeonScene = "Assets/Scenes/Dungeon_#.hbscene.json";  // # 자리에 방 번호
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxSlash = "Assets/Audio/S_Slash.hbaudioasset.json";  // 검 베기
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxArrow = "Assets/Audio/S_Arrow.hbaudioasset.json";  // 화살
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxBolt = "Assets/Audio/S_Bolt.hbaudioasset.json";  // 마탄
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxBoom = "Assets/Audio/S_Boom.hbaudioasset.json";  // 마탄 폭발
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxHit = "Assets/Audio/S_Hit.hbaudioasset.json";  // 적중
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxKill = "Assets/Audio/S_Kill.hbaudioasset.json";  // 해골 쓰러짐
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxHurt = "Assets/Audio/S_Hurt.hbaudioasset.json";  // 플레이어 피격
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxCoin = "Assets/Audio/S_Coin.hbaudioasset.json";  // 골드·구매
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxDodge = "Assets/Audio/S_Dodge.hbaudioasset.json";  // 회피
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxDoorHit = "Assets/Audio/S_DoorHit.hbaudioasset.json";  // 잠긴 문 때림
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxDoorOpen = "Assets/Audio/S_DoorOpen.hbaudioasset.json";  // 문 열림
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxFlash = "Assets/Audio/S_Flash.hbaudioasset.json";  // 섬광탄
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxCraft = "Assets/Audio/S_Craft.hbaudioasset.json";  // 제작
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxGather = "Assets/Audio/S_Gather.hbaudioasset.json";  // 채집
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxSelect = "Assets/Audio/S_Select.hbaudioasset.json";  // 선택·대사 넘김
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SfxBossCharge = "Assets/Audio/S_BossCharge.hbaudioasset.json";  // 해골 대장 돌진 예고
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string HubMusic = "Assets/Audio/S_BGM_Hub.hbaudioasset.json";  // 거점 배경음
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string DungeonMusic = "Assets/Audio/S_BGM_Dungeon.hbaudioasset.json";  // 던전 배경음
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string BossMusic = "Assets/Audio/S_BGM_Boss.hbaudioasset.json";  // 보스방 배경음
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string ReturnMusic = "Assets/Audio/S_BGM_Return.hbaudioasset.json";  // 귀환 배경음
+  // 소리는 C++가 이벤트만 부르고 BP가 Play Sound로 재생한다 (BP_TopDownShooter 이벤트 그래프)
+  HB_FUNCTION(BlueprintImplementableEvent, DisplayName="효과음 재생", Category="소리")
+  void OnPlaySfx(const std::string& Sound);
+  HB_FUNCTION(BlueprintImplementableEvent, DisplayName="배경음 바꾸기", Category="소리")
+  void OnPlayMusic(const std::string& Music,const std::string& Previous);
 private:
   void Hud(hb::Actor* player);
   void Fire(const std::vector<hb::Actor*>& bullets,const hb::Vec3& from,const hb::Vec3& dir);
@@ -110,6 +173,11 @@ private:
   void ResetToTitle();
   bool ending=false,anyHeld=true,rotShown=false;
   float idleTime=0;
+  // 화면 없는 검사기(tools/run-project.mjs)는 소리 노드를 실행하지 못해서 tools/check_demo.mjs가 AURIC_MUTE를 켠다
+  bool Muted() const{return std::getenv("AURIC_MUTE")!=nullptr;}
+  void Sfx(const std::string& sound){if(!sound.empty()&&!Muted())OnPlaySfx(sound);}
+  std::string currentMusic;
+  float runTime=0;bool gatherTold=false;
   void SetDoors(const std::vector<hb::Actor*>& doors,int room,bool locked);
   float attackCooldown=0,dodgeTime=0,dodgeCooldown=0,invulnerable=0,gameOver=0;
   bool dodgeHeld=false,started=false,hudDirty=true;

@@ -565,5 +565,137 @@
   },
   "Assets/UI/Kit/rot_pause.png": {
     "id": "622f9160-9f02-4e82-a7a5-e365f27637e1"
+  },
+  "Assets/Audio/Arrow.wav": {
+    "id": "164820c9-eebc-48ee-855e-254e6fe54b00"
+  },
+  "Assets/Audio/BGM_Boss.wav": {
+    "id": "9ea8974a-2a09-4cef-a3a7-8d00465b4af8"
+  },
+  "Assets/Audio/BGM_Dungeon.wav": {
+    "id": "d93eda00-79d1-4bac-a76e-2bcd93297496"
+  },
+  "Assets/Audio/BGM_Hub.wav": {
+    "id": "d4f5130a-7801-41c5-bc96-96d497c54203"
+  },
+  "Assets/Audio/BGM_Return.wav": {
+    "id": "e88eda30-40f6-4a0d-80fd-6262cd0b7c26"
+  },
+  "Assets/Audio/Bolt.wav": {
+    "id": "6e2f79ba-b6e4-4ced-9f8d-5ed654572880"
+  },
+  "Assets/Audio/Boom.wav": {
+    "id": "c448f8df-dd6f-4ea8-8f33-9cb1bfdcbdeb"
+  },
+  "Assets/Audio/BossCharge.wav": {
+    "id": "ac334ebe-3936-4356-8aa0-c66eb3b46c68"
+  },
+  "Assets/Audio/Coin.wav": {
+    "id": "4556c03e-2068-4908-a07f-d556606ce9aa"
+  },
+  "Assets/Audio/Craft.wav": {
+    "id": "1e0effa7-de40-4da6-9cc2-dd999945f8db"
+  },
+  "Assets/Audio/Dodge.wav": {
+    "id": "6a5f43bd-40b8-4dde-b2a0-5bd23bbe79a8"
+  },
+  "Assets/Audio/DoorHit.wav": {
+    "id": "20e5ff62-8def-4155-b9a2-24ec75ebf6fe"
+  },
+  "Assets/Audio/DoorOpen.wav": {
+    "id": "e21cfb84-14a9-42ce-a1f1-727ca0b44a47"
+  },
+  "Assets/Audio/Flash.wav": {
+    "id": "491704dd-b961-4594-82a7-9dc346bd217d"
+  },
+  "Assets/Audio/Gather.wav": {
+    "id": "b22561ea-176c-465c-8103-413483921a6f"
+  },
+  "Assets/Audio/Hit.wav": {
+    "id": "f4a01d37-c784-4204-a0f5-82b2c52d996a"
+  },
+  "Assets/Audio/Hurt.wav": {
+    "id": "dd9238de-6967-49bb-b253-1d7186e948cc"
+  },
+  "Assets/Audio/Kill.wav": {
+    "id": "19c443b8-f149-474c-a185-99a26fb6c300"
+  },
+  "Assets/Audio/Select.wav": {
+    "id": "578e7382-efac-4ebd-b8b9-d20f298c493e"
+  },
+  "Assets/Audio/Slash.wav": {
+    "id": "8fbd5edd-3861-4fc0-8908-e388a2204bbb"
+  },
+  "Assets/Audio/S_Arrow.hbaudioasset.json": {
+    "id": "4497be1a-9f86-4891-a891-64020148d018"
+  },
+  "Assets/Audio/S_BGM_Boss.hbaudioasset.json": {
+    "id": "986cd208-4fa8-4070-aed6-a37eec66173b"
+  },
+  "Assets/Audio/S_BGM_Dungeon.hbaudioasset.json": {
+    "id": "0dedb49f-d5f3-4c48-85a1-bc29e4298df9"
+  },
+  "Assets/Audio/S_BGM_Hub.hbaudioasset.json": {
+    "id": "4f09273d-b5ce-4b42-ad07-1d51faf3311c"
+  },
+  "Assets/Audio/S_BGM_Return.hbaudioasset.json": {
+    "id": "2c13857e-bcbc-45e4-a96d-d69c1127db28"
+  },
+  "Assets/Audio/S_Bolt.hbaudioasset.json": {
+    "id": "be426a2d-96cc-4282-8182-08e5783f051f"
+  },
+  "Assets/Audio/S_Boom.hbaudioasset.json": {
+    "id": "e4e6e548-b8a0-4aeb-b2ae-9c75c1cbed05"
+  },
+  "Assets/Audio/S_BossCharge.hbaudioasset.json": {
+    "id": "954053d5-1e35-4619-a115-12a1dbaae32e"
+  },
+  "Assets/Audio/S_Coin.hbaudioasset.json": {
+    "id": "a7797250-37a6-4f10-ab11-fa502d908a1a"
+  },
+  "Assets/Audio/S_Craft.hbaudioasset.json": {
+    "id": "6855fb84-c212-42f1-837f-7ec5cbdebf3e"
+  },
+  "Assets/Audio/S_Dodge.hbaudioasset.json": {
+    "id": "9835e666-e353-4aa3-9008-194725d547f3"
+  },
+  "Assets/Audio/S_DoorHit.hbaudioasset.json": {
+    "id": "40932b2d-8bae-4129-a873-00f0aea4e752"
+  },
+  "Assets/Audio/S_DoorOpen.hbaudioasset.json": {
+    "id": "ccbfc5c9-328e-4c58-b912-45dba4a23eda"
+  },
+  "Assets/Audio/S_Flash.hbaudioasset.json": {
+    "id": "1b922347-9a47-48e7-9b6b-7da4e1967052"
+  },
+  "Assets/Audio/S_Gather.hbaudioasset.json": {
+    "id": "5da32865-d98e-4885-9781-a594f1c24d28"
+  },
+  "Assets/Audio/S_Hit.hbaudioasset.json": {
+    "id": "b95c409c-8069-47af-aa6e-11962ae84e40"
+  },
+  "Assets/Audio/S_Hurt.hbaudioasset.json": {
+    "id": "7c8cf112-aef2-4efc-b9b7-fb0a78b5dc92"
+  },
+  "Assets/Audio/S_Kill.hbaudioasset.json": {
+    "id": "18971edc-6d63-492e-a24c-968266d5c331"
+  },
+  "Assets/Audio/S_Select.hbaudioasset.json": {
+    "id": "c4fd3353-6da7-40b9-a8cf-d0cc5213ba18"
+  },
+  "Assets/Audio/S_Slash.hbaudioasset.json": {
+    "id": "9850f599-33be-44aa-8691-4ee79608d638"
+  },
+  "Assets/Blueprints/BP_ZCheckEnding.hbblueprint.json": {
+    "id": "7efa6c73-87db-46a8-afa6-d5e194179d4b"
+  },
+  "Assets/Blueprints/BP_ZCheckReturn.hbblueprint.json": {
+    "id": "b0dbfb6c-ef8e-4eed-8158-27df681c2f22"
+  },
+  "Assets/Scenes/ZCheckEnding.hbscene.json": {
+    "id": "c6636d7f-4fe3-4dee-9803-24329c71245a"
+  },
+  "Assets/Scenes/ZCheckReturn.hbscene.json": {
+    "id": "946b7ee2-50e8-4a07-9648-a1417a275a92"
   }
 }
