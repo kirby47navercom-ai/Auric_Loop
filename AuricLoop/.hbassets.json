@@ -190,5 +190,38 @@
   },
   "Assets/Sprites/Valen/Valen_Walk_3.png": {
     "id": "a39e9b5b-3894-4cea-aefc-88df6078dd01"
+  },
+  "Assets/Sprites/Room_Floor_16.png": {
+    "id": "6f69fba8-f284-48bf-b30b-2e0e0171d627"
+  },
+  "Assets/Sprites/Room_Floor_24.png": {
+    "id": "3f0b3878-ee57-4e19-bc8d-2a529792ad2a"
+  },
+  "Assets/Sprites/Room_Floor_32.png": {
+    "id": "8066a801-4e1d-4a9d-8641-cacc96451c5b"
+  },
+  "Assets/Sprites/Room_Wall_Door.png": {
+    "id": "ffe5c5d1-371c-4642-86c5-685cb66c5682"
+  },
+  "Assets/Sprites/Room_Wall_H11.png": {
+    "id": "2df5458f-34b6-4835-88b3-6f72a07a87e0"
+  },
+  "Assets/Sprites/Room_Wall_H15.png": {
+    "id": "bb12f4f2-800d-4655-bdd5-92d8e7e5896b"
+  },
+  "Assets/Sprites/Room_Wall_H26.png": {
+    "id": "98feb70d-ac9e-45f9-b01e-3979883a686a"
+  },
+  "Assets/Sprites/Room_Wall_H34.png": {
+    "id": "28d775d4-a390-4a02-bd1f-842399352635"
+  },
+  "Assets/Sprites/Room_Wall_V16.png": {
+    "id": "a15a2241-2589-4d9a-8818-e6c0f439cc24"
+  },
+  "Assets/Sprites/Room_Wall_V24.png": {
+    "id": "40ec2ec8-5c13-45f3-b42d-dc6eedae2bc7"
+  },
+  "Assets/Sprites/Room_Wall_V32.png": {
+    "id": "1363cd57-94da-41d2-86e6-32bd8e1a39f4"
   }
 }

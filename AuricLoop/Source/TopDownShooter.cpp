@@ -26,10 +26,19 @@ constexpr float shotSpread=15.0f;      // 갈래 사이 각도
 constexpr float shotSpeed=7.0f;
 constexpr float shotLife=3.0f;
 constexpr float shotHitRange=0.45f;
-constexpr float roomHalf=12.0f;        // 중형 방 24m
 constexpr float respawnDelay=3.0f;
-constexpr float waveDelay=3.0f;        // ponytail: 문·다음 방이 생기기 전까지 같은 방에 다시 등장
+constexpr float enterDepth=2.0f;       // 문을 지나 이만큼 들어오면 방에 들어온 것으로 봄 (m)
 }
+
+// <rooms> tools/gen_scene.py가 만든 표. 손으로 고치지 말고 생성기를 고친다.
+struct Spawn{float x,y;int ranged;};
+struct Room{float cy,half;int kind,first,count;};  // kind: 0 전투, 1 채집, 2 상점, 3 보스
+constexpr Spawn spawns[]={{-6.0f,4.0f,0},{0.0f,6.0f,0},{6.0f,4.0f,0},{-7.0f,3.0f,0},{7.0f,3.0f,0},{-5.0f,8.0f,1},{5.0f,8.0f,1},{-8.0f,6.0f,0},{8.0f,6.0f,0},{0.0f,10.0f,1},{-10.0f,12.0f,1},{10.0f,12.0f,1}};
+constexpr Room rooms[]={{0.0f,12.0f,0,0,3},{25.0f,12.0f,0,3,4},{46.0f,8.0f,1,7,0},{67.0f,12.0f,2,7,0},{96.0f,16.0f,3,7,5}};
+constexpr int roomCount=5;
+// </rooms>
+
+static int RoomAt(float y){for(int i=0;i<roomCount;++i)if(y<=rooms[i].cy+rooms[i].half+0.5f)return i;return roomCount-1;}
 
 static float Length(const hb::Vec3& v){return std::sqrt(hb::VectorMath::VectorLengthSquared(v));}
 static hb::Vec3 Rotate(const hb::Vec3& v,float degrees){const float r=degrees*3.14159265f/180,c=std::cos(r),s=std::sin(r);return {v.x*c-v.y*s,v.x*s+v.y*c,0};}
@@ -74,19 +83,42 @@ void TopDownShooter::Animate(hb::Actor* player,float delta,bool moving){
   if(slashFx&&slashTime>0&&(slashTime-=delta)<=0)hb::ActorPool::Release(slashFx);
 }
 
-void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& effects){
+void TopDownShooter::SetDoors(const std::vector<hb::Actor*>& doors,int room,bool locked){
+  // doors[i]는 방 i와 방 i+1 사이 문. 풀에서 꺼내 있으면 잠김(막힘), 반환하면 열림.
+  for(int i:{room-1,room}){if(i<0||i>=(int)doors.size())continue;auto* d=doors[i];
+    if(locked&&!hb::ActorPool::IsActive(d)){hb::Transform t;t.position=hb::Scene::GetPosition(d);hb::ActorPool::Acquire(std::vector<hb::Actor*>{d},t);}
+    else if(!locked&&hb::ActorPool::IsActive(d))hb::ActorPool::Release(d);}
+}
+
+void TopDownShooter::EnterRoom(int index,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& doors){
+  RoomIndex=index;auto& state=roomState[index];if(state)return;
+  const Room& r=rooms[index];
+  if(r.count==0){state=2;return;}  // 채집방·상점은 싸움 없음
+  state=1;fightingRoom=index;SetDoors(doors,index,true);
+  const std::vector<hb::Actor*> melee(enemies.begin(),enemies.begin()+balance::rangedFrom),ranged(enemies.begin()+balance::rangedFrom,enemies.end());
+  for(int i=r.first;i<r.first+r.count;++i){
+    hb::Transform t;t.position=hb::Vec3{spawns[i].x,r.cy+spawns[i].y,0.1f};
+    if(auto* e=hb::ActorPool::Acquire(spawns[i].ranged?ranged:melee,t)){enemyHp[e]=balance::enemyHp;stun[e]=0;}
+  }
+}
+
+void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& effects,const std::vector<hb::Actor*>& doors){
   auto* player=hb::Gameplay::GetPlayerPawn();if(!player)return;
   frame++;if(hudDirty)Hud(player);
   if(!started){started=true;Hp=balance::playerHp;
-    for(size_t i=0;i<enemies.size();++i){auto* e=enemies[i];enemyHp[e]=balance::enemyHp;shotTimer[e]=1+0.3f*i;
-      if(hb::ActorPool::IsActive(e))spawn[e]=hb::Scene::GetPosition(e);}
+    for(size_t i=0;i<enemies.size();++i){enemyHp[enemies[i]]=balance::enemyHp;shotTimer[enemies[i]]=1+0.3f*i;}
     Hud(player);}
   const auto position=hb::Scene::GetPosition(player);
+  const Room& room=rooms[RoomIndex];
+
+  // 방 입장: 문을 지나 조금 들어오면 그 방의 적이 나오고 문이 잠긴다
+  {const int at=RoomAt(position.y);const Room& r=rooms[at];
+   if(position.y>r.cy-r.half+balance::enterDepth||at==0)EnterRoom(at,enemies,doors);}
 
   // 탄환 수명과 방 밖으로 나간 탄환 정리
   for(auto it=lifetime.begin();it!=lifetime.end();){
     const auto p=hb::Scene::GetPosition(it->first);it->second-=delta;
-    if(it->second<=0||std::fabs(p.x)>balance::roomHalf||std::fabs(p.y)>balance::roomHalf){hb::ActorPool::Release(it->first);it=lifetime.erase(it);}else ++it;
+    if(it->second<=0||std::fabs(p.x)>room.half||std::fabs(p.y-room.cy)>room.half){hb::ActorPool::Release(it->first);it=lifetime.erase(it);}else ++it;
   }
 
   if(Hp<=0){ // ponytail: 정산 화면이 생기면 거기로 보냄. 지금은 3초 뒤 회복
@@ -154,10 +186,9 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
   }
   for(auto& [b,life]:lifetime)if(Length(hb::Scene::GetPosition(b)-position)<balance::shotHitRange){Damage(player,1);life=0;}
 
-  // 방 클리어: 피로도 +1 (기획), 피로도가 가득 차면 쓰러짐
-  if(alive==0){
-    if(waveTimer<=0){waveTimer=balance::waveDelay;RoomClears++;Fatigue++;if(Fatigue>=FatigueMax){Hp=0;gameOver=balance::respawnDelay;}Hud(player);}
-    else if((waveTimer-=delta)<=0)
-      for(auto& [e,at]:spawn){hb::Transform t;t.position=at;enemyHp[e]=balance::enemyHp;hb::ActorPool::Acquire(std::vector<hb::Actor*>{e},t);}
+  // 방 클리어: 문이 열리고 피로도 +1 (기획), 피로도가 가득 차면 쓰러짐
+  if(alive==0&&fightingRoom>=0){
+    roomState[fightingRoom]=2;SetDoors(doors,fightingRoom,false);fightingRoom=-1;
+    RoomClears++;Fatigue++;if(Fatigue>=FatigueMax){Hp=0;gameOver=balance::respawnDelay;}Hud(player);
   }
 }
