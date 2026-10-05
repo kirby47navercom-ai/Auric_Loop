@@ -8,8 +8,8 @@
       "kind": "character2d",
       "group": "WORLD",
       "position": [
-        0,
-        83.0,
+        -3,
+        45.0,
         0.1
       ],
       "rotation": [
@@ -11713,8 +11713,8 @@
       "kind": "playerStart",
       "group": "WORLD",
       "position": [
-        0,
-        83.0,
+        -3,
+        45.0,
         0.1
       ],
       "rotation": [

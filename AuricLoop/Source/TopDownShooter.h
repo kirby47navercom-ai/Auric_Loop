@@ -6,7 +6,7 @@ HB_CLASS(Blueprintable)
 class TopDownShooter : public hb::Actor {
 public:
   HB_FUNCTION(BlueprintCallable, KoreanName="조준·발사·탄환 재사용", Category="탑다운 슈터")
-  void Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& effects,const std::vector<hb::Actor*>& doors,const std::vector<hb::Actor*>& boss);
+  void Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& effects,const std::vector<hb::Actor*>& doors,const std::vector<hb::Actor*>& boss,const std::vector<hb::Actor*>& items);
   // 피로도 한계. 기획 100, 데모 기본 20 (docs/데모_기획서.md 4-1). 편집기 BP 기본값에서 바꿀 수 있음.
   HB_PROPERTY(BlueprintReadWrite)
   int FatigueMax = 20;
@@ -38,6 +38,23 @@ public:
   int DoorHits = 0;
   HB_PROPERTY(BlueprintReadWrite)
   int Flashbangs = 3;          // ponytail: 골드가 생기면 기획대로 골드 10씩 소모
+  // 재화·소재 (기획서 6-1). 광물 30kg/40G, 약초 5kg/5G, 마물형 15kg/30G
+  HB_PROPERTY(BlueprintReadWrite)
+  int Gold = 0;
+  HB_PROPERTY(BlueprintReadWrite)
+  int Ore = 0;
+  HB_PROPERTY(BlueprintReadWrite)
+  int Herb = 0;
+  HB_PROPERTY(BlueprintReadWrite)
+  int Monster = 0;
+  HB_PROPERTY(BlueprintReadWrite)
+  int Bottle = 1;              // 빈 병: 오프닝에서 1개 (기획서 6-2-2)
+  HB_PROPERTY(BlueprintReadWrite)
+  int WeaponLevel = 0;         // 대장간 강화 +N
+  HB_PROPERTY(BlueprintReadWrite)
+  int Debt = 9800;             // 발렌 빚 (기획서 6-4)
+  HB_PROPERTY(BlueprintReadWrite)
+  int LastRepaid = 0;
 private:
   void Hud(hb::Actor* player);
   void Fire(const std::vector<hb::Actor*>& bullets,const hb::Vec3& from,const hb::Vec3& dir);
@@ -45,6 +62,10 @@ private:
   void Animate(hb::Actor* player,float delta,bool moving);
   void EnterRoom(int index,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& doors,const std::vector<hb::Actor*>& boss);
   void UpdateReturn(hb::Actor* player,const hb::Vec3& position,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& doors);
+  void DropCoin(const std::vector<hb::Actor*>& items,const hb::Vec3& at,int value);
+  void Interact(hb::Actor* player,const hb::Vec3& position,const std::vector<hb::Actor*>& items,bool pressed);
+  void Settle(hb::Actor* player);
+  int Weight() const{return Ore*30+Herb*5+Monster*15;}
   void StunAll(const std::vector<hb::Actor*>& enemies,float seconds);
   bool UpdateBoss(hb::Actor* player,float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies);
   void SetDoors(const std::vector<hb::Actor*>& doors,int room,bool locked);
@@ -59,6 +80,8 @@ private:
   std::map<int,int> roomState;  // 0 처음, 1 전투 중(문 잠김), 2 클리어
   int fightingRoom=-1,returnRoom=-1;
   bool returnHeld=false,flashHeld=false;
+  std::map<hb::Actor*,int> coinValue;
+  std::string hint;
   hb::Actor* bossActor=nullptr;
   int bossPattern=0,bossStep=0;
   float bossTimer=0;

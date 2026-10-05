@@ -229,5 +229,23 @@
   },
   "Assets/Sprites/SkeletonCaptain_Idle.png": {
     "id": "8413a3fe-bbd5-4425-8918-3e06f9bc185b"
+  },
+  "Assets/Scenes/Test_Gather.hbscene.json": {
+    "id": "89d12982-e460-4b15-8ce9-3ba07cbb248e"
+  },
+  "Assets/Sprites/Item_Coin.png": {
+    "id": "22d188b4-9036-42cb-9e90-3b2278357e2d"
+  },
+  "Assets/Sprites/NPC_Blacksmith.png": {
+    "id": "a59669bc-9acf-4869-8507-1f159d48304e"
+  },
+  "Assets/Sprites/Prop_Herb.png": {
+    "id": "d434f3ea-cf6b-473e-b137-d4eb054fad0c"
+  },
+  "Assets/Sprites/Prop_Ore.png": {
+    "id": "854afa6a-3dc8-48de-97ad-8e1c983a35c3"
+  },
+  "Assets/Sprites/Prop_Stall.png": {
+    "id": "6149d276-883b-40cf-89dd-b2807acaf4fd"
   }
 }

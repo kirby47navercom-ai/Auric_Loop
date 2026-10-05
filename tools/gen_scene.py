@@ -127,6 +127,7 @@ for i, (name, kind, size, spawns) in enumerate(ROOMS):
         piece = tiled("Wall_Stone.png", f"Room_Wall_H{seg:g}.png", seg, WALL, band=PPU)
         made += [box(f"Room{i}SL", -(DOOR + seg) / 2, wy, seg, WALL, piece), box(f"Room{i}SR", (DOOR + seg) / 2, wy, seg, WALL, piece)]
         made.append(box(f"Door{i - 1}", 0, wy, DOOR, WALL, "Room_Wall_Door.png", order=1, pooled=True))  # 풀에서 꺼내면 잠김
+        made.append(box(f"Floor{i}Gap", 0, wy, DOOR, WALL, tiled("Floor_Stone.png", "Room_Floor_Gap.png", DOOR, WALL), collider=False, order=-10))  # 문이 열렸을 때 보이는 바닥
     rooms_cpp.append((cy, half, kind, spawns))
     y += size + WALL
 w = ROOMS[-1][2] + 2 * WALL
@@ -135,6 +136,30 @@ for o in made:
     if o["id"].startswith("Door"):
         comp(o, "PooledActor")["properties"]["initiallyActive"] = False  # 처음엔 열림
 
+# ---- 채집물, 상점, 골드 (기획서 6-1, 6-2) ----
+def prop(oid, image, room, x, y, pooled=False, active=True, collider=False, order=1):
+    o = copy.deepcopy(objs["Enemy0"])
+    o.update(id=oid, name=oid, position=[x, rooms_cpp[room][0] + y, 0.05])
+    keep = {"Transform", "SpriteRenderer"} | ({"PooledActor"} if pooled else set()) | ({"BoxCollider2D"} if collider else set())
+    o["components"] = [c for c in o["components"] if c["type"] in keep]
+    texture(o, image, sortingOrder=order)
+    if pooled:
+        comp(o, "PooledActor")["properties"]["initiallyActive"] = active
+    if collider:
+        w, h = Image.open(SPRITES / image).size
+        comp(o, "BoxCollider2D")["properties"].update(trigger=False, layer=0, mask=4294967295, extent=[w / PPU * 0.4, h / PPU * 0.25, 0.5],
+                                                     center=[0, -h / PPU * 0.2, 0])
+    return o
+
+
+props = [
+    prop("Ore", "Prop_Ore.png", 2, -3, 1, pooled=True),     # 채집방: 광물 바위
+    prop("Herb", "Prop_Herb.png", 2, 3, 1, pooled=True),    # 채집방: 약초 덤불
+    prop("Blacksmith", "NPC_Blacksmith.png", 3, -6, 5, collider=True),
+    prop("Stall", "Prop_Stall.png", 3, 6, 5, collider=True),
+] + [prop(f"Coin{i}", "Item_Coin.png", 0, 0, -60, pooled=True, active=False, order=3) for i in range(12)]
+made += props
+
 old_ids = {o["id"] for o in made} | {o["id"] for o in scene["objects"] if re.match(r"(Floor|Wall|Room|Door)", o["id"])}
 scene["objects"] = [o for o in scene["objects"] if o["id"] not in old_ids] + made
 SCENE.write_text(json.dumps(scene, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -142,12 +167,15 @@ for f in ("Room_Wall_H.png", "Room_Wall_V.png", "Room_Floor.png"):  # 이전 한
     (SPRITES / f).unlink(missing_ok=True)
 print("장면 갱신:", SCENE.name, len(scene["objects"]), "objects,", len(ROOMS), "rooms")
 
-# 검사용 장면: 보스방 입구에서 시작 (tools/check_demo.mjs)
-boss_start = rooms_cpp[-1][0] - rooms_cpp[-1][1] + 3
-test = copy.deepcopy(scene)
-next(o for o in test["objects"] if o["id"] == "PlayerStart")["position"] = [0, boss_start, 0.1]
-next(o for o in test["objects"] if o["id"] == "Player")["position"] = [0, boss_start, 0.1]
-(SCENE.parent / "Test_Boss.hbscene.json").write_text(json.dumps(test, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+# 검사용 장면 (tools/check_demo.mjs): 보스방 입구, 채집방 광물 앞에서 시작
+for test_name, (room, sx, sy) in {"Test_Boss": (4, 0, None), "Test_Gather": (2, -3, -1)}.items():
+    cy, half = rooms_cpp[room][0], rooms_cpp[room][1]
+    pos = [sx, cy - half + 3 if sy is None else cy + sy, 0.1]
+    test = copy.deepcopy(scene)
+    for oid in ("PlayerStart", "Player"):
+        next(o for o in test["objects"] if o["id"] == oid)["position"] = pos
+    (SCENE.parent / f"{test_name}.hbscene.json").write_text(json.dumps(test, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
 
 # ---- C++ 방 표 ----
 spawn_rows, rows = [], []

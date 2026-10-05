@@ -56,6 +56,7 @@ for i in (1, 2, 3):
 text("HpText", "3 / 3", "tl", 24 + 64, 24 + 14, 220, 28, align="center")
 image("BagIcon", "icon_bag.png", "tl", 30, 92)
 text("WeightText", "0 / 100", "tl", 68, 86, 160, 32)
+text("GoldText", "0 G", "tl", 340, 34, 200, 32, size=18)
 image("FatigueBack", "fatigue_back.png", "tl", 24, 132)
 for p in range(0, 101, 10):
     image(f"Fatigue{p:03d}", f"fatigue_{p:03d}.png", "tl", 24 + 8, 132 + 8, z=11, visible=p == 0)
@@ -64,6 +65,7 @@ image("FatigueTicks", "fatigue_ticks.png", "tl", 24 + 8, 132 + 52, z=12)
 # 위 가운데: 탐색 층 / 상태 문구
 text("Title", "탐색", "t", 0, 18, 400, 28, size=20, align="center")
 text("Floor", "1F", "t", 0, 44, 400, 22, size=14, align="center")
+text("Hint", "", "t", 0, 70, 600, 24, size=15, align="center")  # 가까운 상호작용 안내 (E: 채집 등)
 
 # 오른쪽 위: 가방, 일시정지, 미니맵 틀
 image("PauseButton", "btn_pause.png", "tr", 24, 24)

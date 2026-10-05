@@ -26,6 +26,18 @@ assert.ok(player.position[1] > 13, '플레이어가 전투방2 안에 있음');
 assert.equal(stats.FatigueMax, 20, '데모 피로도 한계 기본값 20');
 console.log('전투·문 검사 통과', JSON.stringify(stats), 'y', player.position[1].toFixed(1));
 
+// 채집방 광물 앞에서 시작: E로 광물 채집 → 오른쪽으로 걸어가 E로 약초 채집
+const g = await runProject(project, {scene: 'Assets/Scenes/Test_Gather.hbscene.json', frames: 240, delta: 1 / 60, inputs: [
+  {frame: 10, key: 'e', value: 1}, {frame: 12, key: 'e', value: 0},
+  {frame: 20, key: 'd', value: 1}, {frame: 80, key: 'd', value: 0},
+  {frame: 120, key: 'e', value: 1}, {frame: 122, key: 'e', value: 0},
+]});
+const gs = g.objects.find(o => o.id === 'Director').nativeProperties;
+assert.equal(gs.Ore, 1, 'E로 광물 채집');
+assert.equal(gs.Herb, 3, 'E로 약초 3개 채집');
+assert.equal(gs.Fatigue, 2, '채집마다 피로도 +1');
+console.log('채집 검사 통과', 'ore', gs.Ore, 'herb', gs.Herb, 'fatigue', gs.Fatigue);
+
 // 보스방 입구에서 시작: 해골 대장 처치 → Tab으로 [귀환] 사용 → 아래로 걸으며 잠긴 문 때리기
 const down = {position: [640, 600], size: [1280, 720]};
 const b = await runProject(project, {scene: 'Assets/Scenes/Test_Boss.hbscene.json', frames: 4200, delta: 1 / 60, inputs: [

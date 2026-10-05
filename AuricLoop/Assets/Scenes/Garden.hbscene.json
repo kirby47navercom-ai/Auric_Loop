@@ -12774,6 +12774,80 @@
       ]
     },
     {
+      "id": "Floor1Gap",
+      "name": "Floor1Gap",
+      "kind": "sprite",
+      "position": [
+        0,
+        12.5,
+        -0.1
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Room_Floor_Gap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4.0,
+            "height": 1.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ]
+    },
+    {
       "id": "Floor2",
       "name": "Floor2",
       "kind": "sprite",
@@ -13362,6 +13436,80 @@
           "properties": {
             "enabled": true,
             "initiallyActive": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "Floor2Gap",
+      "name": "Floor2Gap",
+      "kind": "sprite",
+      "position": [
+        0,
+        37.5,
+        -0.1
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Room_Floor_Gap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4.0,
+            "height": 1.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
           }
         }
       ]
@@ -13960,6 +14108,80 @@
       ]
     },
     {
+      "id": "Floor3Gap",
+      "name": "Floor3Gap",
+      "kind": "sprite",
+      "position": [
+        0,
+        54.5,
+        -0.1
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Room_Floor_Gap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4.0,
+            "height": 1.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ]
+    },
+    {
       "id": "Floor4",
       "name": "Floor4",
       "kind": "sprite",
@@ -14553,6 +14775,80 @@
       ]
     },
     {
+      "id": "Floor4Gap",
+      "name": "Floor4Gap",
+      "kind": "sprite",
+      "position": [
+        0,
+        79.5,
+        -0.1
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Room_Floor_Gap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4.0,
+            "height": 1.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ]
+    },
+    {
       "id": "RoomTop",
       "name": "RoomTop",
       "kind": "sprite",
@@ -14650,6 +14946,1372 @@
               0.5,
               0.5
             ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Ore",
+      "name": "Ore",
+      "kind": "sprite",
+      "position": [
+        -3,
+        47.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Prop_Ore.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.4375,
+            "height": 1.375,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "30694412-3890-4683-8c85-e614d33fa161",
+          "name": "PooledActor",
+          "type": "PooledActor",
+          "properties": {
+            "enabled": true,
+            "initiallyActive": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "Herb",
+      "name": "Herb",
+      "kind": "sprite",
+      "position": [
+        3,
+        47.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Prop_Herb.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.59375,
+            "height": 1.59375,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "30694412-3890-4683-8c85-e614d33fa161",
+          "name": "PooledActor",
+          "type": "PooledActor",
+          "properties": {
+            "enabled": true,
+            "initiallyActive": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "Blacksmith",
+      "name": "Blacksmith",
+      "kind": "sprite",
+      "position": [
+        -6,
+        72.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/NPC_Blacksmith.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.0625,
+            "height": 2.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -0.50625,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.8250000000000001,
+              0.6328125,
+              0.5
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Stall",
+      "name": "Stall",
+      "kind": "sprite",
+      "position": [
+        6,
+        72.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Prop_Stall.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4.125,
+            "height": 4.46875,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -0.89375,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.6500000000000001,
+              1.1171875,
+              0.5
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Coin0",
+      "name": "Coin0",
+      "kind": "sprite",
+      "position": [
+        0,
+        -60.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "30694412-3890-4683-8c85-e614d33fa161",
+          "name": "PooledActor",
+          "type": "PooledActor",
+          "properties": {
+            "enabled": true,
+            "initiallyActive": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "Coin1",
+      "name": "Coin1",
+      "kind": "sprite",
+      "position": [
+        0,
+        -60.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "30694412-3890-4683-8c85-e614d33fa161",
+          "name": "PooledActor",
+          "type": "PooledActor",
+          "properties": {
+            "enabled": true,
+            "initiallyActive": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "Coin2",
+      "name": "Coin2",
+      "kind": "sprite",
+      "position": [
+        0,
+        -60.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "30694412-3890-4683-8c85-e614d33fa161",
+          "name": "PooledActor",
+          "type": "PooledActor",
+          "properties": {
+            "enabled": true,
+            "initiallyActive": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "Coin3",
+      "name": "Coin3",
+      "kind": "sprite",
+      "position": [
+        0,
+        -60.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "30694412-3890-4683-8c85-e614d33fa161",
+          "name": "PooledActor",
+          "type": "PooledActor",
+          "properties": {
+            "enabled": true,
+            "initiallyActive": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "Coin4",
+      "name": "Coin4",
+      "kind": "sprite",
+      "position": [
+        0,
+        -60.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "30694412-3890-4683-8c85-e614d33fa161",
+          "name": "PooledActor",
+          "type": "PooledActor",
+          "properties": {
+            "enabled": true,
+            "initiallyActive": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "Coin5",
+      "name": "Coin5",
+      "kind": "sprite",
+      "position": [
+        0,
+        -60.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "30694412-3890-4683-8c85-e614d33fa161",
+          "name": "PooledActor",
+          "type": "PooledActor",
+          "properties": {
+            "enabled": true,
+            "initiallyActive": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "Coin6",
+      "name": "Coin6",
+      "kind": "sprite",
+      "position": [
+        0,
+        -60.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "30694412-3890-4683-8c85-e614d33fa161",
+          "name": "PooledActor",
+          "type": "PooledActor",
+          "properties": {
+            "enabled": true,
+            "initiallyActive": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "Coin7",
+      "name": "Coin7",
+      "kind": "sprite",
+      "position": [
+        0,
+        -60.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "30694412-3890-4683-8c85-e614d33fa161",
+          "name": "PooledActor",
+          "type": "PooledActor",
+          "properties": {
+            "enabled": true,
+            "initiallyActive": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "Coin8",
+      "name": "Coin8",
+      "kind": "sprite",
+      "position": [
+        0,
+        -60.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "30694412-3890-4683-8c85-e614d33fa161",
+          "name": "PooledActor",
+          "type": "PooledActor",
+          "properties": {
+            "enabled": true,
+            "initiallyActive": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "Coin9",
+      "name": "Coin9",
+      "kind": "sprite",
+      "position": [
+        0,
+        -60.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "30694412-3890-4683-8c85-e614d33fa161",
+          "name": "PooledActor",
+          "type": "PooledActor",
+          "properties": {
+            "enabled": true,
+            "initiallyActive": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "Coin10",
+      "name": "Coin10",
+      "kind": "sprite",
+      "position": [
+        0,
+        -60.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "30694412-3890-4683-8c85-e614d33fa161",
+          "name": "PooledActor",
+          "type": "PooledActor",
+          "properties": {
+            "enabled": true,
+            "initiallyActive": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "Coin11",
+      "name": "Coin11",
+      "kind": "sprite",
+      "position": [
+        0,
+        -60.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "30694412-3890-4683-8c85-e614d33fa161",
+          "name": "PooledActor",
+          "type": "PooledActor",
+          "properties": {
+            "enabled": true,
+            "initiallyActive": false
           }
         }
       ]
