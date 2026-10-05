@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "name": "BP_Hub",
+  "name": "BP_Test_Sherry",
   "components": [
     {
       "id": "component_0",
@@ -44,14 +44,92 @@
       "name": "Bullets",
       "type": "object",
       "container": "array",
-      "value": []
+      "value": [
+        "Bullet0",
+        "Bullet1",
+        "Bullet2",
+        "Bullet3",
+        "Bullet4",
+        "Bullet5",
+        "Bullet6",
+        "Bullet7",
+        "Bullet8",
+        "Bullet9",
+        "Bullet10",
+        "Bullet11",
+        "Bullet12",
+        "Bullet13",
+        "Bullet14",
+        "Bullet15",
+        "Bullet16",
+        "Bullet17",
+        "Bullet18",
+        "Bullet19",
+        "Bullet20",
+        "Bullet21",
+        "Bullet22",
+        "Bullet23",
+        "Bullet24",
+        "Bullet25",
+        "Bullet26",
+        "Bullet27",
+        "Bullet28",
+        "Bullet29",
+        "Bullet30",
+        "Bullet31",
+        "Bullet32",
+        "Bullet33",
+        "Bullet34",
+        "Bullet35",
+        "Bullet36",
+        "Bullet37",
+        "Bullet38",
+        "Bullet39",
+        "Bullet40",
+        "Bullet41",
+        "Bullet42",
+        "Bullet43",
+        "Bullet44",
+        "Bullet45",
+        "Bullet46",
+        "Bullet47",
+        "Bullet48",
+        "Bullet49",
+        "Bullet50",
+        "Bullet51",
+        "Bullet52",
+        "Bullet53",
+        "Bullet54",
+        "Bullet55",
+        "Bullet56",
+        "Bullet57",
+        "Bullet58",
+        "Bullet59",
+        "Bullet60",
+        "Bullet61",
+        "Bullet62",
+        "Bullet63"
+      ]
     },
     {
       "id": "enemies",
       "name": "Enemies",
       "type": "object",
       "container": "array",
-      "value": []
+      "value": [
+        "Enemy0",
+        "Enemy1",
+        "Enemy2",
+        "Enemy3",
+        "Enemy4",
+        "Enemy5",
+        "Enemy6",
+        "Enemy7",
+        "Enemy8",
+        "Enemy9",
+        "Enemy10",
+        "Enemy11"
+      ]
     },
     {
       "id": "effects",
@@ -68,28 +146,71 @@
       "name": "Doors",
       "type": "object",
       "container": "array",
-      "value": []
+      "value": [
+        "Door0",
+        "Door1",
+        "Door2",
+        "Door3"
+      ]
     },
     {
       "id": "boss",
       "name": "Boss",
       "type": "object",
       "container": "array",
-      "value": []
+      "value": [
+        "Boss"
+      ]
     },
     {
       "id": "items",
       "name": "Items",
       "type": "object",
       "container": "array",
-      "value": []
+      "value": [
+        "Ore",
+        "Herb",
+        "Coin0",
+        "Coin1",
+        "Coin2",
+        "Coin3",
+        "Coin4",
+        "Coin5",
+        "Coin6",
+        "Coin7",
+        "Coin8",
+        "Coin9",
+        "Coin10",
+        "Coin11"
+      ]
     },
     {
       "id": "shots",
       "name": "Shots",
       "type": "object",
       "container": "array",
-      "value": []
+      "value": [
+        "Shot0",
+        "Shot1",
+        "Shot2",
+        "Shot3",
+        "Shot4",
+        "Shot5",
+        "Shot6",
+        "Shot7",
+        "Shot8",
+        "Shot9",
+        "Shot10",
+        "Shot11",
+        "Shot12",
+        "Shot13",
+        "Shot14",
+        "Shot15",
+        "Shot16",
+        "Shot17",
+        "Shot18",
+        "Shot19"
+      ]
     }
   ],
   "nodes": [
@@ -346,7 +467,10 @@
     "parentClass": "TopDownShooter",
     "tickEnabled": true,
     "tickInterval": 0,
-    "overlapEnabled": true
+    "overlapEnabled": true,
+    "nativeDefaults": {
+      "TopDownShooter.Character": 1
+    }
   },
   "native": {
     "version": 1,

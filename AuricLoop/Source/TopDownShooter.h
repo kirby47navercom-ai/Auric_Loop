@@ -7,7 +7,7 @@ HB_CLASS(Blueprintable)
 class TopDownShooter : public hb::Actor {
 public:
   HB_FUNCTION(BlueprintCallable, KoreanName="조준·발사·탄환 재사용", Category="탑다운 슈터")
-  void Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& effects,const std::vector<hb::Actor*>& doors,const std::vector<hb::Actor*>& boss,const std::vector<hb::Actor*>& items);
+  void Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& effects,const std::vector<hb::Actor*>& doors,const std::vector<hb::Actor*>& boss,const std::vector<hb::Actor*>& items,const std::vector<hb::Actor*>& shots);
   // 피로도 한계. 기획 100, 데모 기본 20 (docs/데모_기획서.md 4-1). 편집기 BP 기본값에서 바꿀 수 있음.
   HB_PROPERTY(BlueprintReadWrite)
   int FatigueMax = 20;
@@ -67,7 +67,9 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   int HomeLevel = 1;           // 인테리어 공사 Lv1→2 (피로도 한계 +5)
   HB_PROPERTY(BlueprintReadWrite)
-  int Phase = 0;               // 0 로딩, 1 타이틀, 2 게임
+  int Phase = 0;               // 0 로딩, 1 타이틀·캐릭터 선택, 2 게임
+  HB_PROPERTY(BlueprintReadWrite)
+  int Character = 0;           // 0 발렌(검), 1 셰리(활), 2 알레아(마탄)
 private:
   void Hud(hb::Actor* player);
   void Fire(const std::vector<hb::Actor*>& bullets,const hb::Vec3& from,const hb::Vec3& dir);
@@ -95,6 +97,14 @@ private:
   void MoveCamera(hb::Actor* camera,const hb::Vec3& position,const hb::Vec3& aim,bool hasAim,float delta);
   int area=0;bool introHidden=false,leaving=false,oreTaken=false,herbTaken=false;
   hb::Vec3 cameraAt{0,0,0};bool cameraReady=false;
+  // 셰리·알레아 공격: 플레이어 탄(shots 풀)
+  void Shoot(const std::vector<hb::Actor*>& shots,const hb::Vec3& from);
+  void UpdateShots(hb::Actor* player,float delta,const std::vector<hb::Actor*>& shots,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& doors,const std::vector<hb::Actor*>& items);
+  bool HitEnemy(hb::Actor* e,const hb::Vec3& push,float damage,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& items);
+  void ShowSelect(hb::Actor* player,bool visible);
+  std::map<hb::Actor*,float> shotLife;
+  std::map<hb::Actor*,bool> shotBoom;
+  float charge=0;bool selecting=false;int pick=0,pickHeld=0;
   void SetDoors(const std::vector<hb::Actor*>& doors,int room,bool locked);
   float attackCooldown=0,dodgeTime=0,dodgeCooldown=0,invulnerable=0,gameOver=0;
   bool dodgeHeld=false,started=false,hudDirty=true;

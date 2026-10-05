@@ -61,6 +61,13 @@ constexpr float cameraLead=0.25f;       // 엔터 더 건전·소울 나이트�
 constexpr float cameraLeadMax=3.0f;    // 끌어당기는 최대 거리 (m)
 constexpr float cameraFollow=8.0f;     // 따라가는 빠르기
 constexpr int handoffSeconds=10;       // 장면을 바꿀 때 적은 상태 파일이 이 시간 안에만 유효 (편집기 재생 시작은 새 게임)
+// 캐릭터 (기획서 4-2): 셰리 활 단발 고위력 1초 장전, 알레아 마탄 연사·작은 폭발·한 발 피해 최저
+constexpr float arrowCharge=1.0f,arrowDamage=3.5f,arrowSpeed=20.0f;  // 화살 한 발에 근거리 해골 하나
+constexpr float boltInterval=0.15f,boltDamage=0.5f,boltSpeed=13.0f;
+constexpr float boomRadius=1.4f,boomDamage=0.5f,boomTime=0.15f;     // 마탄이 적·벽에 닿으면
+constexpr float playerShotLife=1.6f,shotHit=0.7f;
+constexpr int arrowDoorHits=3;          // 귀환 중 잠긴 문: 화살 한 발은 문 3번 때린 것
+constexpr int debts[]={9800,14500,31700}; // 기획서 6-4
 constexpr int doorHitsToOpen=10;       // 기획: 귀환 중 잠긴 문은 10번 때리면 열림
 constexpr float doorStun=1.0f;         // 기획: 문이 열리면 1초 전체 스턴
 constexpr float flashStun=1.0f;        // 기획: 섬광탄 1초 전체 스턴 + 탄막 제거
@@ -81,6 +88,11 @@ constexpr Spot hubSpots[]={{"DebtBoard",0.0f,-29.0f},{"Entrance",0.0f,-15.5f},{"
 constexpr float dungeonBottom=-13.0f;  // 이보다 아래는 거점
 // </hub>
 
+static const char* names[]={"Valen","Sherry","Alea"};
+static const char* koreanNames[]={"발렌","셰리","알레아"};
+static const char* faces[]={"valen","sherry","alea"};
+static const char* weapons[]={"검","활","지팡이"};
+
 static int RoomAt(float y){if(y<rooms[0].cy-rooms[0].half-1)return -1;  // 거점
   for(int i=0;i<roomCount;++i)if(y<=rooms[i].cy+rooms[i].half+0.5f)return i;return roomCount-1;}
 
@@ -100,6 +112,7 @@ void TopDownShooter::Hud(hb::Actor* player){
   hb::UI::SetText(player,"HUD","WeightText",std::to_string(Weight())+" / 100");
   hb::UI::SetText(player,"HUD","GoldText",std::to_string(Gold)+" G   빚 "+std::to_string(Debt));
   hb::UI::SetText(player,"HUD","Hint",hint);
+  for(int i=0;i<3;++i)hb::UI::SetVisible(player,"HUD",std::string("AttackButton_")+faces[i],i==Character);
   int level=FatigueMax>0?Fatigue*10/FatigueMax:10;if(level>10)level=10;  // 10% 단위 그림
   if(level!=fatigueLevel){
     auto name=[](int lv){std::string n=std::to_string(lv*10);return "Fatigue"+std::string(3-n.size(),'0')+n;};
@@ -127,10 +140,11 @@ void TopDownShooter::Fire(const std::vector<hb::Actor*>& bullets,const hb::Vec3&
 void TopDownShooter::Animate(hb::Actor* player,float delta,bool moving){
   // 프레임: 공격 3장(0.1초씩) > 걷기 4장(초당 8장) > 서 있기. 그림은 오른쪽을 보고 있어 왼쪽이면 뒤집는다.
   std::string next;
-  if(attackAnim>0){attackAnim-=delta;const int f=attackAnim>0.2f?0:attackAnim>0.1f?1:2;next="Attack_"+std::to_string(f);}
+  if(charge>0)next=charge<balance::arrowCharge*0.5f?"Attack_0":"Attack_1";  // 셰리 장전: 시위 걸기 → 당기기
+  else if(attackAnim>0){attackAnim-=delta;const int f=attackAnim>0.2f?0:attackAnim>0.1f?1:2;next="Attack_"+std::to_string(f);}
   else if(moving){walkTime+=delta;next="Walk_"+std::to_string(int(walkTime*8)%4);}
   else{walkTime=0;next="Idle_0";}
-  if(next!=currentSprite){currentSprite=next;hb::Sprites::SetSprite(player,"Assets/Sprites/Valen/S_Valen_"+next+".hbsprite.json");}
+  if(next!=currentSprite){currentSprite=next;hb::Sprites::SetSprite(player,std::string("Assets/Sprites/")+names[Character]+"/S_"+names[Character]+"_"+next+".hbsprite.json");}
   if(slashFx&&slashTime>0&&(slashTime-=delta)<=0)hb::ActorPool::Release(slashFx);
 }
 
@@ -177,8 +191,8 @@ void TopDownShooter::Interact(hb::Actor* player,const hb::Vec3& position,const s
   }else if(items.size()>=2&&items[1]&&hb::ActorPool::IsActive(items[1])&&near(hb::Scene::GetPosition(items[1]))){
     next="E: 약초 채집 (3개)";if(pressed){Herb+=3;Fatigue++;herbTaken=true;hb::ActorPool::Release(items[1]);next="";}
   }else if(near(smithAt+hb::Vec3{0,-1.5f,0})){
-    next=WeaponLevel?"대장장이: 이번 층 강화는 끝났어":"E: 검 강화 +1 ("+std::to_string(balance::upgradePrice)+" G)";
-    if(pressed&&!WeaponLevel&&Gold>=balance::upgradePrice){Gold-=balance::upgradePrice;WeaponLevel=1;next="발렌의 검 +1";}
+    next=WeaponLevel?"대장장이: 이번 층 강화는 끝났어":"E: "+std::string(weapons[Character])+" 강화 +1 ("+std::to_string(balance::upgradePrice)+" G)";
+    if(pressed&&!WeaponLevel&&Gold>=balance::upgradePrice){Gold-=balance::upgradePrice;WeaponLevel=1;next=std::string(koreanNames[Character])+"의 "+weapons[Character]+" +1";}
   }else if(near(stallAt+hb::Vec3{0,-1.5f,0})){
     next="E: 회복 물약 ("+std::to_string(balance::potionPrice)+" G, 체력 +1)";
     if(pressed&&Gold>=balance::potionPrice&&Hp<MaxHp){Gold-=balance::potionPrice;Hp++;}
@@ -187,19 +201,20 @@ void TopDownShooter::Interact(hb::Actor* player,const hb::Vec3& position,const s
 }
 
 float TopDownShooter::WeaponDamage() const{
-  return balance::swordDamage*(1+balance::upgradeBonus*WeaponLevel)*(Enchant==1?1+balance::enchantPower:1);
+  const float base=Character==1?balance::arrowDamage:Character==2?balance::boltDamage:balance::swordDamage;
+  return base*(1+balance::upgradeBonus*WeaponLevel)*(Enchant==1?1+balance::enchantPower:1);
 }
 
 void TopDownShooter::CraftDetail(hb::Actor* player){
   // 오른쪽 설명: 키트 제작 창 시안의 이름 / 효과 / 종류 / 필요 소재
-  static const char* names[]={"","회복 물약","섬광탄","각인 결정: 증폭","각인 결정: 화상","각인 결정: 검기"};
-  static const char* effects[]={"","체력 1 회복","1초 전체 스턴, 탄막 제거","무기공격력 +30%","맞은 적이 3초 동안 불탐","베기 사거리 +1.5m"};
+  static const char* names[]={"","회복 물약","섬광탄","각인 결정: 증폭","각인 결정: 화상","각인 결정: 검기·관통"};
+  static const char* effects[]={"","체력 1 회복","1초 전체 스턴, 탄막 제거","무기공격력 +30%","맞은 적이 3초 동안 불탐",""};
   std::string cost;
   if(craftPick==1)cost="약초 "+std::to_string(Herb)+" / 3    빈 병 "+std::to_string(Bottle)+" / 1";
   else if(craftPick==2)cost="광물 "+std::to_string(Ore)+" / 1";
   else cost="마물 소재 "+std::to_string(Monster)+" / 1   (각인은 하나만, 새로 하면 덮어씀)";
   hb::UI::SetText(player,"HUD","CraftName",names[craftPick]);
-  hb::UI::SetText(player,"HUD","CraftEffect",effects[craftPick]);
+  hb::UI::SetText(player,"HUD","CraftEffect",craftPick==5?(Character?"화살·마탄이 적을 뚫고 지나감":"베기 사거리 +1.5m"):effects[craftPick]);
   hb::UI::SetText(player,"HUD","CraftType",craftPick<=2?"소모 아이템":"무기 각인 (귀환하면 사라짐)");
   hb::UI::SetText(player,"HUD","CraftCost",cost);
 }
@@ -227,7 +242,7 @@ void TopDownShooter::HubInteract(hb::Actor* player,const hb::Vec3& position,bool
   const Spot* best=nullptr;float bestLen=balance::interactRange+0.8f;
   for(const auto& s:hubSpots){const float len=Length(hb::Vec3{s.x,s.y-1.2f,0}-position);if(len<bestLen){bestLen=len;best=&s;}}
   std::string next,id=best?best->id:"";
-  if(id=="DebtBoard")next="부채 전광판 - 발렌 남은 빚 "+std::to_string(Debt)+" G"+(LastRepaid?"  (지난 정산 "+std::to_string(LastRepaid)+" G 상환)":"");
+  if(id=="DebtBoard")next="부채 전광판 - "+std::string(koreanNames[Character])+" 남은 빚 "+std::to_string(Debt)+" G"+(LastRepaid?"  (지난 정산 "+std::to_string(LastRepaid)+" G 상환)":"");
   else if(id=="Entrance")next="마몬의 입 - 황금 던전 입구";
   else if(id=="Collector"){next=Gold>0?"E: 수금원에게 "+std::to_string(Gold)+" G 모두 갚기":"수금원: 이번 주 이자는 아직이던데?";
     if(pressed&&Gold>0){Debt-=Gold;if(Debt<0)Debt=0;LastRepaid+=Gold;Gold=0;next="수금원: 거래 감사합니다, 고객님";}}
@@ -254,7 +269,7 @@ void TopDownShooter::Say(const std::vector<Line>& lines){
 bool TopDownShooter::UpdateDialog(hb::Actor* player,float delta,bool advance){
   // 대화창 (기획서 6-5): 한 글자씩 → E·클릭·Enter로 바로 다 보이기 → 다시 누르면 다음 줄
   static const char* parts[]={"DialogBox","DialogPortraitFrame","DialogName","DialogText","DialogNext","DialogTouch"};
-  static const char* faces[]={"collector","valen","boss"};
+  static const char* faces[]={"collector","valen","sherry","alea","boss"};
   if(dialogIndex>=dialog.size()){
     if(!dialog.empty()){dialog.clear();dialogIndex=0;for(auto* n:parts)hb::UI::SetVisible(player,"HUD",n,false);
       for(auto* f:faces)hb::UI::SetVisible(player,"HUD",std::string("DialogPortrait_")+f,false);shownWho="";}
@@ -284,15 +299,79 @@ bool TopDownShooter::UpdateIntro(hb::Actor* player,float delta,bool anyKey){
   phaseTime+=delta;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
   if(Phase==0&&phaseTime>=balance::loadingTime){Phase=1;phaseTime=0;
     for(auto* n:{"LoadingBack","LoadingCoin","LoadingText"})hb::UI::SetVisible(player,"HUD",n,false);}
-  else if(Phase==1&&anyKey&&phaseTime>0.3f){Phase=2;
-    for(auto* n:{"TitleBack","TitleScreen","TitleHint"})hb::UI::SetVisible(player,"HUD",n,false);introHidden=true;
+  else if(Phase==1&&!selecting&&anyKey&&phaseTime>0.3f){selecting=true;phaseTime=0;  // 타이틀 → 캐릭터 선택
+    for(auto* n:{"TitleBack","TitleScreen","TitleHint"})hb::UI::SetVisible(player,"HUD",n,false);introHidden=true;confirmHeld=true;ShowSelect(player,true);}
+  else if(Phase==1&&selecting){
+    // 캐릭터 선택 (기획서 2장 흐름 2): 1·2·3 또는 A·D로 고르고 Enter·E로 결정. 카드를 누르면 그 숫자 키가 눌린다.
+    int key=0;for(int i=1;i<=3;++i)if(hb::Input::IsKeyDown(std::to_string(i)))key=i;
+    const int side=hb::Input::IsKeyDown("d")?4:hb::Input::IsKeyDown("a")?5:0;const int now=key?key:side;
+    if(now&&now!=pickHeld){pick=key?key-1:(pick+(side==4?1:2))%3;ShowSelect(player,true);}
+    pickHeld=now;
+    const bool confirm=hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("space");
+    const bool fresh=confirm&&!confirmHeld;confirmHeld=confirm;  // 타이틀에서 누른 키를 계속 누르고 있어도 바로 결정되지 않게
+    if(!fresh)return true;
+    selecting=false;Phase=2;Character=pick;Debt=balance::debts[pick];currentSprite="";ShowSelect(player,false);advanceHeld=true;Animate(player,0,false);Hud(player);
+    static const char* lines[]={"...갚으면 되는 거지.","술값 정도는 나오겠지?","확률은... 나쁘지 않네."};  // 기획서 6-5
     Say({{"collector","수금원","어서 와. 오늘부터 여기가 네 집이야. 물론 집주인은 우리 사장님이지만."},
          {"collector","수금원","저 위 계단 끝에 있는 게 '마몬의 입'이야. 들어간 놈들은 황금을 들고 나오거나, 아예 안 나오지."},
-         {"valen","발렌","...갚으면 되는 거지."},
+         {faces[pick],koreanNames[pick],lines[pick]},
          {"collector","수금원","하나만 기억해. 너무 깊이 들어가면 못 돌아와. 적당히 챙겨서, 지치기 전에 나와."},
          {"collector","수금원","아, 튜토리얼용 제작서랑 빈 병도 챙겨 가. 공짜는 아니고, 빚에 달아 둘게."}});
   }
   return Phase<2;
+}
+
+void TopDownShooter::ShowSelect(hb::Actor* player,bool visible){
+  for(auto* n:{"SelectBack","SelectTitle","SelectHint","SelectConfirm"})hb::UI::SetVisible(player,"HUD",n,visible);
+  for(int i=0;i<3;++i){const std::string k=std::to_string(i);
+    for(auto* n:{"SelectCard","SelectArt","SelectName","SelectWeapon","SelectDebt","SelectTouch"})hb::UI::SetVisible(player,"HUD",n+k,visible);
+    hb::UI::SetVisible(player,"HUD","SelectPick"+k,visible&&i==pick);}
+}
+
+void TopDownShooter::Shoot(const std::vector<hb::Actor*>& shots,const hb::Vec3& from){
+  hb::Transform t;t.position=from+facing*0.8f;t.position.z=0.2f;
+  t.rotation=hb::Vec3{0,0,std::atan2(facing.y,facing.x)*180/3.14159265f};
+  auto* s=hb::ActorPool::Acquire(shots,t);if(!s)return;
+  hb::Sprites::SetSprite(s,Character==1?"Assets/Sprites/FX/S_Arrow.hbsprite.json":"Assets/Sprites/FX/S_Bolt.hbsprite.json");
+  hb::Physics::SetVelocity(s,facing*(Character==1?balance::arrowSpeed:balance::boltSpeed));
+  shotLife[s]=balance::playerShotLife;shotBoom[s]=false;Swings++;
+}
+
+bool TopDownShooter::HitEnemy(hb::Actor* e,const hb::Vec3& push,float damage,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& items){
+  // 검·화살·마탄 공통 적중. 쓰러뜨리면 true
+  const auto at=hb::Scene::GetPosition(e);
+  if(!Returning){enemyHp[e]-=damage;if(Enchant==2)burn[e]=balance::burnTime;}Hits++;stun[e]=balance::swordStun;  // 귀환 중 해골은 무적
+  hb::Physics::SetVelocity(e,push*6);
+  if(enemyHp[e]>0)return false;
+  hb::ActorPool::Release(e);Kills++;DropCoin(items,at,1+Kills%3);  // 해골 1~3 G
+  if(fightingRoom==1){int left=0;for(auto* o:enemies)left+=hb::ActorPool::IsActive(o);if(!left)Monster++;}  // 전투방2 마지막 해골은 마물 소재 확정
+  return true;
+}
+
+void TopDownShooter::UpdateShots(hb::Actor* player,float delta,const std::vector<hb::Actor*>& shots,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& doors,const std::vector<hb::Actor*>& items){
+  const Room& room=rooms[RoomIndex<0?0:RoomIndex];
+  for(auto* s:shots){if(!hb::ActorPool::IsActive(s))continue;
+    auto& life=shotLife[s];life-=delta;
+    if(shotBoom[s]){if(life<=0)hb::ActorPool::Release(s);continue;}  // 폭발 그림을 잠깐 보여 주고 반환
+    const auto p=hb::Scene::GetPosition(s);
+    const auto v=hb::Physics::GetVelocity(s);const float speed=Length(v);const auto dir=speed>.01f?v*(1/speed):facing;
+    bool wall=std::fabs(p.x)>room.half-0.2f||std::fabs(p.y-room.cy)>room.half-0.2f,hit=false;  // wall: 벽·문·보스에 막힘
+    if(Returning&&returnRoom>0&&doors.size()>=size_t(returnRoom)&&hb::ActorPool::IsActive(doors[returnRoom-1])&&Length(hb::Scene::GetPosition(doors[returnRoom-1])-p)<1.5f){
+      DoorHits+=Character==1?balance::arrowDoorHits:1;wall=true;
+      if(DoorHits>=balance::doorHitsToOpen){hb::ActorPool::Release(doors[returnRoom-1]);StunAll(enemies,balance::doorStun);}Hud(player);}
+    for(auto* e:enemies){if(wall||(hit&&Enchant!=3))break;if(!hb::ActorPool::IsActive(e)||stun[e]>0.05f)continue;  // 방금 맞은 적은 건너뜀
+      if(Length(hb::Scene::GetPosition(e)-p)<balance::shotHit){HitEnemy(e,dir,WeaponDamage(),enemies,items);hit=true;}}
+    if(!wall&&bossActor&&hb::ActorPool::IsActive(bossActor)&&Length(hb::Scene::GetPosition(bossActor)-p)<balance::bossRadius){
+      BossHp-=WeaponDamage();Hits++;wall=true;
+      if(BossHp<=0){const auto at=hb::Scene::GetPosition(bossActor);hb::ActorPool::Release(bossActor);Kills++;HasReturnItem=true;Monster++;DropCoin(items,at,30);Hud(player);}}
+    if(!wall&&!(hit&&Enchant!=3)&&life>0)continue;  // 각인 관통(3)이면 적을 뚫고 벽·문·보스에서 멈춤
+    if(Character!=2){hb::ActorPool::Release(s);continue;}
+    // 알레아 마탄: 작은 폭발로 주변 적에게 피해
+    hb::Physics::SetVelocity(s,hb::Vec3{0,0,0});hb::Sprites::SetSprite(s,"Assets/Sprites/FX/S_Boom.hbsprite.json");
+    shotBoom[s]=true;life=balance::boomTime;
+    for(auto* e:enemies)if(hb::ActorPool::IsActive(e)){const auto d=hb::Scene::GetPosition(e)-p;const float len=Length(d);
+      if(len<balance::boomRadius&&len>0.05f)HitEnemy(e,d*(1/len),balance::boomDamage*WeaponDamage()/balance::boltDamage,enemies,items);}
+  }
 }
 
 void TopDownShooter::Settle(hb::Actor* player){
@@ -315,7 +394,7 @@ void TopDownShooter::SaveAndOpen(hb::Actor* player,const hb::Vec3& position,int 
   std::ofstream o(StatePath());
   o<<std::time(nullptr)<<' '<<position.x<<' '<<position.y<<' '<<facing.x<<' '<<facing.y<<' '<<int(BossHp*100);
   for(int v:{FatigueMax,Fatigue,Hp,Kills,RoomClears,Swings,Hits,Shots,int(HasReturnItem),int(Returning),int(ReturnSuccess),Flashbangs,Gold,Ore,Herb,Monster,Bottle,
-             WeaponLevel,Debt,LastRepaid,Enchant,Crafted,MaxHp,SofaLevel,HomeLevel,Phase,int(oreTaken),int(herbTaken)})o<<' '<<v;
+             WeaponLevel,Debt,LastRepaid,Enchant,Crafted,MaxHp,SofaLevel,HomeLevel,Phase,int(oreTaken),int(herbTaken),Character})o<<' '<<v;
   for(int i=0;i<roomCount;++i)o<<' '<<roomState[i];
   o.close();leaving=true;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
   hb::Scene::Open(SceneFor(to));
@@ -324,14 +403,14 @@ void TopDownShooter::SaveAndOpen(hb::Actor* player,const hb::Vec3& position,int 
 bool TopDownShooter::Restore(hb::Actor* player){
   std::ifstream in(StatePath());long long saved=0;if(!(in>>saved))return false;
   float px,py,fx,fy;int boss;in>>px>>py>>fx>>fy>>boss;
-  int flags[28];for(int& v:flags)in>>v;
+  int flags[29];for(int& v:flags)in>>v;
   int rooms[roomCount];for(int& v:rooms)in>>v;
   const bool ok=bool(in);in.close();std::remove(StatePath().c_str());  // 한 번 쓰면 지운다
   if(!ok||std::time(nullptr)-saved>balance::handoffSeconds)return false;
   int k=0;for(int* v:{&FatigueMax,&Fatigue,&Hp,&Kills,&RoomClears,&Swings,&Hits,&Shots})*v=flags[k++];
   HasReturnItem=flags[k++];Returning=flags[k++];ReturnSuccess=flags[k++];
   for(int* v:{&Flashbangs,&Gold,&Ore,&Herb,&Monster,&Bottle,&WeaponLevel,&Debt,&LastRepaid,&Enchant,&Crafted,&MaxHp,&SofaLevel,&HomeLevel,&Phase})*v=flags[k++];
-  oreTaken=flags[k++];herbTaken=flags[k++];
+  oreTaken=flags[k++];herbTaken=flags[k++];Character=flags[k++];
   for(int i=0;i<roomCount;++i)roomState[i]=rooms[i]==1?0:rooms[i];  // 전투 중이던 방은 처음부터
   BossHp=boss/100.f;facing=hb::Vec3{fx,fy,0};
   hb::Scene::SetPosition(player,hb::Vec3{px,py,hb::Scene::GetPosition(player).z});
@@ -404,7 +483,7 @@ bool TopDownShooter::UpdateBoss(hb::Actor* player,float delta,const std::vector<
   return true;
 }
 
-void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& effects,const std::vector<hb::Actor*>& doors,const std::vector<hb::Actor*>& boss,const std::vector<hb::Actor*>& items){
+void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& effects,const std::vector<hb::Actor*>& doors,const std::vector<hb::Actor*>& boss,const std::vector<hb::Actor*>& items,const std::vector<hb::Actor*>& shots){
   auto* player=hb::Gameplay::GetPlayerPawn();if(!player)return;
   frame++;if(hudDirty)Hud(player);
   if(!started){started=true;Hp=MaxHp;area=RoomAt(hb::Scene::GetPosition(player).y);  // 이 장면이 맡은 구역 (-1 거점)
@@ -476,7 +555,15 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
    Craft(player,q&&!craftKeyHeld,pick,enter&&!confirmHeld);craftKeyHeld=q;confirmHeld=enter;}
 
   // 검 부채꼴 베기: 적에게 피해, 범위 안의 적 탄환은 지움 (기획: 투사체 삭제)
-  if(hb::Input::IsKeyDown("LeftMouseButton")&&attackCooldown<=0){
+  const bool attackDown=hb::Input::IsKeyDown("LeftMouseButton");
+  if(Character==1){  // 셰리: 누르고 있으면 1초 장전 후 발사, 계속 누르면 다시 장전
+    if(attackDown&&attackCooldown<=0){charge+=delta;if(charge>=balance::arrowCharge){Shoot(shots,position);charge=0;attackAnim=0.1f;attackCooldown=0.15f;}}
+    else charge=0;
+  }else if(Character==2&&attackDown&&attackCooldown<=0){  // 알레아: 마탄 연사
+    attackCooldown=balance::boltInterval;attackAnim=0.2f;Shoot(shots,position);
+  }
+  UpdateShots(player,delta,shots,enemies,doors,items);
+  if(Character==0&&attackDown&&attackCooldown<=0){
     attackCooldown=balance::swordInterval;Swings++;attackAnim=0.3f;
     if(!effects.empty()){  // 베기 이펙트를 바라보는 방향 앞에 0.12초
       hb::Transform t;t.position=position+facing*1.4f;t.position.z=0.2f;
@@ -490,10 +577,7 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
     for(auto* e:enemies){if(!hb::ActorPool::IsActive(e))continue;
       const auto at=hb::Scene::GetPosition(e);if(!inFan(at))continue;
       const auto d=at-position;const float len=Length(d);
-      if(!Returning){enemyHp[e]-=WeaponDamage();if(Enchant==2)burn[e]=balance::burnTime;}Hits++;stun[e]=balance::swordStun;  // 귀환 중 해골은 무적
-      hb::Physics::SetVelocity(e,(len>.01f?d*(1/len):facing)*6);
-      if(enemyHp[e]<=0){hb::ActorPool::Release(e);Kills++;DropCoin(items,at,1+Kills%3);  // 해골 1~3 G
-        if(fightingRoom==1){int left=0;for(auto* o:enemies)left+=hb::ActorPool::IsActive(o);if(!left)Monster++;}}  // 전투방2 마지막 해골은 마물 소재 확정
+      HitEnemy(e,len>.01f?d*(1/len):facing,WeaponDamage(),enemies,items);
     }
     if(Returning&&returnRoom>0&&hb::ActorPool::IsActive(doors[returnRoom-1])&&Length(hb::Scene::GetPosition(doors[returnRoom-1])-position)<balance::doorReach){
       if(++DoorHits>=balance::doorHitsToOpen){hb::ActorPool::Release(doors[returnRoom-1]);StunAll(enemies,balance::doorStun);}

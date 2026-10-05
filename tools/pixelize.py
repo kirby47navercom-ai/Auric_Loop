@@ -31,9 +31,9 @@ def cell_size(im):
     return sum(r * n for r, n in near.items()) / sum(near.values())
 
 
-def snap(im):
-    """칸 가운데 색만 뽑아 원래 해상도로 되돌린다."""
-    c = cell_size(im)
+def snap(im, cell=None):
+    """칸 가운데 색만 뽑아 원래 해상도로 되돌린다. 칸 크기를 못 찾는 그림은 --cell로 준다."""
+    c = cell or cell_size(im)
     w, h = round(im.width / c), round(im.height / c)
     src = im.load()
     out = Image.new("RGB", (w, h))
@@ -73,8 +73,9 @@ def main():
     ap.add_argument("--height", type=int)
     ap.add_argument("--tile", type=int)
     ap.add_argument("--frames", type=int)
+    ap.add_argument("--cell", type=float)
     a = ap.parse_args()
-    im = snap(Image.open(a.src).convert("RGB")).convert("RGBA")
+    im = snap(Image.open(a.src).convert("RGB"), a.cell).convert("RGBA")
     if a.tile:
         im = im.resize((a.tile, a.tile), Image.NEAREST)
     else:

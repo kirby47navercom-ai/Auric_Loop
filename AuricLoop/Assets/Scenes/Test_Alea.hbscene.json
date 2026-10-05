@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sceneName": "Test_Gather",
+  "sceneName": "Test_Alea",
   "objects": [
     {
       "id": "Player",
@@ -8,8 +8,8 @@
       "kind": "character2d",
       "group": "WORLD",
       "position": [
-        -3,
-        45.0,
+        0,
+        -9.0,
         0.1
       ],
       "rotation": [
@@ -234,8 +234,8 @@
       "kind": "playerStart",
       "group": "WORLD",
       "position": [
-        -3,
-        45.0,
+        0,
+        -9.0,
         0.1
       ],
       "rotation": [
@@ -319,7 +319,7 @@
           }
         }
       ],
-      "blueprintAsset": "Assets/Blueprints/BP_TopDownShooter.hbblueprint.json"
+      "blueprintAsset": "Assets/Blueprints/BP_Test_Alea.hbblueprint.json"
     },
     {
       "id": "Bullet0",
@@ -16278,7 +16278,7 @@
           "type": "PooledActor",
           "properties": {
             "enabled": true,
-            "initiallyActive": true
+            "initiallyActive": false
           }
         }
       ]
@@ -16361,18 +16361,18 @@
           "type": "PooledActor",
           "properties": {
             "enabled": true,
-            "initiallyActive": true
+            "initiallyActive": false
           }
         }
       ]
     },
     {
-      "id": "Floor2",
-      "name": "Floor2",
+      "id": "Floor0",
+      "name": "Floor0",
       "kind": "sprite",
       "position": [
         0,
-        46.0,
+        0.0,
         -0.1
       ],
       "rotation": [
@@ -16417,15 +16417,15 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Room_Floor_16.png",
+            "texture": "Assets/Sprites/Room_Floor_24.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 16,
-            "height": 16,
+            "width": 24,
+            "height": 24,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -16441,12 +16441,12 @@
       ]
     },
     {
-      "id": "Room2W",
-      "name": "Room2W",
+      "id": "Room0W",
+      "name": "Room0W",
       "kind": "sprite",
       "position": [
-        -8.5,
-        46.0,
+        -12.5,
+        0.0,
         0.0
       ],
       "rotation": [
@@ -16491,7 +16491,7 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Room_Wall_V16.png",
+            "texture": "Assets/Sprites/Room_Wall_V24.png",
             "color": [
               1,
               1,
@@ -16499,7 +16499,7 @@
               1
             ],
             "width": 1.0,
-            "height": 16,
+            "height": 24,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -16535,7 +16535,7 @@
             "density": 1,
             "extent": [
               0.5,
-              8.0,
+              12.0,
               0.5
             ]
           }
@@ -16543,12 +16543,12 @@
       ]
     },
     {
-      "id": "Room2E",
-      "name": "Room2E",
+      "id": "Room0E",
+      "name": "Room0E",
       "kind": "sprite",
       "position": [
-        8.5,
-        46.0,
+        12.5,
+        0.0,
         0.0
       ],
       "rotation": [
@@ -16593,7 +16593,7 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Room_Wall_V16.png",
+            "texture": "Assets/Sprites/Room_Wall_V24.png",
             "color": [
               1,
               1,
@@ -16601,7 +16601,7 @@
               1
             ],
             "width": 1.0,
-            "height": 16,
+            "height": 24,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -16637,7 +16637,7 @@
             "density": 1,
             "extent": [
               0.5,
-              8.0,
+              12.0,
               0.5
             ]
           }
@@ -16645,12 +16645,12 @@
       ]
     },
     {
-      "id": "Room2SL",
-      "name": "Room2SL",
+      "id": "Room0SL",
+      "name": "Room0SL",
       "kind": "sprite",
       "position": [
         -7.5,
-        37.5,
+        -12.5,
         0.0
       ],
       "rotation": [
@@ -16747,12 +16747,12 @@
       ]
     },
     {
-      "id": "Room2SR",
-      "name": "Room2SR",
+      "id": "Room0SR",
+      "name": "Room0SR",
       "kind": "sprite",
       "position": [
         7.5,
-        37.5,
+        -12.5,
         0.0
       ],
       "rotation": [
@@ -16849,12 +16849,12 @@
       ]
     },
     {
-      "id": "Floor2Gap",
-      "name": "Floor2Gap",
+      "id": "Floor0Gap",
+      "name": "Floor0Gap",
       "kind": "sprite",
       "position": [
         0,
-        37.5,
+        -12.5,
         -0.1
       ],
       "rotation": [
@@ -16923,12 +16923,12 @@
       ]
     },
     {
-      "id": "Room3SL",
-      "name": "Room3SL",
+      "id": "Room1SL",
+      "name": "Room1SL",
       "kind": "sprite",
       "position": [
         -7.5,
-        54.5,
+        12.5,
         0.0
       ],
       "rotation": [
@@ -17025,12 +17025,12 @@
       ]
     },
     {
-      "id": "Room3SR",
-      "name": "Room3SR",
+      "id": "Room1SR",
+      "name": "Room1SR",
       "kind": "sprite",
       "position": [
         7.5,
-        54.5,
+        12.5,
         0.0
       ],
       "rotation": [
@@ -17127,12 +17127,12 @@
       ]
     },
     {
-      "id": "Floor3Gap",
-      "name": "Floor3Gap",
+      "id": "Floor1Gap",
+      "name": "Floor1Gap",
       "kind": "sprite",
       "position": [
         0,
-        54.5,
+        12.5,
         -0.1
       ],
       "rotation": [

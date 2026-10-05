@@ -73,7 +73,8 @@ image("BagButton", "btn_inventory.png", "tr", 24 + 72 + 12, 24)
 image("Minimap", "minimap.png", "tr", 24, 108)
 
 # 오른쪽 아래: 공격, 회피, 상호작용, 제작 (UI 키트 시안 배치)
-image("AttackButton", "btn_attack_valen.png", "br", 40, 40)
+for who in ("valen", "sherry", "alea"):  # 캐릭터마다 공격 버튼 그림이 달라 C++ Hud가 하나만 보인다
+    image(f"AttackButton_{who}", f"btn_attack_{who}.png", "br", 40, 40, visible=who == "valen")
 image("DodgeButton", "btn_dodge.png", "br", 40 + 140 + 16, 24)
 image("InteractButton", "btn_interact.png", "br", 40 + 140 + 4, 40 + 96 + 8)
 image("CraftButton", "btn_craft.png", "br", 40 + 24, 40 + 140 + 16)
@@ -149,7 +150,7 @@ def dialog(name, kind, px, py, w_, h_, z, **props):
 
 dialog("DialogBox", "Image", 0, 0, DW, DH, 50, texture=KIT + "dialog_box.png")
 dialog("DialogPortraitFrame", "Image", 20, 19, 132, 132, 51, texture=KIT + "dialog_portrait_frame.png")
-for who in ("collector", "valen", "boss"):  # 엔진 UI는 실행 중 그림을 바꿀 수 없어 말하는 사람마다 하나씩 두고 보이기만 바꾼다
+for who in ("collector", "valen", "sherry", "alea", "boss"):  # 엔진 UI는 실행 중 그림을 바꿀 수 없어 말하는 사람마다 하나씩 두고 보이기만 바꾼다
     iw, ih = Image.open(PROJECT / KIT / f"portrait_{who}.png").size
     dialog(f"DialogPortrait_{who}", "Image", 26 + (120 - iw) // 2, 25 + (120 - ih) // 2, iw, ih, 52, texture=KIT + f"portrait_{who}.png")
 dialog("DialogName", "Text", 172, 22, 400, 28, 52, text="수금원", fontSize=20, color="#ffd666")
@@ -174,6 +175,27 @@ full("LoadingBack", "Panel", 95, background="#0d1716ff")
 node("LoadingCoin", "Image", "c", 0, -40, 144, 144, 96, texture=KIT + "loading_coin.gif")
 node("LoadingText", "Text", "c", 0, 70, 300, 30, 96, text="Loading...", fontSize=20, color="#fff3e5", align="center")
 
+# ---- 캐릭터 선택 (기획서 2장 흐름 2): 타이틀 다음. 카드를 누르면 1·2·3 키, 결정은 Enter ----
+CARDS = [("valen", "발렌", "검 · 부채꼴 베기, 적 탄환을 지움", 9800),
+         ("sherry", "셰리", "활 · 1초 장전, 한 발이 강함", 14500),
+         ("alea", "알레아", "마탄 · 연사, 닿으면 작은 폭발", 31700)]
+full("SelectBack", "Panel", 80, background="#0b1314f2", visible=False)
+node("SelectTitle", "Text", "c", 0, -300, 600, 40, 81, text="누구의 빚을 갚을까?", fontSize=28, color="#ffd666", align="center", visible=False)
+for i, (who, name, weapon, debt) in enumerate(CARDS):
+    cx = (i - 1) * 340
+    node(f"SelectPick{i}", "Panel", "c", cx, 10, 312, 432, 81, background="#ffd666cc", visible=False)
+    node(f"SelectCard{i}", "Panel", "c", cx, 10, 300, 420, 82, background="#1b2a2bff", visible=False)
+    iw, ih = Image.open(PROJECT / KIT / f"select_{who}.png").size
+    node(f"SelectArt{i}", "Image", "c", cx, -60, iw, ih, 83, texture=KIT + f"select_{who}.png", visible=False)
+    node(f"SelectName{i}", "Text", "c", cx, 110, 280, 32, 83, text=f"{i + 1}. {name}", fontSize=24, color="#fff3e5", align="center", visible=False)
+    node(f"SelectWeapon{i}", "Text", "c", cx, 150, 280, 26, 83, text=weapon, fontSize=14, color="#cdb98a", align="center", visible=False)
+    node(f"SelectDebt{i}", "Text", "c", cx, 186, 280, 26, 83, text=f"빚 {debt:,} G", fontSize=16, color="#ff8a7a", align="center", visible=False)
+    node(f"SelectTouch{i}", "TouchButton", "c", cx, 10, 300, 420, 84, inputKey=str(i + 1), inputMode="keys",
+         background="#00000000", pressed="#ffffff22", hover="#ffffff11", visible=False)
+node("SelectHint", "Text", "c", 0, 270, 700, 26, 81, text="1·2·3 또는 A·D로 고르고 Enter·E로 결정", fontSize=15, color="#cdb98a", align="center", visible=False)
+node("SelectConfirm", "TouchButton", "c", 0, 312, 240, 48, 84, text="결정", fontSize=18, inputKey="enter", inputMode="keys",
+     background="#3a4a3aee", pressed="#ffffff33", hover="#ffffff22", visible=False)
+
 w["nodes"] = nodes
 WIDGET.write_text(json.dumps(w, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-print("제작 창·대화창·타이틀 추가:", len(nodes), "nodes")
+print("제작 창·대화창·타이틀·캐릭터 선택 추가:", len(nodes), "nodes")

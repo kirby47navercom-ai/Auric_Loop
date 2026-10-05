@@ -17,6 +17,11 @@ bp.native = {...n, ...parseNativeHeader(header), header, source};
 await fs.writeFile(bpPath, JSON.stringify(bp, null, 2) + '\n');
 const hub = {...bp, name: 'BP_Hub', variables: bp.variables.map(v => ({...v, value: v.id === 'effects' ? ['SlashFX', 'Camera'] : []}))};
 await fs.writeFile(path.join(project, 'Assets/Blueprints/BP_Hub.hbblueprint.json'), JSON.stringify(hub, null, 2) + '\n');
+// 검사용: 셰리·알레아로 바로 시작하는 BP (tools/check_demo.mjs의 Test_Sherry·Test_Alea 장면)
+for (const [name, character] of [['BP_Test_Sherry', 1], ['BP_Test_Alea', 2]]) {
+  const test = {...bp, name, settings: {...bp.settings, nativeDefaults: {...bp.settings?.nativeDefaults, 'TopDownShooter.Character': character}}};
+  await fs.writeFile(path.join(project, `Assets/Blueprints/${name}.hbblueprint.json`), JSON.stringify(test, null, 2) + '\n');
+}
 console.log('C++ 동기화:', bp.native.classes.map(c => `${c.name}(속성 ${c.properties.length}, 함수 ${c.functions.length})`).join(', '));
 
 // 편집기는 Saved/Editor/storage.json에 열린 문서 사본을 두고 다음 실행 때 디스크보다 먼저 복원한다.

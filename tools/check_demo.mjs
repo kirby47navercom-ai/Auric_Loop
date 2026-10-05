@@ -70,3 +70,15 @@ assert.ok(boss.BossHp <= 0, '해골 대장 처치');
 assert.ok(boss.Returning || boss.ReturnSuccess, 'Tab으로 [귀환] 사용 → 귀환 페이즈');
 assert.ok(by < 80, '잠긴 문을 10번 때려 열고 보스방 아래로 내려감');
 console.log('보스·귀환 검사 통과', JSON.stringify(boss), 'y', by.toFixed(1));
+
+// 셰리(활: 1초 장전 단발)·알레아(마탄 연사·폭발)로 전투방1에서 위를 향해 공격
+for (const [scene, name, minHits] of [['Test_Sherry', '셰리', 1], ['Test_Alea', '알레아', 5]]) {
+  const c = await runProject(project, {scene: `Assets/Scenes/${scene}.hbscene.json`, frames: 600, delta: 1 / 60, inputs: [
+    {frame: 5, key: 'w', value: 1}, {frame: 30, key: 'w', value: 0},
+    {frame: 31, key: 'LeftMouseButton', value: 1, pointer: aimUp}, {frame: 590, key: 'LeftMouseButton', value: 0},
+  ]});
+  const cs = c.objects.find(o => o.id === 'Director').nativeProperties;
+  assert.ok(cs.Swings >= (name === '셰리' ? 4 : 20), `${name} 발사 간격`);
+  assert.ok(cs.Hits >= minHits && cs.Kills >= 1, `${name} 탄이 해골을 맞혀 쓰러뜨림`);
+  console.log(`${name} 검사 통과`, 'shots', cs.Swings, 'hits', cs.Hits, 'kills', cs.Kills);
+}

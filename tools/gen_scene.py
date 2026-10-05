@@ -109,6 +109,14 @@ slash.update(id="SlashFX", name="SlashFX", position=[0, -60, 0.2])
 slash["components"] = [c for c in slash["components"] if c["type"] in ("Transform", "SpriteRenderer", "PooledActor")]
 texture(slash, "FX_Slash.png", sortingOrder=5)
 
+shots = []  # 셰리 화살·알레아 마탄 (C++ Shoot이 그림을 바꿈)
+for i in range(20):
+    o = copy.deepcopy(objs["Bullet0"])
+    o.update(id=f"Shot{i}", name=f"Shot{i}", position=[0, -60, 0.2])
+    comp(o, "SpriteRenderer")["properties"].update(sprite="Assets/Sprites/FX/S_Arrow.hbsprite.json", texture="", color=[1, 1, 1, 1], useCustomSize=False, sortingOrder=4)
+    comp(o, "BoxCollider2D")["properties"]["mask"] = 0  # 판정은 C++ 거리 계산
+    shots.append(o)
+
 # ---- 방, 벽, 문 ----
 made = [boss, slash, start, director]
 rooms_cpp = []
@@ -225,7 +233,7 @@ made += props
 
 base = [objs["Player"], objs["Camera"], start, director]
 spawned = [o for o in scene["objects"] if re.match(r"(Bullet|Enemy)\d+$", o["id"])]
-pools = spawned + [boss, slash] + [o for o in made if re.match(r"(Coin|Door)\d+$", o["id"])]
+pools = spawned + shots + [boss, slash] + [o for o in made if re.match(r"(Coin|Door)\d+$", o["id"])]
 pool_ids = {o["id"] for o in pools}
 hub_ids = {o["id"] for o in hub}
 geometry = [o for o in made if o["id"] not in pool_ids | hub_ids | {"PlayerStart", "Director"}]
@@ -267,6 +275,10 @@ print("장면 갱신:", counts)
 
 # 검사용 장면 (tools/check_demo.mjs): 채집방 광물 앞에서 시작
 write("Test_Gather", room_objects(2), [-3, rooms_cpp[2][0] - 1, 0.1])
+for test_name, who in (("Test_Sherry", 1), ("Test_Alea", 2)):  # 전투방1에서 셰리·알레아로 시작
+    objects = copy.deepcopy(room_objects(0))
+    next(o for o in objects if o["id"] == "Director")["blueprintAsset"] = f"Assets/Blueprints/BP_{test_name}.hbblueprint.json"  # tools/sync_cpp.mjs가 만듦
+    write(test_name, objects, [0, rooms_cpp[0][0] - rooms_cpp[0][1] + 3, 0.1])
 
 
 # ---- C++ 방 표 ----

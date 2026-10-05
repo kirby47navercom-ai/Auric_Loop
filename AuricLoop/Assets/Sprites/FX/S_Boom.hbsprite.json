@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_Boom",
+  "texture": "Assets/Sprites/FX/FX_Boom.png",
+  "pixelsPerUnit": 32,
+  "rect": [
+    0,
+    0,
+    41,
+    34
+  ],
+  "pivot": [
+    0.5,
+    0.5
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}
