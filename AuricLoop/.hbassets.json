@@ -529,5 +529,41 @@
   },
   "Assets/Blueprints/BP_Test_Sherry.hbblueprint.json": {
     "id": "aefeed25-173d-4c5f-a167-3698f5dda9f7"
+  },
+  "Assets/UI/Kit/rot_hp_1.png": {
+    "id": "d2662805-f575-4bc0-9492-8a7b46c9392c"
+  },
+  "Assets/UI/Kit/rot_attack_alea.png": {
+    "id": "c4a2a70b-b1a8-476a-a60d-06c00110c368"
+  },
+  "Assets/UI/Kit/rot_attack_sherry.png": {
+    "id": "3d65303b-997f-4a21-9872-15a26137697f"
+  },
+  "Assets/UI/Kit/rot_attack_valen.png": {
+    "id": "e539bec1-df29-4893-9ecf-75dceee51edb"
+  },
+  "Assets/UI/Kit/rot_craft.png": {
+    "id": "59f18468-c26d-47a7-b495-d3822c6e7764"
+  },
+  "Assets/UI/Kit/rot_dodge.png": {
+    "id": "f2c2d8a1-ddd7-4204-8db9-6e9f84c46266"
+  },
+  "Assets/UI/Kit/rot_hp_2.png": {
+    "id": "f06ae247-753b-48d7-bcb2-32d0ae350410"
+  },
+  "Assets/UI/Kit/rot_hp_3.png": {
+    "id": "abcecdb5-c82c-4620-96d6-6fa53b1d0a00"
+  },
+  "Assets/UI/Kit/rot_interact.png": {
+    "id": "6076a229-d419-4f05-aef3-901b19c1dd32"
+  },
+  "Assets/UI/Kit/rot_inventory.png": {
+    "id": "20a430e9-e272-47e6-baa7-f5e4b9c139d6"
+  },
+  "Assets/UI/Kit/rot_minimap.png": {
+    "id": "42d6693a-bba6-40d3-832c-d94fbb5ea9d9"
+  },
+  "Assets/UI/Kit/rot_pause.png": {
+    "id": "622f9160-9f02-4e82-a7a5-e365f27637e1"
   }
 }

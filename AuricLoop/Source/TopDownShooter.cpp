@@ -68,6 +68,9 @@ constexpr float boomRadius=1.4f,boomDamage=0.5f,boomTime=0.15f;     // 마탄이
 constexpr float playerShotLife=1.6f,shotHit=0.7f;
 constexpr int arrowDoorHits=3;          // 귀환 중 잠긴 문: 화살 한 발은 문 3번 때린 것
 constexpr int debts[]={9800,14500,31700}; // 기획서 6-4
+constexpr int weightLimit=100;          // 적재량 (기획서 4-1)
+constexpr float slowRate=0.75f;
+constexpr float idleReset=60.0f;        // 부스: 입력이 없으면 처음으로 (기획서 10장)
 constexpr int doorHitsToOpen=10;       // 기획: 귀환 중 잠긴 문은 10번 때리면 열림
 constexpr float doorStun=1.0f;         // 기획: 문이 열리면 1초 전체 스턴
 constexpr float flashStun=1.0f;        // 기획: 섬광탄 1초 전체 스턴 + 탄막 제거
@@ -107,12 +110,18 @@ void TopDownShooter::Hud(hb::Actor* player){
     for(auto* n:{"LoadingBack","LoadingCoin","LoadingText","TitleBack","TitleScreen","TitleHint"})hb::UI::SetVisible(player,"HUD",n,false);}
   // 요소 이름은 tools/gen_hud.py가 만든 W_TopDown과 같다
   const int hp=Hp<0?0:Hp;
-  for(int i=1;i<=MaxHp;++i)hb::UI::SetVisible(player,"HUD","HpFill"+std::to_string(i),hp==i);
+  // 귀환 중엔 황금 침식 테마 (UI 키트 v8 corrupted). HP 그림은 3칸이라 최대 체력이 늘면 비율로 보인다
+  const bool rot=Returning;const int fill=hp<=0?0:std::max(1,(hp*3+MaxHp-1)/MaxHp);
+  hb::UI::SetVisible(player,"HUD","HpBack",!rot);
+  for(int i=1;i<=3;++i){hb::UI::SetVisible(player,"HUD","HpFill"+std::to_string(i),!rot&&fill==i);hb::UI::SetVisible(player,"HUD","RotHp"+std::to_string(i),rot&&fill==i);}
+  static const char* themed[][2]={{"DodgeButton","RotDodge"},{"InteractButton","RotInteract"},{"CraftButton","RotCraft"},{"PauseButton","RotPause"},{"BagButton","RotBag"},{"Minimap","RotMinimap"}};
+  if(rot!=rotShown){rotShown=rot;for(auto& t:themed){hb::UI::SetVisible(player,"HUD",t[0],!rot);hb::UI::SetVisible(player,"HUD",t[1],rot);}}
   hb::UI::SetText(player,"HUD","HpText",std::to_string(hp)+" / "+std::to_string(MaxHp));
   hb::UI::SetText(player,"HUD","WeightText",std::to_string(Weight())+" / 100");
   hb::UI::SetText(player,"HUD","GoldText",std::to_string(Gold)+" G   빚 "+std::to_string(Debt));
   hb::UI::SetText(player,"HUD","Hint",hint);
-  for(int i=0;i<3;++i)hb::UI::SetVisible(player,"HUD",std::string("AttackButton_")+faces[i],i==Character);
+  for(int i=0;i<3;++i){hb::UI::SetVisible(player,"HUD",std::string("AttackButton_")+faces[i],!rot&&i==Character);
+    hb::UI::SetVisible(player,"HUD",std::string("RotAttack_")+faces[i],rot&&i==Character);}
   int level=FatigueMax>0?Fatigue*10/FatigueMax:10;if(level>10)level=10;  // 10% 단위 그림
   if(level!=fatigueLevel){
     auto name=[](int lv){std::string n=std::to_string(lv*10);return "Fatigue"+std::string(3-n.size(),'0')+n;};
@@ -243,7 +252,8 @@ void TopDownShooter::HubInteract(hb::Actor* player,const hb::Vec3& position,bool
   for(const auto& s:hubSpots){const float len=Length(hb::Vec3{s.x,s.y-1.2f,0}-position);if(len<bestLen){bestLen=len;best=&s;}}
   std::string next,id=best?best->id:"";
   if(id=="DebtBoard")next="부채 전광판 - "+std::string(koreanNames[Character])+" 남은 빚 "+std::to_string(Debt)+" G"+(LastRepaid?"  (지난 정산 "+std::to_string(LastRepaid)+" G 상환)":"");
-  else if(id=="Entrance")next="마몬의 입 - 황금 던전 입구";
+  else if(id=="Entrance"){next=ReturnSuccess?"E: 오늘은 여기까지 - 하루 마치기":"마몬의 입 - 황금 던전 입구";
+    if(pressed&&ReturnSuccess){ShowEnding(player);return;}}
   else if(id=="Collector"){next=Gold>0?"E: 수금원에게 "+std::to_string(Gold)+" G 모두 갚기":"수금원: 이번 주 이자는 아직이던데?";
     if(pressed&&Gold>0){Debt-=Gold;if(Debt<0)Debt=0;LastRepaid+=Gold;Gold=0;next="수금원: 거래 감사합니다, 고객님";}}
   else if(id=="Interior"){next=HomeLevel>=2?"세공사: 다음 공사는 다음 시즌에!":"E: 원룸 공사 Lv2 ("+std::to_string(balance::homePrice)+" G, 피로도 한계 +"+std::to_string(balance::homeFatigueBonus)+")";
@@ -381,7 +391,8 @@ void TopDownShooter::Settle(hb::Actor* player){
   Debt-=LastRepaid;if(Debt<0)Debt=0;
   Gold=total-LastRepaid;Ore=Herb=Monster=0;WeaponLevel=0;Enchant=0;
   Say({{"collector","수금원","돌아왔네? 정산할게. 소재까지 합쳐 "+std::to_string(total)+" G, 그중 절반 "+std::to_string(LastRepaid)+" G는 빚으로 받아 간다."},
-       {"collector","수금원","남은 빚은 "+std::to_string(Debt)+" G. 강화는 던전 밖에선 무뎌지는 거 알지? 남은 골드로 소파라도 바꾸든가."}});
+       {"collector","수금원","남은 빚은 "+std::to_string(Debt)+" G. 강화는 던전 밖에선 무뎌지는 거 알지? 남은 골드로 소파라도 바꾸든가."},
+       {"collector","수금원","적당히 들어가서, 적당히 챙겨서, 지치기 전에 탈출. 그게 이 던전의 규칙이야. 쉬고 싶으면 계단 위 입구에서 하루를 마쳐."}});
   Hud(player);
 }
 
@@ -425,6 +436,17 @@ void TopDownShooter::MoveCamera(hb::Actor* camera,const hb::Vec3& position,const
   if(!cameraReady){cameraAt=target;cameraReady=true;}
   else cameraAt=hb::VectorMath::VInterpTo(cameraAt,target,delta,balance::cameraFollow);
   hb::Scene::SetPosition(camera,cameraAt);
+}
+
+void TopDownShooter::ShowEnding(hb::Actor* player){
+  ending=true;anyHeld=true;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
+  hb::UI::SetText(player,"HUD","EndingText",std::string(koreanNames[Character])+"의 남은 빚 "+std::to_string(Debt)+" G   ·   오늘 갚은 돈 "+std::to_string(LastRepaid)+" G");
+  for(auto* n:{"EndingBack","EndingArt","EndingShade","EndingTitle","EndingText","EndingHint"})hb::UI::SetVisible(player,"HUD",n,true);
+}
+
+void TopDownShooter::ResetToTitle(){
+  // 처음부터: 넘길 상태 파일을 지우고 거점 장면을 다시 열면 C++ 상태도 새로 시작한다
+  std::remove(StatePath().c_str());leaving=true;hb::Scene::Open(SceneFor(-1));
 }
 
 void TopDownShooter::StunAll(const std::vector<hb::Actor*>& enemies,float seconds){
@@ -493,6 +515,13 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
       if(herbTaken&&items[1]&&hb::ActorPool::IsActive(items[1]))hb::ActorPool::Release(items[1]);}
     Hud(player);}
   if(leaving)return;
+  {// 부스 운영 (기획서 10장): F12 바로 처음으로, 60초 동안 입력이 없으면 처음으로, 엔딩 카드에서 아무 키나 누르면 처음으로
+   bool any=hb::VectorMath::Vector2Length(hb::Input::GetMouseDelta())>0;
+   for(auto* k:{"w","a","s","d","e","q","space","enter","tab","LeftMouseButton","1","2","3","4","5"})any=any||hb::Input::IsKeyDown(k);
+   const bool anyPressed=any&&!anyHeld;anyHeld=any;idleTime=any?0:idleTime+delta;
+   const bool atTitle=Phase<2&&!selecting;
+   if(hb::Input::IsKeyDown("F12")||(idleTime>=balance::idleReset&&!atTitle)||(ending&&anyPressed)){ResetToTitle();return;}
+   if(ending)return;}
   const auto position=hb::Scene::GetPosition(player);
   hb::Vec3 aim;const bool hasAim=hb::Input::GetMouseWorldPosition(hb::Vec3{0,0,1},position,aim);
   MoveCamera(effects.size()>1?effects[1]:nullptr,position,aim,hasAim&&Phase>=2,delta);  // Effects[1]은 카메라
@@ -530,6 +559,8 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
   }
   hb::Sprites::SetFlip(player,facing.x<0,false);
   Animate(player,delta,hb::VectorMath::VectorLengthSquared(move)>.01f);
+  // 적재량 초과·피로도 75% 이상이면 이동속도 -25% (기획서 4-1). 이동 컴포넌트 속도를 C++에서 바꿀 수 없어 이번 프레임 속도를 줄인다
+  if(dodgeTime<=0&&(Weight()>balance::weightLimit||Fatigue*4>=FatigueMax*3))hb::Physics::SetVelocity(player,hb::Physics::GetVelocity(player)*balance::slowRate);
 
   attackCooldown-=delta;dodgeCooldown-=delta;invulnerable-=delta;
 

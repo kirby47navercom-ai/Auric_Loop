@@ -82,3 +82,9 @@ for (const [scene, name, minHits] of [['Test_Sherry', '셰리', 1], ['Test_Alea'
   assert.ok(cs.Hits >= minHits && cs.Kills >= 1, `${name} 탄이 해골을 맞혀 쓰러뜨림`);
   console.log(`${name} 검사 통과`, 'shots', cs.Swings, 'hits', cs.Hits, 'kills', cs.Kills);
 }
+
+// 부스 운영: F12를 누르면 거점 장면을 처음부터 다시 엶 (60초 무입력·엔딩 카드도 같은 ResetToTitle)
+const f = await runProject(project, {scene: 'Assets/Scenes/Dungeon_3.hbscene.json', frames: 60, delta: 1 / 60, inputs: [{frame: 20, key: 'F12', value: 1}]});
+assert.equal(f.sceneHistory.at(-1).scene, 'Assets/Scenes/Hub.hbscene.json', 'F12로 처음으로');
+assert.equal(f.objects.find(o => o.id === 'Director').nativeProperties.Phase, 0, '처음으로 가면 로딩부터');
+console.log('F12 검사 통과');

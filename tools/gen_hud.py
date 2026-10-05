@@ -83,6 +83,18 @@ touch("DodgeTouch", "space", "br", 40 + 140 + 16, 24, 96)
 touch("InteractTouch", "e", "br", 40 + 140 + 4, 40 + 96 + 8, 88)
 touch("CraftTouch", "q", "br", 40 + 24, 40 + 140 + 16, 96)
 
+# 귀환 중 황금 침식 테마 (UI 키트 v8 corrupted). 같은 자리·크기의 그림을 두고 C++ Hud가 은색과 바꿔 보인다
+for i in (1, 2, 3):
+    image(f"RotHp{i}", f"rot_hp_{i}.png", "tl", 24, 24, z=12, visible=False)
+for who in ("valen", "sherry", "alea"):
+    image(f"RotAttack_{who}", f"rot_attack_{who}.png", "br", 40, 40, z=11, visible=False)
+image("RotDodge", "rot_dodge.png", "br", 40 + 140 + 16, 24, z=11, visible=False)
+image("RotInteract", "rot_interact.png", "br", 40 + 140 + 4, 40 + 96 + 8, z=11, visible=False)
+image("RotCraft", "rot_craft.png", "br", 40 + 24, 40 + 140 + 16, z=11, visible=False)
+image("RotPause", "rot_pause.png", "tr", 24, 24, z=11, visible=False)
+image("RotBag", "rot_inventory.png", "tr", 24 + 72 + 12, 24, z=11, visible=False)
+image("RotMinimap", "rot_minimap.png", "tr", 24, 108, z=11, visible=False)
+
 # 왼쪽 아래: 조이스틱(모바일만). 기존 Joystick 입력 노드를 키트 그림 위에 둔다.
 move = copy.deepcopy(next(n for n in w["nodes"] if n["type"] == "Joystick"))
 move["slot"].update(offset=[48, -48, 152, 152])
@@ -195,6 +207,14 @@ for i, (who, name, weapon, debt) in enumerate(CARDS):
 node("SelectHint", "Text", "c", 0, 270, 700, 26, 81, text="1·2·3 또는 A·D로 고르고 Enter·E로 결정", fontSize=15, color="#cdb98a", align="center", visible=False)
 node("SelectConfirm", "TouchButton", "c", 0, 312, 240, 48, 84, text="결정", fontSize=18, inputKey="enter", inputMode="keys",
      background="#3a4a3aee", pressed="#ffffff33", hover="#ffffff22", visible=False)
+
+# ---- 엔딩 카드 (기획서 2장 흐름 13, 8장): 키아트·로고 위에 Coming Soon. 아무 키나 누르면 타이틀로 ----
+full("EndingBack", "Panel", 97, background="#05090aff", visible=False)
+full("EndingArt", "Image", 98, texture=KIT + "title_v2.png", visible=False)
+full("EndingShade", "Panel", 99, background="#05090a99", visible=False)
+node("EndingTitle", "Text", "c", 0, 120, 800, 60, 100, text="Coming Soon", fontSize=44, color="#ffd666", align="center", visible=False)
+node("EndingText", "Text", "c", 0, 180, 900, 30, 100, text="", fontSize=18, color="#fff3e5", align="center", visible=False)
+node("EndingHint", "Text", "c", 0, 300, 600, 26, 100, text="아무 키나 눌러 처음으로", fontSize=15, color="#cdb98a", align="center", visible=False)
 
 w["nodes"] = nodes
 WIDGET.write_text(json.dumps(w, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

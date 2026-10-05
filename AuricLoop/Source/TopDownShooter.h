@@ -105,6 +105,11 @@ private:
   std::map<hb::Actor*,float> shotLife;
   std::map<hb::Actor*,bool> shotBoom;
   float charge=0;bool selecting=false;int pick=0,pickHeld=0;
+  // 엔딩 카드·부스 운영 (기획서 10장)
+  void ShowEnding(hb::Actor* player);
+  void ResetToTitle();
+  bool ending=false,anyHeld=true,rotShown=false;
+  float idleTime=0;
   void SetDoors(const std::vector<hb::Actor*>& doors,int room,bool locked);
   float attackCooldown=0,dodgeTime=0,dodgeCooldown=0,invulnerable=0,gameOver=0;
   bool dodgeHeld=false,started=false,hudDirty=true;
