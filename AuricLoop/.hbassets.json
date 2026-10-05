@@ -358,5 +358,29 @@
   },
   "Assets/UI/Kit/portrait_boss.png": {
     "id": "6a58e10e-ee10-45e1-aa9d-c68cf0715e0b"
+  },
+  "Assets/Blueprints/BP_Hub.hbblueprint.json": {
+    "id": "618bccf8-3bcf-4cc5-9a61-47d3b44635e6"
+  },
+  "Assets/Scenes/Dungeon_0.hbscene.json": {
+    "id": "2eba06ca-2201-47fd-bb3d-f1c42d609446"
+  },
+  "Assets/Scenes/Dungeon_1.hbscene.json": {
+    "id": "96f928a2-46e0-456e-95cf-71a8c08f44e1"
+  },
+  "Assets/Scenes/Dungeon_2.hbscene.json": {
+    "id": "0b5da7d3-13cc-432d-b3cf-27ac5f4eab53"
+  },
+  "Assets/Scenes/Dungeon_3.hbscene.json": {
+    "id": "14503da4-af70-4066-b60d-b48aedc97e94"
+  },
+  "Assets/Scenes/Dungeon_4.hbscene.json": {
+    "id": "064ae52a-be9e-4cdb-b79a-f7733877b749"
+  },
+  "Assets/Scenes/Hub.hbscene.json": {
+    "id": "ad61ce98-e2fd-4935-bab4-a5dc7ae18c4b"
+  },
+  "Assets/Scenes/Template.hbscene.json": {
+    "id": "aaf2420c-231f-44a5-b3cb-d4948f744b4e"
   }
 }

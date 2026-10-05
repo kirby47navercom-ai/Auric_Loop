@@ -7,6 +7,7 @@ import {fileURLToPath, pathToFileURL} from 'node:url';
 const ENGINE = process.env.HB_ENGINE || 'C:/Users/kirby/HBEngine/Versions/d4de30b46c28bab7';
 const {parseNativeHeader} = await import(pathToFileURL(path.join(ENGINE, 'prototype/native-model.js')).href);
 const project = path.join(path.dirname(fileURLToPath(import.meta.url)), '../AuricLoop');
+// 거점 장면엔 적·탄 풀이 없어서, 같은 C++에 빈 배열을 넘기는 BP_Hub를 따로 만든다 (엔진이 없는 오브젝트 참조를 막음)
 const bpPath = path.join(project, 'Assets/Blueprints/BP_TopDownShooter.hbblueprint.json');
 const bp = JSON.parse(await fs.readFile(bpPath, 'utf8'));
 const n = bp.native;
@@ -14,6 +15,8 @@ const header = await fs.readFile(path.join(project, n.headerPath), 'utf8');
 const source = await fs.readFile(path.join(project, n.sourcePath), 'utf8');
 bp.native = {...n, ...parseNativeHeader(header), header, source};
 await fs.writeFile(bpPath, JSON.stringify(bp, null, 2) + '\n');
+const hub = {...bp, name: 'BP_Hub', variables: bp.variables.map(v => ({...v, value: v.id === 'effects' ? ['SlashFX', 'Camera'] : []}))};
+await fs.writeFile(path.join(project, 'Assets/Blueprints/BP_Hub.hbblueprint.json'), JSON.stringify(hub, null, 2) + '\n');
 console.log('C++ 동기화:', bp.native.classes.map(c => `${c.name}(속성 ${c.properties.length}, 함수 ${c.functions.length})`).join(', '));
 
 // 편집기는 Saved/Editor/storage.json에 열린 문서 사본을 두고 다음 실행 때 디스크보다 먼저 복원한다.

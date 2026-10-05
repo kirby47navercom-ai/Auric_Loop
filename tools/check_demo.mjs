@@ -9,10 +9,11 @@ const {runProject} = await import(pathToFileURL(path.join(ENGINE, 'tools/run-pro
 const project = path.join(path.dirname(fileURLToPath(import.meta.url)), '../AuricLoop/AuricLoop.hbproject');
 const aimUp = {position: [640, 250], size: [1280, 720]};
 
-const r = await runProject(project, {scene: 'Assets/Scenes/Test_Dungeon.hbscene.json', frames: 900, delta: 1 / 60, inputs: [
+const r = await runProject(project, {scene: 'Assets/Scenes/Dungeon_0.hbscene.json', frames: 900, delta: 1 / 60, inputs: [
   {frame: 5, key: 'w', value: 1}, {frame: 30, key: 'w', value: 0},
   {frame: 31, key: 'LeftMouseButton', value: 1, pointer: aimUp}, {frame: 400, key: 'LeftMouseButton', value: 0},
-  {frame: 410, key: 'w', value: 1}, {frame: 700, key: 'w', value: 0},  // 열린 문으로 전투방2까지 걸어감
+  {frame: 410, key: 'w', value: 1}, {frame: 700, key: 'w', value: 0},  // 열린 문으로 전투방2까지 걸어감 → Dungeon_1 장면
+  {frame: 720, key: 'w', value: 1}, {frame: 780, key: 'w', value: 0},  // 검사 실행기는 장면이 바뀌면 입력이 풀려서 다시 누름
 ]});
 const player = r.objects.find(o => o.id === 'Player');
 const stats = r.objects.find(o => o.id === 'Director').nativeProperties;
@@ -21,6 +22,8 @@ assert.ok(stats.Swings >= 8, '검 공격 간격 0.35초');
 assert.ok(stats.Kills >= 3, '전투방1 해골 3마리는 검 4대씩에 쓰러짐');
 assert.ok(stats.RoomClears >= 1, '전투방1 클리어');
 assert.equal(stats.RoomIndex, 1, '열린 문을 지나 전투방2에 들어감');
+assert.equal(r.sceneHistory.at(-1).scene, 'Assets/Scenes/Dungeon_1.hbscene.json', '방을 넘어가면 다음 방 장면을 엶');
+assert.ok(stats.Kills >= 3 && stats.RoomClears >= 1, '장면을 넘어가도 기록이 이어짐');
 assert.deepEqual(doorsLocked, ['Door0', 'Door1'], '전투방2에 들어가면 앞뒤 문이 잠김');
 assert.ok(player.position[1] > 13, '플레이어가 전투방2 안에 있음');
 assert.equal(stats.FatigueMax, 20, '데모 피로도 한계 기본값 20');
@@ -52,7 +55,7 @@ console.log('제작 검사 통과', 'flashbangs', ks.Flashbangs);
 
 // 보스방 입구에서 시작: 해골 대장 처치 → Tab으로 [귀환] 사용 → 아래로 걸으며 잠긴 문 때리기
 const down = {position: [640, 600], size: [1280, 720]};
-const b = await runProject(project, {scene: 'Assets/Scenes/Test_Boss.hbscene.json', frames: 4200, delta: 1 / 60, inputs: [
+const b = await runProject(project, {scene: 'Assets/Scenes/Dungeon_4.hbscene.json', frames: 4200, delta: 1 / 60, inputs: [
   {frame: 2, key: 'w', value: 1}, {frame: 40, key: 'w', value: 0},
   {frame: 20, key: 'e', value: 1}, {frame: 22, key: 'e', value: 0},  // 해골 대장 대사: 다 보이기
   {frame: 30, key: 'e', value: 1}, {frame: 32, key: 'e', value: 0},  // 대사 닫기

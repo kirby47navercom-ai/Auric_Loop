@@ -1,6 +1,6 @@
 # 사용자용 HBEngine 편집기로 프로젝트를 다시 열고, C++ 빌드 → 실행 → 창 스크린샷을 찍는다.
 # 실행: powershell -ExecutionPolicy Bypass -File tools/preview.ps1 [-Out 경로.png] [-Seconds 2]
-param([string]$Out = (Join-Path $env:TEMP "auric_preview.png"), [int]$Seconds = 2, [string]$Inputs = "", [string]$Scene = "Garden")
+param([string]$Out = (Join-Path $env:TEMP "auric_preview.png"), [int]$Seconds = 2, [string]$Inputs = "", [string]$Scene = "Hub")
 $ErrorActionPreference = 'Stop'
 $engine = 'C:\Users\kirby\HBEngine\Versions\d4de30b46c28bab7'
 $root = Split-Path $PSScriptRoot

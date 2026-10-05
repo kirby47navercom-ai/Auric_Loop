@@ -1,4 +1,7 @@
-"""데모 장면 생성기. 템플릿 장면의 오브젝트를 바탕으로 던전 방·문·적·카메라를 다시 만든다.
+"""데모 장면 생성기. 템플릿 장면의 오브젝트를 바탕으로 거점·던전 방 장면을 만든다.
+
+장면은 구역마다 따로: Hub(거점), Dungeon_0~4(방 하나씩). 좌표는 한 세계 좌표를 그대로 쓰고,
+C++가 구역 경계를 넘을 때 상태를 파일에 적고 다음 장면을 연다.
 
 실행: python tools/gen_scene.py
 수치 근거: docs/데모_기획서.md (1칸 = 4m, 소형 16m / 중형 24m / 대형 32m, 이동속도 6)
@@ -11,7 +14,7 @@ from pathlib import Path
 
 from PIL import Image
 
-SCENE = Path(__file__).resolve().parent.parent / "AuricLoop/Assets/Scenes/Garden.hbscene.json"
+SCENE = Path(__file__).resolve().parent.parent / "AuricLoop/Assets/Scenes/Template.hbscene.json"
 SOURCE = SCENE.parents[2] / "Source/TopDownShooter.cpp"
 SPRITES = SCENE.parents[1] / "Sprites"
 PPU = 32             # 도트 밀도: 1m = 32px (UI 키트 1280x720과 같은 픽셀 크기)
@@ -84,7 +87,8 @@ director = {"id": "Director", "name": "Director", "kind": "empty", "group": "WOR
 start = {"id": "PlayerStart", "name": "PlayerStart", "kind": "playerStart", "group": "WORLD",
          "position": [0, -8, 0.1], "rotation": [0, 0, 0], "scale": [1, 1, 1], "visible": True,
          "components": [copy.deepcopy(comp(player, "Transform"))]}
-comp(objs["Camera"], "Camera")["properties"].update(orthographicSize=11.25, followTarget="Player", followOffset=[0, 0, 12])
+# 카메라는 C++(MoveCamera)가 조준 쪽으로 끌어당기며 따라간다. 5.625 = 720p에서 도트 2배 (C++ balance::cameraSize)
+comp(objs["Camera"], "Camera")["properties"].update(orthographicSize=5.625, followTarget="", followOffset=[0, 0, 12])
 
 # ---- 탄, 적 (모두 풀에서 꺼내 쓴다. 처음엔 숨김) ----
 for i in range(64):
@@ -219,21 +223,50 @@ props = [
 ] + [prop(f"Coin{i}", "Item_Coin.png", 0, 0, -60, pooled=True, active=False, order=3) for i in range(12)]
 made += props
 
-old_ids = {o["id"] for o in made} | {o["id"] for o in scene["objects"] if re.match(r"(Floor|Wall|Room|Door|Plaza|Stair|Home|NpcZone)", o["id"])}
-scene["objects"] = [o for o in scene["objects"] if o["id"] not in old_ids] + made
+base = [objs["Player"], objs["Camera"], start, director]
+spawned = [o for o in scene["objects"] if re.match(r"(Bullet|Enemy)\d+$", o["id"])]
+pools = spawned + [boss, slash] + [o for o in made if re.match(r"(Coin|Door)\d+$", o["id"])]
+pool_ids = {o["id"] for o in pools}
+hub_ids = {o["id"] for o in hub}
+geometry = [o for o in made if o["id"] not in pool_ids | hub_ids | {"PlayerStart", "Director"}]
+
+
+def write(name, objects, at):
+    out = copy.deepcopy(scene)
+    out["sceneName"] = name
+    out["objects"] = copy.deepcopy(objects)
+    for o in out["objects"]:
+        if o["id"] in ("PlayerStart", "Player"):
+            o["position"] = at
+    (SCENE.parent / f"{name}.hbscene.json").write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return len(out["objects"])
+
+
+hub_director = copy.deepcopy(director)
+hub_director["blueprintAsset"] = "Assets/Blueprints/BP_Hub.hbblueprint.json"  # 거점엔 적·탄 풀이 없다 (tools/sync_cpp.mjs가 만듦)
+counts = {"Hub": write("Hub", [objs["Player"], objs["Camera"], start, hub_director, slash] + hub, [0, PLAZA[1] - 4, 0.1])}
+
+
+def room_objects(i):  # 위아래 벽은 이웃 방과 같이 쓴다
+    cy, half = rooms_cpp[i][:2]
+    gather = []  # BP Items가 광물·약초를 가리켜서 모든 방 장면에 두고, 채집방에서만 보인다
+    for o in (x for x in made if x["id"] in ("Ore", "Herb")):
+        o = copy.deepcopy(o)
+        comp(o, "PooledActor")["properties"]["initiallyActive"] = i == 2
+        gather.append(o)
+    return base + pools + gather + [o for o in geometry if o["id"] not in ("Ore", "Herb") and cy - half - WALL - 0.01 <= o["position"][1] <= cy + half + WALL + 0.01]
+
+
+for i, (cy, half, _, _) in enumerate(rooms_cpp):
+    counts[f"Dungeon_{i}"] = write(f"Dungeon_{i}", room_objects(i), [0, cy - half + 3, 0.1])
+scene["objects"] = base[:2] + [director] + spawned  # 템플릿은 복사 원본(플레이어·카메라·탄·적)만 남긴다
 SCENE.write_text(json.dumps(scene, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 for f in ("Room_Wall_H.png", "Room_Wall_V.png", "Room_Floor.png"):  # 이전 한 방 구조의 그림
     (SPRITES / f).unlink(missing_ok=True)
-print("장면 갱신:", SCENE.name, len(scene["objects"]), "objects,", len(ROOMS), "rooms")
+print("장면 갱신:", counts)
 
-# 검사용 장면 (tools/check_demo.mjs): 보스방 입구, 채집방 광물 앞에서 시작
-for test_name, (room, sx, sy) in {"Test_Dungeon": (0, 0, -8), "Test_Boss": (4, 0, None), "Test_Gather": (2, -3, -1)}.items():
-    cy, half = rooms_cpp[room][0], rooms_cpp[room][1]
-    pos = [sx, cy - half + 3 if sy is None else cy + sy, 0.1]
-    test = copy.deepcopy(scene)
-    for oid in ("PlayerStart", "Player"):
-        next(o for o in test["objects"] if o["id"] == oid)["position"] = pos
-    (SCENE.parent / f"{test_name}.hbscene.json").write_text(json.dumps(test, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+# 검사용 장면 (tools/check_demo.mjs): 채집방 광물 앞에서 시작
+write("Test_Gather", room_objects(2), [-3, rooms_cpp[2][0] - 1, 0.1])
 
 
 # ---- C++ 방 표 ----

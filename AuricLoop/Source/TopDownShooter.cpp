@@ -2,6 +2,10 @@
 #include <cmath>
 #include <string>
 #include <algorithm>
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
+#include <fstream>
 
 // 수치는 docs/데모_기획서.md 4-1, 4-2, 5장 기준.
 // ponytail: 상수로 둠. 편집기에서 바꿔야 하면 HB_PROPERTY로 옮김.
@@ -52,6 +56,11 @@ constexpr int homePrice=150;           // 인테리어 공사 Lv2 [제안: 가�
 constexpr int homeFatigueBonus=5;      // 기획: 공사마다 피로도 한계 상승 (데모 한계 20 기준 +5)
 constexpr float loadingTime=1.2f;
 constexpr float typeSpeed=30.0f;       // 대화 글자/초 (기획서 6-5 한 글자씩)
+constexpr float cameraSize=5.625f;     // 카메라 orthographicSize. 720p에서 1m=64px(도트 2배) — tools/gen_scene.py와 같게
+constexpr float cameraLead=0.25f;       // 엔터 더 건전·소울 나이트처럼 조준 쪽으로 화면을 끌어당기는 비율
+constexpr float cameraLeadMax=3.0f;    // 끌어당기는 최대 거리 (m)
+constexpr float cameraFollow=8.0f;     // 따라가는 빠르기
+constexpr int handoffSeconds=10;       // 장면을 바꿀 때 적은 상태 파일이 이 시간 안에만 유효 (편집기 재생 시작은 새 게임)
 constexpr int doorHitsToOpen=10;       // 기획: 귀환 중 잠긴 문은 10번 때리면 열림
 constexpr float doorStun=1.0f;         // 기획: 문이 열리면 1초 전체 스턴
 constexpr float flashStun=1.0f;        // 기획: 섬광탄 1초 전체 스턴 + 탄막 제거
@@ -82,6 +91,8 @@ void TopDownShooter::Hud(hb::Actor* player){
   // UIWidget 인스턴스는 첫 프레임 뒤에 생기므로 그 전에는 표시만 미룬다
   if(frame<2){hudDirty=true;return;}
   hudDirty=false;
+  if(Phase>=2&&!introHidden){introHidden=true;
+    for(auto* n:{"LoadingBack","LoadingCoin","LoadingText","TitleBack","TitleScreen","TitleHint"})hb::UI::SetVisible(player,"HUD",n,false);}
   // 요소 이름은 tools/gen_hud.py가 만든 W_TopDown과 같다
   const int hp=Hp<0?0:Hp;
   for(int i=1;i<=MaxHp;++i)hb::UI::SetVisible(player,"HUD","HpFill"+std::to_string(i),hp==i);
@@ -161,10 +172,10 @@ void TopDownShooter::Interact(hb::Actor* player,const hb::Vec3& position,const s
   auto near=[&](const hb::Vec3& at){return Length(at-position)<balance::interactRange;};
   const Room& shop=rooms[3];
   const hb::Vec3 smithAt{-6,shop.cy+5,0},stallAt{6,shop.cy+5,0};  // tools/gen_scene.py props와 같은 자리
-  if(items.size()>=2&&hb::ActorPool::IsActive(items[0])&&near(hb::Scene::GetPosition(items[0]))){
-    next="E: 광물 채집 (30kg)";if(pressed){Ore++;Fatigue++;hb::ActorPool::Release(items[0]);next="";}
-  }else if(items.size()>=2&&hb::ActorPool::IsActive(items[1])&&near(hb::Scene::GetPosition(items[1]))){
-    next="E: 약초 채집 (3개)";if(pressed){Herb+=3;Fatigue++;hb::ActorPool::Release(items[1]);next="";}
+  if(items.size()>=2&&items[0]&&hb::ActorPool::IsActive(items[0])&&near(hb::Scene::GetPosition(items[0]))){
+    next="E: 광물 채집 (30kg)";if(pressed){Ore++;Fatigue++;oreTaken=true;hb::ActorPool::Release(items[0]);next="";}
+  }else if(items.size()>=2&&items[1]&&hb::ActorPool::IsActive(items[1])&&near(hb::Scene::GetPosition(items[1]))){
+    next="E: 약초 채집 (3개)";if(pressed){Herb+=3;Fatigue++;herbTaken=true;hb::ActorPool::Release(items[1]);next="";}
   }else if(near(smithAt+hb::Vec3{0,-1.5f,0})){
     next=WeaponLevel?"대장장이: 이번 층 강화는 끝났어":"E: 검 강화 +1 ("+std::to_string(balance::upgradePrice)+" G)";
     if(pressed&&!WeaponLevel&&Gold>=balance::upgradePrice){Gold-=balance::upgradePrice;WeaponLevel=1;next="발렌의 검 +1";}
@@ -274,7 +285,7 @@ bool TopDownShooter::UpdateIntro(hb::Actor* player,float delta,bool anyKey){
   if(Phase==0&&phaseTime>=balance::loadingTime){Phase=1;phaseTime=0;
     for(auto* n:{"LoadingBack","LoadingCoin","LoadingText"})hb::UI::SetVisible(player,"HUD",n,false);}
   else if(Phase==1&&anyKey&&phaseTime>0.3f){Phase=2;
-    for(auto* n:{"TitleBack","TitleScreen","TitleHint"})hb::UI::SetVisible(player,"HUD",n,false);
+    for(auto* n:{"TitleBack","TitleScreen","TitleHint"})hb::UI::SetVisible(player,"HUD",n,false);introHidden=true;
     Say({{"collector","수금원","어서 와. 오늘부터 여기가 네 집이야. 물론 집주인은 우리 사장님이지만."},
          {"collector","수금원","저 위 계단 끝에 있는 게 '마몬의 입'이야. 들어간 놈들은 황금을 들고 나오거나, 아예 안 나오지."},
          {"valen","발렌","...갚으면 되는 거지."},
@@ -293,6 +304,48 @@ void TopDownShooter::Settle(hb::Actor* player){
   Say({{"collector","수금원","돌아왔네? 정산할게. 소재까지 합쳐 "+std::to_string(total)+" G, 그중 절반 "+std::to_string(LastRepaid)+" G는 빚으로 받아 간다."},
        {"collector","수금원","남은 빚은 "+std::to_string(Debt)+" G. 강화는 던전 밖에선 무뎌지는 거 알지? 남은 골드로 소파라도 바꾸든가."}});
   Hud(player);
+}
+
+static std::string StatePath(){const char* t=std::getenv("TEMP");return std::string(t?t:".")+"/AuricLoop_handoff.txt";}
+static std::string SceneFor(int area){return area<0?"Assets/Scenes/Hub.hbscene.json":"Assets/Scenes/Dungeon_"+std::to_string(area)+".hbscene.json";}
+
+void TopDownShooter::SaveAndOpen(hb::Actor* player,const hb::Vec3& position,int to,const std::vector<hb::Actor*>& items){
+  // 바닥에 남은 골드는 들고 간다. 전투 중엔 문이 잠겨 있어서 적·탄환 상태는 넘기지 않는다.
+  for(size_t i=2;i<items.size();++i)if(hb::ActorPool::IsActive(items[i])){Gold+=coinValue[items[i]];hb::ActorPool::Release(items[i]);}
+  std::ofstream o(StatePath());
+  o<<std::time(nullptr)<<' '<<position.x<<' '<<position.y<<' '<<facing.x<<' '<<facing.y<<' '<<int(BossHp*100);
+  for(int v:{FatigueMax,Fatigue,Hp,Kills,RoomClears,Swings,Hits,Shots,int(HasReturnItem),int(Returning),int(ReturnSuccess),Flashbangs,Gold,Ore,Herb,Monster,Bottle,
+             WeaponLevel,Debt,LastRepaid,Enchant,Crafted,MaxHp,SofaLevel,HomeLevel,Phase,int(oreTaken),int(herbTaken)})o<<' '<<v;
+  for(int i=0;i<roomCount;++i)o<<' '<<roomState[i];
+  o.close();leaving=true;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
+  hb::Scene::Open(SceneFor(to));
+}
+
+bool TopDownShooter::Restore(hb::Actor* player){
+  std::ifstream in(StatePath());long long saved=0;if(!(in>>saved))return false;
+  float px,py,fx,fy;int boss;in>>px>>py>>fx>>fy>>boss;
+  int flags[28];for(int& v:flags)in>>v;
+  int rooms[roomCount];for(int& v:rooms)in>>v;
+  const bool ok=bool(in);in.close();std::remove(StatePath().c_str());  // 한 번 쓰면 지운다
+  if(!ok||std::time(nullptr)-saved>balance::handoffSeconds)return false;
+  int k=0;for(int* v:{&FatigueMax,&Fatigue,&Hp,&Kills,&RoomClears,&Swings,&Hits,&Shots})*v=flags[k++];
+  HasReturnItem=flags[k++];Returning=flags[k++];ReturnSuccess=flags[k++];
+  for(int* v:{&Flashbangs,&Gold,&Ore,&Herb,&Monster,&Bottle,&WeaponLevel,&Debt,&LastRepaid,&Enchant,&Crafted,&MaxHp,&SofaLevel,&HomeLevel,&Phase})*v=flags[k++];
+  oreTaken=flags[k++];herbTaken=flags[k++];
+  for(int i=0;i<roomCount;++i)roomState[i]=rooms[i]==1?0:rooms[i];  // 전투 중이던 방은 처음부터
+  BossHp=boss/100.f;facing=hb::Vec3{fx,fy,0};
+  hb::Scene::SetPosition(player,hb::Vec3{px,py,hb::Scene::GetPosition(player).z});
+  return true;
+}
+
+void TopDownShooter::MoveCamera(hb::Actor* camera,const hb::Vec3& position,const hb::Vec3& aim,bool hasAim,float delta){
+  if(!camera)return;
+  hb::Vec3 target=position;
+  if(hasAim)target=target+hb::VectorMath::ClampVectorLength((aim-position)*balance::cameraLead,balance::cameraLeadMax);
+  target.z=hb::Scene::GetPosition(camera).z;
+  if(!cameraReady){cameraAt=target;cameraReady=true;}
+  else cameraAt=hb::VectorMath::VInterpTo(cameraAt,target,delta,balance::cameraFollow);
+  hb::Scene::SetPosition(camera,cameraAt);
 }
 
 void TopDownShooter::StunAll(const std::vector<hb::Actor*>& enemies,float seconds){
@@ -354,16 +407,21 @@ bool TopDownShooter::UpdateBoss(hb::Actor* player,float delta,const std::vector<
 void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& effects,const std::vector<hb::Actor*>& doors,const std::vector<hb::Actor*>& boss,const std::vector<hb::Actor*>& items){
   auto* player=hb::Gameplay::GetPlayerPawn();if(!player)return;
   frame++;if(hudDirty)Hud(player);
-  if(!started){started=true;Hp=MaxHp;
+  if(!started){started=true;Hp=MaxHp;area=RoomAt(hb::Scene::GetPosition(player).y);  // 이 장면이 맡은 구역 (-1 거점)
     for(size_t i=0;i<enemies.size();++i){enemyHp[enemies[i]]=balance::enemyHp;shotTimer[enemies[i]]=1+0.3f*i;}
+    if(Restore(player)||area>=0)Phase=std::max(Phase,2);  // 장면을 넘어왔거나 던전에서 바로 시작하면 로딩·타이틀 생략 (Hud에서 숨김)
+    if(items.size()>=2){if(oreTaken&&items[0]&&hb::ActorPool::IsActive(items[0]))hb::ActorPool::Release(items[0]);
+      if(herbTaken&&items[1]&&hb::ActorPool::IsActive(items[1]))hb::ActorPool::Release(items[1]);}
     Hud(player);}
+  if(leaving)return;
   const auto position=hb::Scene::GetPosition(player);
-  if(frame==1&&RoomAt(position.y)>=0){Phase=2;  // 던전 안에서 시작하는 검사 장면은 로딩·타이틀 생략
-    for(auto* n:{"LoadingBack","LoadingCoin","LoadingText","TitleBack","TitleScreen","TitleHint"})hb::UI::SetVisible(player,"HUD",n,false);}
+  hb::Vec3 aim;const bool hasAim=hb::Input::GetMouseWorldPosition(hb::Vec3{0,0,1},position,aim);
+  MoveCamera(effects.size()>1?effects[1]:nullptr,position,aim,hasAim&&Phase>=2,delta);  // Effects[1]은 카메라
   {const bool adv=hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("space");
    const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
    if(frame>=2&&UpdateIntro(player,delta,pressed))return;
-   if(UpdateDialog(player,delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;return;}}  // 대화 중엔 행동 막음
+   if(UpdateDialog(player,delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}}  // 대화 중엔 행동·이동 막음
+  if(RoomAt(position.y)!=area){SaveAndOpen(player,position,RoomAt(position.y),items);return;}  // 다른 구역으로 넘어감
   if(RoomAt(position.y)!=RoomIndex&&!Returning){RoomIndex=RoomAt(position.y);if(RoomIndex<0)Hud(player);}  // 거점이면 -1
   const Room& room=rooms[RoomIndex<0?0:RoomIndex];
 
@@ -388,7 +446,7 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
   // 조준: 마우스가 있으면 마우스 방향, 없으면 이동 방향
   hb::Vec3 move{hb::Input::GetAxis("d")-hb::Input::GetAxis("a"),hb::Input::GetAxis("w")-hb::Input::GetAxis("s"),0};
   if(hb::VectorMath::VectorLengthSquared(move)>.01f)facing=hb::VectorMath::NormalizeVector(move);
-  hb::Vec3 aim;if(hb::Input::GetMouseWorldPosition(hb::Vec3{0,0,1},position,aim)){
+  if(hasAim){
     const auto d=aim-position;if(hb::VectorMath::VectorLengthSquared(d)>.01f)facing=hb::VectorMath::NormalizeVector(d);
   }
   hb::Sprites::SetFlip(player,facing.x<0,false);
@@ -424,7 +482,7 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
       hb::Transform t;t.position=position+facing*1.4f;t.position.z=0.2f;
       t.rotation=hb::Vec3{0,0,std::atan2(facing.y,facing.x)*180/3.14159265f};
       if(slashFx)hb::ActorPool::Release(slashFx);
-      slashFx=hb::ActorPool::Acquire(effects,t);slashTime=0.12f;
+      slashFx=hb::ActorPool::Acquire(std::vector<hb::Actor*>{effects[0]},t);slashTime=0.12f;
     }
     const float minDot=std::cos(balance::swordHalfAngle*3.14159265f/180);
     auto inFan=[&](const hb::Vec3& at){const auto d=at-position;const float len=Length(d);

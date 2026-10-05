@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sceneName": "Test_Gather",
+  "sceneName": "Dungeon_2",
   "objects": [
     {
       "id": "Player",
@@ -8,8 +8,8 @@
       "kind": "character2d",
       "group": "WORLD",
       "position": [
-        -3,
-        45.0,
+        0,
+        41.0,
         0.1
       ],
       "rotation": [
@@ -234,8 +234,8 @@
       "kind": "playerStart",
       "group": "WORLD",
       "position": [
-        -3,
-        45.0,
+        0,
+        41.0,
         0.1
       ],
       "rotation": [

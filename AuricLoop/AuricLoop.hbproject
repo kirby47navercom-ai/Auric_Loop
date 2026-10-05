@@ -4,6 +4,6 @@
   "engineVersion": "0.1.0",
   "id": "c56d1b68-6576-4a57-8773-0469147f0d1c",
   "name": "AuricLoop",
-  "startupScene": "Assets/Scenes/Garden.hbscene.json",
+  "startupScene": "Assets/Scenes/Hub.hbscene.json",
   "startupBlueprint": "Assets/Blueprints/BP_Garden.hbblueprint.json"
 }

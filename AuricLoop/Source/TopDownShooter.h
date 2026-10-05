@@ -89,6 +89,12 @@ private:
   int Weight() const{return Ore*30+Herb*5+Monster*15;}
   void StunAll(const std::vector<hb::Actor*>& enemies,float seconds);
   bool UpdateBoss(hb::Actor* player,float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies);
+  // 장면 나누기: 거점·던전 방마다 장면이 따로라서, 다른 구역으로 넘어갈 때 상태를 파일에 적고 장면을 연다
+  void SaveAndOpen(hb::Actor* player,const hb::Vec3& position,int area,const std::vector<hb::Actor*>& items);
+  bool Restore(hb::Actor* player);
+  void MoveCamera(hb::Actor* camera,const hb::Vec3& position,const hb::Vec3& aim,bool hasAim,float delta);
+  int area=0;bool introHidden=false,leaving=false,oreTaken=false,herbTaken=false;
+  hb::Vec3 cameraAt{0,0,0};bool cameraReady=false;
   void SetDoors(const std::vector<hb::Actor*>& doors,int room,bool locked);
   float attackCooldown=0,dodgeTime=0,dodgeCooldown=0,invulnerable=0,gameOver=0;
   bool dodgeHeld=false,started=false,hudDirty=true;

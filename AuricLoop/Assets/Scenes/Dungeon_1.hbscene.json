@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sceneName": "Test_Gather",
+  "sceneName": "Dungeon_1",
   "objects": [
     {
       "id": "Player",
@@ -8,8 +8,8 @@
       "kind": "character2d",
       "group": "WORLD",
       "position": [
-        -3,
-        45.0,
+        0,
+        16.0,
         0.1
       ],
       "rotation": [
@@ -234,8 +234,8 @@
       "kind": "playerStart",
       "group": "WORLD",
       "position": [
-        -3,
-        45.0,
+        0,
+        16.0,
         0.1
       ],
       "rotation": [
@@ -13318,7 +13318,7 @@
           "type": "PooledActor",
           "properties": {
             "enabled": true,
-            "initiallyActive": true
+            "initiallyActive": false
           }
         }
       ]
@@ -13401,18 +13401,18 @@
           "type": "PooledActor",
           "properties": {
             "enabled": true,
-            "initiallyActive": true
+            "initiallyActive": false
           }
         }
       ]
     },
     {
-      "id": "Floor2",
-      "name": "Floor2",
+      "id": "Floor1",
+      "name": "Floor1",
       "kind": "sprite",
       "position": [
         0,
-        46.0,
+        25.0,
         -0.1
       ],
       "rotation": [
@@ -13457,15 +13457,15 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Room_Floor_16.png",
+            "texture": "Assets/Sprites/Room_Floor_24.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 16,
-            "height": 16,
+            "width": 24,
+            "height": 24,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -13481,12 +13481,12 @@
       ]
     },
     {
-      "id": "Room2W",
-      "name": "Room2W",
+      "id": "Room1W",
+      "name": "Room1W",
       "kind": "sprite",
       "position": [
-        -8.5,
-        46.0,
+        -12.5,
+        25.0,
         0.0
       ],
       "rotation": [
@@ -13531,7 +13531,7 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Room_Wall_V16.png",
+            "texture": "Assets/Sprites/Room_Wall_V24.png",
             "color": [
               1,
               1,
@@ -13539,7 +13539,7 @@
               1
             ],
             "width": 1.0,
-            "height": 16,
+            "height": 24,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -13575,7 +13575,7 @@
             "density": 1,
             "extent": [
               0.5,
-              8.0,
+              12.0,
               0.5
             ]
           }
@@ -13583,12 +13583,12 @@
       ]
     },
     {
-      "id": "Room2E",
-      "name": "Room2E",
+      "id": "Room1E",
+      "name": "Room1E",
       "kind": "sprite",
       "position": [
-        8.5,
-        46.0,
+        12.5,
+        25.0,
         0.0
       ],
       "rotation": [
@@ -13633,7 +13633,7 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Room_Wall_V16.png",
+            "texture": "Assets/Sprites/Room_Wall_V24.png",
             "color": [
               1,
               1,
@@ -13641,7 +13641,7 @@
               1
             ],
             "width": 1.0,
-            "height": 16,
+            "height": 24,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -13677,9 +13677,287 @@
             "density": 1,
             "extent": [
               0.5,
-              8.0,
+              12.0,
               0.5
             ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Room1SL",
+      "name": "Room1SL",
+      "kind": "sprite",
+      "position": [
+        -7.5,
+        12.5,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Room_Wall_H11.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 11.0,
+            "height": 1.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              5.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Room1SR",
+      "name": "Room1SR",
+      "kind": "sprite",
+      "position": [
+        7.5,
+        12.5,
+        0.0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Room_Wall_H11.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 11.0,
+            "height": 1.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              5.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Floor1Gap",
+      "name": "Floor1Gap",
+      "kind": "sprite",
+      "position": [
+        0,
+        12.5,
+        -0.1
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Room_Floor_Gap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4.0,
+            "height": 1.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
           }
         }
       ]
@@ -13895,284 +14173,6 @@
       "position": [
         0,
         37.5,
-        -0.1
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Room_Floor_Gap.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 4.0,
-            "height": 1.0,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -10,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ]
-    },
-    {
-      "id": "Room3SL",
-      "name": "Room3SL",
-      "kind": "sprite",
-      "position": [
-        -7.5,
-        54.5,
-        0.0
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Room_Wall_H11.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 11.0,
-            "height": 1.0,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": 0,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        },
-        {
-          "id": "component_2",
-          "name": "BoxCollider2D",
-          "type": "BoxCollider2D",
-          "properties": {
-            "enabled": true,
-            "center": [
-              0,
-              0,
-              0
-            ],
-            "collisionMode": "both",
-            "trigger": false,
-            "layer": 0,
-            "mask": 4294967295,
-            "physicalMaterial": "",
-            "friction": 0.5,
-            "frictionCombine": "average",
-            "restitution": 0,
-            "restitutionCombine": "average",
-            "density": 1,
-            "extent": [
-              5.5,
-              0.5,
-              0.5
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "id": "Room3SR",
-      "name": "Room3SR",
-      "kind": "sprite",
-      "position": [
-        7.5,
-        54.5,
-        0.0
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Room_Wall_H11.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 11.0,
-            "height": 1.0,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": 0,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        },
-        {
-          "id": "component_2",
-          "name": "BoxCollider2D",
-          "type": "BoxCollider2D",
-          "properties": {
-            "enabled": true,
-            "center": [
-              0,
-              0,
-              0
-            ],
-            "collisionMode": "both",
-            "trigger": false,
-            "layer": 0,
-            "mask": 4294967295,
-            "physicalMaterial": "",
-            "friction": 0.5,
-            "frictionCombine": "average",
-            "restitution": 0,
-            "restitutionCombine": "average",
-            "density": 1,
-            "extent": [
-              5.5,
-              0.5,
-              0.5
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "id": "Floor3Gap",
-      "name": "Floor3Gap",
-      "kind": "sprite",
-      "position": [
-        0,
-        54.5,
         -0.1
       ],
       "rotation": [

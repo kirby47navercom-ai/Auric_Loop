@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "name": "BP_TopDownShooter",
+  "name": "BP_Hub",
   "components": [
     {
       "id": "component_0",
@@ -44,92 +44,14 @@
       "name": "Bullets",
       "type": "object",
       "container": "array",
-      "value": [
-        "Bullet0",
-        "Bullet1",
-        "Bullet2",
-        "Bullet3",
-        "Bullet4",
-        "Bullet5",
-        "Bullet6",
-        "Bullet7",
-        "Bullet8",
-        "Bullet9",
-        "Bullet10",
-        "Bullet11",
-        "Bullet12",
-        "Bullet13",
-        "Bullet14",
-        "Bullet15",
-        "Bullet16",
-        "Bullet17",
-        "Bullet18",
-        "Bullet19",
-        "Bullet20",
-        "Bullet21",
-        "Bullet22",
-        "Bullet23",
-        "Bullet24",
-        "Bullet25",
-        "Bullet26",
-        "Bullet27",
-        "Bullet28",
-        "Bullet29",
-        "Bullet30",
-        "Bullet31",
-        "Bullet32",
-        "Bullet33",
-        "Bullet34",
-        "Bullet35",
-        "Bullet36",
-        "Bullet37",
-        "Bullet38",
-        "Bullet39",
-        "Bullet40",
-        "Bullet41",
-        "Bullet42",
-        "Bullet43",
-        "Bullet44",
-        "Bullet45",
-        "Bullet46",
-        "Bullet47",
-        "Bullet48",
-        "Bullet49",
-        "Bullet50",
-        "Bullet51",
-        "Bullet52",
-        "Bullet53",
-        "Bullet54",
-        "Bullet55",
-        "Bullet56",
-        "Bullet57",
-        "Bullet58",
-        "Bullet59",
-        "Bullet60",
-        "Bullet61",
-        "Bullet62",
-        "Bullet63"
-      ]
+      "value": []
     },
     {
       "id": "enemies",
       "name": "Enemies",
       "type": "object",
       "container": "array",
-      "value": [
-        "Enemy0",
-        "Enemy1",
-        "Enemy2",
-        "Enemy3",
-        "Enemy4",
-        "Enemy5",
-        "Enemy6",
-        "Enemy7",
-        "Enemy8",
-        "Enemy9",
-        "Enemy10",
-        "Enemy11"
-      ]
+      "value": []
     },
     {
       "id": "effects",
@@ -146,43 +68,21 @@
       "name": "Doors",
       "type": "object",
       "container": "array",
-      "value": [
-        "Door0",
-        "Door1",
-        "Door2",
-        "Door3"
-      ]
+      "value": []
     },
     {
       "id": "boss",
       "name": "Boss",
       "type": "object",
       "container": "array",
-      "value": [
-        "Boss"
-      ]
+      "value": []
     },
     {
       "id": "items",
       "name": "Items",
       "type": "object",
       "container": "array",
-      "value": [
-        "Ore",
-        "Herb",
-        "Coin0",
-        "Coin1",
-        "Coin2",
-        "Coin3",
-        "Coin4",
-        "Coin5",
-        "Coin6",
-        "Coin7",
-        "Coin8",
-        "Coin9",
-        "Coin10",
-        "Coin11"
-      ]
+      "value": []
     }
   ],
   "nodes": [
