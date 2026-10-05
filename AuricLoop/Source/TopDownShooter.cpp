@@ -27,14 +27,23 @@ constexpr float shotSpeed=7.0f;
 constexpr float shotLife=3.0f;
 constexpr float shotHitRange=0.45f;
 constexpr float respawnDelay=3.0f;
+constexpr float bossHp=40.0f;          // 기획서 5장 [제안]
+constexpr float bossSpeed=3.6f;
+constexpr float bossRadius=1.4f;       // 몸이 커서 검 사거리와 접촉 판정에 더한다
+constexpr float bossChargeWindup=1.0f; // 돌진 전 예고 1초
+constexpr float bossChargeTime=0.6f;
+constexpr float bossChargeSpeed=14.0f;
+constexpr int bossRing=12;             // 원형 탄막 12방향 x 2회
+constexpr int bossSummon=2;            // 근거리 해골 2마리 소환
+constexpr float bossRest=1.5f;
 constexpr float enterDepth=2.0f;       // 문을 지나 이만큼 들어오면 방에 들어온 것으로 봄 (m)
 }
 
 // <rooms> tools/gen_scene.py가 만든 표. 손으로 고치지 말고 생성기를 고친다.
 struct Spawn{float x,y;int ranged;};
 struct Room{float cy,half;int kind,first,count;};  // kind: 0 전투, 1 채집, 2 상점, 3 보스
-constexpr Spawn spawns[]={{-6.0f,4.0f,0},{0.0f,6.0f,0},{6.0f,4.0f,0},{-7.0f,3.0f,0},{7.0f,3.0f,0},{-5.0f,8.0f,1},{5.0f,8.0f,1},{-8.0f,6.0f,0},{8.0f,6.0f,0},{0.0f,10.0f,1},{-10.0f,12.0f,1},{10.0f,12.0f,1}};
-constexpr Room rooms[]={{0.0f,12.0f,0,0,3},{25.0f,12.0f,0,3,4},{46.0f,8.0f,1,7,0},{67.0f,12.0f,2,7,0},{96.0f,16.0f,3,7,5}};
+constexpr Spawn spawns[]={{-6.0f,4.0f,0},{0.0f,6.0f,0},{6.0f,4.0f,0},{-7.0f,3.0f,0},{7.0f,3.0f,0},{-5.0f,8.0f,1},{5.0f,8.0f,1}};
+constexpr Room rooms[]={{0.0f,12.0f,0,0,3},{25.0f,12.0f,0,3,4},{46.0f,8.0f,1,7,0},{67.0f,12.0f,2,7,0},{96.0f,16.0f,3,7,0}};
 constexpr int roomCount=5;
 // </rooms>
 
@@ -57,7 +66,8 @@ void TopDownShooter::Hud(hb::Actor* player){
     if(fatigueLevel>=0)hb::UI::SetVisible(player,"HUD",name(fatigueLevel),false);
     hb::UI::SetVisible(player,"HUD",name(level),true);fatigueLevel=level;
   }
-  hb::UI::SetText(player,"HUD","Title",Hp>0?"탐색":Fatigue>=FatigueMax?"지쳐 쓰러졌다":"쓰러졌다");
+  hb::UI::SetText(player,"HUD","Title",Hp<=0?(Fatigue>=FatigueMax?"지쳐 쓰러졌다":"쓰러졌다")
+    :HasReturnItem?"[귀환] 획득":bossActor&&hb::ActorPool::IsActive(bossActor)?"해골 대장":"탐색");
 }
 
 void TopDownShooter::Damage(hb::Actor* player,int amount){
@@ -90,9 +100,14 @@ void TopDownShooter::SetDoors(const std::vector<hb::Actor*>& doors,int room,bool
     else if(!locked&&hb::ActorPool::IsActive(d))hb::ActorPool::Release(d);}
 }
 
-void TopDownShooter::EnterRoom(int index,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& doors){
+void TopDownShooter::EnterRoom(int index,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& doors,const std::vector<hb::Actor*>& boss){
   RoomIndex=index;auto& state=roomState[index];if(state)return;
   const Room& r=rooms[index];
+  if(r.kind==3&&!boss.empty()){  // 보스방: 해골 대장 등장
+    state=1;fightingRoom=index;SetDoors(doors,index,true);
+    hb::Transform t;t.position=hb::Vec3{0,r.cy+6,0.1f};bossActor=hb::ActorPool::Acquire(boss,t);
+    BossHp=balance::bossHp;bossPattern=0;bossStep=0;bossTimer=2.0f;Hud(hb::Gameplay::GetPlayerPawn());return;
+  }
   if(r.count==0){state=2;return;}  // 채집방·상점은 싸움 없음
   state=1;fightingRoom=index;SetDoors(doors,index,true);
   const std::vector<hb::Actor*> melee(enemies.begin(),enemies.begin()+balance::rangedFrom),ranged(enemies.begin()+balance::rangedFrom,enemies.end());
@@ -102,7 +117,39 @@ void TopDownShooter::EnterRoom(int index,const std::vector<hb::Actor*>& enemies,
   }
 }
 
-void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& effects,const std::vector<hb::Actor*>& doors){
+bool TopDownShooter::UpdateBoss(hb::Actor* player,float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies){
+  // 해골 대장: 천천히 다가오다가 돌진 → 원형 탄막 → 졸개 소환을 차례로 반복 (기획서 5장)
+  if(!bossActor||!hb::ActorPool::IsActive(bossActor))return false;
+  const auto at=hb::Scene::GetPosition(bossActor),to=hb::Scene::GetPosition(player)-at;
+  const float len=Length(to);const auto dir=len>.01f?to*(1/len):hb::Vec3{0,-1,0};
+  bossTimer-=delta;
+  if(bossStep==0){  // 쉬면서 추격
+    hb::Physics::SetVelocity(bossActor,dir*balance::bossSpeed);
+    if(bossTimer<=0){bossStep=1;bossTimer=bossPattern==0?balance::bossChargeWindup:0.5f;
+      if(bossPattern==0)hb::Sprites::SetColor(bossActor,hb::Color{1,0.45f,0.45f,1});}  // 돌진 예고: 붉게
+  }else if(bossPattern==0){  // 돌진
+    if(bossStep==1){hb::Physics::SetVelocity(bossActor,hb::Vec3{0,0,0});bossDash=dir;
+      if(bossTimer<=0){bossStep=2;bossTimer=balance::bossChargeTime;hb::Sprites::SetColor(bossActor,hb::Color{1,1,1,1});}}
+    else{hb::Physics::SetVelocity(bossActor,bossDash*balance::bossChargeSpeed);if(bossTimer<=0)bossStep=3;}
+  }else if(bossPattern==1){  // 원형 탄막 2회
+    hb::Physics::SetVelocity(bossActor,hb::Vec3{0,0,0});
+    if(bossTimer<=0&&bossStep<=2){
+      for(int i=0;i<balance::bossRing;++i){const auto d=Rotate(hb::Vec3{1,0,0},360.f*i/balance::bossRing+bossStep*15.f);
+        hb::Transform t;t.position=at+d*1.6f;if(auto* b=hb::ActorPool::Acquire(bullets,t)){hb::Physics::SetVelocity(b,d*balance::shotSpeed);lifetime[b]=balance::shotLife;Shots++;}}
+      bossStep++;bossTimer=0.5f;
+    }
+  }else{  // 졸개 소환
+    const std::vector<hb::Actor*> melee(enemies.begin(),enemies.begin()+balance::rangedFrom);
+    for(int i=0;i<balance::bossSummon;++i){hb::Transform t;t.position=at+hb::Vec3{i?2.5f:-2.5f,-1.5f,0};
+      if(auto* e=hb::ActorPool::Acquire(melee,t)){enemyHp[e]=balance::enemyHp;stun[e]=0.5f;}}
+    bossStep=3;
+  }
+  if(bossStep==3){bossStep=0;bossPattern=(bossPattern+1)%3;bossTimer=balance::bossRest;}
+  if(len<balance::bossRadius+balance::contactRange)Damage(player,1);
+  return true;
+}
+
+void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& effects,const std::vector<hb::Actor*>& doors,const std::vector<hb::Actor*>& boss){
   auto* player=hb::Gameplay::GetPlayerPawn();if(!player)return;
   frame++;if(hudDirty)Hud(player);
   if(!started){started=true;Hp=balance::playerHp;
@@ -113,7 +160,7 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
 
   // 방 입장: 문을 지나 조금 들어오면 그 방의 적이 나오고 문이 잠긴다
   {const int at=RoomAt(position.y);const Room& r=rooms[at];
-   if(position.y>r.cy-r.half+balance::enterDepth||at==0)EnterRoom(at,enemies,doors);}
+   if(position.y>r.cy-r.half+balance::enterDepth||at==0)EnterRoom(at,enemies,doors,boss);}
 
   // 탄환 수명과 방 밖으로 나간 탄환 정리
   for(auto it=lifetime.begin();it!=lifetime.end();){
@@ -165,6 +212,13 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
       hb::Physics::SetVelocity(e,(len>.01f?d*(1/len):facing)*6);
       if(enemyHp[e]<=0){hb::ActorPool::Release(e);Kills++;}
     }
+    if(bossActor&&hb::ActorPool::IsActive(bossActor)){
+      const auto d=hb::Scene::GetPosition(bossActor)-position;const float len=Length(d);
+      if(len<=balance::swordRange+balance::bossRadius&&(len<=balance::bossRadius+balance::contactRange||hb::VectorMath::DotProduct(d*(1/len),facing)>=minDot)){
+        BossHp-=balance::swordDamage;Hits++;
+        if(BossHp<=0){hb::ActorPool::Release(bossActor);Kills++;HasReturnItem=true;Hud(player);}
+      }
+    }
     for(auto it=lifetime.begin();it!=lifetime.end();)
       if(inFan(hb::Scene::GetPosition(it->first))){hb::ActorPool::Release(it->first);it=lifetime.erase(it);}else ++it;
   }
@@ -186,6 +240,7 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
   }
   for(auto& [b,life]:lifetime)if(Length(hb::Scene::GetPosition(b)-position)<balance::shotHitRange){Damage(player,1);life=0;}
 
+  if(UpdateBoss(player,delta,bullets,enemies))alive++;
   // 방 클리어: 문이 열리고 피로도 +1 (기획), 피로도가 가득 차면 쓰러짐
   if(alive==0&&fightingRoom>=0){
     roomState[fightingRoom]=2;SetDoors(doors,fightingRoom,false);fightingRoom=-1;

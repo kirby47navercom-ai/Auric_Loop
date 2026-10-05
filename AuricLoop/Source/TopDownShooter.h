@@ -6,7 +6,7 @@ HB_CLASS(Blueprintable)
 class TopDownShooter : public hb::Actor {
 public:
   HB_FUNCTION(BlueprintCallable, KoreanName="조준·발사·탄환 재사용", Category="탑다운 슈터")
-  void Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& effects,const std::vector<hb::Actor*>& doors);
+  void Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& effects,const std::vector<hb::Actor*>& doors,const std::vector<hb::Actor*>& boss);
   // 피로도 한계. 기획 100, 데모 기본 20 (docs/데모_기획서.md 4-1). 편집기 BP 기본값에서 바꿀 수 있음.
   HB_PROPERTY(BlueprintReadWrite)
   int FatigueMax = 20;
@@ -26,12 +26,17 @@ public:
   int Shots = 0;
   HB_PROPERTY(BlueprintReadWrite)
   int RoomIndex = 0;
+  HB_PROPERTY(BlueprintReadWrite)
+  float BossHp = 0;
+  HB_PROPERTY(BlueprintReadWrite)
+  bool HasReturnItem = false;  // 기획: 보스를 잡으면 [귀환] 아이템
 private:
   void Hud(hb::Actor* player);
   void Fire(const std::vector<hb::Actor*>& bullets,const hb::Vec3& from,const hb::Vec3& dir);
   void Damage(hb::Actor* player,int amount);
   void Animate(hb::Actor* player,float delta,bool moving);
-  void EnterRoom(int index,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& doors);
+  void EnterRoom(int index,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& doors,const std::vector<hb::Actor*>& boss);
+  bool UpdateBoss(hb::Actor* player,float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies);
   void SetDoors(const std::vector<hb::Actor*>& doors,int room,bool locked);
   float attackCooldown=0,dodgeTime=0,dodgeCooldown=0,invulnerable=0,gameOver=0;
   bool dodgeHeld=false,started=false,hudDirty=true;
@@ -43,4 +48,8 @@ private:
   std::map<hb::Actor*,float> enemyHp,stun,shotTimer,lifetime;
   std::map<int,int> roomState;  // 0 처음, 1 전투 중(문 잠김), 2 클리어
   int fightingRoom=-1;
+  hb::Actor* bossActor=nullptr;
+  int bossPattern=0,bossStep=0;
+  float bossTimer=0;
+  hb::Vec3 bossDash{0,0,0};
 };

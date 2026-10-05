@@ -26,7 +26,7 @@ ROOMS = [
     ("전투방2", COMBAT, 24, [(-7, 3, 0), (7, 3, 0), (-5, 8, 1), (5, 8, 1)]),
     ("채집방", GATHER, 16, []),
     ("상점", SHOP, 24, []),
-    ("보스방", BOSS, 32, [(-8, 6, 0), (8, 6, 0), (0, 10, 1), (-10, 12, 1), (10, 12, 1)]),  # ponytail: 해골 대장 전까지 임시 무리
+    ("보스방", BOSS, 32, []),  # 해골 대장은 C++가 방 가운데 위쪽에 꺼낸다
 ]
 
 scene = json.loads(SCENE.read_text(encoding="utf-8"))
@@ -95,13 +95,18 @@ for i in range(12):
     comp(e, "PooledActor")["properties"]["initiallyActive"] = False
     e["position"] = [0, -60, 0.1]
 
+boss = copy.deepcopy(objs["Enemy0"])  # 1층 보스 해골 대장 (기획서 5장)
+boss.update(id="Boss", name="Boss", position=[0, -60, 0.1])
+texture(boss, "SkeletonCaptain_Idle.png", sortingOrder=2)
+comp(boss, "BoxCollider2D")["properties"]["extent"] = [1.2, 1.4, 0.1]
+
 slash = copy.deepcopy(objs["Bullet0"])  # 검 베기 이펙트
 slash.update(id="SlashFX", name="SlashFX", position=[0, -60, 0.2])
 slash["components"] = [c for c in slash["components"] if c["type"] in ("Transform", "SpriteRenderer", "PooledActor")]
 texture(slash, "FX_Slash.png", sortingOrder=5)
 
 # ---- 방, 벽, 문 ----
-made = [slash, start, director]
+made = [boss, slash, start, director]
 rooms_cpp = []
 y = -12.0  # 첫 방 아래쪽 안쪽 경계
 tiled("Wall_Stone.png", "Room_Wall_Door.png", DOOR, WALL, band=PPU)
@@ -136,6 +141,13 @@ SCENE.write_text(json.dumps(scene, ensure_ascii=False, indent=2) + "\n", encodin
 for f in ("Room_Wall_H.png", "Room_Wall_V.png", "Room_Floor.png"):  # 이전 한 방 구조의 그림
     (SPRITES / f).unlink(missing_ok=True)
 print("장면 갱신:", SCENE.name, len(scene["objects"]), "objects,", len(ROOMS), "rooms")
+
+# 검사용 장면: 보스방 입구에서 시작 (tools/check_demo.mjs)
+boss_start = rooms_cpp[-1][0] - rooms_cpp[-1][1] + 3
+test = copy.deepcopy(scene)
+next(o for o in test["objects"] if o["id"] == "PlayerStart")["position"] = [0, boss_start, 0.1]
+next(o for o in test["objects"] if o["id"] == "Player")["position"] = [0, boss_start, 0.1]
+(SCENE.parent / "Test_Boss.hbscene.json").write_text(json.dumps(test, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 # ---- C++ 방 표 ----
 spawn_rows, rows = [], []

@@ -223,5 +223,11 @@
   },
   "Assets/Sprites/Room_Wall_V32.png": {
     "id": "1363cd57-94da-41d2-86e6-32bd8e1a39f4"
+  },
+  "Assets/Scenes/Test_Boss.hbscene.json": {
+    "id": "805abc0a-f079-4a46-92d9-f5e2d717e191"
+  },
+  "Assets/Sprites/SkeletonCaptain_Idle.png": {
+    "id": "8413a3fe-bbd5-4425-8918-3e06f9bc185b"
   }
 }
