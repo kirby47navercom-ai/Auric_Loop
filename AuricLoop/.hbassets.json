@@ -55,5 +55,89 @@
   },
   "Assets/Sprites/Room_Wall_V.png": {
     "id": "8e37cfa2-2f6e-42c9-8934-66c8db960c54"
+  },
+  "Assets/UI/Kit/btn_attack_valen.png": {
+    "id": "3d9496dd-47e3-4a51-ab24-78c51c64d9cf"
+  },
+  "Assets/UI/Kit/btn_craft.png": {
+    "id": "8265117b-c3d7-4fb1-acb8-bc94144dee9f"
+  },
+  "Assets/UI/Kit/btn_dodge.png": {
+    "id": "a41447fd-61eb-41a2-bccf-26154ea72e23"
+  },
+  "Assets/UI/Kit/btn_flash.png": {
+    "id": "03b5ec69-3204-40c2-bccb-1aa1ecc8db31"
+  },
+  "Assets/UI/Kit/btn_gather.png": {
+    "id": "02b00fa2-a12a-4690-b69f-23e266c98926"
+  },
+  "Assets/UI/Kit/btn_interact.png": {
+    "id": "04c78cac-5238-4e20-ab25-0c427051afe8"
+  },
+  "Assets/UI/Kit/btn_inventory.png": {
+    "id": "f7d1720f-af02-4f15-bbe4-c805bdd4b410"
+  },
+  "Assets/UI/Kit/btn_pause.png": {
+    "id": "063453bb-3dcc-4baf-a187-f16b758a15af"
+  },
+  "Assets/UI/Kit/fatigue_000.png": {
+    "id": "11507afe-60e8-434a-8f84-e325c6e27dc5"
+  },
+  "Assets/UI/Kit/fatigue_010.png": {
+    "id": "63f8d250-8135-4240-95f0-e7e44a719d4f"
+  },
+  "Assets/UI/Kit/fatigue_020.png": {
+    "id": "3943f67e-ff95-47ea-bbd3-e3cbd3120466"
+  },
+  "Assets/UI/Kit/fatigue_030.png": {
+    "id": "1b8e1d73-40bc-4228-9e4a-53ce688ed790"
+  },
+  "Assets/UI/Kit/fatigue_040.png": {
+    "id": "cf8b0350-a53a-4060-bd97-3514dcdd3a9f"
+  },
+  "Assets/UI/Kit/fatigue_050.png": {
+    "id": "dc784ada-e33d-4a41-8002-d28aba4a7e13"
+  },
+  "Assets/UI/Kit/fatigue_060.png": {
+    "id": "e0b23ac2-c276-4817-b19b-41cf91bb42ce"
+  },
+  "Assets/UI/Kit/fatigue_070.png": {
+    "id": "007d54f4-9ec2-4e7b-a748-35f58d913d45"
+  },
+  "Assets/UI/Kit/fatigue_080.png": {
+    "id": "32155382-694c-480d-a48e-88b0f6443ce1"
+  },
+  "Assets/UI/Kit/fatigue_090.png": {
+    "id": "7ef6d355-309a-417a-9e1a-ef4504b71913"
+  },
+  "Assets/UI/Kit/fatigue_100.png": {
+    "id": "08993911-2891-4e9f-85f6-169aecaa59f5"
+  },
+  "Assets/UI/Kit/fatigue_back.png": {
+    "id": "06f991d5-aed8-4ce0-ba03-97c3999185c2"
+  },
+  "Assets/UI/Kit/fatigue_ticks.png": {
+    "id": "e6710a90-98d8-4c12-af00-51e4880c081e"
+  },
+  "Assets/UI/Kit/hp_back.png": {
+    "id": "e797e6d9-00ca-4246-8c14-ae833953665f"
+  },
+  "Assets/UI/Kit/hp_fill_1.png": {
+    "id": "1f269c60-4906-479e-8614-202b5ebfcf98"
+  },
+  "Assets/UI/Kit/hp_fill_2.png": {
+    "id": "1f9449bd-5f50-47de-a1a8-afeca02a30fa"
+  },
+  "Assets/UI/Kit/hp_fill_3.png": {
+    "id": "f1653f57-0a74-40ec-af82-f7b3edb47941"
+  },
+  "Assets/UI/Kit/icon_bag.png": {
+    "id": "264a2a60-238b-4263-a4a7-0ee91adc69a8"
+  },
+  "Assets/UI/Kit/joystick.png": {
+    "id": "247419d3-5791-4924-8a27-32ecab71fba3"
+  },
+  "Assets/UI/Kit/minimap.png": {
+    "id": "528cdc83-678c-4f75-831d-2915b8a1b8db"
   }
 }

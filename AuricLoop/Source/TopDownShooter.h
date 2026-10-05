@@ -29,7 +29,7 @@ private:
   void Damage(hb::Actor* player,int amount);
   float attackCooldown=0,dodgeTime=0,dodgeCooldown=0,invulnerable=0,gameOver=0,waveTimer=0;
   bool dodgeHeld=false,started=false,hudDirty=true;
-  int frame=0;
+  int frame=0,fatigueLevel=0;  // fatigueLevel: 지금 보이는 피로도 그림(10% 단위)
   hb::Vec3 facing{1,0,0};
   std::map<hb::Actor*,float> enemyHp,stun,shotTimer,lifetime;
   std::map<hb::Actor*,hb::Vec3> spawn;

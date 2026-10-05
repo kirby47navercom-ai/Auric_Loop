@@ -38,9 +38,17 @@ void TopDownShooter::Hud(hb::Actor* player){
   // UIWidget 인스턴스는 첫 프레임 뒤에 생기므로 그 전에는 표시만 미룬다
   if(frame<2){hudDirty=true;return;}
   hudDirty=false;
-  const std::string text=Hp<=0?(Fatigue>=FatigueMax?"지쳐 쓰러졌다... 잠시 후 다시 일어난다":"쓰러졌다... 잠시 후 다시 일어난다")
-    :"HP "+std::to_string(Hp)+" / "+std::to_string(balance::playerHp)+"    피로도 "+std::to_string(Fatigue)+" / "+std::to_string(FatigueMax)+"    탐색 1F";
-  hb::UI::SetText(player,"HUD","Title",text);
+  // 요소 이름은 tools/gen_hud.py가 만든 W_TopDown과 같다
+  const int hp=Hp<0?0:Hp;
+  for(int i=1;i<=balance::playerHp;++i)hb::UI::SetVisible(player,"HUD","HpFill"+std::to_string(i),hp==i);
+  hb::UI::SetText(player,"HUD","HpText",std::to_string(hp)+" / "+std::to_string(balance::playerHp));
+  int level=FatigueMax>0?Fatigue*10/FatigueMax:10;if(level>10)level=10;  // 10% 단위 그림
+  if(level!=fatigueLevel){
+    auto name=[](int lv){std::string n=std::to_string(lv*10);return "Fatigue"+std::string(3-n.size(),'0')+n;};
+    if(fatigueLevel>=0)hb::UI::SetVisible(player,"HUD",name(fatigueLevel),false);
+    hb::UI::SetVisible(player,"HUD",name(level),true);fatigueLevel=level;
+  }
+  hb::UI::SetText(player,"HUD","Title",Hp>0?"탐색":Fatigue>=FatigueMax?"지쳐 쓰러졌다":"쓰러졌다");
 }
 
 void TopDownShooter::Damage(hb::Actor* player,int amount){
