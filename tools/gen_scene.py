@@ -119,12 +119,12 @@ for i, (name, kind, size, spawns) in enumerate(ROOMS):
     # 아래 벽: 첫 방은 막고, 나머지는 가운데 문 자리를 비운다. 위쪽 벽은 다음 방의 아래 벽이 맡는다.
     below = max(size, ROOMS[i - 1][2]) if i else size
     wy = y - WALL / 2
-    if i == 0:
-        w = below + 2 * WALL
-        made.append(box("Room0S", 0, wy, w, WALL, tiled("Wall_Stone.png", f"Room_Wall_H{w:g}.png", w, WALL, band=PPU)))
+    seg = (below + 2 * WALL - DOOR) / 2
+    piece = tiled("Wall_Stone.png", f"Room_Wall_H{seg:g}.png", seg, WALL, band=PPU)
+    if i == 0:  # 첫 방 아래는 거점 계단으로 열려 있다
+        made += [box("Room0SL", -(DOOR + seg) / 2, wy, seg, WALL, piece), box("Room0SR", (DOOR + seg) / 2, wy, seg, WALL, piece)]
+        made.append(box("Floor0Gap", 0, wy, DOOR, WALL, tiled("Floor_Stone.png", "Room_Floor_Gap.png", DOOR, WALL), collider=False, order=-10))
     else:
-        seg = (below + 2 * WALL - DOOR) / 2
-        piece = tiled("Wall_Stone.png", f"Room_Wall_H{seg:g}.png", seg, WALL, band=PPU)
         made += [box(f"Room{i}SL", -(DOOR + seg) / 2, wy, seg, WALL, piece), box(f"Room{i}SR", (DOOR + seg) / 2, wy, seg, WALL, piece)]
         made.append(box(f"Door{i - 1}", 0, wy, DOOR, WALL, "Room_Wall_Door.png", order=1, pooled=True))  # 풀에서 꺼내면 잠김
         made.append(box(f"Floor{i}Gap", 0, wy, DOOR, WALL, tiled("Floor_Stone.png", "Room_Floor_Gap.png", DOOR, WALL), collider=False, order=-10))  # 문이 열렸을 때 보이는 바닥
@@ -135,6 +135,65 @@ made.append(box("RoomTop", 0, y - WALL / 2, w, WALL, tiled("Wall_Stone.png", f"R
 for o in made:
     if o["id"].startswith("Door"):
         comp(o, "PooledActor")["properties"]["initiallyActive"] = False  # 처음엔 열림
+
+# ---- 거점 (기획서 3-1, 기획팀 10/05: 분위기 위주) ----
+# 던전 첫 방 아래로 계단 통로 → 중앙 광장. 광장 왼쪽 원룸, 오른쪽 NPC 구역.
+def walled(prefix, cx, cy, w, h, floor_src, gaps):
+    """바닥과 네 벽을 만든다. gaps: {'N'|'S'|'W'|'E': 가운데 열린 폭(m)}"""
+    out = [box(f"{prefix}Floor", cx, cy, w, h, tiled(floor_src, f"{prefix}_Floor.png", w, h), collider=False, order=-10)]
+    for side in "NSWE":
+        horizontal = side in "NS"
+        length = w + 2 * WALL if horizontal else h
+        px = cx if horizontal else cx + (w / 2 + WALL / 2) * (1 if side == "E" else -1)
+        py = cy + (h / 2 + WALL / 2) * (1 if side == "N" else -1) if horizontal else cy
+        gap = gaps.get(side, 0)
+        pieces = [(0, length)] if not gap else [(-(gap + (length - gap) / 2) / 2, (length - gap) / 2), ((gap + (length - gap) / 2) / 2, (length - gap) / 2)]
+        for k, (off, ln) in enumerate(pieces):
+            ww, hh = (ln, WALL) if horizontal else (WALL, ln)
+            img = tiled("Wall_Stone.png", f"Room_Wall_{'H' if horizontal else 'V'}{ln:g}.png", ww, hh, band=PPU)
+            out.append(box(f"{prefix}Wall{side}{k}", px + (off if horizontal else 0), py + (0 if horizontal else off), ww, hh, img))
+    return out
+
+
+room0_bottom = rooms_cpp[0][0] - rooms_cpp[0][1] - WALL  # 첫 방 아래 벽 아래쪽
+PLAZA = (0, -34, 24, 16)
+STAIR_H = room0_bottom - (PLAZA[1] + PLAZA[3] / 2 + WALL)
+hub = walled("Plaza", *PLAZA, "Floor_Plaza.png", {"N": DOOR, "W": DOOR, "E": DOOR})
+hub += walled("Stair", 0, PLAZA[1] + PLAZA[3] / 2 + WALL + STAIR_H / 2, DOOR, STAIR_H, "Floor_Stone.png", {"N": DOOR, "S": DOOR})
+hub = [o for o in hub if not o["id"].startswith("StairWall")] + [o for o in hub if o["id"].startswith("StairWall") and o["id"][9] in "WE"]
+ROOM_HOME = (-19, -34, 12, 12)
+NPC_ZONE = (21, -34, 16, 16)
+hub += walled("Home", *ROOM_HOME, "Floor_Stone.png", {"E": DOOR})
+hub += walled("NpcZone", *NPC_ZONE, "Floor_Plaza.png", {"W": DOOR})
+for side, (x, y) in {"W": (-12.5, -34), "E": (12.5, -34)}.items():  # 광장과 옆 구역 사이 벽 틈 바닥
+    hub.append(box(f"PlazaGap{side}", x + (-0.5 if side == "W" else 0.5), y, 2 * WALL, DOOR, tiled("Floor_Plaza.png", "Plaza_Gap.png", 2 * WALL, DOOR), collider=False, order=-10))
+
+HUB_SPOTS = {  # C++ 상호작용 표와 같은 자리 (아래 <hub> 블록으로 생성)
+    "DebtBoard": ("Prop_DebtBoard.png", 0, -29, True),
+    "Entrance": ("Prop_DungeonEntrance.png", 0, room0_bottom - 2.5, False),
+    "Collector": ("NPC_Collector.png", 16, -29, True),
+    "Interior": ("NPC_Interior.png", 21, -29, True),
+    "ClosedRental": ("Prop_ClosedShop.png", 26.5, -29, True),
+    "ClosedCharm": ("Prop_ClosedShop.png", 15.5, -39.5, True),
+    "ClosedRecipe": ("Prop_ClosedShop.png", 21, -39.5, True),
+    "ClosedRelic": ("Prop_ClosedShop.png", 26.5, -39.5, True),
+    "Sofa": ("Furniture_Sofa.png", -19, -30, True),
+    "Bed": ("Furniture_Bed.png", -23, -37, True),
+    "Fridge": ("Furniture_Fridge.png", -15, -37, True),
+    "TV": ("Furniture_TV.png", -19, -37.5, True),
+}
+for oid, (img, x, y, solid) in HUB_SPOTS.items():
+    o = copy.deepcopy(objs["Enemy0"])
+    o.update(id=oid, name=oid, position=[x, y, 0.05])
+    o["components"] = [c for c in o["components"] if c["type"] in ({"Transform", "SpriteRenderer", "BoxCollider2D"} if solid else {"Transform", "SpriteRenderer"})]
+    texture(o, img, sortingOrder=1)
+    if solid:
+        w, h = Image.open(SPRITES / img).size
+        comp(o, "BoxCollider2D")["properties"].update(trigger=False, layer=0, mask=4294967295, extent=[w / PPU * 0.4, h / PPU * 0.2, 0.5], center=[0, -h / PPU * 0.3, 0])
+    hub.append(o)
+made += hub
+for oid in ("PlayerStart", "Player"):  # 거점 광장에서 시작
+    (start if oid == "PlayerStart" else player)["position"] = [0, PLAZA[1] - 4, 0.1]
 
 # ---- 채집물, 상점, 골드 (기획서 6-1, 6-2) ----
 def prop(oid, image, room, x, y, pooled=False, active=True, collider=False, order=1):
@@ -160,7 +219,7 @@ props = [
 ] + [prop(f"Coin{i}", "Item_Coin.png", 0, 0, -60, pooled=True, active=False, order=3) for i in range(12)]
 made += props
 
-old_ids = {o["id"] for o in made} | {o["id"] for o in scene["objects"] if re.match(r"(Floor|Wall|Room|Door)", o["id"])}
+old_ids = {o["id"] for o in made} | {o["id"] for o in scene["objects"] if re.match(r"(Floor|Wall|Room|Door|Plaza|Stair|Home|NpcZone)", o["id"])}
 scene["objects"] = [o for o in scene["objects"] if o["id"] not in old_ids] + made
 SCENE.write_text(json.dumps(scene, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 for f in ("Room_Wall_H.png", "Room_Wall_V.png", "Room_Floor.png"):  # 이전 한 방 구조의 그림
@@ -168,7 +227,7 @@ for f in ("Room_Wall_H.png", "Room_Wall_V.png", "Room_Floor.png"):  # 이전 한
 print("장면 갱신:", SCENE.name, len(scene["objects"]), "objects,", len(ROOMS), "rooms")
 
 # 검사용 장면 (tools/check_demo.mjs): 보스방 입구, 채집방 광물 앞에서 시작
-for test_name, (room, sx, sy) in {"Test_Boss": (4, 0, None), "Test_Gather": (2, -3, -1)}.items():
+for test_name, (room, sx, sy) in {"Test_Dungeon": (0, 0, -8), "Test_Boss": (4, 0, None), "Test_Gather": (2, -3, -1)}.items():
     cy, half = rooms_cpp[room][0], rooms_cpp[room][1]
     pos = [sx, cy - half + 3 if sy is None else cy + sy, 0.1]
     test = copy.deepcopy(scene)
@@ -191,5 +250,12 @@ block = ("// <rooms> tools/gen_scene.py가 만든 표. 손으로 고치지 말�
          "// </rooms>")
 src = SOURCE.read_text(encoding="utf-8")
 src = re.sub(r"// <rooms>.*?// </rooms>", lambda _: block, src, flags=re.S)
+hub_rows = ",".join(f'{{"{k}",{float(x)}f,{float(y)}f}}' for k, (_, x, y, _) in HUB_SPOTS.items())
+hub_block = ("// <hub> tools/gen_scene.py가 만든 거점 상호작용 자리\n"
+             "struct Spot{const char* id;float x,y;};\n"
+             f"constexpr Spot hubSpots[]={{{hub_rows}}};\n"
+             f"constexpr float dungeonBottom={float(room0_bottom)}f;  // 이보다 아래는 거점\n"
+             "// </hub>")
+src = re.sub(r"// <hub>.*?// </hub>", lambda _: hub_block, src, flags=re.S)
 SOURCE.write_text(src, encoding="utf-8")
 print("C++ 방 표 갱신:", len(rows), "rooms,", len(spawn_rows), "spawns")

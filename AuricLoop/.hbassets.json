@@ -268,5 +268,71 @@
   },
   "Assets/UI/Kit/craft_select.png": {
     "id": "02359b6f-2b11-4006-93d9-46fbe2009764"
+  },
+  "Assets/Scenes/Test_Dungeon.hbscene.json": {
+    "id": "095fa3db-16a3-4315-abbb-4ec0ec702900"
+  },
+  "Assets/Sprites/Floor_Plaza.png": {
+    "id": "240156d7-f486-4b3a-a6ac-b5504700faca"
+  },
+  "Assets/Sprites/Furniture_Bed.png": {
+    "id": "4ab075cb-79ee-47e4-83e6-bfe6a1c5c8ab"
+  },
+  "Assets/Sprites/Furniture_Fridge.png": {
+    "id": "2ed42e9e-2aec-4735-aaa3-36c1e4c132c5"
+  },
+  "Assets/Sprites/Furniture_Sofa.png": {
+    "id": "6d6653e4-d415-4b76-9636-0a47948a6e3a"
+  },
+  "Assets/Sprites/Furniture_TV.png": {
+    "id": "f136eebf-cf6e-44b8-aad1-6990ba72771a"
+  },
+  "Assets/Sprites/Home_Floor.png": {
+    "id": "5a6d1a48-2631-4d57-833e-4884036b33a2"
+  },
+  "Assets/Sprites/NpcZone_Floor.png": {
+    "id": "d32e975f-e398-452a-b6f4-d2de0d4410d1"
+  },
+  "Assets/Sprites/NPC_Collector.png": {
+    "id": "0d681541-c139-422f-980a-149d9a1df2a6"
+  },
+  "Assets/Sprites/NPC_Interior.png": {
+    "id": "09e20bc5-1476-413c-86a4-425880c9a414"
+  },
+  "Assets/Sprites/Plaza_Floor.png": {
+    "id": "8fd431e8-cafb-4bb7-bb2b-7f5fe30d4ab5"
+  },
+  "Assets/Sprites/Plaza_Gap.png": {
+    "id": "da5ef84b-991c-45a7-b84a-ee776e0196a3"
+  },
+  "Assets/Sprites/Prop_ClosedShop.png": {
+    "id": "b2ca6b1a-8fb7-4fdf-8fb4-efe0ee30792e"
+  },
+  "Assets/Sprites/Prop_DebtBoard.png": {
+    "id": "08dd8662-fdce-435d-80c8-35c499cdb48c"
+  },
+  "Assets/Sprites/Prop_DungeonEntrance.png": {
+    "id": "6042db5c-73be-4b9a-a0ec-9af538da6c31"
+  },
+  "Assets/Sprites/Room_Wall_H1.png": {
+    "id": "58a56787-2f6e-4005-aaeb-32384dbc4ffc"
+  },
+  "Assets/Sprites/Room_Wall_H14.png": {
+    "id": "ed29e146-3e43-458d-b6ca-78d3148e1611"
+  },
+  "Assets/Sprites/Room_Wall_H18.png": {
+    "id": "af1cc95d-43d9-4bfa-b99e-c4b8c2db478a"
+  },
+  "Assets/Sprites/Room_Wall_V12.png": {
+    "id": "97e49bbe-646d-4041-906f-55b3017926f3"
+  },
+  "Assets/Sprites/Room_Wall_V4.png": {
+    "id": "2f1583a6-7855-47de-bc1a-170cfc50a658"
+  },
+  "Assets/Sprites/Room_Wall_V6.png": {
+    "id": "7ca0b8da-2c28-4d5c-bcae-d45ce56a63ec"
+  },
+  "Assets/Sprites/Stair_Floor.png": {
+    "id": "c3b90468-b8fa-42e2-bc15-be8192827ccb"
   }
 }

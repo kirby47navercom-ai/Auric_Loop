@@ -9,7 +9,7 @@ const {runProject} = await import(pathToFileURL(path.join(ENGINE, 'tools/run-pro
 const project = path.join(path.dirname(fileURLToPath(import.meta.url)), '../AuricLoop/AuricLoop.hbproject');
 const aimUp = {position: [640, 250], size: [1280, 720]};
 
-const r = await runProject(project, {frames: 900, delta: 1 / 60, inputs: [
+const r = await runProject(project, {scene: 'Assets/Scenes/Test_Dungeon.hbscene.json', frames: 900, delta: 1 / 60, inputs: [
   {frame: 5, key: 'w', value: 1}, {frame: 30, key: 'w', value: 0},
   {frame: 31, key: 'LeftMouseButton', value: 1, pointer: aimUp}, {frame: 400, key: 'LeftMouseButton', value: 0},
   {frame: 410, key: 'w', value: 1}, {frame: 700, key: 'w', value: 0},  // 열린 문으로 전투방2까지 걸어감
