@@ -2,6 +2,7 @@
 #include <HBEngine/Game.hpp>
 #include <map>
 #include <string>
+#include <vector>
 HB_CLASS(Blueprintable)
 class TopDownShooter : public hb::Actor {
 public:
@@ -65,6 +66,8 @@ public:
   int SofaLevel = 0;
   HB_PROPERTY(BlueprintReadWrite)
   int HomeLevel = 1;           // 인테리어 공사 Lv1→2 (피로도 한계 +5)
+  HB_PROPERTY(BlueprintReadWrite)
+  int Phase = 0;               // 0 로딩, 1 타이틀, 2 게임
 private:
   void Hud(hb::Actor* player);
   void Fire(const std::vector<hb::Actor*>& bullets,const hb::Vec3& from,const hb::Vec3& dir);
@@ -75,6 +78,10 @@ private:
   void DropCoin(const std::vector<hb::Actor*>& items,const hb::Vec3& at,int value);
   void Interact(hb::Actor* player,const hb::Vec3& position,const std::vector<hb::Actor*>& items,bool pressed);
   void Settle(hb::Actor* player);
+  struct Line{std::string who,name,text;};
+  void Say(const std::vector<Line>& lines);
+  bool UpdateDialog(hb::Actor* player,float delta,bool advance);  // 대화 중이면 true
+  bool UpdateIntro(hb::Actor* player,float delta,bool anyKey);    // 로딩·타이틀 중이면 true
   void HubInteract(hb::Actor* player,const hb::Vec3& position,bool pressed);
   void Craft(hb::Actor* player,bool open,int pick,bool confirm);
   void CraftDetail(hb::Actor* player);
@@ -99,6 +106,9 @@ private:
   bool craftOpen=false,craftKeyHeld=false,confirmHeld=false;
   int craftPick=1;
   std::map<hb::Actor*,float> burn;
+  std::vector<Line> dialog;
+  size_t dialogIndex=0,shownChars=0;float typeTime=0,phaseTime=0;std::string shownWho;
+  bool advanceHeld=true,bossIntro=false;
   hb::Actor* bossActor=nullptr;
   int bossPattern=0,bossStep=0;
   float bossTimer=0;

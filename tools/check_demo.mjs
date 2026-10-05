@@ -54,6 +54,8 @@ console.log('제작 검사 통과', 'flashbangs', ks.Flashbangs);
 const down = {position: [640, 600], size: [1280, 720]};
 const b = await runProject(project, {scene: 'Assets/Scenes/Test_Boss.hbscene.json', frames: 4200, delta: 1 / 60, inputs: [
   {frame: 2, key: 'w', value: 1}, {frame: 40, key: 'w', value: 0},
+  {frame: 20, key: 'e', value: 1}, {frame: 22, key: 'e', value: 0},  // 해골 대장 대사: 다 보이기
+  {frame: 30, key: 'e', value: 1}, {frame: 32, key: 'e', value: 0},  // 대사 닫기
   {frame: 41, key: 'LeftMouseButton', value: 1, pointer: aimUp}, {frame: 2400, key: 'LeftMouseButton', value: 0},
   {frame: 2410, key: 'tab', value: 1}, {frame: 2415, key: 'tab', value: 0},
   {frame: 2420, key: 's', value: 1}, {frame: 2421, key: 'LeftMouseButton', value: 1, pointer: down}, {frame: 4190, key: 's', value: 0},

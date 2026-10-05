@@ -50,6 +50,8 @@ constexpr float slashExtend=1.5f;      // 검기: 사거리 +1.5m. ponytail: 날
 constexpr int sofaPrice=50,sofaMax=3;  // 기획서 3-1 원룸 [제안: 가격]
 constexpr int homePrice=150;           // 인테리어 공사 Lv2 [제안: 가격]
 constexpr int homeFatigueBonus=5;      // 기획: 공사마다 피로도 한계 상승 (데모 한계 20 기준 +5)
+constexpr float loadingTime=1.2f;
+constexpr float typeSpeed=30.0f;       // 대화 글자/초 (기획서 6-5 한 글자씩)
 constexpr int doorHitsToOpen=10;       // 기획: 귀환 중 잠긴 문은 10번 때리면 열림
 constexpr float doorStun=1.0f;         // 기획: 문이 열리면 1초 전체 스턴
 constexpr float flashStun=1.0f;        // 기획: 섬광탄 1초 전체 스턴 + 탄막 제거
@@ -134,7 +136,8 @@ void TopDownShooter::EnterRoom(int index,const std::vector<hb::Actor*>& enemies,
   if(r.kind==3&&!boss.empty()){  // 보스방: 해골 대장 등장
     state=1;fightingRoom=index;SetDoors(doors,index,true);
     hb::Transform t;t.position=hb::Vec3{0,r.cy+6,0.1f};bossActor=hb::ActorPool::Acquire(boss,t);
-    BossHp=balance::bossHp;bossPattern=0;bossStep=0;bossTimer=2.0f;Hud(hb::Gameplay::GetPlayerPawn());return;
+    BossHp=balance::bossHp;bossPattern=0;bossStep=0;bossTimer=3.0f;
+    Say({{"boss","해골 대장","또 빚쟁이냐. 네 뼈도 황금으로 칠해 주마."}});Hud(hb::Gameplay::GetPlayerPawn());return;
   }
   if(r.count==0){state=2;return;}  // 채집방·상점은 싸움 없음
   state=1;fightingRoom=index;SetDoors(doors,index,true);
@@ -229,12 +232,66 @@ void TopDownShooter::HubInteract(hb::Actor* player,const hb::Vec3& position,bool
   if(next!=hint||pressed){hint=next;Hud(player);}
 }
 
+static size_t Utf8Count(const std::string& s){size_t n=0;for(unsigned char ch:s)n+=(ch&0xC0)!=0x80;return n;}
+static std::string Utf8Prefix(const std::string& s,size_t chars){size_t i=0,n=0;
+  while(i<s.size()){if(((unsigned char)s[i]&0xC0)!=0x80){if(n==chars)break;n++;}i++;}return s.substr(0,i);}
+
+void TopDownShooter::Say(const std::vector<Line>& lines){
+  for(auto& l:lines)dialog.push_back(l);
+}
+
+bool TopDownShooter::UpdateDialog(hb::Actor* player,float delta,bool advance){
+  // 대화창 (기획서 6-5): 한 글자씩 → E·클릭·Enter로 바로 다 보이기 → 다시 누르면 다음 줄
+  static const char* parts[]={"DialogBox","DialogPortraitFrame","DialogName","DialogText","DialogNext","DialogTouch"};
+  static const char* faces[]={"collector","valen","boss"};
+  if(dialogIndex>=dialog.size()){
+    if(!dialog.empty()){dialog.clear();dialogIndex=0;for(auto* n:parts)hb::UI::SetVisible(player,"HUD",n,false);
+      for(auto* f:faces)hb::UI::SetVisible(player,"HUD",std::string("DialogPortrait_")+f,false);shownWho="";}
+    return false;
+  }
+  const Line& l=dialog[dialogIndex];
+  if(shownWho!=l.who){  // 새 화자: 창을 보이고 초상화 바꿈
+    if(shownWho.empty())for(auto* n:parts)hb::UI::SetVisible(player,"HUD",n,true);
+    for(auto* f:faces)hb::UI::SetVisible(player,"HUD",std::string("DialogPortrait_")+f,l.who==f);
+    hb::UI::SetText(player,"HUD","DialogName",l.name);shownWho=l.who;
+  }
+  const size_t total=Utf8Count(l.text);
+  if(advance){
+    if(shownChars<total)shownChars=total;
+    else{dialogIndex++;shownChars=0;typeTime=0;if(dialogIndex<dialog.size()&&dialog[dialogIndex].who==shownWho)hb::UI::SetText(player,"HUD","DialogName",dialog[dialogIndex].name);
+      hb::UI::SetText(player,"HUD","DialogText","");return true;}
+  }else if(shownChars<total){typeTime+=delta;const size_t next=std::min(total,size_t(typeTime*balance::typeSpeed));if(next==shownChars)return true;shownChars=next;}
+  else return true;
+  hb::UI::SetText(player,"HUD","DialogText",Utf8Prefix(l.text,shownChars));
+  hb::UI::SetVisible(player,"HUD","DialogNext",shownChars>=total);
+  return true;
+}
+
+bool TopDownShooter::UpdateIntro(hb::Actor* player,float delta,bool anyKey){
+  // 로딩(금화 GIF) → 타이틀(아무 키) → 오프닝 대화 (기획서 2장)
+  if(Phase>=2)return false;
+  phaseTime+=delta;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
+  if(Phase==0&&phaseTime>=balance::loadingTime){Phase=1;phaseTime=0;
+    for(auto* n:{"LoadingBack","LoadingCoin","LoadingText"})hb::UI::SetVisible(player,"HUD",n,false);}
+  else if(Phase==1&&anyKey&&phaseTime>0.3f){Phase=2;
+    for(auto* n:{"TitleBack","TitleScreen","TitleHint"})hb::UI::SetVisible(player,"HUD",n,false);
+    Say({{"collector","수금원","어서 와. 오늘부터 여기가 네 집이야. 물론 집주인은 우리 사장님이지만."},
+         {"collector","수금원","저 위 계단 끝에 있는 게 '마몬의 입'이야. 들어간 놈들은 황금을 들고 나오거나, 아예 안 나오지."},
+         {"valen","발렌","...갚으면 되는 거지."},
+         {"collector","수금원","하나만 기억해. 너무 깊이 들어가면 못 돌아와. 적당히 챙겨서, 지치기 전에 나와."},
+         {"collector","수금원","아, 튜토리얼용 제작서랑 빈 병도 챙겨 가. 공짜는 아니고, 빚에 달아 둘게."}});
+  }
+  return Phase<2;
+}
+
 void TopDownShooter::Settle(hb::Actor* player){
   // 정산 (기획서 6-4): 소재를 골드로 바꾸고 절반을 빚에서 자동 상환, 강화는 초기화
   const int total=Gold+Ore*40+Herb*5+Monster*30;
   LastRepaid=int(total*balance::repayRate);
   Debt-=LastRepaid;if(Debt<0)Debt=0;
   Gold=total-LastRepaid;Ore=Herb=Monster=0;WeaponLevel=0;Enchant=0;
+  Say({{"collector","수금원","돌아왔네? 정산할게. 소재까지 합쳐 "+std::to_string(total)+" G, 그중 절반 "+std::to_string(LastRepaid)+" G는 빚으로 받아 간다."},
+       {"collector","수금원","남은 빚은 "+std::to_string(Debt)+" G. 강화는 던전 밖에선 무뎌지는 거 알지? 남은 골드로 소파라도 바꾸든가."}});
   Hud(player);
 }
 
@@ -301,6 +358,12 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
     for(size_t i=0;i<enemies.size();++i){enemyHp[enemies[i]]=balance::enemyHp;shotTimer[enemies[i]]=1+0.3f*i;}
     Hud(player);}
   const auto position=hb::Scene::GetPosition(player);
+  if(frame==1&&RoomAt(position.y)>=0){Phase=2;  // 던전 안에서 시작하는 검사 장면은 로딩·타이틀 생략
+    for(auto* n:{"LoadingBack","LoadingCoin","LoadingText","TitleBack","TitleScreen","TitleHint"})hb::UI::SetVisible(player,"HUD",n,false);}
+  {const bool adv=hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("space");
+   const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
+   if(frame>=2&&UpdateIntro(player,delta,pressed))return;
+   if(UpdateDialog(player,delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;return;}}  // 대화 중엔 행동 막음
   if(RoomAt(position.y)!=RoomIndex&&!Returning){RoomIndex=RoomAt(position.y);if(RoomIndex<0)Hud(player);}  // 거점이면 -1
   const Room& room=rooms[RoomIndex<0?0:RoomIndex];
 

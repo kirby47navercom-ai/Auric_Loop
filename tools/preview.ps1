@@ -35,17 +35,16 @@ Start-Sleep $Seconds
 foreach ($json in ($Inputs -split '\|' | Where-Object { $_ })) { & $hb runtime.input $json | Out-Null; Start-Sleep -Milliseconds 100 }
 if ($Inputs) { Start-Sleep -Milliseconds 400 }
 
-# 3. 편집기 창만 캡처
+# 3. 편집기 창만 캡처. PrintWindow(PW_RENDERFULLCONTENT)라 다른 창이 위에 있어도 되고 포커스를 뺏지 않는다.
 Add-Type -AssemblyName System.Drawing
-if (-not ([System.Management.Automation.PSTypeName]'Win').Type) {
-  Add-Type 'using System;using System.Runtime.InteropServices;public class Win{[DllImport("user32.dll")]public static extern bool GetWindowRect(IntPtr h,out RECT r);[DllImport("user32.dll")]public static extern bool SetForegroundWindow(IntPtr h);public struct RECT{public int L,T,R,B;}}'
+if (-not ([System.Management.Automation.PSTypeName]'Win2').Type) {
+  Add-Type 'using System;using System.Runtime.InteropServices;public class Win2{[DllImport("user32.dll")]public static extern bool GetWindowRect(IntPtr h,out RECT r);[DllImport("user32.dll")]public static extern bool PrintWindow(IntPtr h,IntPtr dc,uint f);public struct RECT{public int L,T,R,B;}}'
 }
 $proc = Get-Process HBEngine | Where-Object { $_.Path -like "$engine*" -and $_.MainWindowHandle -ne 0 } | Select-Object -First 1
-[Win]::SetForegroundWindow($proc.MainWindowHandle) | Out-Null
-Start-Sleep 1
-$r = New-Object Win+RECT
-[Win]::GetWindowRect($proc.MainWindowHandle, [ref]$r) | Out-Null
+$r = New-Object Win2+RECT
+[Win2]::GetWindowRect($proc.MainWindowHandle, [ref]$r) | Out-Null
 $bmp = New-Object System.Drawing.Bitmap ($r.R - $r.L), ($r.B - $r.T)
-[System.Drawing.Graphics]::FromImage($bmp).CopyFromScreen($r.L, $r.T, 0, 0, $bmp.Size)
+$g = [System.Drawing.Graphics]::FromImage($bmp)
+$dc = $g.GetHdc(); [Win2]::PrintWindow($proc.MainWindowHandle, $dc, 2) | Out-Null; $g.ReleaseHdc($dc)
 $bmp.Save($Out)
 "port=$port screenshot=$Out"

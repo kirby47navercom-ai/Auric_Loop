@@ -334,5 +334,29 @@
   },
   "Assets/Sprites/Stair_Floor.png": {
     "id": "c3b90468-b8fa-42e2-bc15-be8192827ccb"
+  },
+  "Assets/UI/Kit/dialog_box.png": {
+    "id": "6a86aa38-9046-406c-89d4-8c6301034f2e"
+  },
+  "Assets/UI/Kit/dialog_portrait_frame.png": {
+    "id": "cefa062d-1fb0-45a1-bd93-689c48325890"
+  },
+  "Assets/UI/Kit/loading_coin.gif": {
+    "id": "c5134f0b-cef0-4649-b564-401635c0248c"
+  },
+  "Assets/UI/Kit/portrait_collector.png": {
+    "id": "6a8b1f4d-865d-4b00-8f7c-18b34b7a288f"
+  },
+  "Assets/UI/Kit/portrait_interior.png": {
+    "id": "ffe89ec7-d694-43ed-b1f0-7b65aa9ff323"
+  },
+  "Assets/UI/Kit/portrait_valen.png": {
+    "id": "7e7a1113-b818-4cd5-96ff-a5a19602e488"
+  },
+  "Assets/UI/Kit/title_v2.png": {
+    "id": "8043001a-08fd-40ed-afbb-a97a10a1fb52"
+  },
+  "Assets/UI/Kit/portrait_boss.png": {
+    "id": "6a58e10e-ee10-45e1-aa9d-c68cf0715e0b"
   }
 }

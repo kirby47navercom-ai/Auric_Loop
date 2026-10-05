@@ -19,7 +19,7 @@ base = next(n for n in w["nodes"] if n["name"] == "Title")
 root = next(n for n in w["nodes"] if n["type"] == "Canvas")
 nodes = [root]
 
-CORNER = {"tl": (0, 0), "tr": (1, 0), "bl": (0, 1), "br": (1, 1), "t": (0.5, 0), "c": (0.5, 0.5)}
+CORNER = {"tl": (0, 0), "tr": (1, 0), "bl": (0, 1), "br": (1, 1), "t": (0.5, 0), "c": (0.5, 0.5), "b": (0.5, 1)}
 
 
 def node(name, kind, corner, x, y, w_, h, z=10, **props):
@@ -137,6 +137,43 @@ panel("CraftClose", "TouchButton", 820, 24, 72, 72, 44, inputKey="q", inputMode=
       background="#00000000", pressed="#ffffff22", hover="#ffffff11")
 panel_text("CraftFooter", "제작 중에도 전투가 계속됩니다", 480, 462, 380, 20, size=12)
 
+# ---- 대화창 (기획서 6-5): 아래 가운데, 초상화·이름·본문·넘김 표시. 처음엔 숨김 ----
+DW, DH = 1000, 170
+
+
+def dialog(name, kind, px, py, w_, h_, z, **props):
+    n = node(name, kind, "b", 0, 0, w_, h_, z, visible=False, **props)
+    n["slot"].update(anchors=[0.5, 1, 0.5, 1], alignment=[0, 0], offset=[px - DW / 2, -(DH + 24) + py, w_, h_])
+    return n
+
+
+dialog("DialogBox", "Image", 0, 0, DW, DH, 50, texture=KIT + "dialog_box.png")
+dialog("DialogPortraitFrame", "Image", 20, 19, 132, 132, 51, texture=KIT + "dialog_portrait_frame.png")
+for who in ("collector", "valen", "boss"):  # 엔진 UI는 실행 중 그림을 바꿀 수 없어 말하는 사람마다 하나씩 두고 보이기만 바꾼다
+    iw, ih = Image.open(PROJECT / KIT / f"portrait_{who}.png").size
+    dialog(f"DialogPortrait_{who}", "Image", 26 + (120 - iw) // 2, 25 + (120 - ih) // 2, iw, ih, 52, texture=KIT + f"portrait_{who}.png")
+dialog("DialogName", "Text", 172, 22, 400, 28, 52, text="수금원", fontSize=20, color="#ffd666")
+dialog("DialogText", "Text", 172, 58, 790, 90, 52, text="", fontSize=18, color="#fff3e5")
+dialog("DialogNext", "Text", DW - 60, DH - 44, 40, 28, 52, text="▼", fontSize=18, color="#ffd666")
+dialog("DialogTouch", "TouchButton", 0, 0, DW, DH, 53, inputKey="e", inputMode="keys",
+       background="#00000000", pressed="#ffffff11", hover="#00000000")
+
+
+# ---- 타이틀·로딩 (자료: 타이틀 시안 v2, 로딩 화면 초안 금화 GIF). 화면 전체를 덮는다 ----
+def full(name, kind, z, **props):
+    n = node(name, kind, "tl", 0, 0, 0, 0, z, **props)
+    n["slot"].update(anchors=[0, 0, 1, 1], offset=[0, 0, 0, 0], alignment=[0, 0])
+    return n
+
+
+full("TitleBack", "Panel", 90, background="#05090aff")
+full("TitleScreen", "Image", 91, texture=KIT + "title_v2.png")
+hint = node("TitleHint", "Text", "b", 0, 0, 600, 30, 92, text="클릭하거나 아무 키나 눌러 시작", fontSize=16, color="#cdb98a", align="center")
+hint["slot"].update(anchors=[0.5, 1, 0.5, 1], alignment=[0.5, 1], offset=[0, -40, 600, 30])
+full("LoadingBack", "Panel", 95, background="#0d1716ff")
+node("LoadingCoin", "Image", "c", 0, -40, 144, 144, 96, texture=KIT + "loading_coin.gif")
+node("LoadingText", "Text", "c", 0, 70, 300, 30, 96, text="Loading...", fontSize=20, color="#fff3e5", align="center")
+
 w["nodes"] = nodes
 WIDGET.write_text(json.dumps(w, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-print("제작 창 추가:", len(nodes), "nodes")
+print("제작 창·대화창·타이틀 추가:", len(nodes), "nodes")
