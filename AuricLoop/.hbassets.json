@@ -31,5 +31,29 @@
   },
   "Source/DoorController.h": {
     "id": "092734b6-0ab5-4647-9b84-6ec9a57403cf"
+  },
+  "Assets/Sprites/Floor_Stone.png": {
+    "id": "917c0ffe-5486-4b9b-8dbb-ad6df6cbd35f"
+  },
+  "Assets/Sprites/SkeletonMage_Idle.png": {
+    "id": "225cff31-ac19-4ea1-aff7-4e888e9fa62b"
+  },
+  "Assets/Sprites/Skeleton_Idle.png": {
+    "id": "81f76acd-a133-4ce2-b48f-d6075b36365f"
+  },
+  "Assets/Sprites/Valen_Idle.png": {
+    "id": "59a41f2a-15b9-410f-9577-06ea5b7883b2"
+  },
+  "Assets/Sprites/Wall_Stone.png": {
+    "id": "30731cc6-c0af-42c4-adee-b8d25c2253ad"
+  },
+  "Assets/Sprites/Room_Floor.png": {
+    "id": "7512e676-164e-4b2e-99f3-f8f9cd395999"
+  },
+  "Assets/Sprites/Room_Wall_H.png": {
+    "id": "ffebbd0a-60d7-4690-a814-8d23268ed9a4"
+  },
+  "Assets/Sprites/Room_Wall_V.png": {
+    "id": "8e37cfa2-2f6e-42c9-8934-66c8db960c54"
   }
 }

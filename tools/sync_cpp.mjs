@@ -15,3 +15,14 @@ const source = await fs.readFile(path.join(project, n.sourcePath), 'utf8');
 bp.native = {...n, ...parseNativeHeader(header), header, source};
 await fs.writeFile(bpPath, JSON.stringify(bp, null, 2) + '\n');
 console.log('C++ 동기화:', bp.native.classes.map(c => `${c.name}(속성 ${c.properties.length}, 함수 ${c.functions.length})`).join(', '));
+
+// 편집기는 Saved/Editor/storage.json에 열린 문서 사본을 두고 다음 실행 때 디스크보다 먼저 복원한다.
+// 밖에서 파일을 바꿨으면 이 사본을 지워야 편집기가 새 내용을 읽는다. (편집기를 닫은 뒤 실행)
+const storage = path.join(project, 'Saved/Editor/storage.json');
+try {
+  const data = JSON.parse(await fs.readFile(storage, 'utf8'));
+  const stale = Object.keys(data.items).filter(k => k.startsWith('hbengine.documents.'));
+  stale.forEach(k => delete data.items[k]);
+  await fs.writeFile(storage, JSON.stringify(data));
+  if (stale.length) console.log('편집기 문서 사본 정리:', stale.length);
+} catch (error) { if (error.code !== 'ENOENT') throw error; }
