@@ -64,7 +64,17 @@ void TopDownShooter::Fire(const std::vector<hb::Actor*>& bullets,const hb::Vec3&
   }
 }
 
-void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies){
+void TopDownShooter::Animate(hb::Actor* player,float delta,bool moving){
+  // 프레임: 공격 3장(0.1초씩) > 걷기 4장(초당 8장) > 서 있기. 그림은 오른쪽을 보고 있어 왼쪽이면 뒤집는다.
+  std::string next;
+  if(attackAnim>0){attackAnim-=delta;const int f=attackAnim>0.2f?0:attackAnim>0.1f?1:2;next="Attack_"+std::to_string(f);}
+  else if(moving){walkTime+=delta;next="Walk_"+std::to_string(int(walkTime*8)%4);}
+  else{walkTime=0;next="Idle_0";}
+  if(next!=currentSprite){currentSprite=next;hb::Sprites::SetSprite(player,"Assets/Sprites/Valen/S_Valen_"+next+".hbsprite.json");}
+  if(slashFx&&slashTime>0&&(slashTime-=delta)<=0)hb::ActorPool::Release(slashFx);
+}
+
+void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& effects){
   auto* player=hb::Gameplay::GetPlayerPawn();if(!player)return;
   frame++;if(hudDirty)Hud(player);
   if(!started){started=true;Hp=balance::playerHp;
@@ -94,6 +104,7 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
     const auto d=aim-position;if(hb::VectorMath::VectorLengthSquared(d)>.01f)facing=hb::VectorMath::NormalizeVector(d);
   }
   hb::Sprites::SetFlip(player,facing.x<0,false);
+  Animate(player,delta,hb::VectorMath::VectorLengthSquared(move)>.01f);
 
   attackCooldown-=delta;dodgeCooldown-=delta;invulnerable-=delta;
 
@@ -105,7 +116,13 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
 
   // 검 부채꼴 베기: 적에게 피해, 범위 안의 적 탄환은 지움 (기획: 투사체 삭제)
   if(hb::Input::IsKeyDown("LeftMouseButton")&&attackCooldown<=0){
-    attackCooldown=balance::swordInterval;Swings++;
+    attackCooldown=balance::swordInterval;Swings++;attackAnim=0.3f;
+    if(!effects.empty()){  // 베기 이펙트를 바라보는 방향 앞에 0.12초
+      hb::Transform t;t.position=position+facing*1.4f;t.position.z=0.2f;
+      t.rotation=hb::Vec3{0,0,std::atan2(facing.y,facing.x)*180/3.14159265f};
+      if(slashFx)hb::ActorPool::Release(slashFx);
+      slashFx=hb::ActorPool::Acquire(effects,t);slashTime=0.12f;
+    }
     const float minDot=std::cos(balance::swordHalfAngle*3.14159265f/180);
     auto inFan=[&](const hb::Vec3& at){const auto d=at-position;const float len=Length(d);
       return len<=balance::swordRange&&(len<=balance::contactRange||hb::VectorMath::DotProduct(d*(1/len),facing)>=minDot);};  // 바로 붙은 적은 방향과 관계없이 맞음

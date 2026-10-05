@@ -139,5 +139,56 @@
   },
   "Assets/UI/Kit/minimap.png": {
     "id": "528cdc83-678c-4f75-831d-2915b8a1b8db"
+  },
+  "Assets/Sprites/FX_Slash.png": {
+    "id": "ae777ad4-172e-4242-a6c4-5e6a8bf99361"
+  },
+  "Assets/Sprites/Valen/S_Valen_Attack_0.hbsprite.json": {
+    "id": "fcdefd81-f288-4447-bcc5-e5caa8ee3d81"
+  },
+  "Assets/Sprites/Valen/S_Valen_Attack_1.hbsprite.json": {
+    "id": "aca60182-24db-4756-ac38-8c58ca6ffc26"
+  },
+  "Assets/Sprites/Valen/S_Valen_Attack_2.hbsprite.json": {
+    "id": "d4c24bcb-bc4a-457b-89a4-65555b5358ec"
+  },
+  "Assets/Sprites/Valen/S_Valen_Idle_0.hbsprite.json": {
+    "id": "e42261b5-9b23-4f73-b3a6-ab2e4baeb4bd"
+  },
+  "Assets/Sprites/Valen/S_Valen_Walk_0.hbsprite.json": {
+    "id": "06bd7338-93d5-455b-9378-5438f1c14dab"
+  },
+  "Assets/Sprites/Valen/S_Valen_Walk_1.hbsprite.json": {
+    "id": "95d1783e-e153-40c8-ac3e-77d73ab47559"
+  },
+  "Assets/Sprites/Valen/S_Valen_Walk_2.hbsprite.json": {
+    "id": "2dfad0c9-f282-4fdd-8d21-7340905bc149"
+  },
+  "Assets/Sprites/Valen/S_Valen_Walk_3.hbsprite.json": {
+    "id": "26da595c-396b-4685-8389-3a57c1e8f0e6"
+  },
+  "Assets/Sprites/Valen/Valen_Attack_0.png": {
+    "id": "7acae07c-4241-494a-b63d-1bffe974acb4"
+  },
+  "Assets/Sprites/Valen/Valen_Attack_1.png": {
+    "id": "625a6c49-3ddd-467c-8db2-a08bf78eaf86"
+  },
+  "Assets/Sprites/Valen/Valen_Attack_2.png": {
+    "id": "2a03e84e-1029-485a-a447-b581e64da9f8"
+  },
+  "Assets/Sprites/Valen/Valen_Idle_0.png": {
+    "id": "49727fe4-a63b-4b48-887e-25065a9f8f78"
+  },
+  "Assets/Sprites/Valen/Valen_Walk_0.png": {
+    "id": "10aed7e6-c01c-4f6d-95d3-fe6968012a86"
+  },
+  "Assets/Sprites/Valen/Valen_Walk_1.png": {
+    "id": "c3bf6dc6-9663-48df-a679-fcf527c582b6"
+  },
+  "Assets/Sprites/Valen/Valen_Walk_2.png": {
+    "id": "bd362b4c-927d-459c-abfa-dca4e0a2d8d0"
+  },
+  "Assets/Sprites/Valen/Valen_Walk_3.png": {
+    "id": "a39e9b5b-3894-4cea-aefc-88df6078dd01"
   }
 }

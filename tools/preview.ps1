@@ -31,6 +31,8 @@ $hb = { param($m, $p) $f = [IO.Path]::GetTempFileName(); [IO.File]::WriteAllText
 & $hb document.open '{"path":"Assets/Scenes/Garden.hbscene.json"}' | Out-Null
 & $hb runtime.play '{}' | Out-Null
 Start-Sleep $Seconds
+foreach ($json in $Inputs) { & $hb runtime.input $json | Out-Null }  # 예: '{"key":"d","value":1}'
+if ($Inputs) { Start-Sleep -Milliseconds 400 }
 
 # 3. 편집기 창만 캡처
 Add-Type -AssemblyName System.Drawing

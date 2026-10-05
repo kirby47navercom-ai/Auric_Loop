@@ -31,7 +31,8 @@ def texture(obj, name, **extra):
 
 player = objs["Player"]
 comp(player, "TopDownMovement2D")["properties"]["speed"] = 6
-texture(player, "Valen_Idle.png")
+comp(player, "SpriteRenderer")["properties"].update(  # 프레임은 C++가 S_Valen_*로 바꾼다
+    sprite="Assets/Sprites/Valen/S_Valen_Idle_0.hbsprite.json", texture="", color=[1, 1, 1, 1], useCustomSize=False)
 player["position"] = [0, -8, 0.1]
 # 게임 규칙 C++(BP_TopDownShooter)는 플레이어가 아니라 별도 Director에 붙인다.
 # 플레이어에 붙이면 C++ 인스턴스 생성 때 플레이어 위치가 (0,0,0)으로 덮어써짐 (HBEngine 사용자용 d4de30b4에서 확인).
@@ -75,7 +76,14 @@ start = {"id": "PlayerStart", "name": "PlayerStart", "kind": "playerStart", "gro
          "components": [copy.deepcopy(comp(player, "Transform"))]}
 
 half = ROOM / 2 + WALL / 2
+# 검 베기 이펙트: 충돌·물리 없이 풀에서 꺼내 0.12초 보였다가 반환
+slash = copy.deepcopy(objs["Bullet0"])
+slash.update(id="SlashFX", name="SlashFX", position=[0, 40, 0.2])
+slash["components"] = [c for c in slash["components"] if c["type"] in ("Transform", "SpriteRenderer", "PooledActor")]
+texture(slash, "FX_Slash.png", sortingOrder=5)
+
 room = [
+    slash,
     start,
     director,
     static_box("Floor", 0, 0, ROOM, ROOM, [1, 1, 1, 1], collider=False, order=-10),
@@ -101,7 +109,7 @@ def tiled(src, out, w_m, h_m, band=None):
     return out
 
 
-for o in room[2:]:
+for o in room[3:]:
     w, h = (comp(o, "SpriteRenderer")["properties"][k] for k in ("width", "height"))
     if o["id"] == "Floor":
         name = tiled("Floor_Stone.png", "Room_Floor.png", w, h)
