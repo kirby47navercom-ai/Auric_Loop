@@ -247,5 +247,26 @@
   },
   "Assets/Sprites/Prop_Stall.png": {
     "id": "6149d276-883b-40cf-89dd-b2807acaf4fd"
+  },
+  "Assets/Sprites/Room_Floor_Gap.png": {
+    "id": "570a16c3-38ee-46e3-9b00-679afbfae77c"
+  },
+  "Assets/UI/Kit/craft_detail_potion.png": {
+    "id": "bb6f388a-a971-4381-99dc-9e5719f07e3b"
+  },
+  "Assets/UI/Kit/craft_item_crystal.png": {
+    "id": "95afc36e-c124-43bb-a062-fc5555a65347"
+  },
+  "Assets/UI/Kit/craft_item_flash.png": {
+    "id": "e37285d3-10e7-43de-9f89-7be4e7930f7a"
+  },
+  "Assets/UI/Kit/craft_item_potion.png": {
+    "id": "0a8d6d4b-d9c0-44aa-9c6f-5fc93dfe6b6b"
+  },
+  "Assets/UI/Kit/craft_panel.png": {
+    "id": "952979d5-bc01-4baf-93e8-94dbaf7889c9"
+  },
+  "Assets/UI/Kit/craft_select.png": {
+    "id": "02359b6f-2b11-4006-93d9-46fbe2009764"
   }
 }

@@ -38,6 +38,18 @@ assert.equal(gs.Herb, 3, 'E로 약초 3개 채집');
 assert.equal(gs.Fatigue, 2, '채집마다 피로도 +1');
 console.log('채집 검사 통과', 'ore', gs.Ore, 'herb', gs.Herb, 'fatigue', gs.Fatigue);
 
+// 채집 뒤 Q로 제작 창 → 2(섬광탄) → Enter
+const k = await runProject(project, {scene: 'Assets/Scenes/Test_Gather.hbscene.json', frames: 120, delta: 1 / 60, inputs: [
+  {frame: 10, key: 'e', value: 1}, {frame: 12, key: 'e', value: 0},
+  {frame: 20, key: 'q', value: 1}, {frame: 22, key: 'q', value: 0},
+  {frame: 30, key: '2', value: 1}, {frame: 32, key: '2', value: 0},
+  {frame: 40, key: 'enter', value: 1}, {frame: 42, key: 'enter', value: 0},
+]});
+const ks = k.objects.find(o => o.id === 'Director').nativeProperties;
+assert.equal(ks.Ore, 0, '광물 1개를 써서');
+assert.equal(ks.Flashbangs, 4, '섬광탄 1개 제작 (3 + 1)');
+console.log('제작 검사 통과', 'flashbangs', ks.Flashbangs);
+
 // 보스방 입구에서 시작: 해골 대장 처치 → Tab으로 [귀환] 사용 → 아래로 걸으며 잠긴 문 때리기
 const down = {position: [640, 600], size: [1280, 720]};
 const b = await runProject(project, {scene: 'Assets/Scenes/Test_Boss.hbscene.json', frames: 4200, delta: 1 / 60, inputs: [

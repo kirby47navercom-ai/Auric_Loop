@@ -44,6 +44,9 @@ constexpr float upgradeBonus=0.15f;    // 강화 +1마다 무기공격력 15%
 constexpr float interactRange=2.2f;
 constexpr float coinMagnet=3.0f,coinPickup=0.7f;
 constexpr float repayRate=0.5f;        // 기획서 6-4 정산 상환 비율
+constexpr float enchantPower=0.3f;     // 기획서 6-2-1 단순 증폭 +30% [제안]
+constexpr float burnTime=3.0f,burnRate=0.1f;  // 기획: 3초 동안 1초마다 무기공격력 10%
+constexpr float slashExtend=1.5f;      // 검기: 사거리 +1.5m. ponytail: 날아가는 검기 투사체는 아군 탄이 생기면 교체
 constexpr int doorHitsToOpen=10;       // 기획: 귀환 중 잠긴 문은 10번 때리면 열림
 constexpr float doorStun=1.0f;         // 기획: 문이 열리면 1초 전체 스턴
 constexpr float flashStun=1.0f;        // 기획: 섬광탄 1초 전체 스턴 + 탄막 제거
@@ -159,12 +162,48 @@ void TopDownShooter::Interact(hb::Actor* player,const hb::Vec3& position,const s
   if(next!=hint||pressed){hint=next;Hud(player);}
 }
 
+float TopDownShooter::WeaponDamage() const{
+  return balance::swordDamage*(1+balance::upgradeBonus*WeaponLevel)*(Enchant==1?1+balance::enchantPower:1);
+}
+
+void TopDownShooter::CraftDetail(hb::Actor* player){
+  // 오른쪽 설명: 키트 제작 창 시안의 이름 / 효과 / 종류 / 필요 소재
+  static const char* names[]={"","회복 물약","섬광탄","각인 결정: 증폭","각인 결정: 화상","각인 결정: 검기"};
+  static const char* effects[]={"","체력 1 회복","1초 전체 스턴, 탄막 제거","무기공격력 +30%","맞은 적이 3초 동안 불탐","베기 사거리 +1.5m"};
+  std::string cost;
+  if(craftPick==1)cost="약초 "+std::to_string(Herb)+" / 3    빈 병 "+std::to_string(Bottle)+" / 1";
+  else if(craftPick==2)cost="광물 "+std::to_string(Ore)+" / 1";
+  else cost="마물 소재 "+std::to_string(Monster)+" / 1   (각인은 하나만, 새로 하면 덮어씀)";
+  hb::UI::SetText(player,"HUD","CraftName",names[craftPick]);
+  hb::UI::SetText(player,"HUD","CraftEffect",effects[craftPick]);
+  hb::UI::SetText(player,"HUD","CraftType",craftPick<=2?"소모 아이템":"무기 각인 (귀환하면 사라짐)");
+  hb::UI::SetText(player,"HUD","CraftCost",cost);
+}
+
+void TopDownShooter::Craft(hb::Actor* player,bool toggle,int pick,bool confirm){
+  // 제작 창 (기획서 6-2-2): Q로 열고 닫음, 1~5 선택, Enter·제작하기로 제작. 열려 있어도 게임은 계속된다.
+  static const char* parts[]={"CraftPanel","CraftTitle","CraftSub","CraftIcon1","CraftIcon2","CraftIcon3","CraftIcon4","CraftIcon5",
+    "CraftKey1","CraftKey2","CraftKey3","CraftKey4","CraftKey5","CraftSlot1","CraftSlot2","CraftSlot3","CraftSlot4","CraftSlot5",
+    "CraftSelect","CraftName","CraftEffect","CraftType","CraftNeed","CraftCost","CraftConfirm","CraftConfirmButton","CraftClose","CraftFooter"};
+  if(toggle){craftOpen=!craftOpen;for(auto* n:parts)hb::UI::SetVisible(player,"HUD",n,craftOpen);if(craftOpen)CraftDetail(player);}
+  if(!craftOpen)return;
+  if(pick>0){craftPick=pick;CraftDetail(player);}  // ponytail: 선택 테두리 위치 이동은 위젯 위치 API가 생기면
+  if(!confirm)return;
+  bool done=false;
+  if(craftPick==1&&Herb>=3&&Bottle>=1&&Hp<balance::playerHp){Herb-=3;Bottle--;Hp++;done=true;}
+  else if(craftPick==2&&Ore>=1){Ore--;Flashbangs++;done=true;}
+  else if(craftPick>=3&&Monster>=1){Monster--;Enchant=craftPick-2;done=true;}
+  if(done){Crafted++;hint=std::string("제작 완료: ")+(craftPick==1?"회복 물약":craftPick==2?"섬광탄":"각인 결정");}
+  else hint="소재가 모자라요";
+  CraftDetail(player);Hud(player);
+}
+
 void TopDownShooter::Settle(hb::Actor* player){
   // 정산 (기획서 6-4): 소재를 골드로 바꾸고 절반을 빚에서 자동 상환, 강화는 초기화
   const int total=Gold+Ore*40+Herb*5+Monster*30;
   LastRepaid=int(total*balance::repayRate);
   Debt-=LastRepaid;if(Debt<0)Debt=0;
-  Gold=total-LastRepaid;Ore=Herb=Monster=0;WeaponLevel=0;
+  Gold=total-LastRepaid;Ore=Herb=Monster=0;WeaponLevel=0;Enchant=0;
   Hud(player);
 }
 
@@ -278,6 +317,9 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
     for(auto& [b,life]:lifetime)life=0;Hud(player);}
   flashHeld=flash;
   if(Returning)UpdateReturn(player,position,enemies,doors);
+  {const bool q=hb::Input::IsKeyDown("q"),enter=hb::Input::IsKeyDown("enter");int pick=0;
+   for(int i=1;i<=5;++i)if(hb::Input::IsKeyDown(std::to_string(i)))pick=i;
+   Craft(player,q&&!craftKeyHeld,pick,enter&&!confirmHeld);craftKeyHeld=q;confirmHeld=enter;}
 
   // 검 부채꼴 베기: 적에게 피해, 범위 안의 적 탄환은 지움 (기획: 투사체 삭제)
   if(hb::Input::IsKeyDown("LeftMouseButton")&&attackCooldown<=0){
@@ -290,11 +332,11 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
     }
     const float minDot=std::cos(balance::swordHalfAngle*3.14159265f/180);
     auto inFan=[&](const hb::Vec3& at){const auto d=at-position;const float len=Length(d);
-      return len<=balance::swordRange&&(len<=balance::contactRange||hb::VectorMath::DotProduct(d*(1/len),facing)>=minDot);};  // 바로 붙은 적은 방향과 관계없이 맞음
+      return len<=balance::swordRange+(Enchant==3?balance::slashExtend:0)&&(len<=balance::contactRange||hb::VectorMath::DotProduct(d*(1/len),facing)>=minDot);};  // 바로 붙은 적은 방향과 관계없이 맞음
     for(auto* e:enemies){if(!hb::ActorPool::IsActive(e))continue;
       const auto at=hb::Scene::GetPosition(e);if(!inFan(at))continue;
       const auto d=at-position;const float len=Length(d);
-      if(!Returning)enemyHp[e]-=balance::swordDamage*(1+balance::upgradeBonus*WeaponLevel);Hits++;stun[e]=balance::swordStun;  // 귀환 중 해골은 무적
+      if(!Returning){enemyHp[e]-=WeaponDamage();if(Enchant==2)burn[e]=balance::burnTime;}Hits++;stun[e]=balance::swordStun;  // 귀환 중 해골은 무적
       hb::Physics::SetVelocity(e,(len>.01f?d*(1/len):facing)*6);
       if(enemyHp[e]<=0){hb::ActorPool::Release(e);Kills++;DropCoin(items,at,1+Kills%3);  // 해골 1~3 G
         if(fightingRoom==1){int left=0;for(auto* o:enemies)left+=hb::ActorPool::IsActive(o);if(!left)Monster++;}}  // 전투방2 마지막 해골은 마물 소재 확정
@@ -306,7 +348,7 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
     if(bossActor&&hb::ActorPool::IsActive(bossActor)){
       const auto d=hb::Scene::GetPosition(bossActor)-position;const float len=Length(d);
       if(len<=balance::swordRange+balance::bossRadius&&(len<=balance::bossRadius+balance::contactRange||hb::VectorMath::DotProduct(d*(1/len),facing)>=minDot)){
-        BossHp-=balance::swordDamage*(1+balance::upgradeBonus*WeaponLevel);Hits++;
+        BossHp-=WeaponDamage();Hits++;
         if(BossHp<=0){const auto at=hb::Scene::GetPosition(bossActor);hb::ActorPool::Release(bossActor);Kills++;HasReturnItem=true;Monster++;DropCoin(items,at,30);Hud(player);}
       }
     }
@@ -317,6 +359,8 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
   // 해골: 근거리는 추격, 원거리는 거리를 두고 3갈래 탄 발사
   int alive=0;
   for(size_t i=0;i<enemies.size();++i){auto* e=enemies[i];if(!hb::ActorPool::IsActive(e))continue;alive++;
+    if(burn[e]>0){burn[e]-=delta;enemyHp[e]-=WeaponDamage()*balance::burnRate*delta;  // 화상
+      if(enemyHp[e]<=0){hb::ActorPool::Release(e);Kills++;burn[e]=0;continue;}}
     if(stun[e]>0){stun[e]-=delta;continue;}
     const auto d=position-hb::Scene::GetPosition(e);const float len=Length(d);
     const auto dir=len>.01f?d*(1/len):hb::Vec3{0,0,0};

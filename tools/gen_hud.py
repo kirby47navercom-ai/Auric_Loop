@@ -19,7 +19,7 @@ base = next(n for n in w["nodes"] if n["name"] == "Title")
 root = next(n for n in w["nodes"] if n["type"] == "Canvas")
 nodes = [root]
 
-CORNER = {"tl": (0, 0), "tr": (1, 0), "bl": (0, 1), "br": (1, 1), "t": (0.5, 0)}
+CORNER = {"tl": (0, 0), "tr": (1, 0), "bl": (0, 1), "br": (1, 1), "t": (0.5, 0), "c": (0.5, 0.5)}
 
 
 def node(name, kind, corner, x, y, w_, h, z=10, **props):
@@ -27,7 +27,7 @@ def node(name, kind, corner, x, y, w_, h, z=10, **props):
     ax, ay = CORNER[corner]
     n = copy.deepcopy(base)
     n.update(id=name, name=name, type=kind, parent="root", events={}, bindings={})
-    n["slot"] = {"anchors": [ax, ay, ax, ay], "offset": [x if ax < 1 else -x, y if ay < 1 else -y, w_, h],
+    n["slot"] = {"anchors": [ax, ay, ax, ay], "offset": [-x if ax == 1 else x, -y if ay == 1 else y, w_, h],
                  "alignment": [ax, ay], "zIndex": z, "fill": 0}
     n["properties"].update({"text": "", "texture": "", "background": "#00000000", "deviceVisibility": "all", **props})
     nodes.append(n)
@@ -92,3 +92,51 @@ nodes.append(move)
 w["nodes"] = nodes
 WIDGET.write_text(json.dumps(w, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 print("HUD 갱신:", WIDGET.name, len(nodes), "nodes")
+
+# ---- 제작 창 (Q). UI 키트 v8 crafting 배치 그대로, 화면 가운데. 처음엔 숨김 ----
+PW, PH = 920, 516  # craft_panel.png 크기
+
+
+def panel(name, kind, px, py, w_, h_, z, **props):
+    """제작 창 안쪽 좌표(px, py)로 둔다. 화면 가운데 기준."""
+    n = node(name, kind, "c", px - PW / 2, py - PH / 2, w_, h_, z, visible=False, **props)
+    n["slot"]["alignment"] = [0, 0]
+    return n
+
+
+def panel_image(name, file, px, py, z=41):
+    iw, ih = Image.open(PROJECT / KIT / file).size
+    return panel(name, "Image", px, py, iw, ih, z, texture=KIT + file)
+
+
+def panel_text(name, value, px, py, w_, h_, size=16, align="left"):
+    return panel(name, "Text", px, py, w_, h_, 42, text=value, fontSize=size, color="#fff3e5", align=align)
+
+
+panel_image("CraftPanel", "craft_panel.png", 0, 0, z=40)
+panel_text("CraftTitle", "제작", 32, 32, 300, 28, size=22)
+panel_text("CraftSub", "제작서를 보유한 아이템  (1~5 선택, Enter 제작, Q 닫기)", 32, 70, 400, 22, size=13)
+SLOTS = [(32, 128), (148, 128), (264, 128), (32, 244), (148, 244)]  # 키트 slot_01~05
+ICONS = ["craft_item_potion.png", "craft_item_flash.png", "craft_item_crystal.png", "craft_item_crystal.png", "craft_item_crystal.png"]
+for i, ((sx, sy), icon) in enumerate(zip(SLOTS, ICONS), 1):
+    iw, ih = Image.open(PROJECT / KIT / icon).size
+    panel_image(f"CraftIcon{i}", icon, sx + (104 - iw) // 2, sy + (104 - ih) // 2)
+    panel_text(f"CraftKey{i}", str(i), sx + 8, sy + 4, 20, 18, size=12)
+    t = panel(f"CraftSlot{i}", "TouchButton", sx, sy, 104, 104, 44, inputKey=str(i), inputMode="keys",
+              background="#00000000", pressed="#ffffff22", hover="#ffffff11")
+panel_image("CraftSelect", "craft_select.png", 32, 128, z=43)
+panel_text("CraftName", "회복 물약", 480, 136, 380, 26, size=20)
+panel_text("CraftEffect", "체력 1 회복", 568, 190, 300, 22)
+panel_text("CraftType", "소모 아이템", 568, 220, 300, 20, size=13)
+panel_text("CraftNeed", "필요 소재", 480, 272, 300, 22)
+panel_text("CraftCost", "약초 0 / 3    빈 병 1 / 1", 480, 312, 380, 22)
+panel_text("CraftConfirm", "제작하기", 480, 400, 380, 30, size=18, align="center")
+panel("CraftConfirmButton", "TouchButton", 480, 384, 380, 64, 44, inputKey="enter", inputMode="keys",
+      background="#00000000", pressed="#ffffff22", hover="#ffffff11")
+panel("CraftClose", "TouchButton", 820, 24, 72, 72, 44, inputKey="q", inputMode="keys",
+      background="#00000000", pressed="#ffffff22", hover="#ffffff11")
+panel_text("CraftFooter", "제작 중에도 전투가 계속됩니다", 480, 462, 380, 20, size=12)
+
+w["nodes"] = nodes
+WIDGET.write_text(json.dumps(w, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+print("제작 창 추가:", len(nodes), "nodes")

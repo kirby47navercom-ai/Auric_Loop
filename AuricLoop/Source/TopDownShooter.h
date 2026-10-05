@@ -55,6 +55,10 @@ public:
   int Debt = 9800;             // 발렌 빚 (기획서 6-4)
   HB_PROPERTY(BlueprintReadWrite)
   int LastRepaid = 0;
+  HB_PROPERTY(BlueprintReadWrite)
+  int Enchant = 0;             // 각인: 0 없음, 1 증폭(+30%), 2 화상, 3 검기(사거리) — 하나만, 새로 하면 덮어씀
+  HB_PROPERTY(BlueprintReadWrite)
+  int Crafted = 0;
 private:
   void Hud(hb::Actor* player);
   void Fire(const std::vector<hb::Actor*>& bullets,const hb::Vec3& from,const hb::Vec3& dir);
@@ -65,6 +69,9 @@ private:
   void DropCoin(const std::vector<hb::Actor*>& items,const hb::Vec3& at,int value);
   void Interact(hb::Actor* player,const hb::Vec3& position,const std::vector<hb::Actor*>& items,bool pressed);
   void Settle(hb::Actor* player);
+  void Craft(hb::Actor* player,bool open,int pick,bool confirm);
+  void CraftDetail(hb::Actor* player);
+  float WeaponDamage() const;
   int Weight() const{return Ore*30+Herb*5+Monster*15;}
   void StunAll(const std::vector<hb::Actor*>& enemies,float seconds);
   bool UpdateBoss(hb::Actor* player,float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies);
@@ -82,6 +89,9 @@ private:
   bool returnHeld=false,flashHeld=false;
   std::map<hb::Actor*,int> coinValue;
   std::string hint;
+  bool craftOpen=false,craftKeyHeld=false,confirmHeld=false;
+  int craftPick=1;
+  std::map<hb::Actor*,float> burn;
   hb::Actor* bossActor=nullptr;
   int bossPattern=0,bossStep=0;
   float bossTimer=0;
