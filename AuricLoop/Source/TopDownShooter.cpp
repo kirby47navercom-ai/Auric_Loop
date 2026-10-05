@@ -36,7 +36,11 @@ constexpr float bossChargeSpeed=14.0f;
 constexpr int bossRing=12;             // 원형 탄막 12방향 x 2회
 constexpr int bossSummon=2;            // 근거리 해골 2마리 소환
 constexpr float bossRest=1.5f;
-constexpr float enterDepth=2.0f;       // 문을 지나 이만큼 들어오면 방에 들어온 것으로 봄 (m)
+constexpr float enterDepth=2.0f;
+constexpr int doorHitsToOpen=10;       // 기획: 귀환 중 잠긴 문은 10번 때리면 열림
+constexpr float doorStun=1.0f;         // 기획: 문이 열리면 1초 전체 스턴
+constexpr float flashStun=1.0f;        // 기획: 섬광탄 1초 전체 스턴 + 탄막 제거
+constexpr float doorReach=2.5f;        // 문까지 이 거리 안에서 베면 문을 때린 것       // 문을 지나 이만큼 들어오면 방에 들어온 것으로 봄 (m)
 }
 
 // <rooms> tools/gen_scene.py가 만든 표. 손으로 고치지 말고 생성기를 고친다.
@@ -67,7 +71,8 @@ void TopDownShooter::Hud(hb::Actor* player){
     hb::UI::SetVisible(player,"HUD",name(level),true);fatigueLevel=level;
   }
   hb::UI::SetText(player,"HUD","Title",Hp<=0?(Fatigue>=FatigueMax?"지쳐 쓰러졌다":"쓰러졌다")
-    :HasReturnItem?"[귀환] 획득":bossActor&&hb::ActorPool::IsActive(bossActor)?"해골 대장":"탐색");
+    :ReturnSuccess?"귀환 성공":Returning?"귀환 - 문 "+std::to_string(DoorHits)+"/"+std::to_string(balance::doorHitsToOpen)+"  섬광탄 "+std::to_string(Flashbangs)
+    :HasReturnItem?"[귀환] 획득 - Tab으로 사용":bossActor&&hb::ActorPool::IsActive(bossActor)?"해골 대장":"탐색");
 }
 
 void TopDownShooter::Damage(hb::Actor* player,int amount){
@@ -117,6 +122,30 @@ void TopDownShooter::EnterRoom(int index,const std::vector<hb::Actor*>& enemies,
   }
 }
 
+void TopDownShooter::StunAll(const std::vector<hb::Actor*>& enemies,float seconds){
+  for(auto* e:enemies)if(hb::ActorPool::IsActive(e)){stun[e]=seconds;hb::Physics::SetVelocity(e,hb::Vec3{0,0,0});}
+}
+
+void TopDownShooter::UpdateReturn(hb::Actor* player,const hb::Vec3& position,const std::vector<hb::Actor*>& enemies,const std::vector<hb::Actor*>& doors){
+  // 귀환 페이즈 (기획서 6-3): 지나온 방을 거꾸로 걸어 나간다. 방마다 무적 해골이 한꺼번에 나오고,
+  // 아래쪽 문은 잠겨서 10번 때려야 열린다. 입구 근처에 닿으면 귀환 성공.
+  const int at=RoomAt(position.y);
+  if(at==0&&position.y<rooms[0].cy-rooms[0].half+4){
+    Returning=false;ReturnSuccess=true;for(auto* e:enemies)if(hb::ActorPool::IsActive(e))hb::ActorPool::Release(e);Hud(player);return;
+  }
+  if(at==returnRoom)return;
+  for(auto* e:enemies)if(hb::ActorPool::IsActive(e))hb::ActorPool::Release(e);  // 지나온 방의 해골은 정리
+  returnRoom=at;DoorHits=0;Fatigue++;  // 기획: 귀환 중에도 방을 지날 때 피로도 +1
+  if(Fatigue>=FatigueMax){Hp=0;gameOver=balance::respawnDelay;}
+  if(at>0&&at-1<(int)doors.size()&&!hb::ActorPool::IsActive(doors[at-1])){hb::Transform t;t.position=hb::Scene::GetPosition(doors[at-1]);hb::ActorPool::Acquire(std::vector<hb::Actor*>{doors[at-1]},t);}
+  const Room& r=rooms[at];
+  const std::vector<hb::Actor*> melee(enemies.begin(),enemies.begin()+balance::rangedFrom),ranged(enemies.begin()+balance::rangedFrom,enemies.end());
+  const float spots[][3]={{-0.5f,0.3f,0},{0.5f,0.3f,0},{-0.6f,-0.2f,1},{0.6f,-0.2f,1},{0.f,0.5f,1}};  // 방 크기 비율 위치
+  for(auto& s:spots){hb::Transform t;t.position=hb::Vec3{s[0]*r.half,r.cy+s[1]*r.half,0.1f};
+    if(auto* e=hb::ActorPool::Acquire(s[2]?ranged:melee,t)){enemyHp[e]=balance::enemyHp;stun[e]=0.8f;}}
+  Hud(player);
+}
+
 bool TopDownShooter::UpdateBoss(hb::Actor* player,float delta,const std::vector<hb::Actor*>& bullets,const std::vector<hb::Actor*>& enemies){
   // 해골 대장: 천천히 다가오다가 돌진 → 원형 탄막 → 졸개 소환을 차례로 반복 (기획서 5장)
   if(!bossActor||!hb::ActorPool::IsActive(bossActor))return false;
@@ -160,7 +189,7 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
 
   // 방 입장: 문을 지나 조금 들어오면 그 방의 적이 나오고 문이 잠긴다
   {const int at=RoomAt(position.y);const Room& r=rooms[at];
-   if(position.y>r.cy-r.half+balance::enterDepth||at==0)EnterRoom(at,enemies,doors,boss);}
+   if(!Returning&&!ReturnSuccess&&(position.y>r.cy-r.half+balance::enterDepth||at==0))EnterRoom(at,enemies,doors,boss);}
 
   // 탄환 수명과 방 밖으로 나간 탄환 정리
   for(auto it=lifetime.begin();it!=lifetime.end();){
@@ -193,6 +222,16 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
   dodgeHeld=dodgeDown;
   if(dodgeTime>0){dodgeTime-=delta;hb::Physics::SetVelocity(player,facing*balance::dodgeSpeed);}
 
+  // [귀환] 사용 (가방 Tab), 귀환 중 섬광탄 (E)
+  const bool tab=hb::Input::IsKeyDown("tab");
+  if(tab&&!returnHeld&&HasReturnItem&&!Returning&&!ReturnSuccess){HasReturnItem=false;Returning=true;returnRoom=-1;}
+  returnHeld=tab;
+  const bool flash=hb::Input::IsKeyDown("e");
+  if(flash&&!flashHeld&&Returning&&Flashbangs>0){Flashbangs--;StunAll(enemies,balance::flashStun);
+    for(auto& [b,life]:lifetime)life=0;Hud(player);}
+  flashHeld=flash;
+  if(Returning)UpdateReturn(player,position,enemies,doors);
+
   // 검 부채꼴 베기: 적에게 피해, 범위 안의 적 탄환은 지움 (기획: 투사체 삭제)
   if(hb::Input::IsKeyDown("LeftMouseButton")&&attackCooldown<=0){
     attackCooldown=balance::swordInterval;Swings++;attackAnim=0.3f;
@@ -208,9 +247,13 @@ void TopDownShooter::Update(float delta,const std::vector<hb::Actor*>& bullets,c
     for(auto* e:enemies){if(!hb::ActorPool::IsActive(e))continue;
       const auto at=hb::Scene::GetPosition(e);if(!inFan(at))continue;
       const auto d=at-position;const float len=Length(d);
-      enemyHp[e]-=balance::swordDamage;Hits++;stun[e]=balance::swordStun;
+      if(!Returning)enemyHp[e]-=balance::swordDamage;Hits++;stun[e]=balance::swordStun;  // 귀환 중 해골은 무적
       hb::Physics::SetVelocity(e,(len>.01f?d*(1/len):facing)*6);
       if(enemyHp[e]<=0){hb::ActorPool::Release(e);Kills++;}
+    }
+    if(Returning&&returnRoom>0&&hb::ActorPool::IsActive(doors[returnRoom-1])&&Length(hb::Scene::GetPosition(doors[returnRoom-1])-position)<balance::doorReach){
+      if(++DoorHits>=balance::doorHitsToOpen){hb::ActorPool::Release(doors[returnRoom-1]);StunAll(enemies,balance::doorStun);}
+      Hud(player);
     }
     if(bossActor&&hb::ActorPool::IsActive(bossActor)){
       const auto d=hb::Scene::GetPosition(bossActor)-position;const float len=Length(d);

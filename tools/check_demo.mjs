@@ -26,13 +26,18 @@ assert.ok(player.position[1] > 13, '플레이어가 전투방2 안에 있음');
 assert.equal(stats.FatigueMax, 20, '데모 피로도 한계 기본값 20');
 console.log('전투·문 검사 통과', JSON.stringify(stats), 'y', player.position[1].toFixed(1));
 
-// 보스방 입구에서 시작해 위를 보고 계속 베기
-const b = await runProject(project, {scene: 'Assets/Scenes/Test_Boss.hbscene.json', frames: 1500, delta: 1 / 60, inputs: [
+// 보스방 입구에서 시작: 해골 대장 처치 → Tab으로 [귀환] 사용 → 아래로 걸으며 잠긴 문 때리기
+const down = {position: [640, 600], size: [1280, 720]};
+const b = await runProject(project, {scene: 'Assets/Scenes/Test_Boss.hbscene.json', frames: 4200, delta: 1 / 60, inputs: [
   {frame: 2, key: 'w', value: 1}, {frame: 40, key: 'w', value: 0},
-  {frame: 41, key: 'LeftMouseButton', value: 1, pointer: aimUp}, {frame: 1490, key: 'LeftMouseButton', value: 0},
+  {frame: 41, key: 'LeftMouseButton', value: 1, pointer: aimUp}, {frame: 2400, key: 'LeftMouseButton', value: 0},
+  {frame: 2410, key: 'tab', value: 1}, {frame: 2415, key: 'tab', value: 0},
+  {frame: 2420, key: 's', value: 1}, {frame: 2421, key: 'LeftMouseButton', value: 1, pointer: down}, {frame: 4190, key: 's', value: 0},
 ]});
 const boss = b.objects.find(o => o.id === 'Director').nativeProperties;
-assert.equal(boss.RoomIndex, 4, '보스방');
+const by = b.objects.find(o => o.id === 'Player').position[1];
 assert.ok(boss.Shots >= 12, '해골 대장이 원형 탄막을 쏨');
-assert.ok(boss.BossHp < 40, '해골 대장이 검에 맞음');
-console.log('보스 검사 통과', JSON.stringify(boss));
+assert.ok(boss.BossHp <= 0, '해골 대장 처치');
+assert.ok(boss.Returning || boss.ReturnSuccess, 'Tab으로 [귀환] 사용 → 귀환 페이즈');
+assert.ok(by < 80, '잠긴 문을 10번 때려 열고 보스방 아래로 내려감');
+console.log('보스·귀환 검사 통과', JSON.stringify(boss), 'y', by.toFixed(1));
