@@ -2446,5 +2446,224 @@
   },
   "Assets/Sprites/FX/S_Shockwave_3.hbsprite.json": {
     "id": "9f326d28-829f-4daa-8569-5406f499fe69"
+  },
+  "Assets/Blueprints/BP_Test_Boss.hbblueprint.json": {
+    "id": "af9b38e0-3449-43b1-8cf3-624c6fe2f03c"
+  },
+  "Assets/Sprites/Alea/Alea_E_Roll_0.png": {
+    "id": "eb89798c-1397-4b90-a91e-145c6ac5ee79"
+  },
+  "Assets/Sprites/Alea/Alea_E_Roll_1.png": {
+    "id": "2ffb3b1c-b289-4a78-9785-dd15e3faf53d"
+  },
+  "Assets/Sprites/Alea/Alea_E_Roll_2.png": {
+    "id": "e5c5dc37-b508-4adc-bb9e-36927a302c3b"
+  },
+  "Assets/Sprites/Alea/Alea_E_Roll_3.png": {
+    "id": "c9b89172-3e10-4b44-b523-e1fdc81eba68"
+  },
+  "Assets/Sprites/Alea/Alea_N_Roll_0.png": {
+    "id": "91563fac-bf8e-4a91-9578-7cd0bfbb3e6c"
+  },
+  "Assets/Sprites/Alea/Alea_N_Roll_1.png": {
+    "id": "7b2f1f41-f563-49fd-bfd9-ed6486ec4a78"
+  },
+  "Assets/Sprites/Alea/Alea_N_Roll_2.png": {
+    "id": "3faa6546-c289-4d58-93cd-25681e50e048"
+  },
+  "Assets/Sprites/Alea/Alea_N_Roll_3.png": {
+    "id": "822db94f-8c6f-477b-983e-29abe25dd945"
+  },
+  "Assets/Sprites/Alea/Alea_S_Roll_0.png": {
+    "id": "523fea23-b674-474a-93c7-d3ea5309a9c4"
+  },
+  "Assets/Sprites/Alea/Alea_S_Roll_1.png": {
+    "id": "1d7985e8-87b1-4843-aff7-a69f16a49b8e"
+  },
+  "Assets/Sprites/Alea/Alea_S_Roll_2.png": {
+    "id": "827643a9-5818-4c2d-9ac9-16a553f4f765"
+  },
+  "Assets/Sprites/Alea/Alea_S_Roll_3.png": {
+    "id": "3d00b4aa-8057-495f-93d1-510551eec787"
+  },
+  "Assets/Sprites/Alea/S_Alea_E_Roll_0.hbsprite.json": {
+    "id": "73c71d42-f273-43e8-b179-cfebdf85c1a8"
+  },
+  "Assets/Sprites/Alea/S_Alea_E_Roll_1.hbsprite.json": {
+    "id": "ed73499c-f6f0-4548-a7cd-58dd3264f3f8"
+  },
+  "Assets/Sprites/Alea/S_Alea_E_Roll_2.hbsprite.json": {
+    "id": "ed863de9-89ab-42ad-a6bd-c5f2f8c5b2b4"
+  },
+  "Assets/Sprites/Alea/S_Alea_E_Roll_3.hbsprite.json": {
+    "id": "a9dd69b4-6f41-41b9-b48f-adbe48101eba"
+  },
+  "Assets/Sprites/Alea/S_Alea_N_Roll_0.hbsprite.json": {
+    "id": "52e3a7cc-32e5-448f-8659-0b9c1d695155"
+  },
+  "Assets/Sprites/Alea/S_Alea_N_Roll_1.hbsprite.json": {
+    "id": "3a4dbef0-dd7d-4c0f-b901-3d29531334bc"
+  },
+  "Assets/Sprites/Alea/S_Alea_N_Roll_2.hbsprite.json": {
+    "id": "0848ab67-a0dc-4299-92bd-ee8693f2d3cf"
+  },
+  "Assets/Sprites/Alea/S_Alea_N_Roll_3.hbsprite.json": {
+    "id": "b0d9cde0-0d5b-45d1-8f04-105fd9d8893f"
+  },
+  "Assets/Sprites/Alea/S_Alea_S_Roll_0.hbsprite.json": {
+    "id": "e085a3e6-37cf-4c7c-a742-feb512015060"
+  },
+  "Assets/Sprites/Alea/S_Alea_S_Roll_1.hbsprite.json": {
+    "id": "ec377737-d395-449e-a6be-affa985dc5fb"
+  },
+  "Assets/Sprites/Alea/S_Alea_S_Roll_2.hbsprite.json": {
+    "id": "ba32cc05-105a-4f68-b91d-6d2048e65c3e"
+  },
+  "Assets/Sprites/Alea/S_Alea_S_Roll_3.hbsprite.json": {
+    "id": "431d2270-00b9-4103-a794-eeb669f8309f"
+  },
+  "Assets/Sprites/Sherry/Sherry_E_Roll_0.png": {
+    "id": "d8ce54fd-7da4-4722-8a2f-c97edeb0a778"
+  },
+  "Assets/Sprites/Sherry/Sherry_E_Roll_1.png": {
+    "id": "408cf9e3-37eb-42a1-ba4b-c5ddab353333"
+  },
+  "Assets/Sprites/Sherry/Sherry_E_Roll_2.png": {
+    "id": "3ba61084-6045-45b9-865e-5957c3bae69d"
+  },
+  "Assets/Sprites/Sherry/Sherry_E_Roll_3.png": {
+    "id": "d978edae-f876-4158-9bb8-1ee92e67a894"
+  },
+  "Assets/Sprites/Sherry/Sherry_N_Roll_0.png": {
+    "id": "c5fb87ae-4ac9-434b-bd21-7da72f78d7de"
+  },
+  "Assets/Sprites/Sherry/Sherry_N_Roll_1.png": {
+    "id": "a05e0d82-e46e-4038-b55c-f11e3b6d5af9"
+  },
+  "Assets/Sprites/Sherry/Sherry_N_Roll_2.png": {
+    "id": "efe35ec8-fc79-4d40-8f19-7b7cbdd7be46"
+  },
+  "Assets/Sprites/Sherry/Sherry_N_Roll_3.png": {
+    "id": "e45f1dd0-cba8-4154-a5d5-d28c15fbca07"
+  },
+  "Assets/Sprites/Sherry/Sherry_S_Roll_0.png": {
+    "id": "93a53065-b99b-4e8d-aace-af8c9e20230a"
+  },
+  "Assets/Sprites/Sherry/Sherry_S_Roll_1.png": {
+    "id": "b86424c8-6c69-42ab-8ba6-59016fa3e431"
+  },
+  "Assets/Sprites/Sherry/Sherry_S_Roll_2.png": {
+    "id": "2cc91a18-b02e-4270-a16c-9ce7c65a6e0d"
+  },
+  "Assets/Sprites/Sherry/Sherry_S_Roll_3.png": {
+    "id": "bfb13aad-013d-45b3-a5b6-95768e1e8d20"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_E_Roll_0.hbsprite.json": {
+    "id": "a121dc7a-3b28-4966-9d28-cbf7ef194bad"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_E_Roll_1.hbsprite.json": {
+    "id": "99bbff6d-fb9f-45c2-8fc4-2adf55a89d1c"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_E_Roll_2.hbsprite.json": {
+    "id": "4390b78a-898f-47d8-bc15-c5d17157a2ad"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_E_Roll_3.hbsprite.json": {
+    "id": "60aef9b7-95f8-44c8-a06d-8957049f5b64"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_N_Roll_0.hbsprite.json": {
+    "id": "a29a2f55-9b09-45eb-b8ab-4ec20f919c2e"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_N_Roll_1.hbsprite.json": {
+    "id": "85d78625-7bed-4205-88aa-10bef07c2f78"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_N_Roll_2.hbsprite.json": {
+    "id": "02a63626-edf0-468d-88e1-cf94b9ed7f16"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_N_Roll_3.hbsprite.json": {
+    "id": "c37392f7-ec11-4c07-88f7-67bebf5fb91a"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_S_Roll_0.hbsprite.json": {
+    "id": "7a37f55a-29f0-4185-b398-4cf848fb9f69"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_S_Roll_1.hbsprite.json": {
+    "id": "d1b16acc-1dff-42cc-a650-6a27b06be11e"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_S_Roll_2.hbsprite.json": {
+    "id": "4c272f72-a0fa-4fa3-beec-1aa9a4fa91e5"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_S_Roll_3.hbsprite.json": {
+    "id": "1ca27375-865a-43b3-8051-9853adc12d9d"
+  },
+  "Assets/Sprites/Valen/S_Valen_E_Roll_0.hbsprite.json": {
+    "id": "460f09ef-c9c5-4d29-b5e9-433e14f932d9"
+  },
+  "Assets/Sprites/Valen/S_Valen_E_Roll_1.hbsprite.json": {
+    "id": "af9e9321-e2e3-4caa-aedd-aa1f5df4746e"
+  },
+  "Assets/Sprites/Valen/S_Valen_E_Roll_2.hbsprite.json": {
+    "id": "73a8704e-c070-488f-b748-88d48627ee78"
+  },
+  "Assets/Sprites/Valen/S_Valen_E_Roll_3.hbsprite.json": {
+    "id": "4a99e0d0-626e-4126-ab87-08f74960d1ab"
+  },
+  "Assets/Sprites/Valen/S_Valen_N_Roll_0.hbsprite.json": {
+    "id": "91d9fedc-f509-429f-b480-e6f749a69f8b"
+  },
+  "Assets/Sprites/Valen/S_Valen_N_Roll_1.hbsprite.json": {
+    "id": "7da6d4a1-ae18-49cc-a592-cff82f4a7288"
+  },
+  "Assets/Sprites/Valen/S_Valen_N_Roll_2.hbsprite.json": {
+    "id": "01fb3066-ad87-47c0-a25e-a0fef0eedce4"
+  },
+  "Assets/Sprites/Valen/S_Valen_N_Roll_3.hbsprite.json": {
+    "id": "617eb83f-b15b-4b78-acda-2b183889cc6d"
+  },
+  "Assets/Sprites/Valen/S_Valen_S_Roll_0.hbsprite.json": {
+    "id": "9c915ac5-d3d1-430a-a7be-f26f1aae0933"
+  },
+  "Assets/Sprites/Valen/S_Valen_S_Roll_1.hbsprite.json": {
+    "id": "bd55f01e-0848-412a-a0bf-f54bee89d4fc"
+  },
+  "Assets/Sprites/Valen/S_Valen_S_Roll_2.hbsprite.json": {
+    "id": "0065a5f6-419c-47ee-b929-8c7cf1d092d5"
+  },
+  "Assets/Sprites/Valen/S_Valen_S_Roll_3.hbsprite.json": {
+    "id": "cee5f597-578b-4c8b-83f6-8755d6fffb99"
+  },
+  "Assets/Sprites/Valen/Valen_E_Roll_0.png": {
+    "id": "fd729adb-af74-459a-97ee-88a584e8a405"
+  },
+  "Assets/Sprites/Valen/Valen_E_Roll_1.png": {
+    "id": "0720189b-282f-4065-a2a3-4131ac03a0d7"
+  },
+  "Assets/Sprites/Valen/Valen_E_Roll_2.png": {
+    "id": "e49f52fd-6b64-40b0-929c-b2d48e0bd320"
+  },
+  "Assets/Sprites/Valen/Valen_E_Roll_3.png": {
+    "id": "9a77ce53-0387-4242-b104-88db3b848aeb"
+  },
+  "Assets/Sprites/Valen/Valen_N_Roll_0.png": {
+    "id": "e8016e74-2a35-4d19-a754-7a27704f0db7"
+  },
+  "Assets/Sprites/Valen/Valen_N_Roll_1.png": {
+    "id": "68ba32cb-e141-4e3b-8e4a-05ac078ffbc7"
+  },
+  "Assets/Sprites/Valen/Valen_N_Roll_2.png": {
+    "id": "4a511650-24c1-4812-9694-fe8eef447521"
+  },
+  "Assets/Sprites/Valen/Valen_N_Roll_3.png": {
+    "id": "67352e50-dc3f-488b-a361-9b2b484185e1"
+  },
+  "Assets/Sprites/Valen/Valen_S_Roll_0.png": {
+    "id": "bb842de6-5300-4fd8-8a13-6a1243b4d04e"
+  },
+  "Assets/Sprites/Valen/Valen_S_Roll_1.png": {
+    "id": "8c0015cf-3cbd-4c12-800d-d106875189c1"
+  },
+  "Assets/Sprites/Valen/Valen_S_Roll_2.png": {
+    "id": "c007a34b-4d8b-4655-bee5-a33e3648fb6a"
+  },
+  "Assets/Sprites/Valen/Valen_S_Roll_3.png": {
+    "id": "b430e2a8-9dab-4b88-8763-46c8c31a1798"
   }
 }

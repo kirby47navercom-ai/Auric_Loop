@@ -10,6 +10,7 @@ from pathlib import Path
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from defringe import clean  # noqa: E402
 from pixelize import save_frames, snap  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent / "AuricLoop/Assets"
@@ -38,7 +39,7 @@ for sheet, items in SHEETS.items():
         f = Image.open(tmp / f"{sheet.rsplit('.', 1)[0]}_{i}.png")
         f = f.crop(f.getbbox())
         f = f.resize((max(1, round(f.width * height / f.height)), height), Image.NEAREST)
-        f.save(out / f"{name}.png")
+        clean(f)[0].save(out / f"{name}.png")
         print(name, f.size)
 # 원룸 바닥: 거점 아틀라스의 나무 바닥 4x4칸
 atlas = Image.open(ROOT / "Tiles/T_World.png")

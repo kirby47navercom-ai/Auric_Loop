@@ -265,19 +265,19 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
     objects.append(bp_obj("Room", "BP_RoomInfo", 0, 0, {"Index": 0, "Kind": "Dungeon"}))
     T = "Assets/Tiles/"
     parked(objects, "Dungeon.Background", 1, lambda i: background(i, 0, 0, 4, 4))
-    parked(objects, "Dungeon.Floor", 28, lambda i: tiled(i, T + "T_DungeonFloor.png", -12, False))
-    parked(objects, "Dungeon.Cap", 100, lambda i: tiled(i, T + "T_DungeonCap.png", -9, True))
-    parked(objects, "Dungeon.Face", 36, lambda i: tiled(i, T + "T_DungeonFace.png", -10, True))
-    parked(objects, "Dungeon.Arch", 14, lambda i: sprite_obj(i, PROP + "Archway.png", 0, 0, order=-8, width=4, height=3))
+    parked(objects, "Dungeon.Floor", 18, lambda i: tiled(i, T + "T_DungeonFloor.png", -12, False))
+    parked(objects, "Dungeon.Cap", 64, lambda i: tiled(i, T + "T_DungeonCap.png", -9, True))
+    parked(objects, "Dungeon.Face", 22, lambda i: tiled(i, T + "T_DungeonFace.png", -10, True))
+    parked(objects, "Dungeon.Arch", 8, lambda i: sprite_obj(i, PROP + "Archway.png", 0, 0, order=-8, width=4, height=3))
     parked(objects, "Dungeon.Gate", 4, lambda i: sprite_obj(i, PROP + "Portcullis.png", 0, 0, order=-7, collider=(2, 0.5, -1.0), width=4, height=3))
     parked(objects, "Dungeon.GateSide", 4, lambda i: sprite_obj(i, PROP + "GateSide.png", 0, 0, order=0, collider=(0.5, 2, 0)))
-    parked(objects, "Dungeon.Torch", 26, lambda i: torch(i, 0, 0)[0])
-    parked(objects, "Dungeon.Glow", 26, lambda i: glow(i, 0, 0, 3.5))
-    parked(objects, "Dungeon.Banner", 12, lambda i: sprite_obj(i, PROP + "Banner.png", 0, 0, order=-8))
+    parked(objects, "Dungeon.Torch", 18, lambda i: torch(i, 0, 0)[0])
+    parked(objects, "Dungeon.Glow", 18, lambda i: glow(i, 0, 0, 3.5))
+    parked(objects, "Dungeon.Banner", 8, lambda i: sprite_obj(i, PROP + "Banner.png", 0, 0, order=-8))
     parked(objects, "Dungeon.Pillar", 16, lambda i: sprite_obj(i, PROP + "Pillar.png", 0, 0, order=0, collider=(0.35, 0.25, -0.6)))
     # 전투방 엄폐물 (Dungeon::Build의 배치 6가지). 충돌은 그림 아랫부분만
-    for tag, file, count, col in (("Crate", "Crates2", 14, (0.45, 0.3, -0.5)), ("Barrel", "Barrel2", 10, (0.4, 0.25, -0.4)),
-                                  ("LowWall", "LowWall", 22, (0.8, 0.3, -0.25)), ("Statue", "Statue", 8, (0.45, 0.3, -0.6)), ("Chest", "GoldChest", 2, (0.55, 0.3, -0.3))):
+    for tag, file, count, col in (("Crate", "Crates2", 12, (0.45, 0.3, -0.5)), ("Barrel", "Barrel2", 10, (0.4, 0.25, -0.4)),
+                                  ("LowWall", "LowWall", 20, (0.8, 0.3, -0.25)), ("Statue", "Statue", 8, (0.45, 0.3, -0.6)), ("Chest", "GoldChest", 2, (0.55, 0.3, -0.3))):
         parked(objects, "Dungeon." + tag, count, lambda i, f=file, c=col: sprite_obj(i, PROP + f + ".png", 0, 0, order=0, collider=c))
     for name, count in (("Rubble", 10), ("Bones", 10), ("GoldPile", 6)):
         parked(objects, "Dungeon." + ("Gold" if name == "GoldPile" else name), count, lambda i, n=name: sprite_obj(i, PROP + n + ".png", 0, 0, order=-2))

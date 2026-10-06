@@ -21,6 +21,7 @@ from pathlib import Path
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from defringe import clean, key  # noqa: E402
 from pixelize import snap  # noqa: E402
 
 ASSETS = Path(__file__).resolve().parent.parent / "AuricLoop/Assets"
@@ -34,15 +35,7 @@ DIRS = ["S", "SE", "E", "NE", "N"]
 
 
 def load(name):
-    im = snap(Image.open(src / name).convert("RGB")).convert("RGBA")
-    im.putdata([(0, 0, 0, 0) if (p[0] > 190 and p[2] > 190 and p[1] < 90) else p for p in im.get_flattened_data()])
-    # 테두리에 남은 분홍 번짐(배경과 섞인 칸)도 지운다
-    px = im.load()
-    fringe = [(x, y) for y in range(im.height) for x in range(im.width)
-              if px[x, y][3] and px[x, y][0] > 150 and px[x, y][2] > 120 and px[x, y][0] - px[x, y][1] > 80 and px[x, y][2] - px[x, y][1] > 60
-              and any(0 <= x + dx < im.width and 0 <= y + dy < im.height and not px[x + dx, y + dy][3] for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))]
-    for x, y in fringe:
-        px[x, y] = (0, 0, 0, 0)
+    im = key(snap(Image.open(src / name).convert("RGB")))
     return im
 
 
@@ -101,7 +94,7 @@ def save(folder, prefix, named, pivot_y_px=None):
     for name, f in named:
         canvas = Image.new("RGBA", (w, h))
         canvas.paste(f, (round(w / 2 - feet_x(f)), h - f.height))
-        canvas.save(folder / f"{prefix}_{name}.png")
+        clean(canvas)[0].save(folder / f"{prefix}_{name}.png")
         asset = {"version": 1, "name": f"S_{prefix}_{name}", "texture": f"{tex}/{prefix}_{name}.png", "pixelsPerUnit": PPU, "rect": [0, 0, w, h],
                  "pivot": [0.5, round(pivot_y_px / h, 4) if pivot_y_px is not None else 0.5], "filter": "nearest", "border": [0, 0, 0, 0]}
         (folder / f"S_{prefix}_{name}.hbsprite.json").write_text(json.dumps(asset, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -123,6 +116,11 @@ for name, body in CHARACTERS.items():
     for d in DIRS:
         frames = scaled(grid(load(f"{name.lower()}_{d.lower()}.png"), [5, 3]), body)
         named += [(f"{d}_Idle_0", frames[0])] + [(f"{d}_Walk_{i}", frames[1 + i]) for i in range(4)] + [(f"{d}_Attack_{i}", frames[5 + i]) for i in range(3)]
+    # 구르기 (<캐릭터>_roll.png: 아래·오른쪽·위 3줄 x 4장). 첫 장(웅크림)을 서 있는 키의 0.62배로 맞춤
+    roll = grid(load(f"{name.lower()}_roll.png"), [4, 4, 4])
+    k = body * 0.62 / roll[0].height
+    roll = [f.resize((max(1, round(f.width * k)), max(1, round(f.height * k))), Image.NEAREST) for f in roll]
+    named += [(f"{d}_Roll_{i}", roll[r * 4 + i]) for r, d in enumerate(["S", "E", "N"]) for i in range(4)]
     folder = ASSETS / f"Sprites/{name}"
     shutil.rmtree(folder, ignore_errors=True)  # 예전 한 방향 프레임
     save(folder, name, named, FEET * PPU)
@@ -157,7 +155,7 @@ def save_strip(folder, prefix, frames, pivot=(0.5, 0.5)):
     tex = folder.relative_to(ASSETS.parent).as_posix()
     out = []
     for i, f in enumerate(frames):
-        f.save(folder / f"{prefix}_{i}.png")
+        clean(f)[0].save(folder / f"{prefix}_{i}.png")
         asset = {"version": 1, "name": f"S_{prefix}_{i}", "texture": f"{tex}/{prefix}_{i}.png", "pixelsPerUnit": PPU, "rect": [0, 0, f.width, f.height],
                  "pivot": list(pivot), "filter": "nearest", "border": [0, 0, 0, 0]}
         (folder / f"S_{prefix}_{i}.hbsprite.json").write_text(json.dumps(asset, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

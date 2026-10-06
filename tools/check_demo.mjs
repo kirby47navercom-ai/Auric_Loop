@@ -29,9 +29,9 @@ const rooms = layout.filter(r => r.kind !== 'Shortage');
   assert.ok(rooms.some(r => links(r) >= 3), '갈림길(3갈래 이상) 방이 있음');
   assert.ok(rooms.find(r => r.kind === 'Boss').path >= 4, '보스까지 방 4개 이상');
   for (const a of rooms) for (const b of rooms) if (a !== b) assert.ok(Math.abs(a.x - b.x) >= a.hw + b.hw + 2 || Math.abs(a.y - b.y) >= a.hh + b.hh + 2, '방끼리 겹치지 않음');
-  // 바닥·벽 조각(장면 풀)이 어떤 배치에서도 모자라지 않음
+  // 바닥·벽·장식 조각(장면 풀)이 어떤 배치·어느 방에서도 모자라지 않음 (내 주변 방만 깔기)
   for (const seed of [7, 1, 2, 3, 11, 23, 99, 1234]) {
-    const short = JSON.parse(director(await runProject(project, {scene: scene('Test_Valen'), frames: 3, delta: 1 / 60, nativeDefaults: {Director: {Seed: seed}}})).Layout).find(r => r.kind === 'Shortage');
+    const short = JSON.parse(director(await runProject(project, {scene: scene('Test_Valen'), frames: 70, delta: 1 / 60, nativeDefaults: {Director: {Seed: seed}}, inputs: warps(5, 8)})).Layout).find(r => r.kind === 'Shortage');  // 경로 방을 차례로 지나며 주변을 다시 깖
     assert.ok(!short, `씨앗 ${seed}: 바닥·벽 조각 ${short?.count}개 모자람`);
   }
   console.log('층 생성 검사 통과', rooms.map(r => `${r.row}${r.path >= 0 ? '#' + r.path : ''}(${r.x / 36},${r.y / 36})`).join(' '));
@@ -154,4 +154,16 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   const t = await runProject(project, {scene: scene('Test_Valen'), frames: 60, delta: 1 / 60, inputs: [...warps(5, 1)]});
   assert.ok(director(t).TipsShown & 2, '첫 전투방 안내 문구');
   console.log('일시정지·안내 문구 검사 통과', 'tips', director(t).TipsShown);
+}
+
+// 구르기(Space): 바라보는 방향으로 1초 대시(이동속도 2배·무적), 그림이 구르기로 바뀜 (기획서 4-1)
+{
+  let rolling = '';
+  const r = await runProject(project, {scene: scene('Test_Valen'), frames: 90, delta: 1 / 60, inputs: [
+    {frame: 5, key: 'd', value: 1}, {frame: 8, key: 'd', value: 0}, ...press(10, 'space')],
+    onFrame: (frame, vm) => { if (frame === 25) rolling = vm.objects.find(o => o.id === 'Player').components.find(c => c.type === 'SpriteRenderer').properties.sprite; }});
+  const x = r.objects.find(o => o.id === 'Player').position[0];
+  assert.ok(/_Roll_/.test(rolling), `구르는 동안 구르기 그림 (${rolling})`);
+  assert.ok(x > 3, '오른쪽으로 굴러 나감');
+  console.log('구르기 검사 통과', rolling.split('/').at(-1), 'x', x.toFixed(1));
 }

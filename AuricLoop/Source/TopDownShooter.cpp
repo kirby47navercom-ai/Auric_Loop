@@ -5,6 +5,7 @@
 #include <string>
 #include <algorithm>
 #include <sstream>
+#include <set>
 
 // 수치 근거: docs/데모_기획서.md 4·5·6장. 값은 BP 기본값(편집기 속성)에서 고친다.
 
@@ -244,79 +245,100 @@ hb::Vec3 Dungeon::DoorPosition(int room,int dir) const{
 }
 
 // 반복 무늬 스프라이트 하나를 사각형 [x0,x1]×[y0,y1]에 깐다. collider: 0 없음, 1 전체, 2 아래 1m (위로 솟은 벽면)
-static int shortages=0;  // 풀이 모자라 못 깐 조각 수 (Describe → 검사)
-static void Put(std::vector<hb::Actor*>& pool,float x0,float y0,float x1,float y1,int collider,float z=0.05f){
+// 반복 무늬 조각 하나를 사각형 [x0,x1]×[y0,y1]에 깐다. collider: 0 없음, 1 전체, 2 아래 1m (위로 솟은 벽면)
+void Dungeon::Put(std::vector<Piece>& out,const char* tag,float x0,float y0,float x1,float y1,int collider,float z){
   if(x1-x0<0.05f||y1-y0<0.05f)return;
-  if(pool.empty()){shortages++;return;}
-  auto* a=pool.back();pool.pop_back();const float w=x1-x0,h=y1-y0;
+  auto& pool=pools[tag];if(pool.empty()){shortages++;return;}
+  auto* a=pool.back();pool.pop_back();out.push_back({&pool,a});const float w=x1-x0,h=y1-y0;
   hb::Scene::SetPosition(a,hb::Vec3{(x0+x1)/2,(y0+y1)/2,z});hb::Sprites::SetSize(a,hb::Vec2{w,h});
   if(collider==1){hb::Components::SetVector(a,"BoxCollider2D","extent",hb::Vec3{w/2,h/2,0.5f});hb::Components::SetVector(a,"BoxCollider2D","center",hb::Vec3{0,0,0});}
   if(collider==2){hb::Components::SetVector(a,"BoxCollider2D","extent",hb::Vec3{w/2,0.5f,0.5f});hb::Components::SetVector(a,"BoxCollider2D","center",hb::Vec3{0,-h/2+0.5f,0});}
 }
 
-static void Move(std::vector<hb::Actor*>& pool,float x,float y){
-  if(pool.empty())return;auto* a=pool.back();pool.pop_back();hb::Scene::SetPosition(a,hb::Vec3{x,y,0.05f});
+void Dungeon::Move(std::vector<Piece>& out,const char* tag,float x,float y,float z){
+  auto& pool=pools[tag];if(pool.empty()){shortages++;return;}
+  auto* a=pool.back();pool.pop_back();out.push_back({&pool,a});hb::Scene::SetPosition(a,hb::Vec3{x,y,z});
 }
 
 void Dungeon::Build(){
-  shortages=0;
-  auto floors=hb::Scene::GetActorsWithTag("Dungeon.Floor"),caps=hb::Scene::GetActorsWithTag("Dungeon.Cap"),faces=hb::Scene::GetActorsWithTag("Dungeon.Face");
-  auto arches=hb::Scene::GetActorsWithTag("Dungeon.Arch"),torches=hb::Scene::GetActorsWithTag("Dungeon.Torch"),glows=hb::Scene::GetActorsWithTag("Dungeon.Glow");
-  auto banners=hb::Scene::GetActorsWithTag("Dungeon.Banner"),pillars=hb::Scene::GetActorsWithTag("Dungeon.Pillar");
-  auto crates=hb::Scene::GetActorsWithTag("Dungeon.Crate"),barrels=hb::Scene::GetActorsWithTag("Dungeon.Barrel"),walls=hb::Scene::GetActorsWithTag("Dungeon.LowWall");
-  auto statues=hb::Scene::GetActorsWithTag("Dungeon.Statue"),chests=hb::Scene::GetActorsWithTag("Dungeon.Chest");
-  auto rubble=hb::Scene::GetActorsWithTag("Dungeon.Rubble"),bones=hb::Scene::GetActorsWithTag("Dungeon.Bones"),gold=hb::Scene::GetActorsWithTag("Dungeon.Gold");
+  // 풀: 장면에 화면 밖으로 세워 둔 조각들 (태그 Dungeon.*). 내 주변 방만 깔아서 개수가 적어도 됨
+  for(auto* tag:{"Dungeon.Floor","Dungeon.Cap","Dungeon.Face","Dungeon.Arch","Dungeon.Torch","Dungeon.Glow","Dungeon.Banner","Dungeon.Pillar",
+                 "Dungeon.Crate","Dungeon.Barrel","Dungeon.LowWall","Dungeon.Statue","Dungeon.Chest","Dungeon.Rubble","Dungeon.Bones","Dungeon.Gold"})
+    pools[tag]=hb::Scene::GetActorsWithTag(tag);
   gateFree=hb::Scene::GetActorsWithTag("Dungeon.Gate");sideFree=hb::Scene::GetActorsWithTag("Dungeon.GateSide");
   {auto s=hb::Scene::GetActorsWithTag("Dungeon.Stairs");stairs=s.empty()?nullptr:s.front();}
-  std::mt19937 rng(unsigned(rooms.size()*7919+rooms[0].hw*31+rooms.back().gx*17));
-  auto between=[&](float a,float b){return std::uniform_real_distribution<float>(a,b)(rng);};
-  const float C=CORRIDOR;
-  {// 맵 밖: 벽 윗면과 같은 어두운 돌 무늬를 맵 전체 뒤에 한 장 (카메라가 밖을 비춰도 빈 화면이 안 보이게)
-   auto back=hb::Scene::GetActorsWithTag("Dungeon.Background");float x0=1e9f,x1=-1e9f,y0=1e9f,y1=-1e9f;
+  shortages=0;placed.clear();
+  {// 맵 밖: 벽 윗면 무늬를 어둡게, 맵 전체 뒤에 한 장 (카메라가 밖을 비춰도 빈 화면이 안 보이게)
+   float x0=1e9f,x1=-1e9f,y0=1e9f,y1=-1e9f;
    for(auto& r:rooms){x0=std::min(x0,r.cx-r.hw);x1=std::max(x1,r.cx+r.hw);y0=std::min(y0,r.cy-r.hh);y1=std::max(y1,r.cy+r.hh);}
-   auto all=hb::Scene::GetActorsWithTag("Dungeon.Background");Put(back,x0-30,y0-30,x1+30,y1+30,0);
-   for(auto* b:all)if(hb::Scene::GetPosition(b).y>-150)hb::Scene::SetPosition(b,hb::Vec3{(x0+x1)/2,(y0+y1)/2,-1});}  // 바닥보다 뒤 (같은 깊이면 새 엔진이 순서를 섞음)
+   auto back=hb::Scene::GetActorsWithTag("Dungeon.Background");
+   if(!back.empty()){hb::Scene::SetPosition(back[0],hb::Vec3{(x0+x1)/2,(y0+y1)/2,-1});hb::Sprites::SetSize(back[0],hb::Vec2{x1-x0+60,y1-y0+60});}}
+  // 방마다 장식·엄폐물 자리를 한 번 정함 (방 번호로 씨앗을 줘서 다시 깔아도 같은 자리)
+  const float C=CORRIDOR;
   for(int i=0;i<int(rooms.size());++i){
-    auto& r=rooms[i];const float x0=r.cx-r.hw,x1=r.cx+r.hw,y0=r.cy-r.hh,y1=r.cy+r.hh;
-    Put(floors,x0,y0,x1,y1,0,0.f);
-    // 북쪽 벽: 위로 솟은 벽면 3m (아래 1m만 막힘). 문이 있으면 가운데를 비우고 아치를 세운다
+    auto& r=rooms[i];r.props.clear();r.blocked.clear();
+    std::mt19937 rng(unsigned(i*7919+int(r.hw*31)+r.gx*17+r.gy*131));
+    auto between=[&](float a,float b){return std::uniform_real_distribution<float>(a,b)(rng);};
+    const float x0=r.cx-r.hw,x1=r.cx+r.hw,y0=r.cy-r.hh,y1=r.cy+r.hh;
+    // 북쪽 벽 장식: 횃불·빛 (6m마다), 넓은 벽엔 깃발, 위 문엔 아치
     std::vector<std::pair<float,float>> north;
-    if(r.link[0]<0)north.push_back({x0,x1});else{north.push_back({x0,r.cx-C});north.push_back({r.cx+C,x1});Move(arches,r.cx,y1+1.5f);}
-    for(auto [a,b]:north){Put(faces,a,y1,b,y1+3,2,0.02f);
-      for(float x=a+2.5f;x<b-1.5f;x+=6){Move(torches,x,y1+1.1f);Move(glows,x,y1+1.45f);}
-      if(b-a>9)Move(banners,(a+b)/2,y1+1.6f);}
-    // 남쪽 벽(윗면 1m), 서·동 벽(윗면, 북쪽 벽면 높이까지)
-    if(r.link[2]<0)Put(caps,x0-1,y0-1,x1+1,y0,1,0.03f);else{Put(caps,x0-1,y0-1,r.cx-C,y0,1,0.03f);Put(caps,r.cx+C,y0-1,x1+1,y0,1,0.03f);}
-    for(int side:{3,1}){const float a=side==3?x0-1:x1,b=a+1;
-      if(r.link[side]<0)Put(caps,a,y0,b,y1+3,1,0.03f);else{Put(caps,a,y0,b,r.cy-C,1,0.03f);Put(caps,a,r.cy+C,b,y1+3,1,0.03f);}}
-    // 복도: 북쪽·동쪽으로 이어진 것만 (반대쪽은 상대 방이 깖)
-    if(r.link[0]>=0){const auto& n=rooms[r.link[0]];const float top=n.cy-n.hh;
-      Put(floors,r.cx-C,y1,r.cx+C,top,0,0.f);Put(caps,r.cx-C-1,y1,r.cx-C,top-1,1,0.03f);Put(caps,r.cx+C,y1,r.cx+C+1,top-1,1,0.03f);}
-    if(r.link[1]>=0){const auto& e=rooms[r.link[1]];const float right=e.cx-e.hw;
-      Put(floors,x1,r.cy-C,right,r.cy+C,0,0.f);Put(faces,x1+1,r.cy+C,right-1,r.cy+C+3,2,0.02f);Put(caps,x1+1,r.cy-C-1,right-1,r.cy-C,1,0.03f);}
+    if(r.link[0]<0)north.push_back({x0,x1});else{north.push_back({x0,r.cx-C});north.push_back({r.cx+C,x1});r.props.push_back({"Dungeon.Arch",r.cx,y1+1.5f});}
+    for(auto [a,b]:north){for(float x=a+2.5f;x<b-1.5f;x+=6){r.props.push_back({"Dungeon.Torch",x,y1+1.1f});r.props.push_back({"Dungeon.Glow",x,y1+1.45f});}
+      if(b-a>9)r.props.push_back({"Dungeon.Banner",(a+b)/2,y1+1.6f});}
     // 엄폐물 배치 (방마다 무작위 하나): 0 기둥 몇 개, 1 네 기둥, 2 가운데 상자 더미, 3 낮은 벽 두 줄(통로),
     // 4 상자·통 흩뿌리기, 5 네 귀퉁이 황금 석상 + 가운데 보물 상자. 문 앞 3.5m는 비워서 문을 막지 않음
-    r.blocked.clear();
-    auto place=[&](std::vector<hb::Actor*>& pool,float fx,float fy,float lift){
+    auto place=[&](const char* tag,float fx,float fy,float lift){
       const hb::Vec3 p{r.cx+fx,r.cy+fy,0};
       for(int d=0;d<4;++d)if(r.link[d]>=0&&std::hypot(DoorPosition(i,d).x-p.x,DoorPosition(i,d).y-p.y)<3.5f)return;
       if(!r.Inside(p,1.5f))return;
       for(auto& q:r.blocked)if(std::hypot(q.x-p.x,q.y-p.y)<1.2f)return;
-      r.blocked.push_back(p);Move(pool,p.x,p.y+lift);};
-    const float W=r.hw,H=r.hh;
+      r.blocked.push_back(p);r.props.push_back({tag,p.x,p.y+lift});};
+    const float W=r.hw,Hh=r.hh;
     switch(r.layout){
-      case 0:{for(int k=0,n=int(between(1,3.99f));k<n;++k)place(pillars,between(-W+3,W-3),between(-H+3,H-3),0.6f);}break;
-      case 1:{for(float sx:{-1.f,1.f})for(float sy:{-1.f,1.f})place(pillars,sx*W*0.5f,sy*H*0.5f,0.6f);}break;
-      case 2:{for(float sx:{-0.9f,0.9f})for(float sy:{-0.7f,0.9f})place(crates,sx,sy,0.7f);place(barrels,2.4f,0.2f,0.5f);}break;
-      case 3:{for(float sy:{-1.f,1.f})for(float x=-W*0.6f;x<=W*0.6f;x+=1.6f)if(std::fabs(x)>2.5f)place(walls,x,sy*H*0.4f,0.3f);}break;
-      case 4:{for(int k=0;k<7;++k)place(k%2?barrels:crates,between(-W+2.5f,W-2.5f),between(-H+2.5f,H-2.5f),k%2?0.5f:0.7f);}break;
-      case 5:{for(float sx:{-1.f,1.f})for(float sy:{-1.f,1.f})place(statues,sx*(W-3),sy*(H-3),0.8f);place(chests,0,0,0.4f);}break;
+      case 0:{for(int k=0,n=int(between(1,3.99f));k<n;++k)place("Dungeon.Pillar",between(-W+3,W-3),between(-Hh+3,Hh-3),0.6f);}break;
+      case 1:{for(float sx:{-1.f,1.f})for(float sy:{-1.f,1.f})place("Dungeon.Pillar",sx*W*0.5f,sy*Hh*0.5f,0.6f);}break;
+      case 2:{for(float sx:{-0.9f,0.9f})for(float sy:{-0.7f,0.9f})place("Dungeon.Crate",sx,sy,0.7f);place("Dungeon.Barrel",2.4f,0.2f,0.5f);}break;
+      case 3:{for(float sy:{-1.f,1.f})for(float x=-W*0.6f;x<=W*0.6f;x+=1.6f)if(std::fabs(x)>2.5f)place("Dungeon.LowWall",x,sy*Hh*0.4f,0.3f);}break;
+      case 4:{for(int k=0;k<7;++k)place(k%2?"Dungeon.Barrel":"Dungeon.Crate",between(-W+2.5f,W-2.5f),between(-Hh+2.5f,Hh-2.5f),k%2?0.5f:0.7f);}break;
+      case 5:{for(float sx:{-1.f,1.f})for(float sy:{-1.f,1.f})place("Dungeon.Statue",sx*(W-3),sy*(Hh-3),0.8f);place("Dungeon.Chest",0,0,0.4f);}break;
     }
+    // 바닥 잔해·뼈, 보스·채집방엔 금화 더미
     for(int k=0,n=int(r.hw*r.hh/30);k<n;++k){const float x=between(x0+1,x1-1),y=between(y0+1,y1-1);
       if(std::fabs(x-r.cx)<2&&std::fabs(y-r.cy)<2)continue;
-      auto& pool=(r.kind=="Boss"||r.kind=="Gather")&&k%3==0?gold:k%2?bones:rubble;Move(pool,x,y);}
+      r.props.push_back({(r.kind=="Boss"||r.kind=="Gather")&&k%3==0?"Dungeon.Gold":k%2?"Dungeon.Bones":"Dungeon.Rubble",x,y});}
   }
   if(stairs)hb::Scene::SetPosition(stairs,hb::Vec3{rooms[start].cx-rooms[start].hw+2.2f,rooms[start].cy+rooms[start].hh-1.6f,0.05f});  // 문(벽 가운데)을 막지 않게 왼쪽 위 구석
+  Show(start);
+}
+
+void Dungeon::PlaceRoom(int i){
+  auto& out=placed[i];auto& r=rooms[i];const float C=CORRIDOR,x0=r.cx-r.hw,x1=r.cx+r.hw,y0=r.cy-r.hh,y1=r.cy+r.hh;
+  Put(out,"Dungeon.Floor",x0,y0,x1,y1,0,0.f);
+  // 북쪽 벽: 위로 솟은 벽면 3m (아래 1m만 막힘), 남쪽 벽(윗면 1m), 서·동 벽(윗면, 북쪽 벽면 높이까지). 문 자리는 비움
+  if(r.link[0]<0)Put(out,"Dungeon.Face",x0,y1,x1,y1+3,2,0.02f);else{Put(out,"Dungeon.Face",x0,y1,r.cx-C,y1+3,2,0.02f);Put(out,"Dungeon.Face",r.cx+C,y1,x1,y1+3,2,0.02f);}
+  if(r.link[2]<0)Put(out,"Dungeon.Cap",x0-1,y0-1,x1+1,y0,1,0.03f);else{Put(out,"Dungeon.Cap",x0-1,y0-1,r.cx-C,y0,1,0.03f);Put(out,"Dungeon.Cap",r.cx+C,y0-1,x1+1,y0,1,0.03f);}
+  for(int side:{3,1}){const float a=side==3?x0-1:x1,b=a+1;
+    if(r.link[side]<0)Put(out,"Dungeon.Cap",a,y0,b,y1+3,1,0.03f);else{Put(out,"Dungeon.Cap",a,y0,b,r.cy-C,1,0.03f);Put(out,"Dungeon.Cap",a,r.cy+C,b,y1+3,1,0.03f);}}
+  for(const auto& p:r.props)Move(out,p.tag,p.x,p.y);
+}
+
+void Dungeon::PlaceCorridor(int i,int d){
+  // 북쪽(d 0)·동쪽(d 1) 복도만 단위로 둠 (반대쪽은 상대 방의 북·동 복도)
+  auto& out=placed[1000+i*4+d];const auto& r=rooms[i];const float C=CORRIDOR;
+  if(d==0){const auto& n=rooms[r.link[0]];const float bottom=r.cy+r.hh,top=n.cy-n.hh;
+    Put(out,"Dungeon.Floor",r.cx-C,bottom,r.cx+C,top,0,0.f);Put(out,"Dungeon.Cap",r.cx-C-1,bottom,r.cx-C,top-1,1,0.03f);Put(out,"Dungeon.Cap",r.cx+C,bottom,r.cx+C+1,top-1,1,0.03f);}
+  else{const auto& e=rooms[r.link[1]];const float left=r.cx+r.hw,right=e.cx-e.hw;
+    Put(out,"Dungeon.Floor",left,r.cy-C,right,r.cy+C,0,0.f);Put(out,"Dungeon.Face",left+1,r.cy+C,right-1,r.cy+C+3,2,0.02f);Put(out,"Dungeon.Cap",left+1,r.cy-C-1,right-1,r.cy-C,1,0.03f);}
+}
+
+void Dungeon::Show(int center){
+  // 지금 방과 이웃 방, 그 방들에 붙은 복도만 남기고 나머지 조각은 화면 밖 풀로 돌려놓는다
+  std::set<int> near{center};for(int d=0;d<4;++d)if(rooms[center].link[d]>=0)near.insert(rooms[center].link[d]);
+  std::set<int> want(near.begin(),near.end());
+  for(int i=0;i<int(rooms.size());++i)for(int d:{0,1})if(rooms[i].link[d]>=0&&(near.count(i)||near.count(rooms[i].link[d])))want.insert(1000+i*4+d);
+  for(auto it=placed.begin();it!=placed.end();)
+    if(!want.count(it->first)){for(auto& p:it->second){hb::Scene::SetPosition(p.actor,hb::Vec3{0,-200,0});p.pool->push_back(p.actor);}it=placed.erase(it);}else ++it;
+  for(int u:want)if(!placed.count(u)){if(u<1000)PlaceRoom(u);else PlaceCorridor((u-1000)/4,(u-1000)%4);}
 }
 
 void Dungeon::Lock(int room,bool locked,int only){
@@ -336,7 +358,7 @@ void Dungeon::Lock(int room,bool locked,int only){
 
 hb::Json Dungeon::Describe() const{
   hb::Json list=hb::Json::array();
-  if(shortages)list.push_back({{"kind","Shortage"},{"count",shortages}});  // 바닥·벽 풀 부족 (tools/gen_scene.py 개수 늘리기)
+  if(shortages)list.push_back({{"kind","Shortage"},{"count",shortages}});  // 조각 풀 부족 (tools/gen_scene.py 개수 늘리기)
   for(const auto& r:rooms)list.push_back({{"kind",r.kind},{"row",r.row},{"x",r.cx},{"y",r.cy},{"hw",r.hw},{"hh",r.hh},{"path",r.path},{"state",r.state},{"links",{r.link[0],r.link[1],r.link[2],r.link[3]}}});
   return list;
 }
@@ -371,7 +393,7 @@ void TopDownShooter::ParkEnemy(Enemy* e){
 
 float TopDownShooter::WeaponDamage() const{
   const float base=Character==1?rules->ArrowDamage:Character==2?rules->BoltDamage:rules->SwordDamage;
-  return base*(1+rules->UpgradeBonus*WeaponLevel)*(Enchant==1?1+rules->EnchantPower:1);
+  return base*(1+rules->UpgradeBonus*WeaponLevel)*(Enchant==1?1+rules->EnchantPower:1)*(Fatigue*4>=FatigueMax*3?rules->TiredAttack:1.f);  // 지치면 약해짐
 }
 
 bool TopDownShooter::DamagePlayer(int amount,const hb::Vec3& from){
@@ -475,6 +497,8 @@ void TopDownShooter::KillEnemy(Enemy* e){
 
 bool TopDownShooter::HitEnemy(Enemy* e,const hb::Vec3& push,float damage){
   Hits++;Sfx("Hit");
+  const bool crit=std::rand()%10000<int(rules->CritChance*100);  // 크리티컬: 피해 2배, 불꽃 두 겹·크게 흔들림
+  if(crit){damage*=rules->CritDamage;const auto c=hb::Scene::GetPosition(e);Effect("Hit",hb::Vec3{c.x,c.y+0.4f,0.31f},45,2.f);shake=rules->ShakeTime*3;}
   // 타격감: 맞은 자리에 불꽃, 화면 살짝 흔들림, 밀려남
   const auto at=hb::Scene::GetPosition(e);
   PlayFx(rules->HitClip,0.16f,hb::Vec3{at.x-push.x*0.3f,at.y-push.y*0.3f+0.2f,0.3f},float(std::rand()%360),1.5f,false);
@@ -707,8 +731,11 @@ void TopDownShooter::UpdateWaves(float delta){
 
 void TopDownShooter::ClearRoom(){
   // 방 클리어: 문이 열리고 피로도 +1 (기획), 피로도가 가득 차면 쓰러짐
+  const int fightingRoomCleared=fightingRoom;
   map.rooms[fightingRoom].state=2;map.Lock(fightingRoom,false);fightingRoom=-1;waves.clear();
-  RoomClears++;Fatigue++;if(Fatigue>=FatigueMax){Hp=0;gameOver=rules->RespawnDelay;}Hud();
+  // 피로도 (기획서 4-1): 방 클리어 +1, 보스 +2, 무게가 넘치면 +1 더
+  const bool bossRoom=map.rooms[fightingRoomCleared].kind=="Boss";
+  RoomClears++;Fatigue+=1+(bossRoom?1:0)+(Weight()>rules->WeightLimit?1:0);if(Fatigue>=FatigueMax){Hp=0;gameOver=rules->RespawnDelay;}Hud();
   if(RoomClears>=1&&!(TipsShown&(1<<7)))Tip(3);
 }
 
@@ -954,7 +981,11 @@ void TopDownShooter::Animate(float delta,bool moving){
   const bool flip=sector>=3&&sector<=5;
   if(flip!=playerFlipped){playerFlipped=flip;hb::Sprites::SetFlip(player,flip,false);}
   std::string next=std::string(dirs[sector])+"_";
-  if(charge>0)next+=charge<rules->ArrowCharge*0.5f?"Attack_0":"Attack_1";  // 셰리 장전: 시위 걸기 → 당기기
+  if(dodgeTimer>0){  // 구르기: 웅크림 → 몸을 만 두 장을 번갈아 → 일어남. 그림은 아래·옆·위 셋이라 대각선은 가까운 쪽
+    const float t=rules->DodgeTime-dodgeTimer;const int f=t<0.08f?0:dodgeTimer<0.12f?3:1+int((t-0.08f)/0.09f)%2;
+    const char* row=sector==2||sector==1||sector==3?"N":sector>=5&&sector<=7?"S":"E";
+    next=std::string(row)+"_Roll_"+std::to_string(f);}
+  else if(charge>0)next+=charge<rules->ArrowCharge*0.5f?"Attack_0":"Attack_1";  // 셰리 장전: 시위 걸기 → 당기기
   else if(attackAnim>0){attackAnim-=delta;const int f=attackAnim>0.2f?0:attackAnim>0.1f?1:2;next+="Attack_"+std::to_string(f);}
   else if(moving){walkTime+=delta;next+="Walk_"+std::to_string(int(walkTime*10)%4);}
   else{walkTime=0;next+="Idle_0";}
@@ -1105,6 +1136,7 @@ void TopDownShooter::Update(float delta){
     if(map.stairs&&fightingRoom<0&&Length(hb::Scene::GetPosition(map.stairs)-position)<1.0f){Leave(-1,"StairTop");return;}
     const int at=map.RoomAt(position);
     if(at>=0&&at!=area){area=at;RoomIndex=at;roomKind=map.rooms[at].kind;
+      map.Show(at);Layout=map.Describe().dump();  // 내 주변 방만 깔기
       auto& r=map.rooms[at];r.visited=r.seen=true;for(int d=0;d<4;++d)if(r.link[d]>=0)map.rooms[r.link[d]].seen=true;
       UpdateMinimap();Hud();}
     if(at>=0&&map.rooms[at].Inside(position,rules->EnterDepth)){
