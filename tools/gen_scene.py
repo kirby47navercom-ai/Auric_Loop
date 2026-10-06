@@ -97,6 +97,8 @@ def base_objects(director_bp="BP_TopDownShooter", at=(0, 0)):
     player = copy.deepcopy(objs["Player"])
     player["position"] = [at[0], at[1], 0.1]
     comp(player, "TopDownMovement2D")["properties"]["speed"] = 6
+    # 충돌 층: 0 벽·장식, 1 플레이어, 2 적, 3 탄. 플레이어와 적은 서로 밀지 않는다 (접촉하면 피해만, 엔터 더 건전처럼)
+    comp(player, "CapsuleCollider2D")["properties"].update(layer=1, mask=0xFFFFFFFF & ~(1 << 2))
     comp(player, "SpriteRenderer")["properties"].update(sprite="Assets/Sprites/Valen/S_Valen_Idle_0.hbsprite.json", texture="", color=[1, 1, 1, 1],
                                                         useCustomSize=False, sortingOrder=2)
     cam = copy.deepcopy(objs["Camera"])
@@ -199,6 +201,14 @@ def room_scene(i, room, director_bp="BP_TopDownShooter", at=None):
         objects.append(bp_obj(f"Spawn{k}", "BP_SpawnPoint", x, y, {"EnemyBlueprint": BP + enemy + ".hbblueprint.json"}))
     for k, (fx, fy, enemy) in enumerate([(-0.5, 0.3, SK), (0.5, 0.3, SK), (-0.6, -0.2, MAGE), (0.6, -0.2, MAGE), (0, 0.5, MAGE)]):
         objects.append(bp_obj(f"ReturnSpawn{k}", "BP_SpawnPoint", fx * hw, fy * hh, {"EnemyBlueprint": BP + enemy + ".hbblueprint.json", "ReturnOnly": True}))
+    # 탄·골드·베기 이펙트: 프리팹을 장면에 미리 놓아 화면 밖(y -200)에 세워 둔다. 실행 중 생성·엔진 풀은 부를 때마다 수 ms~수십 ms라 프레임이 끊김
+    for tag, prefab, count in (("Pool.EnemyShot", "PF_EnemyShot", 24), ("Pool.PlayerShot", "PF_PlayerShot", 16), ("Pool.Coin", "PF_Coin", 12), ("Pool.Slash", "PF_Slash", 1)):
+        base = json.loads((ASSETS / f"Prefabs/{prefab}.hbprefab.json").read_text(encoding="utf-8"))["objects"][0]
+        for k in range(count):
+            o = copy.deepcopy(base)
+            o.update(id=f"{prefab[3:]}{k}", name=f"{prefab[3:]}{k}", position=[-12 + k % 12 * 2, -200 - k // 12, 0.15], tags=[tag])
+            o["components"] = [comp_ for comp_ in o["components"] if comp_["type"] != "PooledActor"]  # 켜 둔 채 화면 밖에 세워 둠 (C++ Take/Give)
+            objects.append(o)
     # 방 종류별 상호작용
     if room["kind"] == "Gather":
         objects += [interactable("Ore", "Assets/Sprites/Prop_Ore.png", -3, 1, "Ore", solid=False),

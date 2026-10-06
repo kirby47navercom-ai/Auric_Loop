@@ -88,14 +88,14 @@ gm["variables"] = []
 write(BP / "BP_TopDownShooter.hbblueprint.json", gm)
 
 # ---- 적 ----
-ENEMY_EVENTS = ["Sense", "Halt", "Chase", "Range", "Windup", "Fire", "Dash", "Ring", "Summon"]
+ENEMY_EVENTS = ["Halt", "Chase", "Range", "Stagger", "Windup", "Fire", "Dash", "Ring", "Summon"]  # 상태에 들어갈 때만 (매 프레임 이동은 C++ 게임 규칙이 한 번에)
 nodes = [node("begin", "beginPlay", 60, 40), node("awake", "nativeCall", 360, 40, nativeId="Enemy.Awake")]
 edges = [edge("begin", "then", "awake", "exec")]
 for i, ev in enumerate(ENEMY_EVENTS):
     nodes += [node(f"ev_{ev}", "customEvent", 60, 160 + i * 110, options={"eventName": ev}),
               node(f"call_{ev}", "nativeCall", 360, 160 + i * 110, nativeId=f"Enemy.{ev}")]
     edges.append(edge(f"ev_{ev}", "then", f"call_{ev}", "exec"))
-enemy_layer = dict(layer=2, mask=1 | 4)  # 벽(0)·플레이어(0)·다른 적(2)과 부딪힘. 예전엔 trigger라 벽을 지나갔음
+enemy_layer = dict(layer=2, mask=(1 << 0) | (1 << 2))  # 벽(층 0)·다른 적(층 2)과 부딪힘, 플레이어(층 1)는 통과. 예전엔 trigger라 벽까지 지나갔음
 write(BP / "Enemies/BP_Enemy.hbblueprint.json", blueprint(
     "BP_Enemy", "Enemy", [transform(), sprite("Assets/Sprites/Skeleton_Idle.png", 0.90625, 1.375), box((0.35, 0.3, 0.1), (0, -0.35, 0), **enemy_layer), body(), pool(16)],
     nodes, edges, native_from=True))
@@ -184,32 +184,32 @@ P = lambda n, t, v: {"name": n, "type": t, "value": v}  # noqa: E731
 PARAMS = [P("Distance", "float", 99), P("Stunned", "bool", False), P("Ready", "bool", False), P("Next", "float", 0)]
 stunned = [go("toStun", "any", "stun", conditions=[("Stunned", "equal", True)])]
 fsm("FSM_Skeleton", "appear", PARAMS, [
-    state("appear", "등장", 120, 150, 0.6, enter="Halt", update="Sense"),
-    state("chase", "추격", 360, 150, update="Chase"),
-    state("stun", "경직", 360, 320, enter="Halt", update="Sense"),
+    state("appear", "등장", 120, 150, 0.6, enter="Halt"),
+    state("chase", "추격", 360, 150, enter="Chase"),
+    state("stun", "경직", 360, 320, enter="Stagger"),
 ], [go("appear_chase", "appear", "chase", exit_time=1), *stunned, go("stun_chase", "stun", "chase", conditions=[("Stunned", "equal", False)])])
 
 fsm("FSM_SkeletonMage", "appear", PARAMS, [
-    state("appear", "등장", 120, 150, 0.6, enter="Halt", update="Sense"),
-    state("move", "거리 유지", 360, 150, update="Range"),
-    state("windup", "시전 예고", 600, 80, 0.4, enter="Windup", update="Sense"),
-    state("fire", "3갈래 발사", 840, 150, 0.15, enter="Fire", update="Sense"),
-    state("stun", "경직", 360, 320, enter="Halt", update="Sense"),
+    state("appear", "등장", 120, 150, 0.6, enter="Halt"),
+    state("move", "거리 유지", 360, 150, enter="Range"),
+    state("windup", "시전 예고", 600, 80, 0.4, enter="Windup"),
+    state("fire", "3갈래 발사", 840, 150, 0.15, enter="Fire"),
+    state("stun", "경직", 360, 320, enter="Stagger"),
 ], [go("appear_move", "appear", "move", exit_time=1), go("move_windup", "move", "windup", conditions=[("Ready", "equal", True)]),
     go("windup_fire", "windup", "fire", exit_time=1), go("fire_move", "fire", "move", exit_time=1),
     *stunned, go("stun_move", "stun", "move", conditions=[("Stunned", "equal", False)])])
 
 # 해골 대장 (기획서 5장): 쉬며 추격 → 돌진(예고 1초) → 쉬기 → 원형 탄막 2회 → 쉬기 → 졸개 소환 → … (Next가 다음 패턴)
 fsm("FSM_SkeletonCaptain", "intro", PARAMS, [
-    state("intro", "등장 대사", 120, 60, 3.0, enter="Halt", update="Sense"),
-    state("rest", "쉬며 추격", 120, 260, 1.5, update="Chase"),
+    state("intro", "등장 대사", 120, 60, 3.0, enter="Halt"),
+    state("rest", "쉬며 추격", 120, 260, 1.5, enter="Chase"),
     state("charge", "돌진 패턴", 420, 60, initial="windup"),
-    state("windup", "돌진 예고", 420, 140, 1.0, enter="Windup", update="Sense", parent="charge"),
-    state("dash", "돌진", 640, 140, 0.6, enter="Dash", update="Sense", parent="charge"),
+    state("windup", "돌진 예고", 420, 140, 1.0, enter="Windup", parent="charge"),
+    state("dash", "돌진", 640, 140, 0.6, enter="Dash", parent="charge"),
     state("ring", "탄막 패턴", 420, 300, initial="burst1"),
-    state("burst1", "탄막 1", 420, 380, 0.5, enter="Ring", update="Sense", parent="ring"),
-    state("burst2", "탄막 2", 640, 380, 0.5, enter="Ring", update="Sense", parent="ring"),
-    state("summon", "졸개 소환", 420, 520, 0.4, enter="Summon", update="Sense"),
+    state("burst1", "탄막 1", 420, 380, 0.5, enter="Ring", parent="ring"),
+    state("burst2", "탄막 2", 640, 380, 0.5, enter="Ring", parent="ring"),
+    state("summon", "졸개 소환", 420, 520, 0.4, enter="Summon"),
 ], [go("intro_rest", "intro", "rest", exit_time=1),
     go("rest_charge", "rest", "charge", exit_time=1, conditions=[("Next", "equal", 0)]),
     go("rest_ring", "rest", "ring", exit_time=1, conditions=[("Next", "equal", 1)]),

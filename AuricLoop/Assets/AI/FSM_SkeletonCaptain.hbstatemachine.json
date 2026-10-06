@@ -35,7 +35,7 @@
       "duration": 3.0,
       "onEnter": "Halt",
       "onExit": "",
-      "onUpdate": "Sense",
+      "onUpdate": "",
       "parent": "",
       "initialChild": "",
       "enterConditions": []
@@ -48,9 +48,9 @@
       "clip": "",
       "loop": true,
       "duration": 1.5,
-      "onEnter": "",
+      "onEnter": "Chase",
       "onExit": "",
-      "onUpdate": "Chase",
+      "onUpdate": "",
       "parent": "",
       "initialChild": "",
       "enterConditions": []
@@ -80,7 +80,7 @@
       "duration": 1.0,
       "onEnter": "Windup",
       "onExit": "",
-      "onUpdate": "Sense",
+      "onUpdate": "",
       "parent": "charge",
       "initialChild": "",
       "enterConditions": []
@@ -95,7 +95,7 @@
       "duration": 0.6,
       "onEnter": "Dash",
       "onExit": "",
-      "onUpdate": "Sense",
+      "onUpdate": "",
       "parent": "charge",
       "initialChild": "",
       "enterConditions": []
@@ -125,7 +125,7 @@
       "duration": 0.5,
       "onEnter": "Ring",
       "onExit": "",
-      "onUpdate": "Sense",
+      "onUpdate": "",
       "parent": "ring",
       "initialChild": "",
       "enterConditions": []
@@ -140,7 +140,7 @@
       "duration": 0.5,
       "onEnter": "Ring",
       "onExit": "",
-      "onUpdate": "Sense",
+      "onUpdate": "",
       "parent": "ring",
       "initialChild": "",
       "enterConditions": []
@@ -155,7 +155,7 @@
       "duration": 0.4,
       "onEnter": "Summon",
       "onExit": "",
-      "onUpdate": "Sense",
+      "onUpdate": "",
       "parent": "",
       "initialChild": "",
       "enterConditions": []

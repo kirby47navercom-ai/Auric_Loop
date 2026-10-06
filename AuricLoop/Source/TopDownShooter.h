@@ -61,17 +61,17 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   bool Invulnerable = false;      // 귀환 중 해골은 무적 (기획서 6-3)
 
-  // 상태 머신의 상태마다 BP 사용자 이벤트가 부르는 행동
+  // 상태 머신이 상태에 들어갈 때 BP 사용자 이벤트가 한 번 부른다 (매 프레임 부르지 않음: C++ 호출 비용)
   HB_FUNCTION(BlueprintCallable, DisplayName="생성", Category="적")
   void Awake();
-  HB_FUNCTION(BlueprintCallable, DisplayName="주변 감지", Category="적")
-  void Sense();
-  HB_FUNCTION(BlueprintCallable, DisplayName="멈춤", Category="적")
+  HB_FUNCTION(BlueprintCallable, DisplayName="등장·멈춤", Category="적")
   void Halt();
   HB_FUNCTION(BlueprintCallable, DisplayName="추격", Category="적")
   void Chase();
   HB_FUNCTION(BlueprintCallable, DisplayName="거리 유지", Category="적")
   void Range();
+  HB_FUNCTION(BlueprintCallable, DisplayName="경직", Category="적")
+  void Stagger();
   HB_FUNCTION(BlueprintCallable, DisplayName="공격 예고", Category="적")
   void Windup();
   HB_FUNCTION(BlueprintCallable, DisplayName="탄 발사", Category="적")
@@ -83,13 +83,20 @@ public:
   HB_FUNCTION(BlueprintCallable, DisplayName="졸개 소환", Category="적")
   void Summon();
 
-  // 게임 규칙(TopDownShooter)이 직접 부른다 (같은 C++ 빌드라 실제 객체)
+  // 게임 규칙(TopDownShooter)이 직접 부른다 (같은 C++ 빌드라 실제 객체). Tick은 게임 규칙의 한 프레임 호출 안에서 모든 적을 한 번에 움직인다
+  void Tick(float delta);
   bool TakeHit(float damage,const hb::Vec3& push,float stunSeconds,float burnSeconds);  // 쓰러지면 true
   void Stun(float seconds);
   float burnLeft=0,burnDamage=0;
+  bool burnedOut=false;          // 화상으로 체력이 다함 (게임 규칙이 처리)
 private:
   hb::Vec3 ToPlayer(float& distance) const;
+  enum class Mode{Halt,Chase,Range,Stagger,Dash};
+  Mode mode=Mode::Halt;
   float stun=0,flash=0,shotTimer=0;
+  bool sentStunned=false,sentReady=false,flipped=false;  // 엔진 명령은 값이 바뀔 때만 보낸다 (호출 비용)
+  hb::Vec3 sentVelocity{9e9f,0,0};
+  int velocityAge=0;
   int ring=0,pattern=0;
   hb::Vec3 dashDir{0,-1,0};
 };
@@ -381,6 +388,11 @@ private:
   void KillEnemy(Enemy* e);
   void DropCoin(const hb::Vec3& at,int value);
   void StunAll(float seconds);
+  // 실행 중 생성(Scene::Spawn)은 호출마다 수십 ms가 걸려서, 장면에 미리 놓은 풀(태그 Pool.*)을 찾아 꺼내 쓴다
+  void Prewarm();
+  hb::Actor* Take(std::vector<hb::Actor*>& pool,const std::string& prefab,const hb::Transform& at);
+  void Give(std::vector<hb::Actor*>& pool,hb::Actor* actor);  // 풀로 돌려놓기
+  std::vector<hb::Actor*> bulletPool,shotPool,coinPool,slashPool;
   void SetDoor(const char* tag,bool locked);
   hb::Actor* Door(const char* tag) const;
   float WeaponDamage() const;
@@ -401,6 +413,7 @@ private:
   hb::Actor* player=nullptr;
   hb::Actor* camera=nullptr;
   hb::Vec3 playerAt{0,0,0},facing{1,0,0},cameraAt{0,0,0};
+  bool playerFlipped=false;
   bool cameraReady=false,started=false,leaving=false,hudDirty=true,introHidden=false,rotShown=false;
   int frame=0,fatigueLevel=0,area=-1,fightingRoom=-1;
   std::string roomKind="Hub";

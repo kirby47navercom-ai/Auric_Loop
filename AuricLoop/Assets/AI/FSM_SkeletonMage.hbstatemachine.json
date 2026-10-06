@@ -35,7 +35,7 @@
       "duration": 0.6,
       "onEnter": "Halt",
       "onExit": "",
-      "onUpdate": "Sense",
+      "onUpdate": "",
       "parent": "",
       "initialChild": "",
       "enterConditions": []
@@ -48,9 +48,9 @@
       "clip": "",
       "loop": true,
       "duration": 1.0,
-      "onEnter": "",
+      "onEnter": "Range",
       "onExit": "",
-      "onUpdate": "Range",
+      "onUpdate": "",
       "parent": "",
       "initialChild": "",
       "enterConditions": []
@@ -65,7 +65,7 @@
       "duration": 0.4,
       "onEnter": "Windup",
       "onExit": "",
-      "onUpdate": "Sense",
+      "onUpdate": "",
       "parent": "",
       "initialChild": "",
       "enterConditions": []
@@ -80,7 +80,7 @@
       "duration": 0.15,
       "onEnter": "Fire",
       "onExit": "",
-      "onUpdate": "Sense",
+      "onUpdate": "",
       "parent": "",
       "initialChild": "",
       "enterConditions": []
@@ -93,9 +93,9 @@
       "clip": "",
       "loop": true,
       "duration": 1.0,
-      "onEnter": "Halt",
+      "onEnter": "Stagger",
       "onExit": "",
-      "onUpdate": "Sense",
+      "onUpdate": "",
       "parent": "",
       "initialChild": "",
       "enterConditions": []

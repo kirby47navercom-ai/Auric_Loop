@@ -23,7 +23,8 @@ static float Angle(const hb::Vec3& d){return std::atan2(d.y,d.x)*180/3.14159265f
 
 void Enemy::Awake(){
   // 풀에서 다시 꺼낼 때도 불린다. 생성한 쪽이 먼저 정한 무적·경직(귀환 해골)은 지우지 않는다
-  Hp=MaxHp;flash=0;burnLeft=0;ring=0;pattern=0;shotTimer=ShotInterval*0.5f;
+  Hp=MaxHp;flash=0;burnLeft=0;ring=0;pattern=0;shotTimer=ShotInterval*0.5f;mode=Mode::Halt;burnedOut=false;
+  sentStunned=sentReady=flipped=false;sentVelocity={9e9f,0,0};
   hb::Sprites::SetColor(this,hb::Color{1,1,1,1});
   hb::States::Start(this,Brain);
 }
@@ -33,35 +34,33 @@ hb::Vec3 Enemy::ToPlayer(float& distance) const{
   const auto d=game->PlayerPosition()-hb::Scene::GetPosition(const_cast<Enemy*>(this));distance=Length(d);return Normal(d,{0,-1,0});
 }
 
-void Enemy::Sense(){
-  // 모든 상태가 매 프레임 먼저 부른다: 경직·화상·피격 깜빡임·접촉 피해와 상태 머신 파라미터 갱신
-  auto* game=TopDownShooter::Current;const float delta=hb::Clock::GetWorldDeltaSeconds();
+void Enemy::Tick(float delta){
+  // 매 프레임: 경직·화상·깜빡임·접촉 피해, 상태 머신 파라미터, 지금 상태(mode)에 맞는 이동
+  auto* game=TopDownShooter::Current;
   float distance;const auto dir=ToPlayer(distance);
   if(stun>0)stun-=delta;
   if(flash>0&&(flash-=delta)<=0)hb::Sprites::SetColor(this,hb::Color{1,1,1,1});
-  if(burnLeft>0){burnLeft-=delta;if(!Invulnerable)Hp-=burnDamage*delta;}
-  if(KeepDistance>0&&(shotTimer-=delta)<=0)hb::States::SetBool(this,"Ready",true);
-  hb::States::SetFloat(this,"Distance",distance);
-  hb::States::SetBool(this,"Stunned",stun>0);
-  hb::Sprites::SetFlip(this,dir.x<0,false);
-  if(game&&!game->Frozen()&&stun<=0&&distance<Radius+0.35f)game->DamagePlayer(ContactDamage);
+  if(burnLeft>0){burnLeft-=delta;if(!Invulnerable){Hp-=burnDamage*delta;burnedOut=Hp<=0.001f;}}
+  // 상태 머신 파라미터·뒤집기는 바뀔 때만 보낸다 (적 수 × 매 프레임 명령을 줄임)
+  const bool ready=KeepDistance>0&&(shotTimer-=delta)<=0,stunned=stun>0,flip=dir.x<0;
+  if(ready!=sentReady){sentReady=ready;hb::States::SetBool(this,"Ready",ready);}
+  if(stunned!=sentStunned){sentStunned=stunned;hb::States::SetBool(this,"Stunned",stunned);}
+  if(flip!=flipped){flipped=flip;hb::Sprites::SetFlip(this,flip,false);}
+  const bool frozen=!game||game->Frozen();
+  if(!frozen&&stun<=0&&distance<Radius+0.35f)game->DamagePlayer(ContactDamage);
+  if(mode==Mode::Dash||mode==Mode::Stagger)return;  // 돌진 속도·밀려남은 그대로 둔다
+  hb::Vec3 v{0,0,0};
+  if(!frozen&&stun<=0){
+    if(mode==Mode::Chase)v=dir*Speed;
+    else if(mode==Mode::Range){const float side=distance>KeepDistance+1?1.f:distance<KeepDistance-1?-1.f:0.f;v=dir*(Speed*side);}
+  }
+  if(Length(v-sentVelocity)>0.05f||++velocityAge>=10){sentVelocity=v;velocityAge=0;hb::Physics::SetVelocity(this,v);}  // 벽에 막혀 줄어든 속도도 가끔 다시 맞춘다
 }
 
-void Enemy::Halt(){Sense();hb::Physics::SetVelocity(this,hb::Vec3{0,0,0});}
-
-void Enemy::Chase(){
-  Sense();if(stun>0)return;
-  auto* game=TopDownShooter::Current;float distance;const auto dir=ToPlayer(distance);
-  hb::Physics::SetVelocity(this,game&&game->Frozen()?hb::Vec3{0,0,0}:dir*Speed);
-}
-
-void Enemy::Range(){
-  // 원거리: 유지 거리보다 멀면 다가가고 가까우면 물러난다
-  Sense();if(stun>0)return;
-  auto* game=TopDownShooter::Current;float distance;const auto dir=ToPlayer(distance);
-  const float side=distance>KeepDistance+1?1.f:distance<KeepDistance-1?-1.f:0.f;
-  hb::Physics::SetVelocity(this,game&&game->Frozen()?hb::Vec3{0,0,0}:dir*(Speed*side));
-}
+void Enemy::Halt(){mode=Mode::Halt;sentVelocity={0,0,0};hb::Physics::SetVelocity(this,hb::Vec3{0,0,0});}
+void Enemy::Chase(){mode=Mode::Chase;hb::Sprites::SetColor(this,hb::Color{1,1,1,1});}
+void Enemy::Range(){mode=Mode::Range;}
+void Enemy::Stagger(){mode=Mode::Stagger;}
 
 void Enemy::Windup(){
   // 공격 예고: 멈추고 붉게. 보스는 돌진 방향을 이때 정한다
@@ -75,12 +74,12 @@ void Enemy::Fire(){
   auto* game=TopDownShooter::Current;if(!game||game->Frozen())return;
   float distance;const auto dir=ToPlayer(distance);
   game->FireBullets(hb::Scene::GetPosition(this),dir,ShotCount,ShotSpread,ShotSpeed);
-  shotTimer=ShotInterval;hb::States::SetBool(this,"Ready",false);
+  shotTimer=ShotInterval;
 }
 
 void Enemy::Dash(){
-  Sense();hb::Sprites::SetColor(this,hb::Color{1,1,1,1});
-  hb::Physics::SetVelocity(this,dashDir*DashSpeed);
+  mode=Mode::Dash;hb::Sprites::SetColor(this,hb::Color{1,1,1,1});
+  sentVelocity=dashDir*DashSpeed;hb::Physics::SetVelocity(this,sentVelocity);
   pattern=1;hb::States::SetFloat(this,"Next",float(pattern));
 }
 
@@ -100,13 +99,13 @@ void Enemy::Summon(){
   pattern=0;hb::States::SetFloat(this,"Next",float(pattern));
 }
 
-void Enemy::Stun(float seconds){stun=std::max(stun,seconds);hb::Physics::SetVelocity(this,hb::Vec3{0,0,0});}
+void Enemy::Stun(float seconds){stun=std::max(stun,seconds);sentVelocity={0,0,0};hb::Physics::SetVelocity(this,hb::Vec3{0,0,0});}
 
 bool Enemy::TakeHit(float damage,const hb::Vec3& push,float stunSeconds,float burnSeconds){
   if(!Invulnerable){Hp-=damage;if(burnSeconds>0){burnLeft=burnSeconds;}}
   flash=0.08f;hb::Sprites::SetColor(this,hb::Color{1,0.55f,0.55f,1});
-  if(!Boss){stun=std::max(stun,stunSeconds);hb::Physics::SetVelocity(this,push*6);}
-  return Hp<=0;
+  if(!Boss){stun=std::max(stun,stunSeconds);sentVelocity=push*6;hb::Physics::SetVelocity(this,sentVelocity);}
+  return Hp<=0.001f;  // 소수 오차로 0에 못 닿는 경우
 }
 
 // =====================================================================================
@@ -142,16 +141,37 @@ void TopDownShooter::FireBullets(const hb::Vec3& from,const hb::Vec3& dir,int co
   for(int i=0;i<count;++i){
     const auto d=Rotate(dir,(i-(count-1)/2.0f)*spread);
     hb::Transform t;t.position=from+d*0.6f;t.position.z=0.15f;
-    if(auto* b=hb::Scene::Spawn(rules->EnemyShotPrefab,t)){hb::Physics::SetVelocity(b,d*speed);bullets[b]=rules->EnemyShotLife;Shots++;}
+    if(auto* b=Take(bulletPool,rules->EnemyShotPrefab,t)){hb::Physics::SetVelocity(b,d*speed);bullets[b]=rules->EnemyShotLife;Shots++;}
   }
 }
 
 void TopDownShooter::DropCoin(const hb::Vec3& at,int value){
   hb::Transform t;t.position=hb::Vec3{at.x,at.y,0.05f};
-  if(auto* c=hb::Scene::Spawn(rules->CoinPrefab,t))coins[c]=value;else Gold+=value;
+  if(auto* c=Take(coinPool,rules->CoinPrefab,t))coins[c]=value;else Gold+=value;
 }
 
 void TopDownShooter::StunAll(float seconds){for(auto* e:Enemies())e->Stun(seconds);}
+
+// 탄·골드·베기 이펙트는 장면에 미리 놓아 두고(태그 Pool.*) 화면 밖에 세워 둔다. 꺼내기·돌려놓기는 옮기기만 한다.
+// 실행 중 생성(Scene::Spawn)과 엔진 풀(ActorPool)은 부를 때마다 컴포넌트를 다시 시작해 수 ms~수십 ms가 걸려 프레임이 끊긴다
+static const hb::Vec3 parked{0,-200,0};
+
+hb::Actor* TopDownShooter::Take(std::vector<hb::Actor*>& pool,const std::string& prefab,const hb::Transform& at){
+  if(!pool.empty()){auto* a=pool.back();pool.pop_back();hb::Scene::SetTransform(a,at);return a;}
+  return hb::Scene::Spawn(prefab,at);  // 모자랄 때만 새로 생성 (끊김 감수)
+}
+
+void TopDownShooter::Give(std::vector<hb::Actor*>& pool,hb::Actor* actor){
+  if(&pool==&bulletPool||&pool==&shotPool)hb::Physics::SetVelocity(actor,hb::Vec3{0,0,0});  // 골드·이펙트는 물리 몸체가 없다
+  hb::Scene::SetPosition(actor,parked);pool.push_back(actor);
+}
+
+void TopDownShooter::Prewarm(){
+  bulletPool=hb::Scene::GetActorsWithTag("Pool.EnemyShot");
+  shotPool=hb::Scene::GetActorsWithTag("Pool.PlayerShot");
+  coinPool=hb::Scene::GetActorsWithTag("Pool.Coin");
+  slashPool=hb::Scene::GetActorsWithTag("Pool.Slash");
+}
 
 void TopDownShooter::KillEnemy(Enemy* e){
   const auto at=hb::Scene::GetPosition(e);Kills++;Sfx("Kill");
@@ -174,8 +194,8 @@ void TopDownShooter::Slash(const hb::Vec3& position,const std::vector<Enemy*>& e
   // 검 부채꼴 베기: 적에게 피해, 범위 안의 적 탄은 지움 (기획: 투사체 삭제)
   attackCooldown=rules->SwordInterval;Swings++;attackAnim=0.3f;Sfx("Slash");
   hb::Transform t;t.position=position+facing*1.4f;t.position.z=0.2f;t.rotation=hb::Vec3{0,0,Angle(facing)};
-  if(slashFx)hb::Scene::Destroy(slashFx);
-  slashFx=hb::Scene::Spawn(rules->SlashPrefab,t);slashTime=0.12f;
+  if(slashFx)Give(slashPool,slashFx);
+  slashFx=Take(slashPool,rules->SlashPrefab,t);slashTime=0.12f;
   const float minDot=std::cos(rules->SwordHalfAngle*3.14159265f/180),reach=rules->SwordRange+(Enchant==3?rules->SlashExtend:0);
   auto inFan=[&](const hb::Vec3& at,float radius){const auto d=at-position;const float len=Length(d);
     return len<=reach+radius&&(len<=radius+0.75f||hb::VectorMath::DotProduct(d*(1/len),facing)>=minDot);};  // 바로 붙은 적은 방향과 관계없이 맞음
@@ -184,12 +204,12 @@ void TopDownShooter::Slash(const hb::Vec3& position,const std::vector<Enemy*>& e
   if(Returning)if(auto* d=Door("Door.Bottom"))if(hb::ActorPool::IsActive(d)&&Length(hb::Scene::GetPosition(d)-position)<rules->DoorReach){
     Sfx("DoorHit");if(++DoorHits>=rules->DoorHitsToOpen){SetDoor("Door.Bottom",false);StunAll(rules->DoorStun);Sfx("DoorOpen");}Hud();}
   for(auto it=bullets.begin();it!=bullets.end();)
-    if(inFan(hb::Scene::GetPosition(it->first),0)){hb::Scene::Destroy(it->first);it=bullets.erase(it);}else ++it;
+    if(inFan(hb::Scene::GetPosition(it->first),0)){Give(bulletPool,it->first);it=bullets.erase(it);}else ++it;
 }
 
 void TopDownShooter::Shoot(const hb::Vec3& from){
   hb::Transform t;t.position=from+facing*0.8f;t.position.z=0.2f;t.rotation=hb::Vec3{0,0,Angle(facing)};
-  auto* s=hb::Scene::Spawn(rules->PlayerShotPrefab,t);if(!s)return;
+  auto* s=Take(shotPool,rules->PlayerShotPrefab,t);if(!s)return;
   hb::Sprites::SetSprite(s,Character==1?rules->ArrowSprite:rules->BoltSprite);Sfx(Character==1?"Arrow":"Bolt");
   hb::Physics::SetVelocity(s,facing*(Character==1?rules->ArrowSpeed:rules->BoltSpeed));
   shots[s]=rules->PlayerShotLife;shotBoom[s]=false;Swings++;
@@ -213,14 +233,14 @@ void TopDownShooter::UpdateShots(float delta,const std::vector<Enemy*>& enemies)
     for(auto* e:Enemies()){const auto d=hb::Scene::GetPosition(e)-p;const float len=Length(d);
       if(len<rules->BoomRadius&&len>0.05f)HitEnemy(e,d*(1/len),rules->BoomDamage*WeaponDamage()/rules->BoltDamage);}
   }
-  for(auto* s:done){hb::Scene::Destroy(s);shots.erase(s);shotBoom.erase(s);}
+  for(auto* s:done){Give(shotPool,s);shots.erase(s);shotBoom.erase(s);}
 }
 
 void TopDownShooter::UpdateBullets(float delta,const hb::Vec3& position){
   for(auto it=bullets.begin();it!=bullets.end();){
     const auto p=hb::Scene::GetPosition(it->first);it->second-=delta;
     if(Hp>0&&Length(p-position)<rules->EnemyShotHit){DamagePlayer(1);it->second=0;}
-    if(it->second<=0||std::fabs(p.x)>halfWidth||std::fabs(p.y)>halfHeight){hb::Scene::Destroy(it->first);it=bullets.erase(it);}else ++it;
+    if(it->second<=0||std::fabs(p.x)>halfWidth||std::fabs(p.y)>halfHeight){Give(bulletPool,it->first);it=bullets.erase(it);}else ++it;
   }
 }
 
@@ -266,7 +286,7 @@ bool TopDownShooter::LoadRun(){
 
 void TopDownShooter::Leave(int to,const std::string& spawn){
   // 바닥에 남은 골드는 들고 간다. 전투 중엔 문이 잠겨 있어 적·탄 상태는 넘기지 않는다
-  for(auto& [c,value]:coins){Gold+=value;hb::Scene::Destroy(c);}coins.clear();
+  for(auto& [c,value]:coins){Gold+=value;Give(coinPool,c);}coins.clear();
   SaveRun();leaving=true;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
   std::string scene=rules->HubScene;
   if(to>=0){scene=rules->DungeonScene;const auto at=scene.find('#');if(at!=std::string::npos)scene.replace(at,1,std::to_string(to));}
@@ -288,6 +308,7 @@ void TopDownShooter::Begin(){
   for(auto it=interactables.begin();it!=interactables.end();)  // 이미 채집한 것은 치운다
     if(taken.count(std::to_string(area)+":"+(*it)->Kind)){hb::Scene::Destroy(*it);it=interactables.erase(it);}else ++it;
   RoomIndex=area;
+  if(area>=0)Prewarm();
   if(Returning)StartReturnRoom();
   Hud();
 }
@@ -455,7 +476,7 @@ void TopDownShooter::Animate(float delta,bool moving){
   else if(moving){walkTime+=delta;next="Walk_"+std::to_string(int(walkTime*8)%4);}
   else{walkTime=0;next="Idle_0";}
   if(next!=currentSprite){currentSprite=next;if(Character<(int)rules->CharacterSprites.size())hb::Sprites::SetSprite(player,rules->CharacterSprites[Character]+next+".hbsprite.json");}
-  if(slashFx&&slashTime>0&&(slashTime-=delta)<=0){hb::Scene::Destroy(slashFx);slashFx=nullptr;}
+  if(slashFx&&slashTime>0&&(slashTime-=delta)<=0){Give(slashPool,slashFx);slashFx=nullptr;}
 }
 
 static size_t Utf8Count(const std::string& s){size_t n=0;for(unsigned char ch:s)n+=(ch&0xC0)!=0x80;return n;}
@@ -568,7 +589,10 @@ void TopDownShooter::Update(float delta){
    if(to!=area){Leave(to,to<0?"StairTop":to>area?"DoorBottom":"DoorTop");return;}}
   if(area>=0&&!Returning&&!ReturnSuccess&&(position.y>-halfHeight+rules->EnterDepth||area==0))EnterRoom();
 
-  const auto enemies=Enemies();
+  std::vector<Enemy*> enemies;
+  for(auto* e:Enemies()){e->Tick(delta);  // 적 이동은 여기서 한 번에 (상태 머신은 상태가 바뀔 때만 C++를 부름)
+    if(e->burnedOut){e->burnedOut=false;KillEnemy(e);}else enemies.push_back(e);}  // 화상으로 쓰러짐
+  boss=nullptr;for(auto* e:enemies)if(e->Boss)boss=e;  // 적 포인터는 프레임을 넘겨 들고 있지 않는다 (엔진이 다시 만들 수 있음)
   UpdateBullets(delta,position);
   if(Hp<=0){  // 쓰러짐: 3초 뒤 회복 (ponytail: 정산 화면이 생기면 거기로)
     hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});gameOver-=delta;
@@ -585,7 +609,7 @@ void TopDownShooter::Update(float delta){
     for(auto* e:enemies){const float len=Length(hb::Scene::GetPosition(e)-position);if(len<best){best=len;target=e;}}
     if(target)facing=Normal(hb::Scene::GetPosition(target)-position,facing);}
   else if(hasAim)facing=Normal(aim-position,facing);
-  hb::Sprites::SetFlip(player,facing.x<0,false);
+  if((facing.x<0)!=playerFlipped){playerFlipped=facing.x<0;hb::Sprites::SetFlip(player,playerFlipped,false);}
   Animate(delta,moving);
   // 적재량 초과·피로도 75% 이상이면 이동속도 -25% (기획서 4-1)
   if(dodgeTimer<=0&&(Weight()>rules->WeightLimit||Fatigue*4>=FatigueMax*3))hb::Physics::SetVelocity(player,hb::Physics::GetVelocity(player)*rules->SlowRate);
@@ -620,7 +644,7 @@ void TopDownShooter::Update(float delta){
 
   // 골드: 가까이 가면 끌려와서 주워짐
   for(auto it=coins.begin();it!=coins.end();){auto* c=it->first;const auto d=position-hb::Scene::GetPosition(c);const float len=Length(d);
-    if(len<rules->CoinPickup){Gold+=it->second;Sfx("Coin");hb::Scene::Destroy(c);it=coins.erase(it);Hud();continue;}
+    if(len<rules->CoinPickup){Gold+=it->second;Sfx("Coin");Give(coinPool,c);it=coins.erase(it);Hud();continue;}
     if(len<rules->CoinMagnet)hb::Scene::SetPosition(c,hb::Scene::GetPosition(c)+d*(std::min(1.f,delta*8)));
     ++it;}
   if(boss)BossHp=boss->Hp;

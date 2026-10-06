@@ -88,8 +88,8 @@
             ],
             "collisionMode": "both",
             "trigger": false,
-            "layer": 0,
-            "mask": 4294967295,
+            "layer": 1,
+            "mask": 4294967291,
             "physicalMaterial": "",
             "friction": 0,
             "frictionCombine": "min",
@@ -963,6 +963,6687 @@
           "ReturnOnly": true
         }
       }
+    },
+    {
+      "id": "EnemyShot0",
+      "name": "EnemyShot0",
+      "kind": "sprite",
+      "position": [
+        -12,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot1",
+      "name": "EnemyShot1",
+      "kind": "sprite",
+      "position": [
+        -10,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot2",
+      "name": "EnemyShot2",
+      "kind": "sprite",
+      "position": [
+        -8,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot3",
+      "name": "EnemyShot3",
+      "kind": "sprite",
+      "position": [
+        -6,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot4",
+      "name": "EnemyShot4",
+      "kind": "sprite",
+      "position": [
+        -4,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot5",
+      "name": "EnemyShot5",
+      "kind": "sprite",
+      "position": [
+        -2,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot6",
+      "name": "EnemyShot6",
+      "kind": "sprite",
+      "position": [
+        0,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot7",
+      "name": "EnemyShot7",
+      "kind": "sprite",
+      "position": [
+        2,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot8",
+      "name": "EnemyShot8",
+      "kind": "sprite",
+      "position": [
+        4,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot9",
+      "name": "EnemyShot9",
+      "kind": "sprite",
+      "position": [
+        6,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot10",
+      "name": "EnemyShot10",
+      "kind": "sprite",
+      "position": [
+        8,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot11",
+      "name": "EnemyShot11",
+      "kind": "sprite",
+      "position": [
+        10,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot12",
+      "name": "EnemyShot12",
+      "kind": "sprite",
+      "position": [
+        -12,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot13",
+      "name": "EnemyShot13",
+      "kind": "sprite",
+      "position": [
+        -10,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot14",
+      "name": "EnemyShot14",
+      "kind": "sprite",
+      "position": [
+        -8,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot15",
+      "name": "EnemyShot15",
+      "kind": "sprite",
+      "position": [
+        -6,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot16",
+      "name": "EnemyShot16",
+      "kind": "sprite",
+      "position": [
+        -4,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot17",
+      "name": "EnemyShot17",
+      "kind": "sprite",
+      "position": [
+        -2,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot18",
+      "name": "EnemyShot18",
+      "kind": "sprite",
+      "position": [
+        0,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot19",
+      "name": "EnemyShot19",
+      "kind": "sprite",
+      "position": [
+        2,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot20",
+      "name": "EnemyShot20",
+      "kind": "sprite",
+      "position": [
+        4,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot21",
+      "name": "EnemyShot21",
+      "kind": "sprite",
+      "position": [
+        6,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot22",
+      "name": "EnemyShot22",
+      "kind": "sprite",
+      "position": [
+        8,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "EnemyShot23",
+      "name": "EnemyShot23",
+      "kind": "sprite",
+      "position": [
+        10,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              0.75,
+              0.45,
+              1.0,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 4,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.EnemyShot"
+      ]
+    },
+    {
+      "id": "PlayerShot0",
+      "name": "PlayerShot0",
+      "kind": "sprite",
+      "position": [
+        -12,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "PlayerShot1",
+      "name": "PlayerShot1",
+      "kind": "sprite",
+      "position": [
+        -10,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "PlayerShot2",
+      "name": "PlayerShot2",
+      "kind": "sprite",
+      "position": [
+        -8,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "PlayerShot3",
+      "name": "PlayerShot3",
+      "kind": "sprite",
+      "position": [
+        -6,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "PlayerShot4",
+      "name": "PlayerShot4",
+      "kind": "sprite",
+      "position": [
+        -4,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "PlayerShot5",
+      "name": "PlayerShot5",
+      "kind": "sprite",
+      "position": [
+        -2,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "PlayerShot6",
+      "name": "PlayerShot6",
+      "kind": "sprite",
+      "position": [
+        0,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "PlayerShot7",
+      "name": "PlayerShot7",
+      "kind": "sprite",
+      "position": [
+        2,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "PlayerShot8",
+      "name": "PlayerShot8",
+      "kind": "sprite",
+      "position": [
+        4,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "PlayerShot9",
+      "name": "PlayerShot9",
+      "kind": "sprite",
+      "position": [
+        6,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "PlayerShot10",
+      "name": "PlayerShot10",
+      "kind": "sprite",
+      "position": [
+        8,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "PlayerShot11",
+      "name": "PlayerShot11",
+      "kind": "sprite",
+      "position": [
+        10,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "PlayerShot12",
+      "name": "PlayerShot12",
+      "kind": "sprite",
+      "position": [
+        -12,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "PlayerShot13",
+      "name": "PlayerShot13",
+      "kind": "sprite",
+      "position": [
+        -10,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "PlayerShot14",
+      "name": "PlayerShot14",
+      "kind": "sprite",
+      "position": [
+        -8,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "PlayerShot15",
+      "name": "PlayerShot15",
+      "kind": "sprite",
+      "position": [
+        -6,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 3,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.07,
+              0.07,
+              0.1
+            ]
+          }
+        },
+        {
+          "id": "82ebba12-026d-40b0-8a8f-58f7b7ecdd3f",
+          "name": "Rigidbody2D",
+          "type": "Rigidbody2D",
+          "properties": {
+            "enabled": true,
+            "mass": 1,
+            "autoMass": false,
+            "useGravity": false,
+            "isKinematic": false,
+            "drag": 0,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "freezePosition": [
+              0,
+              0,
+              1
+            ],
+            "bodyType": "dynamic",
+            "gravityScale": 1,
+            "angularDrag": 0,
+            "angularVelocity": [
+              0,
+              0,
+              0
+            ],
+            "collisionDetection": "continuous",
+            "freezeRotation": [
+              1,
+              1,
+              0
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Pool.PlayerShot"
+      ]
+    },
+    {
+      "id": "Coin0",
+      "name": "Coin0",
+      "kind": "sprite",
+      "position": [
+        -12,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Coin"
+      ]
+    },
+    {
+      "id": "Coin1",
+      "name": "Coin1",
+      "kind": "sprite",
+      "position": [
+        -10,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Coin"
+      ]
+    },
+    {
+      "id": "Coin2",
+      "name": "Coin2",
+      "kind": "sprite",
+      "position": [
+        -8,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Coin"
+      ]
+    },
+    {
+      "id": "Coin3",
+      "name": "Coin3",
+      "kind": "sprite",
+      "position": [
+        -6,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Coin"
+      ]
+    },
+    {
+      "id": "Coin4",
+      "name": "Coin4",
+      "kind": "sprite",
+      "position": [
+        -4,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Coin"
+      ]
+    },
+    {
+      "id": "Coin5",
+      "name": "Coin5",
+      "kind": "sprite",
+      "position": [
+        -2,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Coin"
+      ]
+    },
+    {
+      "id": "Coin6",
+      "name": "Coin6",
+      "kind": "sprite",
+      "position": [
+        0,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Coin"
+      ]
+    },
+    {
+      "id": "Coin7",
+      "name": "Coin7",
+      "kind": "sprite",
+      "position": [
+        2,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Coin"
+      ]
+    },
+    {
+      "id": "Coin8",
+      "name": "Coin8",
+      "kind": "sprite",
+      "position": [
+        4,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Coin"
+      ]
+    },
+    {
+      "id": "Coin9",
+      "name": "Coin9",
+      "kind": "sprite",
+      "position": [
+        6,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Coin"
+      ]
+    },
+    {
+      "id": "Coin10",
+      "name": "Coin10",
+      "kind": "sprite",
+      "position": [
+        8,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Coin"
+      ]
+    },
+    {
+      "id": "Coin11",
+      "name": "Coin11",
+      "kind": "sprite",
+      "position": [
+        10,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Coin"
+      ]
+    },
+    {
+      "id": "Slash0",
+      "name": "Slash0",
+      "kind": "sprite",
+      "position": [
+        -12,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX_Slash.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.21875,
+            "height": 2.59375,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 5,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Slash"
+      ]
     },
     {
       "id": "Torch0",
