@@ -58,8 +58,9 @@ image("BagIcon", "icon_bag.png", "tl", 30, 92)
 text("WeightText", "0 / 100", "tl", 68, 86, 160, 32)
 text("GoldText", "0 G", "tl", 340, 34, 200, 32, size=18)
 image("FatigueBack", "fatigue_back.png", "tl", 24, 132)
-for p in range(0, 101, 10):
-    image(f"Fatigue{p:03d}", f"fatigue_{p:03d}.png", "tl", 24 + 8, 132 + 8, z=11, visible=p == 0)
+# 피로도: 세로 막대 하나 (C++ UI::SetValue 0~1, 아래에서 위로 참)
+node("Fatigue", "ProgressBar", "tl", 24 + 8, 132 + 8, 16, 220, 11, value=0, max=1, fillDirection="bottomToTop",
+     fillTexture=KIT + "fatigue_100.png", backgroundTexture="", background="#00000000", accent="#00000000")
 image("FatigueTicks", "fatigue_ticks.png", "tl", 24 + 8, 132 + 52, z=12)
 
 # 위 가운데: 탐색 층 / 상태 문구
@@ -73,27 +74,18 @@ image("BagButton", "btn_inventory.png", "tr", 24 + 72 + 12, 24)
 image("Minimap", "minimap.png", "tr", 24, 108)
 
 # 오른쪽 아래: 공격, 회피, 상호작용, 제작 (UI 키트 시안 배치)
-for who in ("valen", "sherry", "alea"):  # 캐릭터마다 공격 버튼 그림이 달라 C++ Hud가 하나만 보인다
-    image(f"AttackButton_{who}", f"btn_attack_{who}.png", "br", 40, 40, visible=who == "valen")
+image("AttackButton", "btn_attack_valen.png", "br", 40, 40)  # 캐릭터·귀환 테마에 맞는 그림은 C++ UI::SetTexture
 image("DodgeButton", "btn_dodge.png", "br", 40 + 140 + 16, 24)
 image("InteractButton", "btn_interact.png", "br", 40 + 140 + 4, 40 + 96 + 8)
 image("CraftButton", "btn_craft.png", "br", 40 + 24, 40 + 140 + 16)
-touch("AttackTouch", "k", "br", 40, 40, 140)  # 모바일 공격은 K: C++가 자동 조준으로 바꾼다 (터치 위치는 조준이 아님)
+touch("AttackTouch", "LeftMouseButton", "br", 40, 40, 140)  # 터치로 누르면 C++가 마지막 입력 장치(touch)를 보고 자동 조준
 touch("DodgeTouch", "space", "br", 40 + 140 + 16, 24, 96)
 touch("InteractTouch", "e", "br", 40 + 140 + 4, 40 + 96 + 8, 88)
 touch("CraftTouch", "q", "br", 40 + 24, 40 + 140 + 16, 96)
 
-# 귀환 중 황금 침식 테마 (UI 키트 v8 corrupted). 같은 자리·크기의 그림을 두고 C++ Hud가 은색과 바꿔 보인다
+# 귀환 중 황금 침식 테마 (UI 키트 v8 corrupted): 버튼 그림은 C++가 rot_*로 바꾼다. 체력 막대는 틀째 다른 그림이라 따로 둔다
 for i in (1, 2, 3):
     image(f"RotHp{i}", f"rot_hp_{i}.png", "tl", 24, 24, z=12, visible=False)
-for who in ("valen", "sherry", "alea"):
-    image(f"RotAttack_{who}", f"rot_attack_{who}.png", "br", 40, 40, z=11, visible=False)
-image("RotDodge", "rot_dodge.png", "br", 40 + 140 + 16, 24, z=11, visible=False)
-image("RotInteract", "rot_interact.png", "br", 40 + 140 + 4, 40 + 96 + 8, z=11, visible=False)
-image("RotCraft", "rot_craft.png", "br", 40 + 24, 40 + 140 + 16, z=11, visible=False)
-image("RotPause", "rot_pause.png", "tr", 24, 24, z=11, visible=False)
-image("RotBag", "rot_inventory.png", "tr", 24 + 72 + 12, 24, z=11, visible=False)
-image("RotMinimap", "rot_minimap.png", "tr", 24, 108, z=11, visible=False)
 
 # 왼쪽 아래: 조이스틱(모바일만). 기존 Joystick 입력 노드를 키트 그림 위에 둔다.
 move = copy.deepcopy(next(n for n in w["nodes"] if n["type"] == "Joystick"))
@@ -137,11 +129,9 @@ for i, ((sx, sy), icon) in enumerate(zip(SLOTS, ICONS), 1):
     panel_text(f"CraftKey{i}", str(i), sx + 8, sy + 4, 20, 18, size=12)
     t = panel(f"CraftSlot{i}", "TouchButton", sx, sy, 104, 104, 44, inputKey=str(i), inputMode="keys",
               background="#00000000", pressed="#ffffff22", hover="#ffffff11")
-for i, (sx, sy) in enumerate(SLOTS, 1):  # 선택 테두리: C++가 고른 칸 것만 보인다
-    panel_image(f"CraftSelect{i}", "craft_select.png", sx, sy, z=43)
-for i, icon in enumerate(["craft_detail_potion.png"] + ICONS[1:], 1):  # 오른쪽 설명 아이콘
-    iw, ih = Image.open(PROJECT / KIT / icon).size
-    panel_image(f"CraftDetail{i}", icon, 480 + (72 - iw) // 2, 176 + (72 - ih) // 2)
+panel_image("CraftSelect", "craft_select.png", *SLOTS[0], z=43)  # 선택 테두리 하나를 C++ UI::SetPosition으로 옮김
+iw, ih = Image.open(PROJECT / KIT / "craft_detail_potion.png").size
+panel_image("CraftDetail", "craft_detail_potion.png", 480 + (72 - iw) // 2, 176 + (72 - ih) // 2)  # 설명 아이콘: SetTexture·SetSize·SetPosition
 panel_text("CraftName", "회복 물약", 480, 136, 380, 26, size=20)
 panel_text("CraftEffect", "체력 1 회복", 568, 190, 300, 22)
 panel_text("CraftType", "소모 아이템", 568, 220, 300, 20, size=13)
@@ -166,9 +156,8 @@ def dialog(name, kind, px, py, w_, h_, z, **props):
 
 dialog("DialogBox", "Image", 0, 0, DW, DH, 50, texture=KIT + "dialog_box.png")
 dialog("DialogPortraitFrame", "Image", 20, 19, 132, 132, 51, texture=KIT + "dialog_portrait_frame.png")
-for who in ("collector", "valen", "sherry", "alea", "boss"):  # 엔진 UI는 실행 중 그림을 바꿀 수 없어 말하는 사람마다 하나씩 두고 보이기만 바꾼다
-    iw, ih = Image.open(PROJECT / KIT / f"portrait_{who}.png").size
-    dialog(f"DialogPortrait_{who}", "Image", 26 + (120 - iw) // 2, 25 + (120 - ih) // 2, iw, ih, 52, texture=KIT + f"portrait_{who}.png")
+iw, ih = Image.open(PROJECT / KIT / "portrait_collector.png").size  # 말하는 사람 초상화 하나: C++가 그림·크기·위치를 바꿈
+dialog("DialogPortrait", "Image", 26 + (120 - iw) // 2, 25 + (120 - ih) // 2, iw, ih, 52, texture=KIT + "portrait_collector.png")
 dialog("DialogName", "Text", 172, 22, 400, 28, 52, text="수금원", fontSize=20, color="#ffd666")
 dialog("DialogText", "Text", 172, 58, 790, 90, 52, text="", fontSize=18, color="#fff3e5")
 dialog("DialogNext", "Text", DW - 60, DH - 44, 40, 28, 52, text="▼", fontSize=18, color="#ffd666")

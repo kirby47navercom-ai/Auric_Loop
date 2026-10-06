@@ -428,8 +428,9 @@ private:
   hb::Actor* camera=nullptr;
   hb::Vec3 playerAt{0,0,0},facing{1,0,0},cameraAt{0,0,0};
   bool playerFlipped=false;
-  bool cameraReady=false,started=false,leaving=false,hudDirty=true,introHidden=false,rotShown=false;
-  int frame=0,fatigueLevel=0,area=-1,fightingRoom=-1;
+  bool cameraReady=false,started=false,leaving=false,hudDirty=true,introHidden=false;
+  int rotShown=-1;                // 지금 보이는 버튼 그림 (귀환 테마*10 + 캐릭터)
+  int frame=0,area=-1,fightingRoom=-1;
   std::string roomKind="Hub";
   float halfWidth=12,halfHeight=12,exitY=21;
   bool monsterDrop=false;

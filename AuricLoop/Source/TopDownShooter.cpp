@@ -427,9 +427,15 @@ void TopDownShooter::CraftDetail(){
   if(craftPick==1)cost="약초 "+std::to_string(Herb)+" / 3    빈 병 "+std::to_string(Bottle)+" / 1";
   else if(craftPick==2)cost="광물 "+std::to_string(Ore)+" / 1";
   else cost="마물 소재 "+std::to_string(Monster)+" / 1   (각인은 하나만, 새로 하면 덮어씀)";
-  for(int i=1;i<=5;++i){  // 위젯 위치를 못 바꿔서 칸마다 둔 선택 테두리·설명 아이콘 중 하나만 보인다
-    hb::UI::SetVisible(player,"HUD","CraftSelect"+std::to_string(i),craftOpen&&i==craftPick);
-    hb::UI::SetVisible(player,"HUD","CraftDetail"+std::to_string(i),craftOpen&&i==craftPick);}
+  {// 선택 테두리는 고른 칸으로 옮기고, 설명 아이콘은 그림·크기를 바꿔 72px 칸 가운데에 (좌표: 제작 창 920x516 가운데 기준, tools/gen_hud.py)
+   static const struct{const char* file;float w,h;}icons[]={{"craft_detail_potion.png",32,52},{"craft_item_flash.png",44,44},
+     {"craft_item_crystal.png",30,42},{"craft_item_crystal.png",30,42},{"craft_item_crystal.png",30,42}};
+   const auto& ic=icons[craftPick-1];const int col=(craftPick-1)%3,row=(craftPick-1)/3;
+   hb::UI::SetVisible(player,"HUD","CraftSelect",craftOpen);hb::UI::SetVisible(player,"HUD","CraftDetail",craftOpen);
+   hb::UI::SetPosition(player,"HUD","CraftSelect",hb::Vec2{32.f+116*col-460,128.f+116*row-258});
+   hb::UI::SetTexture(player,"HUD","CraftDetail",std::string("Assets/UI/Kit/")+ic.file);
+   hb::UI::SetSize(player,"HUD","CraftDetail",hb::Vec2{ic.w,ic.h});
+   hb::UI::SetPosition(player,"HUD","CraftDetail",hb::Vec2{480+(72-ic.w)/2-460,176+(72-ic.h)/2-258});}
   hb::UI::SetText(player,"HUD","CraftName",names[craftPick]);
   hb::UI::SetText(player,"HUD","CraftEffect",craftPick==5?(Character?"화살·마탄이 적을 뚫고 지나감":"베기 사거리 +1.5m"):effects[craftPick]);
   hb::UI::SetText(player,"HUD","CraftType",craftPick<=2?"소모 아이템":"무기 각인 (귀환하면 사라짐)");
@@ -466,17 +472,18 @@ void TopDownShooter::Hud(){
   const bool rot=Returning;const int fill=hp<=0?0:std::max(1,(hp*3+MaxHp-1)/MaxHp);  // 귀환 중엔 황금 침식 테마
   hb::UI::SetVisible(player,"HUD","HpBack",!rot);
   for(int i=1;i<=3;++i){hb::UI::SetVisible(player,"HUD","HpFill"+std::to_string(i),!rot&&fill==i);hb::UI::SetVisible(player,"HUD","RotHp"+std::to_string(i),rot&&fill==i);}
-  static const char* themed[][2]={{"DodgeButton","RotDodge"},{"InteractButton","RotInteract"},{"CraftButton","RotCraft"},{"PauseButton","RotPause"},{"BagButton","RotBag"},{"Minimap","RotMinimap"}};
-  if(rot!=rotShown){rotShown=rot;for(auto& t:themed){hb::UI::SetVisible(player,"HUD",t[0],!rot);hb::UI::SetVisible(player,"HUD",t[1],rot);}}
+  // 버튼 그림: 캐릭터별 공격, 귀환 중엔 황금 침식(rot_*) 그림으로 바꿈
+  static const char* themed[][3]={{"DodgeButton","btn_dodge","rot_dodge"},{"InteractButton","btn_interact","rot_interact"},{"CraftButton","btn_craft","rot_craft"},
+    {"PauseButton","btn_pause","rot_pause"},{"BagButton","btn_inventory","rot_inventory"},{"Minimap","minimap","rot_minimap"}};
+  const int theme=(rot?10:0)+Character;
+  if(theme!=rotShown){rotShown=theme;
+    for(auto& t:themed)hb::UI::SetTexture(player,"HUD",t[0],std::string("Assets/UI/Kit/")+t[rot?2:1]+".png");
+    hb::UI::SetTexture(player,"HUD","AttackButton",std::string("Assets/UI/Kit/")+(rot?"rot_attack_":"btn_attack_")+faces[Character]+".png");}
   hb::UI::SetText(player,"HUD","HpText",std::to_string(hp)+" / "+std::to_string(MaxHp));
   hb::UI::SetText(player,"HUD","WeightText",std::to_string(Weight())+" / "+std::to_string(rules->WeightLimit));
   hb::UI::SetText(player,"HUD","GoldText",std::to_string(Gold)+" G   빚 "+std::to_string(Debt));
   hb::UI::SetText(player,"HUD","Hint",hint);
-  for(int i=0;i<3;++i){hb::UI::SetVisible(player,"HUD",std::string("AttackButton_")+faces[i],!rot&&i==Character);
-    hb::UI::SetVisible(player,"HUD",std::string("RotAttack_")+faces[i],rot&&i==Character);}
-  const int level=std::min(10,FatigueMax>0?Fatigue*10/FatigueMax:10);  // 10% 단위 그림
-  if(level!=fatigueLevel){auto name=[](int lv){std::string n=std::to_string(lv*10);return "Fatigue"+std::string(3-n.size(),'0')+n;};
-    hb::UI::SetVisible(player,"HUD",name(fatigueLevel),false);hb::UI::SetVisible(player,"HUD",name(level),true);fatigueLevel=level;}
+  hb::UI::SetValue(player,"HUD","Fatigue",FatigueMax>0?std::min(1.f,float(Fatigue)/FatigueMax):1.f);
   hb::UI::SetText(player,"HUD","Title",Hp<=0?(Fatigue>=FatigueMax?"지쳐 쓰러졌다":"쓰러졌다")
     :ReturnSuccess?"귀환 성공 - 정산 "+std::to_string(LastRepaid)+" G 상환"
     :Returning?"귀환 - 문 "+std::to_string(DoorHits)+"/"+std::to_string(rules->DoorHitsToOpen)+"  섬광탄 "+(Flashbangs?std::to_string(Flashbangs):std::to_string(rules->FlashPrice)+"G")
@@ -505,16 +512,21 @@ static std::string Utf8Prefix(const std::string& s,size_t chars){size_t i=0,n=0;
 bool TopDownShooter::UpdateDialog(float delta,bool advance){
   // 대화창 (기획서 6-5): 한 글자씩 → E·클릭·Enter로 바로 다 보이기 → 다시 누르면 다음 줄
   static const char* parts[]={"DialogBox","DialogPortraitFrame","DialogName","DialogText","DialogNext","DialogTouch"};
-  static const char* portraits[]={"collector","valen","sherry","alea","boss"};
+  // 초상화 하나를 말하는 사람 그림으로 바꿔 120px 틀 가운데에 (좌표: 대화창 1000x170 기준, tools/gen_hud.py)
+  static const struct{const char* who;float w,h;}portraits[]={{"collector",108,108},{"valen",96,96},{"sherry",84,66},{"alea",90,72},{"boss",66,66}};
   if(dialogIndex>=dialog.size()){
     if(!dialog.empty()){dialog.clear();dialogIndex=0;for(auto* n:parts)hb::UI::SetVisible(player,"HUD",n,false);
-      for(auto* f:portraits)hb::UI::SetVisible(player,"HUD",std::string("DialogPortrait_")+f,false);shownWho="";}
+      hb::UI::SetVisible(player,"HUD","DialogPortrait",false);shownWho="";}
     return false;
   }
   const Line& l=dialog[dialogIndex];
   if(shownWho!=l.who){
     if(shownWho.empty())for(auto* n:parts)hb::UI::SetVisible(player,"HUD",n,true);
-    for(auto* f:portraits)hb::UI::SetVisible(player,"HUD",std::string("DialogPortrait_")+f,l.who==f);
+    for(const auto& p:portraits)if(l.who==p.who){
+      hb::UI::SetTexture(player,"HUD","DialogPortrait",std::string("Assets/UI/Kit/portrait_")+p.who+".png");
+      hb::UI::SetSize(player,"HUD","DialogPortrait",hb::Vec2{p.w,p.h});
+      hb::UI::SetPosition(player,"HUD","DialogPortrait",hb::Vec2{26+(120-p.w)/2-500,25+(120-p.h)/2-194});}
+    hb::UI::SetVisible(player,"HUD","DialogPortrait",true);
     hb::UI::SetText(player,"HUD","DialogName",l.name);shownWho=l.who;
   }
   const size_t total=Utf8Count(l.text);
