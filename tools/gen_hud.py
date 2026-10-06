@@ -57,6 +57,7 @@ text("HpText", "3 / 3", "tl", 24 + 64, 24 + 14, 220, 28, align="center")
 image("BagIcon", "icon_bag.png", "tl", 30, 92)
 text("WeightText", "0 / 100", "tl", 68, 86, 160, 32)
 text("GoldText", "0 G", "tl", 340, 34, 200, 32, size=18)
+node("Fps", "Text", "tl", 24, 380, 300, 26, 60, text="", fontSize=16, color="#7dff9a", visible=False)  # F3 성능 표시
 image("FatigueBack", "fatigue_back.png", "tl", 24, 132)
 # 피로도: 세로 막대 하나 (C++ UI::SetValue 0~1, 아래에서 위로 참)
 node("Fatigue", "ProgressBar", "tl", 24 + 8, 132 + 8, 16, 220, 11, value=0, max=1, fillDirection="bottomToTop",

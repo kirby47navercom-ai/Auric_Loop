@@ -135,7 +135,7 @@ write(BP / "BP_AuricRules.hbblueprint.json", rules)
 write(BP / "BP_RoomInfo.hbblueprint.json", blueprint("BP_RoomInfo", "RoomInfo", [transform()], native_from=True))
 for name, who in (("BP_Test_Valen", 0), ("BP_Test_Sherry", 1), ("BP_Test_Alea", 2)):
     write(BP / f"{name}.hbblueprint.json", blueprint(name, "Assets/Blueprints/BP_TopDownShooter.hbblueprint.json",
-                                                     defaults={"TopDownShooter.Character": who, "TopDownShooter.Seed": 7}))
+                                                     defaults={"TopDownShooter.Character": who, "TopDownShooter.Seed": 7, "TopDownShooter.ShowFps": True}))
 
 # ---- 던전 데이터 (편집기 데이터 표에서 고침, 다시 빌드할 필요 없음) ----
 # 웨이브: | 로 웨이브를 나누고 , 로 적을 나눔. 기호는 BP_AuricRules.Enemies (S 해골, M 해골 마법사, C 해골 대장)

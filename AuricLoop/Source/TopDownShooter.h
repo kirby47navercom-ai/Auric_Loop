@@ -379,7 +379,9 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   std::string Layout = "";       // 지금 던전 방 목록 (검사·디버그용 JSON)
   HB_PROPERTY(BlueprintReadWrite)
-  std::string StartRoom = "";    // 검사·시연용: 던전에 들어오면 이 종류(Gather·Shop·Boss…)의 첫 방으로 바로 감
+  std::string StartRoom = "";
+  HB_PROPERTY(BlueprintReadWrite)
+  bool ShowFps = false;          // 왼쪽 위에 초당 프레임·프레임 시간 (F3으로 켜고 끔)    // 검사·시연용: 던전에 들어오면 이 종류(Gather·Shop·Boss…)의 첫 방으로 바로 감
   HB_PROPERTY(BlueprintReadWrite)
   float BossHp = 0;
   HB_PROPERTY(BlueprintReadWrite)
@@ -520,6 +522,7 @@ private:
   Enemy* boss=nullptr;
   std::vector<Line> dialog;
   size_t dialogIndex=0,shownChars=0;
+  float fpsTime=0,fpsWorst=0;int fpsFrames=0;bool fpsHeld=false;
   bool warpHeld=false,dodgeHeld=false,returnHeld=false,flashHeld=false,craftOpen=false,craftKeyHeld=false,confirmHeld=false;
   bool advanceHeld=true,selecting=false,ending=false,anyHeld=true,touchMode=false,gatherTold=false;
   int craftPick=1,pick=0,pickHeld=0;

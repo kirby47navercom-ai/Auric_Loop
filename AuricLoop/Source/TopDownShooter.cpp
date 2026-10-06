@@ -419,7 +419,7 @@ bool TopDownShooter::HitEnemy(Enemy* e,const hb::Vec3& push,float damage){
 void TopDownShooter::Slash(const hb::Vec3& position,const std::vector<Enemy*>& enemies){
   // 검 부채꼴 베기: 적에게 피해, 범위 안의 적 탄은 지움 (기획: 투사체 삭제)
   attackCooldown=rules->SwordInterval;Swings++;attackAnim=0.3f;Sfx("Slash");
-  PlayFx(rules->SlashClip,0.2f,position+facing*0.9f+hb::Vec3{0,0.2f,0.2f},Angle(facing),1.2f,false,(Swings&1)!=0);  // 번갈아 위·아래로 벰  // 캐릭터 그림과 따로, 공격 방향으로 돌린 베기
+  PlayFx(rules->SlashClip,0.2f,position+facing*0.9f+hb::Vec3{0,0.2f,0.2f},Angle(facing),0.5f,false,(Swings&1)!=0);  // 번갈아 위·아래로 벰  // 캐릭터 그림과 따로, 공격 방향으로 돌린 베기
   const float minDot=std::cos(rules->SwordHalfAngle*3.14159265f/180),reach=rules->SwordRange+(Enchant==3?rules->SlashExtend:0);
   auto inFan=[&](const hb::Vec3& at,float radius){const auto d=at-position;const float len=Length(d);
     return len<=reach+radius&&(len<=radius+0.75f||hb::VectorMath::DotProduct(d*(1/len),facing)>=minDot);};  // 바로 붙은 적은 방향과 관계없이 맞음
@@ -888,6 +888,12 @@ void TopDownShooter::Update(float delta){
   Current=this;
   player=hb::Gameplay::GetPlayerPawn();if(!player)return;
   frame++;if(hudDirty)Hud();
+  {// 성능 확인: F3으로 왼쪽 위에 초당 게임 프레임과 0.5초 동안 가장 긴 프레임
+   const bool f3=hb::Input::IsKeyDown("F3");if(f3&&!fpsHeld){ShowFps=!ShowFps;if(player&&frame>=2)hb::UI::SetVisible(player,"HUD","Fps",ShowFps);}fpsHeld=f3;
+   fpsTime+=delta;fpsFrames++;fpsWorst=std::max(fpsWorst,delta);
+   if(fpsTime>=0.5f){if(ShowFps&&player&&frame>=2){hb::UI::SetVisible(player,"HUD","Fps",true);
+       hb::UI::SetText(player,"HUD","Fps",std::to_string(int(fpsFrames/fpsTime+0.5f))+" FPS  최장 "+std::to_string(int(fpsWorst*1000+0.5f))+"ms");}
+     fpsTime=0;fpsFrames=0;fpsWorst=0;}}
   if(minimapDirty&&frame>=2){minimapDirty=false;UpdateMinimap();}  // 위젯은 첫 프레임 뒤에 생김
   if(!started)Begin();
   if(leaving)return;

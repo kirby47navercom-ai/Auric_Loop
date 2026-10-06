@@ -629,6 +629,75 @@
       "bindings": {}
     },
     {
+      "id": "Fps",
+      "name": "Fps",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          380,
+          300,
+          26
+        ],
+        "alignment": [
+          0,
+          0
+        ],
+        "zIndex": 60,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 16,
+        "color": "#7dff9a",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 4,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
       "id": "FatigueBack",
       "name": "FatigueBack",
       "parent": "root",

@@ -17,7 +17,8 @@
     "overlapEnabled": true,
     "nativeDefaults": {
       "TopDownShooter.Character": 0,
-      "TopDownShooter.Seed": 7
+      "TopDownShooter.Seed": 7,
+      "TopDownShooter.ShowFps": true
     }
   }
 }

@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "profiles": [
+    {
+      "id": "windows",
+      "name": "Windows (부스)",
+      "configuration": "release",
+      "productName": "AuricLoop",
+      "width": 1280,
+      "height": 720,
+      "scenes": [
+        {
+          "path": "Assets/Scenes/Hub.hbscene.json",
+          "enabled": true
+        },
+        {
+          "path": "Assets/Scenes/Dungeon.hbscene.json",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "perf",
+      "name": "성능 측정 (발렌 던전, FPS 표시)",
+      "configuration": "release",
+      "productName": "AuricLoopPerf",
+      "width": 1280,
+      "height": 720,
+      "scenes": [
+        {
+          "path": "Assets/Scenes/Test_Valen.hbscene.json",
+          "enabled": true
+        },
+        {
+          "path": "Assets/Scenes/Hub.hbscene.json",
+          "enabled": true
+        },
+        {
+          "path": "Assets/Scenes/Dungeon.hbscene.json",
+          "enabled": true
+        }
+      ]
+    }
+  ]
+}
