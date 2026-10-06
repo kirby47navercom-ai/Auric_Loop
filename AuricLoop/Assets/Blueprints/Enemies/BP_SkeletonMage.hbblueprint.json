@@ -20,13 +20,13 @@
       "Enemy.Brain": "Assets/AI/FSM_SkeletonMage.hbstatemachine.json",
       "Enemy.KeepDistance": 6,
       "Enemy.GoldMin": 2,
-      "Enemy.GoldMax": 3
+      "Enemy.GoldMax": 3,
+      "Enemy.DeathSprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Death_"
     },
     "componentOverrides": {
       "sprite": {
-        "texture": "Assets/Sprites/SkeletonMage_Idle.png",
-        "width": 1.625,
-        "height": 1.59375
+        "sprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Walk_0.hbsprite.json",
+        "texture": ""
       }
     }
   }

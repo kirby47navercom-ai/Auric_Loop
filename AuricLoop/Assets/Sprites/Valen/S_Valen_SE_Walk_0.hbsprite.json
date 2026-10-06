@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_Valen_SE_Walk_0",
+  "texture": "Assets/Sprites/Valen/Valen_SE_Walk_0.png",
+  "pixelsPerUnit": 32,
+  "rect": [
+    0,
+    0,
+    109,
+    76
+  ],
+  "pivot": [
+    0.5,
+    0.4
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

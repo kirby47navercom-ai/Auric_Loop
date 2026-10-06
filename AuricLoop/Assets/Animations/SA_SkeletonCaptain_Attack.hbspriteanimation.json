@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "name": "SA_SkeletonCaptain_Attack",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Attack_0.hbsprite.json",
+      "duration": 0.13
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Attack_1.hbsprite.json",
+      "duration": 0.13
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Attack_2.hbsprite.json",
+      "duration": 0.13
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

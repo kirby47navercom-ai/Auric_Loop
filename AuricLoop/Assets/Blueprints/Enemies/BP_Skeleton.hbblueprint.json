@@ -17,13 +17,13 @@
     "overlapEnabled": true,
     "nativeDefaults": {
       "Enemy.DisplayName": "해골",
-      "Enemy.Brain": "Assets/AI/FSM_Skeleton.hbstatemachine.json"
+      "Enemy.Brain": "Assets/AI/FSM_Skeleton.hbstatemachine.json",
+      "Enemy.DeathSprite": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Death_"
     },
     "componentOverrides": {
       "sprite": {
-        "texture": "Assets/Sprites/Skeleton_Idle.png",
-        "width": 0.90625,
-        "height": 1.375
+        "sprite": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Walk_0.hbsprite.json",
+        "texture": ""
       }
     }
   }

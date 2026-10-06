@@ -811,5 +811,1067 @@
   },
   "Source/AuricSession.h": {
     "id": "62426173-97b7-4ef2-b668-ab51db3932d8"
+  },
+  "Assets/Animations/SA_SkeletonCaptain_Attack.hbspriteanimation.json": {
+    "id": "5a6a7ea5-85ab-444c-81db-b44f630e8c40"
+  },
+  "Assets/Animations/SA_SkeletonCaptain_Hurt.hbspriteanimation.json": {
+    "id": "58c3eee5-2223-453b-8b22-5f56dff833c0"
+  },
+  "Assets/Animations/SA_SkeletonCaptain_Walk.hbspriteanimation.json": {
+    "id": "c4262e28-3b4b-432c-8a5f-3cf7dac90cfe"
+  },
+  "Assets/Animations/SA_SkeletonMage_Attack.hbspriteanimation.json": {
+    "id": "58b9af3a-14b0-429d-8db7-67f8443967a9"
+  },
+  "Assets/Animations/SA_SkeletonMage_Hurt.hbspriteanimation.json": {
+    "id": "330b54c0-398c-44c3-a238-7d9f27d6cfb6"
+  },
+  "Assets/Animations/SA_SkeletonMage_Walk.hbspriteanimation.json": {
+    "id": "786bf503-ddbb-4d67-b36f-3acbec73c5db"
+  },
+  "Assets/Animations/SA_Skeleton_Attack.hbspriteanimation.json": {
+    "id": "8bf615cc-b68b-448a-bd5f-ee8d3032135e"
+  },
+  "Assets/Animations/SA_Skeleton_Hurt.hbspriteanimation.json": {
+    "id": "ebbd8b2d-1ac0-4757-9aec-02fd259e1e03"
+  },
+  "Assets/Animations/SA_Skeleton_Walk.hbspriteanimation.json": {
+    "id": "53f9c164-63f7-41d1-b4d8-948b9008fb05"
+  },
+  "Assets/Animations/SA_Torch.hbspriteanimation.json": {
+    "id": "4c7d2e20-a055-471b-83f9-87b3b779f58d"
+  },
+  "Assets/Prefabs/PF_Fx.hbprefab.json": {
+    "id": "bd200a85-23fb-4259-92d5-d522c73b01e4"
+  },
+  "Assets/Sprites/Alea/Alea_E_Attack_0.png": {
+    "id": "e6a78c1d-ec08-40b8-9e69-b2866ad9387f"
+  },
+  "Assets/Sprites/Alea/Alea_E_Attack_1.png": {
+    "id": "f0beabea-3105-4cf8-b053-cf962babf0da"
+  },
+  "Assets/Sprites/Alea/Alea_E_Attack_2.png": {
+    "id": "fa0c94f6-2236-4fea-97a4-9e3d4a8071c1"
+  },
+  "Assets/Sprites/Alea/Alea_E_Idle_0.png": {
+    "id": "9c337812-d93c-4fdc-948e-3cb97a36c704"
+  },
+  "Assets/Sprites/Alea/Alea_E_Walk_0.png": {
+    "id": "4bfd70e4-7a8b-4b55-b2da-48692a536c76"
+  },
+  "Assets/Sprites/Alea/Alea_E_Walk_1.png": {
+    "id": "f8ebb5f1-8089-4635-820a-103823b3b580"
+  },
+  "Assets/Sprites/Alea/Alea_E_Walk_2.png": {
+    "id": "738c1d4d-c787-4d01-a801-16d3a56f21d1"
+  },
+  "Assets/Sprites/Alea/Alea_E_Walk_3.png": {
+    "id": "403d7aba-c4a1-4297-b39f-36977cf8e308"
+  },
+  "Assets/Sprites/Alea/Alea_NE_Attack_0.png": {
+    "id": "bdfa95b9-5285-4fff-99af-2c04861ccf59"
+  },
+  "Assets/Sprites/Alea/Alea_NE_Attack_1.png": {
+    "id": "19ce4b39-86d0-43ee-bc2f-2f2d4c9508c9"
+  },
+  "Assets/Sprites/Alea/Alea_NE_Attack_2.png": {
+    "id": "11d7800a-d3a7-4c20-a38b-8dfa3811dd22"
+  },
+  "Assets/Sprites/Alea/Alea_NE_Idle_0.png": {
+    "id": "921cbf99-5f4a-4b52-9d08-f43d3f41bd7d"
+  },
+  "Assets/Sprites/Alea/Alea_NE_Walk_0.png": {
+    "id": "1870a8f3-efe7-4ad9-93ec-12cd35ec9ddb"
+  },
+  "Assets/Sprites/Alea/Alea_NE_Walk_1.png": {
+    "id": "7f080fd1-4867-4057-9383-e64b6a60e154"
+  },
+  "Assets/Sprites/Alea/Alea_NE_Walk_2.png": {
+    "id": "5565dded-6b9b-4bee-90ac-c3efb788d366"
+  },
+  "Assets/Sprites/Alea/Alea_NE_Walk_3.png": {
+    "id": "51ac3bf4-c7e3-4c8e-8839-2536f00b63e6"
+  },
+  "Assets/Sprites/Alea/Alea_N_Attack_0.png": {
+    "id": "0c9aae58-c05c-471a-a593-03dbed233527"
+  },
+  "Assets/Sprites/Alea/Alea_N_Attack_1.png": {
+    "id": "06973037-c356-4fab-b20a-65898a361e4f"
+  },
+  "Assets/Sprites/Alea/Alea_N_Attack_2.png": {
+    "id": "3548fdd5-a4eb-4a63-83d3-033c34da02f8"
+  },
+  "Assets/Sprites/Alea/Alea_N_Idle_0.png": {
+    "id": "1757b2f9-61da-47c4-94cc-32a014be3aa4"
+  },
+  "Assets/Sprites/Alea/Alea_N_Walk_0.png": {
+    "id": "52c489e2-234e-4e94-9a43-64fb6437e415"
+  },
+  "Assets/Sprites/Alea/Alea_N_Walk_1.png": {
+    "id": "7f2d2e5b-d08f-454c-ba7b-928ca87ffb7f"
+  },
+  "Assets/Sprites/Alea/Alea_N_Walk_2.png": {
+    "id": "235f0e50-f763-4040-bf2e-25a727efca14"
+  },
+  "Assets/Sprites/Alea/Alea_N_Walk_3.png": {
+    "id": "3d31fab2-8759-4661-83e6-ce660a4083fd"
+  },
+  "Assets/Sprites/Alea/Alea_SE_Attack_0.png": {
+    "id": "507545f8-9324-4ec1-a50d-39a4f7c72eed"
+  },
+  "Assets/Sprites/Alea/Alea_SE_Attack_1.png": {
+    "id": "17354e21-1e62-4e7d-b0a3-bed2efab7669"
+  },
+  "Assets/Sprites/Alea/Alea_SE_Attack_2.png": {
+    "id": "17bd5ac9-370f-4c1b-a373-3a23f0878248"
+  },
+  "Assets/Sprites/Alea/Alea_SE_Idle_0.png": {
+    "id": "33572335-fa3d-451a-9807-e90bdbe3f4b2"
+  },
+  "Assets/Sprites/Alea/Alea_SE_Walk_0.png": {
+    "id": "6ca7c570-88de-46f6-80a8-d37ae26e9603"
+  },
+  "Assets/Sprites/Alea/Alea_SE_Walk_1.png": {
+    "id": "4aec8742-70b2-432d-b2e2-e73ec43b90c9"
+  },
+  "Assets/Sprites/Alea/Alea_SE_Walk_2.png": {
+    "id": "adda0c01-f98b-4be6-8bcd-546c952a2a90"
+  },
+  "Assets/Sprites/Alea/Alea_SE_Walk_3.png": {
+    "id": "2b553f95-f945-4e35-a9ed-4d75f85bc32f"
+  },
+  "Assets/Sprites/Alea/Alea_S_Attack_0.png": {
+    "id": "daf3a9b6-1365-46d2-86f8-217e4a13d8a0"
+  },
+  "Assets/Sprites/Alea/Alea_S_Attack_1.png": {
+    "id": "d135b5d4-15fd-4d4b-8701-6633a1a50335"
+  },
+  "Assets/Sprites/Alea/Alea_S_Attack_2.png": {
+    "id": "b7f31d90-1011-4570-8c47-55fb2b741840"
+  },
+  "Assets/Sprites/Alea/Alea_S_Idle_0.png": {
+    "id": "7c022211-6b78-4e8d-a2ef-71c5c2f21f1e"
+  },
+  "Assets/Sprites/Alea/Alea_S_Walk_0.png": {
+    "id": "12fa6c4c-1218-4bfc-8cd4-ca5565d4947b"
+  },
+  "Assets/Sprites/Alea/Alea_S_Walk_1.png": {
+    "id": "47b6c4f5-dfbb-40ed-b5aa-260e8a6aa27e"
+  },
+  "Assets/Sprites/Alea/Alea_S_Walk_2.png": {
+    "id": "eee174cb-1320-4cb6-96d1-b74d557f7db5"
+  },
+  "Assets/Sprites/Alea/Alea_S_Walk_3.png": {
+    "id": "401d54f8-38fb-4aa6-aa4e-e35e7f95c724"
+  },
+  "Assets/Sprites/Alea/S_Alea_E_Attack_0.hbsprite.json": {
+    "id": "e280e1f5-500c-4ef0-b3b7-0bd1413d49f3"
+  },
+  "Assets/Sprites/Alea/S_Alea_E_Attack_1.hbsprite.json": {
+    "id": "490723be-022d-4ed1-8a30-35a9fd13ff09"
+  },
+  "Assets/Sprites/Alea/S_Alea_E_Attack_2.hbsprite.json": {
+    "id": "d25fee23-2410-42de-a78e-c0d731483a48"
+  },
+  "Assets/Sprites/Alea/S_Alea_E_Idle_0.hbsprite.json": {
+    "id": "c77e0967-0dd8-490f-bfc7-e12a606c9310"
+  },
+  "Assets/Sprites/Alea/S_Alea_E_Walk_0.hbsprite.json": {
+    "id": "e11f5616-6f06-44fd-a44d-728654b36fde"
+  },
+  "Assets/Sprites/Alea/S_Alea_E_Walk_1.hbsprite.json": {
+    "id": "837fe1ae-5541-4952-ad43-9194f1071ee5"
+  },
+  "Assets/Sprites/Alea/S_Alea_E_Walk_2.hbsprite.json": {
+    "id": "53c142e9-37f6-4ee7-8540-eec36675e387"
+  },
+  "Assets/Sprites/Alea/S_Alea_E_Walk_3.hbsprite.json": {
+    "id": "5393d4a1-416b-452d-a563-b84e4d42b819"
+  },
+  "Assets/Sprites/Alea/S_Alea_NE_Attack_0.hbsprite.json": {
+    "id": "0fa02efd-77e8-4f77-bbd4-cce2c9e377d5"
+  },
+  "Assets/Sprites/Alea/S_Alea_NE_Attack_1.hbsprite.json": {
+    "id": "5ea4380f-f66e-4fb2-9bb0-d0314b4afbdf"
+  },
+  "Assets/Sprites/Alea/S_Alea_NE_Attack_2.hbsprite.json": {
+    "id": "9e3919a0-558f-4b55-905a-9ab513591aff"
+  },
+  "Assets/Sprites/Alea/S_Alea_NE_Idle_0.hbsprite.json": {
+    "id": "3a7620d3-1788-4436-8ddd-8ad5b813dcc9"
+  },
+  "Assets/Sprites/Alea/S_Alea_NE_Walk_0.hbsprite.json": {
+    "id": "d79ea642-e3fd-46bd-8826-191a3e1fd503"
+  },
+  "Assets/Sprites/Alea/S_Alea_NE_Walk_1.hbsprite.json": {
+    "id": "dae94810-e14c-407f-837c-79769971b4c0"
+  },
+  "Assets/Sprites/Alea/S_Alea_NE_Walk_2.hbsprite.json": {
+    "id": "1cf69682-ff43-4f81-ab26-55d85d8cceda"
+  },
+  "Assets/Sprites/Alea/S_Alea_NE_Walk_3.hbsprite.json": {
+    "id": "463ca90e-a03a-4bfd-bdb1-77b9514bb634"
+  },
+  "Assets/Sprites/Alea/S_Alea_N_Attack_0.hbsprite.json": {
+    "id": "df9a8074-7c51-4385-a50d-7742b08ce9e3"
+  },
+  "Assets/Sprites/Alea/S_Alea_N_Attack_1.hbsprite.json": {
+    "id": "31e87df8-f399-4ec2-a7e2-f28e5150c57c"
+  },
+  "Assets/Sprites/Alea/S_Alea_N_Attack_2.hbsprite.json": {
+    "id": "eca0139f-6b65-4059-a765-c3f3a46cf0a3"
+  },
+  "Assets/Sprites/Alea/S_Alea_N_Idle_0.hbsprite.json": {
+    "id": "cca27c92-29f1-417a-9f6a-6595402ba46e"
+  },
+  "Assets/Sprites/Alea/S_Alea_N_Walk_0.hbsprite.json": {
+    "id": "1876ed19-7041-4c3b-86db-5a2976faddb1"
+  },
+  "Assets/Sprites/Alea/S_Alea_N_Walk_1.hbsprite.json": {
+    "id": "e01f75b8-78d9-4781-b221-0ef6a3bd75c7"
+  },
+  "Assets/Sprites/Alea/S_Alea_N_Walk_2.hbsprite.json": {
+    "id": "c940e2cb-c766-4539-94bb-1d3b9eb896be"
+  },
+  "Assets/Sprites/Alea/S_Alea_N_Walk_3.hbsprite.json": {
+    "id": "989baaa6-bffc-4036-9cdf-8eae0b162f5f"
+  },
+  "Assets/Sprites/Alea/S_Alea_SE_Attack_0.hbsprite.json": {
+    "id": "6b53037c-8762-4bac-9bd1-caf7123fb0d5"
+  },
+  "Assets/Sprites/Alea/S_Alea_SE_Attack_1.hbsprite.json": {
+    "id": "c6a38937-a639-4f27-9410-7b7f8774c2d1"
+  },
+  "Assets/Sprites/Alea/S_Alea_SE_Attack_2.hbsprite.json": {
+    "id": "f6b554f2-eea5-4854-a28b-173e97ba5bd8"
+  },
+  "Assets/Sprites/Alea/S_Alea_SE_Idle_0.hbsprite.json": {
+    "id": "df7573f4-09f3-4442-abc7-8b737d4fcae1"
+  },
+  "Assets/Sprites/Alea/S_Alea_SE_Walk_0.hbsprite.json": {
+    "id": "e88662ab-a664-4fa7-b9ad-ef3a7be727ab"
+  },
+  "Assets/Sprites/Alea/S_Alea_SE_Walk_1.hbsprite.json": {
+    "id": "b5d433b4-2e96-4ab3-8272-45ced958886f"
+  },
+  "Assets/Sprites/Alea/S_Alea_SE_Walk_2.hbsprite.json": {
+    "id": "3fda354c-8240-40ec-b64a-fbdb67b031ad"
+  },
+  "Assets/Sprites/Alea/S_Alea_SE_Walk_3.hbsprite.json": {
+    "id": "a42c869f-e94f-494f-b20f-eea8a9438a37"
+  },
+  "Assets/Sprites/Alea/S_Alea_S_Attack_0.hbsprite.json": {
+    "id": "5f76e832-464d-42a3-8694-1fa0c57c9ff1"
+  },
+  "Assets/Sprites/Alea/S_Alea_S_Attack_1.hbsprite.json": {
+    "id": "0c81e8ce-4d3b-4c43-b660-ae926ef07076"
+  },
+  "Assets/Sprites/Alea/S_Alea_S_Attack_2.hbsprite.json": {
+    "id": "efcc2657-e050-4c51-a5b3-a1b1ae21c756"
+  },
+  "Assets/Sprites/Alea/S_Alea_S_Idle_0.hbsprite.json": {
+    "id": "4d477476-1003-41e5-b210-dce946d7d113"
+  },
+  "Assets/Sprites/Alea/S_Alea_S_Walk_0.hbsprite.json": {
+    "id": "90e8d463-aa0f-447c-89d0-32b53053356f"
+  },
+  "Assets/Sprites/Alea/S_Alea_S_Walk_1.hbsprite.json": {
+    "id": "f0777f50-1e89-4b77-b344-6f10e56e1072"
+  },
+  "Assets/Sprites/Alea/S_Alea_S_Walk_2.hbsprite.json": {
+    "id": "2ac54e29-33e0-4e58-a7ef-6a5669570a77"
+  },
+  "Assets/Sprites/Alea/S_Alea_S_Walk_3.hbsprite.json": {
+    "id": "bb2a99ca-5824-4a76-a293-dcdd7c6e1793"
+  },
+  "Assets/Sprites/Enemies/Skeleton/Skeleton_Attack_0.png": {
+    "id": "65c4390b-e26e-44b0-80a8-b393c8d6c821"
+  },
+  "Assets/Sprites/Enemies/Skeleton/Skeleton_Attack_1.png": {
+    "id": "89a7aa17-7d4e-41a6-a2e1-8cfdebf45839"
+  },
+  "Assets/Sprites/Enemies/Skeleton/Skeleton_Attack_2.png": {
+    "id": "10b25c8e-9cc0-483b-a38b-2246d1b72089"
+  },
+  "Assets/Sprites/Enemies/Skeleton/Skeleton_Death_0.png": {
+    "id": "60d41610-6d85-4d65-8b53-d9a8b6295ea9"
+  },
+  "Assets/Sprites/Enemies/Skeleton/Skeleton_Death_1.png": {
+    "id": "71608266-733c-4d7c-92f3-049b9f67f993"
+  },
+  "Assets/Sprites/Enemies/Skeleton/Skeleton_Death_2.png": {
+    "id": "d4f8382d-9fa0-4c91-9f10-ad1b52f1b79d"
+  },
+  "Assets/Sprites/Enemies/Skeleton/Skeleton_Death_3.png": {
+    "id": "0e42e2e3-3d43-465e-93aa-824e9fef0f98"
+  },
+  "Assets/Sprites/Enemies/Skeleton/Skeleton_Flash_0.png": {
+    "id": "8881d3d2-6e61-460a-9d64-1e0417ccd782"
+  },
+  "Assets/Sprites/Enemies/Skeleton/Skeleton_Hurt_0.png": {
+    "id": "5cc96694-33b3-4112-a35a-8448d3deef0c"
+  },
+  "Assets/Sprites/Enemies/Skeleton/Skeleton_Walk_0.png": {
+    "id": "7022f590-ca64-476a-a35b-7c525236093b"
+  },
+  "Assets/Sprites/Enemies/Skeleton/Skeleton_Walk_1.png": {
+    "id": "0c4ba734-e443-407d-904c-b6b56652584a"
+  },
+  "Assets/Sprites/Enemies/Skeleton/Skeleton_Walk_2.png": {
+    "id": "4ab808c0-1b5e-4c28-ace7-a79c7aa55db7"
+  },
+  "Assets/Sprites/Enemies/Skeleton/Skeleton_Walk_3.png": {
+    "id": "4cb8ebcc-71e8-4042-b92f-f25a47d262f7"
+  },
+  "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Attack_0.hbsprite.json": {
+    "id": "b6349a33-5ddb-48c0-87c7-4f424dabd35f"
+  },
+  "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Attack_1.hbsprite.json": {
+    "id": "6747628f-98ee-4719-acce-61738493de60"
+  },
+  "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Attack_2.hbsprite.json": {
+    "id": "34997808-941d-4cbb-82ed-10968d3c3ea1"
+  },
+  "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Death_0.hbsprite.json": {
+    "id": "b183e4ac-ed57-4c15-a02a-0cee50b44a45"
+  },
+  "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Death_1.hbsprite.json": {
+    "id": "6d4b5dab-bd36-4021-8644-f06b82015a9e"
+  },
+  "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Death_2.hbsprite.json": {
+    "id": "7f476cab-272f-4407-9043-9e05c7bf6355"
+  },
+  "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Death_3.hbsprite.json": {
+    "id": "c1ca8cf1-6af6-47d0-85bf-4ca9d91466dc"
+  },
+  "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Flash_0.hbsprite.json": {
+    "id": "582cae18-18ec-4078-a9b7-82d8321ad9d9"
+  },
+  "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Hurt_0.hbsprite.json": {
+    "id": "5b5edbf2-b731-423c-b747-b26f8e939925"
+  },
+  "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Walk_0.hbsprite.json": {
+    "id": "d622de8e-b887-4ad6-8279-a71d10c9044a"
+  },
+  "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Walk_1.hbsprite.json": {
+    "id": "623a854a-7f0a-4603-9e28-82bff95c9e82"
+  },
+  "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Walk_2.hbsprite.json": {
+    "id": "30ed3344-bd44-4bed-9d0d-50da6de5c992"
+  },
+  "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Walk_3.hbsprite.json": {
+    "id": "a6c167e7-882a-45ae-a1ba-95b4fa834097"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Attack_0.png": {
+    "id": "3527c38d-d6b2-4bfa-bef0-f7895db654ff"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Attack_1.png": {
+    "id": "844f0c8b-1dfa-4ee7-b315-49dfa677e984"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Attack_2.png": {
+    "id": "e585c914-1511-49f6-9234-d9e70e596dfb"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Death_0.png": {
+    "id": "1ae49f12-88bb-461f-bd1d-0c3c6e2a9cce"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Death_1.png": {
+    "id": "3400c15e-8944-4829-825f-35f4cd996514"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Death_2.png": {
+    "id": "21491b0b-8b61-407c-aa19-cc9d4d67d72b"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Death_3.png": {
+    "id": "f91466f0-b9ee-4f55-8e04-d6173be3c796"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Flash_0.png": {
+    "id": "6df8630c-9bb5-4847-83c6-e262d843b250"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Hurt_0.png": {
+    "id": "160f81ea-d9d9-491b-8e90-c0303a48c336"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Walk_0.png": {
+    "id": "176853d5-bb46-4d6a-98ce-a284f017c089"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Walk_1.png": {
+    "id": "bc53683c-02ff-4480-aa21-14ed6fcd49aa"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Walk_2.png": {
+    "id": "c9fa0a6d-e76f-40ed-a096-10dd815bf837"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Walk_3.png": {
+    "id": "6adf42ba-60cb-4350-afb1-588b961e61c9"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Attack_0.hbsprite.json": {
+    "id": "819af612-9843-459d-9559-f9eb2de38195"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Attack_1.hbsprite.json": {
+    "id": "a740cb4a-3d91-46ed-8c3e-26dddd709071"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Attack_2.hbsprite.json": {
+    "id": "1e554fb3-0ee2-4dc5-91fd-62dcf8917e59"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Death_0.hbsprite.json": {
+    "id": "1ba0fc17-61e3-485a-bbb7-1463dd13755a"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Death_1.hbsprite.json": {
+    "id": "4747e429-0823-423e-ba8a-2ace8881f9df"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Death_2.hbsprite.json": {
+    "id": "a541ba8c-e9ba-4ba1-b639-4cb089e19af2"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Death_3.hbsprite.json": {
+    "id": "364c82c3-715f-49da-abf1-d9e6ac1c5d45"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Flash_0.hbsprite.json": {
+    "id": "142e5a9b-d9fb-4698-9561-077501b5f6dd"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Hurt_0.hbsprite.json": {
+    "id": "7db94cde-deaf-4b3f-9d56-9c56fb718cd5"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Walk_0.hbsprite.json": {
+    "id": "e4000d2e-8505-4dbf-94a3-50658e7d74ca"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Walk_1.hbsprite.json": {
+    "id": "8da63616-2193-4b73-b9cc-2cd610e450de"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Walk_2.hbsprite.json": {
+    "id": "488edef1-527d-4e58-b173-1f082037185a"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Walk_3.hbsprite.json": {
+    "id": "23e4a29d-63d6-40ae-ba22-ee3b72b74d6d"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/SkeletonMage_Attack_0.png": {
+    "id": "ee766b71-c77c-433d-ada8-c4ba721cb71d"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/SkeletonMage_Attack_1.png": {
+    "id": "989882d3-a49a-42fb-82fa-635f3ed8e563"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/SkeletonMage_Attack_2.png": {
+    "id": "6e32efc0-a719-4e30-b14e-d519596b323e"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/SkeletonMage_Death_0.png": {
+    "id": "5fd568d1-fc3b-4791-bd77-286869e679e8"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/SkeletonMage_Death_1.png": {
+    "id": "abe6a8f2-c13a-4ef6-99ca-d4e91b25f36a"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/SkeletonMage_Death_2.png": {
+    "id": "119858ba-7948-4729-872c-eb7c54dbc787"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/SkeletonMage_Death_3.png": {
+    "id": "fe70aadf-3435-40f6-8fea-62d1193f20a3"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/SkeletonMage_Flash_0.png": {
+    "id": "aabc0dc0-27b5-4849-aa0b-a2f90171d681"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/SkeletonMage_Hurt_0.png": {
+    "id": "f332f36f-81c6-436d-8784-f738178492b1"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/SkeletonMage_Walk_0.png": {
+    "id": "1615db03-7710-4d4f-ba18-5c0e64d7570b"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/SkeletonMage_Walk_1.png": {
+    "id": "100c8d5b-3874-4c64-9e9c-c391e312b070"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/SkeletonMage_Walk_2.png": {
+    "id": "a57f5dfd-9828-4d1b-9efa-4fcdf05f16d2"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/SkeletonMage_Walk_3.png": {
+    "id": "2efebb80-d91f-4451-95c6-9960143e2636"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Attack_0.hbsprite.json": {
+    "id": "962978a4-5cd1-4951-a82b-5de33e9ed169"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Attack_1.hbsprite.json": {
+    "id": "df20107f-f64c-425e-b1ea-87fc0ed9d24c"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Attack_2.hbsprite.json": {
+    "id": "4c0f8326-4c0e-45b3-972c-30f0415fc278"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Death_0.hbsprite.json": {
+    "id": "913aac84-f68a-4c9d-ab3e-5b6726bdb6c1"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Death_1.hbsprite.json": {
+    "id": "d80c3932-691c-4fa4-bc7d-c72d22153a5c"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Death_2.hbsprite.json": {
+    "id": "ebf23c95-8f0e-49da-a99a-11b03d3adf79"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Death_3.hbsprite.json": {
+    "id": "fa4b077a-82dc-47de-9444-89cb04dae76b"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Flash_0.hbsprite.json": {
+    "id": "bff775b7-c107-43cc-9481-b9fcabec44c0"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Hurt_0.hbsprite.json": {
+    "id": "73c7ef56-f1c3-41c4-ac55-ce39a498add3"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Walk_0.hbsprite.json": {
+    "id": "59bf1127-6c6b-4008-b37a-dd0eebc19721"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Walk_1.hbsprite.json": {
+    "id": "963df76e-6498-4009-89ca-8267ebc52132"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Walk_2.hbsprite.json": {
+    "id": "c890a9e6-5752-4dce-9131-2a2551055e10"
+  },
+  "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Walk_3.hbsprite.json": {
+    "id": "446a379e-3e1b-43f2-bec9-09b64e087057"
+  },
+  "Assets/Sprites/FX/FX_Glow.png": {
+    "id": "00a9aa2e-c287-4a3b-9dcc-04e63d8e0ddb"
+  },
+  "Assets/Sprites/FX/Hit_0.png": {
+    "id": "07b5216e-fe22-4b8b-bc3b-c00b594bb941"
+  },
+  "Assets/Sprites/FX/Hit_1.png": {
+    "id": "ffcce119-eeaa-42ba-91bf-c85642e02f42"
+  },
+  "Assets/Sprites/FX/Hit_2.png": {
+    "id": "d96c33cc-a8bb-4b49-bec8-8702dfbddc10"
+  },
+  "Assets/Sprites/FX/Hit_3.png": {
+    "id": "33a01611-d777-4b65-b5ee-7ce040d63538"
+  },
+  "Assets/Sprites/FX/Slash_0.png": {
+    "id": "5c81da7b-1f7f-4d95-a80b-8042430c113c"
+  },
+  "Assets/Sprites/FX/Slash_1.png": {
+    "id": "71908db8-e250-4a00-a066-671318457599"
+  },
+  "Assets/Sprites/FX/Slash_2.png": {
+    "id": "2ddbf29e-8730-4986-b9f7-91f4f0337cb8"
+  },
+  "Assets/Sprites/FX/Slash_3.png": {
+    "id": "8ac3d31a-af6a-4caa-aa09-608857b75e41"
+  },
+  "Assets/Sprites/FX/S_Hit_0.hbsprite.json": {
+    "id": "f5443bf5-2569-431c-a3e8-2b010108af76"
+  },
+  "Assets/Sprites/FX/S_Hit_1.hbsprite.json": {
+    "id": "0081753f-61bd-43b1-ae5b-012d62bcca7e"
+  },
+  "Assets/Sprites/FX/S_Hit_2.hbsprite.json": {
+    "id": "8dce0398-31e1-46dd-a61f-c2fef4cecc46"
+  },
+  "Assets/Sprites/FX/S_Hit_3.hbsprite.json": {
+    "id": "43c43496-8fcb-4be0-ac02-837fcfc77eb1"
+  },
+  "Assets/Sprites/FX/S_Slash_0.hbsprite.json": {
+    "id": "a01bd0fd-166d-4f04-a7de-e769f125b3f9"
+  },
+  "Assets/Sprites/FX/S_Slash_1.hbsprite.json": {
+    "id": "e62a3922-e35f-4af6-888e-c8a2005ba032"
+  },
+  "Assets/Sprites/FX/S_Slash_2.hbsprite.json": {
+    "id": "70a1d289-427f-4147-b070-5328ec0d2286"
+  },
+  "Assets/Sprites/FX/S_Slash_3.hbsprite.json": {
+    "id": "4427c086-c5ef-4bc8-a2a8-4b23869a02c1"
+  },
+  "Assets/Sprites/Props/S_Torch_0.hbsprite.json": {
+    "id": "14f81cf2-ec59-4bad-a2be-61708ba45979"
+  },
+  "Assets/Sprites/Props/S_Torch_1.hbsprite.json": {
+    "id": "74c7a9c8-b9d0-4a37-84af-d543b0de895d"
+  },
+  "Assets/Sprites/Props/S_Torch_2.hbsprite.json": {
+    "id": "7ae8578e-8a2b-4ab4-8037-3dbf5ec1403f"
+  },
+  "Assets/Sprites/Props/S_Torch_3.hbsprite.json": {
+    "id": "5e8142b8-af03-4d4b-ab3c-a6ae9a7493c9"
+  },
+  "Assets/Sprites/Props/Torch_0.png": {
+    "id": "a1b5a029-a563-4b9f-871f-9e72f8916178"
+  },
+  "Assets/Sprites/Props/Torch_1.png": {
+    "id": "1a417424-acb5-4361-a3f4-a923611afd5c"
+  },
+  "Assets/Sprites/Props/Torch_2.png": {
+    "id": "ae79d39f-0176-4c57-bf29-fd2ccf0c6b63"
+  },
+  "Assets/Sprites/Props/Torch_3.png": {
+    "id": "7acc67f4-3aaa-43ab-898f-1c37885785e8"
+  },
+  "Assets/Sprites/Sherry/Sherry_E_Attack_0.png": {
+    "id": "f225bd60-b9e7-4123-8aef-bbba3b3cb84f"
+  },
+  "Assets/Sprites/Sherry/Sherry_E_Attack_1.png": {
+    "id": "d0ebfb90-835c-4464-9105-cd406ffe6432"
+  },
+  "Assets/Sprites/Sherry/Sherry_E_Attack_2.png": {
+    "id": "7ddf2ef9-b97c-4063-b7d2-5a58b753c94a"
+  },
+  "Assets/Sprites/Sherry/Sherry_E_Idle_0.png": {
+    "id": "c509eb86-39e9-4e8f-aa50-bba456d82d8d"
+  },
+  "Assets/Sprites/Sherry/Sherry_E_Walk_0.png": {
+    "id": "e35e8d27-3953-448c-957f-78aeb2e4151d"
+  },
+  "Assets/Sprites/Sherry/Sherry_E_Walk_1.png": {
+    "id": "df2de4aa-0564-498b-bee6-7bbfdd3d16c6"
+  },
+  "Assets/Sprites/Sherry/Sherry_E_Walk_2.png": {
+    "id": "840e0c68-9a72-46bd-8280-5994e69728f0"
+  },
+  "Assets/Sprites/Sherry/Sherry_E_Walk_3.png": {
+    "id": "734bf3bf-b888-4623-8ae9-cdd24f80a9b6"
+  },
+  "Assets/Sprites/Sherry/Sherry_NE_Attack_0.png": {
+    "id": "9b825c82-a6d9-44c5-bc7e-d296ef379260"
+  },
+  "Assets/Sprites/Sherry/Sherry_NE_Attack_1.png": {
+    "id": "3f02076b-c290-4d95-b40d-8a7639f0815a"
+  },
+  "Assets/Sprites/Sherry/Sherry_NE_Attack_2.png": {
+    "id": "4d396900-163c-46ab-86b0-5eef650bd869"
+  },
+  "Assets/Sprites/Sherry/Sherry_NE_Idle_0.png": {
+    "id": "ce2215b6-81b7-4261-a0dc-17b1c920f339"
+  },
+  "Assets/Sprites/Sherry/Sherry_NE_Walk_0.png": {
+    "id": "a6ca4d41-fa00-411c-81c5-776ea2a378af"
+  },
+  "Assets/Sprites/Sherry/Sherry_NE_Walk_1.png": {
+    "id": "177a0312-47b5-4677-9ae3-8104a517d838"
+  },
+  "Assets/Sprites/Sherry/Sherry_NE_Walk_2.png": {
+    "id": "dedae0df-947a-43d3-8496-2ff1b2001a62"
+  },
+  "Assets/Sprites/Sherry/Sherry_NE_Walk_3.png": {
+    "id": "3aafd8ce-5d76-4a38-a626-bcfa005e3a5b"
+  },
+  "Assets/Sprites/Sherry/Sherry_N_Attack_0.png": {
+    "id": "76c393c8-5cc9-49d4-8e5d-06189e7cf3fd"
+  },
+  "Assets/Sprites/Sherry/Sherry_N_Attack_1.png": {
+    "id": "ee29bef3-7b68-4b83-aead-00730fbc6e99"
+  },
+  "Assets/Sprites/Sherry/Sherry_N_Attack_2.png": {
+    "id": "0f065a95-9be7-4f4d-bd5a-b18f7408142c"
+  },
+  "Assets/Sprites/Sherry/Sherry_N_Idle_0.png": {
+    "id": "4721272f-8ef7-4ceb-9ba4-7e18b5a95726"
+  },
+  "Assets/Sprites/Sherry/Sherry_N_Walk_0.png": {
+    "id": "b8e10f21-36c3-4a6a-a92a-7d72f4b2bff0"
+  },
+  "Assets/Sprites/Sherry/Sherry_N_Walk_1.png": {
+    "id": "5eccb7d9-0e4a-4c5a-9803-7f2e73fc48dd"
+  },
+  "Assets/Sprites/Sherry/Sherry_N_Walk_2.png": {
+    "id": "c9df9df3-6700-4209-a884-a3e322c45c8d"
+  },
+  "Assets/Sprites/Sherry/Sherry_N_Walk_3.png": {
+    "id": "37b2c1fb-ce89-4078-b8e0-8da9b3bf2cfa"
+  },
+  "Assets/Sprites/Sherry/Sherry_SE_Attack_0.png": {
+    "id": "5a9bc8a2-b9c9-4dc4-bf65-cbae37e0025b"
+  },
+  "Assets/Sprites/Sherry/Sherry_SE_Attack_1.png": {
+    "id": "1f8a95d8-a809-44b7-9dc2-a8b015da537b"
+  },
+  "Assets/Sprites/Sherry/Sherry_SE_Attack_2.png": {
+    "id": "72bba8c1-91c3-466c-947d-3236db025a8a"
+  },
+  "Assets/Sprites/Sherry/Sherry_SE_Idle_0.png": {
+    "id": "289c60b4-263a-43b1-96e5-d7e5f5715382"
+  },
+  "Assets/Sprites/Sherry/Sherry_SE_Walk_0.png": {
+    "id": "67d30c08-3483-4896-91e7-fa758844ca3d"
+  },
+  "Assets/Sprites/Sherry/Sherry_SE_Walk_1.png": {
+    "id": "aaaaf77e-1e03-4edb-8524-19d2e5d1486f"
+  },
+  "Assets/Sprites/Sherry/Sherry_SE_Walk_2.png": {
+    "id": "e9ccdcfc-7934-48cc-80f3-ae3d997b03ce"
+  },
+  "Assets/Sprites/Sherry/Sherry_SE_Walk_3.png": {
+    "id": "aae7774a-b539-4689-8493-3ea3fade7bb1"
+  },
+  "Assets/Sprites/Sherry/Sherry_S_Attack_0.png": {
+    "id": "9fdc18d9-0d90-4db1-b4f8-a5d9a691f228"
+  },
+  "Assets/Sprites/Sherry/Sherry_S_Attack_1.png": {
+    "id": "ddfa1257-8587-4a50-93f6-b1ee1193f80b"
+  },
+  "Assets/Sprites/Sherry/Sherry_S_Attack_2.png": {
+    "id": "0ef7ef15-e4bd-4d10-8954-74a30568070b"
+  },
+  "Assets/Sprites/Sherry/Sherry_S_Idle_0.png": {
+    "id": "0079bd2b-037a-4f51-aa6f-24c516bd628c"
+  },
+  "Assets/Sprites/Sherry/Sherry_S_Walk_0.png": {
+    "id": "8f38320e-498b-44fc-998b-4bb62822c337"
+  },
+  "Assets/Sprites/Sherry/Sherry_S_Walk_1.png": {
+    "id": "1268a24a-af9e-40ca-8da7-15c9e3be18a6"
+  },
+  "Assets/Sprites/Sherry/Sherry_S_Walk_2.png": {
+    "id": "3ced2565-8153-4ede-bb8a-53945e006404"
+  },
+  "Assets/Sprites/Sherry/Sherry_S_Walk_3.png": {
+    "id": "d9dde63f-f5fa-4701-b4f2-8516965ecca3"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_E_Attack_0.hbsprite.json": {
+    "id": "d68073c7-713a-4607-86b8-d9f4a18a9dc2"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_E_Attack_1.hbsprite.json": {
+    "id": "39be9b0d-6487-414a-b618-7e5072c75af6"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_E_Attack_2.hbsprite.json": {
+    "id": "5237a82a-7302-40f3-882c-e0f250a689db"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_E_Idle_0.hbsprite.json": {
+    "id": "50048fd3-c6a1-4704-85b5-7e000897aaf7"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_E_Walk_0.hbsprite.json": {
+    "id": "43ccd601-66ef-4dd7-8c4e-44106fee127d"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_E_Walk_1.hbsprite.json": {
+    "id": "307fe345-4918-43dc-b53f-ffba60a0c006"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_E_Walk_2.hbsprite.json": {
+    "id": "2e7c89ea-08db-4780-845a-d94001114e31"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_E_Walk_3.hbsprite.json": {
+    "id": "9b91823f-aef6-4997-80b2-322f77810ef3"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_NE_Attack_0.hbsprite.json": {
+    "id": "324c665c-91a8-41f1-ad88-8bb5856ee560"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_NE_Attack_1.hbsprite.json": {
+    "id": "9e838c88-6c2c-42c5-ab46-7cd2a0ee0fc7"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_NE_Attack_2.hbsprite.json": {
+    "id": "90eb3099-0a3a-4d61-a2ad-c7ad74670e26"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_NE_Idle_0.hbsprite.json": {
+    "id": "b9d4d412-1932-4f83-ab85-e955a535b169"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_NE_Walk_0.hbsprite.json": {
+    "id": "f2aa135f-9c54-4452-9330-d2f540dceab9"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_NE_Walk_1.hbsprite.json": {
+    "id": "b604f0c7-5dca-4b57-8c46-1546ac5be219"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_NE_Walk_2.hbsprite.json": {
+    "id": "0f11c797-e4eb-4246-8fa9-837631dabe2e"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_NE_Walk_3.hbsprite.json": {
+    "id": "c6300fa2-1feb-4706-bf87-6bd9f750c151"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_N_Attack_0.hbsprite.json": {
+    "id": "4d62e762-2d0e-43e4-a4da-329c5b62574a"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_N_Attack_1.hbsprite.json": {
+    "id": "4899d751-9330-457d-8adc-1fce848a2706"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_N_Attack_2.hbsprite.json": {
+    "id": "186441f1-26a3-4c1b-a3b5-c3e6281eb220"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_N_Idle_0.hbsprite.json": {
+    "id": "906cf615-741b-4ac0-b705-c83b7dc89927"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_N_Walk_0.hbsprite.json": {
+    "id": "f2d29355-40a2-4b2e-9092-f03d85f30778"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_N_Walk_1.hbsprite.json": {
+    "id": "7a8041a3-966e-416b-bc4d-5d64eb7d2162"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_N_Walk_2.hbsprite.json": {
+    "id": "047b9b6d-01e6-4391-ae5d-aaf75c84bb59"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_N_Walk_3.hbsprite.json": {
+    "id": "9b4e8572-3f23-4607-a4c9-19fca253d540"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_SE_Attack_0.hbsprite.json": {
+    "id": "d5dacbc7-a23d-4a9e-9b5e-e5ba6c511723"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_SE_Attack_1.hbsprite.json": {
+    "id": "9aa4e957-c314-4af6-9982-3d59ca0a1ae3"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_SE_Attack_2.hbsprite.json": {
+    "id": "384bde54-4b6c-44ed-9cab-b3a64aa674bd"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_SE_Idle_0.hbsprite.json": {
+    "id": "683abe69-b2d1-4bdf-b38a-89d38ffd72e9"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_SE_Walk_0.hbsprite.json": {
+    "id": "7befe29c-54db-4759-b122-b179f824de41"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_SE_Walk_1.hbsprite.json": {
+    "id": "aa2abe77-51b4-42a1-8f75-e9a62b29e3ee"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_SE_Walk_2.hbsprite.json": {
+    "id": "14ba2dc8-ce84-4d62-a66b-4419fc52fbe3"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_SE_Walk_3.hbsprite.json": {
+    "id": "c4066110-552a-437f-aca6-3d0971c76ee6"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_S_Attack_0.hbsprite.json": {
+    "id": "3b1ac058-ef9e-4a24-afeb-968b2436fec6"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_S_Attack_1.hbsprite.json": {
+    "id": "7e52d07f-2d1e-4e84-8f84-541151332669"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_S_Attack_2.hbsprite.json": {
+    "id": "f6ec2f0b-9bbc-4891-9368-4c26350d8037"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_S_Idle_0.hbsprite.json": {
+    "id": "288f92cf-3962-4bbb-bc5f-ad3f7a265877"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_S_Walk_0.hbsprite.json": {
+    "id": "93d88dfc-0415-45a3-8e75-8c08b0fb779e"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_S_Walk_1.hbsprite.json": {
+    "id": "ba7b11f2-3ca1-4a53-8538-6d12cfc0120b"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_S_Walk_2.hbsprite.json": {
+    "id": "0901f2a5-ed7b-44d8-a6e3-8e1144426ab5"
+  },
+  "Assets/Sprites/Sherry/S_Sherry_S_Walk_3.hbsprite.json": {
+    "id": "35d9dd91-dde3-45da-9a17-9ac1a2a43108"
+  },
+  "Assets/Sprites/Valen/S_Valen_E_Attack_0.hbsprite.json": {
+    "id": "2f247984-c66b-4062-a3bb-8c210f83f3de"
+  },
+  "Assets/Sprites/Valen/S_Valen_E_Attack_1.hbsprite.json": {
+    "id": "1ee1029c-5dc3-44c2-bfbe-2073342e0c02"
+  },
+  "Assets/Sprites/Valen/S_Valen_E_Attack_2.hbsprite.json": {
+    "id": "acaf1f95-9920-407a-8bae-c10def3ae186"
+  },
+  "Assets/Sprites/Valen/S_Valen_E_Idle_0.hbsprite.json": {
+    "id": "1ecf94ca-9c00-4264-af7f-2857f7770077"
+  },
+  "Assets/Sprites/Valen/S_Valen_E_Walk_0.hbsprite.json": {
+    "id": "78ad335d-4146-402f-8a82-442b88fece89"
+  },
+  "Assets/Sprites/Valen/S_Valen_E_Walk_1.hbsprite.json": {
+    "id": "a2a6762e-dc74-4152-a009-fe3561e853cb"
+  },
+  "Assets/Sprites/Valen/S_Valen_E_Walk_2.hbsprite.json": {
+    "id": "07321ac1-99ba-4a6b-9028-5ae60fdf78e2"
+  },
+  "Assets/Sprites/Valen/S_Valen_E_Walk_3.hbsprite.json": {
+    "id": "7a4f3421-41e8-4f7c-8165-a01b64ab463f"
+  },
+  "Assets/Sprites/Valen/S_Valen_NE_Attack_0.hbsprite.json": {
+    "id": "0251fd1c-c999-492c-9b67-0e15fbb4e9e5"
+  },
+  "Assets/Sprites/Valen/S_Valen_NE_Attack_1.hbsprite.json": {
+    "id": "5da54cf0-199e-4133-bced-f15b5baffc6c"
+  },
+  "Assets/Sprites/Valen/S_Valen_NE_Attack_2.hbsprite.json": {
+    "id": "eb634a96-3127-4d77-98b3-adbc61c802ba"
+  },
+  "Assets/Sprites/Valen/S_Valen_NE_Idle_0.hbsprite.json": {
+    "id": "11ab0c13-d7a1-432c-a54a-5fca3a461fee"
+  },
+  "Assets/Sprites/Valen/S_Valen_NE_Walk_0.hbsprite.json": {
+    "id": "2cb7db38-1c3f-45bc-9f93-f4c56c3ed499"
+  },
+  "Assets/Sprites/Valen/S_Valen_NE_Walk_1.hbsprite.json": {
+    "id": "3cd4cbeb-85b0-4cfd-83e5-99c1fb2e6cbf"
+  },
+  "Assets/Sprites/Valen/S_Valen_NE_Walk_2.hbsprite.json": {
+    "id": "ecb3cdec-4e6e-4841-990e-2c187f605d9b"
+  },
+  "Assets/Sprites/Valen/S_Valen_NE_Walk_3.hbsprite.json": {
+    "id": "d7652892-65f9-48b4-ab09-1772f0f82614"
+  },
+  "Assets/Sprites/Valen/S_Valen_N_Attack_0.hbsprite.json": {
+    "id": "d5fba604-7acf-445a-be7c-b7b8e945a542"
+  },
+  "Assets/Sprites/Valen/S_Valen_N_Attack_1.hbsprite.json": {
+    "id": "e316d608-668c-4f59-b6cc-6bda7d6f194e"
+  },
+  "Assets/Sprites/Valen/S_Valen_N_Attack_2.hbsprite.json": {
+    "id": "73d40446-1492-4006-8841-79c45109c73d"
+  },
+  "Assets/Sprites/Valen/S_Valen_N_Idle_0.hbsprite.json": {
+    "id": "3b8a4fd5-1f5c-4f72-bf13-12c40c91d315"
+  },
+  "Assets/Sprites/Valen/S_Valen_N_Walk_0.hbsprite.json": {
+    "id": "a71eb7f0-e774-4db6-835c-097676f93ac2"
+  },
+  "Assets/Sprites/Valen/S_Valen_N_Walk_1.hbsprite.json": {
+    "id": "d7fdc2ce-db01-4754-a585-fe735cd314d0"
+  },
+  "Assets/Sprites/Valen/S_Valen_N_Walk_2.hbsprite.json": {
+    "id": "3fdaf2ae-0d01-4bbf-983a-407cf24fc308"
+  },
+  "Assets/Sprites/Valen/S_Valen_N_Walk_3.hbsprite.json": {
+    "id": "0601341e-d5b9-494f-a381-5f382e5aaafa"
+  },
+  "Assets/Sprites/Valen/S_Valen_SE_Attack_0.hbsprite.json": {
+    "id": "eee768af-8ab1-407a-8576-41a9d007bc5d"
+  },
+  "Assets/Sprites/Valen/S_Valen_SE_Attack_1.hbsprite.json": {
+    "id": "4fe61649-da09-4edf-8dcc-145e71e2730e"
+  },
+  "Assets/Sprites/Valen/S_Valen_SE_Attack_2.hbsprite.json": {
+    "id": "0be6fa5b-198e-4e8d-80c5-2265e131e77b"
+  },
+  "Assets/Sprites/Valen/S_Valen_SE_Idle_0.hbsprite.json": {
+    "id": "bda2bb1a-9fec-4c8b-9a9a-fcc181e67301"
+  },
+  "Assets/Sprites/Valen/S_Valen_SE_Walk_0.hbsprite.json": {
+    "id": "474b5465-5a3d-4fb7-a9f1-2b295219c266"
+  },
+  "Assets/Sprites/Valen/S_Valen_SE_Walk_1.hbsprite.json": {
+    "id": "24462a43-4a41-41dd-8b46-f71b8c0622ef"
+  },
+  "Assets/Sprites/Valen/S_Valen_SE_Walk_2.hbsprite.json": {
+    "id": "b9992368-ea65-4288-957e-ab03022231ca"
+  },
+  "Assets/Sprites/Valen/S_Valen_SE_Walk_3.hbsprite.json": {
+    "id": "cacb33e6-32d5-425f-ac2c-1061489e8d79"
+  },
+  "Assets/Sprites/Valen/S_Valen_S_Attack_0.hbsprite.json": {
+    "id": "54221ee2-306c-4243-97ec-f7890557165b"
+  },
+  "Assets/Sprites/Valen/S_Valen_S_Attack_1.hbsprite.json": {
+    "id": "7aa7737b-d5b1-4a32-b3ae-b181273259db"
+  },
+  "Assets/Sprites/Valen/S_Valen_S_Attack_2.hbsprite.json": {
+    "id": "eec0130e-ce69-4178-86aa-0825bbfa479e"
+  },
+  "Assets/Sprites/Valen/S_Valen_S_Idle_0.hbsprite.json": {
+    "id": "51f874b6-e243-448b-ad22-5a5027bbf2f8"
+  },
+  "Assets/Sprites/Valen/S_Valen_S_Walk_0.hbsprite.json": {
+    "id": "29baad52-543c-415a-bdf8-f542528de96f"
+  },
+  "Assets/Sprites/Valen/S_Valen_S_Walk_1.hbsprite.json": {
+    "id": "83f2b5a4-0442-429e-9f4f-dfd0b3ae3bf2"
+  },
+  "Assets/Sprites/Valen/S_Valen_S_Walk_2.hbsprite.json": {
+    "id": "8c9d052e-7a6f-48ca-af60-62c7427d4628"
+  },
+  "Assets/Sprites/Valen/S_Valen_S_Walk_3.hbsprite.json": {
+    "id": "125bf788-6e8b-4496-a948-abcd498ab6df"
+  },
+  "Assets/Sprites/Valen/Valen_E_Attack_0.png": {
+    "id": "6b232340-25ff-41ce-8ae4-6d7f6ee552df"
+  },
+  "Assets/Sprites/Valen/Valen_E_Attack_1.png": {
+    "id": "5545c2ce-9faa-4c53-ab07-2ee22fa8b1b9"
+  },
+  "Assets/Sprites/Valen/Valen_E_Attack_2.png": {
+    "id": "dd940d45-3d16-4d2d-85bb-a4def6cc6893"
+  },
+  "Assets/Sprites/Valen/Valen_E_Idle_0.png": {
+    "id": "074217c7-f00b-434d-8f4d-98222f3e3338"
+  },
+  "Assets/Sprites/Valen/Valen_E_Walk_0.png": {
+    "id": "8d75f9b3-2beb-400d-aa64-523f8e81e0f5"
+  },
+  "Assets/Sprites/Valen/Valen_E_Walk_1.png": {
+    "id": "f3d5ddaa-3660-4abe-91bf-a3609861789b"
+  },
+  "Assets/Sprites/Valen/Valen_E_Walk_2.png": {
+    "id": "ba3978ec-99ab-4e01-a984-c33b7d203d7b"
+  },
+  "Assets/Sprites/Valen/Valen_E_Walk_3.png": {
+    "id": "bdf8277b-61d8-4efa-a16d-8f67176edf28"
+  },
+  "Assets/Sprites/Valen/Valen_NE_Attack_0.png": {
+    "id": "ae208101-2d53-4f78-88d2-fbb32b841ec5"
+  },
+  "Assets/Sprites/Valen/Valen_NE_Attack_1.png": {
+    "id": "4f98d3e4-d3f6-44d4-970f-d1f145c86e18"
+  },
+  "Assets/Sprites/Valen/Valen_NE_Attack_2.png": {
+    "id": "372bcb05-95f4-46f7-a993-087dee02bad3"
+  },
+  "Assets/Sprites/Valen/Valen_NE_Idle_0.png": {
+    "id": "ef288e53-f2fe-4a92-93d3-0169ff027948"
+  },
+  "Assets/Sprites/Valen/Valen_NE_Walk_0.png": {
+    "id": "fef5d8aa-858b-45e5-844d-b2299a06632f"
+  },
+  "Assets/Sprites/Valen/Valen_NE_Walk_1.png": {
+    "id": "2bd21f22-829c-4243-aa32-9298fa7e6ab2"
+  },
+  "Assets/Sprites/Valen/Valen_NE_Walk_2.png": {
+    "id": "b45aa053-f773-4b6e-86ed-66e8af314e64"
+  },
+  "Assets/Sprites/Valen/Valen_NE_Walk_3.png": {
+    "id": "7eb13de9-a247-4b64-8e9e-b78bd27672b3"
+  },
+  "Assets/Sprites/Valen/Valen_N_Attack_0.png": {
+    "id": "7aed8de5-12c3-438b-9b7a-b624b12f69c0"
+  },
+  "Assets/Sprites/Valen/Valen_N_Attack_1.png": {
+    "id": "c033568d-ac53-4779-bc2e-91287685662a"
+  },
+  "Assets/Sprites/Valen/Valen_N_Attack_2.png": {
+    "id": "9bf840e6-c8cc-4079-af11-1d430de521d0"
+  },
+  "Assets/Sprites/Valen/Valen_N_Idle_0.png": {
+    "id": "8d4ac4e0-f364-435c-98c6-86ef21d5cd9e"
+  },
+  "Assets/Sprites/Valen/Valen_N_Walk_0.png": {
+    "id": "a2ffe580-6181-409e-b397-d78a0a89566a"
+  },
+  "Assets/Sprites/Valen/Valen_N_Walk_1.png": {
+    "id": "b14f0454-4c2a-49c2-99cc-e0d784a2384d"
+  },
+  "Assets/Sprites/Valen/Valen_N_Walk_2.png": {
+    "id": "99474c28-71f6-4c54-8fc3-c4b70fcd7f61"
+  },
+  "Assets/Sprites/Valen/Valen_N_Walk_3.png": {
+    "id": "808aa031-f12e-4f3f-bd5e-f021ebf6f8a3"
+  },
+  "Assets/Sprites/Valen/Valen_SE_Attack_0.png": {
+    "id": "0bb08d75-576a-4f68-9f4d-67cc6a23941d"
+  },
+  "Assets/Sprites/Valen/Valen_SE_Attack_1.png": {
+    "id": "3bd60919-2cfe-4e98-baf9-a62b4e7bc037"
+  },
+  "Assets/Sprites/Valen/Valen_SE_Attack_2.png": {
+    "id": "aebc4d3e-7343-4c8c-9ce1-c9d547535ba8"
+  },
+  "Assets/Sprites/Valen/Valen_SE_Idle_0.png": {
+    "id": "82cd5e7b-1c7f-4170-bb8f-0b1bec447ef7"
+  },
+  "Assets/Sprites/Valen/Valen_SE_Walk_0.png": {
+    "id": "26dd01c8-fbf1-4e98-8f39-0c26d0421e33"
+  },
+  "Assets/Sprites/Valen/Valen_SE_Walk_1.png": {
+    "id": "7d54fd02-f54b-44c7-8816-191452cec552"
+  },
+  "Assets/Sprites/Valen/Valen_SE_Walk_2.png": {
+    "id": "7a4eefdf-ba9b-47ff-8c36-719f2844cf02"
+  },
+  "Assets/Sprites/Valen/Valen_SE_Walk_3.png": {
+    "id": "c4511269-4051-42d6-a7a4-3da4f9012e2e"
+  },
+  "Assets/Sprites/Valen/Valen_S_Attack_0.png": {
+    "id": "b27c1642-50f4-41e5-90e8-48ae56caedaf"
+  },
+  "Assets/Sprites/Valen/Valen_S_Attack_1.png": {
+    "id": "8ccf8a91-8ee4-498d-a6e2-886ecd97deff"
+  },
+  "Assets/Sprites/Valen/Valen_S_Attack_2.png": {
+    "id": "350c225b-945f-44e7-968b-fe990334c7ac"
+  },
+  "Assets/Sprites/Valen/Valen_S_Idle_0.png": {
+    "id": "7acf8a53-011e-4ff5-bce9-9c9412ea2a82"
+  },
+  "Assets/Sprites/Valen/Valen_S_Walk_0.png": {
+    "id": "4e0ecdba-8de9-424b-b98c-58106217ddde"
+  },
+  "Assets/Sprites/Valen/Valen_S_Walk_1.png": {
+    "id": "762e27d6-de2b-4def-8064-ed2d005d48c9"
+  },
+  "Assets/Sprites/Valen/Valen_S_Walk_2.png": {
+    "id": "9b0fd24d-508d-4c75-8977-db35409b4a2a"
+  },
+  "Assets/Sprites/Valen/Valen_S_Walk_3.png": {
+    "id": "f7adad0f-1d47-47b3-a451-f0b0d0a8a712"
   }
 }

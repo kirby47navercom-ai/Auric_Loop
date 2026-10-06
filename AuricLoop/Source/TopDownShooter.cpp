@@ -24,7 +24,7 @@ static float Angle(const hb::Vec3& d){return std::atan2(d.y,d.x)*180/3.14159265f
 void Enemy::Awake(){
   // 풀에서 다시 꺼낼 때도 불린다. 생성한 쪽이 먼저 정한 무적·경직(귀환 해골)은 지우지 않는다
   Hp=MaxHp;flash=0;burnLeft=0;ring=0;pattern=0;shotTimer=ShotInterval*0.5f;mode=Mode::Halt;burnedOut=false;
-  sentStunned=sentReady=flipped=false;sentVelocity={9e9f,0,0};
+  sentStunned=sentReady=sentNear=flipped=false;sentVelocity={9e9f,0,0};
   hb::Sprites::SetColor(this,hb::Color{1,1,1,1});
   hb::States::Start(this,Brain);
 }
@@ -42,8 +42,9 @@ void Enemy::Tick(float delta){
   if(flash>0&&(flash-=delta)<=0)hb::Sprites::SetColor(this,hb::Color{1,1,1,1});
   if(burnLeft>0){burnLeft-=delta;if(!Invulnerable){Hp-=burnDamage*delta;burnedOut=Hp<=0.001f;}}
   // 상태 머신 파라미터·뒤집기는 바뀔 때만 보낸다 (적 수 × 매 프레임 명령을 줄임)
-  const bool ready=KeepDistance>0&&(shotTimer-=delta)<=0,stunned=stun>0,flip=dir.x<0;
+  const bool ready=KeepDistance>0&&(shotTimer-=delta)<=0,stunned=stun>0,flip=dir.x<0,near=distance<Radius+1.2f;
   if(ready!=sentReady){sentReady=ready;hb::States::SetBool(this,"Ready",ready);}
+  if(near!=sentNear){sentNear=near;hb::States::SetBool(this,"Near",near);}  // 근거리 해골의 휘두르기 그림
   if(stunned!=sentStunned){sentStunned=stunned;hb::States::SetBool(this,"Stunned",stunned);}
   if(flip!=flipped){flipped=flip;hb::Sprites::SetFlip(this,flip,false);}
   const bool frozen=!game||game->Frozen();
@@ -103,8 +104,9 @@ void Enemy::Stun(float seconds){stun=std::max(stun,seconds);sentVelocity={0,0,0}
 
 bool Enemy::TakeHit(float damage,const hb::Vec3& push,float stunSeconds,float burnSeconds){
   if(!Invulnerable){Hp-=damage;if(burnSeconds>0){burnLeft=burnSeconds;}}
-  flash=0.08f;hb::Sprites::SetColor(this,hb::Color{1,0.55f,0.55f,1});
-  if(!Boss){stun=std::max(stun,stunSeconds);sentVelocity=push*6;hb::Physics::SetVelocity(this,sentVelocity);}
+  // 맞은 순간 붉게 (하얀 번쩍은 경직 상태의 맞는 그림 클립 첫 프레임), 보스가 아니면 밀려나며 잠깐 경직
+  auto* game=TopDownShooter::Current;flash=game?game->HitFlashTime():0.1f;hb::Sprites::SetColor(this,hb::Color{1,0.5f,0.5f,1});
+  if(!Boss){stun=std::max(stun,stunSeconds);sentVelocity=push;hb::Physics::SetVelocity(this,sentVelocity);}
   return Hp<=0.001f;  // 소수 오차로 0에 못 닿는 경우
 }
 
@@ -166,11 +168,26 @@ void TopDownShooter::Give(std::vector<hb::Actor*>& pool,hb::Actor* actor){
   hb::Scene::SetPosition(actor,parked);pool.push_back(actor);
 }
 
+void TopDownShooter::PlayFx(const std::string& sprite,int frames,float step,const hb::Vec3& at,float angle,bool flip,float hold){
+  hb::Transform t;t.position=at;t.rotation=hb::Vec3{0,0,angle};
+  auto* a=Take(fxPool,rules->FxPrefab,t);if(!a)return;
+  hb::Sprites::SetSprite(a,sprite+"0.hbsprite.json");hb::Sprites::SetFlip(a,flip,false);
+  fxs.push_back(Fx{a,sprite,frames,0,0,step,hold});
+}
+
+void TopDownShooter::UpdateFx(float delta){
+  for(auto it=fxs.begin();it!=fxs.end();){
+    it->time+=delta;const int f=int(it->time/it->step);
+    if(f>=it->frames&&it->time>=it->frames*it->step+it->hold){Give(fxPool,it->actor);it=fxs.erase(it);continue;}
+    if(f<it->frames&&f!=it->shown){it->shown=f;hb::Sprites::SetSprite(it->actor,it->sprite+std::to_string(f)+".hbsprite.json");}
+    ++it;}
+}
+
 void TopDownShooter::Prewarm(){
   bulletPool=hb::Scene::GetActorsWithTag("Pool.EnemyShot");
   shotPool=hb::Scene::GetActorsWithTag("Pool.PlayerShot");
   coinPool=hb::Scene::GetActorsWithTag("Pool.Coin");
-  slashPool=hb::Scene::GetActorsWithTag("Pool.Slash");
+  fxPool=hb::Scene::GetActorsWithTag("Pool.Fx");
 }
 
 void TopDownShooter::KillEnemy(Enemy* e){
@@ -178,12 +195,17 @@ void TopDownShooter::KillEnemy(Enemy* e){
   DropCoin(at,e->GoldMin+Kills%std::max(1,e->GoldMax-e->GoldMin+1));
   if(e->Boss){HasReturnItem=true;Monster++;boss=nullptr;BossHp=0;Hud();}
   if(monsterDrop&&fightingRoom>=0&&Enemies().size()<=1)Monster++;  // 이 방 마지막 해골은 마물 소재 확정
+  PlayFx(e->DeathSprite,4,0.1f,at,0,e->Flipped(),0.5f);  // 쓰러지는 그림은 이펙트로 (적 오브젝트는 바로 지움)
   hb::Scene::Destroy(e);
 }
 
 bool TopDownShooter::HitEnemy(Enemy* e,const hb::Vec3& push,float damage){
   Hits++;Sfx("Hit");
-  const bool dead=e->TakeHit(Returning?0:damage,push,rules->HitStun,Enchant==2?rules->BurnTime:0);
+  // 타격감: 맞은 자리에 불꽃, 화면 살짝 흔들림, 밀려남
+  const auto at=hb::Scene::GetPosition(e);
+  PlayFx(rules->HitSprite,4,0.035f,hb::Vec3{at.x-push.x*0.3f,at.y-push.y*0.3f+0.2f,0.3f},float(std::rand()%360),false);
+  shake=rules->ShakeTime;
+  const bool dead=e->TakeHit(Returning?0:damage,push*rules->Knockback,rules->HitStun,Enchant==2?rules->BurnTime:0);
   if(Enchant==2)e->burnDamage=WeaponDamage()*rules->BurnRate;
   if(e->Boss)BossHp=e->Hp;
   if(dead)KillEnemy(e);
@@ -193,9 +215,7 @@ bool TopDownShooter::HitEnemy(Enemy* e,const hb::Vec3& push,float damage){
 void TopDownShooter::Slash(const hb::Vec3& position,const std::vector<Enemy*>& enemies){
   // 검 부채꼴 베기: 적에게 피해, 범위 안의 적 탄은 지움 (기획: 투사체 삭제)
   attackCooldown=rules->SwordInterval;Swings++;attackAnim=0.3f;Sfx("Slash");
-  hb::Transform t;t.position=position+facing*1.4f;t.position.z=0.2f;t.rotation=hb::Vec3{0,0,Angle(facing)};
-  if(slashFx)Give(slashPool,slashFx);
-  slashFx=Take(slashPool,rules->SlashPrefab,t);slashTime=0.12f;
+  PlayFx(rules->SlashSprite,4,0.05f,position+facing*1.1f+hb::Vec3{0,0.2f,0.2f},Angle(facing),false);  // 캐릭터 그림과 따로, 공격 방향으로 돌린 베기
   const float minDot=std::cos(rules->SwordHalfAngle*3.14159265f/180),reach=rules->SwordRange+(Enchant==3?rules->SlashExtend:0);
   auto inFan=[&](const hb::Vec3& at,float radius){const auto d=at-position;const float len=Length(d);
     return len<=reach+radius&&(len<=radius+0.75f||hb::VectorMath::DotProduct(d*(1/len),facing)>=minDot);};  // 바로 붙은 적은 방향과 관계없이 맞음
@@ -469,14 +489,18 @@ void TopDownShooter::Hud(){
 }
 
 void TopDownShooter::Animate(float delta,bool moving){
-  // 프레임: 공격 3장(0.1초씩) > 걷기 4장(초당 8장) > 서 있기. 그림은 오른쪽을 보고 있어 왼쪽이면 뒤집는다
-  std::string next;
-  if(charge>0)next=charge<rules->ArrowCharge*0.5f?"Attack_0":"Attack_1";  // 셰리 장전: 시위 걸기 → 당기기
-  else if(attackAnim>0){attackAnim-=delta;const int f=attackAnim>0.2f?0:attackAnim>0.1f?1:2;next="Attack_"+std::to_string(f);}
-  else if(moving){walkTime+=delta;next="Walk_"+std::to_string(int(walkTime*8)%4);}
-  else{walkTime=0;next="Idle_0";}
+  // 8방향: 그림은 남·남동·동·북동·북 5방향이고 서쪽 셋은 동쪽 그림을 뒤집는다
+  // 프레임: 공격 3장(0.1초씩) > 걷기 4장(초당 8장) > 서 있기
+  static const char* dirs[]={"E","NE","N","NE","E","SE","S","SE"};
+  const int sector=((int)std::lround(Angle(facing)/45)%8+8)%8;
+  const bool flip=sector>=3&&sector<=5;
+  if(flip!=playerFlipped){playerFlipped=flip;hb::Sprites::SetFlip(player,flip,false);}
+  std::string next=std::string(dirs[sector])+"_";
+  if(charge>0)next+=charge<rules->ArrowCharge*0.5f?"Attack_0":"Attack_1";  // 셰리 장전: 시위 걸기 → 당기기
+  else if(attackAnim>0){attackAnim-=delta;const int f=attackAnim>0.2f?0:attackAnim>0.1f?1:2;next+="Attack_"+std::to_string(f);}
+  else if(moving){walkTime+=delta;next+="Walk_"+std::to_string(int(walkTime*8)%4);}
+  else{walkTime=0;next+="Idle_0";}
   if(next!=currentSprite){currentSprite=next;if(Character<(int)rules->CharacterSprites.size())hb::Sprites::SetSprite(player,rules->CharacterSprites[Character]+next+".hbsprite.json");}
-  if(slashFx&&slashTime>0&&(slashTime-=delta)<=0){Give(slashPool,slashFx);slashFx=nullptr;}
 }
 
 static size_t Utf8Count(const std::string& s){size_t n=0;for(unsigned char ch:s)n+=(ch&0xC0)!=0x80;return n;}
@@ -552,7 +576,9 @@ void TopDownShooter::MoveCamera(const hb::Vec3& position,const hb::Vec3& aim,boo
   if(hasAim)target=target+hb::VectorMath::ClampVectorLength((aim-position)*rules->CameraLead,rules->CameraLeadMax);
   target.z=hb::Scene::GetPosition(camera).z;
   if(!cameraReady){cameraAt=target;cameraReady=true;}else cameraAt=hb::VectorMath::VInterpTo(cameraAt,target,delta,rules->CameraFollow);
-  hb::Scene::SetPosition(camera,cameraAt);
+  auto at=cameraAt;
+  if(shake>0){shake-=delta;const float a=rules->ShakeAmount;at.x+=a*(std::rand()%201-100)/100;at.y+=a*(std::rand()%201-100)/100;}  // 때렸을 때 흔들림
+  hb::Scene::SetPosition(camera,at);
 }
 
 // ---- 한 프레임 ------------------------------------------------------------------------
@@ -594,6 +620,7 @@ void TopDownShooter::Update(float delta){
     if(e->burnedOut){e->burnedOut=false;KillEnemy(e);}else enemies.push_back(e);}  // 화상으로 쓰러짐
   boss=nullptr;for(auto* e:enemies)if(e->Boss)boss=e;  // 적 포인터는 프레임을 넘겨 들고 있지 않는다 (엔진이 다시 만들 수 있음)
   UpdateBullets(delta,position);
+  UpdateFx(delta);
   if(Hp<=0){  // 쓰러짐: 3초 뒤 회복 (ponytail: 정산 화면이 생기면 거기로)
     hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});gameOver-=delta;
     for(auto& [b,life]:bullets)hb::Physics::SetVelocity(b,hb::Vec3{0,0,0});
@@ -609,7 +636,6 @@ void TopDownShooter::Update(float delta){
     for(auto* e:enemies){const float len=Length(hb::Scene::GetPosition(e)-position);if(len<best){best=len;target=e;}}
     if(target)facing=Normal(hb::Scene::GetPosition(target)-position,facing);}
   else if(hasAim)facing=Normal(aim-position,facing);
-  if((facing.x<0)!=playerFlipped){playerFlipped=facing.x<0;hb::Sprites::SetFlip(player,playerFlipped,false);}
   Animate(delta,moving);
   // 적재량 초과·피로도 75% 이상이면 이동속도 -25% (기획서 4-1)
   if(dodgeTimer<=0&&(Weight()>rules->WeightLimit||Fatigue*4>=FatigueMax*3))hb::Physics::SetVelocity(player,hb::Physics::GetVelocity(player)*rules->SlowRate);

@@ -22,6 +22,11 @@
       "name": "Next",
       "type": "float",
       "value": 0
+    },
+    {
+      "name": "Near",
+      "type": "bool",
+      "value": false
     }
   ],
   "states": [
@@ -30,7 +35,7 @@
       "name": "등장",
       "x": 120,
       "y": 150,
-      "clip": "",
+      "clip": "Assets/Animations/SA_SkeletonMage_Walk.hbspriteanimation.json",
       "loop": true,
       "duration": 0.6,
       "onEnter": "Halt",
@@ -45,7 +50,7 @@
       "name": "거리 유지",
       "x": 360,
       "y": 150,
-      "clip": "",
+      "clip": "Assets/Animations/SA_SkeletonMage_Walk.hbspriteanimation.json",
       "loop": true,
       "duration": 1.0,
       "onEnter": "Range",
@@ -60,8 +65,8 @@
       "name": "시전 예고",
       "x": 600,
       "y": 80,
-      "clip": "",
-      "loop": true,
+      "clip": "Assets/Animations/SA_SkeletonMage_Attack.hbspriteanimation.json",
+      "loop": false,
       "duration": 0.4,
       "onEnter": "Windup",
       "onExit": "",
@@ -90,8 +95,8 @@
       "name": "경직",
       "x": 360,
       "y": 320,
-      "clip": "",
-      "loop": true,
+      "clip": "Assets/Animations/SA_SkeletonMage_Hurt.hbspriteanimation.json",
+      "loop": false,
       "duration": 1.0,
       "onEnter": "Stagger",
       "onExit": "",

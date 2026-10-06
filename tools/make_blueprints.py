@@ -57,9 +57,9 @@ def transform():
     return {"id": "transform", "name": "Transform", "type": "Transform", "properties": {"position": [0, 0, 0], "rotation": [0, 0, 0], "scale": [1, 1, 1]}}
 
 
-def sprite(texture, w, h, order=2):
+def sprite(texture, w, h, order=2, asset=""):
     p = copy.deepcopy(comp(objs["Enemy0"], "SpriteRenderer")["properties"])
-    p.update(texture=texture, sprite="", width=w, height=h, pixelsPerUnit=PPU, sortingOrder=order, color=[1, 1, 1, 1], useCustomSize=False)
+    p.update(texture="" if asset else texture, sprite=asset, width=w, height=h, pixelsPerUnit=PPU, sortingOrder=order, color=[1, 1, 1, 1], useCustomSize=False)
     return {"id": "sprite", "name": "SpriteRenderer", "type": "SpriteRenderer", "properties": p}
 
 
@@ -71,6 +71,7 @@ def box(extent, center=(0, 0, 0), trigger=False, layer=0, mask=4294967295):
 
 def body():
     p = copy.deepcopy(comp(objs["Enemy0"], "Rigidbody2D")["properties"])
+    p["freezeRotation"] = [1, 1, 1]  # 2D 몸체가 부딪혀 돌지 않게 (예전엔 z가 풀려 적이 빙글빙글 돌았음)
     return {"id": "body", "name": "Rigidbody2D", "type": "Rigidbody2D", "properties": p}
 
 
@@ -95,22 +96,23 @@ for i, ev in enumerate(ENEMY_EVENTS):
     nodes += [node(f"ev_{ev}", "customEvent", 60, 160 + i * 110, options={"eventName": ev}),
               node(f"call_{ev}", "nativeCall", 360, 160 + i * 110, nativeId=f"Enemy.{ev}")]
     edges.append(edge(f"ev_{ev}", "then", f"call_{ev}", "exec"))
+ENEMY_SPRITE = "Assets/Sprites/Enemies/{0}/S_{0}_{1}.hbsprite.json"  # tools/make_anims.py가 만든 프레임
 enemy_layer = dict(layer=2, mask=(1 << 0) | (1 << 2))  # 벽(층 0)·다른 적(층 2)과 부딪힘, 플레이어(층 1)는 통과. 예전엔 trigger라 벽까지 지나갔음
 write(BP / "Enemies/BP_Enemy.hbblueprint.json", blueprint(
-    "BP_Enemy", "Enemy", [transform(), sprite("Assets/Sprites/Skeleton_Idle.png", 0.90625, 1.375), box((0.35, 0.3, 0.1), (0, -0.35, 0), **enemy_layer), body(), pool(16)],
+    "BP_Enemy", "Enemy", [transform(), sprite("", 0.90625, 1.375, asset=ENEMY_SPRITE.format("Skeleton", "Walk_0")), box((0.35, 0.3, 0.1), (0, -0.35, 0), **enemy_layer), body(), pool(16)],
     nodes, edges, native_from=True))
 ENEMIES = {
-    "BP_Skeleton": ("Skeleton_Idle.png", {"Enemy.DisplayName": "해골", "Enemy.Brain": "Assets/AI/FSM_Skeleton.hbstatemachine.json"}),
-    "BP_SkeletonMage": ("SkeletonMage_Idle.png", {"Enemy.DisplayName": "해골 마법사", "Enemy.Brain": "Assets/AI/FSM_SkeletonMage.hbstatemachine.json",
+    "BP_Skeleton": ("Skeleton", {"Enemy.DisplayName": "해골", "Enemy.Brain": "Assets/AI/FSM_Skeleton.hbstatemachine.json"}),
+    "BP_SkeletonMage": ("SkeletonMage", {"Enemy.DisplayName": "해골 마법사", "Enemy.Brain": "Assets/AI/FSM_SkeletonMage.hbstatemachine.json",
                                                    "Enemy.KeepDistance": 6, "Enemy.GoldMin": 2, "Enemy.GoldMax": 3}),
-    "BP_SkeletonCaptain": ("SkeletonCaptain_Idle.png", {"Enemy.DisplayName": "해골 대장", "Enemy.Brain": "Assets/AI/FSM_SkeletonCaptain.hbstatemachine.json",
+    "BP_SkeletonCaptain": ("SkeletonCaptain", {"Enemy.DisplayName": "해골 대장", "Enemy.Brain": "Assets/AI/FSM_SkeletonCaptain.hbstatemachine.json",
                                                         "Enemy.Boss": True, "Enemy.MaxHp": 40, "Enemy.Speed": 3.6, "Enemy.Radius": 1.4,
                                                         "Enemy.GoldMin": 30, "Enemy.GoldMax": 30}),
 }
 from PIL import Image  # noqa: E402
-for name, (texture, defaults) in ENEMIES.items():
-    w, h = Image.open(PROJECT / "Assets/Sprites" / texture).size
-    over = {"sprite": {"texture": f"Assets/Sprites/{texture}", "width": w / PPU, "height": h / PPU}}
+for name, (who, defaults) in ENEMIES.items():
+    defaults["Enemy.DeathSprite"] = ENEMY_SPRITE.format(who, "Death_").removesuffix(".hbsprite.json")
+    over = {"sprite": {"sprite": ENEMY_SPRITE.format(who, "Walk_0"), "texture": ""}}
     if name == "BP_SkeletonCaptain":
         over["collider"] = {"extent": [1.0, 0.8, 0.1], "center": [0, -0.6, 0]}
     write(BP / f"Enemies/{name}.hbblueprint.json", blueprint(name, "Assets/Blueprints/Enemies/BP_Enemy.hbblueprint.json", defaults=defaults, overrides=over))
@@ -160,12 +162,17 @@ comp(data["objects"][0], "BoxCollider2D")["properties"]["mask"] = 0
 write(PROJECT / "Assets/Prefabs/PF_PlayerShot.hbprefab.json", data)
 cw, ch = Image.open(PROJECT / "Assets/Sprites/Item_Coin.png").size
 prefab("PF_Coin", "Enemy0", "Assets/Sprites/Item_Coin.png", cw / PPU, ch / PPU, keep_pool=24, order=1, collider=False, rigid=False)
-sw, sh = Image.open(PROJECT / "Assets/Sprites/FX_Slash.png").size
-prefab("PF_Slash", "Bullet0", "Assets/Sprites/FX_Slash.png", sw / PPU, sh / PPU, keep_pool=2, order=5, collider=False, rigid=False)
+# 이펙트(베기·타격 불꽃·적 쓰러짐): 그림은 C++ PlayFx가 프레임마다 바꿔 끼운다
+prefab("PF_Fx", "Bullet0", keep_pool=16, order=4, collider=False, rigid=False)
+data = json.loads((PROJECT / "Assets/Prefabs/PF_Fx.hbprefab.json").read_text(encoding="utf-8"))
+comp(data["objects"][0], "SpriteRenderer")["properties"].update(sprite="Assets/Sprites/FX/S_Slash_0.hbsprite.json", texture="", color=[1, 1, 1, 1], useCustomSize=False)
+write(PROJECT / "Assets/Prefabs/PF_Fx.hbprefab.json", data)
+(PROJECT / "Assets/Prefabs/PF_Slash.hbprefab.json").unlink(missing_ok=True)
 
 # ---- 적 행동 상태 머신 ----
-def state(sid, name, x, y, duration=1.0, enter="", update="", exit_="", parent="", initial=""):
-    return {"id": sid, "name": name, "x": x, "y": y, "clip": "", "loop": True, "duration": duration, "onEnter": enter, "onExit": exit_,
+def state(sid, name, x, y, duration=1.0, enter="", update="", exit_="", parent="", initial="", clip="", loop=True):
+    """clip: 이 상태에서 틀 스프라이트 애니메이션 (Assets/Animations/SA_<clip>)"""
+    return {"id": sid, "name": name, "x": x, "y": y, "clip": f"Assets/Animations/SA_{clip}.hbspriteanimation.json" if clip else "", "loop": loop, "duration": duration, "onEnter": enter, "onExit": exit_,
             "onUpdate": update, "parent": parent, "initialChild": initial, "enterConditions": []}
 
 
@@ -181,35 +188,38 @@ def fsm(name, initial, params, states, transitions):
 
 P = lambda n, t, v: {"name": n, "type": t, "value": v}  # noqa: E731
 # Enemy::Sense가 모든 적에게 같은 파라미터를 쓰므로 세 상태 머신이 같은 파라미터를 가진다
-PARAMS = [P("Distance", "float", 99), P("Stunned", "bool", False), P("Ready", "bool", False), P("Next", "float", 0)]
+PARAMS = [P("Distance", "float", 99), P("Stunned", "bool", False), P("Ready", "bool", False), P("Next", "float", 0), P("Near", "bool", False)]
 stunned = [go("toStun", "any", "stun", conditions=[("Stunned", "equal", True)])]
+S, M, C = "Skeleton_", "SkeletonMage_", "SkeletonCaptain_"
 fsm("FSM_Skeleton", "appear", PARAMS, [
-    state("appear", "등장", 120, 150, 0.6, enter="Halt"),
-    state("chase", "추격", 360, 150, enter="Chase"),
-    state("stun", "경직", 360, 320, enter="Stagger"),
-], [go("appear_chase", "appear", "chase", exit_time=1), *stunned, go("stun_chase", "stun", "chase", conditions=[("Stunned", "equal", False)])])
+    state("appear", "등장", 120, 150, 0.6, enter="Halt", clip=S + "Walk"),
+    state("chase", "추격", 360, 150, enter="Chase", clip=S + "Walk"),
+    state("swing", "휘두르기", 600, 150, 0.4, enter="Chase", clip=S + "Attack", loop=False),  # 붙으면 칼을 휘두름 (피해는 접촉)
+    state("stun", "경직", 360, 320, enter="Stagger", clip=S + "Hurt", loop=False),
+], [go("appear_chase", "appear", "chase", exit_time=1), go("chase_swing", "chase", "swing", conditions=[("Near", "equal", True)]),
+    go("swing_chase", "swing", "chase", exit_time=1), *stunned, go("stun_chase", "stun", "chase", conditions=[("Stunned", "equal", False)])])
 
 fsm("FSM_SkeletonMage", "appear", PARAMS, [
-    state("appear", "등장", 120, 150, 0.6, enter="Halt"),
-    state("move", "거리 유지", 360, 150, enter="Range"),
-    state("windup", "시전 예고", 600, 80, 0.4, enter="Windup"),
+    state("appear", "등장", 120, 150, 0.6, enter="Halt", clip=M + "Walk"),
+    state("move", "거리 유지", 360, 150, enter="Range", clip=M + "Walk"),
+    state("windup", "시전 예고", 600, 80, 0.4, enter="Windup", clip=M + "Attack", loop=False),
     state("fire", "3갈래 발사", 840, 150, 0.15, enter="Fire"),
-    state("stun", "경직", 360, 320, enter="Stagger"),
+    state("stun", "경직", 360, 320, enter="Stagger", clip=M + "Hurt", loop=False),
 ], [go("appear_move", "appear", "move", exit_time=1), go("move_windup", "move", "windup", conditions=[("Ready", "equal", True)]),
     go("windup_fire", "windup", "fire", exit_time=1), go("fire_move", "fire", "move", exit_time=1),
     *stunned, go("stun_move", "stun", "move", conditions=[("Stunned", "equal", False)])])
 
 # 해골 대장 (기획서 5장): 쉬며 추격 → 돌진(예고 1초) → 쉬기 → 원형 탄막 2회 → 쉬기 → 졸개 소환 → … (Next가 다음 패턴)
 fsm("FSM_SkeletonCaptain", "intro", PARAMS, [
-    state("intro", "등장 대사", 120, 60, 3.0, enter="Halt"),
-    state("rest", "쉬며 추격", 120, 260, 1.5, enter="Chase"),
+    state("intro", "등장 대사", 120, 60, 3.0, enter="Halt", clip=C + "Walk"),
+    state("rest", "쉬며 추격", 120, 260, 1.5, enter="Chase", clip=C + "Walk"),
     state("charge", "돌진 패턴", 420, 60, initial="windup"),
-    state("windup", "돌진 예고", 420, 140, 1.0, enter="Windup", parent="charge"),
-    state("dash", "돌진", 640, 140, 0.6, enter="Dash", parent="charge"),
+    state("windup", "돌진 예고", 420, 140, 1.0, enter="Windup", parent="charge", clip=C + "Attack", loop=False),
+    state("dash", "돌진", 640, 140, 0.6, enter="Dash", parent="charge", clip=C + "Walk"),
     state("ring", "탄막 패턴", 420, 300, initial="burst1"),
-    state("burst1", "탄막 1", 420, 380, 0.5, enter="Ring", parent="ring"),
-    state("burst2", "탄막 2", 640, 380, 0.5, enter="Ring", parent="ring"),
-    state("summon", "졸개 소환", 420, 520, 0.4, enter="Summon"),
+    state("burst1", "탄막 1", 420, 380, 0.5, enter="Ring", parent="ring", clip=C + "Attack", loop=False),
+    state("burst2", "탄막 2", 640, 380, 0.5, enter="Ring", parent="ring", clip=C + "Attack", loop=False),
+    state("summon", "졸개 소환", 420, 520, 0.4, enter="Summon", clip=C + "Attack", loop=False),
 ], [go("intro_rest", "intro", "rest", exit_time=1),
     go("rest_charge", "rest", "charge", exit_time=1, conditions=[("Next", "equal", 0)]),
     go("rest_ring", "rest", "ring", exit_time=1, conditions=[("Next", "equal", 1)]),

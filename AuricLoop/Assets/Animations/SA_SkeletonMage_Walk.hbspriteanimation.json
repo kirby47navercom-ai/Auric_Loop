@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "SA_SkeletonMage_Walk",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Walk_0.hbsprite.json",
+      "duration": 0.14
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Walk_1.hbsprite.json",
+      "duration": 0.14
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Walk_2.hbsprite.json",
+      "duration": 0.14
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Walk_3.hbsprite.json",
+      "duration": 0.14
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

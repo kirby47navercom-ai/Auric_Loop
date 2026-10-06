@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_SkeletonMage_Death_2",
+  "texture": "Assets/Sprites/Enemies/SkeletonMage/SkeletonMage_Death_2.png",
+  "pixelsPerUnit": 32,
+  "rect": [
+    0,
+    0,
+    80,
+    53
+  ],
+  "pivot": [
+    0.5,
+    0.4811
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

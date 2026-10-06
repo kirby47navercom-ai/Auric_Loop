@@ -23,13 +23,13 @@
       "Enemy.Speed": 3.6,
       "Enemy.Radius": 1.4,
       "Enemy.GoldMin": 30,
-      "Enemy.GoldMax": 30
+      "Enemy.GoldMax": 30,
+      "Enemy.DeathSprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Death_"
     },
     "componentOverrides": {
       "sprite": {
-        "texture": "Assets/Sprites/SkeletonCaptain_Idle.png",
-        "width": 3.3125,
-        "height": 3.46875
+        "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Walk_0.hbsprite.json",
+        "texture": ""
       },
       "collider": {
         "extent": [

@@ -52,7 +52,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Valen/S_Valen_Idle_0.hbsprite.json",
+            "sprite": "Assets/Sprites/Valen/S_Valen_S_Idle_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -66,7 +66,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 2,
+            "sortingOrder": 3,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -7793,8 +7793,8 @@
       ]
     },
     {
-      "id": "Slash0",
-      "name": "Slash0",
+      "id": "Fx0",
+      "name": "Fx0",
       "kind": "sprite",
       "position": [
         -12,
@@ -7841,21 +7841,21 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/FX_Slash.png",
+            "texture": "",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 2.21875,
-            "height": 2.59375,
-            "pixelsPerUnit": 32,
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 5,
+            "sortingOrder": 4,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -7866,7 +7866,1162 @@
         }
       ],
       "tags": [
-        "Pool.Slash"
+        "Pool.Fx"
+      ]
+    },
+    {
+      "id": "Fx1",
+      "name": "Fx1",
+      "kind": "sprite",
+      "position": [
+        -10,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ]
+    },
+    {
+      "id": "Fx2",
+      "name": "Fx2",
+      "kind": "sprite",
+      "position": [
+        -8,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ]
+    },
+    {
+      "id": "Fx3",
+      "name": "Fx3",
+      "kind": "sprite",
+      "position": [
+        -6,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ]
+    },
+    {
+      "id": "Fx4",
+      "name": "Fx4",
+      "kind": "sprite",
+      "position": [
+        -4,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ]
+    },
+    {
+      "id": "Fx5",
+      "name": "Fx5",
+      "kind": "sprite",
+      "position": [
+        -2,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ]
+    },
+    {
+      "id": "Fx6",
+      "name": "Fx6",
+      "kind": "sprite",
+      "position": [
+        0,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ]
+    },
+    {
+      "id": "Fx7",
+      "name": "Fx7",
+      "kind": "sprite",
+      "position": [
+        2,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ]
+    },
+    {
+      "id": "Fx8",
+      "name": "Fx8",
+      "kind": "sprite",
+      "position": [
+        4,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ]
+    },
+    {
+      "id": "Fx9",
+      "name": "Fx9",
+      "kind": "sprite",
+      "position": [
+        6,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ]
+    },
+    {
+      "id": "Fx10",
+      "name": "Fx10",
+      "kind": "sprite",
+      "position": [
+        8,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ]
+    },
+    {
+      "id": "Fx11",
+      "name": "Fx11",
+      "kind": "sprite",
+      "position": [
+        10,
+        -200,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ]
+    },
+    {
+      "id": "Fx12",
+      "name": "Fx12",
+      "kind": "sprite",
+      "position": [
+        -12,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ]
+    },
+    {
+      "id": "Fx13",
+      "name": "Fx13",
+      "kind": "sprite",
+      "position": [
+        -10,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ]
+    },
+    {
+      "id": "Fx14",
+      "name": "Fx14",
+      "kind": "sprite",
+      "position": [
+        -8,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ]
+    },
+    {
+      "id": "Fx15",
+      "name": "Fx15",
+      "kind": "sprite",
+      "position": [
+        -6,
+        -201,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
       ]
     },
     {
@@ -7918,9 +9073,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Torch.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -7936,6 +9091,92 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "animator",
+          "name": "Animator",
+          "type": "Animator",
+          "properties": {
+            "enabled": true,
+            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
+            "playOnStart": true,
+            "loop": true,
+            "speed": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "Torch0Glow",
+      "name": "Torch0Glow",
+      "kind": "sprite",
+      "position": [
+        -9,
+        13.45,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Glow.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3.5,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -5,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
             "sortingLayer": "default",
             "maskInteraction": "none",
             "shading": "unlit"
@@ -7992,9 +9233,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Torch.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -8010,6 +9251,92 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "animator",
+          "name": "Animator",
+          "type": "Animator",
+          "properties": {
+            "enabled": true,
+            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
+            "playOnStart": true,
+            "loop": true,
+            "speed": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "Torch1Glow",
+      "name": "Torch1Glow",
+      "kind": "sprite",
+      "position": [
+        9,
+        13.45,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Glow.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3.5,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -5,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
             "sortingLayer": "default",
             "maskInteraction": "none",
             "shading": "unlit"
@@ -8066,9 +9393,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Torch.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -8084,6 +9411,92 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "animator",
+          "name": "Animator",
+          "type": "Animator",
+          "properties": {
+            "enabled": true,
+            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
+            "playOnStart": true,
+            "loop": true,
+            "speed": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "Torch2Glow",
+      "name": "Torch2Glow",
+      "kind": "sprite",
+      "position": [
+        -7,
+        13.45,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Glow.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3.5,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -5,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
             "sortingLayer": "default",
             "maskInteraction": "none",
             "shading": "unlit"
@@ -8140,9 +9553,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Torch.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -8158,6 +9571,92 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "animator",
+          "name": "Animator",
+          "type": "Animator",
+          "properties": {
+            "enabled": true,
+            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
+            "playOnStart": true,
+            "loop": true,
+            "speed": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "Torch3Glow",
+      "name": "Torch3Glow",
+      "kind": "sprite",
+      "position": [
+        7,
+        13.45,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Glow.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3.5,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -5,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
             "sortingLayer": "default",
             "maskInteraction": "none",
             "shading": "unlit"

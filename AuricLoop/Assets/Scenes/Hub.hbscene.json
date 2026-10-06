@@ -52,7 +52,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Valen/S_Valen_Idle_0.hbsprite.json",
+            "sprite": "Assets/Sprites/Valen/S_Valen_S_Idle_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -66,7 +66,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 2,
+            "sortingOrder": 3,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -1524,6 +1524,80 @@
       ]
     },
     {
+      "id": "Lamp0Glow",
+      "name": "Lamp0Glow",
+      "kind": "sprite",
+      "position": [
+        -10.5,
+        7.225,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Glow.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -2,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ]
+    },
+    {
       "id": "Lamp1",
       "name": "Lamp1",
       "kind": "sprite",
@@ -1621,6 +1695,80 @@
               0.25,
               0.5
             ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Lamp1Glow",
+      "name": "Lamp1Glow",
+      "kind": "sprite",
+      "position": [
+        10.5,
+        7.225,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Glow.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -2,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
           }
         }
       ]
@@ -1728,6 +1876,80 @@
       ]
     },
     {
+      "id": "Lamp2Glow",
+      "name": "Lamp2Glow",
+      "kind": "sprite",
+      "position": [
+        -10.5,
+        -5.775,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Glow.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -2,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ]
+    },
+    {
       "id": "Lamp3",
       "name": "Lamp3",
       "kind": "sprite",
@@ -1825,6 +2047,80 @@
               0.25,
               0.5
             ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Lamp3Glow",
+      "name": "Lamp3Glow",
+      "kind": "sprite",
+      "position": [
+        10.5,
+        -5.775,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Glow.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -2,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
           }
         }
       ]
@@ -1932,6 +2228,80 @@
       ]
     },
     {
+      "id": "Lamp4Glow",
+      "name": "Lamp4Glow",
+      "kind": "sprite",
+      "position": [
+        -2.8,
+        14.725,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Glow.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -2,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ]
+    },
+    {
       "id": "Lamp5",
       "name": "Lamp5",
       "kind": "sprite",
@@ -2029,6 +2399,80 @@
               0.25,
               0.5
             ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Lamp5Glow",
+      "name": "Lamp5Glow",
+      "kind": "sprite",
+      "position": [
+        2.8,
+        14.725,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Glow.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -2,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
           }
         }
       ]
