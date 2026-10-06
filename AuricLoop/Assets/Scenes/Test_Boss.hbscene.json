@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sceneName": "Test_Alea",
+  "sceneName": "Test_Boss",
   "objects": [
     {
       "id": "Player",
@@ -644,7 +644,7 @@
           }
         }
       ],
-      "blueprintAsset": "Assets/Blueprints/BP_Test_Alea.hbblueprint.json",
+      "blueprintAsset": "Assets/Blueprints/BP_Test_Boss.hbblueprint.json",
       "parent": "Group_0"
     },
     {

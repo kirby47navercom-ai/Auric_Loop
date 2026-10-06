@@ -134,9 +134,10 @@ rules["settings"].update(tickEnabled=False, overlapEnabled=False)
 write(BP / "BP_AuricRules.hbblueprint.json", rules)
 (BP / "BP_SpawnPoint.hbblueprint.json").unlink(missing_ok=True)  # 적 자리는 이제 웨이브가 방 안에서 무작위로 고름
 write(BP / "BP_RoomInfo.hbblueprint.json", blueprint("BP_RoomInfo", "RoomInfo", [transform()], native_from=True))
-for name, who in (("BP_Test_Valen", 0), ("BP_Test_Sherry", 1), ("BP_Test_Alea", 2)):
+for name, who, room in (("BP_Test_Valen", 0, ""), ("BP_Test_Sherry", 1, ""), ("BP_Test_Alea", 2, ""), ("BP_Test_Boss", 0, "Boss")):
     write(BP / f"{name}.hbblueprint.json", blueprint(name, "Assets/Blueprints/BP_TopDownShooter.hbblueprint.json",
-                                                     defaults={"TopDownShooter.Character": who, "TopDownShooter.Seed": 7, "TopDownShooter.ShowFps": True, "TopDownShooter.MaxHp": 30}))
+                                                     defaults={"TopDownShooter.Character": who, "TopDownShooter.Seed": 7, "TopDownShooter.ShowFps": True,
+                                                               "TopDownShooter.MaxHp": 30, "TopDownShooter.StartRoom": room}))  # Test_Boss: 성능 측정용, 보스방에서 시작
 
 # ---- 던전 데이터 (편집기 데이터 표에서 고침, 다시 빌드할 필요 없음) ----
 # 웨이브: | 로 웨이브를 나누고 , 로 적을 나눔. 기호는 BP_AuricRules.Enemies (S 해골, M 해골 마법사, C 해골 대장)
@@ -286,5 +287,16 @@ DIALOGUE = {
     "Settle": [L(C, "남은 빚은 {debt} G. 강화는 던전 밖에선 무뎌지는 거 알지? 남은 골드로 소파라도 바꾸든가."),
                L(C, "적당히 들어가서, 적당히 챙겨서, 지치기 전에 탈출. 그게 이 던전의 규칙이야. 쉬고 싶으면 계단 위 입구에서 하루를 마쳐.")],
 }
+TIPS = {  # 안내 문구 (기획서 9장), 처음 한 번만 화면 위 띠로. TipTouch<번호>는 모바일용
+    "Tip0": "빚을 갚으려면 던전에 들어가야 해. 북쪽 계단으로 가자.",
+    "Tip1": "마우스로 조준하고 왼쪽 클릭으로 공격해.", "TipTouch1": "공격 버튼을 누르면 가까운 적을 자동으로 조준해.",
+    "Tip2": "Space로 구르면 잠깐 무적이야.", "TipTouch2": "구르기 버튼을 누르면 잠깐 무적이야.",
+    "Tip3": "방을 하나 지날 때마다 피로가 쌓여. 왼쪽 막대를 봐.",
+    "Tip4": "E로 채집. 무거우면 느려지고 더 빨리 지쳐.", "TipTouch4": "손 버튼으로 채집. 무거우면 느려지고 더 빨리 지쳐.",
+    "Tip5": "마물 소재로 각인 결정을 만들면 무기에 능력을 새길 수 있어. 하나만, 새로 하면 덮어써져.",
+    "Tip6": "대장장이에게 골드를 내면 무기를 강화할 수 있어. 단, 돌아가면 초기화돼.",
+    "Tip7": "[귀환]을 얻었다. 가방(Tab)을 열고 Enter로 써서 집으로 돌아가자.", "TipTouch7": "[귀환]을 얻었다. 가방 버튼을 열고 [귀환]을 눌러 집으로 돌아가자.",
+}
+DIALOGUE.update({k: [L(ME, v)] for k, v in TIPS.items()})
 write(PROJECT / "Assets/Data/DT_Dialogue.hbdata.json", {"version": 1, "name": "DT_Dialogue", "columns": [{"name": "lines", "type": "json"}],
                                                          "rows": {k: {"lines": v} for k, v in DIALOGUE.items()}})

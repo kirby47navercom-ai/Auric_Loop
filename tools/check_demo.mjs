@@ -18,7 +18,8 @@ const gatesLocked = vm => vm.objects.filter(o => (o.tags || []).some(t => t === 
 const startIn = room => ({Director: {StartRoom: room}});
 
 // 층 생성: 방 11개, 막다른 방에 보스·상점·채집, 보스는 시작에서 4방 이상, 방끼리 겹치지 않음
-const rooms = JSON.parse(director(await runProject(project, {scene: scene('Test_Valen'), frames: 3, delta: 1 / 60})).Layout);
+const layout = JSON.parse(director(await runProject(project, {scene: scene('Test_Valen'), frames: 3, delta: 1 / 60})).Layout);
+const rooms = layout.filter(r => r.kind !== 'Shortage');
 {
   const count = kind => rooms.filter(r => r.kind === kind).length;
   const links = r => r.links.filter(l => l >= 0).length;
@@ -28,6 +29,11 @@ const rooms = JSON.parse(director(await runProject(project, {scene: scene('Test_
   assert.ok(rooms.some(r => links(r) >= 3), '갈림길(3갈래 이상) 방이 있음');
   assert.ok(rooms.find(r => r.kind === 'Boss').path >= 4, '보스까지 방 4개 이상');
   for (const a of rooms) for (const b of rooms) if (a !== b) assert.ok(Math.abs(a.x - b.x) >= a.hw + b.hw + 2 || Math.abs(a.y - b.y) >= a.hh + b.hh + 2, '방끼리 겹치지 않음');
+  // 바닥·벽 조각(장면 풀)이 어떤 배치에서도 모자라지 않음
+  for (const seed of [7, 1, 2, 3, 11, 23, 99, 1234]) {
+    const short = JSON.parse(director(await runProject(project, {scene: scene('Test_Valen'), frames: 3, delta: 1 / 60, nativeDefaults: {Director: {Seed: seed}}})).Layout).find(r => r.kind === 'Shortage');
+    assert.ok(!short, `씨앗 ${seed}: 바닥·벽 조각 ${short?.count}개 모자람`);
+  }
   console.log('층 생성 검사 통과', rooms.map(r => `${r.row}${r.path >= 0 ? '#' + r.path : ''}(${r.x / 36},${r.y / 36})`).join(' '));
 }
 
@@ -70,7 +76,7 @@ const rooms = JSON.parse(director(await runProject(project, {scene: scene('Test_
   let returnGates = 0;
   const r = await runProject(project, {scene: scene('Test_Valen'), frames: 3600, delta: 1 / 60, nativeDefaults: startIn('Boss'), inputs: [
     ...press(80, 'e'), ...press(90, 'e'),  // 해골 대장 대사
-    ...touchHold(100, 2400), ...press(2410, 'tab'), ...press(2420, 'e'), ...press(2430, 'e'),
+    ...touchHold(100, 2400), ...press(2405, 'tab'), ...press(2410, 'enter'), ...press(2420, 'e'), ...press(2430, 'e'),  // 가방(Tab) 열고 Enter로 [귀환]
     ...press(2440, 'F9'), {frame: 2460, key, value: 1}, {frame: 2460 + walk, key, value: 0},
     {frame: 2465 + walk, key: 'LeftMouseButton', value: 1}, {frame: 2900 + walk, key: 'LeftMouseButton', value: 0},
     {frame: 2910 + walk, key, value: 1}, {frame: 2910 + walk + Math.ceil((36 - walk / 10) / 6 * 60), key, value: 0},  // 복도를 지나 앞 방 가운데쯤까지
@@ -78,7 +84,7 @@ const rooms = JSON.parse(director(await runProject(project, {scene: scene('Test_
   const s = director(r);
   assert.ok(s.Shots >= 12, '해골 대장이 원형 탄막을 쏨');
   assert.ok(s.BossHp <= 0 && s.Kills >= 1, '해골 대장 처치');
-  assert.ok(s.Returning, 'Tab으로 [귀환] 사용 → 귀환 페이즈');
+  assert.ok(s.Returning, '가방에서 [귀환] 사용 → 귀환 페이즈');
   assert.ok(returnGates >= 1, '귀환 중 들어선 방은 시작 방 쪽 문이 잠김');
   assert.equal(s.RoomIndex, prev, '잠긴 문을 10번 때려 열고 시작 쪽 방으로 되돌아감');
   console.log('보스·귀환 검사 통과', 'shots', s.Shots, 'room', s.RoomIndex, 'fatigue', s.Fatigue);
@@ -136,4 +142,16 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   const p = r.objects.find(o => o.id === 'Player').position;
   assert.ok(p[0] < -20, '거점 집 앞에서 나옴');
   console.log('원룸 검사 통과', scenes.map(s => s.split('/').at(-1)).join(' → '));
+}
+
+// 일시정지(Esc): 멈춘 동안 W를 눌러도 안 움직이고, 다시 Esc면 계속. 첫 전투방 안내 문구가 한 번 나옴
+{
+  const r = await runProject(project, {scene: scene('Test_Valen'), frames: 160, delta: 1 / 60, inputs: [
+    ...press(20, 'escape'), {frame: 30, key: 'w', value: 1}, {frame: 90, key: 'w', value: 0}]});
+  const s = director(r), y = r.objects.find(o => o.id === 'Player').position[1];
+  assert.ok(s.Paused, 'Esc로 일시정지');
+  assert.ok(Math.abs(y - -1) < 0.3, '멈춘 동안 움직이지 않음');
+  const t = await runProject(project, {scene: scene('Test_Valen'), frames: 60, delta: 1 / 60, inputs: [...warps(5, 1)]});
+  assert.ok(director(t).TipsShown & 2, '첫 전투방 안내 문구');
+  console.log('일시정지·안내 문구 검사 통과', 'tips', director(t).TipsShown);
 }

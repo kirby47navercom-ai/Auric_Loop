@@ -186,6 +186,9 @@ LAYERS = {"back": {"Background", "Dungeon.Background"},
           "overlay": {"Plaza", "NorthRoad", "HomePath", "Street", "Rug", "Dungeon.Face", "Dungeon.Cap", "Dungeon.Arch"}}  # 아이디 또는 태그
 
 
+HUB_Z = {"Background": -1, "Grass": -0.3, "Floor": -0.3, "Plaza": -0.25, "NorthRoad": -0.25, "HomePath": -0.25, "Street": -0.25}  # 깊이 (클수록 앞)
+
+
 def write(name, objects):
     scene = copy.deepcopy(TEMPLATE)
     scene["sceneName"] = name
@@ -200,6 +203,10 @@ def write(name, objects):
             for c in o["components"]:
                 if c["type"] in ("SpriteRenderer", "TilemapRenderer"):
                     c["properties"]["sortingLayer"] = layer
+                    if c["type"] == "SpriteRenderer" and o["id"] not in ("Rug",) and "Dungeon.Arch" not in o.get("tags", []):
+                        c["properties"]["blendMode"] = "opaque"  # 불투명: 깊이(z)로 앞뒤가 정해져 편집기·패키지 정렬 차이에 흔들리지 않음
+            if o["id"] in HUB_Z:
+                o["position"][2] = HUB_Z[o["id"]]
     post = {"id": "PostFX", "name": "PostFX", "kind": "empty", "group": "WORLD", "position": [0, 0, 0], "rotation": [0, 0, 0], "scale": [1, 1, 1],
             "visible": True, "components": [transform(), {"id": "post", "name": "PostProcessVolume", "type": "PostProcessVolume", "properties": {
                 "enabled": True, "priority": 0, "bloomEnabled": True, "bloomThreshold": 1, "bloomStrength": 0.45, "bloomRadius": 0.35, "bloomResolutionScale": 0.5}}]}
@@ -258,21 +265,21 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
     objects.append(bp_obj("Room", "BP_RoomInfo", 0, 0, {"Index": 0, "Kind": "Dungeon"}))
     T = "Assets/Tiles/"
     parked(objects, "Dungeon.Background", 1, lambda i: background(i, 0, 0, 4, 4))
-    parked(objects, "Dungeon.Floor", 18, lambda i: tiled(i, T + "T_DungeonFloor.png", -12, False))
-    parked(objects, "Dungeon.Cap", 72, lambda i: tiled(i, T + "T_DungeonCap.png", -9, True))
-    parked(objects, "Dungeon.Face", 26, lambda i: tiled(i, T + "T_DungeonFace.png", -10, True))
-    parked(objects, "Dungeon.Arch", 10, lambda i: sprite_obj(i, PROP + "Archway.png", 0, 0, order=-8, width=4, height=3))
+    parked(objects, "Dungeon.Floor", 28, lambda i: tiled(i, T + "T_DungeonFloor.png", -12, False))
+    parked(objects, "Dungeon.Cap", 100, lambda i: tiled(i, T + "T_DungeonCap.png", -9, True))
+    parked(objects, "Dungeon.Face", 36, lambda i: tiled(i, T + "T_DungeonFace.png", -10, True))
+    parked(objects, "Dungeon.Arch", 14, lambda i: sprite_obj(i, PROP + "Archway.png", 0, 0, order=-8, width=4, height=3))
     parked(objects, "Dungeon.Gate", 4, lambda i: sprite_obj(i, PROP + "Portcullis.png", 0, 0, order=-7, collider=(2, 0.5, -1.0), width=4, height=3))
     parked(objects, "Dungeon.GateSide", 4, lambda i: sprite_obj(i, PROP + "GateSide.png", 0, 0, order=0, collider=(0.5, 2, 0)))
-    parked(objects, "Dungeon.Torch", 22, lambda i: torch(i, 0, 0)[0])
-    parked(objects, "Dungeon.Glow", 22, lambda i: glow(i, 0, 0, 3.5))
+    parked(objects, "Dungeon.Torch", 26, lambda i: torch(i, 0, 0)[0])
+    parked(objects, "Dungeon.Glow", 26, lambda i: glow(i, 0, 0, 3.5))
     parked(objects, "Dungeon.Banner", 12, lambda i: sprite_obj(i, PROP + "Banner.png", 0, 0, order=-8))
     parked(objects, "Dungeon.Pillar", 16, lambda i: sprite_obj(i, PROP + "Pillar.png", 0, 0, order=0, collider=(0.35, 0.25, -0.6)))
     # 전투방 엄폐물 (Dungeon::Build의 배치 6가지). 충돌은 그림 아랫부분만
     for tag, file, count, col in (("Crate", "Crates2", 14, (0.45, 0.3, -0.5)), ("Barrel", "Barrel2", 10, (0.4, 0.25, -0.4)),
                                   ("LowWall", "LowWall", 22, (0.8, 0.3, -0.25)), ("Statue", "Statue", 8, (0.45, 0.3, -0.6)), ("Chest", "GoldChest", 2, (0.55, 0.3, -0.3))):
         parked(objects, "Dungeon." + tag, count, lambda i, f=file, c=col: sprite_obj(i, PROP + f + ".png", 0, 0, order=0, collider=c))
-    for name, count in (("Rubble", 16), ("Bones", 16), ("GoldPile", 8)):
+    for name, count in (("Rubble", 10), ("Bones", 10), ("GoldPile", 6)):
         parked(objects, "Dungeon." + ("Gold" if name == "GoldPile" else name), count, lambda i, n=name: sprite_obj(i, PROP + n + ".png", 0, 0, order=-2))
     parked(objects, "Dungeon.Stairs", 1, lambda i: sprite_obj(i, "Assets/Sprites/Prop_DungeonEntrance.png", 0, 0, order=-2))
     # 채집방·상점 상호작용 대상: C++가 그 방으로 옮김
@@ -297,7 +304,7 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
 
 
 counts = {"Dungeon": write("Dungeon", dungeon_scene())}
-for name in ("Test_Valen", "Test_Sherry", "Test_Alea"):  # 검사용: 캐릭터·던전 씨앗 고정 (tools/check_demo.mjs)
+for name in ("Test_Valen", "Test_Sherry", "Test_Alea", "Test_Boss"):  # 검사용: 캐릭터·던전 씨앗 고정 (tools/check_demo.mjs)
     write(name, dungeon_scene("BP_" + name))
 for old in [f"Scenes/Dungeon_{i}.hbscene.json" for i in range(5)] + ["Scenes/Test_Gather.hbscene.json"] + [f"Tilemaps/TM_Dungeon_{i}.hbtilemap.json" for i in range(5)]:
     (ASSETS / old).unlink(missing_ok=True)  # 예전 고정 방 장면

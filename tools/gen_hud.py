@@ -231,6 +231,31 @@ node("BossBarBack", "Panel", "t", 0, 120, 520, 16, 21, background="#1a0d0dcc", v
 node("BossBar", "ProgressBar", "t", 0, 122, 514, 12, 22, value=1, max=1, fillDirection="leftToRight", fillTexture="", backgroundTexture="",
      background="#00000000", accent="#e04a3aff", visible=False)
 
+# ---- 안내 문구 띠 (기획서 9장) ----
+node("TipBack", "Panel", "t", 0, 140, 760, 44, 30, background="#0b1314dd", visible=False)
+node("Tip", "Text", "t", 0, 150, 740, 26, 31, text="", fontSize=17, color="#ffe9a8", align="center", visible=False)
+
+# ---- 가방 (Tab) ----
+node("BagPanel", "Panel", "c", 0, -40, 620, 260, 45, background="#16222ae6", visible=False)
+node("BagTitle", "Text", "c", 0, -150, 580, 32, 46, text="가방", fontSize=22, color="#ffd666", align="center", visible=False)
+for i in range(5):
+    node(f"BagRow{i}", "Text", "c", 0, -105 + i * 36, 580, 28, 46, text="", fontSize=17, color="#ffd666" if i == 4 else "#fff3e5", align="center", visible=False)
+node("BagHint", "Text", "c", 0, 70, 580, 22, 46, text="Tab: 닫기", fontSize=13, color="#cdb98a", align="center", visible=False)
+touch("BagTouch", "tab", "tr", 24 + 72 + 12, 24, 72)
+n = node("BagUseTouch", "TouchButton", "c", 0, 39, 580, 34, 47, inputKey="enter", inputMode="keys", deviceVisibility="touch",
+         background="#00000000", pressed="#ffffff22", hover="#00000000", visible=False)  # 가방이 열렸을 때만 ([귀환] 줄 터치)
+
+# ---- 일시정지 (Esc·P, 모바일 일시정지 버튼) ----
+touch("PauseTouch", "escape", "tr", 24, 24, 72)
+full("PauseBack", "Panel", 85, background="#05090ac8", visible=False)
+node("PauseTitle", "Text", "c", 0, -60, 600, 50, 86, text="일시정지", fontSize=36, color="#ffd666", align="center", visible=False)
+node("PauseResume", "Text", "c", 0, 10, 600, 30, 86, text="Esc · P : 계속하기", fontSize=20, color="#fff3e5", align="center", visible=False)
+node("PauseQuit", "Text", "c", 0, 50, 600, 30, 86, text="F12 : 처음으로", fontSize=17, color="#cdb98a", align="center", visible=False)
+node("PauseResumeTouch", "TouchButton", "c", 0, 10, 300, 40, 87, inputKey="escape", inputMode="keys", deviceVisibility="touch",
+     background="#ffffff11", pressed="#ffffff33", hover="#00000000", visible=False)
+node("PauseQuitTouch", "TouchButton", "c", 0, 50, 300, 34, 87, inputKey="F12", inputMode="keys", deviceVisibility="touch",
+     background="#ffffff11", pressed="#ffffff33", hover="#00000000", visible=False)
+
 # ---- 쓰러짐 (기획서 2장 게임 오버): 화면을 붉게 덮고 문구 ----
 full("KoBack", "Panel", 70, background="#2a0508dd", visible=False)
 node("KoTitle", "Text", "c", 0, -30, 900, 60, 71, text="쓰러졌다", fontSize=44, color="#ff7a6a", align="center", visible=False)

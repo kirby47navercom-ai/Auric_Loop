@@ -657,7 +657,7 @@
       "position": [
         10,
         8,
-        -0.3
+        -1
       ],
       "rotation": [
         0,
@@ -719,7 +719,8 @@
             "useCustomSize": true,
             "sortingLayer": "back",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -732,7 +733,7 @@
       "position": [
         10.0,
         2.0,
-        -0.25
+        -0.3
       ],
       "rotation": [
         0,
@@ -794,7 +795,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -869,7 +871,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -944,7 +947,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -1019,7 +1023,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -1094,7 +1099,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],

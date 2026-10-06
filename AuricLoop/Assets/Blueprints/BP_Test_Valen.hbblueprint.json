@@ -19,7 +19,8 @@
       "TopDownShooter.Character": 0,
       "TopDownShooter.Seed": 7,
       "TopDownShooter.ShowFps": true,
-      "TopDownShooter.MaxHp": 30
+      "TopDownShooter.MaxHp": 30,
+      "TopDownShooter.StartRoom": ""
     }
   }
 }

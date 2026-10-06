@@ -398,6 +398,10 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   bool ShowFps = false;
   HB_PROPERTY(BlueprintReadWrite)
+  int TipsShown = 0;             // 이미 보여 준 안내 문구 (비트, 기획서 9장)
+  HB_PROPERTY(BlueprintReadWrite)
+  bool Paused = false;           // 일시정지 (Esc·P, 모바일 일시정지 버튼)
+  HB_PROPERTY(BlueprintReadWrite)
   bool KnockedOut = false;       // 던전에서 쓰러져 끌려 나옴 (소재를 잃고 정산)          // 왼쪽 위에 초당 프레임·프레임 시간 (F3으로 켜고 끔)    // 검사·시연용: 던전에 들어오면 이 종류(Gather·Shop·Boss…)의 첫 방으로 바로 감
   HB_PROPERTY(BlueprintReadWrite)
   float BossHp = 0;
@@ -456,7 +460,8 @@ public:
   void Sfx(const std::string& name){const auto s=Sound(name);if(!s.empty())hb::Audio::Play(s);}  // 첫 입력 전 효과음은 엔진이 버림
   void Say(const std::string& who,const std::string& name,const std::string& text){dialog.push_back({who,name,text});}
   void Talk(const std::string& row,const std::map<std::string,std::string>& vars={});  // DT_Dialogue 행의 대사를 차례로
-  bool Frozen() const{return Hp<=0||dialogIndex<dialog.size()||Phase<2||cutscene>0;}  // 쓰러짐·대화·타이틀 중엔 적도 멈춤
+  bool Frozen() const{return Hp<=0||dialogIndex<dialog.size()||Phase<2||cutscene>0||Paused;}
+  void Tip(int id);              // 안내 문구 (한 번만, 화면 위 띠). 문구는 DT_Dialogue의 Tip<id> (모바일은 TipTouch<id>가 있으면 그것)  // 쓰러짐·대화·타이틀 중엔 적도 멈춤
 
 private:
   struct Line{std::string who,name,text;};
@@ -477,6 +482,8 @@ private:
   void HitReturnGate(const hb::Vec3& at,float reach,int hits);
   void ClearRoom();
   void Settle();
+  void SetPaused(bool paused);
+  void Bag(bool toggle,bool use);  // 가방 (Tab): 소재·아이템, [귀환]은 가방에서 Enter로 사용
   bool UpdateSettle(float delta,bool advance);  // 정산 화면이 떠 있으면 true (이동·행동 막음)
   void ShowSettle(bool visible);
   void ShowEnding();
@@ -550,6 +557,8 @@ private:
   std::vector<Line> dialog;
   size_t dialogIndex=0,shownChars=0;
   float fpsTime=0,fpsWorst=0;int fpsFrames=0;bool fpsHeld=false;
+  float tipTime=0;bool pauseHeld=false,bagOpen=false;
+  std::map<hb::Actor*,hb::Vec3> frozenVelocity;   // 일시정지 동안 멈춘 탄의 속도
   // 정산 화면: 줄이 하나씩 나타나고 남은 빚이 줄어드는 숫자 연출
   std::vector<std::string> settleRows;
   float settleTime=-1;int settleShown=0,debtFrom=0,debtTo=0,debtShown=-1;bool settleDone=false;

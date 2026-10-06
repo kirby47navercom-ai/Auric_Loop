@@ -21,12 +21,42 @@
     },
     {
       "id": "perf",
-      "name": "성능 측정 (발렌 던전, FPS 표시)",
+      "name": "성능 측정 (보스방 시작, FPS 표시)",
       "configuration": "release",
       "productName": "AuricLoopPerf",
       "width": 1280,
       "height": 720,
       "scenes": [
+        {
+          "path": "Assets/Scenes/Test_Boss.hbscene.json",
+          "enabled": true
+        },
+        {
+          "path": "Assets/Scenes/Test_Valen.hbscene.json",
+          "enabled": true
+        },
+        {
+          "path": "Assets/Scenes/Hub.hbscene.json",
+          "enabled": true
+        },
+        {
+          "path": "Assets/Scenes/Dungeon.hbscene.json",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "perfdev",
+      "name": "성능 측정 (개발 빌드, 디버그)",
+      "configuration": "development",
+      "productName": "AuricLoopDev",
+      "width": 1280,
+      "height": 720,
+      "scenes": [
+        {
+          "path": "Assets/Scenes/Test_Boss.hbscene.json",
+          "enabled": true
+        },
         {
           "path": "Assets/Scenes/Test_Valen.hbscene.json",
           "enabled": true

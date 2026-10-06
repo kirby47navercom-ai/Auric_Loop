@@ -865,7 +865,8 @@
             "useCustomSize": true,
             "sortingLayer": "back",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -943,7 +944,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -1021,7 +1023,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -1099,7 +1102,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -1177,7 +1181,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -1255,7 +1260,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -1333,7 +1339,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -1411,7 +1418,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -1489,7 +1497,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -1567,7 +1576,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -1645,7 +1655,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -1723,7 +1734,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -1801,7 +1813,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -1879,7 +1892,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -1957,7 +1971,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -2035,7 +2050,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -2113,7 +2129,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -2191,7 +2208,8 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -2269,7 +2287,798 @@
             "useCustomSize": true,
             "sortingLayer": "ground",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Floor"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Floor18",
+      "name": "Floor18",
+      "kind": "sprite",
+      "position": [
+        12,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFloor.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -12,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "ground",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Floor"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Floor19",
+      "name": "Floor19",
+      "kind": "sprite",
+      "position": [
+        16,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFloor.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -12,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "ground",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Floor"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Floor20",
+      "name": "Floor20",
+      "kind": "sprite",
+      "position": [
+        20,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFloor.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -12,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "ground",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Floor"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Floor21",
+      "name": "Floor21",
+      "kind": "sprite",
+      "position": [
+        24,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFloor.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -12,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "ground",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Floor"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Floor22",
+      "name": "Floor22",
+      "kind": "sprite",
+      "position": [
+        28,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFloor.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -12,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "ground",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Floor"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Floor23",
+      "name": "Floor23",
+      "kind": "sprite",
+      "position": [
+        32,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFloor.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -12,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "ground",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Floor"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Floor24",
+      "name": "Floor24",
+      "kind": "sprite",
+      "position": [
+        36,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFloor.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -12,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "ground",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Floor"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Floor25",
+      "name": "Floor25",
+      "kind": "sprite",
+      "position": [
+        40,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFloor.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -12,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "ground",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Floor"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Floor26",
+      "name": "Floor26",
+      "kind": "sprite",
+      "position": [
+        44,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFloor.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -12,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "ground",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Floor"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Floor27",
+      "name": "Floor27",
+      "kind": "sprite",
+      "position": [
+        48,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFloor.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -12,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "ground",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         }
       ],
@@ -2347,7 +3156,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -2453,7 +3263,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -2559,7 +3370,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -2665,7 +3477,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -2771,7 +3584,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -2877,7 +3691,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -2983,7 +3798,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -3089,7 +3905,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -3195,7 +4012,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -3301,7 +4119,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -3407,7 +4226,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -3513,7 +4333,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -3619,7 +4440,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -3725,7 +4547,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -3831,7 +4654,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -3937,7 +4761,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -4043,7 +4868,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -4149,7 +4975,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -4255,7 +5082,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -4361,7 +5189,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -4467,7 +5296,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -4573,7 +5403,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -4679,7 +5510,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -4785,7 +5617,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -4891,7 +5724,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -4997,7 +5831,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -5103,7 +5938,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -5209,7 +6045,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -5315,7 +6152,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -5421,7 +6259,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -5527,7 +6366,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -5633,7 +6473,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -5739,7 +6580,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -5845,7 +6687,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -5951,7 +6794,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -6057,7 +6901,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -6163,7 +7008,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -6269,7 +7115,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -6375,7 +7222,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -6481,7 +7329,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -6587,7 +7436,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -6693,7 +7543,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -6799,7 +7650,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -6905,7 +7757,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -7011,7 +7864,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -7117,7 +7971,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -7223,7 +8078,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -7329,7 +8185,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -7435,7 +8292,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -7541,7 +8399,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -7647,7 +8506,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -7753,7 +8613,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -7859,7 +8720,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -7965,7 +8827,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -8071,7 +8934,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -8177,7 +9041,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -8283,7 +9148,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -8389,7 +9255,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -8495,7 +9362,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -8601,7 +9469,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -8707,7 +9576,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -8813,7 +9683,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -8919,7 +9790,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -9025,7 +9897,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -9131,7 +10004,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -9237,7 +10111,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -9343,7 +10218,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -9449,7 +10325,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -9555,7 +10432,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -9661,7 +10539,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -9767,7 +10646,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -9873,7 +10753,3004 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap72",
+      "name": "Cap72",
+      "kind": "sprite",
+      "position": [
+        -12,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap73",
+      "name": "Cap73",
+      "kind": "sprite",
+      "position": [
+        -8,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap74",
+      "name": "Cap74",
+      "kind": "sprite",
+      "position": [
+        -4,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap75",
+      "name": "Cap75",
+      "kind": "sprite",
+      "position": [
+        0,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap76",
+      "name": "Cap76",
+      "kind": "sprite",
+      "position": [
+        4,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap77",
+      "name": "Cap77",
+      "kind": "sprite",
+      "position": [
+        8,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap78",
+      "name": "Cap78",
+      "kind": "sprite",
+      "position": [
+        12,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap79",
+      "name": "Cap79",
+      "kind": "sprite",
+      "position": [
+        16,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap80",
+      "name": "Cap80",
+      "kind": "sprite",
+      "position": [
+        20,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap81",
+      "name": "Cap81",
+      "kind": "sprite",
+      "position": [
+        24,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap82",
+      "name": "Cap82",
+      "kind": "sprite",
+      "position": [
+        28,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap83",
+      "name": "Cap83",
+      "kind": "sprite",
+      "position": [
+        32,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap84",
+      "name": "Cap84",
+      "kind": "sprite",
+      "position": [
+        36,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap85",
+      "name": "Cap85",
+      "kind": "sprite",
+      "position": [
+        40,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap86",
+      "name": "Cap86",
+      "kind": "sprite",
+      "position": [
+        44,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap87",
+      "name": "Cap87",
+      "kind": "sprite",
+      "position": [
+        48,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap88",
+      "name": "Cap88",
+      "kind": "sprite",
+      "position": [
+        52,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap89",
+      "name": "Cap89",
+      "kind": "sprite",
+      "position": [
+        56,
+        -212,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap90",
+      "name": "Cap90",
+      "kind": "sprite",
+      "position": [
+        -60,
+        -218,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap91",
+      "name": "Cap91",
+      "kind": "sprite",
+      "position": [
+        -56,
+        -218,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap92",
+      "name": "Cap92",
+      "kind": "sprite",
+      "position": [
+        -52,
+        -218,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap93",
+      "name": "Cap93",
+      "kind": "sprite",
+      "position": [
+        -48,
+        -218,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap94",
+      "name": "Cap94",
+      "kind": "sprite",
+      "position": [
+        -44,
+        -218,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap95",
+      "name": "Cap95",
+      "kind": "sprite",
+      "position": [
+        -40,
+        -218,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap96",
+      "name": "Cap96",
+      "kind": "sprite",
+      "position": [
+        -36,
+        -218,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap97",
+      "name": "Cap97",
+      "kind": "sprite",
+      "position": [
+        -32,
+        -218,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap98",
+      "name": "Cap98",
+      "kind": "sprite",
+      "position": [
+        -28,
+        -218,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Cap"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Cap99",
+      "name": "Cap99",
+      "kind": "sprite",
+      "position": [
+        -24,
+        -218,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -9,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -9979,7 +13856,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -10085,7 +13963,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -10191,7 +14070,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -10297,7 +14177,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -10403,7 +14284,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -10509,7 +14391,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -10615,7 +14498,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -10721,7 +14605,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -10827,7 +14712,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -10933,7 +14819,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -11039,7 +14926,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -11145,7 +15033,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -11251,7 +15140,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -11357,7 +15247,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -11463,7 +15354,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -11569,7 +15461,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -11675,7 +15568,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -11781,7 +15675,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -11887,7 +15782,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -11993,7 +15889,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -12099,7 +15996,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -12205,7 +16103,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -12311,7 +16210,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -12417,7 +16317,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -12523,7 +16424,8 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -12629,7 +16531,1078 @@
             "useCustomSize": true,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Face"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Face26",
+      "name": "Face26",
+      "kind": "sprite",
+      "position": [
+        44,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFace.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Face"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Face27",
+      "name": "Face27",
+      "kind": "sprite",
+      "position": [
+        48,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFace.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Face"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Face28",
+      "name": "Face28",
+      "kind": "sprite",
+      "position": [
+        52,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFace.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Face"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Face29",
+      "name": "Face29",
+      "kind": "sprite",
+      "position": [
+        56,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFace.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Face"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Face30",
+      "name": "Face30",
+      "kind": "sprite",
+      "position": [
+        -60,
+        -206,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFace.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Face"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Face31",
+      "name": "Face31",
+      "kind": "sprite",
+      "position": [
+        -56,
+        -206,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFace.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Face"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Face32",
+      "name": "Face32",
+      "kind": "sprite",
+      "position": [
+        -52,
+        -206,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFace.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Face"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Face33",
+      "name": "Face33",
+      "kind": "sprite",
+      "position": [
+        -48,
+        -206,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFace.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Face"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Face34",
+      "name": "Face34",
+      "kind": "sprite",
+      "position": [
+        -44,
+        -206,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFace.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Face"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Face35",
+      "name": "Face35",
+      "kind": "sprite",
+      "position": [
+        -40,
+        -206,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonFace.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -10,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "opaque"
           }
         },
         {
@@ -13374,6 +18347,318 @@
       "kind": "sprite",
       "position": [
         -24,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_Archway.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 3,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Arch"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Arch10",
+      "name": "Arch10",
+      "kind": "sprite",
+      "position": [
+        -20,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_Archway.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 3,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Arch"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Arch11",
+      "name": "Arch11",
+      "kind": "sprite",
+      "position": [
+        -16,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_Archway.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 3,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Arch"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Arch12",
+      "name": "Arch12",
+      "kind": "sprite",
+      "position": [
+        -12,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_Archway.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 3,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Arch"
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Arch13",
+      "name": "Arch13",
+      "kind": "sprite",
+      "position": [
+        -8,
         -200,
         0.05
       ],
@@ -16297,6 +21582,370 @@
       "parent": "Group_3"
     },
     {
+      "id": "Torch22",
+      "name": "Torch22",
+      "kind": "sprite",
+      "position": [
+        28,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5625,
+            "height": 1.25,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "emissiveIntensity": 1.5
+          }
+        },
+        {
+          "id": "animator",
+          "name": "Animator",
+          "type": "Animator",
+          "properties": {
+            "enabled": true,
+            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
+            "playOnStart": true,
+            "loop": true,
+            "speed": 1
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Torch"
+      ],
+      "parent": "Group_3"
+    },
+    {
+      "id": "Torch23",
+      "name": "Torch23",
+      "kind": "sprite",
+      "position": [
+        32,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5625,
+            "height": 1.25,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "emissiveIntensity": 1.5
+          }
+        },
+        {
+          "id": "animator",
+          "name": "Animator",
+          "type": "Animator",
+          "properties": {
+            "enabled": true,
+            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
+            "playOnStart": true,
+            "loop": true,
+            "speed": 1
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Torch"
+      ],
+      "parent": "Group_3"
+    },
+    {
+      "id": "Torch24",
+      "name": "Torch24",
+      "kind": "sprite",
+      "position": [
+        36,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5625,
+            "height": 1.25,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "emissiveIntensity": 1.5
+          }
+        },
+        {
+          "id": "animator",
+          "name": "Animator",
+          "type": "Animator",
+          "properties": {
+            "enabled": true,
+            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
+            "playOnStart": true,
+            "loop": true,
+            "speed": 1
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Torch"
+      ],
+      "parent": "Group_3"
+    },
+    {
+      "id": "Torch25",
+      "name": "Torch25",
+      "kind": "sprite",
+      "position": [
+        40,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5625,
+            "height": 1.25,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "emissiveIntensity": 1.5
+          }
+        },
+        {
+          "id": "animator",
+          "name": "Animator",
+          "type": "Animator",
+          "properties": {
+            "enabled": true,
+            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
+            "playOnStart": true,
+            "loop": true,
+            "speed": 1
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Torch"
+      ],
+      "parent": "Group_3"
+    },
+    {
       "id": "Glow0",
       "name": "Glow0",
       "kind": "sprite",
@@ -17961,6 +23610,322 @@
       "kind": "sprite",
       "position": [
         24,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Glow.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3.5,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -5,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "additive"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Glow"
+      ],
+      "parent": "Group_3"
+    },
+    {
+      "id": "Glow22",
+      "name": "Glow22",
+      "kind": "sprite",
+      "position": [
+        28,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Glow.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3.5,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -5,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "additive"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Glow"
+      ],
+      "parent": "Group_3"
+    },
+    {
+      "id": "Glow23",
+      "name": "Glow23",
+      "kind": "sprite",
+      "position": [
+        32,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Glow.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3.5,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -5,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "additive"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Glow"
+      ],
+      "parent": "Group_3"
+    },
+    {
+      "id": "Glow24",
+      "name": "Glow24",
+      "kind": "sprite",
+      "position": [
+        36,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Glow.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3.5,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -5,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "blendMode": "additive"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Glow"
+      ],
+      "parent": "Group_3"
+    },
+    {
+      "id": "Glow25",
+      "name": "Glow25",
+      "kind": "sprite",
+      "position": [
+        40,
         -200,
         0.05
       ],
@@ -27383,474 +33348,6 @@
       "parent": "Group_3"
     },
     {
-      "id": "Rubble10",
-      "name": "Rubble10",
-      "kind": "sprite",
-      "position": [
-        -20,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Rubble.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 1.03125,
-            "height": 0.6875,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -2,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.Rubble"
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Rubble11",
-      "name": "Rubble11",
-      "kind": "sprite",
-      "position": [
-        -16,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Rubble.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 1.03125,
-            "height": 0.6875,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -2,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.Rubble"
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Rubble12",
-      "name": "Rubble12",
-      "kind": "sprite",
-      "position": [
-        -12,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Rubble.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 1.03125,
-            "height": 0.6875,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -2,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.Rubble"
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Rubble13",
-      "name": "Rubble13",
-      "kind": "sprite",
-      "position": [
-        -8,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Rubble.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 1.03125,
-            "height": 0.6875,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -2,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.Rubble"
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Rubble14",
-      "name": "Rubble14",
-      "kind": "sprite",
-      "position": [
-        -4,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Rubble.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 1.03125,
-            "height": 0.6875,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -2,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.Rubble"
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Rubble15",
-      "name": "Rubble15",
-      "kind": "sprite",
-      "position": [
-        0,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Rubble.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 1.03125,
-            "height": 0.6875,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -2,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.Rubble"
-      ],
-      "parent": "Group_3"
-    },
-    {
       "id": "Bones0",
       "name": "Bones0",
       "kind": "sprite",
@@ -28631,474 +34128,6 @@
       "parent": "Group_3"
     },
     {
-      "id": "Bones10",
-      "name": "Bones10",
-      "kind": "sprite",
-      "position": [
-        -20,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Bones.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 0.9375,
-            "height": 0.5625,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -2,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.Bones"
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Bones11",
-      "name": "Bones11",
-      "kind": "sprite",
-      "position": [
-        -16,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Bones.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 0.9375,
-            "height": 0.5625,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -2,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.Bones"
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Bones12",
-      "name": "Bones12",
-      "kind": "sprite",
-      "position": [
-        -12,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Bones.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 0.9375,
-            "height": 0.5625,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -2,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.Bones"
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Bones13",
-      "name": "Bones13",
-      "kind": "sprite",
-      "position": [
-        -8,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Bones.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 0.9375,
-            "height": 0.5625,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -2,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.Bones"
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Bones14",
-      "name": "Bones14",
-      "kind": "sprite",
-      "position": [
-        -4,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Bones.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 0.9375,
-            "height": 0.5625,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -2,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.Bones"
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Bones15",
-      "name": "Bones15",
-      "kind": "sprite",
-      "position": [
-        0,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Bones.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 0.9375,
-            "height": 0.5625,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -2,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.Bones"
-      ],
-      "parent": "Group_3"
-    },
-    {
       "id": "Gold0",
       "name": "Gold0",
       "kind": "sprite",
@@ -29494,162 +34523,6 @@
       "kind": "sprite",
       "position": [
         -40,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_GoldPile.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 1.1875,
-            "height": 0.9375,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -2,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.Gold"
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Gold6",
-      "name": "Gold6",
-      "kind": "sprite",
-      "position": [
-        -36,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_GoldPile.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 1.1875,
-            "height": 0.9375,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -2,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.Gold"
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Gold7",
-      "name": "Gold7",
-      "kind": "sprite",
-      "position": [
-        -32,
         -200,
         0.05
       ],
