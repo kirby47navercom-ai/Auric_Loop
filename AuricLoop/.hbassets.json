@@ -2176,5 +2176,107 @@
   },
   "Settings/BuildProfiles.json": {
     "id": "a921739b-20a1-495a-b06a-f8ba339a5478"
+  },
+  "Assets/Scenes/Home_1.hbscene.json": {
+    "id": "3894cd88-8a46-4fbd-8e70-06c4a4004207"
+  },
+  "Assets/Scenes/Home_2.hbscene.json": {
+    "id": "09ce2608-3217-4514-ae8b-76934c446ee5"
+  },
+  "Assets/Sprites/Town/Bush.png": {
+    "id": "6027ed4a-0eeb-4bf1-92ac-385f1857ab97"
+  },
+  "Assets/Sprites/Town/Desk.png": {
+    "id": "86533c5d-ab43-45d7-b7ab-1a553f4d67f2"
+  },
+  "Assets/Sprites/Town/Fence.png": {
+    "id": "672c7aaa-d135-4819-9d11-0db9924c93cc"
+  },
+  "Assets/Sprites/Town/Firewood.png": {
+    "id": "afbf0f6b-3ef0-4f3b-9e29-8e06a27bfffd"
+  },
+  "Assets/Sprites/Town/FlowerBed.png": {
+    "id": "edee02e1-0b71-4e5d-8015-d79fbe8643c9"
+  },
+  "Assets/Sprites/Town/HomeDoor.png": {
+    "id": "730f6fc2-89ad-421c-b0bd-be4850770466"
+  },
+  "Assets/Sprites/Town/HomeWall.png": {
+    "id": "93daebd3-9ec9-4883-ad6b-4656ea245efc"
+  },
+  "Assets/Sprites/Town/HomeWindow.png": {
+    "id": "ce8b97b9-24bd-49ff-8abe-9019be3d48db"
+  },
+  "Assets/Sprites/Town/LoanOffice.png": {
+    "id": "4f023fd0-487d-4ec5-9cc1-258f0a30b1ed"
+  },
+  "Assets/Sprites/Town/Mountain.png": {
+    "id": "f7fb84f1-9384-48e0-a89f-cd5e2106116c"
+  },
+  "Assets/Sprites/Town/PlayerHouse.png": {
+    "id": "d369f2a1-9302-4ad1-888f-4e077ffea523"
+  },
+  "Assets/Sprites/Town/PottedPlant.png": {
+    "id": "9f5400f3-19af-4354-8718-b37736765d5c"
+  },
+  "Assets/Sprites/Town/Rug.png": {
+    "id": "f1109d01-1a04-403b-a281-629b332d6a86"
+  },
+  "Assets/Sprites/Town/ShopBag.png": {
+    "id": "c5ec53e8-6496-4a98-89e1-109cc8b9c2b0"
+  },
+  "Assets/Sprites/Town/ShopCharm.png": {
+    "id": "40cfc88e-8bdf-42cf-9e56-34eb4ef823e1"
+  },
+  "Assets/Sprites/Town/ShopRecipe.png": {
+    "id": "363ed561-7560-41c8-a4fd-c3afb451f77e"
+  },
+  "Assets/Sprites/Town/ShopRelic.png": {
+    "id": "6e42e242-81e9-4bbb-99c6-d81199f9349f"
+  },
+  "Assets/Sprites/Town/Sofa2.png": {
+    "id": "6a6a674f-6a32-46c8-9f15-6489de19423b"
+  },
+  "Assets/Sprites/Town/Sofa3.png": {
+    "id": "25f5df04-fdc8-4ea0-ae9a-616b2f05b5ac"
+  },
+  "Assets/Sprites/Town/Stairs.png": {
+    "id": "8366d538-81e3-44f8-94f9-071acd82e1d2"
+  },
+  "Assets/Sprites/Town/S_Sofa_0.hbsprite.json": {
+    "id": "cfbfe6a5-85a0-4126-a1da-4ee756003cf9"
+  },
+  "Assets/Sprites/Town/S_Sofa_1.hbsprite.json": {
+    "id": "4577389a-ddec-4f3a-ac2a-7f15c7710ffa"
+  },
+  "Assets/Sprites/Town/S_Sofa_2.hbsprite.json": {
+    "id": "0302e0b1-2e85-45ba-b70d-91c1c04c9e86"
+  },
+  "Assets/Sprites/Town/S_Sofa_3.hbsprite.json": {
+    "id": "7b568191-3cce-4830-afb4-21f057a75341"
+  },
+  "Assets/Sprites/Town/TreePine.png": {
+    "id": "ed4b473d-8378-4bd3-b518-e73f68d5b7b3"
+  },
+  "Assets/Sprites/Town/TreeRound.png": {
+    "id": "a80fcbd8-ecc4-4766-948b-7b6fef55fdc5"
+  },
+  "Assets/Sprites/Town/Well.png": {
+    "id": "514677a3-d480-4183-92a9-c2155780c390"
+  },
+  "Assets/Sprites/Town/Workshop.png": {
+    "id": "580c4037-825a-4f02-a30b-bd5d8b166f89"
+  },
+  "Assets/Tiles/T_HomeWood.png": {
+    "id": "7b9be798-8631-425b-a57e-507b59e2cfc9"
+  },
+  "Assets/Tiles/T_TownCobble.png": {
+    "id": "ca5c1803-8bc2-4598-a928-242fe2ea09e2"
+  },
+  "Assets/Tiles/T_TownDirt.png": {
+    "id": "e4ead9c9-055b-45bd-a841-8aa09a5f6428"
+  },
+  "Assets/Tiles/T_TownGrass.png": {
+    "id": "0fa31857-b2f4-4083-8f89-47ec759de773"
   }
 }

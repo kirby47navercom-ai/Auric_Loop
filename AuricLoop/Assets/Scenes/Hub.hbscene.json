@@ -324,7 +324,7 @@
       ]
     },
     {
-      "id": "Group_3",
+      "id": "Group_4",
       "name": "장식·조명",
       "kind": "group",
       "group": "WORLD",
@@ -370,8 +370,100 @@
       ]
     },
     {
-      "id": "Group_2",
+      "id": "Group_3",
       "name": "상호작용 (NPC·채집·상점)",
+      "kind": "group",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Group_2",
+      "name": "건물·벽",
+      "kind": "group",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Group_5",
+      "name": "나무·장식",
       "kind": "group",
       "group": "WORLD",
       "position": [
@@ -559,14 +651,13 @@
       "parent": "Group_0"
     },
     {
-      "id": "World",
-      "name": "World",
-      "kind": "tilemap",
-      "group": "WORLD",
+      "id": "Background",
+      "name": "Background",
+      "kind": "sprite",
       "position": [
-        -26,
-        26,
-        -0.2
+        10,
+        8,
+        -0.3
       ],
       "rotation": [
         0,
@@ -603,14 +694,404 @@
           }
         },
         {
-          "id": "tilemap",
-          "name": "TilemapRenderer",
-          "type": "TilemapRenderer",
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "tilemap": "Assets/Tilemaps/TM_Hub.hbtilemap.json",
-            "sortingOrder": -10,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.32,
+              0.32,
+              0.38,
+              1
+            ],
+            "width": 150,
+            "height": 110,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -30,
+            "billboard": false,
             "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Grass",
+      "name": "Grass",
+      "kind": "sprite",
+      "position": [
+        10.0,
+        2.0,
+        -0.25
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_TownGrass.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 128,
+            "height": 64,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -14,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Plaza",
+      "name": "Plaza",
+      "kind": "sprite",
+      "position": [
+        0.0,
+        0.0,
+        -0.25
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_TownCobble.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 24,
+            "height": 18,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -13,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "NorthRoad",
+      "name": "NorthRoad",
+      "kind": "sprite",
+      "position": [
+        0.0,
+        13.0,
+        -0.25
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_TownCobble.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 5.0,
+            "height": 8,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -13,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "HomePath",
+      "name": "HomePath",
+      "kind": "sprite",
+      "position": [
+        -19.5,
+        0.0,
+        -0.25
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_TownDirt.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 15,
+            "height": 3.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -13,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "Street",
+      "name": "Street",
+      "kind": "sprite",
+      "position": [
+        34.5,
+        0.0,
+        -0.25
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_TownCobble.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 45,
+            "height": 7.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -13,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
             "sortingLayer": "default",
             "maskInteraction": "none",
             "shading": "unlit"
@@ -675,13 +1156,107 @@
       "parent": "Group_0"
     },
     {
-      "id": "Background",
-      "name": "Background",
+      "id": "StairTop",
+      "name": "StairTop",
+      "kind": "playerStart",
+      "group": "WORLD",
+      "position": [
+        0,
+        19.8,
+        0.1
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "parent": "Group_0"
+    },
+    {
+      "id": "HomeDoor",
+      "name": "HomeDoor",
+      "kind": "playerStart",
+      "group": "WORLD",
+      "position": [
+        -24,
+        -0.6,
+        0.1
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "parent": "Group_0"
+    },
+    {
+      "id": "Mountain",
+      "name": "Mountain",
       "kind": "sprite",
       "position": [
-        2,
-        7,
-        -0.3
+        0,
+        24.15625,
+        0.05
       ],
       "rotation": [
         0,
@@ -724,23 +1299,23 @@
           "properties": {
             "enabled": true,
             "sprite": "",
-            "drawMode": "tiled",
-            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/Mountain.png",
             "color": [
-              0.32,
-              0.32,
-              0.38,
+              1,
+              1,
+              1,
               1
             ],
-            "width": 110,
-            "height": 80,
+            "width": 21.65625,
+            "height": 10.3125,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -30,
+            "sortingOrder": -6,
             "billboard": false,
             "visible": true,
-            "useCustomSize": true,
+            "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
             "shading": "unlit"
@@ -750,14 +1325,459 @@
       "parent": "Group_1"
     },
     {
-      "id": "StairTop",
-      "name": "StairTop",
-      "kind": "playerStart",
+      "id": "Stairs",
+      "name": "Stairs",
+      "kind": "sprite",
+      "position": [
+        0,
+        18.7875,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/Stairs.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4.4375,
+            "height": 4.375,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -7,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_1"
+    },
+    {
+      "id": "MountainL",
+      "name": "MountainL",
+      "kind": "sprite",
+      "position": [
+        -6.4640625,
+        25.75,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              4.3640625,
+              6.25,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "MountainR",
+      "name": "MountainR",
+      "kind": "sprite",
+      "position": [
+        6.4640625,
+        25.75,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              4.3640625,
+              6.25,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "MouthTop",
+      "name": "MouthTop",
+      "kind": "sprite",
+      "position": [
+        0.0,
+        27.75,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              2.1,
+              4.25,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "StairL",
+      "name": "StairL",
+      "kind": "sprite",
+      "position": [
+        -2.6,
+        17.5,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.3999999999999999,
+              2.0,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "StairR",
+      "name": "StairR",
+      "kind": "sprite",
+      "position": [
+        2.6,
+        17.5,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.3999999999999999,
+              2.0,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Entrance",
+      "name": "Entrance",
+      "kind": "empty",
       "group": "WORLD",
       "position": [
         0,
-        20.2,
-        0.1
+        20.7,
+        0.05
       ],
       "rotation": [
         0,
@@ -794,7 +1814,35 @@
           }
         }
       ],
-      "parent": "Group_0"
+      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
+      "overrides": {
+        "nativeProperties": {
+          "Kind": "Entrance",
+          "Text": "마몬의 입 - 황금 던전 입구",
+          "Price": 0
+        },
+        "components": {
+          "sprite": {
+            "texture": "Assets/UI/Map/map_link.png",
+            "width": 0.1875,
+            "height": 0.1875
+          },
+          "collider": {
+            "extent": [
+              0.07500000000000001,
+              0.037500000000000006,
+              0.5
+            ],
+            "center": [
+              0,
+              -0.056249999999999994,
+              0
+            ],
+            "enabled": false
+          }
+        }
+      },
+      "parent": "Group_3"
     },
     {
       "id": "DebtBoard",
@@ -869,832 +1917,7 @@
           }
         }
       },
-      "parent": "Group_2"
-    },
-    {
-      "id": "Entrance",
-      "name": "Entrance",
-      "kind": "empty",
-      "group": "WORLD",
-      "position": [
-        0,
-        18.5,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        }
-      ],
-      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
-      "overrides": {
-        "nativeProperties": {
-          "Kind": "Entrance",
-          "Text": "마몬의 입 - 황금 던전 입구",
-          "Price": 0
-        },
-        "components": {
-          "sprite": {
-            "texture": "Assets/Sprites/Prop_DungeonEntrance.png",
-            "width": 4.03125,
-            "height": 5.0
-          },
-          "collider": {
-            "extent": [
-              1.6125,
-              1.0,
-              0.5
-            ],
-            "center": [
-              0,
-              -1.5,
-              0
-            ],
-            "enabled": false
-          }
-        }
-      },
-      "parent": "Group_2"
-    },
-    {
-      "id": "Collector",
-      "name": "Collector",
-      "kind": "empty",
-      "group": "WORLD",
-      "position": [
-        16,
-        5,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        }
-      ],
-      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
-      "overrides": {
-        "nativeProperties": {
-          "Kind": "Collector",
-          "Text": "수금원: 이번 주 이자는 아직이던데?",
-          "Price": 0
-        },
-        "components": {
-          "sprite": {
-            "texture": "Assets/Sprites/NPC_Collector.png",
-            "width": 0.71875,
-            "height": 1.9375
-          },
-          "collider": {
-            "extent": [
-              0.28750000000000003,
-              0.3875,
-              0.5
-            ],
-            "center": [
-              0,
-              -0.5812499999999999,
-              0
-            ],
-            "enabled": true
-          }
-        }
-      },
-      "parent": "Group_2"
-    },
-    {
-      "id": "Interior",
-      "name": "Interior",
-      "kind": "empty",
-      "group": "WORLD",
-      "position": [
-        21,
-        5,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        }
-      ],
-      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
-      "overrides": {
-        "nativeProperties": {
-          "Kind": "Interior",
-          "Text": "세공사: 다음 공사는 다음 시즌에!",
-          "Price": 150
-        },
-        "components": {
-          "sprite": {
-            "texture": "Assets/Sprites/NPC_Interior.png",
-            "width": 0.875,
-            "height": 1.8125
-          },
-          "collider": {
-            "extent": [
-              0.35000000000000003,
-              0.36250000000000004,
-              0.5
-            ],
-            "center": [
-              0,
-              -0.54375,
-              0
-            ],
-            "enabled": true
-          }
-        }
-      },
-      "parent": "Group_2"
-    },
-    {
-      "id": "ClosedRental",
-      "name": "ClosedRental",
-      "kind": "empty",
-      "group": "WORLD",
-      "position": [
-        26.5,
-        5,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        }
-      ],
-      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
-      "overrides": {
-        "nativeProperties": {
-          "Kind": "Note",
-          "Text": "휴가 중입니다. 빚쟁이 여러분 다음에 또 오세요",
-          "Price": 0
-        },
-        "components": {
-          "sprite": {
-            "texture": "Assets/Sprites/Prop_ClosedShop.png",
-            "width": 3.0,
-            "height": 2.5
-          },
-          "collider": {
-            "extent": [
-              1.2000000000000002,
-              0.5,
-              0.5
-            ],
-            "center": [
-              0,
-              -0.75,
-              0
-            ],
-            "enabled": true
-          }
-        }
-      },
-      "parent": "Group_2"
-    },
-    {
-      "id": "ClosedCharm",
-      "name": "ClosedCharm",
-      "kind": "empty",
-      "group": "WORLD",
-      "position": [
-        15.5,
-        -5.5,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        }
-      ],
-      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
-      "overrides": {
-        "nativeProperties": {
-          "Kind": "Note",
-          "Text": "가게 개장 준비 중",
-          "Price": 0
-        },
-        "components": {
-          "sprite": {
-            "texture": "Assets/Sprites/Prop_ClosedShop.png",
-            "width": 3.0,
-            "height": 2.5
-          },
-          "collider": {
-            "extent": [
-              1.2000000000000002,
-              0.5,
-              0.5
-            ],
-            "center": [
-              0,
-              -0.75,
-              0
-            ],
-            "enabled": true
-          }
-        }
-      },
-      "parent": "Group_2"
-    },
-    {
-      "id": "ClosedRecipe",
-      "name": "ClosedRecipe",
-      "kind": "empty",
-      "group": "WORLD",
-      "position": [
-        21,
-        -5.5,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        }
-      ],
-      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
-      "overrides": {
-        "nativeProperties": {
-          "Kind": "Note",
-          "Text": "가게 개장 준비 중",
-          "Price": 0
-        },
-        "components": {
-          "sprite": {
-            "texture": "Assets/Sprites/Prop_ClosedShop.png",
-            "width": 3.0,
-            "height": 2.5
-          },
-          "collider": {
-            "extent": [
-              1.2000000000000002,
-              0.5,
-              0.5
-            ],
-            "center": [
-              0,
-              -0.75,
-              0
-            ],
-            "enabled": true
-          }
-        }
-      },
-      "parent": "Group_2"
-    },
-    {
-      "id": "ClosedRelic",
-      "name": "ClosedRelic",
-      "kind": "empty",
-      "group": "WORLD",
-      "position": [
-        26.5,
-        -5.5,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        }
-      ],
-      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
-      "overrides": {
-        "nativeProperties": {
-          "Kind": "Note",
-          "Text": "휴가 중입니다. 빚쟁이 여러분 다음에 또 오세요",
-          "Price": 0
-        },
-        "components": {
-          "sprite": {
-            "texture": "Assets/Sprites/Prop_ClosedShop.png",
-            "width": 3.0,
-            "height": 2.5
-          },
-          "collider": {
-            "extent": [
-              1.2000000000000002,
-              0.5,
-              0.5
-            ],
-            "center": [
-              0,
-              -0.75,
-              0
-            ],
-            "enabled": true
-          }
-        }
-      },
-      "parent": "Group_2"
-    },
-    {
-      "id": "Sofa",
-      "name": "Sofa",
-      "kind": "empty",
-      "group": "WORLD",
-      "position": [
-        -19,
-        4,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        }
-      ],
-      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
-      "overrides": {
-        "nativeProperties": {
-          "Kind": "Sofa",
-          "Text": "푹신한 소파. 더는 바꿀 수 없다",
-          "Price": 50
-        },
-        "components": {
-          "sprite": {
-            "texture": "Assets/Sprites/Furniture_Sofa.png",
-            "width": 2.5,
-            "height": 2.0625
-          },
-          "collider": {
-            "extent": [
-              1.0,
-              0.41250000000000003,
-              0.5
-            ],
-            "center": [
-              0,
-              -0.61875,
-              0
-            ],
-            "enabled": true
-          }
-        }
-      },
-      "parent": "Group_2"
-    },
-    {
-      "id": "Bed",
-      "name": "Bed",
-      "kind": "empty",
-      "group": "WORLD",
-      "position": [
-        -23,
-        -3,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        }
-      ],
-      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
-      "overrides": {
-        "nativeProperties": {
-          "Kind": "Note",
-          "Text": "삐걱거리는 침대. 오늘 밤도 빚 꿈을 꾸겠지",
-          "Price": 0
-        },
-        "components": {
-          "sprite": {
-            "texture": "Assets/Sprites/Furniture_Bed.png",
-            "width": 2.5,
-            "height": 2.0625
-          },
-          "collider": {
-            "extent": [
-              1.0,
-              0.41250000000000003,
-              0.5
-            ],
-            "center": [
-              0,
-              -0.61875,
-              0
-            ],
-            "enabled": true
-          }
-        }
-      },
-      "parent": "Group_2"
-    },
-    {
-      "id": "Fridge",
-      "name": "Fridge",
-      "kind": "empty",
-      "group": "WORLD",
-      "position": [
-        -15,
-        -3,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        }
-      ],
-      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
-      "overrides": {
-        "nativeProperties": {
-          "Kind": "Note",
-          "Text": "텅 빈 냉장고. 물 한 병뿐이다",
-          "Price": 0
-        },
-        "components": {
-          "sprite": {
-            "texture": "Assets/Sprites/Furniture_Fridge.png",
-            "width": 2.5,
-            "height": 2.0625
-          },
-          "collider": {
-            "extent": [
-              1.0,
-              0.41250000000000003,
-              0.5
-            ],
-            "center": [
-              0,
-              -0.61875,
-              0
-            ],
-            "enabled": true
-          }
-        }
-      },
-      "parent": "Group_2"
-    },
-    {
-      "id": "TV",
-      "name": "TV",
-      "kind": "empty",
-      "group": "WORLD",
-      "position": [
-        -19,
-        -3.5,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        }
-      ],
-      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
-      "overrides": {
-        "nativeProperties": {
-          "Kind": "Note",
-          "Text": "꺼진 TV. 화면에 비친 내 얼굴이 피곤해 보인다",
-          "Price": 0
-        },
-        "components": {
-          "sprite": {
-            "texture": "Assets/Sprites/Furniture_TV.png",
-            "width": 2.5,
-            "height": 2.0625
-          },
-          "collider": {
-            "extent": [
-              1.0,
-              0.41250000000000003,
-              0.5
-            ],
-            "center": [
-              0,
-              -0.61875,
-              0
-            ],
-            "enabled": true
-          }
-        }
-      },
-      "parent": "Group_2"
+      "parent": "Group_3"
     },
     {
       "id": "Lamp0",
@@ -1702,7 +1925,7 @@
       "kind": "sprite",
       "position": [
         -10.5,
-        6.5,
+        7.5,
         0.05
       ],
       "rotation": [
@@ -1797,7 +2020,7 @@
           }
         }
       ],
-      "parent": "Group_3"
+      "parent": "Group_4"
     },
     {
       "id": "Lamp0Glow",
@@ -1805,7 +2028,7 @@
       "kind": "sprite",
       "position": [
         -10.5,
-        7.225,
+        8.225,
         0.05
       ],
       "rotation": [
@@ -1873,7 +2096,7 @@
           }
         }
       ],
-      "parent": "Group_3"
+      "parent": "Group_4"
     },
     {
       "id": "Lamp1",
@@ -1881,7 +2104,7 @@
       "kind": "sprite",
       "position": [
         10.5,
-        6.5,
+        7.5,
         0.05
       ],
       "rotation": [
@@ -1976,7 +2199,7 @@
           }
         }
       ],
-      "parent": "Group_3"
+      "parent": "Group_4"
     },
     {
       "id": "Lamp1Glow",
@@ -1984,7 +2207,7 @@
       "kind": "sprite",
       "position": [
         10.5,
-        7.225,
+        8.225,
         0.05
       ],
       "rotation": [
@@ -2052,7 +2275,7 @@
           }
         }
       ],
-      "parent": "Group_3"
+      "parent": "Group_4"
     },
     {
       "id": "Lamp2",
@@ -2060,7 +2283,7 @@
       "kind": "sprite",
       "position": [
         -10.5,
-        -6.5,
+        -7.5,
         0.05
       ],
       "rotation": [
@@ -2155,7 +2378,7 @@
           }
         }
       ],
-      "parent": "Group_3"
+      "parent": "Group_4"
     },
     {
       "id": "Lamp2Glow",
@@ -2163,7 +2386,7 @@
       "kind": "sprite",
       "position": [
         -10.5,
-        -5.775,
+        -6.775,
         0.05
       ],
       "rotation": [
@@ -2231,7 +2454,7 @@
           }
         }
       ],
-      "parent": "Group_3"
+      "parent": "Group_4"
     },
     {
       "id": "Lamp3",
@@ -2239,7 +2462,7 @@
       "kind": "sprite",
       "position": [
         10.5,
-        -6.5,
+        -7.5,
         0.05
       ],
       "rotation": [
@@ -2334,7 +2557,7 @@
           }
         }
       ],
-      "parent": "Group_3"
+      "parent": "Group_4"
     },
     {
       "id": "Lamp3Glow",
@@ -2342,7 +2565,7 @@
       "kind": "sprite",
       "position": [
         10.5,
-        -5.775,
+        -6.775,
         0.05
       ],
       "rotation": [
@@ -2410,7 +2633,7 @@
           }
         }
       ],
-      "parent": "Group_3"
+      "parent": "Group_4"
     },
     {
       "id": "Lamp4",
@@ -2513,7 +2736,7 @@
           }
         }
       ],
-      "parent": "Group_3"
+      "parent": "Group_4"
     },
     {
       "id": "Lamp4Glow",
@@ -2589,7 +2812,7 @@
           }
         }
       ],
-      "parent": "Group_3"
+      "parent": "Group_4"
     },
     {
       "id": "Lamp5",
@@ -2692,7 +2915,7 @@
           }
         }
       ],
-      "parent": "Group_3"
+      "parent": "Group_4"
     },
     {
       "id": "Lamp5Glow",
@@ -2768,7 +2991,7 @@
           }
         }
       ],
-      "parent": "Group_3"
+      "parent": "Group_4"
     },
     {
       "id": "Bench6",
@@ -2776,7 +2999,7 @@
       "kind": "sprite",
       "position": [
         -6,
-        -6.8,
+        -7.5,
         0.05
       ],
       "rotation": [
@@ -2843,7 +3066,7 @@
           }
         }
       ],
-      "parent": "Group_3"
+      "parent": "Group_4"
     },
     {
       "id": "Bench7",
@@ -2851,7 +3074,7 @@
       "kind": "sprite",
       "position": [
         6,
-        -6.8,
+        -7.5,
         0.05
       ],
       "rotation": [
@@ -2918,474 +3141,15 @@
           }
         }
       ],
-      "parent": "Group_3"
+      "parent": "Group_4"
     },
     {
-      "id": "Plant8",
-      "name": "Plant8",
+      "id": "NoticeBoard8",
+      "name": "NoticeBoard8",
       "kind": "sprite",
       "position": [
-        -11,
-        1,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Plant.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 1.03125,
-            "height": 1.125,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": 0,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Plant9",
-      "name": "Plant9",
-      "kind": "sprite",
-      "position": [
-        11,
-        1,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Plant.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 1.03125,
-            "height": 1.125,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": 0,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Crates10",
-      "name": "Crates10",
-      "kind": "sprite",
-      "position": [
-        27.5,
-        -1.5,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Crates.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 1.21875,
-            "height": 1.375,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": 0,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        },
-        {
-          "id": "component_2",
-          "name": "BoxCollider2D",
-          "type": "BoxCollider2D",
-          "properties": {
-            "enabled": true,
-            "center": [
-              0,
-              -0.3875,
-              0
-            ],
-            "collisionMode": "both",
-            "trigger": false,
-            "layer": 0,
-            "mask": 4294967295,
-            "physicalMaterial": "",
-            "friction": 0.5,
-            "frictionCombine": "average",
-            "restitution": 0,
-            "restitutionCombine": "average",
-            "density": 1,
-            "extent": [
-              0.42656249999999996,
-              0.25,
-              0.5
-            ]
-          }
-        }
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Barrel11",
-      "name": "Barrel11",
-      "kind": "sprite",
-      "position": [
-        27.5,
-        1.5,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Barrel.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 0.84375,
-            "height": 1.0625,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": 0,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        },
-        {
-          "id": "component_2",
-          "name": "BoxCollider2D",
-          "type": "BoxCollider2D",
-          "properties": {
-            "enabled": true,
-            "center": [
-              0,
-              -0.23125,
-              0
-            ],
-            "collisionMode": "both",
-            "trigger": false,
-            "layer": 0,
-            "mask": 4294967295,
-            "physicalMaterial": "",
-            "friction": 0.5,
-            "frictionCombine": "average",
-            "restitution": 0,
-            "restitutionCombine": "average",
-            "density": 1,
-            "extent": [
-              0.2953125,
-              0.25,
-              0.5
-            ]
-          }
-        }
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Crates12",
-      "name": "Crates12",
-      "kind": "sprite",
-      "position": [
-        14.5,
-        0,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Crates.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 1.21875,
-            "height": 1.375,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": 0,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        },
-        {
-          "id": "component_2",
-          "name": "BoxCollider2D",
-          "type": "BoxCollider2D",
-          "properties": {
-            "enabled": true,
-            "center": [
-              0,
-              -0.3875,
-              0
-            ],
-            "collisionMode": "both",
-            "trigger": false,
-            "layer": 0,
-            "mask": 4294967295,
-            "physicalMaterial": "",
-            "friction": 0.5,
-            "frictionCombine": "average",
-            "restitution": 0,
-            "restitutionCombine": "average",
-            "density": 1,
-            "extent": [
-              0.42656249999999996,
-              0.25,
-              0.5
-            ]
-          }
-        }
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "NoticeBoard13",
-      "name": "NoticeBoard13",
-      "kind": "sprite",
-      "position": [
-        4,
-        7.1,
+        5,
+        7.6,
         0.05
       ],
       "rotation": [
@@ -3452,15 +3216,15 @@
           }
         }
       ],
-      "parent": "Group_3"
+      "parent": "Group_4"
     },
     {
-      "id": "Plant14",
-      "name": "Plant14",
+      "id": "Well",
+      "name": "Well",
       "kind": "sprite",
       "position": [
-        -24,
-        4.8,
+        -7,
+        -3.3125,
         0.05
       ],
       "rotation": [
@@ -3505,90 +3269,15 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Plant.png",
+            "texture": "Assets/Sprites/Town/Well.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 1.03125,
-            "height": 1.125,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": 0,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": false,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit"
-          }
-        }
-      ],
-      "parent": "Group_3"
-    },
-    {
-      "id": "Barrel15",
-      "name": "Barrel15",
-      "kind": "sprite",
-      "position": [
-        -14,
-        4.8,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Barrel.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 0.84375,
-            "height": 1.0625,
+            "width": 2.125,
+            "height": 2.375,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -3609,7 +3298,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.23125,
+              -0.7875,
               0
             ],
             "collisionMode": "both",
@@ -3623,14 +3312,5249 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.2953125,
-              0.25,
+              0.8925,
+              0.4,
               0.5
             ]
           }
         }
       ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "FlowerBedA",
+      "name": "FlowerBedA",
+      "kind": "sprite",
+      "position": [
+        -4,
+        7.7,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/FlowerBed.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.28125,
+            "height": 1.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "FlowerBedB",
+      "name": "FlowerBedB",
+      "kind": "sprite",
+      "position": [
+        8,
+        -2.5,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/FlowerBed.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.28125,
+            "height": 1.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "PlayerHouse",
+      "name": "PlayerHouse",
+      "kind": "sprite",
+      "position": [
+        -24,
+        4.1,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/PlayerHouse.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4.5625,
+            "height": 7.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "HouseBody",
+      "name": "HouseBody",
+      "kind": "sprite",
+      "position": [
+        -24.0,
+        2.55,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              2.0812500000000007,
+              1.95,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "HomeEnter",
+      "name": "HomeEnter",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -24,
+        1.4,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
+      "overrides": {
+        "nativeProperties": {
+          "Kind": "Home",
+          "Text": "",
+          "Price": 0
+        },
+        "components": {
+          "sprite": {
+            "texture": "Assets/UI/Map/map_link.png",
+            "width": 0.1875,
+            "height": 0.1875
+          },
+          "collider": {
+            "extent": [
+              0.07500000000000001,
+              0.037500000000000006,
+              0.5
+            ],
+            "center": [
+              0,
+              -0.056249999999999994,
+              0
+            ],
+            "enabled": false
+          }
+        }
+      },
       "parent": "Group_3"
+    },
+    {
+      "id": "Firewood",
+      "name": "Firewood",
+      "kind": "sprite",
+      "position": [
+        -21,
+        0.9625,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/Firewood.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.46875,
+            "height": 1.125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -0.16249999999999998,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.616875,
+              0.4,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "HomeFence1",
+      "name": "HomeFence1",
+      "kind": "sprite",
+      "position": [
+        -29.5,
+        -1.175,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/Fence.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.75,
+            "height": 1.25,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -0.425,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.735,
+              0.2,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "HomeFence2",
+      "name": "HomeFence2",
+      "kind": "sprite",
+      "position": [
+        -18.5,
+        -1.175,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/Fence.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.75,
+            "height": 1.25,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -0.425,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              0.735,
+              0.2,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "HomeBush",
+      "name": "HomeBush",
+      "kind": "sprite",
+      "position": [
+        -27.5,
+        1.13125,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/Bush.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.1875,
+            "height": 1.0625,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "LoanOffice",
+      "name": "LoanOffice",
+      "kind": "sprite",
+      "position": [
+        18,
+        7.6,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/LoanOffice.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 7.8125,
+            "height": 8.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "LoanOfficeBody",
+      "name": "LoanOfficeBody",
+      "kind": "sprite",
+      "position": [
+        18.0,
+        5.55,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              3.7062500000000007,
+              1.95,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Collector",
+      "name": "Collector",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        18,
+        2.4,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
+      "overrides": {
+        "nativeProperties": {
+          "Kind": "Collector",
+          "Text": "수금원: 이번 주 이자는 아직이던데?",
+          "Price": 0
+        },
+        "components": {
+          "sprite": {
+            "texture": "Assets/Sprites/NPC_Collector.png",
+            "width": 0.71875,
+            "height": 1.9375
+          },
+          "collider": {
+            "extent": [
+              0.28750000000000003,
+              0.3875,
+              0.5
+            ],
+            "center": [
+              0,
+              -0.5812499999999999,
+              0
+            ],
+            "enabled": true
+          }
+        }
+      },
+      "parent": "Group_3"
+    },
+    {
+      "id": "Workshop",
+      "name": "Workshop",
+      "kind": "sprite",
+      "position": [
+        27.5,
+        7.1,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/Workshop.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 7.125,
+            "height": 7.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "WorkshopBody",
+      "name": "WorkshopBody",
+      "kind": "sprite",
+      "position": [
+        27.5,
+        5.55,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              3.3625000000000007,
+              1.95,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Interior",
+      "name": "Interior",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        27.5,
+        2.4,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
+      "overrides": {
+        "nativeProperties": {
+          "Kind": "Interior",
+          "Text": "세공사: 다음 공사는 다음 시즌에!",
+          "Price": 150
+        },
+        "components": {
+          "sprite": {
+            "texture": "Assets/Sprites/NPC_Interior.png",
+            "width": 0.875,
+            "height": 1.8125
+          },
+          "collider": {
+            "extent": [
+              0.35000000000000003,
+              0.36250000000000004,
+              0.5
+            ],
+            "center": [
+              0,
+              -0.54375,
+              0
+            ],
+            "enabled": true
+          }
+        }
+      },
+      "parent": "Group_3"
+    },
+    {
+      "id": "ShopBag",
+      "name": "ShopBag",
+      "kind": "sprite",
+      "position": [
+        35.5,
+        6.1,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/ShopBag.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4.65625,
+            "height": 5.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ShopBagBody",
+      "name": "ShopBagBody",
+      "kind": "sprite",
+      "position": [
+        35.5,
+        5.55,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              2.128124999999997,
+              1.95,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ClosedRental",
+      "name": "ClosedRental",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        37.1,
+        2.4,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
+      "overrides": {
+        "nativeProperties": {
+          "Kind": "Note",
+          "Text": "가방 렌탈 - 휴가 중입니다. 빚쟁이 여러분 다음에 또 오세요",
+          "Price": 0
+        },
+        "components": {
+          "sprite": {
+            "texture": "Assets/Sprites/Prop_ClosedShop.png",
+            "width": 3.0,
+            "height": 2.5
+          },
+          "collider": {
+            "extent": [
+              1.2000000000000002,
+              0.5,
+              0.5
+            ],
+            "center": [
+              0,
+              -0.75,
+              0
+            ],
+            "enabled": true
+          }
+        }
+      },
+      "parent": "Group_3"
+    },
+    {
+      "id": "ShopCharm",
+      "name": "ShopCharm",
+      "kind": "sprite",
+      "position": [
+        41,
+        6.1,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/ShopCharm.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4.53125,
+            "height": 5.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ShopCharmBody",
+      "name": "ShopCharmBody",
+      "kind": "sprite",
+      "position": [
+        41.0,
+        5.55,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              2.065624999999997,
+              1.95,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ClosedCharm",
+      "name": "ClosedCharm",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        42.6,
+        2.4,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
+      "overrides": {
+        "nativeProperties": {
+          "Kind": "Note",
+          "Text": "부적 상점 - 가게 개장 준비 중",
+          "Price": 0
+        },
+        "components": {
+          "sprite": {
+            "texture": "Assets/Sprites/Prop_ClosedShop.png",
+            "width": 3.0,
+            "height": 2.5
+          },
+          "collider": {
+            "extent": [
+              1.2000000000000002,
+              0.5,
+              0.5
+            ],
+            "center": [
+              0,
+              -0.75,
+              0
+            ],
+            "enabled": true
+          }
+        }
+      },
+      "parent": "Group_3"
+    },
+    {
+      "id": "ShopRecipe",
+      "name": "ShopRecipe",
+      "kind": "sprite",
+      "position": [
+        46.5,
+        6.1,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/ShopRecipe.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4.625,
+            "height": 5.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ShopRecipeBody",
+      "name": "ShopRecipeBody",
+      "kind": "sprite",
+      "position": [
+        46.5,
+        5.55,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              2.112499999999997,
+              1.95,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ClosedRecipe",
+      "name": "ClosedRecipe",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        48.1,
+        2.4,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
+      "overrides": {
+        "nativeProperties": {
+          "Kind": "Note",
+          "Text": "제작서 상점 - 가게 개장 준비 중",
+          "Price": 0
+        },
+        "components": {
+          "sprite": {
+            "texture": "Assets/Sprites/Prop_ClosedShop.png",
+            "width": 3.0,
+            "height": 2.5
+          },
+          "collider": {
+            "extent": [
+              1.2000000000000002,
+              0.5,
+              0.5
+            ],
+            "center": [
+              0,
+              -0.75,
+              0
+            ],
+            "enabled": true
+          }
+        }
+      },
+      "parent": "Group_3"
+    },
+    {
+      "id": "ShopRelic",
+      "name": "ShopRelic",
+      "kind": "sprite",
+      "position": [
+        52,
+        6.1,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/ShopRelic.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4.375,
+            "height": 5.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ShopRelicBody",
+      "name": "ShopRelicBody",
+      "kind": "sprite",
+      "position": [
+        52.0,
+        5.55,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.9874999999999972,
+              1.95,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ClosedRelic",
+      "name": "ClosedRelic",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        53.6,
+        2.4,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/BP_Interactable.hbblueprint.json",
+      "overrides": {
+        "nativeProperties": {
+          "Kind": "Note",
+          "Text": "유물 감정소 - 휴가 중입니다. 빚쟁이 여러분 다음에 또 오세요",
+          "Price": 0
+        },
+        "components": {
+          "sprite": {
+            "texture": "Assets/Sprites/Prop_ClosedShop.png",
+            "width": 3.0,
+            "height": 2.5
+          },
+          "collider": {
+            "extent": [
+              1.2000000000000002,
+              0.5,
+              0.5
+            ],
+            "center": [
+              0,
+              -0.75,
+              0
+            ],
+            "enabled": true
+          }
+        }
+      },
+      "parent": "Group_3"
+    },
+    {
+      "id": "Tree0",
+      "name": "Tree0",
+      "kind": "sprite",
+      "position": [
+        -34,
+        11.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreeRound.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.96875,
+            "height": 4.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -1.7,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.246875,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree1",
+      "name": "Tree1",
+      "kind": "sprite",
+      "position": [
+        -31,
+        15.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreeRound.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.96875,
+            "height": 4.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -1.7,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.246875,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree2",
+      "name": "Tree2",
+      "kind": "sprite",
+      "position": [
+        -36,
+        -4.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreeRound.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.96875,
+            "height": 4.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -1.7,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.246875,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree3",
+      "name": "Tree3",
+      "kind": "sprite",
+      "position": [
+        -33,
+        -10.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreeRound.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.96875,
+            "height": 4.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -1.7,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.246875,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree4",
+      "name": "Tree4",
+      "kind": "sprite",
+      "position": [
+        -16,
+        13.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreeRound.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.96875,
+            "height": 4.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -1.7,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.246875,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree5",
+      "name": "Tree5",
+      "kind": "sprite",
+      "position": [
+        -14,
+        -10.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreeRound.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.96875,
+            "height": 4.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -1.7,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.246875,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree6",
+      "name": "Tree6",
+      "kind": "sprite",
+      "position": [
+        -6,
+        14.34375,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreePine.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.90625,
+            "height": 4.6875,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -2.04375,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.2206249999999998,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree7",
+      "name": "Tree7",
+      "kind": "sprite",
+      "position": [
+        7,
+        14.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreeRound.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.96875,
+            "height": 4.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -1.7,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.246875,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree8",
+      "name": "Tree8",
+      "kind": "sprite",
+      "position": [
+        15,
+        -8.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreeRound.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.96875,
+            "height": 4.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -1.7,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.246875,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree9",
+      "name": "Tree9",
+      "kind": "sprite",
+      "position": [
+        21,
+        -7.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreeRound.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.96875,
+            "height": 4.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -1.7,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.246875,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree10",
+      "name": "Tree10",
+      "kind": "sprite",
+      "position": [
+        27,
+        -9.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreeRound.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.96875,
+            "height": 4.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -1.7,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.246875,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree11",
+      "name": "Tree11",
+      "kind": "sprite",
+      "position": [
+        34,
+        -6.65625,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreePine.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.90625,
+            "height": 4.6875,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -2.04375,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.2206249999999998,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree12",
+      "name": "Tree12",
+      "kind": "sprite",
+      "position": [
+        40,
+        -8.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreeRound.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.96875,
+            "height": 4.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -1.7,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.246875,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree13",
+      "name": "Tree13",
+      "kind": "sprite",
+      "position": [
+        47,
+        -6.65625,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreePine.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.90625,
+            "height": 4.6875,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -2.04375,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.2206249999999998,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree14",
+      "name": "Tree14",
+      "kind": "sprite",
+      "position": [
+        54,
+        -9.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreeRound.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.96875,
+            "height": 4.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -1.7,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.246875,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree15",
+      "name": "Tree15",
+      "kind": "sprite",
+      "position": [
+        58,
+        8.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreeRound.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.96875,
+            "height": 4.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -1.7,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.246875,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree16",
+      "name": "Tree16",
+      "kind": "sprite",
+      "position": [
+        13,
+        14.34375,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreePine.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.90625,
+            "height": 4.6875,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -2.04375,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.2206249999999998,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree17",
+      "name": "Tree17",
+      "kind": "sprite",
+      "position": [
+        -20,
+        -7.65625,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreePine.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.90625,
+            "height": 4.6875,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -2.04375,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.2206249999999998,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree18",
+      "name": "Tree18",
+      "kind": "sprite",
+      "position": [
+        -27,
+        11.34375,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreePine.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.90625,
+            "height": 4.6875,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -2.04375,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.2206249999999998,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree19",
+      "name": "Tree19",
+      "kind": "sprite",
+      "position": [
+        31,
+        15.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreeRound.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.96875,
+            "height": 4.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -1.7,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.246875,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Tree20",
+      "name": "Tree20",
+      "kind": "sprite",
+      "position": [
+        45,
+        15.0,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/TreeRound.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.96875,
+            "height": 4.0,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -1.7,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              1.246875,
+              0.3,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Bush0",
+      "name": "Bush0",
+      "kind": "sprite",
+      "position": [
+        -20.997204038344407,
+        -6.29442707711916,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/Bush.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.1875,
+            "height": 1.0625,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Bush1",
+      "name": "Bush1",
+      "kind": "sprite",
+      "position": [
+        -22.9558626705031,
+        -7.911677315804951,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/Bush.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.1875,
+            "height": 1.0625,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Bush2",
+      "name": "Bush2",
+      "kind": "sprite",
+      "position": [
+        -24.09027214027465,
+        -13.452776240177188,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/Bush.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.1875,
+            "height": 1.0625,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Bush3",
+      "name": "Bush3",
+      "kind": "sprite",
+      "position": [
+        45.91204600408251,
+        -11.58364255754394,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/Bush.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.1875,
+            "height": 1.0625,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Bush4",
+      "name": "Bush4",
+      "kind": "sprite",
+      "position": [
+        -15.744770092875168,
+        -4.626960020566672,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/Bush.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.1875,
+            "height": 1.0625,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Bush5",
+      "name": "Bush5",
+      "kind": "sprite",
+      "position": [
+        46.00632995105937,
+        -10.865003490277662,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/Bush.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.1875,
+            "height": 1.0625,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Bush6",
+      "name": "Bush6",
+      "kind": "sprite",
+      "position": [
+        54.378930961307844,
+        -8.615738780162705,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/Bush.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.1875,
+            "height": 1.0625,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "Bush7",
+      "name": "Bush7",
+      "kind": "sprite",
+      "position": [
+        27.71606486155568,
+        -11.625734369195865,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Town/Bush.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1.1875,
+            "height": 1.0625,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 0,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_5"
+    },
+    {
+      "id": "EdgeW",
+      "name": "EdgeW",
+      "kind": "sprite",
+      "position": [
+        -39.5,
+        7.0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              2.5,
+              27.0,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "EdgeE",
+      "name": "EdgeE",
+      "kind": "sprite",
+      "position": [
+        61.5,
+        7.0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              2.5,
+              27.0,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "EdgeS",
+      "name": "EdgeS",
+      "kind": "sprite",
+      "position": [
+        11.0,
+        -17.5,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              53.0,
+              2.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "EdgeN1",
+      "name": "EdgeN1",
+      "kind": "sprite",
+      "position": [
+        -26.5,
+        24.5,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              15.5,
+              9.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "EdgeN2",
+      "name": "EdgeN2",
+      "kind": "sprite",
+      "position": [
+        37.5,
+        24.5,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_2",
+          "name": "BoxCollider2D",
+          "type": "BoxCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              0,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": false,
+            "layer": 0,
+            "mask": 4294967295,
+            "physicalMaterial": "",
+            "friction": 0.5,
+            "frictionCombine": "average",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "extent": [
+              26.5,
+              9.5,
+              0.5
+            ]
+          }
+        }
+      ],
+      "parent": "Group_2"
     },
     {
       "id": "PostFX",

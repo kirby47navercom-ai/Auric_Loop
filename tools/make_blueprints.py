@@ -128,6 +128,7 @@ rules = blueprint("BP_AuricRules", "AuricRules", [transform()], native_from=True
     "AuricRules.Debts": [9800, 14500, 31700],  # 기획서 6-4
     "AuricRules.CharacterSprites": ["Assets/Sprites/Valen/S_Valen_", "Assets/Sprites/Sherry/S_Sherry_", "Assets/Sprites/Alea/S_Alea_"],
     "AuricRules.Sounds": SOUNDS,
+    "AuricRules.SofaSprites": [f"Assets/Sprites/Town/S_Sofa_{k}.hbsprite.json" for k in range(4)],
     "AuricRules.Enemies": [f"{k}=Assets/Blueprints/Enemies/BP_{v}.hbblueprint.json" for k, v in (("S", "Skeleton"), ("M", "SkeletonMage"), ("C", "SkeletonCaptain"))]})
 rules["settings"].update(tickEnabled=False, overlapEnabled=False)
 write(BP / "BP_AuricRules.hbblueprint.json", rules)

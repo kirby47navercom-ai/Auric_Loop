@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_Sofa_2",
+  "texture": "Assets/Sprites/Town/Sofa2.png",
+  "pixelsPerUnit": 32,
+  "rect": [
+    0,
+    0,
+    76,
+    50
+  ],
+  "pivot": [
+    0.5,
+    0.5
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

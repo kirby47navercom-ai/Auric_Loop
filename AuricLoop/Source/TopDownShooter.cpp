@@ -508,7 +508,9 @@ void TopDownShooter::Leave(int to,const std::string& spawn){
   for(auto& [c,value]:coins){Gold+=value;Give(coinPool,c);}coins.clear();
   SaveRun();leaving=true;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
   if(to<0)taken.clear();  // 던전은 들어갈 때마다 새로 만들어짐
-  hb::Scene::Open(to>=0?rules->DungeonScene:rules->HubScene,spawn.empty()?hb::Json::object():hb::Json{{"spawn",spawn}});  // 던전은 C++가 시작 방에 세움
+  std::string scene=to>=0?rules->DungeonScene:rules->HubScene;
+  if(to==-2){scene=rules->HomeScene;const auto at=scene.find('#');if(at!=std::string::npos)scene.replace(at,1,std::to_string(std::clamp(HomeLevel,1,2)));}
+  hb::Scene::Open(scene,spawn.empty()?hb::Json::object():hb::Json{{"spawn",spawn}});  // 던전은 C++가 시작 방에 세움
 }
 
 void TopDownShooter::Begin(){
@@ -516,7 +518,7 @@ void TopDownShooter::Begin(){
   started=true;Hp=MaxHp;
   rules=&fallbackRules;for(auto* a:hb::Scene::GetAllActorsOfClass("AuricRules"))if(auto* r=dynamic_cast<AuricRules*>(a))rules=r;
   for(auto* a:hb::Scene::GetAllActorsOfClass("RoomInfo"))if(auto* r=dynamic_cast<RoomInfo*>(a)){
-    area=r->Index;roomKind=r->Kind;exitY=r->ExitY;inDungeon=r->Kind=="Dungeon";}
+    area=r->Index;roomKind=r->Kind;exitY=r->ExitY;inDungeon=r->Kind=="Dungeon";inHome=r->Kind=="Home";}
   for(auto* a:hb::Scene::GetAllActorsOfClass("Interactable"))if(auto* i=dynamic_cast<Interactable*>(a))interactables.push_back(i);
   auto cams=hb::Scene::GetActorsWithTag("MainCamera");camera=cams.empty()?nullptr:cams.front();
   const bool carried=LoadRun();
@@ -525,6 +527,7 @@ void TopDownShooter::Begin(){
   if(carried||area>=0)Phase=std::max(Phase,2);  // 장면을 넘어왔거나 던전에서 바로 시작하면 로딩·타이틀 생략
   RoomIndex=area;
   if(inDungeon){Prewarm();StartFloor();}
+  if(inHome)ShowSofa();
   else if(Returning||KnockedOut){Returning=false;ReturnSuccess=true;Settle();}  // 거점에 닿으면 귀환 성공 (쓰러졌으면 소재 없이 정산)
   Hud();
 }
@@ -569,6 +572,13 @@ void TopDownShooter::UpdateMinimap(){
       else hb::UI::SetPosition(player,"HUD",lname,hb::Vec2{c.x,c.y-bar/2}),hb::UI::SetSize(player,"HUD",lname,hb::Vec2{o.x-c.x,bar});}
   }
   for(int k=links;k<20;++k)hb::UI::SetVisible(player,"HUD","MapLink"+std::to_string(k),false);
+}
+
+void TopDownShooter::ShowSofa(){
+  // 원룸 소파 그림을 레벨에 맞게 (낡은 소파 → 가죽 → 황금 벨벳)
+  if(rules->SofaSprites.empty())return;
+  const auto& path=rules->SofaSprites[std::min<size_t>(SofaLevel,rules->SofaSprites.size()-1)];
+  for(auto* i:interactables)if(i->Kind=="Sofa")hb::Sprites::SetSprite(i,path);
 }
 
 void TopDownShooter::Warp(int room){
@@ -750,8 +760,9 @@ void TopDownShooter::Interact(const hb::Vec3& position,bool pressed){
   else if(kind=="Interior"){next=HomeLevel>=2?text:"E: 원룸 공사 Lv2 ("+std::to_string(price)+" G, 피로도 한계 +"+std::to_string(rules->HomeFatigueBonus)+")";
     if(pressed&&HomeLevel<2&&Gold>=price){Gold-=price;HomeLevel=2;Sfx("Coin");FatigueMax+=rules->HomeFatigueBonus;next="원룸이 넓어졌다!";}}
   else if(kind=="Sofa"){next=SofaLevel>=rules->SofaMax?text:"E: 소파 바꾸기 ("+std::to_string(price)+" G, 최대 체력 +1)";
-    if(pressed&&SofaLevel<rules->SofaMax&&Gold>=price){Gold-=price;SofaLevel++;Sfx("Coin");MaxHp++;Hp=MaxHp;}}
-  else next=text;  // Note: 가구·문 닫은 가게 등은 문구만
+    if(pressed&&SofaLevel<rules->SofaMax&&Gold>=price){Gold-=price;SofaLevel++;Sfx("Coin");MaxHp++;Hp=MaxHp;ShowSofa();}}
+  else if(kind=="Home"){next="E: 집에 들어가기 (원룸 Lv"+std::to_string(HomeLevel)+")";if(pressed){Leave(-2,"");return;}}
+  else{next=text;if(pressed&&!text.empty())Say(faces[Character],koreanNames[Character],text);}  // Note: 가구·문 닫은 가게 등은 조사하면 혼잣말
   if(next!=hint||pressed){hint=next;Hud();}
 }
 
@@ -824,7 +835,7 @@ void TopDownShooter::Hud(){
   hb::UI::SetText(player,"HUD","Title",Hp<=0?(Fatigue>=FatigueMax?"지쳐 쓰러졌다":"쓰러졌다")
     :ReturnSuccess?"귀환 성공 - 정산 "+std::to_string(LastRepaid)+" G 상환"
     :Returning?"귀환 - 문 "+std::to_string(DoorHits)+"/"+std::to_string(rules->DoorHitsToOpen)+"  섬광탄 "+(Flashbangs?std::to_string(Flashbangs):std::to_string(rules->FlashPrice)+"G")
-    :HasReturnItem?"[귀환] 획득 - Tab으로 사용":boss?"해골 대장  "+std::to_string(int(std::ceil(BossHp)))+" HP":area<0?"거점":"탐색");
+    :HasReturnItem?"[귀환] 획득 - Tab으로 사용":boss?"해골 대장  "+std::to_string(int(std::ceil(BossHp)))+" HP":inHome?"원룸 Lv"+std::to_string(HomeLevel):area<0?"거점":"탐색");
 }
 
 void TopDownShooter::Animate(float delta,bool moving){
@@ -962,7 +973,8 @@ void TopDownShooter::Update(float delta){
    if(frame>=2&&UpdateIntro(delta,pressed))return;
    if(UpdateSettle(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}
    if(UpdateDialog(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}}  // 대화 중엔 행동·이동 막음
-  if(!inDungeon){  // 거점 계단 끝 → 던전 (들어갈 때마다 새 층). 계단에 막 도착했으면 한 번 내려와야 다시 들어감 (W를 누른 채 왔다 갔다 방지)
+  if(inHome){if(position.y<exitY){Leave(-1,"HomeDoor");return;}}  // 원룸 문 → 거점 집 앞
+  else if(!inDungeon){  // 거점 계단 끝 → 던전 (들어갈 때마다 새 층). 계단에 막 도착했으면 한 번 내려와야 다시 들어감 (W를 누른 채 왔다 갔다 방지)
     if(position.y<exitY-2)exitArmed=true;
     if(exitArmed&&position.y>exitY){Leave(0,"");return;}}
   else{

@@ -155,11 +155,13 @@ def tilemap(name, rects, style):
 # 아웃라이너 폴더: 종류별 그룹 오브젝트(원점) 아래에 넣는다. 위치는 그대로 (그룹이 원점이라 로컬 = 월드)
 OUTLINE = [
     ("시스템", lambda o: o["id"] in ("Director", "Rules", "Room", "PostFX", "PlayerStart", "StairTop", "DoorBottom", "DoorTop") or o.get("kind") == "playerStart"),
-    ("맵", lambda o: o.get("kind") == "tilemap" or o["id"] == "Background" or any(t in ("Dungeon.Background", "Dungeon.Floor", "Dungeon.Cap", "Dungeon.Face", "Dungeon.Arch") for t in o.get("tags", []))),
+    ("맵", lambda o: o.get("kind") == "tilemap" or o["id"] in ("Background", "Grass", "Plaza", "NorthRoad", "HomePath", "Street", "Floor", "Mountain", "Stairs") or any(t in ("Dungeon.Background", "Dungeon.Floor", "Dungeon.Cap", "Dungeon.Face", "Dungeon.Arch") for t in o.get("tags", []))),
     ("문", lambda o: any(t in ("Dungeon.Gate", "Dungeon.GateSide", "Dungeon.Stairs") for t in o.get("tags", []))),
     ("엄폐물", lambda o: any(t in ("Dungeon.Pillar", "Dungeon.Crate", "Dungeon.Barrel", "Dungeon.LowWall", "Dungeon.Statue", "Dungeon.Chest") for t in o.get("tags", []))),
     ("장식·조명", lambda o: any(t.startswith("Dungeon.") for t in o.get("tags", [])) or o["id"].startswith(("Torch", "Banner", "Lamp", "Pillar", "Bench", "Plant", "Crates", "Barrel", "NoticeBoard", "Decor"))),
     ("상호작용 (NPC·채집·상점)", lambda o: o.get("blueprintAsset", "").endswith("BP_Interactable.hbblueprint.json")),
+    ("건물·벽", lambda o: o["id"].startswith(("PlayerHouse", "HouseBody", "LoanOffice", "Workshop", "Shop", "Wall", "Window", "Door", "Edge", "Mountain", "Mouth", "Stair"))),
+    ("나무·장식", lambda o: o["id"].startswith(("Tree", "Bush", "Firewood", "HomeFence", "HomeBush", "Well", "FlowerBed", "Rug", "Plant"))),
     ("적 대기 풀", lambda o: any(t.startswith("Enemy.") for t in o.get("tags", []))),
     ("탄·골드·이펙트 풀", lambda o: any(t.startswith("Pool.") for t in o.get("tags", []))),
 ]
@@ -287,42 +289,122 @@ for old in [f"Scenes/Dungeon_{i}.hbscene.json" for i in range(5)] + ["Scenes/Tes
     (ASSETS / old).unlink(missing_ok=True)  # 예전 고정 방 장면
 
 
-# ---- 거점 (기획서 3-1, 기획팀 10/05: 분위기 위주) ----
-# 광장(가운데) · 원룸(서쪽, 나무 바닥) · NPC 구역(동쪽) · 계단 통로(북쪽, 끝에 던전 입구)
+# ---- 거점 (기획서 3-1): 빚쟁이 마을의 야외. 광장(가운데, 부채 전광판) · 서쪽 내 집(들어가면 원룸 장면) · 동쪽 NPC 거리
+#      · 북쪽 높은 계단 위 황금 산의 마몬의 입(던전 입구). 땅은 잔디·자갈·흙길 반복 무늬, 건물은 정면 그림 + 바닥 충돌
+TOWN = "Assets/Sprites/Town/"
 EXIT_Y = 21
+
+
+def ground(oid, texture, x0, y0, x1, y1, order):
+    o = sprite_obj(oid, texture, (x0 + x1) / 2, (y0 + y1) / 2, order=order, width=x1 - x0, height=y1 - y0)
+    comp(o, "SpriteRenderer")["properties"]["drawMode"] = "tiled"
+    o["position"][2] = -0.25
+    return o
+
+
+def block(oid, x0, y0, x1, y1):
+    """보이지 않는 벽 (마을 바깥 경계·건물 몸통)"""
+    o = copy.deepcopy(objs["Enemy0"])
+    o.update(id=oid, name=oid, position=[(x0 + x1) / 2, (y0 + y1) / 2, 0])
+    o["components"] = [c for c in o["components"] if c["type"] in ("Transform", "BoxCollider2D")]
+    comp(o, "BoxCollider2D")["properties"].update(trigger=False, layer=0, mask=4294967295, extent=[(x1 - x0) / 2, (y1 - y0) / 2, 0.5], center=[0, 0, 0])
+    return o
+
+
+def standing(oid, file, x, base, depth=0.8, solid=True):
+    """바닥(base y)에 선 물체: 그림 아래가 base에 오고, 충돌은 아랫부분 depth m만"""
+    w, h = size_of(file)
+    return sprite_obj(oid, file, x, base + h / 2, order=0, collider=(w * 0.42, depth / 2, -h / 2 + depth / 2) if solid else None)
+
+
 hub = base_objects(at=(0, -4))
-hub.append(tilemap("TM_Hub", [(-12, -8, 12, 8, "plaza"), (-2, 8, 2, EXIT_Y + 2, "plaza"),
-                              (-25, -6, -13, 6, "wood"), (-13, -2, -12, 2, "wood"),
-                              (13, -8, 29, 8, "plaza"), (12, -2, 13, 2, "plaza")], "hub"))
+hub += [background("Background", 10, 8, 150, 110),
+        ground("Grass", "Assets/Tiles/T_TownGrass.png", -54, -30, 74, 34, -14),  # 카메라가 경계 끝까지 가도 잔디가 보이게 넉넉히
+        ground("Plaza", "Assets/Tiles/T_TownCobble.png", -12, -9, 12, 9, -13),
+        ground("NorthRoad", "Assets/Tiles/T_TownCobble.png", -2.5, 9, 2.5, 17, -13),
+        ground("HomePath", "Assets/Tiles/T_TownDirt.png", -27, -1.5, -12, 1.5, -13),
+        ground("Street", "Assets/Tiles/T_TownCobble.png", 12, -3.5, 57, 3.5, -13)]
 hub.append(bp_obj("Room", "BP_RoomInfo", 0, 0, {"Index": -1, "Kind": "Hub", "ExitY": EXIT_Y}))
-hub.append(background("Background", 2, 7, 110, 80))  # 거점 밖 (광장·원룸·NPC 구역·계단을 다 덮는 크기)
-hub.append(start("StairTop", 0, EXIT_Y - 0.8))
+hub += [start("StairTop", 0, EXIT_Y - 1.2), start("HomeDoor", -24, -0.6)]
+# 북쪽: 높은 계단 → 황금 산의 마몬의 입 (입 안쪽 y > EXIT_Y이면 던전)
+mw, mh = size_of(TOWN + "Mountain.png")
+hub += [sprite_obj("Mountain", TOWN + "Mountain.png", 0, 19 + mh / 2, order=-6),
+        sprite_obj("Stairs", TOWN + "Stairs.png", 0, 17 + size_of(TOWN + "Stairs.png")[1] / 2 - 0.4, order=-7),
+        block("MountainL", -mw / 2, 19.5, -2.1, 32), block("MountainR", 2.1, 19.5, mw / 2, 32), block("MouthTop", -2.1, EXIT_Y + 2.5, 2.1, 32),
+        block("StairL", -3, 15.5, -2.2, 19.5), block("StairR", 2.2, 15.5, 3, 19.5)]
+hub.append(interactable("Entrance", "Assets/UI/Map/map_link.png", 0, EXIT_Y - 0.3, "Entrance", "마몬의 입 - 황금 던전 입구", solid=False))
+# 광장
 CLOSED, VACATION, PREP = "Assets/Sprites/Prop_ClosedShop.png", "휴가 중입니다. 빚쟁이 여러분 다음에 또 오세요", "가게 개장 준비 중"
-hub += [
-    interactable("DebtBoard", "Assets/Sprites/Prop_DebtBoard.png", 0, 5, "DebtBoard"),
-    interactable("Entrance", "Assets/Sprites/Prop_DungeonEntrance.png", 0, 18.5, "Entrance", "마몬의 입 - 황금 던전 입구", solid=False),
-    interactable("Collector", "Assets/Sprites/NPC_Collector.png", 16, 5, "Collector", "수금원: 이번 주 이자는 아직이던데?"),
-    interactable("Interior", "Assets/Sprites/NPC_Interior.png", 21, 5, "Interior", "세공사: 다음 공사는 다음 시즌에!", price=150),
-    interactable("ClosedRental", CLOSED, 26.5, 5, "Note", VACATION),
-    interactable("ClosedCharm", CLOSED, 15.5, -5.5, "Note", PREP),
-    interactable("ClosedRecipe", CLOSED, 21, -5.5, "Note", PREP),
-    interactable("ClosedRelic", CLOSED, 26.5, -5.5, "Note", VACATION),
-    interactable("Sofa", "Assets/Sprites/Furniture_Sofa.png", -19, 4, "Sofa", "푹신한 소파. 더는 바꿀 수 없다", price=50),
-    interactable("Bed", "Assets/Sprites/Furniture_Bed.png", -23, -3, "Note", "삐걱거리는 침대. 오늘 밤도 빚 꿈을 꾸겠지"),
-    interactable("Fridge", "Assets/Sprites/Furniture_Fridge.png", -15, -3, "Note", "텅 빈 냉장고. 물 한 병뿐이다"),
-    interactable("TV", "Assets/Sprites/Furniture_TV.png", -19, -3.5, "Note", "꺼진 TV. 화면에 비친 내 얼굴이 피곤해 보인다"),
-]
-for k, (name, x, y, solid) in enumerate([("Lamp", -10.5, 6.5, True), ("Lamp", 10.5, 6.5, True), ("Lamp", -10.5, -6.5, True), ("Lamp", 10.5, -6.5, True),
+hub.append(interactable("DebtBoard", "Assets/Sprites/Prop_DebtBoard.png", 0, 5, "DebtBoard"))
+for k, (name, x, y, solid) in enumerate([("Lamp", -10.5, 7.5, True), ("Lamp", 10.5, 7.5, True), ("Lamp", -10.5, -7.5, True), ("Lamp", 10.5, -7.5, True),
                                          ("Lamp", -2.8, 14, True), ("Lamp", 2.8, 14, True),
-                                         ("Bench", -6, -6.8, False), ("Bench", 6, -6.8, False), ("Plant", -11, 1, False), ("Plant", 11, 1, False),
-                                         ("Crates", 27.5, -1.5, True), ("Barrel", 27.5, 1.5, True), ("Crates", 14.5, 0, True),
-                                         ("NoticeBoard", 4, 7.1, False), ("Plant", -24, 4.8, False), ("Barrel", -14, 4.8, True)]):
+                                         ("Bench", -6, -7.5, False), ("Bench", 6, -7.5, False), ("NoticeBoard", 5, 7.6, False)]):
     w, h = size_of(PROP + name + ".png")
     hub.append(sprite_obj(f"{name}{k}", PROP + name + ".png", x, y, order=0, collider=(w * 0.35, 0.25, -h / 2 + 0.3) if solid else None))
     if name == "Lamp":
         hub.append(glow(f"{name}{k}Glow", x, y + h / 2 - 0.4, 4, order=-2))
+hub += [standing("Well", TOWN + "Well.png", -7, -4.5), standing("FlowerBedA", TOWN + "FlowerBed.png", -4, 7.2, solid=False),
+        standing("FlowerBedB", TOWN + "FlowerBed.png", 8, -3, solid=False)]
+# 서쪽: 내 집 (문 앞에서 E로 들어가면 원룸 장면)
+hw_, hh_ = size_of(TOWN + "PlayerHouse.png")
+hub += [sprite_obj("PlayerHouse", TOWN + "PlayerHouse.png", -24, 0.6 + hh_ / 2, order=0),
+        block("HouseBody", -24 - hw_ / 2 + 0.2, 0.6, -24 + hw_ / 2 - 0.2, 4.5),
+        interactable("HomeEnter", "Assets/UI/Map/map_link.png", -24, 1.4, "Home", solid=False),
+        standing("Firewood", TOWN + "Firewood.png", -21, 0.4), standing("HomeFence1", TOWN + "Fence.png", -29.5, -1.8, 0.4),
+        standing("HomeFence2", TOWN + "Fence.png", -18.5, -1.8, 0.4), standing("HomeBush", TOWN + "Bush.png", -27.5, 0.6, solid=False)]
+# 동쪽 NPC 거리: 대부업 사무소(수금원)·인테리어 공방(세공사)·문 닫은 가게 넷
+STREET = [("LoanOffice", 18, "Collector", "Assets/Sprites/NPC_Collector.png", "Collector", "수금원: 이번 주 이자는 아직이던데?", 0),
+          ("Workshop", 27.5, "Interior", "Assets/Sprites/NPC_Interior.png", "Interior", "세공사: 다음 공사는 다음 시즌에!", 150),
+          ("ShopBag", 35.5, "ClosedRental", CLOSED, "Note", "가방 렌탈 - " + VACATION, 0), ("ShopCharm", 41, "ClosedCharm", CLOSED, "Note", "부적 상점 - " + PREP, 0),
+          ("ShopRecipe", 46.5, "ClosedRecipe", CLOSED, "Note", "제작서 상점 - " + PREP, 0), ("ShopRelic", 52, "ClosedRelic", CLOSED, "Note", "유물 감정소 - " + VACATION, 0)]
+for name, x, npc, tex, kind, text, price in STREET:
+    w, h = size_of(TOWN + name + ".png")
+    hub += [sprite_obj(name, TOWN + name + ".png", x, 3.6 + h / 2, order=0), block(name + "Body", x - w / 2 + 0.2, 3.6, x + w / 2 - 0.2, 7.5),
+            interactable(npc, tex, x + (0 if kind != "Note" else 1.6), 2.4, kind, text, price=price)]
+# 나무·덤불·울타리 (마을 가장자리)
+rng = random.Random(5)
+spots = [(-34, 9), (-31, 13), (-36, -6), (-33, -12), (-16, 11), (-14, -12), (-6, 12), (7, 12), (15, -10), (21, -9), (27, -11), (34, -9), (40, -10),
+         (47, -9), (54, -11), (58, 6), (13, 12), (-20, -10), (-27, 9), (31, 13), (45, 13)]
+for k, (x, y) in enumerate(spots):
+    file = TOWN + ("TreePine.png" if rng.random() < 0.45 else "TreeRound.png")
+    hub.append(standing(f"Tree{k}", file, x, y, 0.6))
+for k in range(8):
+    hub.append(standing(f"Bush{k}", TOWN + "Bush.png", rng.uniform(-36, 58), rng.uniform(-14, -5), solid=False))
+# 마을 바깥 경계
+hub += [block("EdgeW", -42, -20, -37, 34), block("EdgeE", 59, -20, 64, 34), block("EdgeS", -42, -20, 64, -15), block("EdgeN1", -42, 15, -11, 34),
+        block("EdgeN2", 11, 15, 64, 34)]
 counts["Hub"] = write("Hub", hub)
 
+
+# ---- 원룸 (기획서 3-1): 레벨마다 장면 하나. Lv1 좁고 낡은 방, Lv2(세공사 공사) 넓어지고 책상·러그·화분 추가
+def home_scene(level):
+    W, D = (4, 3) if level == 1 else (6, 4)  # 반너비, 반깊이 (m)
+    objects = base_objects(at=(0, -D + 1.2))
+    objects += [ground("Floor", "Assets/Tiles/T_HomeWood.png", -W, -D, W, D, -13), background("Background", 0, 0, 40, 30)]
+    objects.append(bp_obj("Room", "BP_RoomInfo", 0, 0, {"Index": -2, "Kind": "Home", "ExitY": -D - 0.3}))
+    ww, wh = size_of(TOWN + "HomeWall.png")
+    for k, x in enumerate([-W + ww / 2 + i * ww for i in range(int(2 * W / ww + 0.99))]):
+        objects.append(sprite_obj(f"Wall{k}", TOWN + "HomeWall.png", min(x, W - ww / 2), D + wh / 2, order=-9))
+    objects += [sprite_obj("Window", TOWN + "HomeWindow.png", -W / 2, D + 1.6, order=-8),
+                sprite_obj("Door", TOWN + "HomeDoor.png", 0, -D - 0.2, order=0),
+                block("WallN", -W - 1, D, W + 1, D + 1), block("WallW", -W - 1, -D - 1, -W, D + 1), block("WallE", W, -D - 1, W + 1, D + 1),
+                block("WallSL", -W, -D - 1, -1.2, -D), block("WallSR", 1.2, -D - 1, W, -D)]
+    objects += [interactable("Sofa", "Assets/Sprites/Furniture_Sofa.png", -W + 2, D - 1.2, "Sofa", "푹신한 소파. 더는 바꿀 수 없다", price=50),
+                interactable("Bed", "Assets/Sprites/Furniture_Bed.png", W - 1.8, D - 1.4, "Note", "삐걱거리는 침대. 오늘 밤도 빚 꿈을 꾸겠지"),
+                interactable("Fridge", "Assets/Sprites/Furniture_Fridge.png", W - 0.9, -D + 1.6, "Note", "텅 빈 냉장고. 물 한 병뿐이다"),
+                interactable("TV", "Assets/Sprites/Furniture_TV.png", -W + 1.2, -D + 1.4, "Note", "꺼진 TV. 화면에 비친 내 얼굴이 피곤해 보인다")]
+    if level >= 2:
+        objects += [sprite_obj("Window2", TOWN + "HomeWindow.png", W / 2, D + 1.6, order=-8),
+                    sprite_obj("Rug", TOWN + "Rug.png", 0, 0.3, order=-11),
+                    interactable("Desk", TOWN + "Desk.png", 2.2, D - 1.0, "Note", "책상 위 고지서. 이번 달 이자 납부일이 내일이다"),
+                    standing("Plant", TOWN + "PottedPlant.png", -W + 0.7, -0.5)]
+    return objects
+
+
+for level in (1, 2):
+    counts[f"Home_{level}"] = write(f"Home_{level}", home_scene(level))
+
+(ASSETS / "Tilemaps/TM_Hub.hbtilemap.json").unlink(missing_ok=True)  # 예전 실내형 거점 타일맵
 # 예전 생성기가 미리 이어 붙인 그림 (이제 타일맵이 씀)
 for f in ASSETS.glob("Sprites/*.png"):
     if f.name.startswith(("Room_", "Plaza_", "Home_", "NpcZone_", "Stair_")):

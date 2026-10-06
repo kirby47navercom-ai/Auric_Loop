@@ -159,7 +159,7 @@ HB_CLASS(Blueprintable)
 class Interactable : public hb::Actor {
 public:
   HB_PROPERTY(BlueprintReadWrite)
-  std::string Kind = "Note";     // Note·DebtBoard·Entrance·Collector·Interior·Sofa·Smith·Stall·Ore·Herb
+  std::string Kind = "Note";     // Note·DebtBoard·Entrance·Collector·Interior·Sofa·Smith·Stall·Ore·Herb·Home(집 문)
   HB_PROPERTY(BlueprintReadWrite)
   std::string Text = "";         // 다가가면 위에 뜨는 문구 (Note는 이 문구만)
   HB_PROPERTY(BlueprintReadWrite)
@@ -172,11 +172,11 @@ HB_CLASS(Blueprintable)
 class RoomInfo : public hb::Actor {
 public:
   HB_PROPERTY(BlueprintReadWrite)
-  int Index = -1;                // -1 거점, 0 던전
+  int Index = -1;                // -1 거점, -2 원룸, 0 던전
   HB_PROPERTY(BlueprintReadWrite)
-  std::string Kind = "Hub";      // Hub·Dungeon (던전은 들어올 때마다 방을 무작위로 만듦)
+  std::string Kind = "Hub";      // Hub·Home·Dungeon (던전은 들어올 때마다 방을 무작위로 만듦)
   HB_PROPERTY(BlueprintReadWrite)
-  float ExitY = 21;              // 거점: 이보다 위(계단 끝)로 가면 던전
+  float ExitY = 21;              // 거점: 이보다 위(계단 끝)로 가면 던전. 원룸: 이보다 아래(문)로 가면 거점
 };
 
 HB_CLASS(Blueprintable)
@@ -333,6 +333,10 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   std::string HubScene = "Assets/Scenes/Hub.hbscene.json";
   HB_PROPERTY(BlueprintReadWrite)
+  std::string HomeScene = "Assets/Scenes/Home_#.hbscene.json";   // # 자리에 원룸 레벨 (공사하면 넓은 방)
+  HB_PROPERTY(BlueprintReadWrite)
+  std::vector<std::string> SofaSprites;      // 소파 레벨별 그림 (0 낡은 소파 ~ SofaMax)
+  HB_PROPERTY(BlueprintReadWrite)
   std::string DungeonScene = "Assets/Scenes/Dungeon.hbscene.json";
   HB_PROPERTY(BlueprintReadWrite)
   std::string FloorData = "Assets/Data/DA_Floor.hbdata.json";     // 방 순서·곁가지·간격
@@ -444,7 +448,8 @@ private:
   void Begin();                    // 장면 첫 프레임: 구역 확인·상태 이어받기
   void SaveRun();
   bool LoadRun();
-  void Leave(int to,const std::string& spawn);
+  void Leave(int to,const std::string& spawn);  // to: -1 거점, -2 원룸, 0 던전
+  void ShowSofa();
   // 던전 (Dungeon.h): 들어오면 층을 만들고, 방에 들어서면 문이 잠기며 웨이브가 마법진 예고 뒤 나온다
   void StartFloor();
   void UpdateMinimap();          // 미니맵: 들어간 방과 그 이웃만, 지금 방은 금색 (HUD MapRoom*/MapLink*)
@@ -505,7 +510,7 @@ private:
   int frame=0,area=-1,fightingRoom=-1;
   std::string roomKind="Hub";
   float exitY=21;
-  bool inDungeon=false,monsterDrop=false,exitArmed=false,minimapDirty=false;
+  bool inHome=false,inDungeon=false,monsterDrop=false,exitArmed=false,minimapDirty=false;
   Dungeon map;
   hb::Json roomTable;                    // DT_Rooms 행들
   std::vector<std::string> waves;        // 싸우는 방의 남은 웨이브 ("S,S,M" 하나씩)
