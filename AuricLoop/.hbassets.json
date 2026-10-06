@@ -697,5 +697,119 @@
   },
   "Assets/Scenes/ZCheckReturn.hbscene.json": {
     "id": "946b7ee2-50e8-4a07-9648-a1417a275a92"
+  },
+  "Assets/AI/FSM_Skeleton.hbstatemachine.json": {
+    "id": "80b87fc6-7c8a-4e0b-a03c-b5bbacb6f781"
+  },
+  "Assets/AI/FSM_SkeletonCaptain.hbstatemachine.json": {
+    "id": "7b9ecce9-2385-4f93-b2f2-500ddabcc4f8"
+  },
+  "Assets/AI/FSM_SkeletonMage.hbstatemachine.json": {
+    "id": "0c7554f4-67e2-4750-bce0-97f0876659c2"
+  },
+  "Assets/Blueprints/BP_AuricRules.hbblueprint.json": {
+    "id": "69f421a7-c098-4cc5-84fe-76182c01f684"
+  },
+  "Assets/Blueprints/BP_Interactable.hbblueprint.json": {
+    "id": "3eafc320-6e55-4a51-82ee-7a60ce300634"
+  },
+  "Assets/Blueprints/BP_RoomInfo.hbblueprint.json": {
+    "id": "ca161557-e480-4f59-ac96-7a3ed8349257"
+  },
+  "Assets/Blueprints/BP_SpawnPoint.hbblueprint.json": {
+    "id": "55cb3b4e-4372-485b-96e6-a0638756f7e4"
+  },
+  "Assets/Blueprints/Enemies/BP_Enemy.hbblueprint.json": {
+    "id": "76c1d5c8-c9cb-49d9-9cf8-8d30977165f2"
+  },
+  "Assets/Blueprints/Enemies/BP_Skeleton.hbblueprint.json": {
+    "id": "822ccffb-cf39-4d65-94a6-8bca93a37148"
+  },
+  "Assets/Blueprints/Enemies/BP_SkeletonCaptain.hbblueprint.json": {
+    "id": "af89f770-39b7-4197-ab4a-9269b16abb57"
+  },
+  "Assets/Blueprints/Enemies/BP_SkeletonMage.hbblueprint.json": {
+    "id": "b90cbb94-830e-49da-b28e-fc76443a6a8f"
+  },
+  "Assets/Prefabs/PF_Coin.hbprefab.json": {
+    "id": "32ee2ba3-dcce-452d-bd3d-37b8a0d2f53d"
+  },
+  "Assets/Prefabs/PF_EnemyShot.hbprefab.json": {
+    "id": "8450f1c6-0785-4c14-af77-685484ef136e"
+  },
+  "Assets/Prefabs/PF_PlayerShot.hbprefab.json": {
+    "id": "f2b8ec5e-f296-4f7f-8ec5-a4c774285bb5"
+  },
+  "Assets/Prefabs/PF_Slash.hbprefab.json": {
+    "id": "a48a0672-3bc7-4b09-b7df-2f13a216293d"
+  },
+  "Assets/Sprites/Props/Prop_Archway.png": {
+    "id": "dd0e283f-d1b3-4696-89c5-6fbd870f1e69"
+  },
+  "Assets/Sprites/Props/Prop_Banner.png": {
+    "id": "69bc2741-a48a-4d7f-9d87-a2f7492425e1"
+  },
+  "Assets/Sprites/Props/Prop_Barrel.png": {
+    "id": "f5b42c2b-37df-4fd7-b619-6ffa5204d3c7"
+  },
+  "Assets/Sprites/Props/Prop_Bench.png": {
+    "id": "ba2f2483-ddde-4637-8ccc-91850653f47c"
+  },
+  "Assets/Sprites/Props/Prop_Bones.png": {
+    "id": "0dc7063a-c000-40e5-874c-7aa1dd147112"
+  },
+  "Assets/Sprites/Props/Prop_Crates.png": {
+    "id": "26150116-d1fc-49cd-bf67-23b21df1f2b6"
+  },
+  "Assets/Sprites/Props/Prop_GoldPile.png": {
+    "id": "6aa4a0a9-e5e1-401d-a1b5-2e2ed535cc48"
+  },
+  "Assets/Sprites/Props/Prop_Lamp.png": {
+    "id": "0216d69f-ba87-480a-91e1-757ba507d040"
+  },
+  "Assets/Sprites/Props/Prop_NoticeBoard.png": {
+    "id": "cf002941-514e-4731-961f-508584772321"
+  },
+  "Assets/Sprites/Props/Prop_Pillar.png": {
+    "id": "d33fcf8b-36ec-4cfd-ae18-0f0c5935d52f"
+  },
+  "Assets/Sprites/Props/Prop_Plant.png": {
+    "id": "3191fda2-51b0-49b2-a664-2286af180235"
+  },
+  "Assets/Sprites/Props/Prop_Portcullis.png": {
+    "id": "18f0ad80-721f-4aa6-b4f9-c0592fe79592"
+  },
+  "Assets/Sprites/Props/Prop_Rubble.png": {
+    "id": "3a4e5060-c908-4885-b916-23aebc1bbb36"
+  },
+  "Assets/Sprites/Props/Prop_Torch.png": {
+    "id": "0a10092d-6fa6-4910-be2b-73181e2da4fb"
+  },
+  "Assets/Tilemaps/TM_Dungeon_0.hbtilemap.json": {
+    "id": "14be9b24-2f60-4b56-8137-b766b624b996"
+  },
+  "Assets/Tilemaps/TM_Dungeon_1.hbtilemap.json": {
+    "id": "946b9aa9-94cc-4b6b-aa63-afbeadd3e20c"
+  },
+  "Assets/Tilemaps/TM_Dungeon_2.hbtilemap.json": {
+    "id": "e75e4b05-be12-4e10-b58d-167f3afd6083"
+  },
+  "Assets/Tilemaps/TM_Dungeon_3.hbtilemap.json": {
+    "id": "01763773-bda3-4c3c-ba0a-0abe1cd64286"
+  },
+  "Assets/Tilemaps/TM_Dungeon_4.hbtilemap.json": {
+    "id": "8be7319c-8985-47ab-9eb2-9cedbb08e5f4"
+  },
+  "Assets/Tilemaps/TM_Hub.hbtilemap.json": {
+    "id": "e90dee93-9fcc-40e1-b8a8-f286855d2c2d"
+  },
+  "Assets/Tiles/T_World.png": {
+    "id": "bda63253-4ade-438c-b8f2-5aeca6e3be87"
+  },
+  "Source/AuricSession.cpp": {
+    "id": "28fa75e0-4ac5-4060-b3f2-5f34b52d43aa"
+  },
+  "Source/AuricSession.h": {
+    "id": "62426173-97b7-4ef2-b668-ab51db3932d8"
   }
 }

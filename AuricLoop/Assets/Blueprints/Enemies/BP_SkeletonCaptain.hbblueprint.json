@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "name": "BP_SkeletonCaptain",
+  "components": [],
+  "variables": [],
+  "nodes": [],
+  "edges": [],
+  "functions": [],
+  "macros": [],
+  "comments": [],
+  "dispatchers": [],
+  "interfaces": [],
+  "settings": {
+    "parentClass": "Assets/Blueprints/Enemies/BP_Enemy.hbblueprint.json",
+    "tickEnabled": true,
+    "tickInterval": 0,
+    "overlapEnabled": true,
+    "nativeDefaults": {
+      "Enemy.DisplayName": "해골 대장",
+      "Enemy.Brain": "Assets/AI/FSM_SkeletonCaptain.hbstatemachine.json",
+      "Enemy.Boss": true,
+      "Enemy.MaxHp": 40,
+      "Enemy.Speed": 3.6,
+      "Enemy.Radius": 1.4,
+      "Enemy.GoldMin": 30,
+      "Enemy.GoldMax": 30
+    },
+    "componentOverrides": {
+      "sprite": {
+        "texture": "Assets/Sprites/SkeletonCaptain_Idle.png",
+        "width": 3.3125,
+        "height": 3.46875
+      },
+      "collider": {
+        "extent": [
+          1.0,
+          0.8,
+          0.1
+        ],
+        "center": [
+          0,
+          -0.6,
+          0
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,265 @@
+{
+  "version": 1,
+  "name": "FSM_SkeletonCaptain",
+  "initial": "intro",
+  "parameters": [
+    {
+      "name": "Distance",
+      "type": "float",
+      "value": 99
+    },
+    {
+      "name": "Stunned",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "name": "Ready",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "name": "Next",
+      "type": "float",
+      "value": 0
+    }
+  ],
+  "states": [
+    {
+      "id": "intro",
+      "name": "등장 대사",
+      "x": 120,
+      "y": 60,
+      "clip": "",
+      "loop": true,
+      "duration": 3.0,
+      "onEnter": "Halt",
+      "onExit": "",
+      "onUpdate": "Sense",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "rest",
+      "name": "쉬며 추격",
+      "x": 120,
+      "y": 260,
+      "clip": "",
+      "loop": true,
+      "duration": 1.5,
+      "onEnter": "",
+      "onExit": "",
+      "onUpdate": "Chase",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "charge",
+      "name": "돌진 패턴",
+      "x": 420,
+      "y": 60,
+      "clip": "",
+      "loop": true,
+      "duration": 1.0,
+      "onEnter": "",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "",
+      "initialChild": "windup",
+      "enterConditions": []
+    },
+    {
+      "id": "windup",
+      "name": "돌진 예고",
+      "x": 420,
+      "y": 140,
+      "clip": "",
+      "loop": true,
+      "duration": 1.0,
+      "onEnter": "Windup",
+      "onExit": "",
+      "onUpdate": "Sense",
+      "parent": "charge",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "dash",
+      "name": "돌진",
+      "x": 640,
+      "y": 140,
+      "clip": "",
+      "loop": true,
+      "duration": 0.6,
+      "onEnter": "Dash",
+      "onExit": "",
+      "onUpdate": "Sense",
+      "parent": "charge",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "ring",
+      "name": "탄막 패턴",
+      "x": 420,
+      "y": 300,
+      "clip": "",
+      "loop": true,
+      "duration": 1.0,
+      "onEnter": "",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "",
+      "initialChild": "burst1",
+      "enterConditions": []
+    },
+    {
+      "id": "burst1",
+      "name": "탄막 1",
+      "x": 420,
+      "y": 380,
+      "clip": "",
+      "loop": true,
+      "duration": 0.5,
+      "onEnter": "Ring",
+      "onExit": "",
+      "onUpdate": "Sense",
+      "parent": "ring",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "burst2",
+      "name": "탄막 2",
+      "x": 640,
+      "y": 380,
+      "clip": "",
+      "loop": true,
+      "duration": 0.5,
+      "onEnter": "Ring",
+      "onExit": "",
+      "onUpdate": "Sense",
+      "parent": "ring",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "summon",
+      "name": "졸개 소환",
+      "x": 420,
+      "y": 520,
+      "clip": "",
+      "loop": true,
+      "duration": 0.4,
+      "onEnter": "Summon",
+      "onExit": "",
+      "onUpdate": "Sense",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    }
+  ],
+  "transitions": [
+    {
+      "id": "intro_rest",
+      "from": "intro",
+      "to": "rest",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "rest_charge",
+      "from": "rest",
+      "to": "charge",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": [
+        {
+          "key": "Next",
+          "operator": "equal",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": "rest_ring",
+      "from": "rest",
+      "to": "ring",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": [
+        {
+          "key": "Next",
+          "operator": "equal",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "rest_summon",
+      "from": "rest",
+      "to": "summon",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": [
+        {
+          "key": "Next",
+          "operator": "equal",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "windup_dash",
+      "from": "windup",
+      "to": "dash",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "dash_rest",
+      "from": "dash",
+      "to": "rest",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "burst1_burst2",
+      "from": "burst1",
+      "to": "burst2",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "burst2_rest",
+      "from": "burst2",
+      "to": "rest",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "summon_rest",
+      "from": "summon",
+      "to": "rest",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    }
+  ]
+}

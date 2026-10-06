@@ -5,7 +5,7 @@ import path from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
 
 process.env.AURIC_MUTE = '1';  // 화면 없는 검사기는 소리 노드를 실행하지 못함 (C++ Muted)
-const ENGINE = process.env.HB_ENGINE || 'C:/Users/kirby/HBEngine/Versions/d4de30b46c28bab7';
+const ENGINE = process.env.HB_ENGINE || 'C:/Users/kirby/HBEngine/Versions/09e4470b1e254ac3';
 const {runProject} = await import(pathToFileURL(path.join(ENGINE, 'tools/run-project.mjs')).href);
 const project = path.join(path.dirname(fileURLToPath(import.meta.url)), '../AuricLoop/AuricLoop.hbproject');
 const aimUp = {position: [640, 250], size: [1280, 720]};
@@ -18,14 +18,14 @@ const r = await runProject(project, {scene: 'Assets/Scenes/Dungeon_0.hbscene.jso
 ]});
 const player = r.objects.find(o => o.id === 'Player');
 const stats = r.objects.find(o => o.id === 'Director').nativeProperties;
-const doorsLocked = r.objects.filter(o => /^Door/.test(o.id) && o.poolActive).map(o => o.id);
+const doorsLocked = r.objects.filter(o => /^Gate/.test(o.id) && o.poolActive).map(o => o.id).sort();
 assert.ok(stats.Swings >= 8, '검 공격 간격 0.35초');
 assert.ok(stats.Kills >= 3, '전투방1 해골 3마리는 검 4대씩에 쓰러짐');
 assert.ok(stats.RoomClears >= 1, '전투방1 클리어');
 assert.equal(stats.RoomIndex, 1, '열린 문을 지나 전투방2에 들어감');
 assert.equal(r.sceneHistory.at(-1).scene, 'Assets/Scenes/Dungeon_1.hbscene.json', '방을 넘어가면 다음 방 장면을 엶');
 assert.ok(stats.Kills >= 3 && stats.RoomClears >= 1, '장면을 넘어가도 기록이 이어짐');
-assert.deepEqual(doorsLocked, ['Door0', 'Door1'], '전투방2에 들어가면 앞뒤 문이 잠김');
+assert.deepEqual(doorsLocked, ['GateBottom', 'GateTop'], '전투방2에 들어가면 앞뒤 문이 잠김');
 assert.ok(player.position[1] > -10, '플레이어가 전투방2 안에 있음 (장면마다 방 가운데가 0)');
 assert.equal(stats.FatigueMax, 20, '데모 피로도 한계 기본값 20');
 console.log('전투·문 검사 통과', JSON.stringify(stats), 'y', player.position[1].toFixed(1));

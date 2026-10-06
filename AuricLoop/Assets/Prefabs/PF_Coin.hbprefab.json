@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "name": "PF_Coin",
+  "root": "root",
+  "objects": [
+    {
+      "id": "root",
+      "name": "Coin",
+      "kind": "sprite",
+      "position": [
+        0,
+        0,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Item_Coin.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.5,
+            "height": 0.53125,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 1,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        },
+        {
+          "id": "pool",
+          "name": "PooledActor",
+          "type": "PooledActor",
+          "properties": {
+            "enabled": true,
+            "initiallyActive": false,
+            "maxInactive": 24
+          }
+        }
+      ]
+    }
+  ]
+}

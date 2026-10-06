@@ -1,0 +1,178 @@
+{
+  "version": 1,
+  "name": "FSM_SkeletonMage",
+  "initial": "appear",
+  "parameters": [
+    {
+      "name": "Distance",
+      "type": "float",
+      "value": 99
+    },
+    {
+      "name": "Stunned",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "name": "Ready",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "name": "Next",
+      "type": "float",
+      "value": 0
+    }
+  ],
+  "states": [
+    {
+      "id": "appear",
+      "name": "등장",
+      "x": 120,
+      "y": 150,
+      "clip": "",
+      "loop": true,
+      "duration": 0.6,
+      "onEnter": "Halt",
+      "onExit": "",
+      "onUpdate": "Sense",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "move",
+      "name": "거리 유지",
+      "x": 360,
+      "y": 150,
+      "clip": "",
+      "loop": true,
+      "duration": 1.0,
+      "onEnter": "",
+      "onExit": "",
+      "onUpdate": "Range",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "windup",
+      "name": "시전 예고",
+      "x": 600,
+      "y": 80,
+      "clip": "",
+      "loop": true,
+      "duration": 0.4,
+      "onEnter": "Windup",
+      "onExit": "",
+      "onUpdate": "Sense",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "fire",
+      "name": "3갈래 발사",
+      "x": 840,
+      "y": 150,
+      "clip": "",
+      "loop": true,
+      "duration": 0.15,
+      "onEnter": "Fire",
+      "onExit": "",
+      "onUpdate": "Sense",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "stun",
+      "name": "경직",
+      "x": 360,
+      "y": 320,
+      "clip": "",
+      "loop": true,
+      "duration": 1.0,
+      "onEnter": "Halt",
+      "onExit": "",
+      "onUpdate": "Sense",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    }
+  ],
+  "transitions": [
+    {
+      "id": "appear_move",
+      "from": "appear",
+      "to": "move",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "move_windup",
+      "from": "move",
+      "to": "windup",
+      "exitTime": 1,
+      "hasExitTime": false,
+      "event": "",
+      "conditions": [
+        {
+          "key": "Ready",
+          "operator": "equal",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "windup_fire",
+      "from": "windup",
+      "to": "fire",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "fire_move",
+      "from": "fire",
+      "to": "move",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "toStun",
+      "from": "any",
+      "to": "stun",
+      "exitTime": 1,
+      "hasExitTime": false,
+      "event": "",
+      "conditions": [
+        {
+          "key": "Stunned",
+          "operator": "equal",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "stun_move",
+      "from": "stun",
+      "to": "move",
+      "exitTime": 1,
+      "hasExitTime": false,
+      "event": "",
+      "conditions": [
+        {
+          "key": "Stunned",
+          "operator": "equal",
+          "value": false
+        }
+      ]
+    }
+  ]
+}

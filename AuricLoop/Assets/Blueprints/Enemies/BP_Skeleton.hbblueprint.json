@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "name": "BP_Skeleton",
+  "components": [],
+  "variables": [],
+  "nodes": [],
+  "edges": [],
+  "functions": [],
+  "macros": [],
+  "comments": [],
+  "dispatchers": [],
+  "interfaces": [],
+  "settings": {
+    "parentClass": "Assets/Blueprints/Enemies/BP_Enemy.hbblueprint.json",
+    "tickEnabled": true,
+    "tickInterval": 0,
+    "overlapEnabled": true,
+    "nativeDefaults": {
+      "Enemy.DisplayName": "해골",
+      "Enemy.Brain": "Assets/AI/FSM_Skeleton.hbstatemachine.json"
+    },
+    "componentOverrides": {
+      "sprite": {
+        "texture": "Assets/Sprites/Skeleton_Idle.png",
+        "width": 0.90625,
+        "height": 1.375
+      }
+    }
+  }
+}
