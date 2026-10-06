@@ -27,17 +27,22 @@
       "name": "Near",
       "type": "bool",
       "value": false
+    },
+    {
+      "name": "Again",
+      "type": "bool",
+      "value": false
     }
   ],
   "states": [
     {
       "id": "intro",
-      "name": "등장 대사",
+      "name": "등장",
       "x": 120,
       "y": 60,
       "clip": "Assets/Animations/SA_SkeletonCaptain_Walk.hbspriteanimation.json",
       "loop": true,
-      "duration": 3.0,
+      "duration": 3.4,
       "onEnter": "Halt",
       "onExit": "",
       "onUpdate": "",
@@ -47,13 +52,13 @@
     },
     {
       "id": "rest",
-      "name": "쉬며 추격",
+      "name": "맴돌며 쉬기",
       "x": 120,
       "y": 260,
       "clip": "Assets/Animations/SA_SkeletonCaptain_Walk.hbspriteanimation.json",
       "loop": true,
-      "duration": 1.5,
-      "onEnter": "Chase",
+      "duration": 1.3,
+      "onEnter": "Prowl",
       "onExit": "",
       "onUpdate": "",
       "parent": "",
@@ -62,9 +67,9 @@
     },
     {
       "id": "charge",
-      "name": "돌진 패턴",
+      "name": "연속 돌진",
       "x": 420,
-      "y": 60,
+      "y": 40,
       "clip": "",
       "loop": true,
       "duration": 1.0,
@@ -79,10 +84,10 @@
       "id": "windup",
       "name": "돌진 예고",
       "x": 420,
-      "y": 140,
+      "y": 120,
       "clip": "Assets/Animations/SA_SkeletonCaptain_Attack.hbspriteanimation.json",
       "loop": false,
-      "duration": 1.0,
+      "duration": 0.8,
       "onEnter": "Windup",
       "onExit": "",
       "onUpdate": "",
@@ -94,10 +99,10 @@
       "id": "dash",
       "name": "돌진",
       "x": 640,
-      "y": 140,
+      "y": 120,
       "clip": "Assets/Animations/SA_SkeletonCaptain_Walk.hbspriteanimation.json",
       "loop": true,
-      "duration": 0.6,
+      "duration": 0.45,
       "onEnter": "Dash",
       "onExit": "",
       "onUpdate": "",
@@ -107,9 +112,9 @@
     },
     {
       "id": "ring",
-      "name": "탄막 패턴",
+      "name": "나선 탄막",
       "x": 420,
-      "y": 300,
+      "y": 240,
       "clip": "",
       "loop": true,
       "duration": 1.0,
@@ -124,10 +129,10 @@
       "id": "burst1",
       "name": "탄막 1",
       "x": 420,
-      "y": 380,
+      "y": 320,
       "clip": "Assets/Animations/SA_SkeletonCaptain_Attack.hbspriteanimation.json",
       "loop": false,
-      "duration": 0.5,
+      "duration": 0.4,
       "onEnter": "Ring",
       "onExit": "",
       "onUpdate": "",
@@ -138,8 +143,23 @@
     {
       "id": "burst2",
       "name": "탄막 2",
-      "x": 640,
-      "y": 380,
+      "x": 600,
+      "y": 320,
+      "clip": "Assets/Animations/SA_SkeletonCaptain_Attack.hbspriteanimation.json",
+      "loop": false,
+      "duration": 0.4,
+      "onEnter": "Ring",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "ring",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "burst3",
+      "name": "탄막 3",
+      "x": 780,
+      "y": 320,
       "clip": "Assets/Animations/SA_SkeletonCaptain_Attack.hbspriteanimation.json",
       "loop": false,
       "duration": 0.5,
@@ -151,13 +171,73 @@
       "enterConditions": []
     },
     {
-      "id": "summon",
-      "name": "졸개 소환",
+      "id": "jump",
+      "name": "점프 내려찍기",
+      "x": 420,
+      "y": 440,
+      "clip": "",
+      "loop": true,
+      "duration": 1.0,
+      "onEnter": "",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "",
+      "initialChild": "jwind",
+      "enterConditions": []
+    },
+    {
+      "id": "jwind",
+      "name": "웅크림",
       "x": 420,
       "y": 520,
       "clip": "Assets/Animations/SA_SkeletonCaptain_Attack.hbspriteanimation.json",
       "loop": false,
-      "duration": 0.4,
+      "duration": 0.55,
+      "onEnter": "JumpWindup",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "jump",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "jair",
+      "name": "점프",
+      "x": 600,
+      "y": 520,
+      "clip": "Assets/Animations/SA_SkeletonCaptain_Walk.hbspriteanimation.json",
+      "loop": true,
+      "duration": 0.6,
+      "onEnter": "Jump",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "jump",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "jland",
+      "name": "착지",
+      "x": 780,
+      "y": 520,
+      "clip": "Assets/Animations/SA_SkeletonCaptain_Hurt.hbspriteanimation.json",
+      "loop": false,
+      "duration": 0.7,
+      "onEnter": "Slam",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "jump",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "summon",
+      "name": "졸개 소환",
+      "x": 420,
+      "y": 640,
+      "clip": "Assets/Animations/SA_SkeletonCaptain_Attack.hbspriteanimation.json",
+      "loop": false,
+      "duration": 0.6,
       "onEnter": "Summon",
       "onExit": "",
       "onUpdate": "",
@@ -207,6 +287,21 @@
       ]
     },
     {
+      "id": "rest_jump",
+      "from": "rest",
+      "to": "jump",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": [
+        {
+          "key": "Next",
+          "operator": "equal",
+          "value": 2
+        }
+      ]
+    },
+    {
       "id": "rest_summon",
       "from": "rest",
       "to": "summon",
@@ -217,7 +312,7 @@
         {
           "key": "Next",
           "operator": "equal",
-          "value": 2
+          "value": 3
         }
       ]
     },
@@ -231,13 +326,34 @@
       "conditions": []
     },
     {
+      "id": "dash_again",
+      "from": "dash",
+      "to": "windup",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": [
+        {
+          "key": "Again",
+          "operator": "equal",
+          "value": true
+        }
+      ]
+    },
+    {
       "id": "dash_rest",
       "from": "dash",
       "to": "rest",
       "exitTime": 1,
       "hasExitTime": true,
       "event": "",
-      "conditions": []
+      "conditions": [
+        {
+          "key": "Again",
+          "operator": "equal",
+          "value": false
+        }
+      ]
     },
     {
       "id": "burst1_burst2",
@@ -249,8 +365,44 @@
       "conditions": []
     },
     {
-      "id": "burst2_rest",
+      "id": "burst2_burst3",
       "from": "burst2",
+      "to": "burst3",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "burst3_rest",
+      "from": "burst3",
+      "to": "rest",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "jwind_jair",
+      "from": "jwind",
+      "to": "jair",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "jair_jland",
+      "from": "jair",
+      "to": "jland",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "jland_rest",
+      "from": "jland",
       "to": "rest",
       "exitTime": 1,
       "hasExitTime": true,

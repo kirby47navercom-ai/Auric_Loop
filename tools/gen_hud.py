@@ -219,6 +219,18 @@ node("EndingTitle", "Text", "c", 0, 225, 800, 60, 100, text="Coming Soon", fontS
 node("EndingText", "Text", "c", 0, 275, 900, 30, 100, text="", fontSize=18, color="#fff3e5", align="center", visible=False)
 node("EndingHint", "Text", "c", 0, 318, 600, 26, 100, text="아무 키나 눌러 처음으로", fontSize=15, color="#cdb98a", align="center", visible=False)
 
+# ---- 보스 등장 컷신 (위아래 검은 띠·이름 자막)과 보스 체력 막대 ----
+n = node("CineTop", "Panel", "t", 0, 0, 0, 90, 65, background="#000000ff", visible=False)
+n["slot"].update(anchors=[0, 0, 1, 0], offset=[0, 0, 0, 90], alignment=[0, 0])
+n = node("CineBottom", "Panel", "b", 0, 0, 0, 90, 65, background="#000000ff", visible=False)
+n["slot"].update(anchors=[0, 1, 1, 1], offset=[0, -90, 0, 90], alignment=[0, 0])
+node("BossName", "Text", "c", 0, 150, 900, 60, 66, text="해골 대장", fontSize=46, color="#ffd666", align="center", visible=False)
+node("BossSub", "Text", "c", 0, 205, 900, 30, 66, text="", fontSize=20, color="#ff9a7a", align="center", visible=False)
+node("BossBarName", "Text", "t", 0, 96, 520, 22, 22, text="", fontSize=15, color="#ffd666", align="center", visible=False)
+node("BossBarBack", "Panel", "t", 0, 120, 520, 16, 21, background="#1a0d0dcc", visible=False)
+node("BossBar", "ProgressBar", "t", 0, 122, 514, 12, 22, value=1, max=1, fillDirection="leftToRight", fillTexture="", backgroundTexture="",
+     background="#00000000", accent="#e04a3aff", visible=False)
+
 # ---- 쓰러짐 (기획서 2장 게임 오버): 화면을 붉게 덮고 문구 ----
 full("KoBack", "Panel", 70, background="#2a0508dd", visible=False)
 node("KoTitle", "Text", "c", 0, -30, 900, 60, 71, text="쓰러졌다", fontSize=44, color="#ff7a6a", align="center", visible=False)

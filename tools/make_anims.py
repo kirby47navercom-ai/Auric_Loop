@@ -205,3 +205,29 @@ for file, name, count, height, step, loop in (("fx_enemy_orb.png", "EnemyOrb", 4
                                               ("fx_arrow.png", "Arrow", 2, 6, 0.08, True), ("fx_card.png", "Card", 4, 18, 0.06, True),
                                               ("fx_boom.png", "Boom", 5, 44, 0.05, False), ("fx_coin.png", "Coin", 6, 14, 0.08, True)):
     animation(f"SA_{name}", save_strip(ASSETS / "Sprites/FX", name, strip(file, count, height)), step, loop)
+
+
+# 전투 이펙트 묶음 (fx_more·fx_more2: 한 줄 12칸을 무리별로): 칸을 똑같이 나누고 무리마다 같은 상자로 잘라 높이를 맞춘다
+def strip_groups(file, groups):
+    im = load(file)
+    cw = im.width / 12
+    cells = [im.crop((round(i * cw), 0, round((i + 1) * cw), im.height)) for i in range(12)]
+    start = 0
+    for name, count, height, step, loop in groups:
+        part = cells[start:start + count]
+        start += count
+        boxes = [c.getbbox() for c in part if c.getbbox()]
+        box = (min(b[0] for b in boxes), min(b[1] for b in boxes), max(b[2] for b in boxes), max(b[3] for b in boxes))
+        part = [c.crop(box) for c in part]
+        k = height / part[0].height if part[0].getbbox() else height / max(c.height for c in part)
+        frames = [c.resize((max(1, round(c.width * k)), max(1, round(c.height * k))), Image.NEAREST) for c in part]
+        animation(f"SA_{name}", save_strip(ASSETS / "Sprites/FX", name, frames), step, loop)
+
+
+strip_groups("fx_more.png", [("Dust", 4, 18, 0.06, False), ("BoneBurst", 4, 44, 0.06, False), ("Shockwave", 4, 70, 0.06, False)])
+strip_groups("fx_more2.png", [("Muzzle", 3, 16, 0.04, False), ("CardCast", 3, 22, 0.05, False), ("HurtClaw", 3, 44, 0.05, False), ("CoinSparkle", 3, 22, 0.06, False)])
+
+# 보스 돌진 예고선: 반투명 붉은 띠 (C++가 돌진 방향으로 돌리고 길이를 맞춤)
+warn = Image.new("RGBA", (32, 32))
+warn.putdata([(255, 60, 40, 150 if 6 <= y <= 25 and (x // 4) % 2 == 0 else 90 if 6 <= y <= 25 else 0) for y in range(32) for x in range(32)])
+warn.save(ASSETS / "Sprites/FX/FX_Warning.png")

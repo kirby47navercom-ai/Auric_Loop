@@ -625,7 +625,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -700,7 +700,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "back",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -1786,7 +1786,7 @@
             "priority": 0,
             "bloomEnabled": true,
             "bloomThreshold": 1,
-            "bloomStrength": 0.7,
+            "bloomStrength": 0.45,
             "bloomRadius": 0.35,
             "bloomResolutionScale": 0.5
           }
@@ -1824,6 +1824,21 @@
     "fixedDeltaTime": 0.016666666666666666,
     "maxSubsteps": 8,
     "sortingLayers": [
+      {
+        "id": "back",
+        "name": "Back",
+        "sortMode": "distance"
+      },
+      {
+        "id": "ground",
+        "name": "Ground",
+        "sortMode": "distance"
+      },
+      {
+        "id": "overlay",
+        "name": "Overlay",
+        "sortMode": "distance"
+      },
       {
         "id": "default",
         "name": "Default",

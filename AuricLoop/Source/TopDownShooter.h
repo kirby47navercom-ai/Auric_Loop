@@ -132,6 +132,14 @@ public:
   void Ring();
   HB_FUNCTION(BlueprintCallable, DisplayName="졸개 소환", Category="적")
   void Summon();
+  HB_FUNCTION(BlueprintCallable, DisplayName="보스: 맴돌기", Category="적")
+  void Prowl();
+  HB_FUNCTION(BlueprintCallable, DisplayName="보스: 점프 준비", Category="적")
+  void JumpWindup();
+  HB_FUNCTION(BlueprintCallable, DisplayName="보스: 점프", Category="적")
+  void Jump();
+  HB_FUNCTION(BlueprintCallable, DisplayName="보스: 내려찍기", Category="적")
+  void Slam();
 
   // 게임 규칙(TopDownShooter)이 직접 부른다 (같은 C++ 빌드라 실제 객체). Tick은 게임 규칙의 한 프레임 호출 안에서 모든 적을 한 번에 움직인다
   void Tick(float delta);
@@ -144,7 +152,10 @@ public:
   bool Flipped() const{return flipped;}
 private:
   hb::Vec3 ToPlayer(float& distance) const;
-  enum class Mode{Halt,Chase,Range,Stagger,Dash};
+  enum class Mode{Halt,Chase,Range,Stagger,Dash,Prowl,Jump};
+  int dashCount=0;bool phase2=false;     // 보스: 연속 돌진 횟수, 체력 절반 아래 분노
+  hb::Vec3 jumpTarget{0,0,0};
+  void NextPattern(int next);
   Mode mode=Mode::Halt;
   float stun=0,flash=0,shotTimer=0;
   bool sentStunned=false,sentReady=false,sentNear=false,flipped=false;  // 엔진 명령은 값이 바뀔 때만 보낸다 (호출 비용)
@@ -436,11 +447,16 @@ public:
   Enemy* SpawnEnemy(const std::string& blueprint,const hb::Vec3& at,bool invulnerable);  // 대기 중인 적을 꺼냄 (없으면 생성)
   bool DamagePlayer(int amount,const hb::Vec3& from);  // 맞았으면 true (무적·회피 중이면 false)
   void FireBullets(const hb::Vec3& from,const hb::Vec3& dir,int count,float spread,float speed,const std::string& clip="");
+  // 보스 연출 (Enemy가 부름)
+  void Warn(const hb::Vec3& from,const hb::Vec3& dir,float length,float seconds);   // 돌진 예고선
+  void BossSlam(const hb::Vec3& at,int bullets,float speed,const std::string& clip); // 내려찍기 충격파·탄·흔들림
+  void BossEnraged(Enemy* e);                                                        // 2페이즈 포효
+  void Effect(const std::string& name,const hb::Vec3& at,float angle=0,float glow=0,bool flip=false);  // Assets/Animations/SA_<name> 한 번 재생
   std::string Sound(const std::string& name) const;  // Sounds에서 이름으로 찾은 경로 (없으면 "")
   void Sfx(const std::string& name){const auto s=Sound(name);if(!s.empty())hb::Audio::Play(s);}  // 첫 입력 전 효과음은 엔진이 버림
   void Say(const std::string& who,const std::string& name,const std::string& text){dialog.push_back({who,name,text});}
   void Talk(const std::string& row,const std::map<std::string,std::string>& vars={});  // DT_Dialogue 행의 대사를 차례로
-  bool Frozen() const{return Hp<=0||dialogIndex<dialog.size()||Phase<2;}  // 쓰러짐·대화·타이틀 중엔 적도 멈춤
+  bool Frozen() const{return Hp<=0||dialogIndex<dialog.size()||Phase<2||cutscene>0;}  // 쓰러짐·대화·타이틀 중엔 적도 멈춤
 
 private:
   struct Line{std::string who,name,text;};
@@ -522,6 +538,8 @@ private:
   std::set<std::string> taken;     // 채집한 것 ("방번호:Kind")
   std::vector<Interactable*> interactables;
   float attackCooldown=0,dodgeTimer=0,dodgeCooldownLeft=0,invulnerable=0,gameOver=0,charge=0;
+  float cutscene=0,bannerTime=0,bossBarShown=-1;hb::Vec3 cutsceneAt{0,0,0};bool roared=false;  // 보스 등장 컷신·자막
+  std::vector<hb::Actor*> warnPool;struct WarnLine{hb::Actor* actor;float left;};std::vector<WarnLine> warns;
   float attackAnim=0,walkTime=0,shake=0,aimHold=0,sentSpeed=0,knockTimer=0,idleTime=0,runTime=0,typeTime=0,phaseTime=0;
   std::string currentSprite,currentMusic,hint,shownWho;
   std::map<hb::Actor*,float> bullets;      // 적 탄: 남은 시간

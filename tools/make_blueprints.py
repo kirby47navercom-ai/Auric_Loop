@@ -90,7 +90,7 @@ gm["variables"] = []
 write(BP / "BP_TopDownShooter.hbblueprint.json", gm)
 
 # ---- 적 ----
-ENEMY_EVENTS = ["Halt", "Chase", "Range", "Stagger", "Windup", "Fire", "Dash", "Ring", "Summon"]  # 상태에 들어갈 때만 (매 프레임 이동은 C++ 게임 규칙이 한 번에)
+ENEMY_EVENTS = ["Halt", "Chase", "Range", "Stagger", "Windup", "Fire", "Dash", "Ring", "Summon", "Prowl", "JumpWindup", "Jump", "Slam"]  # 상태에 들어갈 때만 (매 프레임 이동은 C++ 게임 규칙이 한 번에)
 nodes = [node("begin", "beginPlay", 60, 40), node("awake", "nativeCall", 360, 40, nativeId="Enemy.Awake")]
 edges = [edge("begin", "then", "awake", "exec")]
 for i, ev in enumerate(ENEMY_EVENTS):
@@ -220,7 +220,7 @@ def fsm(name, initial, params, states, transitions):
 
 P = lambda n, t, v: {"name": n, "type": t, "value": v}  # noqa: E731
 # Enemy::Sense가 모든 적에게 같은 파라미터를 쓰므로 세 상태 머신이 같은 파라미터를 가진다
-PARAMS = [P("Distance", "float", 99), P("Stunned", "bool", False), P("Ready", "bool", False), P("Next", "float", 0), P("Near", "bool", False)]
+PARAMS = [P("Distance", "float", 99), P("Stunned", "bool", False), P("Ready", "bool", False), P("Next", "float", 0), P("Near", "bool", False), P("Again", "bool", False)]
 stunned = [go("toStun", "any", "stun", conditions=[("Stunned", "equal", True)])]
 S, M, C = "Skeleton_", "SkeletonMage_", "SkeletonCaptain_"
 fsm("FSM_Skeleton", "appear", PARAMS, [
@@ -241,23 +241,31 @@ fsm("FSM_SkeletonMage", "appear", PARAMS, [
     go("windup_fire", "windup", "fire", exit_time=1), go("fire_move", "fire", "move", exit_time=1),
     *stunned, go("stun_move", "stun", "move", conditions=[("Stunned", "equal", False)])])
 
-# 해골 대장 (기획서 5장): 쉬며 추격 → 돌진(예고 1초) → 쉬기 → 원형 탄막 2회 → 쉬기 → 졸개 소환 → … (Next가 다음 패턴)
+# 해골 대장 (기획서 5장, 보스답게 보강): 등장 → 맴돌며 쉬기 → 패턴 넷을 차례로 (Next 0~3, C++가 다음 패턴을 정함)
+#   0 연속 돌진 (예고선 → 돌진, 2번·분노 3번)  1 나선 탄막 3번  2 점프 내려찍기 (착지 충격파·원형 탄)  3 졸개 소환
+#   체력 절반 아래면 분노 (빨라지고 탄·돌진·졸개가 늘어남, C++ Enemy::TakeHit)
 fsm("FSM_SkeletonCaptain", "intro", PARAMS, [
-    state("intro", "등장 대사", 120, 60, 3.0, enter="Halt", clip=C + "Walk"),
-    state("rest", "쉬며 추격", 120, 260, 1.5, enter="Chase", clip=C + "Walk"),
-    state("charge", "돌진 패턴", 420, 60, initial="windup"),
-    state("windup", "돌진 예고", 420, 140, 1.0, enter="Windup", parent="charge", clip=C + "Attack", loop=False),
-    state("dash", "돌진", 640, 140, 0.6, enter="Dash", parent="charge", clip=C + "Walk"),
-    state("ring", "탄막 패턴", 420, 300, initial="burst1"),
-    state("burst1", "탄막 1", 420, 380, 0.5, enter="Ring", parent="ring", clip=C + "Attack", loop=False),
-    state("burst2", "탄막 2", 640, 380, 0.5, enter="Ring", parent="ring", clip=C + "Attack", loop=False),
-    state("summon", "졸개 소환", 420, 520, 0.4, enter="Summon", clip=C + "Attack", loop=False),
+    state("intro", "등장", 120, 60, 3.4, enter="Halt", clip=C + "Walk"),
+    state("rest", "맴돌며 쉬기", 120, 260, 1.3, enter="Prowl", clip=C + "Walk"),
+    state("charge", "연속 돌진", 420, 40, initial="windup"),
+    state("windup", "돌진 예고", 420, 120, 0.8, enter="Windup", parent="charge", clip=C + "Attack", loop=False),
+    state("dash", "돌진", 640, 120, 0.45, enter="Dash", parent="charge", clip=C + "Walk"),
+    state("ring", "나선 탄막", 420, 240, initial="burst1"),
+    state("burst1", "탄막 1", 420, 320, 0.4, enter="Ring", parent="ring", clip=C + "Attack", loop=False),
+    state("burst2", "탄막 2", 600, 320, 0.4, enter="Ring", parent="ring", clip=C + "Attack", loop=False),
+    state("burst3", "탄막 3", 780, 320, 0.5, enter="Ring", parent="ring", clip=C + "Attack", loop=False),
+    state("jump", "점프 내려찍기", 420, 440, initial="jwind"),
+    state("jwind", "웅크림", 420, 520, 0.55, enter="JumpWindup", parent="jump", clip=C + "Attack", loop=False),
+    state("jair", "점프", 600, 520, 0.6, enter="Jump", parent="jump", clip=C + "Walk"),
+    state("jland", "착지", 780, 520, 0.7, enter="Slam", parent="jump", clip=C + "Hurt", loop=False),
+    state("summon", "졸개 소환", 420, 640, 0.6, enter="Summon", clip=C + "Attack", loop=False),
 ], [go("intro_rest", "intro", "rest", exit_time=1),
-    go("rest_charge", "rest", "charge", exit_time=1, conditions=[("Next", "equal", 0)]),
-    go("rest_ring", "rest", "ring", exit_time=1, conditions=[("Next", "equal", 1)]),
-    go("rest_summon", "rest", "summon", exit_time=1, conditions=[("Next", "equal", 2)]),
-    go("windup_dash", "windup", "dash", exit_time=1), go("dash_rest", "dash", "rest", exit_time=1),
-    go("burst1_burst2", "burst1", "burst2", exit_time=1), go("burst2_rest", "burst2", "rest", exit_time=1),
+    *[go(f"rest_{to}", "rest", to, exit_time=1, conditions=[("Next", "equal", n)]) for n, to in enumerate(["charge", "ring", "jump", "summon"])],
+    go("windup_dash", "windup", "dash", exit_time=1),
+    go("dash_again", "dash", "windup", exit_time=1, conditions=[("Again", "equal", True)]),
+    go("dash_rest", "dash", "rest", exit_time=1, conditions=[("Again", "equal", False)]),
+    go("burst1_burst2", "burst1", "burst2", exit_time=1), go("burst2_burst3", "burst2", "burst3", exit_time=1), go("burst3_rest", "burst3", "rest", exit_time=1),
+    go("jwind_jair", "jwind", "jair", exit_time=1), go("jair_jland", "jair", "jland", exit_time=1), go("jland_rest", "jland", "rest", exit_time=1),
     go("summon_rest", "summon", "rest", exit_time=1)])
 print("BP·프리팹·상태 머신 생성 완료")
 

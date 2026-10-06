@@ -508,7 +508,7 @@
       ]
     },
     {
-      "id": "Group_6",
+      "id": "Group_7",
       "name": "적 대기 풀",
       "kind": "group",
       "group": "WORLD",
@@ -554,7 +554,7 @@
       ]
     },
     {
-      "id": "Group_7",
+      "id": "Group_6",
       "name": "탄·골드·이펙트 풀",
       "kind": "group",
       "group": "WORLD",
@@ -863,7 +863,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "back",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -941,7 +941,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -1019,7 +1019,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -1097,7 +1097,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -1175,7 +1175,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -1253,7 +1253,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -1331,7 +1331,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -1409,7 +1409,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -1487,7 +1487,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -1565,7 +1565,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -1643,7 +1643,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -1721,7 +1721,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -1799,7 +1799,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -1877,7 +1877,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -1955,7 +1955,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -2033,7 +2033,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -2111,7 +2111,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -2189,7 +2189,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -2267,7 +2267,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -2345,7 +2345,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -2451,7 +2451,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -2557,7 +2557,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -2663,7 +2663,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -2769,7 +2769,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -2875,7 +2875,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -2981,7 +2981,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -3087,7 +3087,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -3193,7 +3193,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -3299,7 +3299,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -3405,7 +3405,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -3511,7 +3511,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -3617,7 +3617,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -3723,7 +3723,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -3829,7 +3829,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -3935,7 +3935,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -4041,7 +4041,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -4147,7 +4147,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -4253,7 +4253,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -4359,7 +4359,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -4465,7 +4465,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -4571,7 +4571,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -4677,7 +4677,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -4783,7 +4783,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -4889,7 +4889,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -4995,7 +4995,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -5101,7 +5101,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -5207,7 +5207,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -5313,7 +5313,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -5419,7 +5419,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -5525,7 +5525,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -5631,7 +5631,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -5737,7 +5737,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -5843,7 +5843,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -5949,7 +5949,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -6055,7 +6055,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -6161,7 +6161,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -6267,7 +6267,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -6373,7 +6373,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -6479,7 +6479,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -6585,7 +6585,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -6691,7 +6691,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -6797,7 +6797,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -6903,7 +6903,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -7009,7 +7009,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -7115,7 +7115,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -7221,7 +7221,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -7327,7 +7327,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -7433,7 +7433,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -7539,7 +7539,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -7645,7 +7645,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -7751,7 +7751,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -7857,7 +7857,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -7963,7 +7963,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -8069,7 +8069,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -8175,7 +8175,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -8281,7 +8281,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -8387,7 +8387,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -8493,7 +8493,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -8599,7 +8599,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -8705,7 +8705,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -8811,7 +8811,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -8917,7 +8917,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -9023,7 +9023,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -9129,7 +9129,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -9235,7 +9235,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -9341,7 +9341,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -9447,7 +9447,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -9553,7 +9553,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -9659,7 +9659,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -9765,7 +9765,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -9871,7 +9871,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -9977,7 +9977,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -10083,7 +10083,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -10189,7 +10189,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -10295,7 +10295,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -10401,7 +10401,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -10507,7 +10507,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -10613,7 +10613,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -10719,7 +10719,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -10825,7 +10825,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -10931,7 +10931,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -11037,7 +11037,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -11143,7 +11143,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -11249,7 +11249,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -11355,7 +11355,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -11461,7 +11461,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -11567,7 +11567,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -11673,7 +11673,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -11779,7 +11779,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -11885,7 +11885,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -11991,7 +11991,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -12097,7 +12097,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -12203,7 +12203,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -12309,7 +12309,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -12415,7 +12415,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -12521,7 +12521,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -12627,7 +12627,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -12733,7 +12733,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -12811,7 +12811,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -12889,7 +12889,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -12967,7 +12967,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -13045,7 +13045,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -13123,7 +13123,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -13201,7 +13201,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -13279,7 +13279,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -13357,7 +13357,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -13435,7 +13435,7 @@
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit"
           }
@@ -30101,6 +30101,240 @@
       "parent": "Group_5"
     },
     {
+      "id": "Warn0",
+      "name": "Warn0",
+      "kind": "sprite",
+      "position": [
+        -60,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Warning.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Warn"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Warn1",
+      "name": "Warn1",
+      "kind": "sprite",
+      "position": [
+        -56,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Warning.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Warn"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Warn2",
+      "name": "Warn2",
+      "kind": "sprite",
+      "position": [
+        -52,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Warning.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Warn"
+      ],
+      "parent": "Group_6"
+    },
+    {
       "id": "Skeleton0",
       "name": "Skeleton0",
       "kind": "empty",
@@ -30156,7 +30390,7 @@
       "tags": [
         "Enemy.S"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "Skeleton1",
@@ -30214,7 +30448,7 @@
       "tags": [
         "Enemy.S"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "Skeleton2",
@@ -30272,7 +30506,7 @@
       "tags": [
         "Enemy.S"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "Skeleton3",
@@ -30330,7 +30564,7 @@
       "tags": [
         "Enemy.S"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "Skeleton4",
@@ -30388,7 +30622,7 @@
       "tags": [
         "Enemy.S"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "Skeleton5",
@@ -30446,7 +30680,7 @@
       "tags": [
         "Enemy.S"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "Skeleton6",
@@ -30504,7 +30738,7 @@
       "tags": [
         "Enemy.S"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "Skeleton7",
@@ -30562,7 +30796,7 @@
       "tags": [
         "Enemy.S"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "Skeleton8",
@@ -30620,7 +30854,7 @@
       "tags": [
         "Enemy.S"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "Skeleton9",
@@ -30678,7 +30912,7 @@
       "tags": [
         "Enemy.S"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "SkeletonMage0",
@@ -30736,7 +30970,7 @@
       "tags": [
         "Enemy.M"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "SkeletonMage1",
@@ -30794,7 +31028,7 @@
       "tags": [
         "Enemy.M"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "SkeletonMage2",
@@ -30852,7 +31086,7 @@
       "tags": [
         "Enemy.M"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "SkeletonMage3",
@@ -30910,7 +31144,7 @@
       "tags": [
         "Enemy.M"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "SkeletonMage4",
@@ -30968,7 +31202,7 @@
       "tags": [
         "Enemy.M"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "SkeletonMage5",
@@ -31026,7 +31260,7 @@
       "tags": [
         "Enemy.M"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "SkeletonCaptain0",
@@ -31084,7 +31318,7 @@
       "tags": [
         "Enemy.C"
       ],
-      "parent": "Group_6"
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot0",
@@ -31228,7 +31462,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot1",
@@ -31372,7 +31606,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot2",
@@ -31516,7 +31750,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot3",
@@ -31660,7 +31894,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot4",
@@ -31804,7 +32038,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot5",
@@ -31948,7 +32182,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot6",
@@ -32092,7 +32326,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot7",
@@ -32236,7 +32470,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot8",
@@ -32380,7 +32614,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot9",
@@ -32524,7 +32758,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot10",
@@ -32668,7 +32902,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot11",
@@ -32812,7 +33046,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot12",
@@ -32956,7 +33190,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot13",
@@ -33100,7 +33334,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot14",
@@ -33244,7 +33478,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot15",
@@ -33388,7 +33622,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot16",
@@ -33532,7 +33766,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot17",
@@ -33676,7 +33910,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot18",
@@ -33820,7 +34054,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot19",
@@ -33964,7 +34198,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot20",
@@ -34108,7 +34342,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot21",
@@ -34252,7 +34486,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot22",
@@ -34396,7 +34630,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot23",
@@ -34540,7 +34774,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot24",
@@ -34684,7 +34918,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot25",
@@ -34828,7 +35062,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot26",
@@ -34972,7 +35206,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot27",
@@ -35116,7 +35350,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot28",
@@ -35260,7 +35494,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot29",
@@ -35404,7 +35638,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot30",
@@ -35548,7 +35782,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot31",
@@ -35692,7 +35926,7 @@
       "tags": [
         "Pool.EnemyShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot0",
@@ -35836,7 +36070,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot1",
@@ -35980,7 +36214,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot2",
@@ -36124,7 +36358,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot3",
@@ -36268,7 +36502,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot4",
@@ -36412,7 +36646,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot5",
@@ -36556,7 +36790,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot6",
@@ -36700,7 +36934,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot7",
@@ -36844,7 +37078,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot8",
@@ -36988,7 +37222,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot9",
@@ -37132,7 +37366,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot10",
@@ -37276,7 +37510,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot11",
@@ -37420,7 +37654,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot12",
@@ -37564,7 +37798,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot13",
@@ -37708,7 +37942,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot14",
@@ -37852,7 +38086,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "PlayerShot15",
@@ -37996,7 +38230,7 @@
       "tags": [
         "Pool.PlayerShot"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin0",
@@ -38075,7 +38309,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin1",
@@ -38154,7 +38388,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin2",
@@ -38233,7 +38467,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin3",
@@ -38312,7 +38546,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin4",
@@ -38391,7 +38625,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin5",
@@ -38470,7 +38704,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin6",
@@ -38549,7 +38783,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin7",
@@ -38628,7 +38862,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin8",
@@ -38707,7 +38941,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin9",
@@ -38786,7 +39020,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin10",
@@ -38865,7 +39099,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin11",
@@ -38944,7 +39178,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin12",
@@ -39023,7 +39257,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin13",
@@ -39102,7 +39336,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin14",
@@ -39181,7 +39415,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Coin15",
@@ -39260,7 +39494,7 @@
       "tags": [
         "Pool.Coin"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx0",
@@ -39338,7 +39572,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx1",
@@ -39416,7 +39650,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx2",
@@ -39494,7 +39728,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx3",
@@ -39572,7 +39806,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx4",
@@ -39650,7 +39884,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx5",
@@ -39728,7 +39962,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx6",
@@ -39806,7 +40040,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx7",
@@ -39884,7 +40118,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx8",
@@ -39962,7 +40196,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx9",
@@ -40040,7 +40274,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx10",
@@ -40118,7 +40352,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx11",
@@ -40196,7 +40430,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx12",
@@ -40274,7 +40508,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx13",
@@ -40352,7 +40586,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx14",
@@ -40430,7 +40664,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx15",
@@ -40508,7 +40742,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx16",
@@ -40586,7 +40820,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx17",
@@ -40664,7 +40898,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx18",
@@ -40742,7 +40976,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx19",
@@ -40820,7 +41054,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx20",
@@ -40898,7 +41132,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx21",
@@ -40976,7 +41210,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx22",
@@ -41054,7 +41288,7 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
     },
     {
       "id": "Fx23",
@@ -41132,7 +41366,631 @@
       "tags": [
         "Pool.Fx"
       ],
-      "parent": "Group_7"
+      "parent": "Group_6"
+    },
+    {
+      "id": "Fx24",
+      "name": "Fx24",
+      "kind": "sprite",
+      "position": [
+        36,
+        -260,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Fx25",
+      "name": "Fx25",
+      "kind": "sprite",
+      "position": [
+        40,
+        -260,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Fx26",
+      "name": "Fx26",
+      "kind": "sprite",
+      "position": [
+        44,
+        -260,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Fx27",
+      "name": "Fx27",
+      "kind": "sprite",
+      "position": [
+        48,
+        -260,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Fx28",
+      "name": "Fx28",
+      "kind": "sprite",
+      "position": [
+        52,
+        -260,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Fx29",
+      "name": "Fx29",
+      "kind": "sprite",
+      "position": [
+        56,
+        -260,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Fx30",
+      "name": "Fx30",
+      "kind": "sprite",
+      "position": [
+        -60,
+        -262,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Fx31",
+      "name": "Fx31",
+      "kind": "sprite",
+      "position": [
+        -56,
+        -262,
+        0.15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_Slash_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.3,
+            "height": 0.3,
+            "pixelsPerUnit": 100,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 4,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Fx"
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "PostFX",
@@ -41187,7 +42045,7 @@
             "priority": 0,
             "bloomEnabled": true,
             "bloomThreshold": 1,
-            "bloomStrength": 0.7,
+            "bloomStrength": 0.45,
             "bloomRadius": 0.35,
             "bloomResolutionScale": 0.5
           }
@@ -41225,6 +42083,21 @@
     "fixedDeltaTime": 0.016666666666666666,
     "maxSubsteps": 8,
     "sortingLayers": [
+      {
+        "id": "back",
+        "name": "Back",
+        "sortMode": "distance"
+      },
+      {
+        "id": "ground",
+        "name": "Ground",
+        "sortMode": "distance"
+      },
+      {
+        "id": "overlay",
+        "name": "Overlay",
+        "sortMode": "distance"
+      },
       {
         "id": "default",
         "name": "Default",

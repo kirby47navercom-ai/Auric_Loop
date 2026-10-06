@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "SA_Dust",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_Dust_0.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Dust_1.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Dust_2.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Dust_3.hbsprite.json",
+      "duration": 0.06
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

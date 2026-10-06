@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "SA_BoneBurst",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_BoneBurst_0.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_BoneBurst_1.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_BoneBurst_2.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_BoneBurst_3.hbsprite.json",
+      "duration": 0.06
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

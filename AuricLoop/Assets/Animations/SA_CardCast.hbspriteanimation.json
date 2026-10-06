@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "name": "SA_CardCast",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_CardCast_0.hbsprite.json",
+      "duration": 0.05
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_CardCast_1.hbsprite.json",
+      "duration": 0.05
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_CardCast_2.hbsprite.json",
+      "duration": 0.05
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

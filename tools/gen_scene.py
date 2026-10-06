@@ -181,15 +181,28 @@ def outline(objects):
     return out + [g for _, g in sorted(groups.items(), key=lambda kv: [n for n, _ in OUTLINE].index(kv[0]))] + [o for o in objects if "parent" in o]
 
 
+LAYERS = {"back": {"Background", "Dungeon.Background"},
+          "ground": {"Grass", "Floor", "World", "Dungeon.Floor"},
+          "overlay": {"Plaza", "NorthRoad", "HomePath", "Street", "Rug", "Dungeon.Face", "Dungeon.Cap", "Dungeon.Arch"}}  # 아이디 또는 태그
+
+
 def write(name, objects):
     scene = copy.deepcopy(TEMPLATE)
     scene["sceneName"] = name
     # Y 정렬: 같은 순서(sortingOrder) 안에서는 발끝이 아래인 것이 앞에 그려짐 (캐릭터·적·기둥·가구 모두 순서 0)
-    scene["runtime"]["sortingLayers"] = [{"id": "default", "name": "Default", "sortMode": "y"}]
-    # 블룸: 발광(emissiveIntensity)을 준 스프라이트만 번지게 임계값 1 (횃불·베기·불꽃·탄)
+    # 정렬 레이어 (앞의 것부터 그림): back 맵 밖 배경 → ground 바닥(잔디·던전 바닥·원룸 바닥) → overlay 바닥 위 덧칠(자갈길·벽·러그)
+    # → default 캐릭터·적·장식 (발끝 Y 정렬). 새 엔진의 거리 정렬은 같은 레이어 안의 순서값을 무시해 큰 배경이 바닥을 덮었음
+    scene["runtime"]["sortingLayers"] = [{"id": k, "name": k.capitalize(), "sortMode": "distance"} for k in ("back", "ground", "overlay")] + [
+        {"id": "default", "name": "Default", "sortMode": "y"}]
+    for o in objects:
+        layer = next((k for k, ids in LAYERS.items() if o["id"] in ids or any(t in ids for t in o.get("tags", []))), None)
+        if layer:
+            for c in o["components"]:
+                if c["type"] in ("SpriteRenderer", "TilemapRenderer"):
+                    c["properties"]["sortingLayer"] = layer
     post = {"id": "PostFX", "name": "PostFX", "kind": "empty", "group": "WORLD", "position": [0, 0, 0], "rotation": [0, 0, 0], "scale": [1, 1, 1],
             "visible": True, "components": [transform(), {"id": "post", "name": "PostProcessVolume", "type": "PostProcessVolume", "properties": {
-                "enabled": True, "priority": 0, "bloomEnabled": True, "bloomThreshold": 1, "bloomStrength": 0.7, "bloomRadius": 0.35, "bloomResolutionScale": 0.5}}]}
+                "enabled": True, "priority": 0, "bloomEnabled": True, "bloomThreshold": 1, "bloomStrength": 0.45, "bloomRadius": 0.35, "bloomResolutionScale": 0.5}}]}
     scene["objects"] = outline(objects + [post])
     (SCENES / f"{name}.hbscene.json").write_text(json.dumps(scene, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     return len(objects)
@@ -266,13 +279,14 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
     for k, (oid, texture, kind, price) in enumerate([("Ore", "Assets/Sprites/Prop_Ore.png", "Ore", 0), ("Herb", "Assets/Sprites/Prop_Herb.png", "Herb", 0),
                                                      ("Blacksmith", "Assets/Sprites/NPC_Blacksmith.png", "Smith", 20), ("Stall", "Assets/Sprites/Prop_Stall.png", "Stall", 15)]):
         objects.append(interactable(oid, texture, -20 + k * 6, -230, kind, price=price, solid=kind in ("Smith", "Stall")))
+    parked(objects, "Pool.Warn", 3, lambda i: sprite_obj(i, "Assets/Sprites/FX/FX_Warning.png", 0, 0, order=-3, width=4, height=1.4))  # 보스 돌진 예고선
     # 적 풀: 웨이브·소환·귀환 때 C++가 꺼내 씀 (태그 Enemy.기호 = BP_AuricRules.Enemies). 엔진 풀(PooledActor)은 꺼 둔 채 시작하므로 켜서 놓음
     for code, name, count in (("S", "Skeleton", 10), ("M", "SkeletonMage", 6), ("C", "SkeletonCaptain", 1)):
         for k in range(count):
             objects.append(bp_obj(f"{name}{k}", f"Enemies/BP_{name}", -60 + k * 4 + (40 if code != "S" else 0), -300 - (k % 2) * 4,
                                   components={"pool": {"initiallyActive": True}}, tags=["Enemy." + code]))
     # 탄·골드·이펙트 풀 (TopDownShooter::Prewarm)
-    for tag, prefab, count in (("Pool.EnemyShot", "PF_EnemyShot", 32), ("Pool.PlayerShot", "PF_PlayerShot", 16), ("Pool.Coin", "PF_Coin", 16), ("Pool.Fx", "PF_Fx", 24)):
+    for tag, prefab, count in (("Pool.EnemyShot", "PF_EnemyShot", 32), ("Pool.PlayerShot", "PF_PlayerShot", 16), ("Pool.Coin", "PF_Coin", 16), ("Pool.Fx", "PF_Fx", 32)):
         base = json.loads((ASSETS / f"Prefabs/{prefab}.hbprefab.json").read_text(encoding="utf-8"))["objects"][0]
         for k in range(count):
             o = copy.deepcopy(base)

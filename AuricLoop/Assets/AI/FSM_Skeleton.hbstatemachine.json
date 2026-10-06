@@ -27,6 +27,11 @@
       "name": "Near",
       "type": "bool",
       "value": false
+    },
+    {
+      "name": "Again",
+      "type": "bool",
+      "value": false
     }
   ],
   "states": [
