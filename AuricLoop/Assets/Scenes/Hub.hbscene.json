@@ -232,6 +232,190 @@
       ]
     },
     {
+      "id": "Group_0",
+      "name": "시스템",
+      "kind": "group",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Group_1",
+      "name": "맵",
+      "kind": "group",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Group_3",
+      "name": "장식·조명",
+      "kind": "group",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Group_2",
+      "name": "상호작용 (NPC·채집·상점)",
+      "kind": "group",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
       "id": "Director",
       "name": "Director",
       "kind": "empty",
@@ -276,7 +460,8 @@
           }
         }
       ],
-      "blueprintAsset": "Assets/Blueprints/BP_TopDownShooter.hbblueprint.json"
+      "blueprintAsset": "Assets/Blueprints/BP_TopDownShooter.hbblueprint.json",
+      "parent": "Group_0"
     },
     {
       "id": "Rules",
@@ -323,7 +508,8 @@
           }
         }
       ],
-      "blueprintAsset": "Assets/Blueprints/BP_AuricRules.hbblueprint.json"
+      "blueprintAsset": "Assets/Blueprints/BP_AuricRules.hbblueprint.json",
+      "parent": "Group_0"
     },
     {
       "id": "PlayerStart",
@@ -369,7 +555,8 @@
             ]
           }
         }
-      ]
+      ],
+      "parent": "Group_0"
     },
     {
       "id": "World",
@@ -429,7 +616,8 @@
             "shading": "unlit"
           }
         }
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Room",
@@ -483,7 +671,8 @@
           "Kind": "Hub",
           "ExitY": 21
         }
-      }
+      },
+      "parent": "Group_0"
     },
     {
       "id": "StairTop",
@@ -529,7 +718,8 @@
             ]
           }
         }
-      ]
+      ],
+      "parent": "Group_0"
     },
     {
       "id": "DebtBoard",
@@ -603,7 +793,8 @@
             "enabled": true
           }
         }
-      }
+      },
+      "parent": "Group_2"
     },
     {
       "id": "Entrance",
@@ -677,7 +868,8 @@
             "enabled": false
           }
         }
-      }
+      },
+      "parent": "Group_2"
     },
     {
       "id": "Collector",
@@ -751,7 +943,8 @@
             "enabled": true
           }
         }
-      }
+      },
+      "parent": "Group_2"
     },
     {
       "id": "Interior",
@@ -825,7 +1018,8 @@
             "enabled": true
           }
         }
-      }
+      },
+      "parent": "Group_2"
     },
     {
       "id": "ClosedRental",
@@ -899,7 +1093,8 @@
             "enabled": true
           }
         }
-      }
+      },
+      "parent": "Group_2"
     },
     {
       "id": "ClosedCharm",
@@ -973,7 +1168,8 @@
             "enabled": true
           }
         }
-      }
+      },
+      "parent": "Group_2"
     },
     {
       "id": "ClosedRecipe",
@@ -1047,7 +1243,8 @@
             "enabled": true
           }
         }
-      }
+      },
+      "parent": "Group_2"
     },
     {
       "id": "ClosedRelic",
@@ -1121,7 +1318,8 @@
             "enabled": true
           }
         }
-      }
+      },
+      "parent": "Group_2"
     },
     {
       "id": "Sofa",
@@ -1195,7 +1393,8 @@
             "enabled": true
           }
         }
-      }
+      },
+      "parent": "Group_2"
     },
     {
       "id": "Bed",
@@ -1269,7 +1468,8 @@
             "enabled": true
           }
         }
-      }
+      },
+      "parent": "Group_2"
     },
     {
       "id": "Fridge",
@@ -1343,7 +1543,8 @@
             "enabled": true
           }
         }
-      }
+      },
+      "parent": "Group_2"
     },
     {
       "id": "TV",
@@ -1417,7 +1618,8 @@
             "enabled": true
           }
         }
-      }
+      },
+      "parent": "Group_2"
     },
     {
       "id": "Lamp0",
@@ -1519,7 +1721,8 @@
             ]
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Lamp0Glow",
@@ -1594,7 +1797,8 @@
             "blendMode": "additive"
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Lamp1",
@@ -1696,7 +1900,8 @@
             ]
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Lamp1Glow",
@@ -1771,7 +1976,8 @@
             "blendMode": "additive"
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Lamp2",
@@ -1873,7 +2079,8 @@
             ]
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Lamp2Glow",
@@ -1948,7 +2155,8 @@
             "blendMode": "additive"
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Lamp3",
@@ -2050,7 +2258,8 @@
             ]
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Lamp3Glow",
@@ -2125,7 +2334,8 @@
             "blendMode": "additive"
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Lamp4",
@@ -2227,7 +2437,8 @@
             ]
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Lamp4Glow",
@@ -2302,7 +2513,8 @@
             "blendMode": "additive"
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Lamp5",
@@ -2404,7 +2616,8 @@
             ]
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Lamp5Glow",
@@ -2479,7 +2692,8 @@
             "blendMode": "additive"
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bench6",
@@ -2553,7 +2767,8 @@
             "shading": "unlit"
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bench7",
@@ -2627,7 +2842,8 @@
             "shading": "unlit"
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Plant8",
@@ -2701,7 +2917,8 @@
             "shading": "unlit"
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Plant9",
@@ -2775,7 +2992,8 @@
             "shading": "unlit"
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Crates10",
@@ -2877,7 +3095,8 @@
             ]
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Barrel11",
@@ -2979,7 +3198,8 @@
             ]
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Crates12",
@@ -3081,7 +3301,8 @@
             ]
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "NoticeBoard13",
@@ -3155,7 +3376,8 @@
             "shading": "unlit"
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Plant14",
@@ -3229,7 +3451,8 @@
             "shading": "unlit"
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Barrel15",
@@ -3331,7 +3554,8 @@
             ]
           }
         }
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "PostFX",
@@ -3391,7 +3615,8 @@
             "bloomResolutionScale": 0.5
           }
         }
-      ]
+      ],
+      "parent": "Group_0"
     }
   ],
   "surface": {

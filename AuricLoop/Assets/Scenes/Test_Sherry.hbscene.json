@@ -232,6 +232,374 @@
       ]
     },
     {
+      "id": "Group_0",
+      "name": "시스템",
+      "kind": "group",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Group_1",
+      "name": "맵",
+      "kind": "group",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Group_2",
+      "name": "문",
+      "kind": "group",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Group_4",
+      "name": "엄폐물",
+      "kind": "group",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Group_3",
+      "name": "장식·조명",
+      "kind": "group",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Group_5",
+      "name": "상호작용 (NPC·채집·상점)",
+      "kind": "group",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Group_6",
+      "name": "적 대기 풀",
+      "kind": "group",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Group_7",
+      "name": "탄·골드·이펙트 풀",
+      "kind": "group",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
       "id": "Director",
       "name": "Director",
       "kind": "empty",
@@ -276,7 +644,8 @@
           }
         }
       ],
-      "blueprintAsset": "Assets/Blueprints/BP_Test_Sherry.hbblueprint.json"
+      "blueprintAsset": "Assets/Blueprints/BP_Test_Sherry.hbblueprint.json",
+      "parent": "Group_0"
     },
     {
       "id": "Rules",
@@ -323,7 +692,8 @@
           }
         }
       ],
-      "blueprintAsset": "Assets/Blueprints/BP_AuricRules.hbblueprint.json"
+      "blueprintAsset": "Assets/Blueprints/BP_AuricRules.hbblueprint.json",
+      "parent": "Group_0"
     },
     {
       "id": "PlayerStart",
@@ -369,7 +739,8 @@
             ]
           }
         }
-      ]
+      ],
+      "parent": "Group_0"
     },
     {
       "id": "Room",
@@ -422,7 +793,8 @@
           "Index": 0,
           "Kind": "Dungeon"
         }
-      }
+      },
+      "parent": "Group_0"
     },
     {
       "id": "Floor0",
@@ -499,7 +871,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor1",
@@ -576,7 +949,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor2",
@@ -653,7 +1027,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor3",
@@ -730,7 +1105,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor4",
@@ -807,7 +1183,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor5",
@@ -884,7 +1261,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor6",
@@ -961,7 +1339,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor7",
@@ -1038,7 +1417,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor8",
@@ -1115,7 +1495,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor9",
@@ -1192,7 +1573,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor10",
@@ -1269,7 +1651,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor11",
@@ -1346,7 +1729,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor12",
@@ -1423,7 +1807,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor13",
@@ -1500,7 +1885,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor14",
@@ -1577,7 +1963,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor15",
@@ -1654,7 +2041,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor16",
@@ -1731,7 +2119,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Floor17",
@@ -1808,7 +2197,8 @@
       ],
       "tags": [
         "Dungeon.Floor"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap0",
@@ -1913,7 +2303,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap1",
@@ -2018,7 +2409,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap2",
@@ -2123,7 +2515,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap3",
@@ -2228,7 +2621,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap4",
@@ -2333,7 +2727,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap5",
@@ -2438,7 +2833,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap6",
@@ -2543,7 +2939,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap7",
@@ -2648,7 +3045,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap8",
@@ -2753,7 +3151,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap9",
@@ -2858,7 +3257,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap10",
@@ -2963,7 +3363,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap11",
@@ -3068,7 +3469,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap12",
@@ -3173,7 +3575,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap13",
@@ -3278,7 +3681,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap14",
@@ -3383,7 +3787,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap15",
@@ -3488,7 +3893,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap16",
@@ -3593,7 +3999,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap17",
@@ -3698,7 +4105,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap18",
@@ -3803,7 +4211,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap19",
@@ -3908,7 +4317,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap20",
@@ -4013,7 +4423,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap21",
@@ -4118,7 +4529,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap22",
@@ -4223,7 +4635,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap23",
@@ -4328,7 +4741,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap24",
@@ -4433,7 +4847,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap25",
@@ -4538,7 +4953,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap26",
@@ -4643,7 +5059,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap27",
@@ -4748,7 +5165,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap28",
@@ -4853,7 +5271,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap29",
@@ -4958,7 +5377,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap30",
@@ -5063,7 +5483,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap31",
@@ -5168,7 +5589,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap32",
@@ -5273,7 +5695,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap33",
@@ -5378,7 +5801,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap34",
@@ -5483,7 +5907,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap35",
@@ -5588,7 +6013,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap36",
@@ -5693,7 +6119,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap37",
@@ -5798,7 +6225,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap38",
@@ -5903,7 +6331,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap39",
@@ -6008,7 +6437,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap40",
@@ -6113,7 +6543,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap41",
@@ -6218,7 +6649,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap42",
@@ -6323,7 +6755,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap43",
@@ -6428,7 +6861,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap44",
@@ -6533,7 +6967,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap45",
@@ -6638,7 +7073,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap46",
@@ -6743,7 +7179,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap47",
@@ -6848,7 +7285,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap48",
@@ -6953,7 +7391,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap49",
@@ -7058,7 +7497,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap50",
@@ -7163,7 +7603,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap51",
@@ -7268,7 +7709,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap52",
@@ -7373,7 +7815,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap53",
@@ -7478,7 +7921,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap54",
@@ -7583,7 +8027,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap55",
@@ -7688,7 +8133,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap56",
@@ -7793,7 +8239,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap57",
@@ -7898,7 +8345,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap58",
@@ -8003,7 +8451,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap59",
@@ -8108,7 +8557,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap60",
@@ -8213,7 +8663,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap61",
@@ -8318,7 +8769,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap62",
@@ -8423,7 +8875,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap63",
@@ -8528,7 +8981,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap64",
@@ -8633,7 +9087,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap65",
@@ -8738,7 +9193,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap66",
@@ -8843,7 +9299,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap67",
@@ -8948,7 +9405,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap68",
@@ -9053,7 +9511,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap69",
@@ -9158,7 +9617,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap70",
@@ -9263,7 +9723,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Cap71",
@@ -9368,7 +9829,8 @@
       ],
       "tags": [
         "Dungeon.Cap"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face0",
@@ -9473,7 +9935,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face1",
@@ -9578,7 +10041,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face2",
@@ -9683,7 +10147,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face3",
@@ -9788,7 +10253,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face4",
@@ -9893,7 +10359,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face5",
@@ -9998,7 +10465,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face6",
@@ -10103,7 +10571,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face7",
@@ -10208,7 +10677,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face8",
@@ -10313,7 +10783,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face9",
@@ -10418,7 +10889,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face10",
@@ -10523,7 +10995,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face11",
@@ -10628,7 +11101,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face12",
@@ -10733,7 +11207,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face13",
@@ -10838,7 +11313,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face14",
@@ -10943,7 +11419,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face15",
@@ -11048,7 +11525,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face16",
@@ -11153,7 +11631,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face17",
@@ -11258,7 +11737,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face18",
@@ -11363,7 +11843,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face19",
@@ -11468,7 +11949,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face20",
@@ -11573,7 +12055,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face21",
@@ -11678,7 +12161,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face22",
@@ -11783,7 +12267,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face23",
@@ -11888,7 +12373,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face24",
@@ -11993,7 +12479,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Face25",
@@ -12098,7 +12585,8 @@
       ],
       "tags": [
         "Dungeon.Face"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Arch0",
@@ -12175,7 +12663,8 @@
       ],
       "tags": [
         "Dungeon.Arch"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Arch1",
@@ -12252,7 +12741,8 @@
       ],
       "tags": [
         "Dungeon.Arch"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Arch2",
@@ -12329,7 +12819,8 @@
       ],
       "tags": [
         "Dungeon.Arch"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Arch3",
@@ -12406,7 +12897,8 @@
       ],
       "tags": [
         "Dungeon.Arch"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Arch4",
@@ -12483,7 +12975,8 @@
       ],
       "tags": [
         "Dungeon.Arch"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Arch5",
@@ -12560,7 +13053,8 @@
       ],
       "tags": [
         "Dungeon.Arch"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Arch6",
@@ -12637,7 +13131,8 @@
       ],
       "tags": [
         "Dungeon.Arch"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Arch7",
@@ -12714,7 +13209,8 @@
       ],
       "tags": [
         "Dungeon.Arch"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Arch8",
@@ -12791,7 +13287,8 @@
       ],
       "tags": [
         "Dungeon.Arch"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Arch9",
@@ -12868,7 +13365,8 @@
       ],
       "tags": [
         "Dungeon.Arch"
-      ]
+      ],
+      "parent": "Group_1"
     },
     {
       "id": "Gate0",
@@ -12973,7 +13471,8 @@
       ],
       "tags": [
         "Dungeon.Gate"
-      ]
+      ],
+      "parent": "Group_2"
     },
     {
       "id": "Gate1",
@@ -13078,7 +13577,8 @@
       ],
       "tags": [
         "Dungeon.Gate"
-      ]
+      ],
+      "parent": "Group_2"
     },
     {
       "id": "Gate2",
@@ -13183,7 +13683,8 @@
       ],
       "tags": [
         "Dungeon.Gate"
-      ]
+      ],
+      "parent": "Group_2"
     },
     {
       "id": "Gate3",
@@ -13288,7 +13789,8 @@
       ],
       "tags": [
         "Dungeon.Gate"
-      ]
+      ],
+      "parent": "Group_2"
     },
     {
       "id": "GateSide0",
@@ -13393,7 +13895,8 @@
       ],
       "tags": [
         "Dungeon.GateSide"
-      ]
+      ],
+      "parent": "Group_2"
     },
     {
       "id": "GateSide1",
@@ -13498,7 +14001,8 @@
       ],
       "tags": [
         "Dungeon.GateSide"
-      ]
+      ],
+      "parent": "Group_2"
     },
     {
       "id": "GateSide2",
@@ -13603,7 +14107,8 @@
       ],
       "tags": [
         "Dungeon.GateSide"
-      ]
+      ],
+      "parent": "Group_2"
     },
     {
       "id": "GateSide3",
@@ -13708,7 +14213,8 @@
       ],
       "tags": [
         "Dungeon.GateSide"
-      ]
+      ],
+      "parent": "Group_2"
     },
     {
       "id": "Torch0",
@@ -13798,7 +14304,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch1",
@@ -13888,7 +14395,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch2",
@@ -13978,7 +14486,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch3",
@@ -14068,7 +14577,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch4",
@@ -14158,7 +14668,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch5",
@@ -14248,7 +14759,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch6",
@@ -14338,7 +14850,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch7",
@@ -14428,7 +14941,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch8",
@@ -14518,7 +15032,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch9",
@@ -14608,7 +15123,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch10",
@@ -14698,7 +15214,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch11",
@@ -14788,7 +15305,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch12",
@@ -14878,7 +15396,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch13",
@@ -14968,7 +15487,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch14",
@@ -15058,7 +15578,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch15",
@@ -15148,7 +15669,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch16",
@@ -15238,7 +15760,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch17",
@@ -15328,7 +15851,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch18",
@@ -15418,7 +15942,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch19",
@@ -15508,7 +16033,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch20",
@@ -15598,7 +16124,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Torch21",
@@ -15688,7 +16215,8 @@
       ],
       "tags": [
         "Dungeon.Torch"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow0",
@@ -15766,7 +16294,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow1",
@@ -15844,7 +16373,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow2",
@@ -15922,7 +16452,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow3",
@@ -16000,7 +16531,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow4",
@@ -16078,7 +16610,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow5",
@@ -16156,7 +16689,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow6",
@@ -16234,7 +16768,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow7",
@@ -16312,7 +16847,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow8",
@@ -16390,7 +16926,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow9",
@@ -16468,7 +17005,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow10",
@@ -16546,7 +17084,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow11",
@@ -16624,7 +17163,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow12",
@@ -16702,7 +17242,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow13",
@@ -16780,7 +17321,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow14",
@@ -16858,7 +17400,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow15",
@@ -16936,7 +17479,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow16",
@@ -17014,7 +17558,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow17",
@@ -17092,7 +17637,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow18",
@@ -17170,7 +17716,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow19",
@@ -17248,7 +17795,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow20",
@@ -17326,7 +17874,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Glow21",
@@ -17404,7 +17953,8 @@
       ],
       "tags": [
         "Dungeon.Glow"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Banner0",
@@ -17481,7 +18031,8 @@
       ],
       "tags": [
         "Dungeon.Banner"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Banner1",
@@ -17558,7 +18109,8 @@
       ],
       "tags": [
         "Dungeon.Banner"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Banner2",
@@ -17635,7 +18187,8 @@
       ],
       "tags": [
         "Dungeon.Banner"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Banner3",
@@ -17712,7 +18265,8 @@
       ],
       "tags": [
         "Dungeon.Banner"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Banner4",
@@ -17789,7 +18343,8 @@
       ],
       "tags": [
         "Dungeon.Banner"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Banner5",
@@ -17866,7 +18421,8 @@
       ],
       "tags": [
         "Dungeon.Banner"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Banner6",
@@ -17943,7 +18499,8 @@
       ],
       "tags": [
         "Dungeon.Banner"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Banner7",
@@ -18020,7 +18577,8 @@
       ],
       "tags": [
         "Dungeon.Banner"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Banner8",
@@ -18097,7 +18655,8 @@
       ],
       "tags": [
         "Dungeon.Banner"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Banner9",
@@ -18174,7 +18733,8 @@
       ],
       "tags": [
         "Dungeon.Banner"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Banner10",
@@ -18251,7 +18811,8 @@
       ],
       "tags": [
         "Dungeon.Banner"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Banner11",
@@ -18328,7 +18889,8 @@
       ],
       "tags": [
         "Dungeon.Banner"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Pillar0",
@@ -18433,7 +18995,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Pillar1",
@@ -18538,7 +19101,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Pillar2",
@@ -18643,7 +19207,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Pillar3",
@@ -18748,7 +19313,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Pillar4",
@@ -18853,7 +19419,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Pillar5",
@@ -18958,7 +19525,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Pillar6",
@@ -19063,7 +19631,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Pillar7",
@@ -19168,7 +19737,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Pillar8",
@@ -19273,7 +19843,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Pillar9",
@@ -19378,7 +19949,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Pillar10",
@@ -19483,7 +20055,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Pillar11",
@@ -19588,7 +20161,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Pillar12",
@@ -19693,7 +20267,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Pillar13",
@@ -19798,7 +20373,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Pillar14",
@@ -19903,7 +20479,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Pillar15",
@@ -20008,7 +20585,8 @@
       ],
       "tags": [
         "Dungeon.Pillar"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Crate0",
@@ -20113,7 +20691,8 @@
       ],
       "tags": [
         "Dungeon.Crate"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Crate1",
@@ -20218,7 +20797,8 @@
       ],
       "tags": [
         "Dungeon.Crate"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Crate2",
@@ -20323,7 +20903,8 @@
       ],
       "tags": [
         "Dungeon.Crate"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Crate3",
@@ -20428,7 +21009,8 @@
       ],
       "tags": [
         "Dungeon.Crate"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Crate4",
@@ -20533,7 +21115,8 @@
       ],
       "tags": [
         "Dungeon.Crate"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Crate5",
@@ -20638,7 +21221,8 @@
       ],
       "tags": [
         "Dungeon.Crate"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Crate6",
@@ -20743,7 +21327,8 @@
       ],
       "tags": [
         "Dungeon.Crate"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Crate7",
@@ -20848,7 +21433,8 @@
       ],
       "tags": [
         "Dungeon.Crate"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Crate8",
@@ -20953,7 +21539,8 @@
       ],
       "tags": [
         "Dungeon.Crate"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Crate9",
@@ -21058,7 +21645,8 @@
       ],
       "tags": [
         "Dungeon.Crate"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Crate10",
@@ -21163,7 +21751,8 @@
       ],
       "tags": [
         "Dungeon.Crate"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Crate11",
@@ -21268,7 +21857,8 @@
       ],
       "tags": [
         "Dungeon.Crate"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Crate12",
@@ -21373,7 +21963,8 @@
       ],
       "tags": [
         "Dungeon.Crate"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Crate13",
@@ -21478,7 +22069,8 @@
       ],
       "tags": [
         "Dungeon.Crate"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Barrel0",
@@ -21583,7 +22175,8 @@
       ],
       "tags": [
         "Dungeon.Barrel"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Barrel1",
@@ -21688,7 +22281,8 @@
       ],
       "tags": [
         "Dungeon.Barrel"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Barrel2",
@@ -21793,7 +22387,8 @@
       ],
       "tags": [
         "Dungeon.Barrel"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Barrel3",
@@ -21898,7 +22493,8 @@
       ],
       "tags": [
         "Dungeon.Barrel"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Barrel4",
@@ -22003,7 +22599,8 @@
       ],
       "tags": [
         "Dungeon.Barrel"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Barrel5",
@@ -22108,7 +22705,8 @@
       ],
       "tags": [
         "Dungeon.Barrel"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Barrel6",
@@ -22213,7 +22811,8 @@
       ],
       "tags": [
         "Dungeon.Barrel"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Barrel7",
@@ -22318,7 +22917,8 @@
       ],
       "tags": [
         "Dungeon.Barrel"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Barrel8",
@@ -22423,7 +23023,8 @@
       ],
       "tags": [
         "Dungeon.Barrel"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Barrel9",
@@ -22528,7 +23129,8 @@
       ],
       "tags": [
         "Dungeon.Barrel"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall0",
@@ -22633,7 +23235,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall1",
@@ -22738,7 +23341,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall2",
@@ -22843,7 +23447,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall3",
@@ -22948,7 +23553,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall4",
@@ -23053,7 +23659,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall5",
@@ -23158,7 +23765,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall6",
@@ -23263,7 +23871,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall7",
@@ -23368,7 +23977,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall8",
@@ -23473,7 +24083,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall9",
@@ -23578,7 +24189,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall10",
@@ -23683,7 +24295,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall11",
@@ -23788,7 +24401,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall12",
@@ -23893,7 +24507,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall13",
@@ -23998,7 +24613,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall14",
@@ -24103,7 +24719,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall15",
@@ -24208,7 +24825,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall16",
@@ -24313,7 +24931,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall17",
@@ -24418,7 +25037,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall18",
@@ -24523,7 +25143,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall19",
@@ -24628,7 +25249,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall20",
@@ -24733,7 +25355,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "LowWall21",
@@ -24838,7 +25461,8 @@
       ],
       "tags": [
         "Dungeon.LowWall"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Statue0",
@@ -24943,7 +25567,8 @@
       ],
       "tags": [
         "Dungeon.Statue"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Statue1",
@@ -25048,7 +25673,8 @@
       ],
       "tags": [
         "Dungeon.Statue"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Statue2",
@@ -25153,7 +25779,8 @@
       ],
       "tags": [
         "Dungeon.Statue"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Statue3",
@@ -25258,7 +25885,8 @@
       ],
       "tags": [
         "Dungeon.Statue"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Statue4",
@@ -25363,7 +25991,8 @@
       ],
       "tags": [
         "Dungeon.Statue"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Statue5",
@@ -25468,7 +26097,8 @@
       ],
       "tags": [
         "Dungeon.Statue"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Statue6",
@@ -25573,7 +26203,8 @@
       ],
       "tags": [
         "Dungeon.Statue"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Statue7",
@@ -25678,7 +26309,8 @@
       ],
       "tags": [
         "Dungeon.Statue"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Chest0",
@@ -25783,7 +26415,8 @@
       ],
       "tags": [
         "Dungeon.Chest"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Chest1",
@@ -25888,7 +26521,8 @@
       ],
       "tags": [
         "Dungeon.Chest"
-      ]
+      ],
+      "parent": "Group_4"
     },
     {
       "id": "Rubble0",
@@ -25965,7 +26599,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Rubble1",
@@ -26042,7 +26677,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Rubble2",
@@ -26119,7 +26755,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Rubble3",
@@ -26196,7 +26833,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Rubble4",
@@ -26273,7 +26911,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Rubble5",
@@ -26350,7 +26989,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Rubble6",
@@ -26427,7 +27067,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Rubble7",
@@ -26504,7 +27145,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Rubble8",
@@ -26581,7 +27223,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Rubble9",
@@ -26658,7 +27301,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Rubble10",
@@ -26735,7 +27379,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Rubble11",
@@ -26812,7 +27457,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Rubble12",
@@ -26889,7 +27535,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Rubble13",
@@ -26966,7 +27613,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Rubble14",
@@ -27043,7 +27691,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Rubble15",
@@ -27120,7 +27769,8 @@
       ],
       "tags": [
         "Dungeon.Rubble"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones0",
@@ -27197,7 +27847,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones1",
@@ -27274,7 +27925,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones2",
@@ -27351,7 +28003,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones3",
@@ -27428,7 +28081,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones4",
@@ -27505,7 +28159,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones5",
@@ -27582,7 +28237,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones6",
@@ -27659,7 +28315,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones7",
@@ -27736,7 +28393,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones8",
@@ -27813,7 +28471,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones9",
@@ -27890,7 +28549,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones10",
@@ -27967,7 +28627,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones11",
@@ -28044,7 +28705,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones12",
@@ -28121,7 +28783,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones13",
@@ -28198,7 +28861,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones14",
@@ -28275,7 +28939,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Bones15",
@@ -28352,7 +29017,8 @@
       ],
       "tags": [
         "Dungeon.Bones"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Gold0",
@@ -28429,7 +29095,8 @@
       ],
       "tags": [
         "Dungeon.Gold"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Gold1",
@@ -28506,7 +29173,8 @@
       ],
       "tags": [
         "Dungeon.Gold"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Gold2",
@@ -28583,7 +29251,8 @@
       ],
       "tags": [
         "Dungeon.Gold"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Gold3",
@@ -28660,7 +29329,8 @@
       ],
       "tags": [
         "Dungeon.Gold"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Gold4",
@@ -28737,7 +29407,8 @@
       ],
       "tags": [
         "Dungeon.Gold"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Gold5",
@@ -28814,7 +29485,8 @@
       ],
       "tags": [
         "Dungeon.Gold"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Gold6",
@@ -28891,7 +29563,8 @@
       ],
       "tags": [
         "Dungeon.Gold"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Gold7",
@@ -28968,7 +29641,8 @@
       ],
       "tags": [
         "Dungeon.Gold"
-      ]
+      ],
+      "parent": "Group_3"
     },
     {
       "id": "Stairs0",
@@ -29045,7 +29719,8 @@
       ],
       "tags": [
         "Dungeon.Stairs"
-      ]
+      ],
+      "parent": "Group_2"
     },
     {
       "id": "Ore",
@@ -29119,7 +29794,8 @@
             "enabled": false
           }
         }
-      }
+      },
+      "parent": "Group_5"
     },
     {
       "id": "Herb",
@@ -29193,7 +29869,8 @@
             "enabled": false
           }
         }
-      }
+      },
+      "parent": "Group_5"
     },
     {
       "id": "Blacksmith",
@@ -29267,7 +29944,8 @@
             "enabled": true
           }
         }
-      }
+      },
+      "parent": "Group_5"
     },
     {
       "id": "Stall",
@@ -29341,7 +30019,8 @@
             "enabled": true
           }
         }
-      }
+      },
+      "parent": "Group_5"
     },
     {
       "id": "Skeleton0",
@@ -29398,7 +30077,8 @@
       },
       "tags": [
         "Enemy.S"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "Skeleton1",
@@ -29455,7 +30135,8 @@
       },
       "tags": [
         "Enemy.S"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "Skeleton2",
@@ -29512,7 +30193,8 @@
       },
       "tags": [
         "Enemy.S"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "Skeleton3",
@@ -29569,7 +30251,8 @@
       },
       "tags": [
         "Enemy.S"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "Skeleton4",
@@ -29626,7 +30309,8 @@
       },
       "tags": [
         "Enemy.S"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "Skeleton5",
@@ -29683,7 +30367,8 @@
       },
       "tags": [
         "Enemy.S"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "Skeleton6",
@@ -29740,7 +30425,8 @@
       },
       "tags": [
         "Enemy.S"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "Skeleton7",
@@ -29797,7 +30483,8 @@
       },
       "tags": [
         "Enemy.S"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "Skeleton8",
@@ -29854,7 +30541,8 @@
       },
       "tags": [
         "Enemy.S"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "Skeleton9",
@@ -29911,7 +30599,8 @@
       },
       "tags": [
         "Enemy.S"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "SkeletonMage0",
@@ -29968,7 +30657,8 @@
       },
       "tags": [
         "Enemy.M"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "SkeletonMage1",
@@ -30025,7 +30715,8 @@
       },
       "tags": [
         "Enemy.M"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "SkeletonMage2",
@@ -30082,7 +30773,8 @@
       },
       "tags": [
         "Enemy.M"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "SkeletonMage3",
@@ -30139,7 +30831,8 @@
       },
       "tags": [
         "Enemy.M"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "SkeletonMage4",
@@ -30196,7 +30889,8 @@
       },
       "tags": [
         "Enemy.M"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "SkeletonMage5",
@@ -30253,7 +30947,8 @@
       },
       "tags": [
         "Enemy.M"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "SkeletonCaptain0",
@@ -30310,7 +31005,8 @@
       },
       "tags": [
         "Enemy.C"
-      ]
+      ],
+      "parent": "Group_6"
     },
     {
       "id": "EnemyShot0",
@@ -30453,7 +31149,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot1",
@@ -30596,7 +31293,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot2",
@@ -30739,7 +31437,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot3",
@@ -30882,7 +31581,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot4",
@@ -31025,7 +31725,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot5",
@@ -31168,7 +31869,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot6",
@@ -31311,7 +32013,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot7",
@@ -31454,7 +32157,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot8",
@@ -31597,7 +32301,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot9",
@@ -31740,7 +32445,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot10",
@@ -31883,7 +32589,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot11",
@@ -32026,7 +32733,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot12",
@@ -32169,7 +32877,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot13",
@@ -32312,7 +33021,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot14",
@@ -32455,7 +33165,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot15",
@@ -32598,7 +33309,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot16",
@@ -32741,7 +33453,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot17",
@@ -32884,7 +33597,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot18",
@@ -33027,7 +33741,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot19",
@@ -33170,7 +33885,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot20",
@@ -33313,7 +34029,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot21",
@@ -33456,7 +34173,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot22",
@@ -33599,7 +34317,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot23",
@@ -33742,7 +34461,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot24",
@@ -33885,7 +34605,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot25",
@@ -34028,7 +34749,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot26",
@@ -34171,7 +34893,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot27",
@@ -34314,7 +35037,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot28",
@@ -34457,7 +35181,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot29",
@@ -34600,7 +35325,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot30",
@@ -34743,7 +35469,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "EnemyShot31",
@@ -34886,7 +35613,8 @@
       ],
       "tags": [
         "Pool.EnemyShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot0",
@@ -35029,7 +35757,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot1",
@@ -35172,7 +35901,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot2",
@@ -35315,7 +36045,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot3",
@@ -35458,7 +36189,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot4",
@@ -35601,7 +36333,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot5",
@@ -35744,7 +36477,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot6",
@@ -35887,7 +36621,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot7",
@@ -36030,7 +36765,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot8",
@@ -36173,7 +36909,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot9",
@@ -36316,7 +37053,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot10",
@@ -36459,7 +37197,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot11",
@@ -36602,7 +37341,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot12",
@@ -36745,7 +37485,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot13",
@@ -36888,7 +37629,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot14",
@@ -37031,7 +37773,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PlayerShot15",
@@ -37174,7 +37917,8 @@
       ],
       "tags": [
         "Pool.PlayerShot"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin0",
@@ -37252,7 +37996,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin1",
@@ -37330,7 +38075,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin2",
@@ -37408,7 +38154,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin3",
@@ -37486,7 +38233,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin4",
@@ -37564,7 +38312,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin5",
@@ -37642,7 +38391,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin6",
@@ -37720,7 +38470,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin7",
@@ -37798,7 +38549,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin8",
@@ -37876,7 +38628,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin9",
@@ -37954,7 +38707,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin10",
@@ -38032,7 +38786,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin11",
@@ -38110,7 +38865,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin12",
@@ -38188,7 +38944,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin13",
@@ -38266,7 +39023,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin14",
@@ -38344,7 +39102,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Coin15",
@@ -38422,7 +39181,8 @@
       ],
       "tags": [
         "Pool.Coin"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx0",
@@ -38499,7 +39259,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx1",
@@ -38576,7 +39337,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx2",
@@ -38653,7 +39415,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx3",
@@ -38730,7 +39493,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx4",
@@ -38807,7 +39571,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx5",
@@ -38884,7 +39649,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx6",
@@ -38961,7 +39727,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx7",
@@ -39038,7 +39805,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx8",
@@ -39115,7 +39883,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx9",
@@ -39192,7 +39961,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx10",
@@ -39269,7 +40039,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx11",
@@ -39346,7 +40117,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx12",
@@ -39423,7 +40195,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx13",
@@ -39500,7 +40273,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx14",
@@ -39577,7 +40351,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx15",
@@ -39654,7 +40429,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx16",
@@ -39731,7 +40507,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx17",
@@ -39808,7 +40585,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx18",
@@ -39885,7 +40663,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx19",
@@ -39962,7 +40741,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx20",
@@ -40039,7 +40819,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx21",
@@ -40116,7 +40897,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx22",
@@ -40193,7 +40975,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "Fx23",
@@ -40270,7 +41053,8 @@
       ],
       "tags": [
         "Pool.Fx"
-      ]
+      ],
+      "parent": "Group_7"
     },
     {
       "id": "PostFX",
@@ -40330,7 +41114,8 @@
             "bloomResolutionScale": 0.5
           }
         }
-      ]
+      ],
+      "parent": "Group_0"
     }
   ],
   "surface": {

@@ -152,6 +152,33 @@ def tilemap(name, rects, style):
     return o
 
 
+# 아웃라이너 폴더: 종류별 그룹 오브젝트(원점) 아래에 넣는다. 위치는 그대로 (그룹이 원점이라 로컬 = 월드)
+OUTLINE = [
+    ("시스템", lambda o: o["id"] in ("Director", "Rules", "Room", "PostFX", "PlayerStart", "StairTop", "DoorBottom", "DoorTop") or o.get("kind") == "playerStart"),
+    ("맵", lambda o: o.get("kind") == "tilemap" or any(t in ("Dungeon.Floor", "Dungeon.Cap", "Dungeon.Face", "Dungeon.Arch") for t in o.get("tags", []))),
+    ("문", lambda o: any(t in ("Dungeon.Gate", "Dungeon.GateSide", "Dungeon.Stairs") for t in o.get("tags", []))),
+    ("엄폐물", lambda o: any(t in ("Dungeon.Pillar", "Dungeon.Crate", "Dungeon.Barrel", "Dungeon.LowWall", "Dungeon.Statue", "Dungeon.Chest") for t in o.get("tags", []))),
+    ("장식·조명", lambda o: any(t.startswith("Dungeon.") for t in o.get("tags", [])) or o["id"].startswith(("Torch", "Banner", "Lamp", "Pillar", "Bench", "Plant", "Crates", "Barrel", "NoticeBoard", "Decor"))),
+    ("상호작용 (NPC·채집·상점)", lambda o: o.get("blueprintAsset", "").endswith("BP_Interactable.hbblueprint.json")),
+    ("적 대기 풀", lambda o: any(t.startswith("Enemy.") for t in o.get("tags", []))),
+    ("탄·골드·이펙트 풀", lambda o: any(t.startswith("Pool.") for t in o.get("tags", []))),
+]
+
+
+def outline(objects):
+    out, groups = [], {}
+    for o in objects:
+        name = next((g for g, test in OUTLINE if test(o)), None)
+        if name is None:  # 플레이어·카메라는 맨 위에 그대로
+            out.append(o)
+            continue
+        if name not in groups:
+            groups[name] = {"id": "Group_" + str(len(groups)), "name": name, "kind": "group", "group": "WORLD", "position": [0, 0, 0], "rotation": [0, 0, 0],
+                            "scale": [1, 1, 1], "visible": True, "components": [transform()]}
+        o["parent"] = groups[name]["id"]
+    return out + [g for _, g in sorted(groups.items(), key=lambda kv: [n for n, _ in OUTLINE].index(kv[0]))] + [o for o in objects if "parent" in o]
+
+
 def write(name, objects):
     scene = copy.deepcopy(TEMPLATE)
     scene["sceneName"] = name
@@ -161,7 +188,7 @@ def write(name, objects):
     post = {"id": "PostFX", "name": "PostFX", "kind": "empty", "group": "WORLD", "position": [0, 0, 0], "rotation": [0, 0, 0], "scale": [1, 1, 1],
             "visible": True, "components": [transform(), {"id": "post", "name": "PostProcessVolume", "type": "PostProcessVolume", "properties": {
                 "enabled": True, "priority": 0, "bloomEnabled": True, "bloomThreshold": 1, "bloomStrength": 0.7, "bloomRadius": 0.35, "bloomResolutionScale": 0.5}}]}
-    scene["objects"] = objects + [post]
+    scene["objects"] = outline(objects + [post])
     (SCENES / f"{name}.hbscene.json").write_text(json.dumps(scene, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     return len(objects)
 
