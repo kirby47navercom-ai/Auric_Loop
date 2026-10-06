@@ -18,7 +18,8 @@
     "nativeDefaults": {
       "TopDownShooter.Character": 2,
       "TopDownShooter.Seed": 7,
-      "TopDownShooter.ShowFps": true
+      "TopDownShooter.ShowFps": true,
+      "TopDownShooter.MaxHp": 30
     }
   }
 }

@@ -381,7 +381,9 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   std::string StartRoom = "";
   HB_PROPERTY(BlueprintReadWrite)
-  bool ShowFps = false;          // 왼쪽 위에 초당 프레임·프레임 시간 (F3으로 켜고 끔)    // 검사·시연용: 던전에 들어오면 이 종류(Gather·Shop·Boss…)의 첫 방으로 바로 감
+  bool ShowFps = false;
+  HB_PROPERTY(BlueprintReadWrite)
+  bool KnockedOut = false;       // 던전에서 쓰러져 끌려 나옴 (소재를 잃고 정산)          // 왼쪽 위에 초당 프레임·프레임 시간 (F3으로 켜고 끔)    // 검사·시연용: 던전에 들어오면 이 종류(Gather·Shop·Boss…)의 첫 방으로 바로 감
   HB_PROPERTY(BlueprintReadWrite)
   float BossHp = 0;
   HB_PROPERTY(BlueprintReadWrite)
@@ -454,6 +456,8 @@ private:
   void HitReturnGate(const hb::Vec3& at,float reach,int hits);
   void ClearRoom();
   void Settle();
+  bool UpdateSettle(float delta,bool advance);  // 정산 화면이 떠 있으면 true (이동·행동 막음)
+  void ShowSettle(bool visible);
   void ShowEnding();
   void ResetToTitle();
   // 전투
@@ -523,6 +527,9 @@ private:
   std::vector<Line> dialog;
   size_t dialogIndex=0,shownChars=0;
   float fpsTime=0,fpsWorst=0;int fpsFrames=0;bool fpsHeld=false;
+  // 정산 화면: 줄이 하나씩 나타나고 남은 빚이 줄어드는 숫자 연출
+  std::vector<std::string> settleRows;
+  float settleTime=-1;int settleShown=0,debtFrom=0,debtTo=0,debtShown=-1;bool settleDone=false;
   bool warpHeld=false,dodgeHeld=false,returnHeld=false,flashHeld=false,craftOpen=false,craftKeyHeld=false,confirmHeld=false;
   bool advanceHeld=true,selecting=false,ending=false,anyHeld=true,touchMode=false,gatherTold=false;
   int craftPick=1,pick=0,pickHeld=0;

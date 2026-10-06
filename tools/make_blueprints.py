@@ -135,7 +135,7 @@ write(BP / "BP_AuricRules.hbblueprint.json", rules)
 write(BP / "BP_RoomInfo.hbblueprint.json", blueprint("BP_RoomInfo", "RoomInfo", [transform()], native_from=True))
 for name, who in (("BP_Test_Valen", 0), ("BP_Test_Sherry", 1), ("BP_Test_Alea", 2)):
     write(BP / f"{name}.hbblueprint.json", blueprint(name, "Assets/Blueprints/BP_TopDownShooter.hbblueprint.json",
-                                                     defaults={"TopDownShooter.Character": who, "TopDownShooter.Seed": 7, "TopDownShooter.ShowFps": True}))
+                                                     defaults={"TopDownShooter.Character": who, "TopDownShooter.Seed": 7, "TopDownShooter.ShowFps": True, "TopDownShooter.MaxHp": 30}))
 
 # ---- 던전 데이터 (편집기 데이터 표에서 고침, 다시 빌드할 필요 없음) ----
 # 웨이브: | 로 웨이브를 나누고 , 로 적을 나눔. 기호는 BP_AuricRules.Enemies (S 해골, M 해골 마법사, C 해골 대장)
@@ -274,8 +274,7 @@ DIALOGUE = {
     "GatherTip": [L(ME, "Q로 제작 창을 열어 보자. 약초 3개와 빈 병으로 회복 물약, 광물로 섬광탄.")],
     "Boss": [L(("boss", "{boss}"), "또 빚쟁이냐. 네 뼈도 황금으로 칠해 주마.")],
     "ReturnStart": [L(ME, "던전이 놓아주지 않는다. 문을 10번 때려 열고, 막히면 E로 섬광탄!")],
-    "Settle": [L(C, "돌아왔네? 정산할게. 소재까지 합쳐 {total} G, 그중 절반 {repaid} G는 빚으로 받아 간다."),
-               L(C, "남은 빚은 {debt} G. 강화는 던전 밖에선 무뎌지는 거 알지? 남은 골드로 소파라도 바꾸든가."),
+    "Settle": [L(C, "남은 빚은 {debt} G. 강화는 던전 밖에선 무뎌지는 거 알지? 남은 골드로 소파라도 바꾸든가."),
                L(C, "적당히 들어가서, 적당히 챙겨서, 지치기 전에 탈출. 그게 이 던전의 규칙이야. 쉬고 싶으면 계단 위 입구에서 하루를 마쳐.")],
 }
 write(PROJECT / "Assets/Data/DT_Dialogue.hbdata.json", {"version": 1, "name": "DT_Dialogue", "columns": [{"name": "lines", "type": "json"}],

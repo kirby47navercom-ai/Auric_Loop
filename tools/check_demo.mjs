@@ -113,3 +113,14 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   assert.ok(hp[1] > 15 && hp[1] < 24, '거점 계단 끝에 섬 (W를 누른 채여도 바로 던전으로 돌아가지 않음)');
   console.log('거점·던전 이동 검사 통과', 'y', hp[1].toFixed(1));
 }
+
+// 게임 오버: 체력 1로 전투방에 들어가 가만히 맞음 → "빈손으로 끌려 나왔다" → 소재(광물 2)를 잃고 거점에서 정산
+{
+  const r = await runProject(project, {scene: scene('Test_Valen'), frames: 900, delta: 1 / 60, nativeDefaults: {Director: {MaxHp: 1, Ore: 2}}, inputs: warps(5, 1)});
+  const s = director(r);
+  assert.equal(r.sceneHistory.at(-1).scene, scene('Hub'), '쓰러지면 거점으로 끌려 나옴');
+  assert.equal(s.Ore, 0, '들고 있던 광물을 잃음');
+  assert.equal(s.LastRepaid, 0, '소재를 잃어 정산 금액 0');
+  assert.ok(s.ReturnSuccess && s.Hp > 0, '하루가 끝나고 체력 회복');
+  console.log('게임 오버 검사 통과', 'ore', s.Ore, 'repaid', s.LastRepaid);
+}

@@ -343,7 +343,7 @@ float TopDownShooter::WeaponDamage() const{
 bool TopDownShooter::DamagePlayer(int amount,const hb::Vec3& from){
   // 맞으면: 무적 시간 동안 깜빡임, 맞은 반대쪽으로 살짝 밀려남, 붉게 번쩍·화면 흔들림
   if(invulnerable>0||dodgeTimer>0||Hp<=0)return false;
-  Hp-=amount;invulnerable=rules->InvulnerableTime;Sfx("Hurt");if(Hp<=0)gameOver=rules->RespawnDelay;
+  Hp-=amount;invulnerable=rules->InvulnerableTime;Sfx("Hurt");if(Hp<=0){Hp=0;gameOver=rules->RespawnDelay;}
   knock=Normal(playerAt-from,hb::Vec3{0,-1,0})*rules->HurtKnockback;knockTimer=0.12f;shake=rules->ShakeTime*2;
   hb::Sprites::Flash(player,0.15f,1.f);Hud();
   return true;
@@ -476,7 +476,7 @@ void TopDownShooter::UpdateBullets(float delta,const hb::Vec3& position){
 
 #define AURIC_RUN_INTS(X) X(FatigueMax) X(Fatigue) X(Hp) X(MaxHp) X(Kills) X(RoomClears) X(Swings) X(Hits) X(Shots) X(Flashbangs) X(Gold) X(Ore) X(Herb) \
   X(Monster) X(Bottle) X(WeaponLevel) X(Debt) X(LastRepaid) X(Enchant) X(Crafted) X(SofaLevel) X(HomeLevel) X(Phase) X(Character)
-#define AURIC_RUN_BOOLS(X) X(HasReturnItem) X(Returning) X(ReturnSuccess) X(gatherTold)
+#define AURIC_RUN_BOOLS(X) X(HasReturnItem) X(Returning) X(ReturnSuccess) X(KnockedOut) X(gatherTold)
 
 void TopDownShooter::SaveRun(){
   // 장면을 넘어도 이어지는 진행: GameInstance(AuricSession)의 JSON에 둔다
@@ -525,7 +525,7 @@ void TopDownShooter::Begin(){
   if(carried||area>=0)Phase=std::max(Phase,2);  // 장면을 넘어왔거나 던전에서 바로 시작하면 로딩·타이틀 생략
   RoomIndex=area;
   if(inDungeon){Prewarm();StartFloor();}
-  else if(Returning){Returning=false;ReturnSuccess=true;Settle();}  // 거점에 닿으면 귀환 성공
+  else if(Returning||KnockedOut){Returning=false;ReturnSuccess=true;Settle();}  // 거점에 닿으면 귀환 성공 (쓰러졌으면 소재 없이 정산)
   Hud();
 }
 
@@ -654,12 +654,46 @@ void TopDownShooter::HitReturnGate(const hb::Vec3& at,float reach,int hits){
 }
 
 void TopDownShooter::Settle(){
-  // 정산 (기획서 6-4): 소재를 골드로 바꾸고 절반을 빚에서 자동 상환, 강화는 초기화
+  // 정산 (기획서 6-4): 소재를 골드로 바꾸고 일부를 빚에서 자동 상환, 강화는 초기화. 화면에 줄마다 보여 주고 남은 빚이 줄어드는 연출
+  auto line=[](const std::string& name,int count,int price){return name+"  "+std::to_string(count)+" x "+std::to_string(price)+" G  =  "+std::to_string(count*price)+" G";};
   const int total=Gold+Ore*rules->OrePrice+Herb*rules->HerbPrice+Monster*rules->MonsterPrice;
-  LastRepaid=int(total*rules->RepayRate);Debt=std::max(0,Debt-LastRepaid);
+  settleRows.clear();
+  settleRows.push_back(line("광물",Ore,rules->OrePrice));settleRows.push_back(line("약초",Herb,rules->HerbPrice));
+  settleRows.push_back(line("마물 소재",Monster,rules->MonsterPrice));settleRows.push_back("주운 골드  "+std::to_string(Gold)+" G");
+  settleRows.push_back("합계  "+std::to_string(total)+" G");
+  LastRepaid=int(total*rules->RepayRate);debtFrom=Debt;Debt=std::max(0,Debt-LastRepaid);debtTo=Debt;
+  settleRows.push_back("빚 자동 상환 ("+std::to_string(int(rules->RepayRate*100+0.5f))+"%)  - "+std::to_string(LastRepaid)+" G");
+  settleRows.push_back("내 몫  "+std::to_string(total-LastRepaid)+" G");
   Gold=total-LastRepaid;Ore=Herb=Monster=0;WeaponLevel=0;Enchant=0;
-  Talk("Settle",{{"total",std::to_string(total)},{"repaid",std::to_string(LastRepaid)},{"debt",std::to_string(Debt)}});
+  settleTime=0;settleShown=0;debtShown=-1;settleDone=false;
   SaveRun();Hud();
+}
+
+void TopDownShooter::ShowSettle(bool visible){
+  for(auto* n:{"SettleBack","SettlePanel","SettleTitle","SettleDebt","SettleNote","SettleHint"})hb::UI::SetVisible(player,"HUD",n,visible);
+  for(int i=0;i<7;++i)hb::UI::SetVisible(player,"HUD","SettleRow"+std::to_string(i),visible&&i<settleShown);
+}
+
+bool TopDownShooter::UpdateSettle(float delta,bool advance){
+  if(settleTime<0||frame<2)return settleTime>=0;
+  if(settleTime==0){
+    hb::UI::SetText(player,"HUD","SettleTitle",KnockedOut?"정산 - 빈손으로 끌려 나왔다":"정산 - 귀환 성공");
+    hb::UI::SetText(player,"HUD","SettleNote",KnockedOut?"쓰러져서 소재를 잃었다. 무기 강화·각인도 초기화":"무기 강화·각인은 던전 밖에서 초기화된다");
+    for(int i=0;i<7;++i)hb::UI::SetText(player,"HUD","SettleRow"+std::to_string(i),i<int(settleRows.size())?settleRows[i]:"");
+    settleShown=0;ShowSettle(true);}
+  settleTime+=delta;
+  // 0.3초마다 한 줄, 다 나오면 남은 빚이 1.2초 동안 줄어듦
+  const int rows=std::min(int(settleRows.size()),int(settleTime/0.3f));
+  if(rows!=settleShown){settleShown=rows;ShowSettle(true);Sfx("Coin");}
+  const float t=std::clamp((settleTime-0.3f*settleRows.size())/1.2f,0.f,1.f);
+  const int shown=debtFrom+int((debtTo-debtFrom)*t);
+  if(shown!=debtShown){debtShown=shown;hb::UI::SetText(player,"HUD","SettleDebt",std::string(koreanNames[Character])+"의 남은 빚  "+std::to_string(shown)+" G");}
+  if(t>=1&&!settleDone){settleDone=true;hb::UI::SetVisible(player,"HUD","SettleHint",true);}
+  hb::UI::SetVisible(player,"HUD","SettleHint",settleDone);
+  if(advance){
+    if(!settleDone){settleTime=0.3f*settleRows.size()+1.2f;return true;}  // 누르면 연출 건너뛰기
+    settleTime=-1;ShowSettle(false);Talk("Settle",{{"debt",std::to_string(Debt)}});KnockedOut=false;Hud();return false;}
+  return true;
 }
 
 void TopDownShooter::ShowEnding(){
@@ -926,6 +960,7 @@ void TopDownShooter::Update(float delta){
   {const bool adv=hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("space");
    const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
    if(frame>=2&&UpdateIntro(delta,pressed))return;
+   if(UpdateSettle(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}
    if(UpdateDialog(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}}  // 대화 중엔 행동·이동 막음
   if(!inDungeon){  // 거점 계단 끝 → 던전 (들어갈 때마다 새 층). 계단에 막 도착했으면 한 번 내려와야 다시 들어감 (W를 누른 채 왔다 갔다 방지)
     if(position.y<exitY-2)exitArmed=true;
@@ -948,10 +983,17 @@ void TopDownShooter::Update(float delta){
   UpdateBullets(delta,position);
   UpdateFx(delta);
   if(inDungeon)UpdateWaves(delta);
-  if(Hp<=0){  // 쓰러짐: 3초 뒤 회복 (ponytail: 정산 화면이 생기면 거기로)
-    hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});gameOver-=delta;
+  if(Hp<=0){  // 쓰러짐 (기획서 2장): "빈손으로 끌려 나왔다" → 소재를 잃고 거점에서 정산
+    hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
     for(auto& [b,life]:bullets)hb::Physics::SetVelocity(b,hb::Vec3{0,0,0});
-    if(gameOver<=0){Hp=MaxHp;Fatigue=0;invulnerable=rules->InvulnerableTime*2;Hud();}
+    if(gameOver==rules->RespawnDelay){
+      hb::UI::SetText(player,"HUD","KoTitle",Fatigue>=FatigueMax?"지쳐 쓰러졌다":"쓰러졌다");
+      hb::UI::SetText(player,"HUD","KoSub","빈손으로 끌려 나왔다 - 들고 있던 소재를 잃었다");
+      for(auto* n:{"KoBack","KoTitle","KoSub"})hb::UI::SetVisible(player,"HUD",n,true);
+      hb::Camera::Flash(hb::Color{0.6f,0,0,0.6f},0.6f);}
+    if((gameOver-=delta)<=0){
+      for(auto* n:{"KoBack","KoTitle","KoSub"})hb::UI::SetVisible(player,"HUD",n,false);
+      Ore=Herb=Monster=0;KnockedOut=true;Returning=false;HasReturnItem=false;Hp=MaxHp;Leave(-1,"StairTop");}
     return;
   }
 

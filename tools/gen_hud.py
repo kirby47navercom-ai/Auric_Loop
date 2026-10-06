@@ -219,6 +219,21 @@ node("EndingTitle", "Text", "c", 0, 225, 800, 60, 100, text="Coming Soon", fontS
 node("EndingText", "Text", "c", 0, 275, 900, 30, 100, text="", fontSize=18, color="#fff3e5", align="center", visible=False)
 node("EndingHint", "Text", "c", 0, 318, 600, 26, 100, text="아무 키나 눌러 처음으로", fontSize=15, color="#cdb98a", align="center", visible=False)
 
+# ---- 쓰러짐 (기획서 2장 게임 오버): 화면을 붉게 덮고 문구 ----
+full("KoBack", "Panel", 70, background="#2a0508dd", visible=False)
+node("KoTitle", "Text", "c", 0, -30, 900, 60, 71, text="쓰러졌다", fontSize=44, color="#ff7a6a", align="center", visible=False)
+node("KoSub", "Text", "c", 0, 30, 900, 30, 71, text="", fontSize=18, color="#fff3e5", align="center", visible=False)
+
+# ---- 정산 화면 (기획서 6-4): 줄마다 나타나고 남은 빚 숫자가 줄어듦. C++ UpdateSettle ----
+full("SettleBack", "Panel", 72, background="#05090ad0", visible=False)
+node("SettlePanel", "Panel", "c", 0, 0, 640, 470, 73, background="#16222acc", visible=False)
+node("SettleTitle", "Text", "c", 0, -195, 600, 40, 74, text="정산", fontSize=28, color="#ffd666", align="center", visible=False)
+for i in range(7):
+    node(f"SettleRow{i}", "Text", "c", 0, -140 + i * 34, 560, 30, 74, text="", fontSize=18, color="#ffd666" if i in (4, 6) else "#fff3e5", align="center", visible=False)
+node("SettleDebt", "Text", "c", 0, 120, 600, 40, 74, text="", fontSize=26, color="#ff8a7a", align="center", visible=False)
+node("SettleNote", "Text", "c", 0, 165, 600, 24, 74, text="", fontSize=14, color="#cdb98a", align="center", visible=False)
+node("SettleHint", "Text", "c", 0, 205, 600, 24, 74, text="E · 클릭 · Enter: 확인", fontSize=15, color="#7dd9ff", align="center", visible=False)
+
 w["nodes"] = nodes
 WIDGET.write_text(json.dumps(w, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 print("제작 창·대화창·타이틀·캐릭터 선택 추가:", len(nodes), "nodes")
