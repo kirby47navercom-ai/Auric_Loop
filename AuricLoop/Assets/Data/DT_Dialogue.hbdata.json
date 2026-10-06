@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "name": "DT_Dialogue",
+  "columns": [
+    {
+      "name": "lines",
+      "type": "json"
+    }
+  ],
+  "rows": {
+    "Opening1": {
+      "lines": [
+        {
+          "who": "collector",
+          "name": "수금원",
+          "text": "어서 와. 오늘부터 여기가 네 집이야. 물론 집주인은 우리 사장님이지만."
+        },
+        {
+          "who": "collector",
+          "name": "수금원",
+          "text": "저 위 계단 끝에 있는 게 '마몬의 입'이야. 들어간 놈들은 황금을 들고 나오거나, 아예 안 나오지."
+        }
+      ]
+    },
+    "Intro_valen": {
+      "lines": [
+        {
+          "who": "$me",
+          "name": "$me",
+          "text": "...갚으면 되는 거지."
+        }
+      ]
+    },
+    "Intro_sherry": {
+      "lines": [
+        {
+          "who": "$me",
+          "name": "$me",
+          "text": "술값 정도는 나오겠지?"
+        }
+      ]
+    },
+    "Intro_alea": {
+      "lines": [
+        {
+          "who": "$me",
+          "name": "$me",
+          "text": "확률은... 나쁘지 않네."
+        }
+      ]
+    },
+    "Opening2": {
+      "lines": [
+        {
+          "who": "collector",
+          "name": "수금원",
+          "text": "하나만 기억해. 너무 깊이 들어가면 못 돌아와. 적당히 챙겨서, 지치기 전에 나와."
+        },
+        {
+          "who": "collector",
+          "name": "수금원",
+          "text": "아, 튜토리얼용 제작서랑 빈 병도 챙겨 가. 공짜는 아니고, 빚에 달아 둘게."
+        }
+      ]
+    },
+    "GatherTip": {
+      "lines": [
+        {
+          "who": "$me",
+          "name": "$me",
+          "text": "Q로 제작 창을 열어 보자. 약초 3개와 빈 병으로 회복 물약, 광물로 섬광탄."
+        }
+      ]
+    },
+    "Boss": {
+      "lines": [
+        {
+          "who": "boss",
+          "name": "{boss}",
+          "text": "또 빚쟁이냐. 네 뼈도 황금으로 칠해 주마."
+        }
+      ]
+    },
+    "ReturnStart": {
+      "lines": [
+        {
+          "who": "$me",
+          "name": "$me",
+          "text": "던전이 놓아주지 않는다. 문을 10번 때려 열고, 막히면 E로 섬광탄!"
+        }
+      ]
+    },
+    "Settle": {
+      "lines": [
+        {
+          "who": "collector",
+          "name": "수금원",
+          "text": "돌아왔네? 정산할게. 소재까지 합쳐 {total} G, 그중 절반 {repaid} G는 빚으로 받아 간다."
+        },
+        {
+          "who": "collector",
+          "name": "수금원",
+          "text": "남은 빚은 {debt} G. 강화는 던전 밖에선 무뎌지는 거 알지? 남은 골드로 소파라도 바꾸든가."
+        },
+        {
+          "who": "collector",
+          "name": "수금원",
+          "text": "적당히 들어가서, 적당히 챙겨서, 지치기 전에 탈출. 그게 이 던전의 규칙이야. 쉬고 싶으면 계단 위 입구에서 하루를 마쳐."
+        }
+      ]
+    }
+  }
+}

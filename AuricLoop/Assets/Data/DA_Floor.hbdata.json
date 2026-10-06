@@ -3,14 +3,14 @@
   "name": "DA_Floor",
   "fields": [
     {
-      "name": "path",
-      "type": "string",
-      "value": "Start,Combat,Combat,Gather,Combat,Shop,Boss"
+      "name": "rooms",
+      "type": "float",
+      "value": 11
     },
     {
-      "name": "branches",
-      "type": "string",
-      "value": "Combat"
+      "name": "loops",
+      "type": "float",
+      "value": 1
     },
     {
       "name": "spacing",

@@ -18,7 +18,7 @@ class TopDownShooter;
 
 // ---- 던전 층 (엔진이 BP에 연결된 C++ 파일만 컴파일해서 같은 파일에 둠) ----
 // 던전 한 층을 엔터 더 건전·소울 나이트처럼 매번 무작위로 만든다.
-//   1) 격자 위를 무작위로 걸어 주 경로(시작 → 전투 … → 상점 → 보스)를 잇고, 곁가지 방을 붙인다 (Generate)
+//   1) 시작 방에서 격자 위로 가지를 뻗어 나무 모양(갈림길·막다른 방)으로 잇고, 가장 먼 막다른 방을 보스로 (Generate)
 //   2) 방·복도의 바닥과 벽은 장면(Dungeon)에 화면 밖으로 세워 둔 반복 무늬 스프라이트를 옮기고 크기만 바꿔 깐다 (Build)
 // 방 종류·크기·웨이브는 데이터 에셋(Assets/Data/DA_Floor, DT_Rooms)에서 고친다.
 
@@ -27,7 +27,10 @@ struct DungeonRoom{
   std::string row;               // DT_Rooms 행 이름 (Combat1, Branch, …)
   int gx=0,gy=0;                 // 격자 칸
   float cx=0,cy=0,hw=6,hh=6;     // 가운데, 반너비·반높이 (m)
-  int path=-1;                   // 주 경로 순서 (곁가지는 -1)
+  int path=-1;                   // 시작→보스 최단 경로에서의 순서 (경로 밖 방은 -1)
+  int depth=0;                   // 시작 방에서 몇 방 떨어졌는지
+  int layout=0;                  // 엄폐물 배치 (Dungeon::Build)
+  bool seen=false,visited=false; // 미니맵: 들어간 방과 그 이웃만 보임
   int link[4]={-1,-1,-1,-1};     // 북·동·남·서로 이어진 방 번호
   int state=0;                   // 0 처음, 1 전투 중, 2 끝
   bool returned=false;           // 귀환 페이즈에 지나감
@@ -42,7 +45,7 @@ public:
   int start=0,boss=-1;
   hb::Actor* stairs=nullptr;     // 시작 방의 거점 계단
 
-  // floor: DA_Floor (path, branches, spacing), rooms: DT_Rooms 전체 (행 → minHalf, maxHalf, …)
+  // floor: DA_Floor (rooms 방 수, loops 고리 수, spacing 격자 간격), table: DT_Rooms 전체 (행 → minHalf, maxHalf, waves …)
   void Generate(unsigned seed,const hb::Json& floor,const hb::Json& table);
   void Build();
   int RoomAt(const hb::Vec3& p) const;                       // 방 안이면 번호, 복도·밖이면 -1
@@ -180,7 +183,9 @@ class AuricRules : public hb::Actor {
 public:
   // 밸런스·에셋 경로 (기획서 4·5·6장). BP_AuricRules 기본값 한 곳에서 고치면 모든 장면에 적용된다
   HB_PROPERTY(BlueprintReadWrite)
-  float InvulnerableTime = 1.0f;
+  float InvulnerableTime = 1.2f;  // 맞은 뒤 무적 (깜빡임)
+  HB_PROPERTY(BlueprintReadWrite)
+  float HurtKnockback = 9.0f;      // 맞으면 밀려나는 속도 (0.12초)
   HB_PROPERTY(BlueprintReadWrite)
   float DodgeTime = 1.0f;
   HB_PROPERTY(BlueprintReadWrite)
@@ -335,6 +340,8 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   std::string SpawnClip = "Assets/Animations/SA_Spawn.hbspriteanimation.json";  // 적 등장 예고 마법진
   HB_PROPERTY(BlueprintReadWrite)
+  std::string DialogueTable = "Assets/Data/DT_Dialogue.hbdata.json";  // 대사 (행마다 lines: [{who, name, text}], {변수} 치환)
+  HB_PROPERTY(BlueprintReadWrite)
   std::vector<std::string> Enemies;          // "기호=BP 경로". 웨이브 문자열의 S·M·C가 어떤 적인지
 };
 
@@ -370,6 +377,8 @@ public:
   int Seed = 0;                  // 던전 배치 씨앗. 0이면 들어갈 때마다 무작위 (검사용 BP는 고정)
   HB_PROPERTY(BlueprintReadWrite)
   std::string Layout = "";       // 지금 던전 방 목록 (검사·디버그용 JSON)
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string StartRoom = "";    // 검사·시연용: 던전에 들어오면 이 종류(Gather·Shop·Boss…)의 첫 방으로 바로 감
   HB_PROPERTY(BlueprintReadWrite)
   float BossHp = 0;
   HB_PROPERTY(BlueprintReadWrite)
@@ -416,11 +425,12 @@ public:
   // ---- 적(Enemy)이 부르는 것 ----
   hb::Vec3 PlayerPosition() const{return playerAt;}
   Enemy* SpawnEnemy(const std::string& blueprint,const hb::Vec3& at,bool invulnerable);  // 대기 중인 적을 꺼냄 (없으면 생성)
-  void DamagePlayer(int amount);
+  bool DamagePlayer(int amount,const hb::Vec3& from);  // 맞았으면 true (무적·회피 중이면 false)
   void FireBullets(const hb::Vec3& from,const hb::Vec3& dir,int count,float spread,float speed,const std::string& clip="");
   std::string Sound(const std::string& name) const;  // Sounds에서 이름으로 찾은 경로 (없으면 "")
   void Sfx(const std::string& name){const auto s=Sound(name);if(!s.empty())hb::Audio::Play(s);}  // 첫 입력 전 효과음은 엔진이 버림
   void Say(const std::string& who,const std::string& name,const std::string& text){dialog.push_back({who,name,text});}
+  void Talk(const std::string& row,const std::map<std::string,std::string>& vars={});  // DT_Dialogue 행의 대사를 차례로
   bool Frozen() const{return Hp<=0||dialogIndex<dialog.size()||Phase<2;}  // 쓰러짐·대화·타이틀 중엔 적도 멈춤
 
 private:
@@ -432,6 +442,7 @@ private:
   void Leave(int to,const std::string& spawn);
   // 던전 (Dungeon.h): 들어오면 층을 만들고, 방에 들어서면 문이 잠기며 웨이브가 마법진 예고 뒤 나온다
   void StartFloor();
+  void UpdateMinimap();          // 미니맵: 들어간 방과 그 이웃만, 지금 방은 금색 (HUD MapRoom*/MapLink*)
   void EnterRoom(int room);
   void SpawnWave(const std::string& wave,bool invulnerable);
   void UpdateWaves(float delta);
@@ -480,13 +491,14 @@ private:
   hb::Actor* player=nullptr;
   hb::Actor* camera=nullptr;
   hb::Vec3 playerAt{0,0,0},facing{1,0,0},cameraAt{0,0,0};
-  bool playerFlipped=false;
+  bool playerFlipped=false,blinkShown=false;
+  hb::Vec3 knock{0,0,0};
   bool cameraReady=false,started=false,leaving=false,hudDirty=true,introHidden=false;
   int rotShown=-1;                // 지금 보이는 버튼 그림 (귀환 테마*10 + 캐릭터)
   int frame=0,area=-1,fightingRoom=-1;
   std::string roomKind="Hub";
   float exitY=21;
-  bool inDungeon=false,monsterDrop=false,exitArmed=false;
+  bool inDungeon=false,monsterDrop=false,exitArmed=false,minimapDirty=false;
   Dungeon map;
   hb::Json roomTable;                    // DT_Rooms 행들
   std::vector<std::string> waves;        // 싸우는 방의 남은 웨이브 ("S,S,M" 하나씩)
@@ -498,7 +510,7 @@ private:
   std::set<std::string> taken;     // 채집한 것 ("방번호:Kind")
   std::vector<Interactable*> interactables;
   float attackCooldown=0,dodgeTimer=0,dodgeCooldownLeft=0,invulnerable=0,gameOver=0,charge=0;
-  float attackAnim=0,walkTime=0,shake=0,aimHold=0,sentSpeed=0,idleTime=0,runTime=0,typeTime=0,phaseTime=0;
+  float attackAnim=0,walkTime=0,shake=0,aimHold=0,sentSpeed=0,knockTimer=0,idleTime=0,runTime=0,typeTime=0,phaseTime=0;
   std::string currentSprite,currentMusic,hint,shownWho;
   std::map<hb::Actor*,float> bullets;      // 적 탄: 남은 시간
   std::map<hb::Actor*,float> shots;        // 플레이어 탄

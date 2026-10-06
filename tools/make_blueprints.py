@@ -140,16 +140,15 @@ for name, who in (("BP_Test_Valen", 0), ("BP_Test_Sherry", 1), ("BP_Test_Alea", 
 # ---- 던전 데이터 (편집기 데이터 표에서 고침, 다시 빌드할 필요 없음) ----
 # 웨이브: | 로 웨이브를 나누고 , 로 적을 나눔. 기호는 BP_AuricRules.Enemies (S 해골, M 해골 마법사, C 해골 대장)
 write(PROJECT / "Assets/Data/DA_Floor.hbdata.json", {"version": 1, "name": "DA_Floor", "fields": [
-    {"name": "path", "type": "string", "value": "Start,Combat,Combat,Gather,Combat,Shop,Boss"},  # 주 경로 (기획서 3-2 순서 + 전투방 하나)
-    {"name": "branches", "type": "string", "value": "Combat"},                                  # 주 경로 옆에 붙는 곁가지 방
-    {"name": "spacing", "type": "float", "value": 36}]})                                        # 격자 한 칸 (m)
+    {"name": "rooms", "type": "float", "value": 11},    # 방 수 (시작·보스·상점·채집 + 나머지 전투방). 시작에서 가지를 뻗어 나무 모양으로 이음
+    {"name": "loops", "type": "float", "value": 1},     # 나무에 더 이어 붙이는 고리 수 (돌아가는 길)
+    {"name": "spacing", "type": "float", "value": 36}]})  # 격자 한 칸 (m)
 ROOM_COLUMNS = [("minHalf", "float"), ("maxHalf", "float"), ("square", "bool"), ("waves", "string"), ("monsterDrop", "bool")]
 ROOM_ROWS = {
     "Start": (6, 6, True, "", False),
-    "Combat1": (8, 10, False, "S,S,S|S,S,S", False),
-    "Combat2": (9, 11, False, "S,S,M|S,M,M", True),  # 마지막 해골이 마물 소재를 확정으로 떨굼 (인챈트 체험)
-    "Combat3": (9, 11, False, "S,S,S,M|S,S,M,M", False),
-    "Branch": (8, 10, False, "S,S,M", False),
+    "Combat1": (6, 9, False, "S,S|S,S,S", False),          # 시작 바로 옆: 작은 방도 나옴
+    "Combat2": (7, 11, False, "S,S,M|S,M,M", True),        # 마지막 해골이 마물 소재를 확정으로 떨굼 (인챈트 체험)
+    "Combat3": (8, 12, False, "S,S,S,M|S,S,M,M|S,M,M", False),  # 깊은 방: 큰 방, 웨이브 3번
     "Gather": (7, 7, True, "", False),
     "Shop": (9, 9, True, "", False),
     "Boss": (14, 14, True, "C", False),
@@ -165,6 +164,9 @@ def prefab(name, obj_id, texture=None, w=None, h=None, keep_pool=64, order=3, tr
     o.update(id="root", name=name[3:], position=[0, 0, 0.15])
     kinds = {"Transform", "SpriteRenderer"} | ({"BoxCollider2D"} if collider else set()) | ({"Rigidbody2D"} if rigid else set())
     o["components"] = [c for c in o["components"] if c["type"] in kinds] + [pool(keep_pool)]
+    for c in o["components"]:
+        if c["type"] == "Rigidbody2D":
+            c["properties"]["freezeRotation"] = [1, 1, 1]  # 탄이 부딪혀 돌지 않게 (방향은 C++가 정함)
     sp = comp(o, "SpriteRenderer")["properties"]
     if texture:
         sp.update(texture=texture, sprite="", width=w, height=h, pixelsPerUnit=PPU, color=[1, 1, 1, 1], useCustomSize=False)
@@ -257,3 +259,24 @@ fsm("FSM_SkeletonCaptain", "intro", PARAMS, [
     go("burst1_burst2", "burst1", "burst2", exit_time=1), go("burst2_rest", "burst2", "rest", exit_time=1),
     go("summon_rest", "summon", "rest", exit_time=1)])
 print("BP·프리팹·상태 머신 생성 완료")
+
+# ---- 대사 (기획서 6-6). who: 초상화 (collector·valen·sherry·alea·boss, $me는 지금 캐릭터), name: 이름표, text의 {이름}은 C++가 채움 ----
+C, ME = ("collector", "수금원"), ("$me", "$me")
+L = lambda who, text: {"who": who[0], "name": who[1], "text": text}  # noqa: E731
+DIALOGUE = {
+    "Opening1": [L(C, "어서 와. 오늘부터 여기가 네 집이야. 물론 집주인은 우리 사장님이지만."),
+                 L(C, "저 위 계단 끝에 있는 게 '마몬의 입'이야. 들어간 놈들은 황금을 들고 나오거나, 아예 안 나오지.")],
+    "Intro_valen": [L(ME, "...갚으면 되는 거지.")],
+    "Intro_sherry": [L(ME, "술값 정도는 나오겠지?")],
+    "Intro_alea": [L(ME, "확률은... 나쁘지 않네.")],
+    "Opening2": [L(C, "하나만 기억해. 너무 깊이 들어가면 못 돌아와. 적당히 챙겨서, 지치기 전에 나와."),
+                 L(C, "아, 튜토리얼용 제작서랑 빈 병도 챙겨 가. 공짜는 아니고, 빚에 달아 둘게.")],
+    "GatherTip": [L(ME, "Q로 제작 창을 열어 보자. 약초 3개와 빈 병으로 회복 물약, 광물로 섬광탄.")],
+    "Boss": [L(("boss", "{boss}"), "또 빚쟁이냐. 네 뼈도 황금으로 칠해 주마.")],
+    "ReturnStart": [L(ME, "던전이 놓아주지 않는다. 문을 10번 때려 열고, 막히면 E로 섬광탄!")],
+    "Settle": [L(C, "돌아왔네? 정산할게. 소재까지 합쳐 {total} G, 그중 절반 {repaid} G는 빚으로 받아 간다."),
+               L(C, "남은 빚은 {debt} G. 강화는 던전 밖에선 무뎌지는 거 알지? 남은 골드로 소파라도 바꾸든가."),
+               L(C, "적당히 들어가서, 적당히 챙겨서, 지치기 전에 탈출. 그게 이 던전의 규칙이야. 쉬고 싶으면 계단 위 입구에서 하루를 마쳐.")],
+}
+write(PROJECT / "Assets/Data/DT_Dialogue.hbdata.json", {"version": 1, "name": "DT_Dialogue", "columns": [{"name": "lines", "type": "json"}],
+                                                         "rows": {k: {"lines": v} for k, v in DIALOGUE.items()}})

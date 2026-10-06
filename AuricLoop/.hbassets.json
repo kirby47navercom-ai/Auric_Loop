@@ -2122,5 +2122,56 @@
   },
   "Assets/Sprites/FX/S_EnemyOrb_3.hbsprite.json": {
     "id": "9d383460-59a2-4884-9675-1097472df09b"
+  },
+  "Assets/Sprites/Props/Prop_Barrel2.png": {
+    "id": "437b2ee6-37ba-49be-9f18-25ffa3d8c88a"
+  },
+  "Assets/Sprites/Props/Prop_Crates2.png": {
+    "id": "068962a0-d6f8-4a83-9aaa-44bd066a915c"
+  },
+  "Assets/Sprites/Props/Prop_GateSide.png": {
+    "id": "17aedc7d-5769-484c-a829-8e6c3b0ab35d"
+  },
+  "Assets/Sprites/Props/Prop_GateSideSealed.png": {
+    "id": "49b688f3-438c-480b-b6a3-6d58a8f4df95"
+  },
+  "Assets/Sprites/Props/Prop_GoldChest.png": {
+    "id": "3bad8098-eb9f-4d1b-b543-5e4835e87ba0"
+  },
+  "Assets/Sprites/Props/Prop_LowWall.png": {
+    "id": "ece26a9f-8ab4-48fd-ab91-fa79595ffc1d"
+  },
+  "Assets/Sprites/Props/Prop_Statue.png": {
+    "id": "f234c03b-af7b-4a39-8fc5-36adb669a841"
+  },
+  "Assets/Sprites/Props/Prop_Stump.png": {
+    "id": "0cd557da-9052-49e0-826d-b11bc0f9dd73"
+  },
+  "Assets/Data/DT_Dialogue.hbdata.json": {
+    "id": "4933980a-afac-46a9-8ed9-96651c958a54"
+  },
+  "Assets/UI/Map/map_boss.png": {
+    "id": "4d4e9e99-859d-41a0-ac4a-ad5da9d10f97"
+  },
+  "Assets/UI/Map/map_current.png": {
+    "id": "ae33aaf6-5a71-49ae-890e-b34575a3a5b5"
+  },
+  "Assets/UI/Map/map_gather.png": {
+    "id": "3ed0759d-7501-4e34-ae4e-a6ea00925fc2"
+  },
+  "Assets/UI/Map/map_link.png": {
+    "id": "971b9bf0-eb50-4061-a76b-49feb100a9fb"
+  },
+  "Assets/UI/Map/map_room.png": {
+    "id": "e5130910-6028-422f-ae76-7198b215df18"
+  },
+  "Assets/UI/Map/map_shop.png": {
+    "id": "b1d0596c-3a11-48ac-812a-cf8029d776bf"
+  },
+  "Assets/UI/Map/map_start.png": {
+    "id": "8bdbaef6-fceb-4b4c-8f66-91622a322af1"
+  },
+  "Assets/UI/Map/map_unknown.png": {
+    "id": "60ddf35d-6c42-4ae6-aca1-689372191101"
   }
 }

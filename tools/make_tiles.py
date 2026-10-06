@@ -2,7 +2,7 @@
 
 실행: python tools/make_tiles.py <생성 그림 폴더>
 입력: dungeon_floor.png, dungeon_cap.png, dungeon_wall.png, hub_floor.png, hub_wood.png, hub_wall.png (텍스처)
-      dungeon_props.png, hub_props.png, dungeon_door.png (마젠타 배경 시트)
+      dungeon_props.png, hub_props.png, dungeon_door.png, obstacles.png, gate_side.png (마젠타 배경 시트)
 결과: AuricLoop/Assets/Tiles/T_World.png (32px 타일, 8열) + Assets/Sprites/Props/*.png
 
 아틀라스 배치 (타일 번호 = 행 * 8 + 열). tools/gen_scene.py의 TILE 표와 같다.
@@ -45,6 +45,8 @@ PROPS = {
     "dungeon_props.png": [("Torch", 40), ("Banner", 64), ("GoldPile", 30), ("Rubble", 22), ("Pillar", 52), ("Bones", 18)],
     "hub_props.png": [("Lamp", 72), ("Crates", 44), ("Plant", 36), ("Bench", 30), ("Barrel", 34), ("NoticeBoard", 44)],
     "dungeon_door.png": [("Portcullis", 96), ("Archway", 96)],
+    "obstacles.png": [("Crates2", 56), ("Barrel2", 44), ("Stump", 44), ("LowWall", 36), ("Statue", 60), ("GoldChest", 40)],  # 전투방 엄폐물
+    "gate_side.png": [("GateSide", 128), ("GateSideSealed", 128)],  # 옆문 철창 (왼쪽·오른쪽 벽)
 }
 out = ROOT / "Sprites/Props"
 out.mkdir(parents=True, exist_ok=True)
@@ -64,7 +66,5 @@ for sheet, items in PROPS.items():
 # 던전 층(C++ Dungeon)이 크기만 바꿔 까는 반복 무늬 텍스처: 바닥 4x4칸, 벽 윗면 2x2칸, 북쪽 벽면(금테 윗면 + 벽면 2칸) 4x3칸
 for name, box in (("T_DungeonFloor", (0, 0, 4 * T, 4 * T)), ("T_DungeonCap", (4 * T, 0, 6 * T, 2 * T)), ("T_DungeonFace", (0, 8 * T, 4 * T, 11 * T))):
     atlas.crop(box).save(ROOT / f"Tiles/{name}.png")
-# 옆문 철창: 앞에서 본 철창을 눕혀 옆에서 본 모양으로
-gate = Image.open(out / "Prop_Portcullis.png")
-gate.rotate(90, expand=True).save(out / "Prop_PortcullisSide.png")
-print("던전 텍스처·옆문 철창")
+(out / "Prop_PortcullisSide.png").unlink(missing_ok=True)  # 예전 임시 옆문 (앞 철창을 눕힌 그림)
+print("던전 텍스처")

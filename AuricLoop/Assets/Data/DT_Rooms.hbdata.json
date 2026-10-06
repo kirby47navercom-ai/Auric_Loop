@@ -32,31 +32,24 @@
       "monsterDrop": false
     },
     "Combat1": {
-      "minHalf": 8,
-      "maxHalf": 10,
+      "minHalf": 6,
+      "maxHalf": 9,
       "square": false,
-      "waves": "S,S,S|S,S,S",
+      "waves": "S,S|S,S,S",
       "monsterDrop": false
     },
     "Combat2": {
-      "minHalf": 9,
+      "minHalf": 7,
       "maxHalf": 11,
       "square": false,
       "waves": "S,S,M|S,M,M",
       "monsterDrop": true
     },
     "Combat3": {
-      "minHalf": 9,
-      "maxHalf": 11,
-      "square": false,
-      "waves": "S,S,S,M|S,S,M,M",
-      "monsterDrop": false
-    },
-    "Branch": {
       "minHalf": 8,
-      "maxHalf": 10,
+      "maxHalf": 12,
       "square": false,
-      "waves": "S,S,M",
+      "waves": "S,S,S,M|S,S,M,M|S,M,M",
       "monsterDrop": false
     },
     "Gather": {

@@ -87,6 +87,7 @@ def base_objects(director_bp="BP_TopDownShooter", at=(0, 0)):
     comp(player, "TopDownMovement2D")["properties"]["speed"] = 6
     # 충돌 층: 0 벽·장식, 1 플레이어, 2 적, 3 탄. 플레이어와 적은 서로 밀지 않는다 (접촉하면 피해만, 엔터 더 건전처럼)
     comp(player, "CapsuleCollider2D")["properties"].update(layer=1, mask=0xFFFFFFFF & ~(1 << 2))
+    comp(player, "Rigidbody2D")["properties"]["freezeRotation"] = [1, 1, 1]  # 부딪혀도 돌지 않게 (예전엔 z가 풀려 맞으면 캐릭터가 빙글 돌았음)
     comp(player, "SpriteRenderer")["properties"].update(sprite="Assets/Sprites/Valen/S_Valen_S_Idle_0.hbsprite.json", texture="", color=[1, 1, 1, 1],
                                                         useCustomSize=False, sortingOrder=0)
     cam = copy.deepcopy(objs["Camera"])
@@ -211,11 +212,15 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
     parked(objects, "Dungeon.Face", 26, lambda i: tiled(i, T + "T_DungeonFace.png", -10, True))
     parked(objects, "Dungeon.Arch", 10, lambda i: sprite_obj(i, PROP + "Archway.png", 0, 0, order=-8, width=4, height=3))
     parked(objects, "Dungeon.Gate", 4, lambda i: sprite_obj(i, PROP + "Portcullis.png", 0, 0, order=-7, collider=(2, 0.5, -1.0), width=4, height=3))
-    parked(objects, "Dungeon.GateSide", 4, lambda i: sprite_obj(i, PROP + "PortcullisSide.png", 0, 0, order=0, collider=(0.5, 2, 0), width=1.2, height=4))
+    parked(objects, "Dungeon.GateSide", 4, lambda i: sprite_obj(i, PROP + "GateSide.png", 0, 0, order=0, collider=(0.5, 2, 0)))
     parked(objects, "Dungeon.Torch", 22, lambda i: torch(i, 0, 0)[0])
     parked(objects, "Dungeon.Glow", 22, lambda i: glow(i, 0, 0, 3.5))
     parked(objects, "Dungeon.Banner", 12, lambda i: sprite_obj(i, PROP + "Banner.png", 0, 0, order=-8))
-    parked(objects, "Dungeon.Pillar", 24, lambda i: sprite_obj(i, PROP + "Pillar.png", 0, 0, order=0, collider=(0.35, 0.25, -0.6)))
+    parked(objects, "Dungeon.Pillar", 16, lambda i: sprite_obj(i, PROP + "Pillar.png", 0, 0, order=0, collider=(0.35, 0.25, -0.6)))
+    # 전투방 엄폐물 (Dungeon::Build의 배치 6가지). 충돌은 그림 아랫부분만
+    for tag, file, count, col in (("Crate", "Crates2", 14, (0.45, 0.3, -0.5)), ("Barrel", "Barrel2", 10, (0.4, 0.25, -0.4)),
+                                  ("LowWall", "LowWall", 22, (0.8, 0.3, -0.25)), ("Statue", "Statue", 8, (0.45, 0.3, -0.6)), ("Chest", "GoldChest", 2, (0.55, 0.3, -0.3))):
+        parked(objects, "Dungeon." + tag, count, lambda i, f=file, c=col: sprite_obj(i, PROP + f + ".png", 0, 0, order=0, collider=c))
     for name, count in (("Rubble", 16), ("Bones", 16), ("GoldPile", 8)):
         parked(objects, "Dungeon." + ("Gold" if name == "GoldPile" else name), count, lambda i, n=name: sprite_obj(i, PROP + n + ".png", 0, 0, order=-2))
     parked(objects, "Dungeon.Stairs", 1, lambda i: sprite_obj(i, "Assets/Sprites/Prop_DungeonEntrance.png", 0, 0, order=-2))

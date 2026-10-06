@@ -87,6 +87,14 @@ touch("CraftTouch", "q", "br", 40 + 24, 40 + 140 + 16, 96)
 for i in (1, 2, 3):
     image(f"RotHp{i}", f"rot_hp_{i}.png", "tl", 24, 24, z=12, visible=False)
 
+# 미니맵 (오른쪽 위 틀 안): 방 칸 16개, 복도 막대 20개. C++ UpdateMinimap이 위치·크기·그림을 정하고 들어간 방 주변만 보임
+for k in range(16):
+    n = node(f"MapRoom{k}", "Image", "tr", 0, 0, 8, 8, 14, texture="Assets/UI/Map/map_room.png", visible=False)
+    n["slot"]["alignment"] = [0, 0]
+for k in range(20):
+    n = node(f"MapLink{k}", "Image", "tr", 0, 0, 4, 4, 13, texture="Assets/UI/Map/map_link.png", visible=False)
+    n["slot"]["alignment"] = [0, 0]
+
 # 왼쪽 아래: 조이스틱(모바일만). 기존 Joystick 입력 노드를 키트 그림 위에 둔다.
 move = copy.deepcopy(next(n for n in w["nodes"] if n["type"] == "Joystick"))
 move["slot"].update(offset=[48, -48, 152, 152])
