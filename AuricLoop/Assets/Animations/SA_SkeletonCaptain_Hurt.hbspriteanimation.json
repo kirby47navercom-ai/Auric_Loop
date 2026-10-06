@@ -3,16 +3,8 @@
   "name": "SA_SkeletonCaptain_Hurt",
   "frames": [
     {
-      "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Flash_0.hbsprite.json",
-      "duration": 0.07
-    },
-    {
       "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Hurt_0.hbsprite.json",
-      "duration": 0.07
-    },
-    {
-      "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Hurt_0.hbsprite.json",
-      "duration": 0.07
+      "duration": 0.2
     }
   ],
   "loop": false,

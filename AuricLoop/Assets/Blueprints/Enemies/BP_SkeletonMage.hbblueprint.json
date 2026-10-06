@@ -21,7 +21,7 @@
       "Enemy.KeepDistance": 6,
       "Enemy.GoldMin": 2,
       "Enemy.GoldMax": 3,
-      "Enemy.DeathSprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Death_"
+      "Enemy.DeathClip": "Assets/Animations/SA_SkeletonMage_Death.hbspriteanimation.json"
     },
     "componentOverrides": {
       "sprite": {

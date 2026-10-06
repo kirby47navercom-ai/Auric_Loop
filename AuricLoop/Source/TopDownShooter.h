@@ -61,7 +61,7 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   bool Invulnerable = false;      // 귀환 중 해골은 무적 (기획서 6-3)
   HB_PROPERTY(BlueprintReadWrite)
-  std::string DeathSprite = "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Death_";  // 쓰러짐 그림 앞부분 + 0~3 + .hbsprite.json
+  std::string DeathClip = "Assets/Animations/SA_Skeleton_Death.hbspriteanimation.json";  // 쓰러지는 애니메이션 (이펙트로 재생)
 
   // 상태 머신이 상태에 들어갈 때 BP 사용자 이벤트가 한 번 부른다 (매 프레임 부르지 않음: C++ 호출 비용)
   HB_FUNCTION(BlueprintCallable, DisplayName="생성", Category="적")
@@ -166,9 +166,9 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   float HitStun = 0.18f;          // 맞으면 잠깐 멈추고 맞는 그림 (보스 제외)
   HB_PROPERTY(BlueprintReadWrite)
-  float Knockback = 7.0f;         // 맞은 적이 밀려나는 속도 (m/s, 보스 제외)
+  float Knockback = 7.0f;
   HB_PROPERTY(BlueprintReadWrite)
-  float HitFlash = 0.1f;          // 맞은 적이 하얗게 번쩍이는 시간
+  float MoveSpeed = 6.0f;         // 플레이어 이동 속도 (무거우면 SlowRate를 곱함)         // 맞은 적이 밀려나는 속도 (m/s, 보스 제외)
   HB_PROPERTY(BlueprintReadWrite)
   float ShakeTime = 0.1f;         // 때렸을 때 화면 흔들림
   HB_PROPERTY(BlueprintReadWrite)
@@ -285,9 +285,9 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   std::string FxPrefab = "Assets/Prefabs/PF_Fx.hbprefab.json";       // 베기·타격·쓰러짐 이펙트 (풀 Pool.Fx가 모자랄 때만 생성)
   HB_PROPERTY(BlueprintReadWrite)
-  std::string SlashSprite = "Assets/Sprites/FX/S_Slash_";            // + 0~3 + .hbsprite.json, 오른쪽으로 베는 그림을 공격 방향으로 돌림
+  std::string SlashClip = "Assets/Animations/SA_Slash.hbspriteanimation.json";  // 오른쪽으로 베는 그림을 공격 방향으로 돌림
   HB_PROPERTY(BlueprintReadWrite)
-  std::string HitSprite = "Assets/Sprites/FX/S_Hit_";
+  std::string HitClip = "Assets/Animations/SA_Hit.hbspriteanimation.json";
   HB_PROPERTY(BlueprintReadWrite)
   std::string HubScene = "Assets/Scenes/Hub.hbscene.json";
   HB_PROPERTY(BlueprintReadWrite)
@@ -365,21 +365,15 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   bool KeepProgress = false;     // 빚·원룸 업그레이드를 저장해 다음 실행에 이어감 (부스에선 끔)
 
-  // 소리는 C++가 이벤트만 부르고 BP가 Play Sound로 재생한다
-  HB_FUNCTION(BlueprintImplementableEvent, DisplayName="효과음 재생", Category="소리")
-  void OnPlaySfx(const std::string& Sound);
-  HB_FUNCTION(BlueprintImplementableEvent, DisplayName="배경음 바꾸기", Category="소리")
-  void OnPlayMusic(const std::string& Music,const std::string& Previous);
-
   // ---- 적(Enemy)이 부르는 것 ----
   hb::Vec3 PlayerPosition() const{return playerAt;}
   void DamagePlayer(int amount);
   void FireBullets(const hb::Vec3& from,const hb::Vec3& dir,int count,float spread,float speed);
   std::string Sound(const std::string& name) const;  // Sounds에서 이름으로 찾은 경로 (없으면 "")
-  void Sfx(const std::string& name){const auto s=Sound(name);if(!s.empty()&&!Muted())OnPlaySfx(s);}
+  void Sfx(const std::string& name){const auto s=Sound(name);if(!s.empty())hb::Audio::Play(s);}  // 첫 입력 전 효과음은 엔진이 버림
   void Say(const std::string& who,const std::string& name,const std::string& text){dialog.push_back({who,name,text});}
   bool Frozen() const{return Hp<=0||dialogIndex<dialog.size()||Phase<2;}  // 쓰러짐·대화·타이틀 중엔 적도 멈춤
-  float HitFlashTime() const{return rules->HitFlash;}
+
 private:
   struct Line{std::string who,name,text;};
   // 흐름
@@ -410,9 +404,9 @@ private:
   void Give(std::vector<hb::Actor*>& pool,hb::Actor* actor);  // 풀로 돌려놓기
   std::vector<hb::Actor*> bulletPool,shotPool,coinPool,fxPool;
   // 이펙트: 풀에서 꺼낸 그림 오브젝트에 프레임을 차례로 바꿔 끼운다 (베기·타격 불꽃·적 쓰러짐)
-  struct Fx{hb::Actor* actor;std::string sprite;int frames,shown;float time,step,hold;};
+  struct Fx{hb::Actor* actor;float left;};
   std::vector<Fx> fxs;
-  void PlayFx(const std::string& sprite,int frames,float step,const hb::Vec3& at,float angle,bool flip,float hold=0);
+  void PlayFx(const std::string& clip,float length,const hb::Vec3& at,float angle,float glow,bool flipX,bool flipY=false);  // glow: 블룸용 발광  // clip: 스프라이트 애니메이션, length초 뒤 풀로
   void UpdateFx(float delta);
   void SetDoor(const char* tag,bool locked);
   hb::Actor* Door(const char* tag) const;
@@ -428,7 +422,6 @@ private:
   bool UpdateIntro(float delta,bool anyKey);
   void ShowSelect(bool visible);
   void MoveCamera(const hb::Vec3& position,const hb::Vec3& aim,bool hasAim,float delta);
-  bool Muted() const{return std::getenv("AURIC_MUTE")!=nullptr;}  // 화면 없는 검사기는 소리 노드를 못 돌림
 
   AuricRules* rules=nullptr;     // 장면의 BP_AuricRules (없으면 C++ 기본값)
   hb::Actor* player=nullptr;
@@ -444,7 +437,7 @@ private:
   std::set<std::string> taken;     // 채집한 것 ("방번호:Kind")
   std::vector<Interactable*> interactables;
   float attackCooldown=0,dodgeTimer=0,dodgeCooldownLeft=0,invulnerable=0,gameOver=0,charge=0;
-  float attackAnim=0,walkTime=0,shake=0,idleTime=0,runTime=0,typeTime=0,phaseTime=0;
+  float attackAnim=0,walkTime=0,shake=0,aimHold=0,sentSpeed=0,idleTime=0,runTime=0,typeTime=0,phaseTime=0;
   std::string currentSprite,currentMusic,hint,shownWho;
   std::map<hb::Actor*,float> bullets;      // 적 탄: 남은 시간
   std::map<hb::Actor*,float> shots;        // 플레이어 탄

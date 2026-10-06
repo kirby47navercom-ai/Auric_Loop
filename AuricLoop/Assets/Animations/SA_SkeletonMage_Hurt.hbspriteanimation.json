@@ -3,16 +3,8 @@
   "name": "SA_SkeletonMage_Hurt",
   "frames": [
     {
-      "sprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Flash_0.hbsprite.json",
-      "duration": 0.07
-    },
-    {
       "sprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Hurt_0.hbsprite.json",
-      "duration": 0.07
-    },
-    {
-      "sprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Hurt_0.hbsprite.json",
-      "duration": 0.07
+      "duration": 0.2
     }
   ],
   "loop": false,

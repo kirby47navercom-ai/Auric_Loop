@@ -1,8 +1,8 @@
 ﻿# 사용자용 HBEngine 편집기로 프로젝트를 다시 열고, C++ 빌드 → 실행 → 창 스크린샷을 찍는다.
 # 실행: powershell -ExecutionPolicy Bypass -File tools/preview.ps1 [-Out 경로.png] [-Seconds 2]
-param([string]$Out = (Join-Path $env:TEMP "auric_preview.png"), [int]$Seconds = 2, [string]$Inputs = "", [string]$Scene = "Hub", [switch]$Sound)
+param([string]$Out = (Join-Path $env:TEMP "auric_preview.png"), [int]$Seconds = 2, [string]$Inputs = "", [string]$Scene = "Hub")
 $ErrorActionPreference = 'Stop'
-$engine = 'C:\Users\kirby\HBEngine\Versions\09e4470b1e254ac3'
+$engine = 'C:\Users\kirby\HBEngine\Versions\42bcd763ffa422e3'
 $root = Split-Path $PSScriptRoot
 $project = Join-Path $root 'AuricLoop\AuricLoop.hbproject'
 $node = Join-Path $engine 'runtime\node.exe'
@@ -14,8 +14,6 @@ Get-Process HBEngine -ErrorAction SilentlyContinue | Where-Object { $_.Path -lik
 & $node (Join-Path $root 'tools\sync_cpp.mjs')
 
 # 2. 편집기 실행 후 서버 포트 찾기
-# 자동 조작에는 사용자 동작이 없어 브라우저 소리가 켜지지 않고 재생 대기에서 멈추므로 기본은 음소거 (C++ Muted)
-if ($Sound) { Remove-Item Env:AURIC_MUTE -ErrorAction SilentlyContinue } else { $env:AURIC_MUTE = '1' }
 Start-Process -FilePath (Join-Path $engine 'HBEngine.exe') -ArgumentList "`"$project`"" -WorkingDirectory $engine
 $port = $null
 for ($i = 0; $i -lt 40 -and -not $port; $i++) {

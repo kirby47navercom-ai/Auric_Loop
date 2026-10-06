@@ -66,7 +66,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 3,
+            "sortingOrder": 0,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -830,7 +830,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 3,
+            "sortingOrder": 0,
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
@@ -6889,7 +6889,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 1,
+            "sortingOrder": -1,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -6966,7 +6966,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 1,
+            "sortingOrder": -1,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -7043,7 +7043,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 1,
+            "sortingOrder": -1,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -7120,7 +7120,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 1,
+            "sortingOrder": -1,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -7197,7 +7197,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 1,
+            "sortingOrder": -1,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -7274,7 +7274,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 1,
+            "sortingOrder": -1,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -7351,7 +7351,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 1,
+            "sortingOrder": -1,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -7428,7 +7428,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 1,
+            "sortingOrder": -1,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -7505,7 +7505,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 1,
+            "sortingOrder": -1,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -7582,7 +7582,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 1,
+            "sortingOrder": -1,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -7659,7 +7659,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 1,
+            "sortingOrder": -1,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -7736,7 +7736,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": 1,
+            "sortingOrder": -1,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -9199,7 +9199,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 1.5
           }
         },
         {
@@ -9285,7 +9286,8 @@
             "useCustomSize": true,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "additive"
           }
         }
       ]
@@ -9359,7 +9361,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 1.5
           }
         },
         {
@@ -9445,7 +9448,8 @@
             "useCustomSize": true,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "additive"
           }
         }
       ]
@@ -9519,7 +9523,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 1.5
           }
         },
         {
@@ -9605,7 +9610,8 @@
             "useCustomSize": true,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "additive"
           }
         }
       ]
@@ -9679,7 +9685,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 1.5
           }
         },
         {
@@ -9765,7 +9772,8 @@
             "useCustomSize": true,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "blendMode": "additive"
           }
         }
       ]
@@ -9981,7 +9989,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -1,
+            "sortingOrder": 0,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -10083,7 +10091,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -1,
+            "sortingOrder": 0,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -10185,7 +10193,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -1,
+            "sortingOrder": 0,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -10287,7 +10295,7 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -1,
+            "sortingOrder": 0,
             "billboard": false,
             "visible": true,
             "useCustomSize": false,
@@ -10769,6 +10777,66 @@
           }
         }
       ]
+    },
+    {
+      "id": "PostFX",
+      "name": "PostFX",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "post",
+          "name": "PostProcessVolume",
+          "type": "PostProcessVolume",
+          "properties": {
+            "enabled": true,
+            "priority": 0,
+            "bloomEnabled": true,
+            "bloomThreshold": 1,
+            "bloomStrength": 0.7,
+            "bloomRadius": 0.35,
+            "bloomResolutionScale": 0.5
+          }
+        }
+      ]
     }
   ],
   "surface": {
@@ -10798,6 +10866,13 @@
       0
     ],
     "fixedDeltaTime": 0.016666666666666666,
-    "maxSubsteps": 8
+    "maxSubsteps": 8,
+    "sortingLayers": [
+      {
+        "id": "default",
+        "name": "Default",
+        "sortMode": "y"
+      }
+    ]
   }
 }

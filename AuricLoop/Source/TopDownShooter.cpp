@@ -104,8 +104,8 @@ void Enemy::Stun(float seconds){stun=std::max(stun,seconds);sentVelocity={0,0,0}
 
 bool Enemy::TakeHit(float damage,const hb::Vec3& push,float stunSeconds,float burnSeconds){
   if(!Invulnerable){Hp-=damage;if(burnSeconds>0){burnLeft=burnSeconds;}}
-  // 맞은 순간 붉게 (하얀 번쩍은 경직 상태의 맞는 그림 클립 첫 프레임), 보스가 아니면 밀려나며 잠깐 경직
-  auto* game=TopDownShooter::Current;flash=game?game->HitFlashTime():0.1f;hb::Sprites::SetColor(this,hb::Color{1,0.5f,0.5f,1});
+  // 맞은 순간 하얗게 번쩍, 보스가 아니면 밀려나며 잠깐 경직(상태 머신이 맞는 그림)
+  hb::Sprites::Flash(this,0.12f,1.f);
   if(!Boss){stun=std::max(stun,stunSeconds);sentVelocity=push;hb::Physics::SetVelocity(this,sentVelocity);}
   return Hp<=0.001f;  // 소수 오차로 0에 못 닿는 경우
 }
@@ -168,19 +168,16 @@ void TopDownShooter::Give(std::vector<hb::Actor*>& pool,hb::Actor* actor){
   hb::Scene::SetPosition(actor,parked);pool.push_back(actor);
 }
 
-void TopDownShooter::PlayFx(const std::string& sprite,int frames,float step,const hb::Vec3& at,float angle,bool flip,float hold){
+void TopDownShooter::PlayFx(const std::string& clip,float length,const hb::Vec3& at,float angle,float glow,bool flipX,bool flipY){
   hb::Transform t;t.position=at;t.rotation=hb::Vec3{0,0,angle};
   auto* a=Take(fxPool,rules->FxPrefab,t);if(!a)return;
-  hb::Sprites::SetSprite(a,sprite+"0.hbsprite.json");hb::Sprites::SetFlip(a,flip,false);
-  fxs.push_back(Fx{a,sprite,frames,0,0,step,hold});
+  hb::Components::SetFloat(a,"SpriteRenderer","emissiveIntensity",glow);hb::Sprites::SetFlip(a,flipX,flipY);hb::Sprites::PlayAnimation(a,clip,false);
+  fxs.push_back(Fx{a,length});
 }
 
 void TopDownShooter::UpdateFx(float delta){
-  for(auto it=fxs.begin();it!=fxs.end();){
-    it->time+=delta;const int f=int(it->time/it->step);
-    if(f>=it->frames&&it->time>=it->frames*it->step+it->hold){Give(fxPool,it->actor);it=fxs.erase(it);continue;}
-    if(f<it->frames&&f!=it->shown){it->shown=f;hb::Sprites::SetSprite(it->actor,it->sprite+std::to_string(f)+".hbsprite.json");}
-    ++it;}
+  for(auto it=fxs.begin();it!=fxs.end();)
+    if((it->left-=delta)<=0){Give(fxPool,it->actor);it=fxs.erase(it);}else ++it;
 }
 
 void TopDownShooter::Prewarm(){
@@ -195,7 +192,7 @@ void TopDownShooter::KillEnemy(Enemy* e){
   DropCoin(at,e->GoldMin+Kills%std::max(1,e->GoldMax-e->GoldMin+1));
   if(e->Boss){HasReturnItem=true;Monster++;boss=nullptr;BossHp=0;Hud();}
   if(monsterDrop&&fightingRoom>=0&&Enemies().size()<=1)Monster++;  // 이 방 마지막 해골은 마물 소재 확정
-  PlayFx(e->DeathSprite,4,0.1f,at,0,e->Flipped(),0.5f);  // 쓰러지는 그림은 이펙트로 (적 오브젝트는 바로 지움)
+  PlayFx(e->DeathClip,0.9f,at,0,0,e->Flipped());  // 쓰러지는 그림은 이펙트로 (적 오브젝트는 바로 지움)
   hb::Scene::Destroy(e);
 }
 
@@ -203,7 +200,7 @@ bool TopDownShooter::HitEnemy(Enemy* e,const hb::Vec3& push,float damage){
   Hits++;Sfx("Hit");
   // 타격감: 맞은 자리에 불꽃, 화면 살짝 흔들림, 밀려남
   const auto at=hb::Scene::GetPosition(e);
-  PlayFx(rules->HitSprite,4,0.035f,hb::Vec3{at.x-push.x*0.3f,at.y-push.y*0.3f+0.2f,0.3f},float(std::rand()%360),false);
+  PlayFx(rules->HitClip,0.16f,hb::Vec3{at.x-push.x*0.3f,at.y-push.y*0.3f+0.2f,0.3f},float(std::rand()%360),1.5f,false);
   shake=rules->ShakeTime;
   const bool dead=e->TakeHit(Returning?0:damage,push*rules->Knockback,rules->HitStun,Enchant==2?rules->BurnTime:0);
   if(Enchant==2)e->burnDamage=WeaponDamage()*rules->BurnRate;
@@ -215,7 +212,7 @@ bool TopDownShooter::HitEnemy(Enemy* e,const hb::Vec3& push,float damage){
 void TopDownShooter::Slash(const hb::Vec3& position,const std::vector<Enemy*>& enemies){
   // 검 부채꼴 베기: 적에게 피해, 범위 안의 적 탄은 지움 (기획: 투사체 삭제)
   attackCooldown=rules->SwordInterval;Swings++;attackAnim=0.3f;Sfx("Slash");
-  PlayFx(rules->SlashSprite,4,0.05f,position+facing*1.1f+hb::Vec3{0,0.2f,0.2f},Angle(facing),false);  // 캐릭터 그림과 따로, 공격 방향으로 돌린 베기
+  PlayFx(rules->SlashClip,0.2f,position+facing*0.9f+hb::Vec3{0,0.2f,0.2f},Angle(facing),1.2f,false,(Swings&1)!=0);  // 번갈아 위·아래로 벰  // 캐릭터 그림과 따로, 공격 방향으로 돌린 베기
   const float minDot=std::cos(rules->SwordHalfAngle*3.14159265f/180),reach=rules->SwordRange+(Enchant==3?rules->SlashExtend:0);
   auto inFan=[&](const hb::Vec3& at,float radius){const auto d=at-position;const float len=Length(d);
     return len<=reach+radius&&(len<=radius+0.75f||hb::VectorMath::DotProduct(d*(1/len),facing)>=minDot);};  // 바로 붙은 적은 방향과 관계없이 맞음
@@ -389,8 +386,6 @@ std::string TopDownShooter::Sound(const std::string& name) const{
   return "";
 }
 
-void TopDownShooter::OnPlaySfx(const std::string&){}
-void TopDownShooter::OnPlayMusic(const std::string&,const std::string&){}
 
 // ---- 상호작용 (E) --------------------------------------------------------------------
 
@@ -498,7 +493,7 @@ void TopDownShooter::Animate(float delta,bool moving){
   std::string next=std::string(dirs[sector])+"_";
   if(charge>0)next+=charge<rules->ArrowCharge*0.5f?"Attack_0":"Attack_1";  // 셰리 장전: 시위 걸기 → 당기기
   else if(attackAnim>0){attackAnim-=delta;const int f=attackAnim>0.2f?0:attackAnim>0.1f?1:2;next+="Attack_"+std::to_string(f);}
-  else if(moving){walkTime+=delta;next+="Walk_"+std::to_string(int(walkTime*8)%4);}
+  else if(moving){walkTime+=delta;next+="Walk_"+std::to_string(int(walkTime*10)%4);}
   else{walkTime=0;next+="Idle_0";}
   if(next!=currentSprite){currentSprite=next;if(Character<(int)rules->CharacterSprites.size())hb::Sprites::SetSprite(player,rules->CharacterSprites[Character]+next+".hbsprite.json");}
 }
@@ -593,10 +588,10 @@ void TopDownShooter::Update(float delta){
   const auto position=playerAt;
   {// 배경음: 거점·던전·보스방·귀환
    const std::string music=Sound(Returning?"Return":area<0?"Hub":roomKind=="Boss"?"Boss":"Dungeon");
-   if((Phase>=2||selecting)&&music!=currentMusic&&!Muted()){OnPlayMusic(music,currentMusic);currentMusic=music;}}  // 브라우저 소리는 첫 입력 뒤에만 켜짐
+   if((Phase>=2||selecting)&&music!=currentMusic){hb::Audio::PlayMusic(music,0.5f);currentMusic=music;}}  // 첫 입력 전이면 엔진이 기다렸다 틂
   {// 부스 운영 (기획서 10장): F12 바로 처음으로, 60초 무입력이면 처음으로, 엔딩 카드에서 아무 키나 누르면 처음으로
    bool any=hb::VectorMath::Vector2Length(hb::Input::GetMouseDelta())>0;
-   for(auto* k:{"w","a","s","d","e","q","space","enter","tab","LeftMouseButton","k","1","2","3","4","5"})any=any||hb::Input::IsKeyDown(k);
+   for(auto* k:{"w","a","s","d","e","q","space","enter","tab","LeftMouseButton","1","2","3","4","5"})any=any||hb::Input::IsKeyDown(k);
    const bool anyPressed=any&&!anyHeld;anyHeld=any;idleTime=any?0:idleTime+delta;
    if(hb::Input::IsKeyDown("F12")||(idleTime>=rules->IdleReset&&!(Phase<2&&!selecting))||(ending&&anyPressed)){ResetToTitle();return;}
    if(ending)return;
@@ -605,7 +600,7 @@ void TopDownShooter::Update(float delta){
        if(hb::Input::IsKeyDown("F10")){runTime=0;Leave(rules->BossRoom,"DoorBottom");return;}}}}
   hb::Vec3 aim;const bool hasAim=hb::Input::GetMouseWorldPosition(hb::Vec3{0,0,1},position,aim);
   // 모바일 공격 버튼은 K. 터치 위치는 조준이 아니라서 자동 조준·바라보는 방향으로 카메라를 끈다
-  if(hb::Input::IsKeyDown("k"))touchMode=true;else if(hb::Input::IsKeyDown("LeftMouseButton"))touchMode=false;
+  touchMode=hb::Input::GetLastDevice()=="touch";  // 모바일 공격 버튼도 LeftMouseButton. 마지막 입력 장치로 자동 조준을 정함
   MoveCamera(position,touchMode?position+facing*(rules->CameraLeadMax/rules->CameraLead*0.5f):aim,(hasAim||touchMode)&&Phase>=2,delta);
   {const bool adv=hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("space");
    const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
@@ -628,17 +623,21 @@ void TopDownShooter::Update(float delta){
     return;
   }
 
-  // 조준: 마우스 방향, 모바일은 가장 가까운 적, 없으면 이동 방향
+  // 바라보는 방향: 걸을 땐 걷는 쪽(뒷걸음질 없음), 공격하는 동안(+0.4초)은 마우스 쪽, 모바일은 가까운 적이 있으면 그쪽
   const hb::Vec3 move{hb::Input::GetAxis("d")-hb::Input::GetAxis("a"),hb::Input::GetAxis("w")-hb::Input::GetAxis("s"),0};
   const bool moving=hb::VectorMath::VectorLengthSquared(move)>.01f;
-  if(moving)facing=hb::VectorMath::NormalizeVector(move);
-  if(touchMode){float best=rules->AutoAimRange;Enemy* target=nullptr;
-    for(auto* e:enemies){const float len=Length(hb::Scene::GetPosition(e)-position);if(len<best){best=len;target=e;}}
-    if(target)facing=Normal(hb::Scene::GetPosition(target)-position,facing);}
-  else if(hasAim)facing=Normal(aim-position,facing);
+  const bool attackDown=hb::Input::IsKeyDown("LeftMouseButton");
+  aimHold=attackDown?0.4f:aimHold-delta;
+  Enemy* target=nullptr;
+  if(touchMode){float best=rules->AutoAimRange;
+    for(auto* e:enemies){const float len=Length(hb::Scene::GetPosition(e)-position);if(len<best){best=len;target=e;}}}
+  if(target)facing=Normal(hb::Scene::GetPosition(target)-position,facing);
+  else if(aimHold>0&&hasAim&&!touchMode)facing=Normal(aim-position,facing);
+  else if(moving)facing=hb::VectorMath::NormalizeVector(move);
   Animate(delta,moving);
   // 적재량 초과·피로도 75% 이상이면 이동속도 -25% (기획서 4-1)
-  if(dodgeTimer<=0&&(Weight()>rules->WeightLimit||Fatigue*4>=FatigueMax*3))hb::Physics::SetVelocity(player,hb::Physics::GetVelocity(player)*rules->SlowRate);
+  {const float speed=rules->MoveSpeed*((Weight()>rules->WeightLimit||Fatigue*4>=FatigueMax*3)?rules->SlowRate:1.f);
+   if(speed!=sentSpeed){sentSpeed=speed;hb::Movement2D::SetSpeed(player,speed);}}
   attackCooldown-=delta;dodgeCooldownLeft-=delta;invulnerable-=delta;
 
   // 회피: Space를 누른 순간 바라보는 방향으로 대시, 대시 중 무적
@@ -662,7 +661,6 @@ void TopDownShooter::Update(float delta){
    Craft(q&&!craftKeyHeld,which,enter&&!confirmHeld);craftKeyHeld=q;confirmHeld=enter;}
 
   // 공격: 발렌 검 베기, 셰리 1초 장전 활, 알레아 마탄 연사
-  const bool attackDown=hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("k");
   if(Character==1){if(attackDown&&attackCooldown<=0){charge+=delta;if(charge>=rules->ArrowCharge){Shoot(position);charge=0;attackAnim=0.1f;attackCooldown=0.15f;}}else charge=0;}
   else if(Character==2&&attackDown&&attackCooldown<=0){attackCooldown=rules->BoltInterval;attackAnim=0.2f;Shoot(position);}
   else if(Character==0&&attackDown&&attackCooldown<=0)Slash(position,enemies);

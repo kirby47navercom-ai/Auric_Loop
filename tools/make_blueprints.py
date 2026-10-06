@@ -2,7 +2,7 @@
 
 실행: python tools/make_blueprints.py   (그다음 HBEngine runtime/node.exe tools/sync_cpp.mjs 로 C++ 사본 동기화)
 
-  Assets/Blueprints/BP_TopDownShooter      게임 규칙 (장면마다 Director 하나). Tick → Update, 소리 이벤트 → Play Sound
+  Assets/Blueprints/BP_TopDownShooter      게임 규칙 (장면마다 Director 하나). Tick → Update (소리는 C++ hb::Audio)
   Assets/Blueprints/Enemies/BP_Enemy       적 공통: 그림·충돌·풀 + 상태 머신 상태마다 부르는 사용자 이벤트 → C++ Enemy 함수
                      BP_Skeleton / BP_SkeletonMage / BP_SkeletonCaptain   BP_Enemy 자식. 수치·그림·상태 머신만 덮어씀
   Assets/Blueprints/BP_AuricRules           밸런스·에셋 경로 (장면마다 하나, 기본값 한 곳에서 고침)
@@ -57,7 +57,7 @@ def transform():
     return {"id": "transform", "name": "Transform", "type": "Transform", "properties": {"position": [0, 0, 0], "rotation": [0, 0, 0], "scale": [1, 1, 1]}}
 
 
-def sprite(texture, w, h, order=2, asset=""):
+def sprite(texture, w, h, order=0, asset=""):  # 순서 0 = 플레이어와 같은 층에서 Y 정렬
     p = copy.deepcopy(comp(objs["Enemy0"], "SpriteRenderer")["properties"])
     p.update(texture="" if asset else texture, sprite=asset, width=w, height=h, pixelsPerUnit=PPU, sortingOrder=order, color=[1, 1, 1, 1], useCustomSize=False)
     return {"id": "sprite", "name": "SpriteRenderer", "type": "SpriteRenderer", "properties": p}
@@ -81,7 +81,7 @@ def pool(keep):
 
 # ---- 게임 규칙 BP: Tick → Update(delta), 소리 이벤트 → Play Sound ----
 gm = json.loads((BP / "BP_TopDownShooter.hbblueprint.json").read_text(encoding="utf-8"))
-keep = {"beginPlay", "tick", "endPlay", "ev_sfx", "play_sfx", "ev_music", "stop_music", "play_music"}
+keep = {"beginPlay", "tick", "endPlay"}  # 소리는 C++ hb::Audio가 직접 재생 (예전 소리 이벤트 그래프는 지움)
 gm["nodes"] = [n for n in gm["nodes"] if n["id"] in keep] + [node("tick_update", "tick", 100, 240), node("update", "nativeCall", 430, 240, nativeId="TopDownShooter.Update")]
 gm["edges"] = [e for e in gm["edges"] if e["from"]["node"] in keep and e["to"]["node"] in keep] + [
     edge("tick_update", "then", "update", "exec"), edge("tick_update", "delta", "update", "delta")]
@@ -111,7 +111,7 @@ ENEMIES = {
 }
 from PIL import Image  # noqa: E402
 for name, (who, defaults) in ENEMIES.items():
-    defaults["Enemy.DeathSprite"] = ENEMY_SPRITE.format(who, "Death_").removesuffix(".hbsprite.json")
+    defaults["Enemy.DeathClip"] = f"Assets/Animations/SA_{who}_Death.hbspriteanimation.json"
     over = {"sprite": {"sprite": ENEMY_SPRITE.format(who, "Walk_0"), "texture": ""}}
     if name == "BP_SkeletonCaptain":
         over["collider"] = {"extent": [1.0, 0.8, 0.1], "center": [0, -0.6, 0]}
@@ -119,7 +119,7 @@ for name, (who, defaults) in ENEMIES.items():
 
 # ---- 상호작용·적 등장 자리·방 정보 ----
 write(BP / "BP_Interactable.hbblueprint.json", blueprint(
-    "BP_Interactable", "Interactable", [transform(), sprite("Assets/Sprites/Prop_DebtBoard.png", 2, 2, order=1), box((0.8, 0.4, 0.5), (0, -0.6, 0))], native_from=True))
+    "BP_Interactable", "Interactable", [transform(), sprite("Assets/Sprites/Prop_DebtBoard.png", 2, 2), box((0.8, 0.4, 0.5), (0, -0.6, 0))], native_from=True))
 SOUNDS = [f"{k}=Assets/Audio/S_{k}.hbaudioasset.json" for k in ["Slash", "Arrow", "Bolt", "Boom", "Hit", "Kill", "Hurt", "Coin", "Dodge", "DoorHit", "DoorOpen",
                                                                "Flash", "Craft", "Gather", "Select", "BossCharge"]]
 SOUNDS += [f"{k}=Assets/Audio/S_BGM_{k}.hbaudioasset.json" for k in ["Hub", "Dungeon", "Boss", "Return"]]
@@ -161,7 +161,7 @@ comp(data["objects"][0], "SpriteRenderer")["properties"].update(sprite="Assets/S
 comp(data["objects"][0], "BoxCollider2D")["properties"]["mask"] = 0
 write(PROJECT / "Assets/Prefabs/PF_PlayerShot.hbprefab.json", data)
 cw, ch = Image.open(PROJECT / "Assets/Sprites/Item_Coin.png").size
-prefab("PF_Coin", "Enemy0", "Assets/Sprites/Item_Coin.png", cw / PPU, ch / PPU, keep_pool=24, order=1, collider=False, rigid=False)
+prefab("PF_Coin", "Enemy0", "Assets/Sprites/Item_Coin.png", cw / PPU, ch / PPU, keep_pool=24, order=-1, collider=False, rigid=False)
 # 이펙트(베기·타격 불꽃·적 쓰러짐): 그림은 C++ PlayFx가 프레임마다 바꿔 끼운다
 prefab("PF_Fx", "Bullet0", keep_pool=16, order=4, collider=False, rigid=False)
 data = json.loads((PROJECT / "Assets/Prefabs/PF_Fx.hbprefab.json").read_text(encoding="utf-8"))

@@ -100,7 +100,7 @@ def base_objects(director_bp="BP_TopDownShooter", at=(0, 0)):
     # 충돌 층: 0 벽·장식, 1 플레이어, 2 적, 3 탄. 플레이어와 적은 서로 밀지 않는다 (접촉하면 피해만, 엔터 더 건전처럼)
     comp(player, "CapsuleCollider2D")["properties"].update(layer=1, mask=0xFFFFFFFF & ~(1 << 2))
     comp(player, "SpriteRenderer")["properties"].update(sprite="Assets/Sprites/Valen/S_Valen_S_Idle_0.hbsprite.json", texture="", color=[1, 1, 1, 1],
-                                                        useCustomSize=False, sortingOrder=3)  # 적(2)에 겹쳐도 플레이어가 보이게
+                                                        useCustomSize=False, sortingOrder=0)
     cam = copy.deepcopy(objs["Camera"])
     cam["tags"] = ["MainCamera"]
     cam["position"] = [at[0], at[1], 12]
@@ -166,7 +166,13 @@ def tilemap(name, rects, style):
 def write(name, objects):
     scene = copy.deepcopy(TEMPLATE)
     scene["sceneName"] = name
-    scene["objects"] = objects
+    # Y 정렬: 같은 순서(sortingOrder) 안에서는 발끝이 아래인 것이 앞에 그려짐 (캐릭터·적·기둥·가구 모두 순서 0)
+    scene["runtime"]["sortingLayers"] = [{"id": "default", "name": "Default", "sortMode": "y"}]
+    # 블룸: 발광(emissiveIntensity)을 준 스프라이트만 번지게 임계값 1 (횃불·베기·불꽃·탄)
+    post = {"id": "PostFX", "name": "PostFX", "kind": "empty", "group": "WORLD", "position": [0, 0, 0], "rotation": [0, 0, 0], "scale": [1, 1, 1],
+            "visible": True, "components": [transform(), {"id": "post", "name": "PostProcessVolume", "type": "PostProcessVolume", "properties": {
+                "enabled": True, "priority": 0, "bloomEnabled": True, "bloomThreshold": 1, "bloomStrength": 0.7, "bloomRadius": 0.35, "bloomResolutionScale": 0.5}}]}
+    scene["objects"] = objects + [post]
     (SCENES / f"{name}.hbscene.json").write_text(json.dumps(scene, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     return len(objects)
 
@@ -176,13 +182,15 @@ PROP = "Assets/Sprites/Props/Prop_"
 
 def glow(oid, x, y, size, order=-5):
     """빛 번짐: 반투명 주황 원을 불 뒤에 겹친다 (엔진에 블룸이 없어서 그림으로 흉내)"""
-    return sprite_obj(oid, "Assets/Sprites/FX/FX_Glow.png", x, y, order=order, width=size, height=size)
+    o = sprite_obj(oid, "Assets/Sprites/FX/FX_Glow.png", x, y, order=order, width=size, height=size)
+    comp(o, "SpriteRenderer")["properties"]["blendMode"] = "additive"  # 밑바닥을 밝게 더함
+    return o
 
 
 def torch(oid, x, y):
     """불꽃이 흔들리는 횃불 (Animator가 SA_Torch를 반복 재생) + 빛 번짐"""
     o = sprite_obj(oid, PROP + "Torch.png", x, y, order=-4)
-    comp(o, "SpriteRenderer")["properties"].update(texture="", sprite="Assets/Sprites/Props/S_Torch_0.hbsprite.json")
+    comp(o, "SpriteRenderer")["properties"].update(texture="", sprite="Assets/Sprites/Props/S_Torch_0.hbsprite.json", emissiveIntensity=1.5)  # 블룸으로 불꽃이 번짐
     o["components"].append({"id": "animator", "name": "Animator", "type": "Animator", "properties": {
         "enabled": True, "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json", "playOnStart": True, "loop": True, "speed": 1}})
     return [o, glow(oid + "Glow", x, y + 0.35, 3.5)]
@@ -207,7 +215,7 @@ def room_scene(i, room, director_bp="BP_TopDownShooter", at=None):
         door["tags"] = ["Door.Top"]
         objects.append(door)
     if i > 0:  # 첫 방 아래는 거점 계단이라 문이 없다
-        door = sprite_obj("GateBottom", PROP + "Portcullis.png", 0, -hh - 0.4, order=3, collider=(2, 0.5, 0), pooled=False, width=4, height=1.6)
+        door = sprite_obj("GateBottom", PROP + "Portcullis.png", 0, -hh - 0.4, order=0, collider=(2, 0.5, 0), pooled=False, width=4, height=1.6)
         door["tags"] = ["Door.Bottom"]
         objects.append(door)
     # 적 등장 자리, 귀환 때 무적 해골 자리 (기획서 6-3: 근거리 2 + 원거리 3)
@@ -237,7 +245,7 @@ def room_scene(i, room, director_bp="BP_TopDownShooter", at=None):
     for k, x in enumerate([-hw // 2 + 2, hw // 2 - 2] if hw >= 12 else []):
         objects.append(sprite_obj(f"Banner{k}", PROP + "Banner.png", x, hh + 1.6, order=-4))
     for k, (sx, sy) in enumerate([(-1, -1), (1, -1), (-1, 1), (1, 1)] if room["kind"] != "Gather" else []):
-        objects.append(sprite_obj(f"Pillar{k}", PROP + "Pillar.png", sx * (hw - 2.5), sy * (hh - 2.5) + 0.6, order=-1, collider=(0.35, 0.25, -0.6)))
+        objects.append(sprite_obj(f"Pillar{k}", PROP + "Pillar.png", sx * (hw - 2.5), sy * (hh - 2.5) + 0.6, order=0, collider=(0.35, 0.25, -0.6)))
     blocked = [(x, y) for x, y, _ in room["spawns"]] + [(0, -hh + 3), (-6, 5), (6, 5), (-3, 1), (3, 1)]
     decor = ["Rubble", "Bones", "Rubble", "GoldPile" if room["kind"] in ("Boss", "Gather") else "Bones"]
     placed = 0
@@ -285,7 +293,7 @@ for k, (name, x, y, solid) in enumerate([("Lamp", -10.5, 6.5, True), ("Lamp", 10
                                          ("Crates", 27.5, -1.5, True), ("Barrel", 27.5, 1.5, True), ("Crates", 14.5, 0, True),
                                          ("NoticeBoard", 4, 7.1, False), ("Plant", -24, 4.8, False), ("Barrel", -14, 4.8, True)]):
     w, h = size_of(PROP + name + ".png")
-    hub.append(sprite_obj(f"{name}{k}", PROP + name + ".png", x, y, order=-1, collider=(w * 0.35, 0.25, -h / 2 + 0.3) if solid else None))
+    hub.append(sprite_obj(f"{name}{k}", PROP + name + ".png", x, y, order=0, collider=(w * 0.35, 0.25, -h / 2 + 0.3) if solid else None))
     if name == "Lamp":
         hub.append(glow(f"{name}{k}Glow", x, y + h / 2 - 0.4, 4, order=-2))
 counts["Hub"] = write("Hub", hub)

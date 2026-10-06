@@ -1873,5 +1873,20 @@
   },
   "Assets/Sprites/Valen/Valen_S_Walk_3.png": {
     "id": "f7adad0f-1d47-47b3-a451-f0b0d0a8a712"
+  },
+  "Assets/Animations/SA_Hit.hbspriteanimation.json": {
+    "id": "e8adcc9c-8dc3-42da-9533-007be929d9c1"
+  },
+  "Assets/Animations/SA_SkeletonCaptain_Death.hbspriteanimation.json": {
+    "id": "a225c937-33bc-407e-99d1-0d5cd6ad08c6"
+  },
+  "Assets/Animations/SA_SkeletonMage_Death.hbspriteanimation.json": {
+    "id": "1dd3636f-77a9-4320-a205-1f031b3e539c"
+  },
+  "Assets/Animations/SA_Skeleton_Death.hbspriteanimation.json": {
+    "id": "af2237e9-2d1e-443c-af04-0ff0d872e2ac"
+  },
+  "Assets/Animations/SA_Slash.hbspriteanimation.json": {
+    "id": "1fff72f7-d8c9-449d-94ef-4c9cb4493f35"
   }
 }

@@ -24,7 +24,7 @@
       "Enemy.Radius": 1.4,
       "Enemy.GoldMin": 30,
       "Enemy.GoldMax": 30,
-      "Enemy.DeathSprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Death_"
+      "Enemy.DeathClip": "Assets/Animations/SA_SkeletonCaptain_Death.hbspriteanimation.json"
     },
     "componentOverrides": {
       "sprite": {

@@ -4,8 +4,7 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
 
-process.env.AURIC_MUTE = '1';  // 화면 없는 검사기는 소리 노드를 실행하지 못함 (C++ Muted)
-const ENGINE = process.env.HB_ENGINE || 'C:/Users/kirby/HBEngine/Versions/09e4470b1e254ac3';
+const ENGINE = process.env.HB_ENGINE || 'C:/Users/kirby/HBEngine/Versions/42bcd763ffa422e3';
 const {runProject} = await import(pathToFileURL(path.join(ENGINE, 'tools/run-project.mjs')).href);
 const project = path.join(path.dirname(fileURLToPath(import.meta.url)), '../AuricLoop/AuricLoop.hbproject');
 const aimUp = {position: [640, 250], size: [1280, 720]};
@@ -93,9 +92,9 @@ assert.equal(f.sceneHistory.at(-1).scene, 'Assets/Scenes/Hub.hbscene.json', 'F12
 assert.equal(f.objects.find(o => o.id === 'Director').nativeProperties.Phase, 0, '처음으로 가면 로딩부터');
 console.log('F12 검사 통과');
 
-// 모바일: 공격 버튼(K)은 터치 위치 대신 가장 가까운 해골을 자동 조준
+// 모바일: 공격 버튼(터치 LeftMouseButton)은 터치 위치 대신 가장 가까운 해골을 자동 조준
 const m = await runProject(project, {scene: 'Assets/Scenes/Test_Alea.hbscene.json', frames: 600, delta: 1 / 60, inputs: [
-  {frame: 5, key: 'w', value: 1}, {frame: 30, key: 'w', value: 0}, {frame: 31, key: 'k', value: 1}, {frame: 590, key: 'k', value: 0},
+  {frame: 5, key: 'w', value: 1}, {frame: 30, key: 'w', value: 0}, {frame: 31, key: 'LeftMouseButton', value: 1, device: 'touch', source: 'ui'}, {frame: 590, key: 'LeftMouseButton', value: 0, device: 'touch', source: 'ui'},
 ]});
 const ms = m.objects.find(o => o.id === 'Director').nativeProperties;
 assert.ok(ms.Kills >= 3, '자동 조준으로 전투방1 해골 3마리를 모두 맞힘');
@@ -105,5 +104,5 @@ console.log('모바일 자동 조준 검사 통과', 'kills', ms.Kills, 'hits', 
 const h = await runProject(project, {scene: 'Assets/Scenes/Dungeon_0.hbscene.json', frames: 120, delta: 1 / 60, inputs: [{frame: 5, key: 's', value: 1}]});
 const hp = h.objects.find(o => o.id === 'Player').position;
 assert.equal(h.sceneHistory.at(-1).scene, 'Assets/Scenes/Hub.hbscene.json', '첫 방 아래 → 거점');
-assert.ok(hp[1] > 15 && hp[1] < 21, '거점 계단 끝에 섬');
+assert.ok(hp[1] > 5 && hp[1] < 21, '거점 계단 끝에 섬 (누른 S는 장면을 넘어 유지돼 계단을 내려옴)');
 console.log('거점 이동 검사 통과', 'y', hp[1].toFixed(1));

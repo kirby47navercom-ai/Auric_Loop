@@ -132,16 +132,13 @@ for name, body in ENEMIES.items():
     frames = scaled(grid(load(f"{name.lower()}_anim.png"), [4, 4, 4]), body)
     named = [(f"Walk_{i}", frames[i]) for i in range(4)] + [(f"Attack_{i}", frames[4 + i]) for i in range(3)] + [("Hurt_0", frames[7])] \
         + [(f"Death_{i}", frames[8 + i]) for i in range(4)]
-    flash = frames[7].copy()  # 맞은 순간: 맞는 그림을 거의 하얗게 (엔진 색은 곱하기라 1보다 밝게 못 함)
-    flash.putdata([(230 + p[0] // 10, 230 + p[1] // 10, 230 + p[2] // 10, p[3]) for p in flash.get_flattened_data()])
-    named.append(("Flash_0", flash))
     folder = ASSETS / f"Sprites/Enemies/{name}"
     shutil.rmtree(folder, ignore_errors=True)
     p = save(folder, name, named, body / 2)  # 예전처럼 몸 가운데가 오브젝트 중심
     animation(f"SA_{name}_Walk", [p[f"Walk_{i}"] for i in range(4)], 0.14, True)
     animation(f"SA_{name}_Attack", [p[f"Attack_{i}"] for i in range(3)], 0.13, False)
-    data = [p["Flash_0"], p["Hurt_0"], p["Hurt_0"]]  # 번쩍 0.07초 → 움찔 0.14초
-    animation(f"SA_{name}_Hurt", data, 0.07, False)
+    animation(f"SA_{name}_Hurt", [p["Hurt_0"]], 0.2, False)  # 하얀 번쩍임은 C++ Sprites::Flash
+    animation(f"SA_{name}_Death", [p[f"Death_{i}"] for i in range(4)], 0.12, False)  # 마지막 장은 C++가 풀로 돌려놓을 때까지 남음
 
 
 def strip(file, count, height):
@@ -169,11 +166,11 @@ def save_strip(folder, prefix, frames, pivot=(0.5, 0.5)):
     return out
 
 
-save_strip(ASSETS / "Sprites/FX", "Slash", strip("fx_slash.png", 4, 72))
-save_strip(ASSETS / "Sprites/FX", "Hit", strip("fx_hit.png", 4, 40))
+animation("SA_Slash", save_strip(ASSETS / "Sprites/FX", "Slash", strip("fx_slash.png", 4, 72)), 0.045, False)
+animation("SA_Hit", save_strip(ASSETS / "Sprites/FX", "Hit", strip("fx_hit.png", 4, 40)), 0.04, False)
 animation("SA_Torch", save_strip(ASSETS / "Sprites/Props", "Torch", strip("fx_torch.png", 4, 40)), 0.12, True)
 
-# 횃불·가로등 빛 번짐: 반투명 주황 원, 도트에 맞게 4단계 (엔진에 블룸이 없어서 그림으로 흉내)
+# 횃불·가로등 둘레를 밝히는 주황 빛 (가산 혼합으로 바닥에 더함, 불꽃 자체의 번짐은 블룸)
 g = Image.new("RGBA", (64, 64))
-g.putdata([(255, 170, 70, int(150 * round(4 * max(0.0, 1 - (((x - 31.5) ** 2 + (y - 31.5) ** 2) ** 0.5) / 32) ** 2) / 4)) for y in range(64) for x in range(64)])
+g.putdata([(255, 150, 60, int(70 * max(0.0, 1 - (((x - 31.5) ** 2 + (y - 31.5) ** 2) ** 0.5) / 32) ** 2)) for y in range(64) for x in range(64)])
 g.save(ASSETS / "Sprites/FX/FX_Glow.png")
