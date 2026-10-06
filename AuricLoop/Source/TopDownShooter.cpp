@@ -58,10 +58,14 @@ void Enemy::Tick(float delta){
   if(mode==Mode::Dash||mode==Mode::Stagger)return;  // 돌진 속도·밀려남은 그대로 둔다
   hb::Vec3 v{0,0,0};
   if(!frozen&&stun<=0){
-    if(mode==Mode::Chase)v=dir*Speed;
+    if(mode==Mode::Chase)v=(detour>0?detourDir:dir)*Speed;
     else if(mode==Mode::Range){const float side=distance>KeepDistance+1?1.f:distance<KeepDistance-1?-1.f:0.f;v=dir*(Speed*side);}
   }
   if(Length(v-sentVelocity)>0.05f||++velocityAge>=10){sentVelocity=v;velocityAge=0;hb::Physics::SetVelocity(this,v);}  // 벽에 막혀 줄어든 속도도 가끔 다시 맞춘다
+  // 막힘 확인 (0.2초마다): 가려는데 거의 못 움직였으면 0.7초 동안 왼쪽이나 오른쪽으로 비켜 돈다
+  if(detour>0)detour-=delta;
+  if(++stuckAge>=12){stuckAge=0;
+    if(Length(v)>1&&detour<=0&&Length(hb::Physics::GetVelocity(this))<Length(v)*0.3f){detour=0.7f;detourDir=Rotate(dir,std::rand()%2?80.f:-80.f);}}
 }
 
 // 대기 중(화면 밖, 상태 머신 멈춤)이면 늦게 들어온 상태 이벤트는 무시
@@ -570,7 +574,8 @@ void TopDownShooter::Warp(int room){
   for(auto& [b,life]:bullets)life=0;
   if(fightingRoom>=0){map.Lock(fightingRoom,false);map.rooms[fightingRoom].state=2;fightingRoom=-1;}
   for(auto& r:map.rooms)if(r.path>=0&&r.path<map.rooms[room].path&&!Returning)r.state=2;
-  const auto& r=map.rooms[room];hb::Scene::SetPosition(player,hb::Vec3{r.cx,r.kind=="Boss"?r.cy-r.hh*0.6f:r.cy,0.1f});  // 보스방은 보스(가운데 위)와 떨어진 아래쪽
+  const auto& r=map.rooms[room];const bool fight=(r.kind=="Boss"||r.kind=="Combat")&&!Returning;
+  hb::Scene::SetPosition(player,hb::Vec3{r.cx,fight?r.cy-r.hh+rules->EnterDepth+1:r.cy,0.1f});  // 싸우는 방은 아래쪽 (가운데엔 엄폐물·보스)
   playerAt=hb::Scene::GetPosition(player);cameraReady=false;Hud();
 }
 
@@ -964,7 +969,7 @@ void TopDownShooter::Update(float delta){
   if(dodgeTimer>0){dodgeTimer-=delta;hb::Physics::SetVelocity(player,facing*rules->DodgeSpeed);}
   else if(knockTimer>0){knockTimer-=delta;hb::Physics::SetVelocity(player,knock);}
   {const bool blink=invulnerable>0&&int(invulnerable*12)%2==0;  // 무적 시간 깜빡임
-   if(blink!=blinkShown){blinkShown=blink;hb::Sprites::SetColor(player,hb::Color{1,1,1,blink?0.35f:1.f});}}
+   if(blink!=blinkShown){blinkShown=blink;const float v=blink?0.4f:1.f;hb::Sprites::SetColor(player,hb::Color{v,v,v,1});}}  // 투명도를 바꾸면 렌더 재질을 다시 만들어 끊김
 
   // [귀환] 사용 (가방 Tab), 귀환 중 섬광탄 (E): 제작한 것 먼저, 없으면 골드
   const bool tab=hb::Input::IsKeyDown("tab");

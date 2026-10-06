@@ -149,7 +149,8 @@ private:
   float stun=0,flash=0,shotTimer=0;
   bool sentStunned=false,sentReady=false,sentNear=false,flipped=false;  // 엔진 명령은 값이 바뀔 때만 보낸다 (호출 비용)
   hb::Vec3 sentVelocity{9e9f,0,0};
-  int velocityAge=0;
+  int velocityAge=0,stuckAge=0;
+  float detour=0;hb::Vec3 detourDir{0,0,0};  // 엄폐물에 막히면 잠깐 옆으로 돌아감
   int ring=0,pattern=0;
   hb::Vec3 dashDir{0,-1,0};
 };
