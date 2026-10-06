@@ -1954,5 +1954,173 @@
   },
   "Assets/Tiles/T_DungeonFloor.png": {
     "id": "582887e5-d22f-40ce-89c9-af9d2deeb54c"
+  },
+  "Assets/Animations/SA_Arrow.hbspriteanimation.json": {
+    "id": "38682b3b-bbbc-42a8-9d1b-21fcb4e05b7c"
+  },
+  "Assets/Animations/SA_Boom.hbspriteanimation.json": {
+    "id": "ed86c8b2-2536-4f2b-a36b-b1b4c6a69a63"
+  },
+  "Assets/Animations/SA_BossOrb.hbspriteanimation.json": {
+    "id": "d110ad43-9dfa-4e99-aefa-a931af5d2a63"
+  },
+  "Assets/Animations/SA_Card.hbspriteanimation.json": {
+    "id": "608ed9ae-72bf-49b1-a4dc-eac1ea6202ec"
+  },
+  "Assets/Animations/SA_Coin.hbspriteanimation.json": {
+    "id": "ffd3b05d-151f-448d-97b0-c7137dff4f1d"
+  },
+  "Assets/Animations/SA_EnemyOrb.hbspriteanimation.json": {
+    "id": "6b46f778-b973-4a67-99f9-ddec96cc8d45"
+  },
+  "Assets/Sprites/FX/Arrow_0.png": {
+    "id": "896bb237-c217-4663-b9fb-cc5dc44771a9"
+  },
+  "Assets/Sprites/FX/Arrow_1.png": {
+    "id": "e739162e-6d55-435b-ab44-cfe5ede79d45"
+  },
+  "Assets/Sprites/FX/Boom_0.png": {
+    "id": "1cd28cbd-46c2-419b-9902-b30fd13b8bae"
+  },
+  "Assets/Sprites/FX/Boom_1.png": {
+    "id": "9d596c3d-71cd-45e7-986b-5829a5e86ce8"
+  },
+  "Assets/Sprites/FX/Boom_2.png": {
+    "id": "65b37b01-da64-47ed-a5a7-95563b8f1dcd"
+  },
+  "Assets/Sprites/FX/Boom_3.png": {
+    "id": "09436da5-a478-48c6-9eff-5630777ab232"
+  },
+  "Assets/Sprites/FX/Boom_4.png": {
+    "id": "1f2a1dfd-434a-40a8-b497-da0924b6d177"
+  },
+  "Assets/Sprites/FX/BossOrb_0.png": {
+    "id": "1442f0ef-14d9-4e09-853b-3e3ea930de55"
+  },
+  "Assets/Sprites/FX/BossOrb_1.png": {
+    "id": "b602375c-8c63-45d3-9ce0-4c85079d1fd6"
+  },
+  "Assets/Sprites/FX/BossOrb_2.png": {
+    "id": "42ce55e3-5f63-4fe6-aedc-5110cb5f0509"
+  },
+  "Assets/Sprites/FX/BossOrb_3.png": {
+    "id": "e7924aa6-773b-4dda-8fca-82c1132cd47b"
+  },
+  "Assets/Sprites/FX/Card_0.png": {
+    "id": "85971bdd-1f67-468d-b838-09961fca53fe"
+  },
+  "Assets/Sprites/FX/Card_1.png": {
+    "id": "ad8a9a39-427f-49c9-acfd-faea1005ea38"
+  },
+  "Assets/Sprites/FX/Card_2.png": {
+    "id": "e80aa48d-043e-4a69-8656-ac19e1f50ef6"
+  },
+  "Assets/Sprites/FX/Card_3.png": {
+    "id": "5e9f5386-2ae7-46c9-ad8c-0f4e131ce477"
+  },
+  "Assets/Sprites/FX/Coin_0.png": {
+    "id": "c90181d1-f90f-49a5-a8d9-ff3b577fea11"
+  },
+  "Assets/Sprites/FX/Coin_1.png": {
+    "id": "c8112fa8-6266-44d9-a311-213bec16b2e7"
+  },
+  "Assets/Sprites/FX/Coin_2.png": {
+    "id": "539e4af4-8aed-49c0-9517-d3f10e730cf5"
+  },
+  "Assets/Sprites/FX/Coin_3.png": {
+    "id": "e2e237b2-aeef-4d28-9909-e547bccbbacb"
+  },
+  "Assets/Sprites/FX/Coin_4.png": {
+    "id": "3f9b515e-a167-4427-9c14-9f76fb79ddcf"
+  },
+  "Assets/Sprites/FX/Coin_5.png": {
+    "id": "4891fae7-264d-4752-b8af-7ff94177c014"
+  },
+  "Assets/Sprites/FX/EnemyOrb_0.png": {
+    "id": "8325d8e7-aa54-47e2-a6ff-8db305b7c554"
+  },
+  "Assets/Sprites/FX/EnemyOrb_1.png": {
+    "id": "8a86f322-c5d4-47f2-9e92-9859a6a3b99b"
+  },
+  "Assets/Sprites/FX/EnemyOrb_2.png": {
+    "id": "f984af6e-6ffe-4ce5-b17c-b951af4296a4"
+  },
+  "Assets/Sprites/FX/EnemyOrb_3.png": {
+    "id": "8496bb27-d444-4200-ac77-742781436937"
+  },
+  "Assets/Sprites/FX/S_Arrow_0.hbsprite.json": {
+    "id": "1c64a44c-7f4d-43bc-9381-3ea1f9e40745"
+  },
+  "Assets/Sprites/FX/S_Arrow_1.hbsprite.json": {
+    "id": "c20d3ef2-6a90-499e-bc3d-9c4eb54faada"
+  },
+  "Assets/Sprites/FX/S_Boom_0.hbsprite.json": {
+    "id": "2e574916-7a51-48ae-8742-85cf582a9463"
+  },
+  "Assets/Sprites/FX/S_Boom_1.hbsprite.json": {
+    "id": "5630db09-ebd4-4855-b7d3-3c825ec6374e"
+  },
+  "Assets/Sprites/FX/S_Boom_2.hbsprite.json": {
+    "id": "201aac7a-23e9-4187-b6c6-34072bd569ed"
+  },
+  "Assets/Sprites/FX/S_Boom_3.hbsprite.json": {
+    "id": "2180c87c-583e-4642-ada4-9c56daa6be19"
+  },
+  "Assets/Sprites/FX/S_Boom_4.hbsprite.json": {
+    "id": "5e4f98e3-12af-468d-b28f-650a9026804d"
+  },
+  "Assets/Sprites/FX/S_BossOrb_0.hbsprite.json": {
+    "id": "f27d15f1-ca44-4de1-980a-c9cc347cbbf8"
+  },
+  "Assets/Sprites/FX/S_BossOrb_1.hbsprite.json": {
+    "id": "239b8444-0398-41a4-87ae-127434992161"
+  },
+  "Assets/Sprites/FX/S_BossOrb_2.hbsprite.json": {
+    "id": "a0e046ef-1a20-4c5e-8a04-46e449a6f5d5"
+  },
+  "Assets/Sprites/FX/S_BossOrb_3.hbsprite.json": {
+    "id": "0ef844ae-8137-4920-b05f-706962a1d204"
+  },
+  "Assets/Sprites/FX/S_Card_0.hbsprite.json": {
+    "id": "715608e4-d8c4-44c4-b984-9f789c1f65a4"
+  },
+  "Assets/Sprites/FX/S_Card_1.hbsprite.json": {
+    "id": "205e59ee-cc48-4f6f-bfac-c50fc1e70235"
+  },
+  "Assets/Sprites/FX/S_Card_2.hbsprite.json": {
+    "id": "52d3843f-2c67-4adb-806d-0138105b585f"
+  },
+  "Assets/Sprites/FX/S_Card_3.hbsprite.json": {
+    "id": "39bf8e46-ebce-47de-89ac-c2d7a882b101"
+  },
+  "Assets/Sprites/FX/S_Coin_0.hbsprite.json": {
+    "id": "222054ba-dee1-46ae-ae6f-411c77734780"
+  },
+  "Assets/Sprites/FX/S_Coin_1.hbsprite.json": {
+    "id": "f1727ee5-1e21-4103-a741-880b1d509486"
+  },
+  "Assets/Sprites/FX/S_Coin_2.hbsprite.json": {
+    "id": "377978ef-bb5d-4b84-956e-cee5a246a011"
+  },
+  "Assets/Sprites/FX/S_Coin_3.hbsprite.json": {
+    "id": "4bd109e7-c6d4-4e99-81f7-cc20c47ee91f"
+  },
+  "Assets/Sprites/FX/S_Coin_4.hbsprite.json": {
+    "id": "b41effa4-1c2e-4c22-8bb6-6385d3f57efa"
+  },
+  "Assets/Sprites/FX/S_Coin_5.hbsprite.json": {
+    "id": "a337f1f8-8638-4925-be65-eff6651abdd5"
+  },
+  "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json": {
+    "id": "b38aeb26-09c3-46db-bf09-db848705929e"
+  },
+  "Assets/Sprites/FX/S_EnemyOrb_1.hbsprite.json": {
+    "id": "c5d9c08c-0f41-4dc5-8808-fccec93e8ae5"
+  },
+  "Assets/Sprites/FX/S_EnemyOrb_2.hbsprite.json": {
+    "id": "3ae99142-fa79-4ae2-83df-5a90107b5c9b"
+  },
+  "Assets/Sprites/FX/S_EnemyOrb_3.hbsprite.json": {
+    "id": "9d383460-59a2-4884-9675-1097472df09b"
   }
 }

@@ -25321,13 +25321,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -25341,7 +25341,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -25463,13 +25464,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -25483,7 +25484,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -25605,13 +25607,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -25625,7 +25627,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -25747,13 +25750,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -25767,7 +25770,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -25889,13 +25893,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -25909,7 +25913,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -26031,13 +26036,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -26051,7 +26056,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -26173,13 +26179,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -26193,7 +26199,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -26315,13 +26322,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -26335,7 +26342,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -26457,13 +26465,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -26477,7 +26485,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -26599,13 +26608,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -26619,7 +26628,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -26741,13 +26751,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -26761,7 +26771,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -26883,13 +26894,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -26903,7 +26914,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -27025,13 +27037,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -27045,7 +27057,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -27167,13 +27180,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -27187,7 +27200,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -27309,13 +27323,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -27329,7 +27343,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -27451,13 +27466,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -27471,7 +27486,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -27593,13 +27609,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -27613,7 +27629,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -27735,13 +27752,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -27755,7 +27772,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -27877,13 +27895,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -27897,7 +27915,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -28019,13 +28038,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -28039,7 +28058,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -28161,13 +28181,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -28181,7 +28201,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -28303,13 +28324,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -28323,7 +28344,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -28445,13 +28467,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -28465,7 +28487,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -28587,13 +28610,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -28607,7 +28630,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -28729,13 +28753,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -28749,7 +28773,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -28871,13 +28896,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -28891,7 +28916,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -29013,13 +29039,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -29033,7 +29059,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -29155,13 +29182,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -29175,7 +29202,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -29297,13 +29325,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -29317,7 +29345,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -29439,13 +29468,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -29459,7 +29488,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -29581,13 +29611,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -29601,7 +29631,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -29723,13 +29754,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -29743,7 +29774,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {
@@ -29865,7 +29897,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -29885,7 +29917,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -30007,7 +30040,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -30027,7 +30060,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -30149,7 +30183,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -30169,7 +30203,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -30291,7 +30326,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -30311,7 +30346,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -30433,7 +30469,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -30453,7 +30489,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -30575,7 +30612,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -30595,7 +30632,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -30717,7 +30755,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -30737,7 +30775,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -30859,7 +30898,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -30879,7 +30918,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -31001,7 +31041,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -31021,7 +31061,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -31143,7 +31184,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -31163,7 +31204,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -31285,7 +31327,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -31305,7 +31347,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -31427,7 +31470,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -31447,7 +31490,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -31569,7 +31613,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -31589,7 +31633,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -31711,7 +31756,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -31731,7 +31776,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -31853,7 +31899,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -31873,7 +31919,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -31995,7 +32042,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -32015,7 +32062,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {
@@ -32137,9 +32185,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -32157,7 +32205,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],
@@ -32214,9 +32263,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -32234,7 +32283,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],
@@ -32291,9 +32341,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -32311,7 +32361,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],
@@ -32368,9 +32419,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -32388,7 +32439,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],
@@ -32445,9 +32497,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -32465,7 +32517,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],
@@ -32522,9 +32575,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -32542,7 +32595,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],
@@ -32599,9 +32653,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -32619,7 +32673,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],
@@ -32676,9 +32731,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -32696,7 +32751,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],
@@ -32753,9 +32809,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -32773,7 +32829,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],
@@ -32830,9 +32887,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -32850,7 +32907,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],
@@ -32907,9 +32965,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -32927,7 +32985,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],
@@ -32984,9 +33043,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -33004,7 +33063,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],
@@ -33061,9 +33121,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -33081,7 +33141,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],
@@ -33138,9 +33199,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -33158,7 +33219,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],
@@ -33215,9 +33277,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -33235,7 +33297,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],
@@ -33292,9 +33355,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Item_Coin.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -33312,7 +33375,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.4
           }
         }
       ],

@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "name": "S_Arrow",
-  "texture": "Assets/Sprites/FX/FX_Arrow.png",
+  "name": "S_Boom_0",
+  "texture": "Assets/Sprites/FX/Boom_0.png",
   "pixelsPerUnit": 32,
   "rect": [
     0,
     0,
-    38,
-    5
+    50,
+    44
   ],
   "pivot": [
     0.5,

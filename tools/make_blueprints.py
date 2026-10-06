@@ -9,7 +9,7 @@
   Assets/Blueprints/BP_Interactable / BP_RoomInfo
   Assets/Blueprints/BP_Test_Valen / BP_Test_Sherry / BP_Test_Alea   검사용 (BP_TopDownShooter 자식, 캐릭터와 던전 씨앗 고정)
   Assets/Data/DA_Floor, DT_Rooms           던전 층 구성 (방 순서·곁가지·간격), 방 종류별 크기·웨이브
-  Assets/Prefabs/PF_EnemyShot / PF_PlayerShot / PF_Coin / PF_Slash   생성할 때 엔진이 알아서 풀로 재사용
+  Assets/Prefabs/PF_EnemyShot / PF_PlayerShot / PF_Coin / PF_Fx   장면 풀의 원본 (그림은 C++가 애니메이션으로 바꿈)
   Assets/AI/FSM_Skeleton / FSM_SkeletonMage / FSM_SkeletonCaptain   적 행동 (상태 이름의 이벤트를 BP_Enemy가 받음)
 """
 import copy
@@ -106,7 +106,7 @@ ENEMIES = {
     "BP_Skeleton": ("Skeleton", {"Enemy.DisplayName": "해골", "Enemy.Brain": "Assets/AI/FSM_Skeleton.hbstatemachine.json"}),
     "BP_SkeletonMage": ("SkeletonMage", {"Enemy.DisplayName": "해골 마법사", "Enemy.Brain": "Assets/AI/FSM_SkeletonMage.hbstatemachine.json",
                                                    "Enemy.KeepDistance": 6, "Enemy.GoldMin": 2, "Enemy.GoldMax": 3}),
-    "BP_SkeletonCaptain": ("SkeletonCaptain", {"Enemy.DisplayName": "해골 대장", "Enemy.Brain": "Assets/AI/FSM_SkeletonCaptain.hbstatemachine.json",
+    "BP_SkeletonCaptain": ("SkeletonCaptain", {"Enemy.DisplayName": "해골 대장", "Enemy.ShotClip": "Assets/Animations/SA_BossOrb.hbspriteanimation.json", "Enemy.Brain": "Assets/AI/FSM_SkeletonCaptain.hbstatemachine.json",
                                                         "Enemy.Boss": True, "Enemy.MaxHp": 40, "Enemy.Speed": 3.6, "Enemy.Radius": 1.4,
                                                         "Enemy.GoldMin": 30, "Enemy.GoldMax": 30}),
 }
@@ -177,15 +177,20 @@ def prefab(name, obj_id, texture=None, w=None, h=None, keep_pool=64, order=3, tr
 prefab("PF_EnemyShot", "Bullet0", keep_pool=96)
 shot = PROJECT / "Assets/Prefabs/PF_EnemyShot.hbprefab.json"
 data = json.loads(shot.read_text(encoding="utf-8"))
-comp(data["objects"][0], "SpriteRenderer")["properties"].update(color=[0.75, 0.45, 1.0, 1], width=0.3, height=0.3)
+comp(data["objects"][0], "SpriteRenderer")["properties"].update(sprite="Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json", texture="", color=[1, 1, 1, 1], useCustomSize=False,
+                                                                emissiveIntensity=0.8)  # 보라 불꽃 탄, 블룸으로 번짐
 write(shot, data)
 prefab("PF_PlayerShot", "Bullet0", keep_pool=24, order=4)
 data = json.loads((PROJECT / "Assets/Prefabs/PF_PlayerShot.hbprefab.json").read_text(encoding="utf-8"))
-comp(data["objects"][0], "SpriteRenderer")["properties"].update(sprite="Assets/Sprites/FX/S_Arrow.hbsprite.json", texture="", color=[1, 1, 1, 1], useCustomSize=False)
+comp(data["objects"][0], "SpriteRenderer")["properties"].update(sprite="Assets/Sprites/FX/S_Arrow_0.hbsprite.json", texture="", color=[1, 1, 1, 1], useCustomSize=False,
+                                                                emissiveIntensity=0.5)  # 블룸으로 살짝 번짐 (세면 사각 후광이 보임)
 comp(data["objects"][0], "BoxCollider2D")["properties"]["mask"] = 0
 write(PROJECT / "Assets/Prefabs/PF_PlayerShot.hbprefab.json", data)
 cw, ch = Image.open(PROJECT / "Assets/Sprites/Item_Coin.png").size
 prefab("PF_Coin", "Enemy0", "Assets/Sprites/Item_Coin.png", cw / PPU, ch / PPU, keep_pool=24, order=-1, collider=False, rigid=False)
+data = json.loads((PROJECT / "Assets/Prefabs/PF_Coin.hbprefab.json").read_text(encoding="utf-8"))
+comp(data["objects"][0], "SpriteRenderer")["properties"].update(sprite="Assets/Sprites/FX/S_Coin_0.hbsprite.json", texture="", useCustomSize=False, emissiveIntensity=0.4)
+write(PROJECT / "Assets/Prefabs/PF_Coin.hbprefab.json", data)
 # 이펙트(베기·타격 불꽃·적 쓰러짐): 그림은 C++ PlayFx가 프레임마다 바꿔 끼운다
 prefab("PF_Fx", "Bullet0", keep_pool=16, order=4, collider=False, rigid=False)
 data = json.loads((PROJECT / "Assets/Prefabs/PF_Fx.hbprefab.json").read_text(encoding="utf-8"))

@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "name": "S_Bolt",
-  "texture": "Assets/Sprites/FX/FX_Bolt.png",
+  "name": "S_Card_2",
+  "texture": "Assets/Sprites/FX/Card_2.png",
   "pixelsPerUnit": 32,
   "rect": [
     0,
     0,
     18,
-    10
+    18
   ],
   "pivot": [
     0.5,

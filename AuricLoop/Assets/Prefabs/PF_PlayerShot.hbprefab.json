@@ -52,7 +52,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow.hbsprite.json",
+            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -72,7 +72,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.5
           }
         },
         {

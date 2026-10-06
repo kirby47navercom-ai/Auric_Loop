@@ -17,6 +17,7 @@
     "overlapEnabled": true,
     "nativeDefaults": {
       "Enemy.DisplayName": "해골 대장",
+      "Enemy.ShotClip": "Assets/Animations/SA_BossOrb.hbspriteanimation.json",
       "Enemy.Brain": "Assets/AI/FSM_SkeletonCaptain.hbstatemachine.json",
       "Enemy.Boss": true,
       "Enemy.MaxHp": 40,

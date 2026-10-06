@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "name": "SA_Coin",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_Coin_0.hbsprite.json",
+      "duration": 0.08
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Coin_1.hbsprite.json",
+      "duration": 0.08
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Coin_2.hbsprite.json",
+      "duration": 0.08
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Coin_3.hbsprite.json",
+      "duration": 0.08
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Coin_4.hbsprite.json",
+      "duration": 0.08
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Coin_5.hbsprite.json",
+      "duration": 0.08
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

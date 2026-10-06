@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "name": "S_Boom",
-  "texture": "Assets/Sprites/FX/FX_Boom.png",
+  "name": "S_Coin_5",
+  "texture": "Assets/Sprites/FX/Coin_5.png",
   "pixelsPerUnit": 32,
   "rect": [
     0,
     0,
-    41,
-    34
+    15,
+    14
   ],
   "pivot": [
     0.5,

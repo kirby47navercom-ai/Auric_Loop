@@ -52,13 +52,13 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/FX/S_EnemyOrb_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
-              0.75,
-              0.45,
-              1.0,
+              1,
+              1,
+              1,
               1
             ],
             "width": 0.3,
@@ -72,7 +72,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "emissiveIntensity": 0.8
           }
         },
         {

@@ -105,6 +105,8 @@ public:
   bool Invulnerable = false;      // 귀환 중 해골은 무적 (기획서 6-3)
   HB_PROPERTY(BlueprintReadWrite)
   std::string DeathClip = "Assets/Animations/SA_Skeleton_Death.hbspriteanimation.json";  // 쓰러지는 애니메이션 (이펙트로 재생)
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string ShotClip = "";      // 이 적이 쏘는 탄 그림 (비우면 BP_AuricRules.EnemyShotClip)
 
   // 상태 머신이 상태에 들어갈 때 BP 사용자 이벤트가 한 번 부른다 (매 프레임 부르지 않음: C++ 호출 비용)
   HB_FUNCTION(BlueprintCallable, DisplayName="생성", Category="적")
@@ -135,6 +137,7 @@ public:
   float burnLeft=0,burnDamage=0;
   bool burnedOut=false;          // 화상으로 체력이 다함 (게임 규칙이 처리)
   bool Parked=false;             // 장면에 화면 밖으로 대기 중 (게임 규칙이 꺼내 씀, 실행 중 생성은 끊김)
+  bool brainRunning=false;       // 상태 머신이 돌고 있음 (멈춘 상태 머신에 Stop·파라미터를 보내면 엔진 오류)
   bool Flipped() const{return flipped;}
 private:
   hb::Vec3 ToPlayer(float& distance) const;
@@ -300,11 +303,15 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   std::vector<std::string> Sounds;           // "이름=오디오 에셋 경로". 효과음 Slash·Arrow·… / 배경음 Hub·Dungeon·Boss·Return
   HB_PROPERTY(BlueprintReadWrite)
-  std::string ArrowSprite = "Assets/Sprites/FX/S_Arrow.hbsprite.json";
+  std::string ArrowClip = "Assets/Animations/SA_Arrow.hbspriteanimation.json";      // 셰리 화살 (날아가는 동안 반복)
   HB_PROPERTY(BlueprintReadWrite)
-  std::string BoltSprite = "Assets/Sprites/FX/S_Bolt.hbsprite.json";
+  std::string CardClip = "Assets/Animations/SA_Card.hbspriteanimation.json";        // 알레아 마탄 카드
   HB_PROPERTY(BlueprintReadWrite)
-  std::string BoomSprite = "Assets/Sprites/FX/S_Boom.hbsprite.json";
+  std::string BoomClip = "Assets/Animations/SA_Boom.hbspriteanimation.json";        // 마탄 폭발
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string EnemyShotClip = "Assets/Animations/SA_EnemyOrb.hbspriteanimation.json";  // 적 탄 (적마다 Enemy.ShotClip으로 바꿀 수 있음)
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string CoinClip = "Assets/Animations/SA_Coin.hbspriteanimation.json";
   HB_PROPERTY(BlueprintReadWrite)
   std::string EnemyShotPrefab = "Assets/Prefabs/PF_EnemyShot.hbprefab.json";
   HB_PROPERTY(BlueprintReadWrite)
@@ -410,7 +417,7 @@ public:
   hb::Vec3 PlayerPosition() const{return playerAt;}
   Enemy* SpawnEnemy(const std::string& blueprint,const hb::Vec3& at,bool invulnerable);  // 대기 중인 적을 꺼냄 (없으면 생성)
   void DamagePlayer(int amount);
-  void FireBullets(const hb::Vec3& from,const hb::Vec3& dir,int count,float spread,float speed);
+  void FireBullets(const hb::Vec3& from,const hb::Vec3& dir,int count,float spread,float speed,const std::string& clip="");
   std::string Sound(const std::string& name) const;  // Sounds에서 이름으로 찾은 경로 (없으면 "")
   void Sfx(const std::string& name){const auto s=Sound(name);if(!s.empty())hb::Audio::Play(s);}  // 첫 입력 전 효과음은 엔진이 버림
   void Say(const std::string& who,const std::string& name,const std::string& text){dialog.push_back({who,name,text});}
