@@ -134,6 +134,7 @@ public:
   void Stun(float seconds);
   float burnLeft=0,burnDamage=0;
   bool burnedOut=false;          // 화상으로 체력이 다함 (게임 규칙이 처리)
+  bool Parked=false;             // 장면에 화면 밖으로 대기 중 (게임 규칙이 꺼내 씀, 실행 중 생성은 끊김)
   bool Flipped() const{return flipped;}
 private:
   hb::Vec3 ToPlayer(float& distance) const;
@@ -407,6 +408,7 @@ public:
 
   // ---- 적(Enemy)이 부르는 것 ----
   hb::Vec3 PlayerPosition() const{return playerAt;}
+  Enemy* SpawnEnemy(const std::string& blueprint,const hb::Vec3& at,bool invulnerable);  // 대기 중인 적을 꺼냄 (없으면 생성)
   void DamagePlayer(int amount);
   void FireBullets(const hb::Vec3& from,const hb::Vec3& dir,int count,float spread,float speed);
   std::string Sound(const std::string& name) const;  // Sounds에서 이름으로 찾은 경로 (없으면 "")
@@ -434,7 +436,8 @@ private:
   void ShowEnding();
   void ResetToTitle();
   // 전투
-  std::vector<Enemy*> Enemies() const;
+  std::vector<Enemy*> Enemies() const;                       // 나와 있는 적 (대기 중인 적은 뺌)
+  void ParkEnemy(Enemy* e);                                  // 화면 밖 대기로 되돌림
   void Slash(const hb::Vec3& position,const std::vector<Enemy*>& enemies);
   void Shoot(const hb::Vec3& from);
   void UpdateShots(float delta,const std::vector<Enemy*>& enemies);

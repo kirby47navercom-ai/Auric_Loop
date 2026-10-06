@@ -24304,6 +24304,975 @@
       }
     },
     {
+      "id": "Skeleton0",
+      "name": "Skeleton0",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -60,
+        -300,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_Skeleton.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.S"
+      ]
+    },
+    {
+      "id": "Skeleton1",
+      "name": "Skeleton1",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -56,
+        -304,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_Skeleton.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.S"
+      ]
+    },
+    {
+      "id": "Skeleton2",
+      "name": "Skeleton2",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -52,
+        -300,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_Skeleton.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.S"
+      ]
+    },
+    {
+      "id": "Skeleton3",
+      "name": "Skeleton3",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -48,
+        -304,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_Skeleton.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.S"
+      ]
+    },
+    {
+      "id": "Skeleton4",
+      "name": "Skeleton4",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -44,
+        -300,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_Skeleton.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.S"
+      ]
+    },
+    {
+      "id": "Skeleton5",
+      "name": "Skeleton5",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -40,
+        -304,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_Skeleton.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.S"
+      ]
+    },
+    {
+      "id": "Skeleton6",
+      "name": "Skeleton6",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -36,
+        -300,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_Skeleton.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.S"
+      ]
+    },
+    {
+      "id": "Skeleton7",
+      "name": "Skeleton7",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -32,
+        -304,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_Skeleton.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.S"
+      ]
+    },
+    {
+      "id": "Skeleton8",
+      "name": "Skeleton8",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -28,
+        -300,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_Skeleton.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.S"
+      ]
+    },
+    {
+      "id": "Skeleton9",
+      "name": "Skeleton9",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -24,
+        -304,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_Skeleton.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.S"
+      ]
+    },
+    {
+      "id": "SkeletonMage0",
+      "name": "SkeletonMage0",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -20,
+        -300,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_SkeletonMage.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.M"
+      ]
+    },
+    {
+      "id": "SkeletonMage1",
+      "name": "SkeletonMage1",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -16,
+        -304,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_SkeletonMage.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.M"
+      ]
+    },
+    {
+      "id": "SkeletonMage2",
+      "name": "SkeletonMage2",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -12,
+        -300,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_SkeletonMage.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.M"
+      ]
+    },
+    {
+      "id": "SkeletonMage3",
+      "name": "SkeletonMage3",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -8,
+        -304,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_SkeletonMage.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.M"
+      ]
+    },
+    {
+      "id": "SkeletonMage4",
+      "name": "SkeletonMage4",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -4,
+        -300,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_SkeletonMage.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.M"
+      ]
+    },
+    {
+      "id": "SkeletonMage5",
+      "name": "SkeletonMage5",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        0,
+        -304,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_SkeletonMage.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.M"
+      ]
+    },
+    {
+      "id": "SkeletonCaptain0",
+      "name": "SkeletonCaptain0",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -20,
+        -300,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "blueprintAsset": "Assets/Blueprints/Enemies/BP_SkeletonCaptain.hbblueprint.json",
+      "overrides": {
+        "components": {
+          "pool": {
+            "initiallyActive": true
+          }
+        }
+      },
+      "tags": [
+        "Enemy.C"
+      ]
+    },
+    {
       "id": "EnemyShot0",
       "name": "EnemyShot0",
       "kind": "sprite",

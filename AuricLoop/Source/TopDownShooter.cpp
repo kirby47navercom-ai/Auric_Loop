@@ -99,7 +99,7 @@ void Enemy::Ring(){
 void Enemy::Summon(){
   Halt();const auto at=hb::Scene::GetPosition(this);
   for(int i=0;i<SummonCount;++i){hb::Transform t;t.position=at+hb::Vec3{i%2?2.5f:-2.5f,-1.5f-i/2,0};
-    if(auto* e=dynamic_cast<Enemy*>(hb::Scene::Spawn(SummonBlueprint,t)))e->Stun(0.5f);}
+    if(auto* game=TopDownShooter::Current)if(auto* e=game->SpawnEnemy(SummonBlueprint,t.position,false))e->Stun(0.5f);}
   pattern=0;hb::States::SetFloat(this,"Next",float(pattern));
 }
 
@@ -271,8 +271,25 @@ hb::Json Dungeon::Describe() const{
 
 std::vector<Enemy*> TopDownShooter::Enemies() const{
   std::vector<Enemy*> list;
-  for(auto* a:hb::Scene::GetAllActorsOfClass("Enemy"))if(auto* e=dynamic_cast<Enemy*>(a))list.push_back(e);
+  for(auto* a:hb::Scene::GetAllActorsOfClass("Enemy"))if(auto* e=dynamic_cast<Enemy*>(a))if(!e->Parked)list.push_back(e);
   return list;
+}
+
+// 적도 탄처럼 장면(Dungeon)에 화면 밖으로 세워 둔 것을 꺼내 쓴다 (태그 Enemy.S·M·C). Scene::Spawn은 한 마리에 수십 ms라 웨이브마다 끊김
+Enemy* TopDownShooter::SpawnEnemy(const std::string& blueprint,const hb::Vec3& at,bool invulnerable){
+  std::string code;for(const auto& entry:rules->Enemies){const auto eq=entry.find('=');if(eq!=std::string::npos&&entry.substr(eq+1)==blueprint)code=entry.substr(0,eq);}
+  Enemy* e=nullptr;
+  if(!code.empty())for(auto* a:hb::Scene::GetActorsWithTag("Enemy."+code))if(auto* p=dynamic_cast<Enemy*>(a))if(p->Parked){e=p;break;}
+  if(e){hb::Transform t;t.position=at;hb::Scene::SetTransform(e,t);e->Parked=false;e->Invulnerable=invulnerable;e->Awake();}
+  else{hb::Transform t;t.position=at;e=dynamic_cast<Enemy*>(hb::Scene::Spawn(blueprint,t));if(e)e->Invulnerable=invulnerable;}  // 모자랄 때만 (끊김 감수)
+  return e;
+}
+
+void TopDownShooter::ParkEnemy(Enemy* e){
+  const bool pooled=hb::Tags::Has(e,"Enemy.S",true)||hb::Tags::Has(e,"Enemy.M",true)||hb::Tags::Has(e,"Enemy.C",true);
+  if(!pooled){hb::Scene::Destroy(e);return;}
+  hb::States::Stop(e);hb::Physics::SetVelocity(e,hb::Vec3{0,0,0});e->Parked=true;e->burnLeft=0;
+  hb::Scene::SetPosition(e,hb::Vec3{-60.f+float(std::rand()%120),-300.f-float(std::rand()%20),0});
 }
 
 float TopDownShooter::WeaponDamage() const{
@@ -330,6 +347,7 @@ void TopDownShooter::Prewarm(){
   shotPool=hb::Scene::GetActorsWithTag("Pool.PlayerShot");
   coinPool=hb::Scene::GetActorsWithTag("Pool.Coin");
   fxPool=hb::Scene::GetActorsWithTag("Pool.Fx");
+  for(auto* tag:{"Enemy.S","Enemy.M","Enemy.C"})for(auto* a:hb::Scene::GetActorsWithTag(tag))if(auto* e=dynamic_cast<Enemy*>(a))ParkEnemy(e);
 }
 
 void TopDownShooter::KillEnemy(Enemy* e){
@@ -337,8 +355,8 @@ void TopDownShooter::KillEnemy(Enemy* e){
   DropCoin(at,e->GoldMin+Kills%std::max(1,e->GoldMax-e->GoldMin+1));
   if(e->Boss){HasReturnItem=true;Monster++;boss=nullptr;BossHp=0;Hud();}
   if(monsterDrop&&fightingRoom>=0&&pending.empty()&&wave+1>=waves.size()&&Enemies().size()<=1)Monster++;  // 이 방 마지막 해골은 마물 소재 확정
-  PlayFx(e->DeathClip,0.9f,at,0,0,e->Flipped());  // 쓰러지는 그림은 이펙트로 (적 오브젝트는 바로 지움)
-  hb::Scene::Destroy(e);
+  PlayFx(e->DeathClip,0.9f,at,0,0,e->Flipped());  // 쓰러지는 그림은 이펙트로 (적은 바로 화면 밖 대기로)
+  ParkEnemy(e);
 }
 
 bool TopDownShooter::HitEnemy(Enemy* e,const hb::Vec3& push,float damage){
@@ -481,7 +499,7 @@ void TopDownShooter::StartFloor(){
 void TopDownShooter::Warp(int room){
   // 부스 운영자·검사용: 지나친 주 경로 방은 클리어로 치고 그 방 가운데로 옮긴다 (싸우던 적·탄은 치움)
   if(room<0)return;
-  for(auto* e:Enemies())hb::Scene::Destroy(e);pending.clear();waveAlive=0;
+  for(auto* e:Enemies())ParkEnemy(e);pending.clear();waveAlive=0;
   for(auto& [b,life]:bullets)life=0;
   if(fightingRoom>=0){map.Lock(fightingRoom,false);map.rooms[fightingRoom].state=2;fightingRoom=-1;}
   for(auto& r:map.rooms)if(r.path>=0&&r.path<map.rooms[room].path&&!Returning)r.state=2;
@@ -522,10 +540,9 @@ void TopDownShooter::SpawnWave(const std::string& list,bool invulnerable){
 void TopDownShooter::UpdateWaves(float delta){
   for(auto it=pending.begin();it!=pending.end();){
     if((it->left-=delta)>0){++it;continue;}
-    hb::Transform t;t.position=it->at;
-    if(auto* e=dynamic_cast<Enemy*>(hb::Scene::Spawn(it->blueprint,t))){
+    if(auto* e=SpawnEnemy(it->blueprint,it->at,it->invulnerable)){
       if(!it->invulnerable)waveAlive++;
-      if(it->invulnerable){e->Invulnerable=true;e->Stun(0.5f);}
+      if(it->invulnerable)e->Stun(0.5f);
       if(e->Boss){BossHp=e->MaxHp;Say("boss",e->DisplayName,"또 빚쟁이냐. 네 뼈도 황금으로 칠해 주마.");}}
     it=pending.erase(it);
   }
