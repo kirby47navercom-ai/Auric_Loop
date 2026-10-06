@@ -11,10 +11,53 @@
 //   Enemy          (BP_Enemy → BP_Skeleton / BP_SkeletonMage / BP_SkeletonCaptain): 적 수치. 행동은 상태 머신(Assets/AI/FSM_*)이 정하고
 //                  상태마다 BP 사용자 이벤트가 아래 Enemy 함수를 부른다
 //   Interactable   (BP_Interactable): E로 쓰는 것 (NPC·가구·채집물·상점). 문구·가격은 배치한 오브젝트마다 덮어쓴다
-//   SpawnPoint     (BP_SpawnPoint): 방에 들어가면 적이 나오는 자리
+//   Dungeon        (Dungeon.h): 던전에 들어올 때마다 방을 무작위로 잇고 장면 풀로 바닥·벽을 깐다 (방·웨이브는 Assets/Data)
 //   RoomInfo       (BP_RoomInfo): 이 장면이 어떤 구역인지 (거점 / 던전 방 번호, 크기, 종류)
 
 class TopDownShooter;
+
+// ---- 던전 층 (엔진이 BP에 연결된 C++ 파일만 컴파일해서 같은 파일에 둠) ----
+// 던전 한 층을 엔터 더 건전·소울 나이트처럼 매번 무작위로 만든다.
+//   1) 격자 위를 무작위로 걸어 주 경로(시작 → 전투 … → 상점 → 보스)를 잇고, 곁가지 방을 붙인다 (Generate)
+//   2) 방·복도의 바닥과 벽은 장면(Dungeon)에 화면 밖으로 세워 둔 반복 무늬 스프라이트를 옮기고 크기만 바꿔 깐다 (Build)
+// 방 종류·크기·웨이브는 데이터 에셋(Assets/Data/DA_Floor, DT_Rooms)에서 고친다.
+
+struct DungeonRoom{
+  std::string kind;              // Start, Combat, Gather, Shop, Boss
+  std::string row;               // DT_Rooms 행 이름 (Combat1, Branch, …)
+  int gx=0,gy=0;                 // 격자 칸
+  float cx=0,cy=0,hw=6,hh=6;     // 가운데, 반너비·반높이 (m)
+  int path=-1;                   // 주 경로 순서 (곁가지는 -1)
+  int link[4]={-1,-1,-1,-1};     // 북·동·남·서로 이어진 방 번호
+  int state=0;                   // 0 처음, 1 전투 중, 2 끝
+  bool returned=false;           // 귀환 페이즈에 지나감
+  std::vector<hb::Vec3> blocked; // 기둥 자리 (적 등장 자리에서 뺌)
+  bool Inside(const hb::Vec3& p,float margin=0) const{
+    return p.x>cx-hw+margin&&p.x<cx+hw-margin&&p.y>cy-hh+margin&&p.y<cy+hh-margin;}
+};
+
+class Dungeon{
+public:
+  std::vector<DungeonRoom> rooms;
+  int start=0,boss=-1;
+  hb::Actor* stairs=nullptr;     // 시작 방의 거점 계단
+
+  // floor: DA_Floor (path, branches, spacing), rooms: DT_Rooms 전체 (행 → minHalf, maxHalf, …)
+  void Generate(unsigned seed,const hb::Json& floor,const hb::Json& table);
+  void Build();
+  int RoomAt(const hb::Vec3& p) const;                       // 방 안이면 번호, 복도·밖이면 -1
+  int PathRoom(int order) const;                             // 주 경로 order번째 방
+  hb::Vec3 DoorPosition(int room,int dir) const;             // 문 자리 (방 가장자리 가운데)
+  void Lock(int room,bool locked,int only=-1);               // 방 문 잠그기 (only: 그 방향 하나만)
+  bool Locked(int room,int dir) const{return gates[room*4+dir]!=nullptr;}
+  hb::Json Describe() const;                                 // 검사·디버그용 배치 요약
+
+  static constexpr int dx[4]={0,1,0,-1},dy[4]={1,0,-1,0};
+private:
+  std::vector<hb::Actor*> gates;                             // 방*4+방향 → 잠긴 문 (열리면 nullptr)
+  std::vector<hb::Actor*> gateFree,sideFree;                 // 남은 철창 (위·아래 문용, 옆문용)
+};
+
 
 HB_CLASS(Blueprintable)
 class Enemy : public hb::Actor {
@@ -118,29 +161,14 @@ public:
 };
 
 HB_CLASS(Blueprintable)
-class SpawnPoint : public hb::Actor {
-public:
-  HB_PROPERTY(BlueprintReadWrite)
-  std::string EnemyBlueprint = "Assets/Blueprints/Enemies/BP_Skeleton.hbblueprint.json";
-  HB_PROPERTY(BlueprintReadWrite)
-  bool ReturnOnly = false;       // 귀환 페이즈에만 나오는 무적 해골 자리
-};
-
-HB_CLASS(Blueprintable)
 class RoomInfo : public hb::Actor {
 public:
   HB_PROPERTY(BlueprintReadWrite)
-  int Index = -1;                // -1 거점, 0~ 던전 방 번호
+  int Index = -1;                // -1 거점, 0 던전
   HB_PROPERTY(BlueprintReadWrite)
-  std::string Kind = "Combat";   // Hub·Combat·Gather·Shop·Boss
+  std::string Kind = "Hub";      // Hub·Dungeon (던전은 들어올 때마다 방을 무작위로 만듦)
   HB_PROPERTY(BlueprintReadWrite)
-  float HalfWidth = 12;
-  HB_PROPERTY(BlueprintReadWrite)
-  float HalfHeight = 12;
-  HB_PROPERTY(BlueprintReadWrite)
-  float ExitY = 21;              // 거점: 이보다 위(계단 끝)로 가면 던전 첫 방
-  HB_PROPERTY(BlueprintReadWrite)
-  bool MonsterDrop = false;      // 마지막 해골이 마물 소재를 확정으로 떨굼
+  float ExitY = 21;              // 거점: 이보다 위(계단 끝)로 가면 던전
 };
 
 HB_CLASS(Blueprintable)
@@ -208,7 +236,9 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   float SlashExtend = 1.5f;
   HB_PROPERTY(BlueprintReadWrite)
-  float EnterDepth = 2.0f;
+  float EnterDepth = 1.5f;       // 방 가장자리에서 이만큼 들어오면 문이 잠기고 적이 나옴
+  HB_PROPERTY(BlueprintReadWrite)
+  float SpawnWarn = 0.9f;        // 적이 나오기 전 마법진 예고 시간
   HB_PROPERTY(BlueprintReadWrite)
   float RespawnDelay = 3.0f;
   HB_PROPERTY(BlueprintReadWrite)
@@ -259,8 +289,6 @@ public:
   float IdleReset = 60.0f;       // 부스: 입력이 없으면 처음으로
   HB_PROPERTY(BlueprintReadWrite)
   float RunNotice = 600.0f;      // 부스: 10분이 지나면 보스방 앞 이동 안내
-  HB_PROPERTY(BlueprintReadWrite)
-  int BossRoom = 4;              // F10으로 가는 보스방 번호
 
   // ---- 에셋 경로 ----
   // 배열 기본값은 BP_TopDownShooter 기본값에 있다 (C++ 문법과 JSON 기본값을 같이 쓸 수 없어서 C++ 쪽은 비워 둠)
@@ -291,7 +319,15 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   std::string HubScene = "Assets/Scenes/Hub.hbscene.json";
   HB_PROPERTY(BlueprintReadWrite)
-  std::string DungeonScene = "Assets/Scenes/Dungeon_#.hbscene.json";  // # 자리에 방 번호
+  std::string DungeonScene = "Assets/Scenes/Dungeon.hbscene.json";
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string FloorData = "Assets/Data/DA_Floor.hbdata.json";     // 방 순서·곁가지·간격
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string RoomTable = "Assets/Data/DT_Rooms.hbdata.json";     // 방 종류별 크기·웨이브 (적 기호는 Enemies)
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string SpawnClip = "Assets/Animations/SA_Spawn.hbspriteanimation.json";  // 적 등장 예고 마법진
+  HB_PROPERTY(BlueprintReadWrite)
+  std::vector<std::string> Enemies;          // "기호=BP 경로". 웨이브 문자열의 S·M·C가 어떤 적인지
 };
 
 HB_CLASS(Blueprintable)
@@ -322,6 +358,10 @@ public:
   int Shots = 0;
   HB_PROPERTY(BlueprintReadWrite)
   int RoomIndex = 0;
+  HB_PROPERTY(BlueprintReadWrite)
+  int Seed = 0;                  // 던전 배치 씨앗. 0이면 들어갈 때마다 무작위 (검사용 BP는 고정)
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string Layout = "";       // 지금 던전 방 목록 (검사·디버그용 JSON)
   HB_PROPERTY(BlueprintReadWrite)
   float BossHp = 0;
   HB_PROPERTY(BlueprintReadWrite)
@@ -381,9 +421,14 @@ private:
   void SaveRun();
   bool LoadRun();
   void Leave(int to,const std::string& spawn);
-  int AreaAt(float y) const;
-  void EnterRoom();
-  void StartReturnRoom();
+  // 던전 (Dungeon.h): 들어오면 층을 만들고, 방에 들어서면 문이 잠기며 웨이브가 마법진 예고 뒤 나온다
+  void StartFloor();
+  void EnterRoom(int room);
+  void SpawnWave(const std::string& wave,bool invulnerable);
+  void UpdateWaves(float delta);
+  void Warp(int room);           // 그 방 가운데로 (지나친 경로 방은 클리어 처리). 부스 F9·F10, 검사용
+  void StartReturnRoom(int room);
+  void HitReturnGate(const hb::Vec3& at,float reach,int hits);
   void ClearRoom();
   void Settle();
   void ShowEnding();
@@ -408,8 +453,6 @@ private:
   std::vector<Fx> fxs;
   void PlayFx(const std::string& clip,float length,const hb::Vec3& at,float angle,float glow,bool flipX,bool flipY=false);  // glow: 블룸용 발광  // clip: 스프라이트 애니메이션, length초 뒤 풀로
   void UpdateFx(float delta);
-  void SetDoor(const char* tag,bool locked);
-  hb::Actor* Door(const char* tag) const;
   float WeaponDamage() const;
   int Weight() const{return Ore*30+Herb*5+Monster*15;}
   // 상호작용·UI
@@ -432,9 +475,16 @@ private:
   int rotShown=-1;                // 지금 보이는 버튼 그림 (귀환 테마*10 + 캐릭터)
   int frame=0,area=-1,fightingRoom=-1;
   std::string roomKind="Hub";
-  float halfWidth=12,halfHeight=12,exitY=21;
-  bool monsterDrop=false;
-  std::map<int,int> roomState;     // 0 처음, 1 전투 중, 2 클리어 (방 번호별, 장면을 넘어 유지)
+  float exitY=21;
+  bool inDungeon=false,monsterDrop=false,exitArmed=false;
+  Dungeon map;
+  hb::Json roomTable;                    // DT_Rooms 행들
+  std::vector<std::string> waves;        // 싸우는 방의 남은 웨이브 ("S,S,M" 하나씩)
+  size_t wave=0;
+  int waveAlive=0;                       // 이번 웨이브에서 나와 아직 살아 있는 적 (생성 직후 한 프레임은 적 목록에 안 잡혀서 직접 셈)
+  struct Pending{hb::Vec3 at;std::string blueprint;float left;bool invulnerable;};
+  std::vector<Pending> pending;          // 예고 중인 적
+  int returnRoom=-1,returnDir=-1;        // 귀환 중 때려 열어야 하는 문
   std::set<std::string> taken;     // 채집한 것 ("방번호:Kind")
   std::vector<Interactable*> interactables;
   float attackCooldown=0,dodgeTimer=0,dodgeCooldownLeft=0,invulnerable=0,gameOver=0,charge=0;
@@ -447,7 +497,7 @@ private:
   Enemy* boss=nullptr;
   std::vector<Line> dialog;
   size_t dialogIndex=0,shownChars=0;
-  bool dodgeHeld=false,returnHeld=false,flashHeld=false,craftOpen=false,craftKeyHeld=false,confirmHeld=false;
+  bool warpHeld=false,dodgeHeld=false,returnHeld=false,flashHeld=false,craftOpen=false,craftKeyHeld=false,confirmHeld=false;
   bool advanceHeld=true,selecting=false,ending=false,anyHeld=true,touchMode=false,gatherTold=false;
   int craftPick=1,pick=0,pickHeld=0;
 };

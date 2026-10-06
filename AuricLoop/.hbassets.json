@@ -1888,5 +1888,71 @@
   },
   "Assets/Animations/SA_Slash.hbspriteanimation.json": {
     "id": "1fff72f7-d8c9-449d-94ef-4c9cb4493f35"
+  },
+  "Assets/Animations/SA_Spawn.hbspriteanimation.json": {
+    "id": "4482d566-11d6-4293-8d25-fceb584db2f3"
+  },
+  "Assets/Blueprints/BP_Test_Valen.hbblueprint.json": {
+    "id": "d51317d6-e748-4c3c-a3c5-1c7c54259652"
+  },
+  "Assets/Data/DA_Floor.hbdata.json": {
+    "id": "b2d5f3c0-4926-4f2b-94e2-6657f6640f77"
+  },
+  "Assets/Data/DT_Rooms.hbdata.json": {
+    "id": "68d402ab-7fab-4478-b871-ed78fd1e9ace"
+  },
+  "Assets/Scenes/Dungeon.hbscene.json": {
+    "id": "300e6c3e-7942-4835-a5c5-e873f02c4a95"
+  },
+  "Assets/Scenes/Test_Valen.hbscene.json": {
+    "id": "8f1517ac-6c71-4b6d-b22f-752c8bd502e1"
+  },
+  "Assets/Sprites/FX/Spawn_0.png": {
+    "id": "040fefcf-8cc3-483a-8418-9128c6fe4ac3"
+  },
+  "Assets/Sprites/FX/Spawn_1.png": {
+    "id": "2d337f47-420b-44db-b520-2acc2045703a"
+  },
+  "Assets/Sprites/FX/Spawn_2.png": {
+    "id": "dd6b5758-1256-409b-a7c3-218a9a349fa5"
+  },
+  "Assets/Sprites/FX/Spawn_3.png": {
+    "id": "fd19d78a-c4ab-4b1f-a9f5-c92e3ee9063f"
+  },
+  "Assets/Sprites/FX/Spawn_4.png": {
+    "id": "dae61267-0422-4929-93c0-36a4c2cdfae7"
+  },
+  "Assets/Sprites/FX/Spawn_5.png": {
+    "id": "9e71c971-6482-4ca7-9a23-417720e8d480"
+  },
+  "Assets/Sprites/FX/S_Spawn_0.hbsprite.json": {
+    "id": "8c68b1eb-d2aa-48d0-bd50-3e8c2cc070db"
+  },
+  "Assets/Sprites/FX/S_Spawn_1.hbsprite.json": {
+    "id": "d5882830-1b47-483c-8812-29a97ab528d7"
+  },
+  "Assets/Sprites/FX/S_Spawn_2.hbsprite.json": {
+    "id": "96b69731-e906-41ee-a2b5-a84f96981408"
+  },
+  "Assets/Sprites/FX/S_Spawn_3.hbsprite.json": {
+    "id": "2e0c2f5e-ca9b-4acf-9057-ac8c1a916161"
+  },
+  "Assets/Sprites/FX/S_Spawn_4.hbsprite.json": {
+    "id": "64b844b2-1a7f-4ed0-ac12-8b053905e47e"
+  },
+  "Assets/Sprites/FX/S_Spawn_5.hbsprite.json": {
+    "id": "74b58b1a-4fa5-4cc9-ae19-b83093708b53"
+  },
+  "Assets/Sprites/Props/Prop_PortcullisSide.png": {
+    "id": "171edec4-6f91-4067-aefe-86a6b129fbb7"
+  },
+  "Assets/Tiles/T_DungeonCap.png": {
+    "id": "431f0981-5a97-4e06-bdeb-97231ac8a5be"
+  },
+  "Assets/Tiles/T_DungeonFace.png": {
+    "id": "6fa2b944-404f-4fd0-bfc3-819c5d43aef1"
+  },
+  "Assets/Tiles/T_DungeonFloor.png": {
+    "id": "582887e5-d22f-40ce-89c9-af9d2deeb54c"
   }
 }

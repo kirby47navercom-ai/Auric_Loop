@@ -6,8 +6,9 @@
   Assets/Blueprints/Enemies/BP_Enemy       적 공통: 그림·충돌·풀 + 상태 머신 상태마다 부르는 사용자 이벤트 → C++ Enemy 함수
                      BP_Skeleton / BP_SkeletonMage / BP_SkeletonCaptain   BP_Enemy 자식. 수치·그림·상태 머신만 덮어씀
   Assets/Blueprints/BP_AuricRules           밸런스·에셋 경로 (장면마다 하나, 기본값 한 곳에서 고침)
-  Assets/Blueprints/BP_Interactable / BP_SpawnPoint / BP_RoomInfo
-  Assets/Blueprints/BP_Test_Sherry / BP_Test_Alea   검사용 (BP_TopDownShooter 자식, 캐릭터만 다름)
+  Assets/Blueprints/BP_Interactable / BP_RoomInfo
+  Assets/Blueprints/BP_Test_Valen / BP_Test_Sherry / BP_Test_Alea   검사용 (BP_TopDownShooter 자식, 캐릭터와 던전 씨앗 고정)
+  Assets/Data/DA_Floor, DT_Rooms           던전 층 구성 (방 순서·곁가지·간격), 방 종류별 크기·웨이브
   Assets/Prefabs/PF_EnemyShot / PF_PlayerShot / PF_Coin / PF_Slash   생성할 때 엔진이 알아서 풀로 재사용
   Assets/AI/FSM_Skeleton / FSM_SkeletonMage / FSM_SkeletonCaptain   적 행동 (상태 이름의 이벤트를 BP_Enemy가 받음)
 """
@@ -126,13 +127,36 @@ SOUNDS += [f"{k}=Assets/Audio/S_BGM_{k}.hbaudioasset.json" for k in ["Hub", "Dun
 rules = blueprint("BP_AuricRules", "AuricRules", [transform()], native_from=True, defaults={
     "AuricRules.Debts": [9800, 14500, 31700],  # 기획서 6-4
     "AuricRules.CharacterSprites": ["Assets/Sprites/Valen/S_Valen_", "Assets/Sprites/Sherry/S_Sherry_", "Assets/Sprites/Alea/S_Alea_"],
-    "AuricRules.Sounds": SOUNDS})
+    "AuricRules.Sounds": SOUNDS,
+    "AuricRules.Enemies": [f"{k}=Assets/Blueprints/Enemies/BP_{v}.hbblueprint.json" for k, v in (("S", "Skeleton"), ("M", "SkeletonMage"), ("C", "SkeletonCaptain"))]})
 rules["settings"].update(tickEnabled=False, overlapEnabled=False)
 write(BP / "BP_AuricRules.hbblueprint.json", rules)
-write(BP / "BP_SpawnPoint.hbblueprint.json", blueprint("BP_SpawnPoint", "SpawnPoint", [transform()], native_from=True))
+(BP / "BP_SpawnPoint.hbblueprint.json").unlink(missing_ok=True)  # 적 자리는 이제 웨이브가 방 안에서 무작위로 고름
 write(BP / "BP_RoomInfo.hbblueprint.json", blueprint("BP_RoomInfo", "RoomInfo", [transform()], native_from=True))
-for name, who in (("BP_Test_Sherry", 1), ("BP_Test_Alea", 2)):
-    write(BP / f"{name}.hbblueprint.json", blueprint(name, "Assets/Blueprints/BP_TopDownShooter.hbblueprint.json", defaults={"TopDownShooter.Character": who}))
+for name, who in (("BP_Test_Valen", 0), ("BP_Test_Sherry", 1), ("BP_Test_Alea", 2)):
+    write(BP / f"{name}.hbblueprint.json", blueprint(name, "Assets/Blueprints/BP_TopDownShooter.hbblueprint.json",
+                                                     defaults={"TopDownShooter.Character": who, "TopDownShooter.Seed": 7}))
+
+# ---- 던전 데이터 (편집기 데이터 표에서 고침, 다시 빌드할 필요 없음) ----
+# 웨이브: | 로 웨이브를 나누고 , 로 적을 나눔. 기호는 BP_AuricRules.Enemies (S 해골, M 해골 마법사, C 해골 대장)
+write(PROJECT / "Assets/Data/DA_Floor.hbdata.json", {"version": 1, "name": "DA_Floor", "fields": [
+    {"name": "path", "type": "string", "value": "Start,Combat,Combat,Gather,Combat,Shop,Boss"},  # 주 경로 (기획서 3-2 순서 + 전투방 하나)
+    {"name": "branches", "type": "string", "value": "Combat"},                                  # 주 경로 옆에 붙는 곁가지 방
+    {"name": "spacing", "type": "float", "value": 36}]})                                        # 격자 한 칸 (m)
+ROOM_COLUMNS = [("minHalf", "float"), ("maxHalf", "float"), ("square", "bool"), ("waves", "string"), ("monsterDrop", "bool")]
+ROOM_ROWS = {
+    "Start": (6, 6, True, "", False),
+    "Combat1": (8, 10, False, "S,S,S|S,S,S", False),
+    "Combat2": (9, 11, False, "S,S,M|S,M,M", True),  # 마지막 해골이 마물 소재를 확정으로 떨굼 (인챈트 체험)
+    "Combat3": (9, 11, False, "S,S,S,M|S,S,M,M", False),
+    "Branch": (8, 10, False, "S,S,M", False),
+    "Gather": (7, 7, True, "", False),
+    "Shop": (9, 9, True, "", False),
+    "Boss": (14, 14, True, "C", False),
+    "Return": (0, 0, True, "S,S,M,M,M", False),  # 귀환 페이즈에 방마다 나오는 무적 해골 (기획서 6-3)
+}
+write(PROJECT / "Assets/Data/DT_Rooms.hbdata.json", {"version": 1, "name": "DT_Rooms", "columns": [{"name": n, "type": t} for n, t in ROOM_COLUMNS],
+                                                     "rows": {k: dict(zip([n for n, _ in ROOM_COLUMNS], v)) for k, v in ROOM_ROWS.items()}})
 (BP / "BP_Hub.hbblueprint.json").unlink(missing_ok=True)  # 거점도 같은 BP를 씀 (생성·찾기로 풀 배열이 필요 없음)
 
 # ---- 생성용 프리팹 (엔진이 PooledActor로 알아서 재사용) ----

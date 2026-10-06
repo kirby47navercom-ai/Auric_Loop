@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "name": "SA_Spawn",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_Spawn_0.hbsprite.json",
+      "duration": 0.15
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Spawn_1.hbsprite.json",
+      "duration": 0.15
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Spawn_2.hbsprite.json",
+      "duration": 0.15
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Spawn_3.hbsprite.json",
+      "duration": 0.15
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Spawn_4.hbsprite.json",
+      "duration": 0.15
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Spawn_5.hbsprite.json",
+      "duration": 0.15
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

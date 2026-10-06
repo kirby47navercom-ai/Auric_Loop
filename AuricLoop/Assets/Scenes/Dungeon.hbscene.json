@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sceneName": "Test_Sherry",
+  "sceneName": "Dungeon",
   "objects": [
     {
       "id": "Player",
@@ -276,7 +276,7 @@
           }
         }
       ],
-      "blueprintAsset": "Assets/Blueprints/BP_Test_Sherry.hbblueprint.json"
+      "blueprintAsset": "Assets/Blueprints/BP_TopDownShooter.hbblueprint.json"
     },
     {
       "id": "Rules",

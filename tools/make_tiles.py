@@ -60,3 +60,11 @@ for sheet, items in PROPS.items():
         f = f.resize((max(1, round(f.width * height / f.height)), height), Image.NEAREST)
         f.save(out / f"Prop_{name}.png")
         print(name, f.size)
+
+# 던전 층(C++ Dungeon)이 크기만 바꿔 까는 반복 무늬 텍스처: 바닥 4x4칸, 벽 윗면 2x2칸, 북쪽 벽면(금테 윗면 + 벽면 2칸) 4x3칸
+for name, box in (("T_DungeonFloor", (0, 0, 4 * T, 4 * T)), ("T_DungeonCap", (4 * T, 0, 6 * T, 2 * T)), ("T_DungeonFace", (0, 8 * T, 4 * T, 11 * T))):
+    atlas.crop(box).save(ROOT / f"Tiles/{name}.png")
+# 옆문 철창: 앞에서 본 철창을 눕혀 옆에서 본 모양으로
+gate = Image.open(out / "Prop_Portcullis.png")
+gate.rotate(90, expand=True).save(out / "Prop_PortcullisSide.png")
+print("던전 텍스처·옆문 철창")

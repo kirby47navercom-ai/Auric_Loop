@@ -16,7 +16,8 @@
     "tickInterval": 0,
     "overlapEnabled": true,
     "nativeDefaults": {
-      "TopDownShooter.Character": 1
+      "TopDownShooter.Character": 1,
+      "TopDownShooter.Seed": 7
     }
   }
 }

@@ -174,3 +174,28 @@ animation("SA_Torch", save_strip(ASSETS / "Sprites/Props", "Torch", strip("fx_to
 g = Image.new("RGBA", (64, 64))
 g.putdata([(255, 150, 60, int(70 * max(0.0, 1 - (((x - 31.5) ** 2 + (y - 31.5) ** 2) ** 0.5) / 32) ** 2)) for y in range(64) for x in range(64)])
 g.save(ASSETS / "Sprites/FX/FX_Glow.png")
+
+# 적 등장 예고 마법진 (엔터 더 건전·소울 나이트의 "나온다" 표시): 붉은 원이 그려지며 룬이 돌고 마지막에 번쩍
+def magic_circle(k, n=6, size=48):
+    im = Image.new("RGBA", (size, size))
+    px = im.load()
+    c = (size - 1) / 2
+    import math
+    grow = min(1.0, (k + 1) / (n - 2))
+    for y in range(size):
+        for x in range(size):
+            d = math.hypot((x - c), (y - c) * 2)  # 바닥에 누운 원 (세로 절반)
+            a = (math.degrees(math.atan2((y - c) * 2, x - c)) + 360 + k * 25) % 360
+            if abs(d - 21) < 1.2 and a < 360 * grow:
+                px[x, y] = (255, 70, 50, 255)
+            elif abs(d - 15) < 1 and (a // 30) % 2 == 0 and k >= 1:
+                px[x, y] = (255, 190, 80, 255)
+            elif d < 21 and k == n - 1:
+                px[x, y] = (255, 230, 160, 200)
+            elif d < 21:
+                px[x, y] = (200, 40, 30, int(40 + 20 * grow))
+    return im
+
+
+spawn = [magic_circle(k) for k in range(6)]
+animation("SA_Spawn", save_strip(ASSETS / "Sprites/FX", "Spawn", spawn), 0.15, False)

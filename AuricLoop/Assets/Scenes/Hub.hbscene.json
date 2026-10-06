@@ -481,8 +481,6 @@
         "nativeProperties": {
           "Index": -1,
           "Kind": "Hub",
-          "HalfWidth": 30,
-          "HalfHeight": 25,
           "ExitY": 21
         }
       }

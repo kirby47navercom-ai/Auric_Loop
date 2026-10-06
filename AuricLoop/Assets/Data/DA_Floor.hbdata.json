@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "name": "DA_Floor",
+  "fields": [
+    {
+      "name": "path",
+      "type": "string",
+      "value": "Start,Combat,Combat,Gather,Combat,Shop,Boss"
+    },
+    {
+      "name": "branches",
+      "type": "string",
+      "value": "Combat"
+    },
+    {
+      "name": "spacing",
+      "type": "float",
+      "value": 36
+    }
+  ]
+}

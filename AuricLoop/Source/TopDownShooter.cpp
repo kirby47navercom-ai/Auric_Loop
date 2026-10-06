@@ -1,7 +1,10 @@
 #include "TopDownShooter.h"
+#include <random>
+#include <map>
 #include <cmath>
 #include <string>
 #include <algorithm>
+#include <sstream>
 
 // 수치 근거: docs/데모_기획서.md 4·5·6장. 값은 BP 기본값(편집기 속성)에서 고친다.
 
@@ -111,6 +114,158 @@ bool Enemy::TakeHit(float damage,const hb::Vec3& push,float stunSeconds,float bu
 }
 
 // =====================================================================================
+// 던전 층 생성·배치
+// 장면 Dungeon에 tools/gen_scene.py가 놓은 풀 (태그 Dungeon.*): 화면 밖(y -200)에 세워 두고 여기서 옮겨 쓴다 (parked는 아래 탄 풀과 같음)
+static const hb::Vec3 parked{0,-200,0};
+static constexpr float CORRIDOR=2;  // 복도 반폭 (문 폭 4m)
+
+static std::vector<std::string> Split(const std::string& text,char sep){
+  std::vector<std::string> out;std::stringstream ss(text);std::string item;
+  while(std::getline(ss,item,sep))if(!item.empty())out.push_back(item);
+  return out;
+}
+
+void Dungeon::Generate(unsigned seed,const hb::Json& floor,const hb::Json& table){
+  std::mt19937 rng(seed);
+  auto pick=[&](int n){return std::uniform_int_distribution<int>(0,n-1)(rng);};
+  const auto kinds=Split(floor.value("path",std::string("Start,Combat,Combat,Gather,Combat,Shop,Boss")),',');
+  const auto branches=Split(floor.value("branches",std::string("Combat")),',');
+  const float spacing=floor.value("spacing",36.f);
+  // 주 경로: 격자 위 무작위 걷기. 막다른 길이면 처음부터 다시 (칸이 넉넉해 몇 번이면 됨)
+  std::map<std::pair<int,int>,int> cells;
+  auto add=[&](const std::string& kind,int gx,int gy,int from,int dir){
+    DungeonRoom r;r.kind=kind;r.gx=gx;r.gy=gy;rooms.push_back(r);const int i=int(rooms.size())-1;cells[{gx,gy}]=i;
+    if(from>=0){rooms[from].link[dir]=i;rooms[i].link[(dir+2)%4]=from;}
+    return i;};
+  for(int attempt=0;attempt<500;++attempt){
+    rooms.clear();cells.clear();
+    int last=add(kinds[0],0,0,-1,0);rooms[last].path=0;bool ok=true;
+    for(size_t k=1;k<kinds.size()&&ok;++k){
+      std::vector<int> dirs;
+      for(int d=0;d<4;++d)if(!cells.count({rooms[last].gx+dx[d],rooms[last].gy+dy[d]}))dirs.push_back(d);
+      if(dirs.empty()){ok=false;break;}
+      const int d=dirs[pick(int(dirs.size()))];
+      last=add(kinds[k],rooms[last].gx+dx[d],rooms[last].gy+dy[d],last,d);rooms[last].path=int(k);
+    }
+    if(!ok)continue;
+    // 곁가지: 시작·보스가 아닌 주 경로 방 옆 빈 칸에 붙인다 (보스 방 옆 칸은 피함: 보스 방 문은 하나)
+    for(const auto& kind:branches){
+      std::vector<std::pair<int,int>> spots;
+      for(int i=0;i<int(rooms.size());++i){if(rooms[i].path<=0||rooms[i].kind=="Boss")continue;
+        for(int d=0;d<4;++d){const int x=rooms[i].gx+dx[d],y=rooms[i].gy+dy[d];bool nearBoss=false;
+          for(int e=0;e<4;++e){auto it=cells.find({x+dx[e],y+dy[e]});if(it!=cells.end()&&rooms[it->second].kind=="Boss")nearBoss=true;}
+          if(!cells.count({x,y})&&!nearBoss)spots.push_back({i,d});}}
+      if(spots.empty()){ok=false;break;}
+      const auto [i,d]=spots[pick(int(spots.size()))];add(kind,rooms[i].gx+dx[d],rooms[i].gy+dy[d],i,d);
+    }
+    if(ok)break;
+  }
+  // 크기·데이터 행: 전투방은 경로 순서대로 Combat1·2·3, 곁가지 전투방은 Branch
+  int combat=0;
+  for(auto& r:rooms){
+    r.row=r.kind=="Combat"?(r.path<0?std::string("Branch"):"Combat"+std::to_string(++combat)):r.kind;
+    const hb::Json row=table.contains(r.row)?table.at(r.row):hb::Json::object();
+    const int lo=int(row.value("minHalf",8.f)),hi=std::max(lo,int(row.value("maxHalf",10.f)));
+    r.hw=float(lo+pick(hi-lo+1));r.hh=row.value("square",false)?r.hw:float(lo+pick(hi-lo+1));
+    r.cx=r.gx*spacing;r.cy=r.gy*spacing;
+    if(r.kind=="Boss")boss=int(&r-&rooms[0]);
+  }
+  gates.assign(rooms.size()*4,nullptr);
+}
+
+int Dungeon::RoomAt(const hb::Vec3& p) const{
+  for(int i=0;i<int(rooms.size());++i)if(rooms[i].Inside(p))return i;
+  return -1;
+}
+
+int Dungeon::PathRoom(int order) const{
+  for(int i=0;i<int(rooms.size());++i)if(rooms[i].path==order)return i;
+  return -1;
+}
+
+hb::Vec3 Dungeon::DoorPosition(int room,int dir) const{
+  const auto& r=rooms[room];
+  return {r.cx+dx[dir]*(r.hw+0.5f),r.cy+dy[dir]*(r.hh+0.5f),0};
+}
+
+// 반복 무늬 스프라이트 하나를 사각형 [x0,x1]×[y0,y1]에 깐다. collider: 0 없음, 1 전체, 2 아래 1m (위로 솟은 벽면)
+static void Put(std::vector<hb::Actor*>& pool,float x0,float y0,float x1,float y1,int collider){
+  if(pool.empty()||x1-x0<0.05f||y1-y0<0.05f)return;
+  auto* a=pool.back();pool.pop_back();const float w=x1-x0,h=y1-y0;
+  hb::Scene::SetPosition(a,hb::Vec3{(x0+x1)/2,(y0+y1)/2,0.05f});hb::Sprites::SetSize(a,hb::Vec2{w,h});
+  if(collider==1){hb::Components::SetVector(a,"BoxCollider2D","extent",hb::Vec3{w/2,h/2,0.5f});hb::Components::SetVector(a,"BoxCollider2D","center",hb::Vec3{0,0,0});}
+  if(collider==2){hb::Components::SetVector(a,"BoxCollider2D","extent",hb::Vec3{w/2,0.5f,0.5f});hb::Components::SetVector(a,"BoxCollider2D","center",hb::Vec3{0,-h/2+0.5f,0});}
+}
+
+static void Move(std::vector<hb::Actor*>& pool,float x,float y){
+  if(pool.empty())return;auto* a=pool.back();pool.pop_back();hb::Scene::SetPosition(a,hb::Vec3{x,y,0.05f});
+}
+
+void Dungeon::Build(){
+  auto floors=hb::Scene::GetActorsWithTag("Dungeon.Floor"),caps=hb::Scene::GetActorsWithTag("Dungeon.Cap"),faces=hb::Scene::GetActorsWithTag("Dungeon.Face");
+  auto arches=hb::Scene::GetActorsWithTag("Dungeon.Arch"),torches=hb::Scene::GetActorsWithTag("Dungeon.Torch"),glows=hb::Scene::GetActorsWithTag("Dungeon.Glow");
+  auto banners=hb::Scene::GetActorsWithTag("Dungeon.Banner"),pillars=hb::Scene::GetActorsWithTag("Dungeon.Pillar");
+  auto rubble=hb::Scene::GetActorsWithTag("Dungeon.Rubble"),bones=hb::Scene::GetActorsWithTag("Dungeon.Bones"),gold=hb::Scene::GetActorsWithTag("Dungeon.Gold");
+  gateFree=hb::Scene::GetActorsWithTag("Dungeon.Gate");sideFree=hb::Scene::GetActorsWithTag("Dungeon.GateSide");
+  {auto s=hb::Scene::GetActorsWithTag("Dungeon.Stairs");stairs=s.empty()?nullptr:s.front();}
+  std::mt19937 rng(unsigned(rooms.size()*7919+rooms[0].hw*31+rooms.back().gx*17));
+  auto between=[&](float a,float b){return std::uniform_real_distribution<float>(a,b)(rng);};
+  const float C=CORRIDOR;
+  for(int i=0;i<int(rooms.size());++i){
+    auto& r=rooms[i];const float x0=r.cx-r.hw,x1=r.cx+r.hw,y0=r.cy-r.hh,y1=r.cy+r.hh;
+    Put(floors,x0,y0,x1,y1,0);
+    // 북쪽 벽: 위로 솟은 벽면 3m (아래 1m만 막힘). 문이 있으면 가운데를 비우고 아치를 세운다
+    std::vector<std::pair<float,float>> north;
+    if(r.link[0]<0)north.push_back({x0,x1});else{north.push_back({x0,r.cx-C});north.push_back({r.cx+C,x1});Move(arches,r.cx,y1+1.5f);}
+    for(auto [a,b]:north){Put(faces,a,y1,b,y1+3,2);
+      for(float x=a+2.5f;x<b-1.5f;x+=6){Move(torches,x,y1+1.1f);Move(glows,x,y1+1.45f);}
+      if(b-a>9)Move(banners,(a+b)/2,y1+1.6f);}
+    // 남쪽 벽(윗면 1m), 서·동 벽(윗면, 북쪽 벽면 높이까지)
+    if(r.link[2]<0)Put(caps,x0-1,y0-1,x1+1,y0,1);else{Put(caps,x0-1,y0-1,r.cx-C,y0,1);Put(caps,r.cx+C,y0-1,x1+1,y0,1);}
+    for(int side:{3,1}){const float a=side==3?x0-1:x1,b=a+1;
+      if(r.link[side]<0)Put(caps,a,y0,b,y1+3,1);else{Put(caps,a,y0,b,r.cy-C,1);Put(caps,a,r.cy+C,b,y1+3,1);}}
+    // 복도: 북쪽·동쪽으로 이어진 것만 (반대쪽은 상대 방이 깖)
+    if(r.link[0]>=0){const auto& n=rooms[r.link[0]];const float top=n.cy-n.hh;
+      Put(floors,r.cx-C,y1,r.cx+C,top,0);Put(caps,r.cx-C-1,y1,r.cx-C,top-1,1);Put(caps,r.cx+C,y1,r.cx+C+1,top-1,1);}
+    if(r.link[1]>=0){const auto& e=rooms[r.link[1]];const float right=e.cx-e.hw;
+      Put(floors,x1,r.cy-C,right,r.cy+C,0);Put(faces,x1+1,r.cy+C,right-1,r.cy+C+3,2);Put(caps,x1+1,r.cy-C-1,right-1,r.cy-C,1);}
+    // 장식: 전투·보스방은 기둥(엄폐물), 바닥엔 잔해·뼈, 보스·채집방엔 금화 더미
+    r.blocked.clear();
+    const int count=r.kind=="Boss"?4:r.kind=="Combat"?int(between(0,4.99f)):0;
+    for(int k=0,tries=0;k<count&&tries<40;++tries){
+      const hb::Vec3 p{between(x0+3,x1-3),between(y0+3,y1-3),0};
+      if(std::fabs(p.x-r.cx)<3||std::fabs(p.y-r.cy)<3)continue;  // 문에서 문으로 가는 길은 비움
+      bool near=false;for(auto& q:r.blocked)near=near||std::hypot(q.x-p.x,q.y-p.y)<3.5f;if(near)continue;
+      r.blocked.push_back(p);Move(pillars,p.x,p.y+0.6f);++k;}
+    for(int k=0,n=int(r.hw*r.hh/30);k<n;++k){const float x=between(x0+1,x1-1),y=between(y0+1,y1-1);
+      if(std::fabs(x-r.cx)<2&&std::fabs(y-r.cy)<2)continue;
+      auto& pool=(r.kind=="Boss"||r.kind=="Gather")&&k%3==0?gold:k%2?bones:rubble;Move(pool,x,y);}
+  }
+  if(stairs)hb::Scene::SetPosition(stairs,hb::Vec3{rooms[start].cx-rooms[start].hw+2.2f,rooms[start].cy+rooms[start].hh-1.6f,0.05f});  // 문(벽 가운데)을 막지 않게 왼쪽 위 구석
+}
+
+void Dungeon::Lock(int room,bool locked,int only){
+  const auto& r=rooms[room];
+  for(int d=0;d<4;++d){if(r.link[d]<0||(only>=0&&d!=only))continue;
+    auto& g=gates[room*4+d];auto& pool=d%2?sideFree:gateFree;
+    if(locked&&!g&&!pool.empty()){g=pool.back();pool.pop_back();
+      const float x0=r.cx-r.hw,x1=r.cx+r.hw,y0=r.cy-r.hh,y1=r.cy+r.hh;
+      // 위 문은 아치 안의 큰 철창, 아래 문은 낮은 철창, 옆문은 옆에서 본 철창 (철창 그림·충돌은 장면 풀에 정해 둠)
+      const hb::Vec3 at=d==0?hb::Vec3{r.cx,y1+1.5f,0.06f}:d==2?hb::Vec3{r.cx,y0-0.4f,0.06f}:hb::Vec3{d==1?x1+0.5f:x0-0.5f,r.cy+0.3f,0.06f};
+      hb::Scene::SetPosition(g,at);
+      if(d==0){hb::Sprites::SetSize(g,hb::Vec2{4,3});hb::Components::SetVector(g,"BoxCollider2D","center",hb::Vec3{0,-1,0});}
+      if(d==2){hb::Sprites::SetSize(g,hb::Vec2{4,1.6f});hb::Components::SetVector(g,"BoxCollider2D","center",hb::Vec3{0,0,0});}}
+    else if(!locked&&g){hb::Scene::SetPosition(g,parked);pool.push_back(g);g=nullptr;}
+  }
+}
+
+hb::Json Dungeon::Describe() const{
+  hb::Json list=hb::Json::array();
+  for(const auto& r:rooms)list.push_back({{"kind",r.kind},{"row",r.row},{"x",r.cx},{"y",r.cy},{"hw",r.hw},{"hh",r.hh},{"path",r.path},{"state",r.state}});
+  return list;
+}
+
+// =====================================================================================
 // 게임 규칙
 // =====================================================================================
 
@@ -118,15 +273,6 @@ std::vector<Enemy*> TopDownShooter::Enemies() const{
   std::vector<Enemy*> list;
   for(auto* a:hb::Scene::GetAllActorsOfClass("Enemy"))if(auto* e=dynamic_cast<Enemy*>(a))list.push_back(e);
   return list;
-}
-
-hb::Actor* TopDownShooter::Door(const char* tag) const{auto list=hb::Scene::GetActorsWithTag(tag,true);return list.empty()?nullptr:list.front();}
-
-void TopDownShooter::SetDoor(const char* tag,bool locked){
-  // 문은 장면에 놓인 철창. 풀에서 꺼내 있으면 잠김(막힘), 반환하면 열림
-  auto* d=Door(tag);if(!d)return;
-  if(locked&&!hb::ActorPool::IsActive(d)){hb::Transform t;t.position=hb::Scene::GetPosition(d);hb::ActorPool::Acquire(std::vector<hb::Actor*>{d},t);}
-  else if(!locked&&hb::ActorPool::IsActive(d))hb::ActorPool::Release(d);
 }
 
 float TopDownShooter::WeaponDamage() const{
@@ -156,7 +302,6 @@ void TopDownShooter::StunAll(float seconds){for(auto* e:Enemies())e->Stun(second
 
 // 탄·골드·베기 이펙트는 장면에 미리 놓아 두고(태그 Pool.*) 화면 밖에 세워 둔다. 꺼내기·돌려놓기는 옮기기만 한다.
 // 실행 중 생성(Scene::Spawn)과 엔진 풀(ActorPool)은 부를 때마다 컴포넌트를 다시 시작해 수 ms~수십 ms가 걸려 프레임이 끊긴다
-static const hb::Vec3 parked{0,-200,0};
 
 hb::Actor* TopDownShooter::Take(std::vector<hb::Actor*>& pool,const std::string& prefab,const hb::Transform& at){
   if(!pool.empty()){auto* a=pool.back();pool.pop_back();hb::Scene::SetTransform(a,at);return a;}
@@ -188,10 +333,10 @@ void TopDownShooter::Prewarm(){
 }
 
 void TopDownShooter::KillEnemy(Enemy* e){
-  const auto at=hb::Scene::GetPosition(e);Kills++;Sfx("Kill");
+  const auto at=hb::Scene::GetPosition(e);Kills++;Sfx("Kill");if(waveAlive>0)waveAlive--;
   DropCoin(at,e->GoldMin+Kills%std::max(1,e->GoldMax-e->GoldMin+1));
   if(e->Boss){HasReturnItem=true;Monster++;boss=nullptr;BossHp=0;Hud();}
-  if(monsterDrop&&fightingRoom>=0&&Enemies().size()<=1)Monster++;  // 이 방 마지막 해골은 마물 소재 확정
+  if(monsterDrop&&fightingRoom>=0&&pending.empty()&&wave+1>=waves.size()&&Enemies().size()<=1)Monster++;  // 이 방 마지막 해골은 마물 소재 확정
   PlayFx(e->DeathClip,0.9f,at,0,0,e->Flipped());  // 쓰러지는 그림은 이펙트로 (적 오브젝트는 바로 지움)
   hb::Scene::Destroy(e);
 }
@@ -218,8 +363,7 @@ void TopDownShooter::Slash(const hb::Vec3& position,const std::vector<Enemy*>& e
     return len<=reach+radius&&(len<=radius+0.75f||hb::VectorMath::DotProduct(d*(1/len),facing)>=minDot);};  // 바로 붙은 적은 방향과 관계없이 맞음
   for(auto* e:enemies){const auto at=hb::Scene::GetPosition(e);if(!inFan(at,e->Boss?e->Radius:0))continue;
     HitEnemy(e,Normal(at-position,facing),WeaponDamage());}
-  if(Returning)if(auto* d=Door("Door.Bottom"))if(hb::ActorPool::IsActive(d)&&Length(hb::Scene::GetPosition(d)-position)<rules->DoorReach){
-    Sfx("DoorHit");if(++DoorHits>=rules->DoorHitsToOpen){SetDoor("Door.Bottom",false);StunAll(rules->DoorStun);Sfx("DoorOpen");}Hud();}
+  HitReturnGate(position,rules->DoorReach,1);
   for(auto it=bullets.begin();it!=bullets.end();)
     if(inFan(hb::Scene::GetPosition(it->first),0)){Give(bulletPool,it->first);it=bullets.erase(it);}else ++it;
 }
@@ -237,10 +381,10 @@ void TopDownShooter::UpdateShots(float delta,const std::vector<Enemy*>& enemies)
   for(auto& [s,life]:shots){life-=delta;
     if(shotBoom[s]){if(life<=0)done.push_back(s);continue;}  // 폭발 그림을 잠깐 보여 주고 반환
     const auto p=hb::Scene::GetPosition(s);const auto dir=Normal(hb::Physics::GetVelocity(s),facing);
-    bool wall=std::fabs(p.x)>halfWidth-0.2f||std::fabs(p.y)>halfHeight-0.2f,hit=false;  // 벽·문·보스에 막힘
-    if(Returning)if(auto* d=Door("Door.Bottom"))if(hb::ActorPool::IsActive(d)&&Length(hb::Scene::GetPosition(d)-p)<1.5f){
-      DoorHits+=Character==1?rules->ArrowDoorHits:1;wall=true;Sfx("DoorHit");
-      if(DoorHits>=rules->DoorHitsToOpen){SetDoor("Door.Bottom",false);StunAll(rules->DoorStun);Sfx("DoorOpen");}Hud();}
+    const int in=fightingRoom>=0?fightingRoom:area;  // 싸우는 방(문이 잠김) 벽에 막힘
+    bool wall=inDungeon&&in>=0&&!map.rooms[in].Inside(p,0.2f),hit=false;
+    if(Returning&&returnRoom>=0&&map.Locked(returnRoom,returnDir)&&Length(map.DoorPosition(returnRoom,returnDir)-p)<1.5f){
+      HitReturnGate(p,1.5f,Character==1?rules->ArrowDoorHits:1);wall=true;}
     for(auto* e:enemies){if(wall||(hit&&Enchant!=3))break;
       if(Length(hb::Scene::GetPosition(e)-p)<rules->PlayerShotHit+(e->Boss?e->Radius:0)){HitEnemy(e,dir,WeaponDamage());hit=true;if(e->Boss)wall=true;}}
     if(!wall&&!(hit&&Enchant!=3)&&life>0)continue;  // 각인 관통(3)이면 적을 뚫고 벽·문·보스에서 멈춤
@@ -257,18 +401,12 @@ void TopDownShooter::UpdateBullets(float delta,const hb::Vec3& position){
   for(auto it=bullets.begin();it!=bullets.end();){
     const auto p=hb::Scene::GetPosition(it->first);it->second-=delta;
     if(Hp>0&&Length(p-position)<rules->EnemyShotHit){DamagePlayer(1);it->second=0;}
-    if(it->second<=0||std::fabs(p.x)>halfWidth||std::fabs(p.y)>halfHeight){Give(bulletPool,it->first);it=bullets.erase(it);}else ++it;
+    const int in=fightingRoom>=0?fightingRoom:area;
+    if(it->second<=0||(inDungeon&&in>=0&&!map.rooms[in].Inside(p,-0.5f))){Give(bulletPool,it->first);it=bullets.erase(it);}else ++it;  // 방 벽에서 사라짐
   }
 }
 
 // ---- 구역·장면 전환 ----------------------------------------------------------------
-
-int TopDownShooter::AreaAt(float y) const{
-  if(area<0)return y>exitY?0:-1;        // 거점 계단 끝을 넘으면 첫 방
-  if(y>halfHeight+0.5f)return area+1;   // 위쪽 문을 지나면 다음 방 (보스방 위는 벽)
-  if(y<-halfHeight-1)return area-1;     // 아래쪽 문을 지나면 앞 방(첫 방이면 거점)
-  return area;
-}
 
 #define AURIC_RUN_INTS(X) X(FatigueMax) X(Fatigue) X(Hp) X(MaxHp) X(Kills) X(RoomClears) X(Swings) X(Hits) X(Shots) X(Flashbangs) X(Gold) X(Ore) X(Herb) \
   X(Monster) X(Bottle) X(WeaponLevel) X(Debt) X(LastRepaid) X(Enchant) X(Crafted) X(SofaLevel) X(HomeLevel) X(Phase) X(Character)
@@ -281,8 +419,7 @@ void TopDownShooter::SaveRun(){
 #define AURIC_PUT(name) run[#name]=name;
   AURIC_RUN_INTS(AURIC_PUT) AURIC_RUN_BOOLS(AURIC_PUT)
 #undef AURIC_PUT
-  hb::Json rooms=hb::Json::object();for(auto& [k,v]:roomState)rooms[std::to_string(k)]=v==1?0:v;  // 전투 중이던 방은 처음부터
-  run["rooms"]=rooms;run["taken"]=std::vector<std::string>(taken.begin(),taken.end());
+  run["taken"]=std::vector<std::string>(taken.begin(),taken.end());
   run["facing"]={facing.x,facing.y};
   game->state["run"]=run;
   if(KeepProgress)hb::Save::Write("Auric.progress",{{"debt",Debt},{"sofa",SofaLevel},{"home",HomeLevel},{"character",Character}});
@@ -294,8 +431,7 @@ bool TopDownShooter::LoadRun(){
 #define AURIC_GET(name) if(run.contains(#name))name=run[#name].get<decltype(name)>();
   AURIC_RUN_INTS(AURIC_GET) AURIC_RUN_BOOLS(AURIC_GET)
 #undef AURIC_GET
-  const hb::Json rooms=run.value("rooms",hb::Json::object()),done=run.value("taken",hb::Json::array());
-  for(auto& [k,v]:rooms.items())roomState[std::stoi(k)]=v.get<int>();
+  const hb::Json done=run.value("taken",hb::Json::array());
   for(auto& t:done)taken.insert(t.get<std::string>());
   if(run.contains("facing"))facing=hb::Vec3{run["facing"][0].get<float>(),run["facing"][1].get<float>(),0};
   return true;
@@ -305,9 +441,8 @@ void TopDownShooter::Leave(int to,const std::string& spawn){
   // 바닥에 남은 골드는 들고 간다. 전투 중엔 문이 잠겨 있어 적·탄 상태는 넘기지 않는다
   for(auto& [c,value]:coins){Gold+=value;Give(coinPool,c);}coins.clear();
   SaveRun();leaving=true;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
-  std::string scene=rules->HubScene;
-  if(to>=0){scene=rules->DungeonScene;const auto at=scene.find('#');if(at!=std::string::npos)scene.replace(at,1,std::to_string(to));}
-  hb::Scene::Open(scene,{{"spawn",spawn}});
+  if(to<0)taken.clear();  // 던전은 들어갈 때마다 새로 만들어짐
+  hb::Scene::Open(to>=0?rules->DungeonScene:rules->HubScene,spawn.empty()?hb::Json::object():hb::Json{{"spawn",spawn}});  // 던전은 C++가 시작 방에 세움
 }
 
 void TopDownShooter::Begin(){
@@ -315,47 +450,114 @@ void TopDownShooter::Begin(){
   started=true;Hp=MaxHp;
   rules=&fallbackRules;for(auto* a:hb::Scene::GetAllActorsOfClass("AuricRules"))if(auto* r=dynamic_cast<AuricRules*>(a))rules=r;
   for(auto* a:hb::Scene::GetAllActorsOfClass("RoomInfo"))if(auto* r=dynamic_cast<RoomInfo*>(a)){
-    area=r->Index;roomKind=r->Kind;halfWidth=r->HalfWidth;halfHeight=r->HalfHeight;exitY=r->ExitY;monsterDrop=r->MonsterDrop;}
+    area=r->Index;roomKind=r->Kind;exitY=r->ExitY;inDungeon=r->Kind=="Dungeon";}
   for(auto* a:hb::Scene::GetAllActorsOfClass("Interactable"))if(auto* i=dynamic_cast<Interactable*>(a))interactables.push_back(i);
   auto cams=hb::Scene::GetActorsWithTag("MainCamera");camera=cams.empty()?nullptr:cams.front();
   const bool carried=LoadRun();
   if(!carried&&KeepProgress){const auto p=hb::Save::Read("Auric.progress");
     if(p.is_object()){Debt=p.value("debt",Debt);SofaLevel=p.value("sofa",SofaLevel);HomeLevel=p.value("home",HomeLevel);MaxHp=3+SofaLevel;Hp=MaxHp;}}
   if(carried||area>=0)Phase=std::max(Phase,2);  // 장면을 넘어왔거나 던전에서 바로 시작하면 로딩·타이틀 생략
-  for(auto it=interactables.begin();it!=interactables.end();)  // 이미 채집한 것은 치운다
-    if(taken.count(std::to_string(area)+":"+(*it)->Kind)){hb::Scene::Destroy(*it);it=interactables.erase(it);}else ++it;
   RoomIndex=area;
-  if(area>=0)Prewarm();
-  if(Returning)StartReturnRoom();
+  if(inDungeon){Prewarm();StartFloor();}
+  else if(Returning){Returning=false;ReturnSuccess=true;Settle();}  // 거점에 닿으면 귀환 성공
   Hud();
 }
 
-void TopDownShooter::EnterRoom(){
-  // 문을 지나 조금 들어오면 그 방의 적이 나오고 문이 잠긴다
-  auto& state=roomState[area];if(state)return;
-  if(roomKind!="Combat"&&roomKind!="Boss"){state=2;return;}  // 채집방·상점은 싸움 없음
-  state=1;fightingRoom=area;SetDoor("Door.Top",true);SetDoor("Door.Bottom",true);
-  for(auto* a:hb::Scene::GetAllActorsOfClass("SpawnPoint"))if(auto* s=dynamic_cast<SpawnPoint*>(a)){
-    if(s->ReturnOnly)continue;hb::Transform t;t.position=hb::Scene::GetPosition(s);t.position.z=0.1f;
-    if(auto* e=dynamic_cast<Enemy*>(hb::Scene::Spawn(s->EnemyBlueprint,t))){
-      if(e->Boss){boss=e;BossHp=e->MaxHp;Say("boss",e->DisplayName,"또 빚쟁이냐. 네 뼈도 황금으로 칠해 주마.");}}}
+void TopDownShooter::StartFloor(){
+  // 새 층: 데이터 에셋으로 방을 무작위로 잇고, 장면 풀로 바닥·벽·장식을 깐다. 플레이어는 시작 방 계단 아래에 선다
+  const auto floor=hb::Data::Get(rules->FloorData);roomTable=hb::Data::Get(rules->RoomTable);
+  map.Generate(Seed?unsigned(Seed):unsigned(std::rand()^(frame*7919)^int(hb::Game::GetSessionId().size()*131)),floor,roomTable);
+  map.Build();
+  // 채집방·상점의 상호작용 대상 자리 (장면에 화면 밖으로 놓아 둔 것을 옮김)
+  for(auto* i:interactables){const bool gather=i->Kind=="Ore"||i->Kind=="Herb",shop=i->Kind=="Smith"||i->Kind=="Stall";if(!gather&&!shop)continue;
+    for(auto& r:map.rooms)if(r.kind==(gather?"Gather":"Shop")){
+      const float side=i->Kind=="Ore"||i->Kind=="Smith"?-1.f:1.f;
+      hb::Scene::SetPosition(i,hb::Vec3{r.cx+side*(gather?1.6f:4.f),r.cy+(gather?1.2f:3.f),0.05f});break;}}
+  const auto& s=map.rooms[map.start];area=map.start;roomKind=s.kind;RoomIndex=area;
+  hb::Scene::SetPosition(player,hb::Vec3{s.cx,s.cy-1,0.1f});playerAt=hb::Scene::GetPosition(player);cameraReady=false;
+  Layout=map.Describe().dump();
+}
+
+void TopDownShooter::Warp(int room){
+  // 부스 운영자·검사용: 지나친 주 경로 방은 클리어로 치고 그 방 가운데로 옮긴다 (싸우던 적·탄은 치움)
+  if(room<0)return;
+  for(auto* e:Enemies())hb::Scene::Destroy(e);pending.clear();waveAlive=0;
+  for(auto& [b,life]:bullets)life=0;
+  if(fightingRoom>=0){map.Lock(fightingRoom,false);map.rooms[fightingRoom].state=2;fightingRoom=-1;}
+  for(auto& r:map.rooms)if(r.path>=0&&r.path<map.rooms[room].path&&!Returning)r.state=2;
+  const auto& r=map.rooms[room];hb::Scene::SetPosition(player,hb::Vec3{r.cx,r.cy,0.1f});
+  playerAt=hb::Scene::GetPosition(player);cameraReady=false;Hud();
+}
+
+void TopDownShooter::EnterRoom(int room){
+  // 방 가장자리에서 조금 들어오면 문이 잠기고, DT_Rooms의 웨이브가 하나씩 마법진 예고 뒤 나온다 (엔터 더 건전·소울 나이트)
+  auto& r=map.rooms[room];if(r.state)return;
+  if(r.kind!="Combat"&&r.kind!="Boss"){r.state=2;return;}  // 시작·채집·상점은 싸움 없음
+  r.state=1;fightingRoom=room;map.Lock(room,true);
+  const hb::Json row=roomTable.contains(r.row)?roomTable.at(r.row):hb::Json::object();
+  waves.clear();std::stringstream ss(row.value("waves",std::string("S,S,S")));std::string w;while(std::getline(ss,w,'|'))if(!w.empty())waves.push_back(w);
+  wave=0;monsterDrop=row.value("monsterDrop",false);
+  if(!waves.empty())SpawnWave(waves[0],false);
   Hud();
+}
+
+void TopDownShooter::SpawnWave(const std::string& list,bool invulnerable){
+  // 방 안 무작위 자리(플레이어·기둥에서 떨어진 곳)에 마법진을 띄우고 SpawnWarn초 뒤 적을 만든다
+  const int room=fightingRoom>=0?fightingRoom:area;if(room<0)return;
+  const auto& r=map.rooms[room];std::stringstream ss(list);std::string code;
+  while(std::getline(ss,code,',')){
+    std::string blueprint;for(const auto& entry:rules->Enemies){const auto eq=entry.find('=');if(eq!=std::string::npos&&entry.compare(0,eq,code)==0)blueprint=entry.substr(eq+1);}
+    if(blueprint.empty())continue;
+    hb::Vec3 at{r.cx,r.cy+2,0.1f};
+    for(int tries=0;tries<30;++tries){
+      const hb::Vec3 p{r.cx+(std::rand()%2001-1000)/1000.f*(r.hw-2.5f),r.cy+(std::rand()%2001-1000)/1000.f*(r.hh-2.5f),0.1f};
+      bool bad=Length(p-playerAt)<4.5f;for(auto& q:r.blocked)bad=bad||Length(q-p)<1.6f;for(auto& o:pending)bad=bad||Length(o.at-p)<1.4f;
+      if(!bad){at=p;break;}}
+    if(code=="C")at=hb::Vec3{r.cx,r.cy+2,0.1f};  // 보스는 방 가운데 위
+    PlayFx(rules->SpawnClip,rules->SpawnWarn,hb::Vec3{at.x,at.y-0.5f,0.02f},0,1.f,false);
+    pending.push_back({at,blueprint,rules->SpawnWarn,invulnerable});
+  }
+}
+
+void TopDownShooter::UpdateWaves(float delta){
+  for(auto it=pending.begin();it!=pending.end();){
+    if((it->left-=delta)>0){++it;continue;}
+    hb::Transform t;t.position=it->at;
+    if(auto* e=dynamic_cast<Enemy*>(hb::Scene::Spawn(it->blueprint,t))){
+      if(!it->invulnerable)waveAlive++;
+      if(it->invulnerable){e->Invulnerable=true;e->Stun(0.5f);}
+      if(e->Boss){BossHp=e->MaxHp;Say("boss",e->DisplayName,"또 빚쟁이냐. 네 뼈도 황금으로 칠해 주마.");}}
+    it=pending.erase(it);
+  }
+  if(fightingRoom<0||!pending.empty()||waveAlive>0||!Enemies().empty())return;
+  if(++wave<waves.size())SpawnWave(waves[wave],false);else ClearRoom();
 }
 
 void TopDownShooter::ClearRoom(){
   // 방 클리어: 문이 열리고 피로도 +1 (기획), 피로도가 가득 차면 쓰러짐
-  roomState[fightingRoom]=2;SetDoor("Door.Top",false);SetDoor("Door.Bottom",false);fightingRoom=-1;
+  map.rooms[fightingRoom].state=2;map.Lock(fightingRoom,false);fightingRoom=-1;waves.clear();
   RoomClears++;Fatigue++;if(Fatigue>=FatigueMax){Hp=0;gameOver=rules->RespawnDelay;}Hud();
 }
 
-void TopDownShooter::StartReturnRoom(){
-  // 귀환 페이즈 (기획서 6-3): 방에 들어서면 무적 해골이 한꺼번에 나오고 아래쪽 문은 10번 때려야 열린다
-  if(area<0){Returning=false;ReturnSuccess=true;Settle();return;}  // 거점에 닿으면 귀환 성공
-  DoorHits=0;Fatigue++;if(Fatigue>=FatigueMax){Hp=0;gameOver=rules->RespawnDelay;}
-  SetDoor("Door.Bottom",area>0);
-  for(auto* a:hb::Scene::GetAllActorsOfClass("SpawnPoint"))if(auto* s=dynamic_cast<SpawnPoint*>(a)){
-    if(!s->ReturnOnly)continue;hb::Transform t;t.position=hb::Scene::GetPosition(s);t.position.z=0.1f;
-    if(auto* e=dynamic_cast<Enemy*>(hb::Scene::Spawn(s->EnemyBlueprint,t))){e->Invulnerable=true;e->Stun(0.8f);}}
+void TopDownShooter::StartReturnRoom(int room){
+  // 귀환 페이즈 (기획서 6-3): 지나온 주 경로를 거꾸로. 방에 들어서면 무적 해골이 한꺼번에 나오고,
+  // 시작 방 쪽 문은 10번 때려야 열린다. 들어설 때마다 피로도 +1 (보스방은 [귀환]을 쓴 자리라 적 없음)
+  auto& r=map.rooms[room];if(r.returned||r.path<0)return;
+  r.returned=true;DoorHits=0;returnRoom=-1;
+  const int prev=map.PathRoom(r.path-1);
+  for(int d=0;d<4;++d)if(prev>=0&&r.link[d]==prev){returnRoom=room;returnDir=d;map.Lock(room,true,d);}
+  if(r.kind=="Boss")return;
+  Fatigue++;if(Fatigue>=FatigueMax){Hp=0;gameOver=rules->RespawnDelay;}
+  const hb::Json row=roomTable.contains("Return")?roomTable.at("Return"):hb::Json::object();
+  SpawnWave(row.value("waves",std::string("S,S,M,M,M")),true);
+}
+
+void TopDownShooter::HitReturnGate(const hb::Vec3& at,float reach,int hits){
+  // 귀환 중 잠긴 문 때리기: 10번이면 열리고 방의 적 전체 1초 경직
+  if(!Returning||returnRoom<0||!map.Locked(returnRoom,returnDir)||Length(map.DoorPosition(returnRoom,returnDir)-at)>=reach)return;
+  DoorHits+=hits;Sfx("DoorHit");
+  if(DoorHits>=rules->DoorHitsToOpen){map.Lock(returnRoom,false,returnDir);StunAll(rules->DoorStun);Sfx("DoorOpen");}
+  Hud();
 }
 
 void TopDownShooter::Settle(){
@@ -609,7 +811,11 @@ void TopDownShooter::Update(float delta){
    if(ending)return;
    if(Phase>=2&&!Returning&&!ReturnSuccess&&area>=0&&roomKind!="Boss"){runTime+=delta;
      if(runTime>=rules->RunNotice){if(hint.empty()){hint="10분이 지났어요 - F10을 누르면 보스방 앞으로";Hud();}
-       if(hb::Input::IsKeyDown("F10")){runTime=0;Leave(rules->BossRoom,"DoorBottom");return;}}}}
+       if(hb::Input::IsKeyDown("F10")&&inDungeon){runTime=0;hint="";Warp(map.PathRoom(map.rooms[map.boss].path-1));}}}
+   // 부스 운영자: F9로 주 경로 다음 방으로 (귀환 중이면 시작 방 쪽으로)
+   const bool warp=hb::Input::IsKeyDown("F9");
+   if(warp&&!warpHeld&&inDungeon&&area>=0){const int order=map.rooms[area].path+(Returning?-1:1);Warp(map.PathRoom(std::max(0,order)));}
+   warpHeld=warp;}
   hb::Vec3 aim;const bool hasAim=hb::Input::GetMouseWorldPosition(hb::Vec3{0,0,1},position,aim);
   // 모바일 공격 버튼은 K. 터치 위치는 조준이 아니라서 자동 조준·바라보는 방향으로 카메라를 끈다
   touchMode=hb::Input::GetLastDevice()=="touch";  // 모바일 공격 버튼도 LeftMouseButton. 마지막 입력 장치로 자동 조준을 정함
@@ -618,9 +824,17 @@ void TopDownShooter::Update(float delta){
    const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
    if(frame>=2&&UpdateIntro(delta,pressed))return;
    if(UpdateDialog(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}}  // 대화 중엔 행동·이동 막음
-  {const int to=AreaAt(position.y);  // 다른 구역으로 넘어감: 넘어간 장면의 문 안쪽에서 시작
-   if(to!=area){Leave(to,to<0?"StairTop":to>area?"DoorBottom":"DoorTop");return;}}
-  if(area>=0&&!Returning&&!ReturnSuccess&&(position.y>-halfHeight+rules->EnterDepth||area==0))EnterRoom();
+  if(!inDungeon){  // 거점 계단 끝 → 던전 (들어갈 때마다 새 층). 계단에 막 도착했으면 한 번 내려와야 다시 들어감 (W를 누른 채 왔다 갔다 방지)
+    if(position.y<exitY-2)exitArmed=true;
+    if(exitArmed&&position.y>exitY){Leave(0,"");return;}}
+  else{
+    // 시작 방 계단에 닿으면 거점으로 (귀환 중이면 귀환 성공)
+    if(map.stairs&&fightingRoom<0&&Length(hb::Scene::GetPosition(map.stairs)-position)<1.0f){Leave(-1,"StairTop");return;}
+    const int at=map.RoomAt(position);
+    if(at>=0&&at!=area){area=at;RoomIndex=at;roomKind=map.rooms[at].kind;Hud();}
+    if(at>=0&&map.rooms[at].Inside(position,rules->EnterDepth)){
+      if(Returning)StartReturnRoom(at);else if(!ReturnSuccess)EnterRoom(at);}
+  }
 
   std::vector<Enemy*> enemies;
   for(auto* e:Enemies()){e->Tick(delta);  // 적 이동은 여기서 한 번에 (상태 머신은 상태가 바뀔 때만 C++를 부름)
@@ -628,6 +842,7 @@ void TopDownShooter::Update(float delta){
   boss=nullptr;for(auto* e:enemies)if(e->Boss)boss=e;  // 적 포인터는 프레임을 넘겨 들고 있지 않는다 (엔진이 다시 만들 수 있음)
   UpdateBullets(delta,position);
   UpdateFx(delta);
+  if(inDungeon)UpdateWaves(delta);
   if(Hp<=0){  // 쓰러짐: 3초 뒤 회복 (ponytail: 정산 화면이 생기면 거기로)
     hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});gameOver-=delta;
     for(auto& [b,life]:bullets)hb::Physics::SetVelocity(b,hb::Vec3{0,0,0});
@@ -660,7 +875,7 @@ void TopDownShooter::Update(float delta){
 
   // [귀환] 사용 (가방 Tab), 귀환 중 섬광탄 (E): 제작한 것 먼저, 없으면 골드
   const bool tab=hb::Input::IsKeyDown("tab");
-  if(tab&&!returnHeld&&HasReturnItem&&!Returning&&!ReturnSuccess){HasReturnItem=false;Returning=true;DoorHits=0;SetDoor("Door.Bottom",area>0);Hud();
+  if(tab&&!returnHeld&&HasReturnItem&&!Returning&&!ReturnSuccess&&inDungeon&&area>=0){HasReturnItem=false;Returning=true;StartReturnRoom(area);Hud();
     Say(faces[Character],koreanNames[Character],"던전이 놓아주지 않는다. 문을 10번 때려 열고, 막히면 E로 섬광탄!");}
   returnHeld=tab;
   const bool flash=hb::Input::IsKeyDown("e");
@@ -684,5 +899,4 @@ void TopDownShooter::Update(float delta){
     if(len<rules->CoinMagnet)hb::Scene::SetPosition(c,hb::Scene::GetPosition(c)+d*(std::min(1.f,delta*8)));
     ++it;}
   if(boss)BossHp=boss->Hp;
-  if(fightingRoom>=0&&Enemies().empty())ClearRoom();
 }

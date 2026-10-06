@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "name": "BP_Test_Alea",
+  "name": "BP_Test_Valen",
   "components": [],
   "variables": [],
   "nodes": [],
@@ -16,7 +16,7 @@
     "tickInterval": 0,
     "overlapEnabled": true,
     "nativeDefaults": {
-      "TopDownShooter.Character": 2,
+      "TopDownShooter.Character": 0,
       "TopDownShooter.Seed": 7
     }
   }
