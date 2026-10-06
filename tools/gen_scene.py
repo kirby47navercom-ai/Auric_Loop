@@ -155,7 +155,7 @@ def tilemap(name, rects, style):
 # 아웃라이너 폴더: 종류별 그룹 오브젝트(원점) 아래에 넣는다. 위치는 그대로 (그룹이 원점이라 로컬 = 월드)
 OUTLINE = [
     ("시스템", lambda o: o["id"] in ("Director", "Rules", "Room", "PostFX", "PlayerStart", "StairTop", "DoorBottom", "DoorTop") or o.get("kind") == "playerStart"),
-    ("맵", lambda o: o.get("kind") == "tilemap" or any(t in ("Dungeon.Floor", "Dungeon.Cap", "Dungeon.Face", "Dungeon.Arch") for t in o.get("tags", []))),
+    ("맵", lambda o: o.get("kind") == "tilemap" or o["id"] == "Background" or any(t in ("Dungeon.Background", "Dungeon.Floor", "Dungeon.Cap", "Dungeon.Face", "Dungeon.Arch") for t in o.get("tags", []))),
     ("문", lambda o: any(t in ("Dungeon.Gate", "Dungeon.GateSide", "Dungeon.Stairs") for t in o.get("tags", []))),
     ("엄폐물", lambda o: any(t in ("Dungeon.Pillar", "Dungeon.Crate", "Dungeon.Barrel", "Dungeon.LowWall", "Dungeon.Statue", "Dungeon.Chest") for t in o.get("tags", []))),
     ("장식·조명", lambda o: any(t.startswith("Dungeon.") for t in o.get("tags", [])) or o["id"].startswith(("Torch", "Banner", "Lamp", "Pillar", "Bench", "Plant", "Crates", "Barrel", "NoticeBoard", "Decor"))),
@@ -219,6 +219,14 @@ def tiled(oid, texture, order, collider):
     return o
 
 
+def background(oid, x, y, w, h):
+    """맵 밖을 메우는 어두운 돌 무늬 (벽 윗면 텍스처를 어둡게, 가장 뒤)"""
+    o = tiled(oid, "Assets/Tiles/T_DungeonCap.png", -30, False)
+    o["position"] = [x, y, -0.3]
+    comp(o, "SpriteRenderer")["properties"].update(width=w, height=h, color=[0.32, 0.32, 0.38, 1])  # 벽 윗면보다 어둡게 (벽 테두리가 보이게)
+    return o
+
+
 def parked(objects, tag, count, make):
     """풀: 화면 밖(y -200)에 세워 둔 같은 오브젝트 count개. C++가 태그로 찾아 옮겨 씀 (실행 중 생성은 끊김)"""
     for k in range(count):
@@ -234,6 +242,7 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
     objects = base_objects(director_bp, (0, 0))
     objects.append(bp_obj("Room", "BP_RoomInfo", 0, 0, {"Index": 0, "Kind": "Dungeon"}))
     T = "Assets/Tiles/"
+    parked(objects, "Dungeon.Background", 1, lambda i: background(i, 0, 0, 4, 4))
     parked(objects, "Dungeon.Floor", 18, lambda i: tiled(i, T + "T_DungeonFloor.png", -12, False))
     parked(objects, "Dungeon.Cap", 72, lambda i: tiled(i, T + "T_DungeonCap.png", -9, True))
     parked(objects, "Dungeon.Face", 26, lambda i: tiled(i, T + "T_DungeonFace.png", -10, True))
@@ -286,6 +295,7 @@ hub.append(tilemap("TM_Hub", [(-12, -8, 12, 8, "plaza"), (-2, 8, 2, EXIT_Y + 2, 
                               (-25, -6, -13, 6, "wood"), (-13, -2, -12, 2, "wood"),
                               (13, -8, 29, 8, "plaza"), (12, -2, 13, 2, "plaza")], "hub"))
 hub.append(bp_obj("Room", "BP_RoomInfo", 0, 0, {"Index": -1, "Kind": "Hub", "ExitY": EXIT_Y}))
+hub.append(background("Background", 2, 7, 110, 80))  # 거점 밖 (광장·원룸·NPC 구역·계단을 다 덮는 크기)
 hub.append(start("StairTop", 0, EXIT_Y - 0.8))
 CLOSED, VACATION, PREP = "Assets/Sprites/Prop_ClosedShop.png", "휴가 중입니다. 빚쟁이 여러분 다음에 또 오세요", "가게 개장 준비 중"
 hub += [

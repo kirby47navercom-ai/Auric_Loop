@@ -239,6 +239,10 @@ void Dungeon::Build(){
   std::mt19937 rng(unsigned(rooms.size()*7919+rooms[0].hw*31+rooms.back().gx*17));
   auto between=[&](float a,float b){return std::uniform_real_distribution<float>(a,b)(rng);};
   const float C=CORRIDOR;
+  {// 맵 밖: 벽 윗면과 같은 어두운 돌 무늬를 맵 전체 뒤에 한 장 (카메라가 밖을 비춰도 빈 화면이 안 보이게)
+   auto back=hb::Scene::GetActorsWithTag("Dungeon.Background");float x0=1e9f,x1=-1e9f,y0=1e9f,y1=-1e9f;
+   for(auto& r:rooms){x0=std::min(x0,r.cx-r.hw);x1=std::max(x1,r.cx+r.hw);y0=std::min(y0,r.cy-r.hh);y1=std::max(y1,r.cy+r.hh);}
+   Put(back,x0-30,y0-30,x1+30,y1+30,0);}
   for(int i=0;i<int(rooms.size());++i){
     auto& r=rooms[i];const float x0=r.cx-r.hw,x1=r.cx+r.hw,y0=r.cy-r.hh,y1=r.cy+r.hh;
     Put(floors,x0,y0,x1,y1,0);

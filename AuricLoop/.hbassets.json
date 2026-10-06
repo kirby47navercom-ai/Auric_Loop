@@ -2173,5 +2173,8 @@
   },
   "Assets/UI/Map/map_unknown.png": {
     "id": "60ddf35d-6c42-4ae6-aca1-689372191101"
+  },
+  "Settings/BuildProfiles.json": {
+    "id": "a921739b-20a1-495a-b06a-f8ba339a5478"
   }
 }

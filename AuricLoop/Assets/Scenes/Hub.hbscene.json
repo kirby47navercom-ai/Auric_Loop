@@ -675,6 +675,81 @@
       "parent": "Group_0"
     },
     {
+      "id": "Background",
+      "name": "Background",
+      "kind": "sprite",
+      "position": [
+        2,
+        7,
+        -0.3
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.32,
+              0.32,
+              0.38,
+              1
+            ],
+            "width": 110,
+            "height": 80,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit"
+          }
+        }
+      ],
+      "parent": "Group_1"
+    },
+    {
       "id": "StairTop",
       "name": "StairTop",
       "kind": "playerStart",
