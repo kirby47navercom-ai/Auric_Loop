@@ -122,11 +122,11 @@ void Dungeon::Build(){
   gateFree=hb::Scene::GetActorsWithTag("Dungeon.Gate");sideFree=hb::Scene::GetActorsWithTag("Dungeon.GateSide");
   {auto s=hb::Scene::GetActorsWithTag("Dungeon.Stairs");stairs=s.empty()?nullptr:s.front();}
   shortages=0;placed.clear();
-  {// 맵 밖: 벽 윗면 무늬를 어둡게, 맵 전체 뒤에 한 장 (카메라가 밖을 비춰도 빈 화면이 안 보이게)
-   float x0=1e9f,x1=-1e9f,y0=1e9f,y1=-1e9f;
-   for(auto& r:rooms){x0=std::min(x0,r.cx-r.hw);x1=std::max(x1,r.cx+r.hw);y0=std::min(y0,r.cy-r.hh);y1=std::max(y1,r.cy+r.hh);}
+  {// 맵 밖: 벽 윗면 무늬를 어둡게 한 장. 맵 전체 크기로 깔면 큰 층에서 엔진의 반복 무늬 한도(1만 칸)를 넘어
+   // 장면이 안 열리므로 화면보다 조금 큰 크기로 두고 카메라를 따라 무늬 한 칸(2m)씩 옮긴다 (Follow)
    auto back=hb::Scene::GetActorsWithTag("Dungeon.Background");
-   if(!back.empty()){hb::Scene::SetPosition(back[0],hb::Vec3{(x0+x1)/2,(y0+y1)/2,-1});hb::Sprites::SetSize(back[0],hb::Vec2{x1-x0+60,y1-y0+60});}}
+   backdrop=back.empty()?nullptr:back.front();backdropAt={1e9f,0,0};
+   if(backdrop)hb::Sprites::SetSize(backdrop,hb::Vec2{48,32});}
   // 방마다 장식·엄폐물 자리를 한 번 정함 (방 번호로 씨앗을 줘서 다시 깔아도 같은 자리)
   const float C=CORRIDOR;
   for(int i=0;i<int(rooms.size());++i){
@@ -215,4 +215,12 @@ hb::Json Dungeon::Describe() const{
   if(shortages)list.push_back({{"kind","Shortage"},{"count",shortages}});  // 조각 풀 부족 (tools/gen_scene.py 개수 늘리기)
   for(const auto& r:rooms)list.push_back({{"kind",r.kind},{"row",r.row},{"x",r.cx},{"y",r.cy},{"hw",r.hw},{"hh",r.hh},{"path",r.path},{"state",r.state},{"links",{r.link[0],r.link[1],r.link[2],r.link[3]}}});
   return list;
+}
+
+void Dungeon::FollowBackdrop(const hb::Vec3& camera){
+  // 무늬가 미끄러지지 않게 2m(무늬 한 칸) 단위로만 따라가고, 칸이 바뀔 때만 엔진에 보낸다
+  if(!backdrop)return;
+  const hb::Vec3 snap{std::round(camera.x/2)*2,std::round(camera.y/2)*2,-1};
+  if(snap.x==backdropAt.x&&snap.y==backdropAt.y)return;
+  backdropAt=snap;hb::Scene::SetPosition(backdrop,snap);
 }

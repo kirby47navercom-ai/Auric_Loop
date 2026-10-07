@@ -25,6 +25,7 @@ void TopDownShooter::MoveCamera(const hb::Vec3& position,const hb::Vec3& aim,boo
   auto at=cameraAt;
   if(shake>0){shake-=delta;const float a=rules->ShakeAmount;at.x+=a*(std::rand()%201-100)/100;at.y+=a*(std::rand()%201-100)/100;}  // 때렸을 때 흔들림
   hb::Scene::SetPosition(camera,at);
+  if(inDungeon)map.FollowBackdrop(at);
 }
 
 // ---- 한 프레임 ------------------------------------------------------------------------
@@ -101,9 +102,10 @@ void TopDownShooter::Update(float delta){
   }
 
   std::vector<Enemy*> enemies;
-  for(auto* e:Enemies()){e->Tick(delta);KeepInside(e);  // 적 이동은 여기서 한 번에 (상태 머신은 상태가 바뀔 때만 C++를 부름)
+  {const auto all=Enemies();Separate(all,position);  // 겹침은 속도로 벌린다 (위치를 직접 옮기면 매 프레임 엔진 명령이 늘어 느려짐)
+  for(auto* e:all){e->Tick(delta);KeepInside(e);  // 적 이동은 여기서 한 번에 (상태 머신은 상태가 바뀔 때만 C++를 부름)
     if(e->burnedOut){e->burnedOut=false;KillEnemy(e);}else enemies.push_back(e);}  // 화상으로 쓰러짐
-  Separate(enemies,position);
+  }
   boss=nullptr;for(auto* e:enemies)if(e->Boss)boss=e;  // 적 포인터는 프레임을 넘겨 들고 있지 않는다 (엔진이 다시 만들 수 있음)
   UpdateBullets(delta,position);
   UpdateFx(delta);

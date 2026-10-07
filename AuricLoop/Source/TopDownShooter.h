@@ -135,6 +135,7 @@ public:
   bool Parked=false;             // 장면에 화면 밖으로 대기 중 (게임 규칙이 꺼내 씀, 실행 중 생성은 끊김)
   bool brainRunning=false;       // 상태 머신이 돌고 있음 (멈춘 상태 머신에 Stop·파라미터를 보내면 엔진 오류)
   bool Flipped() const{return flipped;}
+  hb::Vec3 sep{0,0,0};           // 다른 적·플레이어와 겹친 만큼 벌리는 속도 (게임 규칙 Separate가 정함)
 private:
   hb::Vec3 ToPlayer(float& distance) const;
   enum class Mode{Halt,Chase,Range,Stagger,Dash,Prowl,Jump};
@@ -156,7 +157,7 @@ private:
   hb::Vec3 atkDir{1,0,0},atkTarget{0,0,0};
   bool UpdateMelee(float delta,const hb::Vec3& dir,float distance,bool frozen);
   void EndAttack();
-  void Move(const hb::Vec3& v){if(Length3(v-sentVelocity)<0.01f)return;sentVelocity=v;velocityAge=0;hb::Physics::SetVelocity(this,v);}
+  void Move(hb::Vec3 v){v=v+sep;if(Length3(v-sentVelocity)<0.05f)return;sentVelocity=v;velocityAge=0;hb::Physics::SetVelocity(this,v);}
   static float Length3(const hb::Vec3& v){return std::sqrt(v.x*v.x+v.y*v.y+v.z*v.z);}
 };
 

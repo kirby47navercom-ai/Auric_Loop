@@ -42,6 +42,7 @@ public:
   int PathRoom(int order) const;                             // 주 경로 order번째 방
   hb::Vec3 DoorPosition(int room,int dir) const;             // 문 자리 (방 가장자리 가운데)
   void Lock(int room,bool locked,int only=-1);               // 방 문 잠그기 (only: 그 방향 하나만)
+  void FollowBackdrop(const hb::Vec3& camera);  // 맵 밖 바탕을 카메라 쪽으로 2m 칸 단위로 옮김
   bool Locked(int room,int dir) const{return gates[room*4+dir]!=nullptr;}
   hb::Json Describe() const;                                 // 검사·디버그용 배치 요약
 
@@ -56,5 +57,6 @@ private:
   void Move(std::vector<Piece>& out,const char* tag,float x,float y,float z=0.05f);
   void PlaceRoom(int i);
   void PlaceCorridor(int i,int d);
+  hb::Actor* backdrop=nullptr;hb::Vec3 backdropAt{1e9f,0,0};  // 맵 밖 어두운 바탕 (화면 크기, 카메라를 따라감)
   std::vector<hb::Actor*> gateFree,sideFree;                 // 남은 철창 (위·아래 문용, 옆문용)
 };

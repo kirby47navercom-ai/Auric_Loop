@@ -215,21 +215,21 @@ void TopDownShooter::UpdateShots(float delta,const std::vector<Enemy*>& enemies)
 }
 
 void TopDownShooter::Separate(const std::vector<Enemy*>& list,const hb::Vec3& player){
-  // 적 몸은 서로 밀지 않아서 한 자리에 겹쳐 쌓인다. 겹친 만큼 반씩 벌리고, 플레이어 위로 올라온 적은 밖으로 민다
-  std::vector<hb::Vec3> at;at.reserve(list.size());for(auto* e:list)at.push_back(hb::Scene::GetPosition(e));
-  std::vector<bool> moved(list.size(),false);
+  // 적 몸은 서로 밀지 않아서 한 자리에 겹쳐 쌓인다. 겹친 깊이에 비례하는 벌림 속도(sep)를 정하면 Enemy가 이동 속도에 더한다.
+  // 위치를 직접 옮기지 않으므로 엔진 명령이 늘지 않고, 속도가 바뀔 때만 보낸다
+  constexpr float strength=7.f;  // 겹친 1m당 초속 7m로 벌림
+  std::vector<hb::Vec3> at;at.reserve(list.size());for(auto* e:list){at.push_back(hb::Scene::GetPosition(e));e->sep={0,0,0};}
   for(size_t i=0;i<list.size();++i){
     for(size_t j=i+1;j<list.size();++j){
       auto d=at[i]-at[j];d.z=0;const float len=Length(d),need=list[i]->Radius+list[j]->Radius;
       if(len>=need)continue;
-      const auto n=len>0.01f?d*(1/len):Rotate(hb::Vec3{1,0,0},float(i*97%360));const float push=(need-len)*0.5f;
-      const float wi=list[i]->Boss?0.f:1.f,wj=list[j]->Boss?0.f:1.f,sum=std::max(0.01f,wi+wj);  // 보스는 밀리지 않음
-      at[i]=at[i]+n*(2*push*wi/sum);at[j]=at[j]-n*(2*push*wj/sum);moved[i]=moved[i]||wi>0;moved[j]=moved[j]||wj>0;}
+      const auto n=len>0.01f?d*(1/len):Rotate(hb::Vec3{1,0,0},float(i*97%360));const float push=(need-len)*strength;
+      if(!list[i]->Boss)list[i]->sep=list[i]->sep+n*push;  // 보스는 밀리지 않음
+      if(!list[j]->Boss)list[j]->sep=list[j]->sep-n*push;}
     if(list[i]->Boss)continue;
-    auto d=at[i]-player;d.z=0;const float len=Length(d),need=list[i]->Radius*0.6f;  // 플레이어와는 반쯤 겹쳐도 됨 (완전히 밀어 내면 문 앞을 막고 길을 가로막음)
-    if(len<need){at[i]=at[i]+(len>0.01f?d*(1/len):hb::Vec3{1,0,0})*(need-len);moved[i]=true;}
+    auto d=at[i]-player;d.z=0;const float len=Length(d),need=list[i]->Radius*0.6f;  // 플레이어와는 반쯤 겹쳐도 됨 (완전히 밀어 내면 문 앞을 막아 길을 가로막음)
+    if(len<need)list[i]->sep=list[i]->sep+(len>0.01f?d*(1/len):hb::Vec3{1,0,0})*((need-len)*strength);
   }
-  for(size_t i=0;i<list.size();++i)if(moved[i])hb::Scene::SetPosition(list[i],at[i]);
 }
 
 void TopDownShooter::KeepInside(Enemy* e) const{
