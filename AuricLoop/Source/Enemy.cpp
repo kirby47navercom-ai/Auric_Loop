@@ -163,7 +163,7 @@ bool Enemy::UpdateMelee(float delta,const hb::Vec3& dir,float distance,bool froz
   if(atkPhase==1){  // 공격 중: 돌진은 부딪히면 한 번 피해, 도약은 착지에 둘레 피해
     if(atk==2&&!atkHit&&distance<Radius+0.55f)atkHit=game->DamagePlayer(1,at);
     if(atkTime>0)return true;
-    if(atk==3){hb::Physics::SetCollisionEnabled(this,true);game->Effect("Dust",at+hb::Vec3{0,-0.6f,0});game->Effect("Shockwave",hb::Vec3{at.x,at.y-0.5f,0.03f},0,0.3f);
+    if(atk==3){hb::Physics::SetCollisionEnabled(this,true);game->Effect("Dust",at+hb::Vec3{0,-0.6f,0});game->Effect("Dust",at+hb::Vec3{0.8f,-0.6f,0},0,0,true);
       if(distance<1.5f)game->DamagePlayer(1,at);}
     atkPhase=2;atkTime=atk==1?0.45f:0.65f;Move(hb::Vec3{0,0,0});return true;
   }

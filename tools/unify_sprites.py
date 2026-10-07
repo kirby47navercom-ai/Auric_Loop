@@ -113,3 +113,17 @@ for name in ["Skeleton", "SkeletonMage", "SkeletonCaptain"]:
     for p, im in images.items():
         repaint(im, pal).save(p)
     print(name, "프레임", len(images), "개를", PALETTE, "색으로")
+
+# 적 걷기 들썩임: 생성된 걷기 4장이 거의 같아 미끄러져 보인다. 1·3번째 장을 발끝 기준 BOB픽셀 띄움 (0·2번째는 바닥에 붙임).
+# 위치를 절대값으로 정하므로 여러 번 돌려도 쌓이지 않는다
+for name, bob in [("Skeleton", 1), ("SkeletonMage", 1), ("SkeletonCaptain", 2)]:
+    folder = ASSETS / f"Sprites/Enemies/{name}"
+    for i in range(4):
+        path = folder / f"{name}_Walk_{i}.png"
+        im = Image.open(path).convert("RGBA")
+        body = im.crop(im.getbbox())
+        out = Image.new("RGBA", im.size)
+        x = im.getbbox()[0]
+        out.paste(body, (x, im.height - body.height - (bob if i % 2 else 0)), body)
+        out.save(path)
+    print(name, "걷기 들썩임", bob, "px")

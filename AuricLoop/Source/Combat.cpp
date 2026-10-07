@@ -214,6 +214,24 @@ void TopDownShooter::UpdateShots(float delta,const std::vector<Enemy*>& enemies)
   for(auto* s:done){Give(shotPool,s);shots.erase(s);shotBoom.erase(s);}
 }
 
+void TopDownShooter::Separate(const std::vector<Enemy*>& list,const hb::Vec3& player){
+  // 적 몸은 서로 밀지 않아서 한 자리에 겹쳐 쌓인다. 겹친 만큼 반씩 벌리고, 플레이어 위로 올라온 적은 밖으로 민다
+  std::vector<hb::Vec3> at;at.reserve(list.size());for(auto* e:list)at.push_back(hb::Scene::GetPosition(e));
+  std::vector<bool> moved(list.size(),false);
+  for(size_t i=0;i<list.size();++i){
+    for(size_t j=i+1;j<list.size();++j){
+      auto d=at[i]-at[j];d.z=0;const float len=Length(d),need=list[i]->Radius+list[j]->Radius;
+      if(len>=need)continue;
+      const auto n=len>0.01f?d*(1/len):Rotate(hb::Vec3{1,0,0},float(i*97%360));const float push=(need-len)*0.5f;
+      const float wi=list[i]->Boss?0.f:1.f,wj=list[j]->Boss?0.f:1.f,sum=std::max(0.01f,wi+wj);  // 보스는 밀리지 않음
+      at[i]=at[i]+n*(2*push*wi/sum);at[j]=at[j]-n*(2*push*wj/sum);moved[i]=moved[i]||wi>0;moved[j]=moved[j]||wj>0;}
+    if(list[i]->Boss)continue;
+    auto d=at[i]-player;d.z=0;const float len=Length(d),need=list[i]->Radius*0.6f;  // 플레이어와는 반쯤 겹쳐도 됨 (완전히 밀어 내면 문 앞을 막고 길을 가로막음)
+    if(len<need){at[i]=at[i]+(len>0.01f?d*(1/len):hb::Vec3{1,0,0})*(need-len);moved[i]=true;}
+  }
+  for(size_t i=0;i<list.size();++i)if(moved[i])hb::Scene::SetPosition(list[i],at[i]);
+}
+
 void TopDownShooter::KeepInside(Enemy* e) const{
   // 돌진·도약·밀려남으로 벽을 뚫고 나간 적은 싸우는 방 안 가장 가까운 자리로 (방은 철창으로 잠겨 있음)
   if(!inDungeon||fightingRoom<0||fightingRoom>=int(map.rooms.size())||e->Parked)return;

@@ -509,7 +509,8 @@ private:
   void Shoot(const hb::Vec3& from);
   void UpdateShots(float delta,const std::vector<Enemy*>& enemies);
   void UpdateBullets(float delta,const hb::Vec3& position);
-  void KeepInside(Enemy* e) const;  // 싸우는 방 밖으로 밀려난 적을 방 안으로 되돌림
+  void KeepInside(Enemy* e) const;
+  void Separate(const std::vector<Enemy*>& list,const hb::Vec3& player);  // 적끼리·플레이어와 겹치면 밀어 냄  // 싸우는 방 밖으로 밀려난 적을 방 안으로 되돌림
   bool HitEnemy(Enemy* e,const hb::Vec3& push,float damage);
   void KillEnemy(Enemy* e);
   void DropCoin(const hb::Vec3& at,int value);
