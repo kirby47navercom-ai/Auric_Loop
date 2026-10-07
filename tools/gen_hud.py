@@ -13,6 +13,7 @@ from PIL import Image
 PROJECT = Path(__file__).resolve().parent.parent / "AuricLoop"
 WIDGET = PROJECT / "Assets/UI/W_TopDown.hbwidget.json"
 KIT = "Assets/UI/Kit/"
+ITEMS = "Assets/UI/Items/"  # 아이템 아이콘 40x40 (tools/make_icons.py). 흐려지지 않게 1배·2배로만 씀
 FONT = "Assets/Fonts/DungGeunMo.ttf"  # 둥근모꼴 (픽셀 글꼴, Public Domain: Assets/Fonts/DungGeunMo_LICENSE.txt)
 # 색: 본문 상아색, 강조 금색, 보조 모래색, 위험 붉은색. 패널은 짙은 남색 + 금테 + 둥근 모서리로 한 가지 모양
 INK, GOLD, SAND, RED, SKY = "#f6ecd8", "#ffd56a", "#c9b48a", "#ff8a7a", "#8fd8ff"
@@ -35,6 +36,8 @@ def node(name, kind, corner, x, y, w_, h, z=10, **props):
     n.update(id=name, name=name, type=kind, parent="root", events={}, bindings={})
     n["slot"] = {"anchors": [ax, ay, ax, ay], "offset": [-x if ax == 1 else x, -y if ay == 1 else y, w_, h],
                  "alignment": [ax, ay], "zIndex": z, "fill": 0}
+    if kind == "Image":
+        props.setdefault("imageRendering", "pixelated")  # 도트 그림을 키워도 흐려지지 않게
     if "fontSize" in props:
         props["fontSize"] = SIZES.get(props["fontSize"], props["fontSize"])  # 픽셀 글꼴은 조금 커야 읽힘
     n["properties"].update({"text": "", "texture": "", "background": "#00000000", "deviceVisibility": "all", "font": FONT,
@@ -142,24 +145,26 @@ def panel_text(name, value, px, py, w_, h_, size=16, align="left"):
 
 panel_image("CraftPanel", "craft_panel.png", 0, 0, z=40)
 panel_text("CraftTitle", "제작", 32, 32, 300, 28, size=22)
-panel_text("CraftSub", "제작서를 보유한 아이템  (1~5 선택, Enter 제작, Q 닫기)", 32, 70, 400, 22, size=13)
+panel_text("CraftSub", "제작서를 보유한 아이템  (1~5 선택, Enter 제작, Q 닫기)", 32, 70, 620, 22, size=13)
 SLOTS = [(32, 128), (148, 128), (264, 128), (32, 244), (148, 244)]  # 키트 slot_01~05
-ICONS = ["craft_item_potion.png", "craft_item_flash.png", "craft_item_crystal.png", "craft_item_crystal.png", "craft_item_crystal.png"]
+ICONS = ["potion", "flash", "crystal_power", "crystal_burn", "crystal_pierce"]
 for i, ((sx, sy), icon) in enumerate(zip(SLOTS, ICONS), 1):
-    iw, ih = Image.open(PROJECT / KIT / icon).size
-    panel_image(f"CraftIcon{i}", icon, sx + (104 - iw) // 2, sy + (104 - ih) // 2)
+    panel(f"CraftIcon{i}", "Image", sx + 12, sy + 12, 80, 80, 41, texture=ITEMS + icon + ".png")
     panel_text(f"CraftKey{i}", str(i), sx + 8, sy + 4, 20, 18, size=12)
     t = panel(f"CraftSlot{i}", "TouchButton", sx, sy, 104, 104, 44, inputKey=str(i), inputMode="keys",
               background="#00000000", pressed="#ffffff22", hover="#ffffff11")
 panel_image("CraftSelect", "craft_select.png", *SLOTS[0], z=43)  # 선택 테두리 하나를 C++ UI::SetPosition으로 옮김
-iw, ih = Image.open(PROJECT / KIT / "craft_detail_potion.png").size
-panel_image("CraftDetail", "craft_detail_potion.png", 480 + (72 - iw) // 2, 176 + (72 - ih) // 2)  # 설명 아이콘: SetTexture·SetSize·SetPosition
+panel("CraftDetail", "Image", 476, 172, 80, 80, 41, texture=ITEMS + "potion.png")  # 설명 아이콘: C++ UI::SetTexture
 panel_text("CraftName", "회복 물약", 480, 136, 380, 26, size=20)
 panel_text("CraftEffect", "체력 1 회복", 568, 190, 300, 22)
 panel_text("CraftType", "소모 아이템", 568, 220, 300, 20, size=13)
 panel_text("CraftNeed", "필요 소재", 480, 272, 300, 22)
-panel_text("CraftCost", "약초 0 / 3    빈 병 1 / 1", 480, 312, 380, 22)
-panel_text("CraftConfirm", "제작하기", 480, 400, 380, 30, size=18, align="center")
+for k in (1, 2):  # 필요 소재 두 칸: 아이콘 + 가진 수 / 필요한 수 (모자라면 붉은 글씨)
+    panel(f"CraftCostBox{k}", "Panel", 480 + (k - 1) * 190, 300, 176, 52, 41, **SOFT)
+    panel(f"CraftCostIcon{k}", "Image", 486 + (k - 1) * 190, 306, 40, 40, 42, texture=ITEMS + "herb.png")
+    panel_text(f"CraftCostText{k}", "", 534 + (k - 1) * 190, 314, 130, 26, size=17)
+panel_text("CraftCost", "", 480, 358, 380, 20, size=12)  # 덧붙임 (각인은 하나만 등)
+panel_text("CraftConfirm", "제작하기", 480, 400, 380, 30, size=18, align="center")["properties"]["color"] = "#2a2112"
 panel("CraftConfirmButton", "TouchButton", 480, 384, 380, 64, 44, inputKey="enter", inputMode="keys",
       background="#00000000", pressed="#ffffff22", hover="#ffffff11")
 panel("CraftClose", "TouchButton", 820, 24, 72, 72, 44, inputKey="q", inputMode="keys",
@@ -249,14 +254,31 @@ node("BossBar", "ProgressBar", "t", 0, 122, 514, 12, 22, value=1, max=1, fillDir
 node("TipBack", "Panel", "t", 0, 140, 780, 48, 30, visible=False, **FRAME)
 node("Tip", "Text", "t", 0, 151, 760, 28, 31, text="", fontSize=17, color="#ffe9a8", align="center", visible=False)
 
-# ---- 가방 (Tab) ----
-node("BagPanel", "Panel", "c", 0, -40, 640, 280, 45, visible=False, **FRAME)
-node("BagTitle", "Text", "c", 0, -150, 580, 32, 46, text="가방", fontSize=22, color=GOLD, align="center", visible=False)
-for i in range(5):
-    node(f"BagRow{i}", "Text", "c", 0, -105 + i * 36, 580, 28, 46, text="", fontSize=17, color=GOLD if i == 4 else INK, align="center", visible=False)
-node("BagHint", "Text", "c", 0, 70, 580, 22, 46, text="Tab: 닫기", fontSize=13, color=SAND, align="center", visible=False)
+# ---- 가방 (Tab): 위 줄은 소재·아이템 칸(아이콘·개수·이름), 아래 줄은 무기·각인·[귀환], 오른쪽 아래 적재량 막대 ----
+BAG_ITEMS = [("ore", "광물"), ("herb", "약초"), ("bone", "마물 소재"), ("bottle", "빈 병"), ("flash", "섬광탄"), ("gold", "골드")]
+node("BagPanel", "Panel", "c", 0, -20, 660, 380, 45, visible=False, **FRAME)
+node("BagTitle", "Text", "c", 0, -180, 600, 32, 46, text="가방", fontSize=22, color=GOLD, align="center", visible=False)
+for i, (icon, label) in enumerate(BAG_ITEMS):
+    x = -250 + i * 100
+    node(f"BagSlot{i}", "Panel", "c", x, -100, 84, 84, 46, visible=False, **SOFT)
+    node(f"BagIcon{i}", "Image", "c", x, -100, 80, 80, 47, texture=ITEMS + icon + ".png", visible=False)
+    node(f"BagCount{i}", "Text", "c", x + 10, -74, 56, 22, 48, text="0", fontSize=16, color=INK, align="right", visible=False)
+    node(f"BagName{i}", "Text", "c", x, -44, 96, 20, 47, text=label, fontSize=13, color=SAND, align="center", visible=False)
+node("BagGearTitle", "Text", "c", -250, -2, 120, 20, 46, text="장비", fontSize=14, color=GOLD, align="left", visible=False)
+for k, (icon, label) in enumerate([("sword", "무기"), ("crystal_power", "각인"), ("scroll", "[귀환]")]):
+    x = -250 + k * 100
+    node(f"BagGearSlot{k}", "Panel", "c", x, 62, 84, 84, 46, visible=False, **SOFT)
+    node(f"BagGearIcon{k}", "Image", "c", x, 62, 80, 80, 47, texture=ITEMS + icon + ".png", visible=False)
+    node(f"BagGearBadge{k}", "Text", "c", x + 10, 88, 56, 22, 48, text="", fontSize=16, color=GOLD, align="right", visible=False)
+    node(f"BagGearName{k}", "Text", "c", x, 118, 120, 20, 47, text=label, fontSize=13, color=SAND, align="center", visible=False)
+node("BagWeightText", "Text", "c", 150, 40, 300, 22, 46, text="적재량 0 / 100", fontSize=15, color=INK, align="left", visible=False)
+node("BagWeightBack", "Panel", "c", 150, 70, 300, 18, 46, background="#05090acc", borderColor="#c9a24a88", borderWidth=1, radius=4, visible=False)
+node("BagWeight", "ProgressBar", "c", 150, 70, 294, 12, 47, value=0, max=1, fillDirection="leftToRight", fillTexture="", backgroundTexture="",
+     background="#00000000", accent="#e0b040ff", visible=False)
+node("BagUseText", "Text", "c", 150, 108, 300, 22, 46, text="", fontSize=15, color=GOLD, align="left", visible=False)
+node("BagHint", "Text", "c", 0, 150, 600, 22, 46, text="Tab: 닫기", fontSize=13, color=SAND, align="center", visible=False)
 touch("BagTouch", "tab", "tr", 24 + 72 + 12, 24, 72)
-n = node("BagUseTouch", "TouchButton", "c", 0, 39, 580, 34, 47, inputKey="enter", inputMode="keys", deviceVisibility="touch",
+n = node("BagUseTouch", "TouchButton", "c", -50, 62, 84, 84, 49, inputKey="enter", inputMode="keys", deviceVisibility="touch",
          background="#00000000", pressed="#ffffff22", hover="#00000000", visible=False)  # 가방이 열렸을 때만 ([귀환] 줄 터치)
 
 # ---- 일시정지 (Esc·P, 모바일 일시정지 버튼) ----

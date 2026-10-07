@@ -282,17 +282,30 @@ void TopDownShooter::SetPaused(bool paused){
 
 void TopDownShooter::Bag(bool toggle,bool use){
   // 가방 (기획서 7장 Tab): 들고 있는 소재·아이템과 적재량. [귀환]이 있으면 Enter로 사용 (던전 안에서만)
+  // 칸 배치는 tools/gen_hud.py: 위 줄 소재·아이템 6칸(아이콘·개수·이름), 아래 줄 무기·각인·[귀환], 적재량 막대
+  static const std::vector<std::string> parts=[]{std::vector<std::string> v={"BagPanel","BagTitle","BagHint","BagGearTitle",
+      "BagWeightText","BagWeightBack","BagWeight","BagUseText"};
+    for(int i=0;i<6;++i)for(auto* p:{"BagSlot","BagIcon","BagCount","BagName"})v.push_back(p+std::to_string(i));
+    for(int k=0;k<3;++k)for(auto* p:{"BagGearSlot","BagGearIcon","BagGearBadge","BagGearName"})v.push_back(p+std::to_string(k));
+    return v;}();
   if(toggle){bagOpen=!bagOpen;if(bagOpen&&craftOpen)Craft(true,0,false);
-    for(auto* n:{"BagPanel","BagTitle","BagHint","BagUseTouch"})UiVisible(n,bagOpen);}
+    for(const auto& n:parts)UiVisible(n,bagOpen);UiVisible("BagUseTouch",bagOpen&&HasReturnItem);}
   const bool canReturn=HasReturnItem&&!Returning&&!ReturnSuccess&&inDungeon&&area>=0;
   if(bagOpen){
-    const std::string rows[]={"광물 "+std::to_string(Ore)+"   약초 "+std::to_string(Herb)+"   마물 소재 "+std::to_string(Monster),
-      "빈 병 "+std::to_string(Bottle)+"   섬광탄 "+std::to_string(Flashbangs)+"   골드 "+std::to_string(Gold)+" G",
-      "적재량 "+std::to_string(Weight())+" / "+std::to_string(rules->WeightLimit)+(Weight()>rules->WeightLimit?"  (무거워서 느려짐)":""),
-      std::string("무기 ")+weapons[Character]+(WeaponLevel?" +1":"")+(Enchant?"   각인 있음":""),
-      HasReturnItem?(canReturn?"[귀환]  Enter: 사용해서 집으로":"[귀환]  던전 안에서 쓸 수 있어"):""};
-    for(int i=0;i<5;++i){UiText("BagRow"+std::to_string(i),rows[i]);UiVisible("BagRow"+std::to_string(i),!rows[i].empty());}}
-  else for(int i=0;i<5;++i)UiVisible("BagRow"+std::to_string(i),false);
+    const int counts[]={Ore,Herb,Monster,Bottle,Flashbangs,Gold};
+    for(int i=0;i<6;++i){const auto k=std::to_string(i);UiText("BagCount"+k,std::to_string(counts[i]));UiOpacity("BagIcon"+k,counts[i]>0?1.f:0.3f);}  // 없는 건 흐리게
+    static const char* weaponIcons[]={"sword","bow","card"};static const char* crystals[]={"","crystal_power","crystal_burn","crystal_pierce"};
+    static const char* enchantNames[]={"각인 없음","증폭","화상",""};
+    UiTexture("BagGearIcon0",std::string("Assets/UI/Items/")+weaponIcons[Character]+".png");
+    UiText("BagGearBadge0",WeaponLevel?"+"+std::to_string(WeaponLevel):"");UiText("BagGearName0",weapons[Character]);
+    UiVisible("BagGearIcon1",Enchant>0);if(Enchant>0)UiTexture("BagGearIcon1",std::string("Assets/UI/Items/")+crystals[Enchant]+".png");
+    UiText("BagGearName1",Enchant==3?(Character?"관통":"검기"):enchantNames[Enchant]);
+    UiVisible("BagGearIcon2",HasReturnItem);UiOpacity("BagGearIcon2",canReturn?1.f:0.45f);UiText("BagGearName2",HasReturnItem?"[귀환]":"없음");
+    const bool heavy=Weight()>rules->WeightLimit;
+    UiText("BagWeightText","적재량 "+std::to_string(Weight())+" / "+std::to_string(rules->WeightLimit)+(heavy?"  무거워서 느림":""));
+    UiColor("BagWeightText",heavy?hb::Color{1,0.54f,0.48f,1}:hb::Color{0.96f,0.93f,0.85f,1});
+    UiValue("BagWeight",std::min(1.f,float(Weight())/std::max(1,rules->WeightLimit)));
+    UiText("BagUseText",HasReturnItem?(canReturn?"Enter·[귀환] 누르기: 집으로":"[귀환]은 던전 안에서 써"):"");}
   if(use&&bagOpen&&canReturn){HasReturnItem=false;Returning=true;Bag(true,false);StartReturnRoom(area);Hud();Talk("ReturnStart");}
 }
 

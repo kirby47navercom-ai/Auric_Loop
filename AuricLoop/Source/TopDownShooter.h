@@ -553,6 +553,8 @@ private:
   void UiValue(const std::string& n,float v){if(UiChanged("f"+n,std::to_string(v)))hb::UI::SetValue(player,"HUD",n,v);}
   void UiPosition(const std::string& n,const hb::Vec2& v){if(UiChanged("p"+n,UiNum(v.x,v.y)))hb::UI::SetPosition(player,"HUD",n,v);}
   void UiSize(const std::string& n,const hb::Vec2& v){if(UiChanged("s"+n,UiNum(v.x,v.y)))hb::UI::SetSize(player,"HUD",n,v);}
+  void UiOpacity(const std::string& n,float v){if(UiChanged("o"+n,std::to_string(v)))hb::UI::SetOpacity(player,"HUD",n,v);}
+  void UiColor(const std::string& n,const hb::Color& c){if(UiChanged("c"+n,UiNum(c.r,c.g)+UiNum(c.b,c.a)))hb::UI::SetColor(player,"HUD",n,c);}
   hb::Vec3 playerAt{0,0,0},facing{1,0,0},cameraAt{0,0,0};
   bool playerFlipped=false,blinkShown=false;
   hb::Vec3 knock{0,0,0};

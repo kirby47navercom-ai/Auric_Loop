@@ -43,19 +43,22 @@ void TopDownShooter::Interact(const hb::Vec3& position,bool pressed){
 void TopDownShooter::CraftDetail(){
   static const char* names[]={"","회복 물약","섬광탄","각인 결정: 증폭","각인 결정: 화상","각인 결정: 검기·관통"};
   static const char* effects[]={"","체력 1 회복","1초 전체 스턴, 탄막 제거","무기공격력 +30%","맞은 적이 3초 동안 불탐",""};
-  std::string cost;
-  if(craftPick==1)cost="약초 "+std::to_string(Herb)+" / 3    빈 병 "+std::to_string(Bottle)+" / 1";
-  else if(craftPick==2)cost="광물 "+std::to_string(Ore)+" / 1";
-  else cost="마물 소재 "+std::to_string(Monster)+" / 1   (각인은 하나만, 새로 하면 덮어씀)";
-  {// 선택 테두리는 고른 칸으로 옮기고, 설명 아이콘은 그림·크기를 바꿔 72px 칸 가운데에 (좌표: 제작 창 920x516 가운데 기준, tools/gen_hud.py)
-   static const struct{const char* file;float w,h;}icons[]={{"craft_detail_potion.png",32,52},{"craft_item_flash.png",44,44},
-     {"craft_item_crystal.png",30,42},{"craft_item_crystal.png",30,42},{"craft_item_crystal.png",30,42}};
-   const auto& ic=icons[craftPick-1];const int col=(craftPick-1)%3,row=(craftPick-1)/3;
+  // 필요 소재: 아이콘 + 가진 수 / 필요한 수 (모자라면 붉게). 칸 두 개 (gen_hud.py CraftCost*)
+  struct Need{const char* icon;int have,need;};
+  const std::vector<Need> needs=craftPick==1?std::vector<Need>{{"herb",Herb,3},{"bottle",Bottle,1}}:craftPick==2?std::vector<Need>{{"ore",Ore,1}}:std::vector<Need>{{"bone",Monster,1}};
+  for(int k=1;k<=2;++k){const auto id=std::to_string(k);const bool on=craftOpen&&k<=int(needs.size());
+    for(auto* p:{"CraftCostBox","CraftCostIcon","CraftCostText"})UiVisible(p+id,on);
+    if(!on)continue;const auto& n=needs[k-1];
+    UiTexture("CraftCostIcon"+id,std::string("Assets/UI/Items/")+n.icon+".png");
+    UiText("CraftCostText"+id,std::to_string(n.have)+" / "+std::to_string(n.need));
+    UiColor("CraftCostText"+id,n.have>=n.need?hb::Color{0.96f,0.93f,0.85f,1}:hb::Color{1,0.54f,0.48f,1});}
+  const std::string cost=craftPick>=3?"각인은 하나만 (새로 하면 덮어씀)":craftPick==1&&Hp>=MaxHp?"체력이 가득 차 있으면 못 마셔":"";
+  {// 선택 테두리는 고른 칸으로 옮기고, 설명 아이콘은 고른 아이템 그림으로 (좌표: 제작 창 920x516 가운데 기준, tools/gen_hud.py)
+   static const char* icons[]={"potion","flash","crystal_power","crystal_burn","crystal_pierce"};
+   const int col=(craftPick-1)%3,row=(craftPick-1)/3;
    UiVisible("CraftSelect",craftOpen);UiVisible("CraftDetail",craftOpen);
    UiPosition("CraftSelect",hb::Vec2{32.f+116*col-460,128.f+116*row-258});
-   UiTexture("CraftDetail",std::string("Assets/UI/Kit/")+ic.file);
-   UiSize("CraftDetail",hb::Vec2{ic.w,ic.h});
-   UiPosition("CraftDetail",hb::Vec2{480+(72-ic.w)/2-460,176+(72-ic.h)/2-258});}
+   UiTexture("CraftDetail",std::string("Assets/UI/Items/")+icons[craftPick-1]+".png");}
   UiText("CraftName",names[craftPick]);
   UiText("CraftEffect",craftPick==5?(Character?"화살·마탄이 적을 뚫고 지나감":"베기 사거리 +1.5m"):effects[craftPick]);
   UiText("CraftType",craftPick<=2?"소모 아이템":"무기 각인 (귀환하면 사라짐)");

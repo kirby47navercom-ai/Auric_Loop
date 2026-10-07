@@ -141,7 +141,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -211,7 +212,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -281,7 +283,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -351,7 +354,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -491,7 +495,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -911,7 +916,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -1054,7 +1060,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -1474,7 +1481,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -1544,7 +1552,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -1614,7 +1623,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -1684,7 +1694,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -1754,7 +1765,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -1824,7 +1836,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -1894,7 +1907,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -2244,7 +2258,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -2314,7 +2329,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -2384,7 +2400,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -2454,7 +2471,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -2524,7 +2542,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -2594,7 +2613,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -2664,7 +2684,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -2734,7 +2755,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -2804,7 +2826,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -2874,7 +2897,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -2944,7 +2968,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -3014,7 +3039,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -3084,7 +3110,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -3154,7 +3181,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -3224,7 +3252,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -3294,7 +3323,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -3364,7 +3394,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -3434,7 +3465,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -3504,7 +3536,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -3574,7 +3607,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -3644,7 +3678,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -3714,7 +3749,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -3784,7 +3820,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -3854,7 +3891,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -3924,7 +3962,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -3994,7 +4033,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -4064,7 +4104,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -4134,7 +4175,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -4204,7 +4246,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -4274,7 +4317,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -4344,7 +4388,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -4414,7 +4459,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -4484,7 +4530,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -4554,7 +4601,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -4624,7 +4672,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -4694,7 +4743,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -4764,7 +4814,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -4834,7 +4885,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -4904,7 +4956,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -4974,7 +5027,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -5113,7 +5167,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -5203,7 +5258,7 @@
         "offset": [
           -428.0,
           -188.0,
-          400,
+          620,
           22
         ],
         "alignment": [
@@ -5271,10 +5326,10 @@
           0.5
         ],
         "offset": [
-          -388.0,
-          -98.0,
-          24,
-          39
+          -416.0,
+          -118.0,
+          80,
+          80
         ],
         "alignment": [
           0,
@@ -5296,7 +5351,7 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "Assets/UI/Kit/craft_item_potion.png",
+        "texture": "Assets/UI/Items/potion.png",
         "fontSize": 22,
         "color": "#f6ecd8",
         "background": "#00000000",
@@ -5323,7 +5378,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -5481,10 +5537,10 @@
           0.5
         ],
         "offset": [
-          -282.0,
-          -100.0,
-          44,
-          44
+          -300.0,
+          -118.0,
+          80,
+          80
         ],
         "alignment": [
           0,
@@ -5506,7 +5562,7 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "Assets/UI/Kit/craft_item_flash.png",
+        "texture": "Assets/UI/Items/flash.png",
         "fontSize": 22,
         "color": "#f6ecd8",
         "background": "#00000000",
@@ -5533,7 +5589,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -5691,10 +5748,10 @@
           0.5
         ],
         "offset": [
-          -159.0,
-          -99.0,
-          30,
-          42
+          -184.0,
+          -118.0,
+          80,
+          80
         ],
         "alignment": [
           0,
@@ -5716,7 +5773,7 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "Assets/UI/Kit/craft_item_crystal.png",
+        "texture": "Assets/UI/Items/crystal_power.png",
         "fontSize": 22,
         "color": "#f6ecd8",
         "background": "#00000000",
@@ -5743,7 +5800,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -5901,10 +5959,10 @@
           0.5
         ],
         "offset": [
-          -391.0,
-          17.0,
-          30,
-          42
+          -416.0,
+          -2.0,
+          80,
+          80
         ],
         "alignment": [
           0,
@@ -5926,7 +5984,7 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "Assets/UI/Kit/craft_item_crystal.png",
+        "texture": "Assets/UI/Items/crystal_burn.png",
         "fontSize": 22,
         "color": "#f6ecd8",
         "background": "#00000000",
@@ -5953,7 +6011,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -6111,10 +6170,10 @@
           0.5
         ],
         "offset": [
-          -275.0,
-          17.0,
-          30,
-          42
+          -300.0,
+          -2.0,
+          80,
+          80
         ],
         "alignment": [
           0,
@@ -6136,7 +6195,7 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "Assets/UI/Kit/craft_item_crystal.png",
+        "texture": "Assets/UI/Items/crystal_pierce.png",
         "fontSize": 22,
         "color": "#f6ecd8",
         "background": "#00000000",
@@ -6163,7 +6222,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -6373,7 +6433,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -6391,10 +6452,10 @@
           0.5
         ],
         "offset": [
-          40.0,
-          -72.0,
-          32,
-          52
+          16.0,
+          -86.0,
+          80,
+          80
         ],
         "alignment": [
           0,
@@ -6416,7 +6477,7 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "Assets/UI/Kit/craft_detail_potion.png",
+        "texture": "Assets/UI/Items/potion.png",
         "fontSize": 22,
         "color": "#f6ecd8",
         "background": "#00000000",
@@ -6443,7 +6504,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -6729,10 +6791,10 @@
       "bindings": {}
     },
     {
-      "id": "CraftCost",
-      "name": "CraftCost",
+      "id": "CraftCostBox1",
+      "name": "CraftCostBox1",
       "parent": "root",
-      "type": "Text",
+      "type": "Panel",
       "slot": {
         "anchors": [
           0.5,
@@ -6742,9 +6804,79 @@
         ],
         "offset": [
           20.0,
-          54.0,
-          380,
-          22
+          42.0,
+          176,
+          52
+        ],
+        "alignment": [
+          0,
+          0
+        ],
+        "zIndex": 41,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#0d1419b8",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#c9a24a55",
+        "borderWidth": 1,
+        "radius": 6,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "CraftCostIcon1",
+      "name": "CraftCostIcon1",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          26.0,
+          48.0,
+          40,
+          40
         ],
         "alignment": [
           0,
@@ -6765,9 +6897,361 @@
         "deadZone": 0.15,
         "floating": false,
         "deviceVisibility": "all",
-        "text": "약초 0 / 3    빈 병 1 / 1",
+        "text": "",
+        "texture": "Assets/UI/Items/herb.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "CraftCostText1",
+      "name": "CraftCostText1",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          74.0,
+          56.0,
+          130,
+          26
+        ],
+        "alignment": [
+          0,
+          0
+        ],
+        "zIndex": 42,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
         "texture": "",
-        "fontSize": 18,
+        "fontSize": 19,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "left",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "CraftCostBox2",
+      "name": "CraftCostBox2",
+      "parent": "root",
+      "type": "Panel",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          210.0,
+          42.0,
+          176,
+          52
+        ],
+        "alignment": [
+          0,
+          0
+        ],
+        "zIndex": 41,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#0d1419b8",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#c9a24a55",
+        "borderWidth": 1,
+        "radius": 6,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "CraftCostIcon2",
+      "name": "CraftCostIcon2",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          216.0,
+          48.0,
+          40,
+          40
+        ],
+        "alignment": [
+          0,
+          0
+        ],
+        "zIndex": 42,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "Assets/UI/Items/herb.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "CraftCostText2",
+      "name": "CraftCostText2",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          264.0,
+          56.0,
+          130,
+          26
+        ],
+        "alignment": [
+          0,
+          0
+        ],
+        "zIndex": 42,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 19,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "left",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "CraftCost",
+      "name": "CraftCost",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          20.0,
+          100.0,
+          380,
+          20
+        ],
+        "alignment": [
+          0,
+          0
+        ],
+        "zIndex": 42,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 14,
         "color": "#f6ecd8",
         "background": "#00000000",
         "accent": "#589ad6",
@@ -6838,7 +7322,7 @@
         "text": "제작하기",
         "texture": "",
         "fontSize": 20,
-        "color": "#f6ecd8",
+        "color": "#2a2112",
         "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
@@ -7213,7 +7697,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -7283,7 +7768,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -7773,7 +8259,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -7983,7 +8470,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -8403,7 +8891,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -8893,7 +9382,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -9383,7 +9873,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -9943,7 +10434,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -10875,9 +11367,9 @@
         ],
         "offset": [
           0,
-          -40,
-          640,
-          280
+          -20,
+          660,
+          380
         ],
         "alignment": [
           0.5,
@@ -10945,8 +11437,8 @@
         ],
         "offset": [
           0,
-          -150,
-          580,
+          -180,
+          600,
           32
         ],
         "alignment": [
@@ -11002,10 +11494,10 @@
       "bindings": {}
     },
     {
-      "id": "BagRow0",
-      "name": "BagRow0",
+      "id": "BagSlot0",
+      "name": "BagSlot0",
       "parent": "root",
-      "type": "Text",
+      "type": "Panel",
       "slot": {
         "anchors": [
           0.5,
@@ -11014,10 +11506,10 @@
           0.5
         ],
         "offset": [
-          0,
-          -105,
-          580,
-          28
+          -250,
+          -100,
+          84,
+          84
         ],
         "alignment": [
           0.5,
@@ -11040,8 +11532,219 @@
         "deviceVisibility": "all",
         "text": "",
         "texture": "",
-        "fontSize": 19,
+        "fontSize": 22,
         "color": "#f6ecd8",
+        "background": "#0d1419b8",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#c9a24a55",
+        "borderWidth": 1,
+        "radius": 6,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagIcon0",
+      "name": "BagIcon0",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -250,
+          -100,
+          80,
+          80
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "Assets/UI/Items/ore.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagCount0",
+      "name": "BagCount0",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -240,
+          -74,
+          56,
+          22
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 48,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "0",
+        "texture": "",
+        "fontSize": 18,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "right",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagName0",
+      "name": "BagName0",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -250,
+          -44,
+          96,
+          20
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "광물",
+        "texture": "",
+        "fontSize": 15,
+        "color": "#c9b48a",
         "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
@@ -11072,10 +11775,10 @@
       "bindings": {}
     },
     {
-      "id": "BagRow1",
-      "name": "BagRow1",
+      "id": "BagSlot1",
+      "name": "BagSlot1",
       "parent": "root",
-      "type": "Text",
+      "type": "Panel",
       "slot": {
         "anchors": [
           0.5,
@@ -11084,10 +11787,10 @@
           0.5
         ],
         "offset": [
-          0,
-          -69,
-          580,
-          28
+          -150,
+          -100,
+          84,
+          84
         ],
         "alignment": [
           0.5,
@@ -11110,8 +11813,219 @@
         "deviceVisibility": "all",
         "text": "",
         "texture": "",
-        "fontSize": 19,
+        "fontSize": 22,
         "color": "#f6ecd8",
+        "background": "#0d1419b8",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#c9a24a55",
+        "borderWidth": 1,
+        "radius": 6,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagIcon1",
+      "name": "BagIcon1",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -150,
+          -100,
+          80,
+          80
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "Assets/UI/Items/herb.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagCount1",
+      "name": "BagCount1",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -140,
+          -74,
+          56,
+          22
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 48,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "0",
+        "texture": "",
+        "fontSize": 18,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "right",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagName1",
+      "name": "BagName1",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -150,
+          -44,
+          96,
+          20
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "약초",
+        "texture": "",
+        "fontSize": 15,
+        "color": "#c9b48a",
         "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
@@ -11142,10 +12056,10 @@
       "bindings": {}
     },
     {
-      "id": "BagRow2",
-      "name": "BagRow2",
+      "id": "BagSlot2",
+      "name": "BagSlot2",
       "parent": "root",
-      "type": "Text",
+      "type": "Panel",
       "slot": {
         "anchors": [
           0.5,
@@ -11154,10 +12068,10 @@
           0.5
         ],
         "offset": [
-          0,
-          -33,
-          580,
-          28
+          -50,
+          -100,
+          84,
+          84
         ],
         "alignment": [
           0.5,
@@ -11180,8 +12094,219 @@
         "deviceVisibility": "all",
         "text": "",
         "texture": "",
-        "fontSize": 19,
+        "fontSize": 22,
         "color": "#f6ecd8",
+        "background": "#0d1419b8",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#c9a24a55",
+        "borderWidth": 1,
+        "radius": 6,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagIcon2",
+      "name": "BagIcon2",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -50,
+          -100,
+          80,
+          80
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "Assets/UI/Items/bone.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagCount2",
+      "name": "BagCount2",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -40,
+          -74,
+          56,
+          22
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 48,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "0",
+        "texture": "",
+        "fontSize": 18,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "right",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagName2",
+      "name": "BagName2",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -50,
+          -44,
+          96,
+          20
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "마물 소재",
+        "texture": "",
+        "fontSize": 15,
+        "color": "#c9b48a",
         "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
@@ -11212,10 +12337,10 @@
       "bindings": {}
     },
     {
-      "id": "BagRow3",
-      "name": "BagRow3",
+      "id": "BagSlot3",
+      "name": "BagSlot3",
       "parent": "root",
-      "type": "Text",
+      "type": "Panel",
       "slot": {
         "anchors": [
           0.5,
@@ -11224,10 +12349,10 @@
           0.5
         ],
         "offset": [
-          0,
-          3,
-          580,
-          28
+          50,
+          -100,
+          84,
+          84
         ],
         "alignment": [
           0.5,
@@ -11250,8 +12375,219 @@
         "deviceVisibility": "all",
         "text": "",
         "texture": "",
-        "fontSize": 19,
+        "fontSize": 22,
         "color": "#f6ecd8",
+        "background": "#0d1419b8",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#c9a24a55",
+        "borderWidth": 1,
+        "radius": 6,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagIcon3",
+      "name": "BagIcon3",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          50,
+          -100,
+          80,
+          80
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "Assets/UI/Items/bottle.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagCount3",
+      "name": "BagCount3",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          60,
+          -74,
+          56,
+          22
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 48,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "0",
+        "texture": "",
+        "fontSize": 18,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "right",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagName3",
+      "name": "BagName3",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          50,
+          -44,
+          96,
+          20
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "빈 병",
+        "texture": "",
+        "fontSize": 15,
+        "color": "#c9b48a",
         "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
@@ -11282,10 +12618,10 @@
       "bindings": {}
     },
     {
-      "id": "BagRow4",
-      "name": "BagRow4",
+      "id": "BagSlot4",
+      "name": "BagSlot4",
       "parent": "root",
-      "type": "Text",
+      "type": "Panel",
       "slot": {
         "anchors": [
           0.5,
@@ -11294,10 +12630,10 @@
           0.5
         ],
         "offset": [
-          0,
-          39,
-          580,
-          28
+          150,
+          -100,
+          84,
+          84
         ],
         "alignment": [
           0.5,
@@ -11320,7 +12656,569 @@
         "deviceVisibility": "all",
         "text": "",
         "texture": "",
-        "fontSize": 19,
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#0d1419b8",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#c9a24a55",
+        "borderWidth": 1,
+        "radius": 6,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagIcon4",
+      "name": "BagIcon4",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          150,
+          -100,
+          80,
+          80
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "Assets/UI/Items/flash.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagCount4",
+      "name": "BagCount4",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          160,
+          -74,
+          56,
+          22
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 48,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "0",
+        "texture": "",
+        "fontSize": 18,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "right",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagName4",
+      "name": "BagName4",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          150,
+          -44,
+          96,
+          20
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "섬광탄",
+        "texture": "",
+        "fontSize": 15,
+        "color": "#c9b48a",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagSlot5",
+      "name": "BagSlot5",
+      "parent": "root",
+      "type": "Panel",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          250,
+          -100,
+          84,
+          84
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 46,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#0d1419b8",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#c9a24a55",
+        "borderWidth": 1,
+        "radius": 6,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagIcon5",
+      "name": "BagIcon5",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          250,
+          -100,
+          80,
+          80
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "Assets/UI/Items/gold.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagCount5",
+      "name": "BagCount5",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          260,
+          -74,
+          56,
+          22
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 48,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "0",
+        "texture": "",
+        "fontSize": 18,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "right",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagName5",
+      "name": "BagName5",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          250,
+          -44,
+          96,
+          20
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "골드",
+        "texture": "",
+        "fontSize": 15,
+        "color": "#c9b48a",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagGearTitle",
+      "name": "BagGearTitle",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -250,
+          -2,
+          120,
+          20
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 46,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "장비",
+        "texture": "",
+        "fontSize": 16,
         "color": "#ffd56a",
         "background": "#00000000",
         "accent": "#589ad6",
@@ -11334,7 +13232,1133 @@
         "enabled": true,
         "focusable": true,
         "tooltip": "",
+        "align": "left",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagGearSlot0",
+      "name": "BagGearSlot0",
+      "parent": "root",
+      "type": "Panel",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -250,
+          62,
+          84,
+          84
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 46,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#0d1419b8",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#c9a24a55",
+        "borderWidth": 1,
+        "radius": 6,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
         "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagGearIcon0",
+      "name": "BagGearIcon0",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -250,
+          62,
+          80,
+          80
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "Assets/UI/Items/sword.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagGearBadge0",
+      "name": "BagGearBadge0",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -240,
+          88,
+          56,
+          22
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 48,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 18,
+        "color": "#ffd56a",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "right",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagGearName0",
+      "name": "BagGearName0",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -250,
+          118,
+          120,
+          20
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "무기",
+        "texture": "",
+        "fontSize": 15,
+        "color": "#c9b48a",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagGearSlot1",
+      "name": "BagGearSlot1",
+      "parent": "root",
+      "type": "Panel",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -150,
+          62,
+          84,
+          84
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 46,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#0d1419b8",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#c9a24a55",
+        "borderWidth": 1,
+        "radius": 6,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagGearIcon1",
+      "name": "BagGearIcon1",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -150,
+          62,
+          80,
+          80
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "Assets/UI/Items/crystal_power.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagGearBadge1",
+      "name": "BagGearBadge1",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -140,
+          88,
+          56,
+          22
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 48,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 18,
+        "color": "#ffd56a",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "right",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagGearName1",
+      "name": "BagGearName1",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -150,
+          118,
+          120,
+          20
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "각인",
+        "texture": "",
+        "fontSize": 15,
+        "color": "#c9b48a",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagGearSlot2",
+      "name": "BagGearSlot2",
+      "parent": "root",
+      "type": "Panel",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -50,
+          62,
+          84,
+          84
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 46,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#0d1419b8",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#c9a24a55",
+        "borderWidth": 1,
+        "radius": 6,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagGearIcon2",
+      "name": "BagGearIcon2",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -50,
+          62,
+          80,
+          80
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "Assets/UI/Items/scroll.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagGearBadge2",
+      "name": "BagGearBadge2",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -40,
+          88,
+          56,
+          22
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 48,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 18,
+        "color": "#ffd56a",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "right",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagGearName2",
+      "name": "BagGearName2",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -50,
+          118,
+          120,
+          20
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "[귀환]",
+        "texture": "",
+        "fontSize": 15,
+        "color": "#c9b48a",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagWeightText",
+      "name": "BagWeightText",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          150,
+          40,
+          300,
+          22
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 46,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "적재량 0 / 100",
+        "texture": "",
+        "fontSize": 17,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "left",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagWeightBack",
+      "name": "BagWeightBack",
+      "parent": "root",
+      "type": "Panel",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          150,
+          70,
+          300,
+          18
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 46,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#05090acc",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#c9a24a88",
+        "borderWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagWeight",
+      "name": "BagWeight",
+      "parent": "root",
+      "type": "ProgressBar",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          150,
+          70,
+          294,
+          12
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 47,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#e0b040ff",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "fillDirection": "leftToRight",
+        "fillTexture": "",
+        "backgroundTexture": ""
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "BagUseText",
+      "name": "BagUseText",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          150,
+          108,
+          300,
+          22
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 46,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 17,
+        "color": "#ffd56a",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "left",
         "value": 0,
         "min": 0,
         "max": 1,
@@ -11365,8 +14389,8 @@
         ],
         "offset": [
           0,
-          70,
-          580,
+          150,
+          600,
           22
         ],
         "alignment": [
@@ -11504,16 +14528,16 @@
           0.5
         ],
         "offset": [
-          0,
-          39,
-          580,
-          34
+          -50,
+          62,
+          84,
+          84
         ],
         "alignment": [
           0.5,
           0.5
         ],
-        "zIndex": 47,
+        "zIndex": 49,
         "fill": 0
       },
       "properties": {
