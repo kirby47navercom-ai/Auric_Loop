@@ -10126,7 +10126,7 @@
         "deadZone": 0.15,
         "floating": false,
         "deviceVisibility": "all",
-        "text": "←→·A·D·1·2·3으로 고르고 Enter·Space 또는 카드를 한 번 더 눌러 결정",
+        "text": "A·D·1·2·3으로 고르고 Enter·Space 또는 카드를 한 번 더 눌러 결정",
         "texture": "",
         "fontSize": 17,
         "color": "#c9b48a",

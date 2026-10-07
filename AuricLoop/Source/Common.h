@@ -16,6 +16,6 @@ inline const hb::Vec3 parked{0,-200,0};
 inline bool AnyPressed(bool move){
   if(!hb::Input::AnyKeyPressed())return false;
   for(auto* k:{"escape","p","tab","F3","F9","F10","F12"})if(hb::Input::WasPressedThisFrame(k))return false;
-  if(!move)for(auto* k:{"w","a","s","d","arrowup","arrowdown","arrowleft","arrowright"})if(hb::Input::WasPressedThisFrame(k))return false;
+  if(!move)for(auto* k:{"w","a","s","d"})if(hb::Input::WasPressedThisFrame(k))return false;
   return true;
 }

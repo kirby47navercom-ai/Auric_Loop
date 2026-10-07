@@ -186,13 +186,13 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   console.log('걸으며 공격 검사 통과', names.filter(n => /WalkAttack/.test(n)).length, '종류');
 }
 
-// 타이틀·선택 입력: 아무 키(K)로 타이틀을 넘기고, →로 셰리를 고른 뒤 2를 한 번 더 누르면 결정
+// 타이틀·선택 입력: 아무 키(K)로 타이틀을 넘기고, D로 셰리를 고른 뒤 2를 한 번 더 누르면 결정
 {
   const r = await runProject(project, {scene: scene('Hub'), frames: 200, delta: 1 / 60, inputs: [
-    ...press(110, 'k'), ...press(140, 'arrowright'), ...press(160, '2'), ...press(175, '2')]});
+    ...press(110, 'k'), ...press(140, 'd'), ...press(160, '2'), ...press(175, '2')]});
   const d = director(r);
   assert.equal(d.Phase, 2, '아무 키로 타이틀 → 선택 → 결정');
-  assert.equal(d.Character, 1, '→로 셰리, 다시 2로 결정');
+  assert.equal(d.Character, 1, 'D로 셰리, 다시 2로 결정');
   console.log('타이틀·선택 입력 검사 통과', 'Character', d.Character);
 }
 

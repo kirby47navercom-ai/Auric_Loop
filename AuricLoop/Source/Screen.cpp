@@ -112,9 +112,9 @@ bool TopDownShooter::UpdateIntro(float delta,bool anyKey){
   else if(Phase==1&&!selecting&&anyKey&&phaseTime>0.3f){selecting=true;phaseTime=0;
     for(auto* n:{"TitleBack","TitleScreen","TitleHint"})UiVisible(n,false);introHidden=true;confirmHeld=true;ShowSelect(true);}
   else if(Phase==1&&selecting){
-    // 1·2·3, A·D, ←→로 고르고 Enter·E·Space로 결정. 카드를 누르면 그 숫자 키가 눌리고, 고른 카드를 한 번 더 누르면 결정
+    // 1·2·3, A·D로 고르고 Enter·E·Space로 결정 (방향키는 쓰지 않음). 카드를 누르면 그 숫자 키가 눌리고, 고른 카드를 한 번 더 누르면 결정
     int key=0;for(int i=1;i<=3;++i)if(hb::Input::IsKeyDown(std::to_string(i)))key=i;
-    const int side=hb::Input::IsKeyDown("d")||hb::Input::IsKeyDown("arrowright")?4:hb::Input::IsKeyDown("a")||hb::Input::IsKeyDown("arrowleft")?5:0;
+    const int side=hb::Input::IsKeyDown("d")?4:hb::Input::IsKeyDown("a")?5:0;
     const int now=key?key:side;
     const bool confirm=hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("space");
     if(phaseTime<0.25f){pickHeld=now;confirmHeld=confirm;return true;}  // 타이틀을 넘긴 그 키가 바로 고르거나 결정하지 않게
