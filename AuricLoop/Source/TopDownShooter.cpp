@@ -29,7 +29,7 @@ void Enemy::Awake(){
   // 풀에서 다시 꺼낼 때도 불린다. 생성한 쪽이 먼저 정한 무적·경직(귀환 해골)은 지우지 않는다
   Hp=MaxHp;flash=0;burnLeft=0;ring=0;pattern=0;shotTimer=ShotInterval*0.5f;mode=Mode::Halt;burnedOut=false;
   sentStunned=sentReady=sentNear=flipped=false;dashCount=0;phase2=false;sentVelocity={9e9f,0,0};
-  hb::Sprites::SetColor(this,hb::Color{1,1,1,1});
+  tint=-1;Tint(false);
   if(Parked)return;  // 화면 밖 대기 중이면 상태 머신을 켜지 않음 (꺼낼 때 다시 Awake)
   hb::States::Start(this,Brain);brainRunning=true;
 }
@@ -44,7 +44,7 @@ void Enemy::Tick(float delta){
   auto* game=TopDownShooter::Current;
   float distance;const auto dir=ToPlayer(distance);
   if(stun>0)stun-=delta;
-  if(flash>0&&(flash-=delta)<=0)hb::Sprites::SetColor(this,hb::Color{1,1,1,1});
+  if(flash>0&&(flash-=delta)<=0)Tint(false);
   if(burnLeft>0){burnLeft-=delta;if(!Invulnerable){Hp-=burnDamage*delta;burnedOut=Hp<=0.001f;}}
   // 상태 머신 파라미터·뒤집기는 바뀔 때만 보낸다 (적 수 × 매 프레임 명령을 줄임)
   const bool ready=KeepDistance>0&&(shotTimer-=delta)<=0,stunned=stun>0,flip=dir.x<0,near=distance<Radius+1.2f;
@@ -73,20 +73,20 @@ void Enemy::Tick(float delta){
 
 // 대기 중(화면 밖, 상태 머신 멈춤)이면 늦게 들어온 상태 이벤트는 무시
 void Enemy::Halt(){if(Parked)return;mode=Mode::Halt;sentVelocity={0,0,0};hb::Physics::SetVelocity(this,hb::Vec3{0,0,0});}
-void Enemy::Chase(){if(Parked)return;mode=Mode::Chase;hb::Sprites::SetColor(this,hb::Color{1,1,1,1});}
+void Enemy::Chase(){if(Parked)return;mode=Mode::Chase;Tint(false);}
 void Enemy::Range(){if(Parked)return;mode=Mode::Range;}
 void Enemy::Stagger(){if(Parked)return;mode=Mode::Stagger;}
 
 void Enemy::Windup(){if(Parked)return;
   // 공격 예고: 멈추고 붉게. 보스는 돌진 방향을 정하고 붉은 예고선을 바닥에 그림
   Halt();float distance;dashDir=ToPlayer(distance);
-  hb::Sprites::SetColor(this,hb::Color{1,0.45f,0.45f,1});flash=0;
+  Tint(true);flash=0;
   if(Boss)if(auto* game=TopDownShooter::Current){game->Sfx("BossCharge");game->Warn(hb::Scene::GetPosition(this),dashDir,DashSpeed*0.45f+1,phase2?0.5f:0.8f);}
 }
 
 void Enemy::NextPattern(int next){pattern=next;hb::States::SetFloat(this,"Next",float(pattern));}
 
-void Enemy::Prowl(){if(Parked)return;mode=Mode::Prowl;ring++;hb::Sprites::SetColor(this,hb::Color{1,1,1,1});}
+void Enemy::Prowl(){if(Parked)return;mode=Mode::Prowl;ring++;Tint(false);}
 
 void Enemy::JumpWindup(){if(Parked)return;
   // 점프 준비: 웅크리고, 내려찍을 자리(지금 플레이어 자리)에 붉은 마법진
@@ -107,7 +107,7 @@ void Enemy::Slam(){if(Parked)return;
 }
 
 void Enemy::Fire(){if(Parked)return;
-  Halt();hb::Sprites::SetColor(this,hb::Color{1,1,1,1});
+  Halt();Tint(false);
   auto* game=TopDownShooter::Current;if(!game||game->Frozen())return;
   float distance;const auto dir=ToPlayer(distance);
   game->FireBullets(hb::Scene::GetPosition(this),dir,ShotCount,ShotSpread,ShotSpeed,ShotClip);
@@ -115,7 +115,7 @@ void Enemy::Fire(){if(Parked)return;
 }
 
 void Enemy::Dash(){if(Parked)return;if(TopDownShooter::Current&&TopDownShooter::Current->Frozen()){Halt();return;}
-  mode=Mode::Dash;hb::Sprites::SetColor(this,hb::Color{1,1,1,1});
+  mode=Mode::Dash;Tint(false);
   sentVelocity=dashDir*DashSpeed;hb::Physics::SetVelocity(this,sentVelocity);
   // 보스는 연속 돌진 (2번, 분노하면 3번) 뒤 다음 패턴
   const bool again=Boss&&++dashCount<(phase2?3:2);hb::States::SetBool(this,"Again",again);
@@ -427,7 +427,7 @@ void TopDownShooter::StunAll(float seconds){for(auto* e:Enemies())e->Stun(second
 
 hb::Actor* TopDownShooter::Take(std::vector<hb::Actor*>& pool,const std::string& prefab,const hb::Transform& at){
   if(!pool.empty()){auto* a=pool.back();pool.pop_back();hb::Scene::SetTransform(a,at);return a;}
-  return hb::Scene::Spawn(prefab,at);  // 모자랄 때만 새로 생성 (끊김 감수)
+  (void)prefab;return nullptr;  // 다 쓰고 있으면 이번 것은 건너뛴다. 게임 중 새로 만들면(Spawn) 에디터에서 하나에 수백 ms씩 멈춤
 }
 
 void TopDownShooter::Give(std::vector<hb::Actor*>& pool,hb::Actor* actor){
@@ -467,7 +467,7 @@ void TopDownShooter::BossSlam(const hb::Vec3& at,int count,float speed,const std
 void TopDownShooter::BossEnraged(Enemy* e){
   // 2페이즈: 포효(흔들림·붉은 번쩍), 자막
   shake=0.6f;hb::Camera::Flash(hb::Color{0.8f,0.1f,0.05f,0.45f},0.5f);Sfx("BossCharge");
-  hb::UI::SetText(player,"HUD","BossSub",e->DisplayName+"이(가) 분노했다!");hb::UI::SetVisible(player,"HUD","BossSub",true);bannerTime=1.8f;
+  UiText("BossSub",e->DisplayName+"이(가) 분노했다!");UiVisible("BossSub",true);bannerTime=1.8f;
 }
 
 void TopDownShooter::UpdateFx(float delta){
@@ -608,6 +608,7 @@ void TopDownShooter::Begin(){
   // 장면 첫 프레임: 이 장면의 구역(RoomInfo), 상호작용 대상, 카메라를 찾고 진행을 이어받는다
   started=true;Hp=MaxHp;
   rules=&fallbackRules;for(auto* a:hb::Scene::GetAllActorsOfClass("AuricRules"))if(auto* r=dynamic_cast<AuricRules*>(a))rules=r;
+  Lines("");  // 대사표 미리 읽기 (로딩 화면 동안)
   for(auto* a:hb::Scene::GetAllActorsOfClass("RoomInfo"))if(auto* r=dynamic_cast<RoomInfo*>(a)){
     area=r->Index;roomKind=r->Kind;exitY=r->ExitY;inDungeon=r->Kind=="Dungeon";inHome=r->Kind=="Home";}
   for(auto* a:hb::Scene::GetAllActorsOfClass("Interactable"))if(auto* i=dynamic_cast<Interactable*>(a))interactables.push_back(i);
@@ -649,20 +650,19 @@ void TopDownShooter::UpdateMinimap(){
   const float cell=std::min({22.f,144.f/(maxx-minx+1),108.f/(maxy-miny+1)});
   const float left=-176+(144-cell*(maxx-minx+1))/2,top=118+(108-cell*(maxy-miny+1))/2,box=cell*0.64f,bar=std::max(2.f,cell*0.18f);
   auto at=[&](const DungeonRoom& r){return hb::Vec2{left+(r.gx-minx+0.5f)*cell,top+(maxy-r.gy+0.5f)*cell};};
+  // 자리·크기는 층을 시작할 때 모든 방·복도에 한 번 정해 두고(HUD 호출 캐시가 같은 값은 거름), 방을 옮길 땐 보이기·그림만 바뀐다
   int links=0;
   for(int i=0;i<int(map.rooms.size())&&i<16;++i){
-    const auto& r=map.rooms[i];const auto name="MapRoom"+std::to_string(i);
-    hb::UI::SetVisible(player,"HUD",name,r.seen);if(!r.seen)continue;
-    const std::string kind=i==area?"current":!r.visited?"unknown":r.kind=="Boss"?"boss":r.kind=="Shop"?"shop":r.kind=="Gather"?"gather":r.kind=="Start"?"start":"room";
-    const auto c=at(r);hb::UI::SetTexture(player,"HUD",name,"Assets/UI/Map/map_"+kind+".png");
-    hb::UI::SetPosition(player,"HUD",name,hb::Vec2{c.x-box/2,c.y-box/2});hb::UI::SetSize(player,"HUD",name,hb::Vec2{box,box});
-    for(int d:{0,1}){const int j=r.link[d];if(j<0||!map.rooms[j].seen||links>=20)continue;
+    const auto& r=map.rooms[i];const auto name="MapRoom"+std::to_string(i);const auto c=at(r);
+    UiPosition(name,hb::Vec2{c.x-box/2,c.y-box/2});UiSize(name,hb::Vec2{box,box});UiVisible(name,r.seen);
+    if(r.seen)UiTexture(name,"Assets/UI/Map/map_"+std::string(i==area?"current":!r.visited?"unknown":r.kind=="Boss"?"boss":r.kind=="Shop"?"shop":r.kind=="Gather"?"gather":r.kind=="Start"?"start":"room")+".png");
+    for(int d:{0,1}){const int j=r.link[d];if(j<0||links>=20)continue;
       const auto o=at(map.rooms[j]);const auto lname="MapLink"+std::to_string(links++);
-      hb::UI::SetVisible(player,"HUD",lname,true);
-      if(d==0)hb::UI::SetPosition(player,"HUD",lname,hb::Vec2{c.x-bar/2,o.y}),hb::UI::SetSize(player,"HUD",lname,hb::Vec2{bar,c.y-o.y});
-      else hb::UI::SetPosition(player,"HUD",lname,hb::Vec2{c.x,c.y-bar/2}),hb::UI::SetSize(player,"HUD",lname,hb::Vec2{o.x-c.x,bar});}
+      if(d==0)UiPosition(lname,hb::Vec2{c.x-bar/2,o.y}),UiSize(lname,hb::Vec2{bar,c.y-o.y});
+      else UiPosition(lname,hb::Vec2{c.x,c.y-bar/2}),UiSize(lname,hb::Vec2{o.x-c.x,bar});
+      UiVisible(lname,r.seen&&map.rooms[j].seen);}
   }
-  for(int k=links;k<20;++k)hb::UI::SetVisible(player,"HUD","MapLink"+std::to_string(k),false);
+  for(int k=links;k<20;++k)UiVisible("MapLink"+std::to_string(k),false);
 }
 
 void TopDownShooter::ShowSofa(){
@@ -690,7 +690,7 @@ void TopDownShooter::EnterRoom(int room){
   if(r.kind!="Combat"&&r.kind!="Boss"){r.state=2;if(r.kind=="Gather")Tip(4);if(r.kind=="Shop")Tip(6);return;}  // 시작·채집·상점은 싸움 없음
   r.state=1;fightingRoom=room;map.Lock(room,true);Tip(1);
   if(r.kind=="Boss"){cutscene=3.2f;cutsceneAt=hb::Vec3{r.cx,r.cy+2,0};roared=false;bannerTime=0;  // 보스 등장 컷신: 화면 위아래 검은 띠, 카메라가 보스 쪽으로
-    for(auto* n:{"CineTop","CineBottom"})hb::UI::SetVisible(player,"HUD",n,true);}
+    for(auto* n:{"CineTop","CineBottom"})UiVisible(n,true);}
   const hb::Json row=roomTable.contains(r.row)?roomTable.at(r.row):hb::Json::object();
   waves.clear();std::stringstream ss(row.value("waves",std::string("S,S,S")));std::string w;while(std::getline(ss,w,'|'))if(!w.empty())waves.push_back(w);
   wave=0;monsterDrop=row.value("monsterDrop",false);
@@ -777,16 +777,16 @@ void TopDownShooter::Settle(){
 }
 
 void TopDownShooter::ShowSettle(bool visible){
-  for(auto* n:{"SettleBack","SettlePanel","SettleTitle","SettleDebt","SettleNote","SettleHint"})hb::UI::SetVisible(player,"HUD",n,visible);
-  for(int i=0;i<7;++i)hb::UI::SetVisible(player,"HUD","SettleRow"+std::to_string(i),visible&&i<settleShown);
+  for(auto* n:{"SettleBack","SettlePanel","SettleTitle","SettleDebt","SettleNote","SettleHint"})UiVisible(n,visible);
+  for(int i=0;i<7;++i)UiVisible("SettleRow"+std::to_string(i),visible&&i<settleShown);
 }
 
 bool TopDownShooter::UpdateSettle(float delta,bool advance){
   if(settleTime<0||frame<2)return settleTime>=0;
   if(settleTime==0){
-    hb::UI::SetText(player,"HUD","SettleTitle",KnockedOut?"정산 - 빈손으로 끌려 나왔다":"정산 - 귀환 성공");
-    hb::UI::SetText(player,"HUD","SettleNote",KnockedOut?"쓰러져서 소재를 잃었다. 무기 강화·각인도 초기화":"무기 강화·각인은 던전 밖에서 초기화된다");
-    for(int i=0;i<7;++i)hb::UI::SetText(player,"HUD","SettleRow"+std::to_string(i),i<int(settleRows.size())?settleRows[i]:"");
+    UiText("SettleTitle",KnockedOut?"정산 - 빈손으로 끌려 나왔다":"정산 - 귀환 성공");
+    UiText("SettleNote",KnockedOut?"쓰러져서 소재를 잃었다. 무기 강화·각인도 초기화":"무기 강화·각인은 던전 밖에서 초기화된다");
+    for(int i=0;i<7;++i)UiText("SettleRow"+std::to_string(i),i<int(settleRows.size())?settleRows[i]:"");
     settleShown=0;ShowSettle(true);}
   settleTime+=delta;
   // 0.3초마다 한 줄, 다 나오면 남은 빚이 1.2초 동안 줄어듦
@@ -794,9 +794,9 @@ bool TopDownShooter::UpdateSettle(float delta,bool advance){
   if(rows!=settleShown){settleShown=rows;ShowSettle(true);Sfx("Coin");}
   const float t=std::clamp((settleTime-0.3f*settleRows.size())/1.2f,0.f,1.f);
   const int shown=debtFrom+int((debtTo-debtFrom)*t);
-  if(shown!=debtShown){debtShown=shown;hb::UI::SetText(player,"HUD","SettleDebt",std::string(koreanNames[Character])+"의 남은 빚  "+std::to_string(shown)+" G");}
-  if(t>=1&&!settleDone){settleDone=true;hb::UI::SetVisible(player,"HUD","SettleHint",true);}
-  hb::UI::SetVisible(player,"HUD","SettleHint",settleDone);
+  if(shown!=debtShown){debtShown=shown;UiText("SettleDebt",std::string(koreanNames[Character])+"의 남은 빚  "+std::to_string(shown)+" G");}
+  if(t>=1&&!settleDone){settleDone=true;UiVisible("SettleHint",true);}
+  UiVisible("SettleHint",settleDone);
   if(advance){
     if(!settleDone){settleTime=0.3f*settleRows.size()+1.2f;return true;}  // 누르면 연출 건너뛰기
     settleTime=-1;ShowSettle(false);Talk("Settle",{{"debt",std::to_string(Debt)}});KnockedOut=false;Hud();return false;}
@@ -805,8 +805,8 @@ bool TopDownShooter::UpdateSettle(float delta,bool advance){
 
 void TopDownShooter::ShowEnding(){
   ending=true;anyHeld=true;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
-  hb::UI::SetText(player,"HUD","EndingText",std::string(koreanNames[Character])+"의 남은 빚 "+std::to_string(Debt)+" G   ·   오늘 갚은 돈 "+std::to_string(LastRepaid)+" G");
-  for(auto* n:{"EndingBack","EndingArt","EndingShade","EndingTitle","EndingText","EndingHint"})hb::UI::SetVisible(player,"HUD",n,true);
+  UiText("EndingText",std::string(koreanNames[Character])+"의 남은 빚 "+std::to_string(Debt)+" G   ·   오늘 갚은 돈 "+std::to_string(LastRepaid)+" G");
+  for(auto* n:{"EndingBack","EndingArt","EndingShade","EndingTitle","EndingText","EndingHint"})UiVisible(n,true);
 }
 
 void TopDownShooter::ResetToTitle(){
@@ -818,16 +818,15 @@ void TopDownShooter::Tip(int id){
   if(TipsShown&(1<<id)||!player||frame<2)return;TipsShown|=1<<id;
   std::string text;
   for(const auto& row:{std::string(touchMode?"TipTouch":"Tip")+std::to_string(id),"Tip"+std::to_string(id)}){
-    try{auto lines=hb::Data::GetTable(rules->DialogueTable,row).value("lines",hb::Json::array());if(lines.is_string())lines=hb::Json::parse(lines.get<std::string>());
-      if(!lines.empty()){text=lines[0].value("text",std::string(""));break;}}catch(...){}}
+    const auto lines=Lines(row);if(!lines.empty()){text=lines[0].value("text",std::string(""));break;}}
   if(text.empty())return;
-  hb::UI::SetText(player,"HUD","Tip",text);hb::UI::SetVisible(player,"HUD","TipBack",true);hb::UI::SetVisible(player,"HUD","Tip",true);tipTime=5;Sfx("Select");
+  UiText("Tip",text);UiVisible("TipBack",true);UiVisible("Tip",true);tipTime=5;Sfx("Select");
 }
 
 void TopDownShooter::SetPaused(bool paused){
   // 일시정지: 플레이어·적·탄을 세우고 메뉴. 풀면 탄 속도를 되돌림 (적은 Tick이 다시 보냄)
   Paused=paused;
-  for(auto* n:{"PauseBack","PauseTitle","PauseResume","PauseQuit","PauseResumeTouch","PauseQuitTouch"})hb::UI::SetVisible(player,"HUD",n,paused);
+  for(auto* n:{"PauseBack","PauseTitle","PauseResume","PauseQuit","PauseResumeTouch","PauseQuitTouch"})UiVisible(n,paused);
   hb::Movement2D::SetSpeed(player,paused?0.f:rules->MoveSpeed);sentSpeed=-1;  // 이동은 엔진 이동 컴포넌트가 입력으로 직접 하므로 속도를 0으로
   if(paused){hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
     for(auto* e:Enemies())hb::Physics::SetVelocity(e,hb::Vec3{0,0,0});
@@ -838,7 +837,7 @@ void TopDownShooter::SetPaused(bool paused){
 void TopDownShooter::Bag(bool toggle,bool use){
   // 가방 (기획서 7장 Tab): 들고 있는 소재·아이템과 적재량. [귀환]이 있으면 Enter로 사용 (던전 안에서만)
   if(toggle){bagOpen=!bagOpen;if(bagOpen&&craftOpen)Craft(true,0,false);
-    for(auto* n:{"BagPanel","BagTitle","BagHint","BagUseTouch"})hb::UI::SetVisible(player,"HUD",n,bagOpen);}
+    for(auto* n:{"BagPanel","BagTitle","BagHint","BagUseTouch"})UiVisible(n,bagOpen);}
   const bool canReturn=HasReturnItem&&!Returning&&!ReturnSuccess&&inDungeon&&area>=0;
   if(bagOpen){
     const std::string rows[]={"광물 "+std::to_string(Ore)+"   약초 "+std::to_string(Herb)+"   마물 소재 "+std::to_string(Monster),
@@ -846,15 +845,23 @@ void TopDownShooter::Bag(bool toggle,bool use){
       "적재량 "+std::to_string(Weight())+" / "+std::to_string(rules->WeightLimit)+(Weight()>rules->WeightLimit?"  (무거워서 느려짐)":""),
       std::string("무기 ")+weapons[Character]+(WeaponLevel?" +1":"")+(Enchant?"   각인 있음":""),
       HasReturnItem?(canReturn?"[귀환]  Enter: 사용해서 집으로":"[귀환]  던전 안에서 쓸 수 있어"):""};
-    for(int i=0;i<5;++i){hb::UI::SetText(player,"HUD","BagRow"+std::to_string(i),rows[i]);hb::UI::SetVisible(player,"HUD","BagRow"+std::to_string(i),!rows[i].empty());}}
-  else for(int i=0;i<5;++i)hb::UI::SetVisible(player,"HUD","BagRow"+std::to_string(i),false);
+    for(int i=0;i<5;++i){UiText("BagRow"+std::to_string(i),rows[i]);UiVisible("BagRow"+std::to_string(i),!rows[i].empty());}}
+  else for(int i=0;i<5;++i)UiVisible("BagRow"+std::to_string(i),false);
   if(use&&bagOpen&&canReturn){HasReturnItem=false;Returning=true;Bag(true,false);StartReturnRoom(area);Hud();Talk("ReturnStart");}
+}
+
+hb::Json TopDownShooter::Lines(const std::string& id){
+  // 대사표는 장면을 열 때 통째로 한 번 읽어 둔다. 한 행씩 읽으면(GetTable) 부를 때마다 엔진에 월드 전체를 보내서 수십 ms 멈춤
+  if(dialogue.is_null()){try{dialogue=hb::Data::Get(rules->DialogueTable);}catch(...){dialogue=hb::Json::object();}}
+  if(!dialogue.contains(id))return hb::Json::array();
+  auto lines=dialogue.at(id).value("lines",hb::Json::array());
+  if(lines.is_string())try{lines=hb::Json::parse(lines.get<std::string>());}catch(...){lines=hb::Json::array();}
+  return lines;
 }
 
 void TopDownShooter::Talk(const std::string& id,const std::map<std::string,std::string>& vars){
   // 대사는 데이터 표(DT_Dialogue)에서: who·name이 $me면 지금 캐릭터, text의 {이름}은 vars로 바꿈
-  hb::Json lines;try{lines=hb::Data::GetTable(rules->DialogueTable,id).value("lines",hb::Json::array());}catch(...){return;}
-  if(lines.is_string())lines=hb::Json::parse(lines.get<std::string>());
+  const hb::Json lines=Lines(id);
   auto fill=[&](std::string s){for(auto& [k,v]:vars){const std::string key="{"+k+"}";for(size_t p;(p=s.find(key))!=std::string::npos;)s.replace(p,key.size(),v);}return s;};
   for(const auto& l:lines){std::string who=l.value("who",std::string("collector")),name=l.value("name",std::string(""));
     if(who=="$me")who=faces[Character];if(name=="$me")name=koreanNames[Character];
@@ -913,15 +920,15 @@ void TopDownShooter::CraftDetail(){
    static const struct{const char* file;float w,h;}icons[]={{"craft_detail_potion.png",32,52},{"craft_item_flash.png",44,44},
      {"craft_item_crystal.png",30,42},{"craft_item_crystal.png",30,42},{"craft_item_crystal.png",30,42}};
    const auto& ic=icons[craftPick-1];const int col=(craftPick-1)%3,row=(craftPick-1)/3;
-   hb::UI::SetVisible(player,"HUD","CraftSelect",craftOpen);hb::UI::SetVisible(player,"HUD","CraftDetail",craftOpen);
-   hb::UI::SetPosition(player,"HUD","CraftSelect",hb::Vec2{32.f+116*col-460,128.f+116*row-258});
-   hb::UI::SetTexture(player,"HUD","CraftDetail",std::string("Assets/UI/Kit/")+ic.file);
-   hb::UI::SetSize(player,"HUD","CraftDetail",hb::Vec2{ic.w,ic.h});
-   hb::UI::SetPosition(player,"HUD","CraftDetail",hb::Vec2{480+(72-ic.w)/2-460,176+(72-ic.h)/2-258});}
-  hb::UI::SetText(player,"HUD","CraftName",names[craftPick]);
-  hb::UI::SetText(player,"HUD","CraftEffect",craftPick==5?(Character?"화살·마탄이 적을 뚫고 지나감":"베기 사거리 +1.5m"):effects[craftPick]);
-  hb::UI::SetText(player,"HUD","CraftType",craftPick<=2?"소모 아이템":"무기 각인 (귀환하면 사라짐)");
-  hb::UI::SetText(player,"HUD","CraftCost",cost);
+   UiVisible("CraftSelect",craftOpen);UiVisible("CraftDetail",craftOpen);
+   UiPosition("CraftSelect",hb::Vec2{32.f+116*col-460,128.f+116*row-258});
+   UiTexture("CraftDetail",std::string("Assets/UI/Kit/")+ic.file);
+   UiSize("CraftDetail",hb::Vec2{ic.w,ic.h});
+   UiPosition("CraftDetail",hb::Vec2{480+(72-ic.w)/2-460,176+(72-ic.h)/2-258});}
+  UiText("CraftName",names[craftPick]);
+  UiText("CraftEffect",craftPick==5?(Character?"화살·마탄이 적을 뚫고 지나감":"베기 사거리 +1.5m"):effects[craftPick]);
+  UiText("CraftType",craftPick<=2?"소모 아이템":"무기 각인 (귀환하면 사라짐)");
+  UiText("CraftCost",cost);
 }
 
 void TopDownShooter::Craft(bool toggle,int which,bool confirm){
@@ -930,7 +937,7 @@ void TopDownShooter::Craft(bool toggle,int which,bool confirm){
     "CraftKey1","CraftKey2","CraftKey3","CraftKey4","CraftKey5","CraftSlot1","CraftSlot2","CraftSlot3","CraftSlot4","CraftSlot5",
     "CraftName","CraftEffect","CraftType","CraftNeed","CraftCost","CraftConfirm","CraftConfirmButton","CraftClose","CraftFooter"};
   if(toggle&&!craftOpen&&bagOpen)Bag(true,false);  // 제작 창을 열면 가방은 닫음
-  if(toggle){craftOpen=!craftOpen;for(auto* n:parts)hb::UI::SetVisible(player,"HUD",n,craftOpen);CraftDetail();}
+  if(toggle){craftOpen=!craftOpen;for(auto* n:parts)UiVisible(n,craftOpen);CraftDetail();}
   if(!craftOpen)return;
   if(which>0){craftPick=which;CraftDetail();Sfx("Select");}
   if(!confirm)return;
@@ -950,24 +957,24 @@ void TopDownShooter::Hud(){
   if(frame<2||!player){hudDirty=true;return;}
   hudDirty=false;
   if(Phase>=2&&!introHidden){introHidden=true;
-    for(auto* n:{"LoadingBack","LoadingCoin","LoadingText","TitleBack","TitleScreen","TitleHint"})hb::UI::SetVisible(player,"HUD",n,false);}
+    for(auto* n:{"LoadingBack","LoadingCoin","LoadingText","TitleBack","TitleScreen","TitleHint"})UiVisible(n,false);}
   const int hp=std::max(0,Hp);
   const bool rot=Returning;const int fill=hp<=0?0:std::max(1,(hp*3+MaxHp-1)/MaxHp);  // 귀환 중엔 황금 침식 테마
-  hb::UI::SetVisible(player,"HUD","HpBack",!rot);
-  for(int i=1;i<=3;++i){hb::UI::SetVisible(player,"HUD","HpFill"+std::to_string(i),!rot&&fill==i);hb::UI::SetVisible(player,"HUD","RotHp"+std::to_string(i),rot&&fill==i);}
+  UiVisible("HpBack",!rot);
+  for(int i=1;i<=3;++i){UiVisible("HpFill"+std::to_string(i),!rot&&fill==i);UiVisible("RotHp"+std::to_string(i),rot&&fill==i);}
   // 버튼 그림: 캐릭터별 공격, 귀환 중엔 황금 침식(rot_*) 그림으로 바꿈
   static const char* themed[][3]={{"DodgeButton","btn_dodge","rot_dodge"},{"InteractButton","btn_interact","rot_interact"},{"CraftButton","btn_craft","rot_craft"},
     {"PauseButton","btn_pause","rot_pause"},{"BagButton","btn_inventory","rot_inventory"},{"Minimap","minimap","rot_minimap"}};
   const int theme=(rot?10:0)+Character;
   if(theme!=rotShown){rotShown=theme;
-    for(auto& t:themed)hb::UI::SetTexture(player,"HUD",t[0],std::string("Assets/UI/Kit/")+t[rot?2:1]+".png");
-    hb::UI::SetTexture(player,"HUD","AttackButton",std::string("Assets/UI/Kit/")+(rot?"rot_attack_":"btn_attack_")+faces[Character]+".png");}
-  hb::UI::SetText(player,"HUD","HpText",std::to_string(hp)+" / "+std::to_string(MaxHp));
-  hb::UI::SetText(player,"HUD","WeightText",std::to_string(Weight())+" / "+std::to_string(rules->WeightLimit));
-  hb::UI::SetText(player,"HUD","GoldText",std::to_string(Gold)+" G   빚 "+std::to_string(Debt));
-  hb::UI::SetText(player,"HUD","Hint",hint);
-  hb::UI::SetValue(player,"HUD","Fatigue",FatigueMax>0?std::min(1.f,float(Fatigue)/FatigueMax):1.f);
-  hb::UI::SetText(player,"HUD","Title",Hp<=0?(Fatigue>=FatigueMax?"지쳐 쓰러졌다":"쓰러졌다")
+    for(auto& t:themed)UiTexture(t[0],std::string("Assets/UI/Kit/")+t[rot?2:1]+".png");
+    UiTexture("AttackButton",std::string("Assets/UI/Kit/")+(rot?"rot_attack_":"btn_attack_")+faces[Character]+".png");}
+  UiText("HpText",std::to_string(hp)+" / "+std::to_string(MaxHp));
+  UiText("WeightText",std::to_string(Weight())+" / "+std::to_string(rules->WeightLimit));
+  UiText("GoldText",std::to_string(Gold)+" G   빚 "+std::to_string(Debt));
+  UiText("Hint",hint);
+  UiValue("Fatigue",FatigueMax>0?std::min(1.f,float(Fatigue)/FatigueMax):1.f);
+  UiText("Title",Hp<=0?(Fatigue>=FatigueMax?"지쳐 쓰러졌다":"쓰러졌다")
     :ReturnSuccess?"귀환 성공 - 정산 "+std::to_string(LastRepaid)+" G 상환"
     :Returning?"귀환 - 문 "+std::to_string(DoorHits)+"/"+std::to_string(rules->DoorHitsToOpen)+"  섬광탄 "+(Flashbangs?std::to_string(Flashbangs):std::to_string(rules->FlashPrice)+"G")
     :HasReturnItem?"[귀환] 획득 - Tab으로 사용":boss?"해골 대장  "+std::to_string(int(std::ceil(BossHp)))+" HP":inHome?"원룸 Lv"+std::to_string(HomeLevel):area<0?"거점":"탐색");
@@ -1002,37 +1009,37 @@ bool TopDownShooter::UpdateDialog(float delta,bool advance){
   // 초상화 하나를 말하는 사람 그림으로 바꿔 120px 틀 가운데에 (좌표: 대화창 1000x170 기준, tools/gen_hud.py)
   static const struct{const char* who;float w,h;}portraits[]={{"collector",108,108},{"valen",96,96},{"sherry",84,66},{"alea",90,72},{"boss",66,66}};
   if(dialogIndex>=dialog.size()){
-    if(!dialog.empty()){dialog.clear();dialogIndex=0;for(auto* n:parts)hb::UI::SetVisible(player,"HUD",n,false);
-      hb::UI::SetVisible(player,"HUD","DialogPortrait",false);shownWho="";}
+    if(!dialog.empty()){dialog.clear();dialogIndex=0;for(auto* n:parts)UiVisible(n,false);
+      UiVisible("DialogPortrait",false);shownWho="";}
     return false;
   }
   const Line& l=dialog[dialogIndex];
   if(shownWho!=l.who){
-    if(shownWho.empty())for(auto* n:parts)hb::UI::SetVisible(player,"HUD",n,true);
+    if(shownWho.empty())for(auto* n:parts)UiVisible(n,true);
     for(const auto& p:portraits)if(l.who==p.who){
-      hb::UI::SetTexture(player,"HUD","DialogPortrait",std::string("Assets/UI/Kit/portrait_")+p.who+".png");
-      hb::UI::SetSize(player,"HUD","DialogPortrait",hb::Vec2{p.w,p.h});
-      hb::UI::SetPosition(player,"HUD","DialogPortrait",hb::Vec2{26+(120-p.w)/2-500,25+(120-p.h)/2-194});}
-    hb::UI::SetVisible(player,"HUD","DialogPortrait",true);
-    hb::UI::SetText(player,"HUD","DialogName",l.name);shownWho=l.who;
+      UiTexture("DialogPortrait",std::string("Assets/UI/Kit/portrait_")+p.who+".png");
+      UiSize("DialogPortrait",hb::Vec2{p.w,p.h});
+      UiPosition("DialogPortrait",hb::Vec2{26+(120-p.w)/2-500,25+(120-p.h)/2-194});}
+    UiVisible("DialogPortrait",true);
+    UiText("DialogName",l.name);shownWho=l.who;
   }
   const size_t total=Utf8Count(l.text);
   if(advance){
     Sfx("Select");if(shownChars<total)shownChars=total;
-    else{dialogIndex++;shownChars=0;typeTime=0;if(dialogIndex<dialog.size()&&dialog[dialogIndex].who==shownWho)hb::UI::SetText(player,"HUD","DialogName",dialog[dialogIndex].name);
-      hb::UI::SetText(player,"HUD","DialogText","");return true;}
+    else{dialogIndex++;shownChars=0;typeTime=0;if(dialogIndex<dialog.size()&&dialog[dialogIndex].who==shownWho)UiText("DialogName",dialog[dialogIndex].name);
+      UiText("DialogText","");return true;}
   }else if(shownChars<total){typeTime+=delta;const size_t next=std::min(total,size_t(typeTime*rules->TypeSpeed));if(next==shownChars)return true;shownChars=next;}
   else return true;
-  hb::UI::SetText(player,"HUD","DialogText",Utf8Prefix(l.text,shownChars));
-  hb::UI::SetVisible(player,"HUD","DialogNext",shownChars>=total);
+  UiText("DialogText",Utf8Prefix(l.text,shownChars));
+  UiVisible("DialogNext",shownChars>=total);
   return true;
 }
 
 void TopDownShooter::ShowSelect(bool visible){
-  for(auto* n:{"SelectBack","SelectTitle","SelectHint","SelectConfirm"})hb::UI::SetVisible(player,"HUD",n,visible);
+  for(auto* n:{"SelectBack","SelectTitle","SelectHint","SelectConfirm"})UiVisible(n,visible);
   for(int i=0;i<3;++i){const std::string k=std::to_string(i);
-    for(auto* n:{"SelectCard","SelectArt","SelectName","SelectWeapon","SelectDebt","SelectTouch"})hb::UI::SetVisible(player,"HUD",n+k,visible);
-    hb::UI::SetVisible(player,"HUD","SelectPick"+k,visible&&i==pick);}
+    for(auto* n:{"SelectCard","SelectArt","SelectName","SelectWeapon","SelectDebt","SelectTouch"})UiVisible(n+k,visible);
+    UiVisible("SelectPick"+k,visible&&i==pick);}
 }
 
 bool TopDownShooter::UpdateIntro(float delta,bool anyKey){
@@ -1040,9 +1047,9 @@ bool TopDownShooter::UpdateIntro(float delta,bool anyKey){
   if(Phase>=2)return false;
   phaseTime+=delta;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
   if(Phase==0&&phaseTime>=rules->LoadingTime){Phase=1;phaseTime=0;
-    for(auto* n:{"LoadingBack","LoadingCoin","LoadingText"})hb::UI::SetVisible(player,"HUD",n,false);}
+    for(auto* n:{"LoadingBack","LoadingCoin","LoadingText"})UiVisible(n,false);}
   else if(Phase==1&&!selecting&&anyKey&&phaseTime>0.3f){selecting=true;phaseTime=0;
-    for(auto* n:{"TitleBack","TitleScreen","TitleHint"})hb::UI::SetVisible(player,"HUD",n,false);introHidden=true;confirmHeld=true;ShowSelect(true);}
+    for(auto* n:{"TitleBack","TitleScreen","TitleHint"})UiVisible(n,false);introHidden=true;confirmHeld=true;ShowSelect(true);}
   else if(Phase==1&&selecting){
     // 1·2·3 또는 A·D로 고르고 Enter·E로 결정. 카드를 누르면 그 숫자 키가 눌린다
     int key=0;for(int i=1;i<=3;++i)if(hb::Input::IsKeyDown(std::to_string(i)))key=i;
@@ -1077,10 +1084,10 @@ void TopDownShooter::Update(float delta){
   player=hb::Gameplay::GetPlayerPawn();if(!player)return;
   frame++;if(hudDirty)Hud();
   {// 성능 확인: F3으로 왼쪽 위에 초당 게임 프레임과 0.5초 동안 가장 긴 프레임
-   const bool f3=hb::Input::IsKeyDown("F3");if(f3&&!fpsHeld){ShowFps=!ShowFps;if(player&&frame>=2)hb::UI::SetVisible(player,"HUD","Fps",ShowFps);}fpsHeld=f3;
+   const bool f3=hb::Input::IsKeyDown("F3");if(f3&&!fpsHeld){ShowFps=!ShowFps;if(player&&frame>=2)UiVisible("Fps",ShowFps);}fpsHeld=f3;
    fpsTime+=delta;fpsFrames++;fpsWorst=std::max(fpsWorst,delta);
-   if(fpsTime>=0.5f){if(ShowFps&&player&&frame>=2){hb::UI::SetVisible(player,"HUD","Fps",true);
-       hb::UI::SetText(player,"HUD","Fps",std::to_string(int(fpsFrames/fpsTime+0.5f))+" FPS  최장 "+std::to_string(int(fpsWorst*1000+0.5f))+"ms");}
+   if(fpsTime>=0.5f){if(ShowFps&&player&&frame>=2){UiVisible("Fps",true);
+       UiText("Fps",std::to_string(int(fpsFrames/fpsTime+0.5f))+" FPS  최장 "+std::to_string(int(fpsWorst*1000+0.5f))+"ms");}
      fpsTime=0;fpsFrames=0;fpsWorst=0;}}
   if(minimapDirty&&frame>=2){minimapDirty=false;UpdateMinimap();}  // 위젯은 첫 프레임 뒤에 생김
   if(!started)Begin();
@@ -1114,16 +1121,16 @@ void TopDownShooter::Update(float delta){
    {const bool p=hb::Input::IsKeyDown("escape")||hb::Input::IsKeyDown("p");  // 일시정지 (Esc·P)
     if(p&&!pauseHeld&&Phase>=2&&settleTime<0&&!ending)SetPaused(!Paused);pauseHeld=p;
     if(Paused)return;}
-   if(tipTime>0&&(tipTime-=delta)<=0){hb::UI::SetVisible(player,"HUD","TipBack",false);hb::UI::SetVisible(player,"HUD","Tip",false);}
+   if(tipTime>0&&(tipTime-=delta)<=0){UiVisible("TipBack",false);UiVisible("Tip",false);}
    if(cutscene>0){  // 보스 등장: 1초 마법진 → 보스 → 1.3초 포효(흔들림)·이름 자막 → 끝나면 대사
      cutscene-=delta;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
      if(!roared&&cutscene<1.9f){roared=true;shake=0.7f;Sfx("BossCharge");hb::Camera::Flash(hb::Color{1,0.85f,0.4f,0.35f},0.3f);
-       for(auto* e:Enemies())if(e->Boss){hb::UI::SetText(player,"HUD","BossName",e->DisplayName);hb::UI::SetText(player,"HUD","BossSub","황금에 잠식된 1층의 문지기");}
-       for(auto* n:{"BossName","BossSub"})hb::UI::SetVisible(player,"HUD",n,true);}
-     if(cutscene<=0){for(auto* n:{"CineTop","CineBottom","BossName","BossSub"})hb::UI::SetVisible(player,"HUD",n,false);
+       for(auto* e:Enemies())if(e->Boss){UiText("BossName",e->DisplayName);UiText("BossSub","황금에 잠식된 1층의 문지기");}
+       for(auto* n:{"BossName","BossSub"})UiVisible(n,true);}
+     if(cutscene<=0){for(auto* n:{"CineTop","CineBottom","BossName","BossSub"})UiVisible(n,false);
        for(auto* e:Enemies())if(e->Boss)Talk("Boss",{{"boss",e->DisplayName}});}
      return;}
-   if(bannerTime>0&&(bannerTime-=delta)<=0)hb::UI::SetVisible(player,"HUD","BossSub",false);
+   if(bannerTime>0&&(bannerTime-=delta)<=0)UiVisible("BossSub",false);
    if(UpdateSettle(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}
    if(UpdateDialog(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}}  // 대화 중엔 행동·이동 막음
   if(!inDungeon&&!inHome&&Phase>=2&&settleTime<0)Tip(0);  // 거점: 북쪽 계단으로 (오프닝 대화가 끝난 뒤)
@@ -1154,12 +1161,12 @@ void TopDownShooter::Update(float delta){
     hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
     for(auto& [b,life]:bullets)hb::Physics::SetVelocity(b,hb::Vec3{0,0,0});
     if(gameOver==rules->RespawnDelay){
-      hb::UI::SetText(player,"HUD","KoTitle",Fatigue>=FatigueMax?"지쳐 쓰러졌다":"쓰러졌다");
-      hb::UI::SetText(player,"HUD","KoSub","빈손으로 끌려 나왔다 - 들고 있던 소재를 잃었다");
-      for(auto* n:{"KoBack","KoTitle","KoSub"})hb::UI::SetVisible(player,"HUD",n,true);
+      UiText("KoTitle",Fatigue>=FatigueMax?"지쳐 쓰러졌다":"쓰러졌다");
+      UiText("KoSub","빈손으로 끌려 나왔다 - 들고 있던 소재를 잃었다");
+      for(auto* n:{"KoBack","KoTitle","KoSub"})UiVisible(n,true);
       hb::Camera::Flash(hb::Color{0.6f,0,0,0.6f},0.6f);}
     if((gameOver-=delta)<=0){
-      for(auto* n:{"KoBack","KoTitle","KoSub"})hb::UI::SetVisible(player,"HUD",n,false);
+      for(auto* n:{"KoBack","KoTitle","KoSub"})UiVisible(n,false);
       Ore=Herb=Monster=0;KnockedOut=true;Returning=false;HasReturnItem=false;Hp=MaxHp;Leave(-1,"StairTop");}
     return;
   }
@@ -1204,8 +1211,11 @@ void TopDownShooter::Update(float delta){
    for(int i=1;i<=5;++i)if(hb::Input::IsKeyDown(std::to_string(i)))which=i;
    Craft(q&&!craftKeyHeld,which,enter&&!confirmHeld);craftKeyHeld=q;confirmHeld=enter;}
 
-  // 공격: 발렌 검 베기, 셰리 1초 장전 활, 알레아 마탄 연사
-  if(Character==1){if(attackDown&&attackCooldown<=0){charge+=delta;if(charge>=rules->ArrowCharge){Shoot(position);charge=0;attackAnim=0.1f;attackCooldown=0.15f;}}else charge=0;}
+  // 공격: 발렌 검 베기, 셰리 당겼다 떼서 쏘는 활, 알레아 마탄 연사
+  if(Character==1){  // 누르는 동안 당기고(1초면 다 당김, 그 뒤로는 유지) 떼는 순간 발사. 덜 당기고 떼면 취소
+    if(attackDown&&attackCooldown<=0){const bool full=charge>=rules->ArrowCharge;charge=std::min(charge+delta,rules->ArrowCharge);
+      if(!full&&charge>=rules->ArrowCharge){hb::Sprites::Flash(player,0.08f,0.5f);Sfx("Select");}}
+    else if(!attackDown&&charge>0){if(charge>=rules->ArrowCharge){Shoot(position);attackAnim=0.1f;attackCooldown=0.15f;}charge=0;}}
   else if(Character==2&&attackDown&&attackCooldown<=0){attackCooldown=rules->BoltInterval;attackAnim=0.2f;Shoot(position);}
   else if(Character==0&&attackDown&&attackCooldown<=0)Slash(position,enemies);
   UpdateShots(delta,enemies);
@@ -1218,7 +1228,7 @@ void TopDownShooter::Update(float delta){
   if(boss)BossHp=boss->Hp;
   {// 보스 체력 막대 (화면 위)
    const float ratio=boss&&boss->MaxHp>0?std::max(0.f,boss->Hp/boss->MaxHp):-1.f;
-   if(ratio!=bossBarShown){if((ratio<0)!=(bossBarShown<0))for(auto* n:{"BossBarBack","BossBar","BossBarName"})hb::UI::SetVisible(player,"HUD",n,ratio>=0);
-     if(ratio>=0){hb::UI::SetValue(player,"HUD","BossBar",ratio);if(bossBarShown<0)hb::UI::SetText(player,"HUD","BossBarName",boss->DisplayName);}
+   if(ratio!=bossBarShown){if((ratio<0)!=(bossBarShown<0))for(auto* n:{"BossBarBack","BossBar","BossBarName"})UiVisible(n,ratio>=0);
+     if(ratio>=0){UiValue("BossBar",ratio);if(bossBarShown<0)UiText("BossBarName",boss->DisplayName);}
      bossBarShown=ratio;}}
 }

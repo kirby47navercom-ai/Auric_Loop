@@ -21,7 +21,7 @@ from pathlib import Path
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from defringe import clean, key  # noqa: E402
+from defringe import allows_purple, clean, key  # noqa: E402
 from pixelize import snap  # noqa: E402
 
 ASSETS = Path(__file__).resolve().parent.parent / "AuricLoop/Assets"
@@ -94,7 +94,7 @@ def save(folder, prefix, named, pivot_y_px=None):
     for name, f in named:
         canvas = Image.new("RGBA", (w, h))
         canvas.paste(f, (round(w / 2 - feet_x(f)), h - f.height))
-        clean(canvas)[0].save(folder / f"{prefix}_{name}.png")
+        clean(canvas, allows_purple(folder))[0].save(folder / f"{prefix}_{name}.png")
         asset = {"version": 1, "name": f"S_{prefix}_{name}", "texture": f"{tex}/{prefix}_{name}.png", "pixelsPerUnit": PPU, "rect": [0, 0, w, h],
                  "pivot": [0.5, round(pivot_y_px / h, 4) if pivot_y_px is not None else 0.5], "filter": "nearest", "border": [0, 0, 0, 0]}
         (folder / f"S_{prefix}_{name}.hbsprite.json").write_text(json.dumps(asset, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -155,7 +155,7 @@ def save_strip(folder, prefix, frames, pivot=(0.5, 0.5)):
     tex = folder.relative_to(ASSETS.parent).as_posix()
     out = []
     for i, f in enumerate(frames):
-        clean(f)[0].save(folder / f"{prefix}_{i}.png")
+        clean(f, allows_purple(folder))[0].save(folder / f"{prefix}_{i}.png")
         asset = {"version": 1, "name": f"S_{prefix}_{i}", "texture": f"{tex}/{prefix}_{i}.png", "pixelsPerUnit": PPU, "rect": [0, 0, f.width, f.height],
                  "pivot": list(pivot), "filter": "nearest", "border": [0, 0, 0, 0]}
         (folder / f"S_{prefix}_{i}.hbsprite.json").write_text(json.dumps(asset, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -229,3 +229,4 @@ strip_groups("fx_more2.png", [("Muzzle", 3, 16, 0.04, False), ("CardCast", 3, 22
 warn = Image.new("RGBA", (32, 32))
 warn.putdata([(255, 60, 40, 150 if 6 <= y <= 25 and (x // 4) % 2 == 0 else 90 if 6 <= y <= 25 else 0) for y in range(32) for x in range(32)])
 warn.save(ASSETS / "Sprites/FX/FX_Warning.png")
+

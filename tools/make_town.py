@@ -39,7 +39,7 @@ for sheet, items in SHEETS.items():
         f = Image.open(tmp / f"{sheet.rsplit('.', 1)[0]}_{i}.png")
         f = f.crop(f.getbbox())
         f = f.resize((max(1, round(f.width * height / f.height)), height), Image.NEAREST)
-        clean(f)[0].save(out / f"{name}.png")
+        clean(f, False)[0].save(out / f"{name}.png")
         print(name, f.size)
 # 원룸 바닥: 거점 아틀라스의 나무 바닥 4x4칸
 atlas = Image.open(ROOT / "Tiles/T_World.png")

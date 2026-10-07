@@ -170,6 +170,8 @@ private:
   Mode mode=Mode::Halt;
   float stun=0,flash=0,shotTimer=0;
   bool sentStunned=false,sentReady=false,sentNear=false,flipped=false;  // 엔진 명령은 값이 바뀔 때만 보낸다 (호출 비용)
+  float tint=-1;  // 보낸 색: 1 흰색, 0.45 공격 예고 붉은색. 같은 색은 다시 보내지 않는다 (에디터는 색을 바꿀 때마다 그림을 다시 만듦)
+  void Tint(bool warn){const float g=warn?0.45f:1.f;if(g==tint)return;tint=g;hb::Sprites::SetColor(this,hb::Color{1,g,g,1});}
   hb::Vec3 sentVelocity{9e9f,0,0};
   int velocityAge=0,stuckAge=0;
   float detour=0;hb::Vec3 detourDir{0,0,0};  // 엄폐물에 막히면 잠깐 옆으로 돌아감
@@ -474,7 +476,9 @@ public:
   void BossEnraged(Enemy* e);                                                        // 2페이즈 포효
   void Effect(const std::string& name,const hb::Vec3& at,float angle=0,float glow=0,bool flip=false);  // Assets/Animations/SA_<name> 한 번 재생
   std::string Sound(const std::string& name) const;  // Sounds에서 이름으로 찾은 경로 (없으면 "")
-  void Sfx(const std::string& name){const auto s=Sound(name);if(!s.empty())hb::Audio::Play(s);}  // 첫 입력 전 효과음은 엔진이 버림
+  void Sfx(const std::string& name){  // Sounds 값은 "wav 경로|볼륨". 첫 입력 전 효과음은 엔진이 버림
+    const auto s=Sound(name);if(s.empty())return;const auto bar=s.find('|');
+    if(bar==std::string::npos)hb::Audio::Play(s);else hb::Audio::Play(s.substr(0,bar),std::stof(s.substr(bar+1)),1.f,"master");}
   void Say(const std::string& who,const std::string& name,const std::string& text){dialog.push_back({who,name,text});}
   void Talk(const std::string& row,const std::map<std::string,std::string>& vars={});  // DT_Dialogue 행의 대사를 차례로
   bool Frozen() const{return Hp<=0||dialogIndex<dialog.size()||Phase<2||cutscene>0||Paused;}
@@ -542,6 +546,19 @@ private:
   AuricRules* rules=nullptr;     // 장면의 BP_AuricRules (없으면 C++ 기본값)
   hb::Actor* player=nullptr;
   hb::Actor* camera=nullptr;
+  // HUD 호출은 값이 바뀔 때만 보낸다. 같은 값을 매 프레임 보내면 에디터가 그때마다 화면을 다시 그려서 끊긴다
+  std::map<std::string,std::string> uiSent;hb::Actor* uiOwner=nullptr;
+  bool UiChanged(const std::string& key,const std::string& value){
+    if(frame<2)return true;  // 위젯은 첫 프레임 뒤에 생겨 그 전 호출은 무시될 수 있으니 기억하지 않는다
+    if(uiOwner!=player){uiOwner=player;uiSent.clear();}
+    auto it=uiSent.find(key);if(it!=uiSent.end()&&it->second==value)return false;uiSent[key]=value;return true;}
+  static std::string UiNum(float a,float b){return std::to_string(a)+","+std::to_string(b);}
+  void UiVisible(const std::string& n,bool v){if(UiChanged("v"+n,v?"1":"0"))hb::UI::SetVisible(player,"HUD",n,v);}
+  void UiText(const std::string& n,const std::string& v){if(UiChanged("t"+n,v))hb::UI::SetText(player,"HUD",n,v);}
+  void UiTexture(const std::string& n,const std::string& v){if(UiChanged("x"+n,v))hb::UI::SetTexture(player,"HUD",n,v);}
+  void UiValue(const std::string& n,float v){if(UiChanged("f"+n,std::to_string(v)))hb::UI::SetValue(player,"HUD",n,v);}
+  void UiPosition(const std::string& n,const hb::Vec2& v){if(UiChanged("p"+n,UiNum(v.x,v.y)))hb::UI::SetPosition(player,"HUD",n,v);}
+  void UiSize(const std::string& n,const hb::Vec2& v){if(UiChanged("s"+n,UiNum(v.x,v.y)))hb::UI::SetSize(player,"HUD",n,v);}
   hb::Vec3 playerAt{0,0,0},facing{1,0,0},cameraAt{0,0,0};
   bool playerFlipped=false,blinkShown=false;
   hb::Vec3 knock{0,0,0};
@@ -553,6 +570,8 @@ private:
   bool inHome=false,inDungeon=false,monsterDrop=false,exitArmed=false,minimapDirty=false;
   Dungeon map;
   hb::Json roomTable;                    // DT_Rooms 행들
+  hb::Json dialogue;                     // DT_Dialogue 행들 (Lines가 처음 부를 때 한 번 읽음)
+  hb::Json Lines(const std::string& id);
   std::vector<std::string> waves;        // 싸우는 방의 남은 웨이브 ("S,S,M" 하나씩)
   size_t wave=0;
   int waveAlive=0;                       // 이번 웨이브에서 나와 아직 살아 있는 적 (생성 직후 한 프레임은 적 목록에 안 잡혀서 직접 셈)

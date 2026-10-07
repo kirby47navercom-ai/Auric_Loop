@@ -2,7 +2,7 @@
 # 실행: powershell -ExecutionPolicy Bypass -File tools/preview.ps1 [-Out 경로.png] [-Seconds 2]
 param([string]$Out = (Join-Path $env:TEMP "auric_preview.png"), [int]$Seconds = 2, [string]$Inputs = "", [string]$Scene = "Hub")
 $ErrorActionPreference = 'Stop'
-$engine = 'C:\Users\kirby\HBEngine\Versions\82abc860ad41c075'
+$engine = 'C:\Users\kirby\HBEngine\Versions\d03c655dc25a2bb6'
 $root = Split-Path $PSScriptRoot
 $project = Join-Path $root 'AuricLoop\AuricLoop.hbproject'
 $node = Join-Path $engine 'runtime\node.exe'

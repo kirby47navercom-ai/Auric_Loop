@@ -61,7 +61,7 @@ for sheet, items in PROPS.items():
         f = Image.open(tmp / f"{sheet.rsplit('.', 1)[0]}_{i}.png")
         f = f.crop(f.getbbox())
         f = f.resize((max(1, round(f.width * height / f.height)), height), Image.NEAREST)
-        clean(f)[0].save(out / f"Prop_{name}.png")
+        clean(f, False)[0].save(out / f"Prop_{name}.png")
         print(name, f.size)
 
 # 던전 층(C++ Dungeon)이 크기만 바꿔 까는 반복 무늬 텍스처: 바닥 4x4칸, 벽 윗면 2x2칸, 북쪽 벽면(금테 윗면 + 벽면 2칸) 4x3칸

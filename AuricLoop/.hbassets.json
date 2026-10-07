@@ -2665,5 +2665,8 @@
   },
   "Assets/Sprites/Valen/Valen_S_Roll_3.png": {
     "id": "b430e2a8-9dab-4b88-8763-46c8c31a1798"
+  },
+  "Assets/Data/DA_Preload.hbdata.json": {
+    "id": "e27994ef-307d-4f87-b49f-05e0c1db50ac"
   }
 }

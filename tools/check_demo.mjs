@@ -6,13 +6,19 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
 
-const ENGINE = process.env.HB_ENGINE || 'C:/Users/kirby/HBEngine/Versions/82abc860ad41c075';
+const ENGINE = process.env.HB_ENGINE || 'C:/Users/kirby/HBEngine/Versions/d03c655dc25a2bb6';
 const {runProject} = await import(pathToFileURL(path.join(ENGINE, 'tools/run-project.mjs')).href);
 const project = path.join(path.dirname(fileURLToPath(import.meta.url)), '../AuricLoop/AuricLoop.hbproject');
 const scene = name => `Assets/Scenes/${name}.hbscene.json`;
 const director = r => r.objects.find(o => o.id === 'Director').nativeProperties;
 const press = (frame, key, extra = {}) => [{frame, key, value: 1, ...extra}, {frame: frame + 2, key, value: 0, ...extra}];
 const warps = (from, count) => Array.from({length: count}, (_, i) => press(from + i * 6, 'F9')).flat();
+// 셰리용: hold 프레임 누르고 gap 프레임 떼기를 반복 (떼는 순간 발사)
+const touchBursts = (from, to, hold = 70, gap = 4) => {
+  const out = [];
+  for (let f = from; f + hold < to; f += hold + gap) out.push(...touchHold(f, f + hold));
+  return out;
+};
 const touchHold = (from, to) => [{frame: from, key: 'LeftMouseButton', value: 1, device: 'touch', source: 'ui'}, {frame: to, key: 'LeftMouseButton', value: 0, device: 'touch', source: 'ui'}];
 const gatesLocked = vm => vm.objects.filter(o => (o.tags || []).some(t => t === 'Dungeon.Gate' || t === 'Dungeon.GateSide') && o.position[1] > -150).length;
 const startIn = room => ({Director: {StartRoom: room}});
@@ -90,9 +96,9 @@ const rooms = layout.filter(r => r.kind !== 'Shortage');
   console.log('보스·귀환 검사 통과', 'shots', s.Shots, 'room', s.RoomIndex, 'fatigue', s.Fatigue);
 }
 
-// 셰리(활: 1초 장전 단발)·알레아(마탄 연사·폭발): 경로 첫 전투방에서 터치 자동 조준
+// 셰리(활: 당겼다 떼면 단발)·알레아(마탄 연사·폭발): 경로 첫 전투방에서 터치 자동 조준
 for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Alea', '알레아', 20]]) {
-  const r = await runProject(project, {scene: scene(name), frames: 700, delta: 1 / 60, inputs: [...warps(5, 1), ...touchHold(20, 690)]});
+  const r = await runProject(project, {scene: scene(name), frames: 700, delta: 1 / 60, inputs: [...warps(5, 1), ...(name === 'Test_Sherry' ? touchBursts(20, 690) : touchHold(20, 690))]});
   const s = director(r);
   assert.ok(s.Swings >= minSwings, `${label} 발사 간격`);
   assert.ok(s.Hits >= 1 && s.Kills >= 1, `${label} 탄이 해골을 맞혀 쓰러뜨림`);

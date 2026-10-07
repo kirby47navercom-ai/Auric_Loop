@@ -17,8 +17,15 @@ def spill(p):
     return a and g <= 24 and min(r, b) > g + 16 and abs(r - b) < 60
 
 
-def clean(im, depth=4):
-    """RGBA 그림을 고쳐서 돌려준다. 바뀐 픽셀 수도 함께.
+PURPLE = {"Sherry", "SkeletonMage", "SkeletonCaptain", "FX"}  # 디자인에 보라가 있는 폴더
+
+
+def allows_purple(path):
+    return any(part in PURPLE for part in Path(path).parts)
+
+
+def clean(im, purple=True, depth=4):
+    """RGBA 그림을 고쳐서 돌려준다. 바뀐 픽셀 수도 함께. purple=False면 보라가 없는 그림이라 보라 칸을 모두 주변색으로.
 
     투명한 곳에서 시작해 '섞인 색'만 타고 depth칸까지 번진다(확대된 3x3 픽셀 덩어리도 통째로 잡힌다)."""
     im = im.convert("RGBA")
@@ -46,7 +53,26 @@ def clean(im, depth=4):
                 nxt.append((nx, ny))
                 changed += 1
         front = nxt
-    return im, changed
+    # 안쪽에 홀로 박힌 분홍·보라 점(배경이 섞여 든 칸): 밝은 색 사이에 홀로 있으면 주변 중간색으로
+    hue = lambda p: p[3] and p[0] > p[1] + 60 and p[2] > p[1] + 50 and abs(p[0] - p[2]) < 80
+    stray = []
+    for y in range(h):
+        for x in range(w):
+            if not hue(px[x, y]):
+                continue
+            nb = [px[x + dx, y + dy] for dx in (-1, 0, 1) for dy in (-1, 0, 1)
+                  if (dx or dy) and 0 <= x + dx < w and 0 <= y + dy < h and px[x + dx, y + dy][3]]
+            rest = [q for q in nb if not hue(q)]
+            if not purple:
+                c = tuple(sorted(q[i] for q in rest)[len(rest) // 2] for i in range(3)) if rest else (24, 16, 16)
+                stray.append(((x, y), c + (px[x, y][3],)))
+            elif not any(map(hue, nb)) and len(rest) >= 5:  # 이웃에 보라가 하나도 없을 때만 (반복해도 머리가 깎이지 않게)
+                c = tuple(sorted(q[i] for q in rest)[len(rest) // 2] for i in range(3))
+                if sum(c) > 150:  # 윤곽선(어두운 칸) 옆 머리끝은 그대로
+                    stray.append(((x, y), c + (px[x, y][3],)))
+    for q, c in stray:
+        px[q] = c
+    return im, changed + len(stray)
 
 
 def key(im):
@@ -93,6 +119,8 @@ if __name__ == "__main__":
         return clean(im)
     assert strip((96, 0, 96, 255))[1] == 3 and strip((96, 0, 96, 255))[0].getpixel((2, 0)) == (0, 0, 0, 255)  # 섞인 테두리는 어둡게
     assert strip((170, 60, 160, 255))[1] == 0  # 진짜 보라는 그대로
+    dot = Image.new("RGBA", (3, 3), (200, 50, 40, 255)); dot.putpixel((1, 1), (193, 42, 163, 255))
+    assert clean(dot)[0].getpixel((1, 1)) == (200, 50, 40, 255)  # 빨간 머리 속 보라 점은 주변색으로
     hole = Image.new("RGB", (5, 5), (255, 0, 255))
     hole.paste((170, 60, 160), (1, 1, 4, 4)); hole.putpixel((2, 2), (250, 2, 250))
     assert key(hole).getpixel((2, 2)) == (170, 60, 160, 255) and key(hole).getpixel((0, 0))[3] == 0  # 머리 속 샌 배경은 메움
@@ -106,7 +134,7 @@ if __name__ == "__main__":
             im = Image.open(f)
             if im.mode not in ("RGBA", "LA", "P"):
                 continue
-            fixed, n = clean(im)
+            fixed, n = clean(im, allows_purple(f))
             if n:
                 fixed.save(f)
                 total += n

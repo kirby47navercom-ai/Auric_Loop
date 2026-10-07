@@ -121,8 +121,12 @@ for name, (who, defaults) in ENEMIES.items():
 # ---- 상호작용·적 등장 자리·방 정보 ----
 write(BP / "BP_Interactable.hbblueprint.json", blueprint(
     "BP_Interactable", "Interactable", [transform(), sprite("Assets/Sprites/Prop_DebtBoard.png", 2, 2), box((0.8, 0.4, 0.5), (0, -0.6, 0))], native_from=True))
-SOUNDS = [f"{k}=Assets/Audio/S_{k}.hbaudioasset.json" for k in ["Slash", "Arrow", "Bolt", "Boom", "Hit", "Kill", "Hurt", "Coin", "Dodge", "DoorHit", "DoorOpen",
-                                                               "Flash", "Craft", "Gather", "Select", "BossCharge"]]
+# 효과음은 wav 경로|볼륨으로 바로 튼다. 에셋(.hbaudioasset) 이름으로 틀면 에디터가 이름을 찾느라 프로젝트 목록을 두 번 읽어 소리마다 멈춤
+def _sfx(k):
+    a = json.loads((PROJECT / f"Assets/Audio/S_{k}.hbaudioasset.json").read_text(encoding="utf-8"))
+    return f"{k}={a['clip']}|{a['volume']}"
+SOUNDS = [_sfx(k) for k in ["Slash", "Arrow", "Bolt", "Boom", "Hit", "Kill", "Hurt", "Coin", "Dodge", "DoorHit", "DoorOpen",
+                            "Flash", "Craft", "Gather", "Select", "BossCharge"]]
 SOUNDS += [f"{k}=Assets/Audio/S_BGM_{k}.hbaudioasset.json" for k in ["Hub", "Dungeon", "Boss", "Return"]]
 rules = blueprint("BP_AuricRules", "AuricRules", [transform()], native_from=True, defaults={
     "AuricRules.Debts": [9800, 14500, 31700],  # 기획서 6-4
