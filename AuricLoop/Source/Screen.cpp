@@ -28,7 +28,7 @@ void TopDownShooter::Hud(){
   UiText("HpText",std::to_string(hp)+" / "+std::to_string(MaxHp));
   UiText("WeightText",std::to_string(Weight())+" / "+std::to_string(rules->WeightLimit));
   UiText("GoldText",std::to_string(Gold)+" G   빚 "+std::to_string(Debt));
-  UiText("Hint",hint);
+  UiText("Hint",hint);UiVisible("HintBack",!hint.empty());UiVisible("Minimap",inDungeon);  // 안내 받침은 문구 있을 때만, 미니맵은 던전에서만
   UiValue("Fatigue",FatigueMax>0?std::min(1.f,float(Fatigue)/FatigueMax):1.f);
   UiText("Title",Hp<=0?(Fatigue>=FatigueMax?"지쳐 쓰러졌다":"쓰러졌다")
     :ReturnSuccess?"귀환 성공 - 정산 "+std::to_string(LastRepaid)+" G 상환"
@@ -65,7 +65,7 @@ static std::string Utf8Prefix(const std::string& s,size_t chars){size_t i=0,n=0;
 
 bool TopDownShooter::UpdateDialog(float delta,bool advance){
   // 대화창 (기획서 6-5): 한 글자씩 → E·클릭·Enter로 바로 다 보이기 → 다시 누르면 다음 줄
-  static const char* parts[]={"DialogBox","DialogPortraitFrame","DialogName","DialogText","DialogNext","DialogTouch"};
+  static const char* parts[]={"DialogBox","DialogNameTag","DialogPortraitFrame","DialogName","DialogText","DialogNext","DialogTouch"};
   // 초상화 하나를 말하는 사람 그림으로 바꿔 120px 틀 가운데에 (좌표: 대화창 1000x170 기준, tools/gen_hud.py)
   static const struct{const char* who;float w,h;}portraits[]={{"collector",108,108},{"valen",96,96},{"sherry",84,66},{"alea",90,72},{"boss",66,66}};
   if(dialogIndex>=dialog.size()){

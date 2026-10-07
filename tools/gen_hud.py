@@ -13,6 +13,12 @@ from PIL import Image
 PROJECT = Path(__file__).resolve().parent.parent / "AuricLoop"
 WIDGET = PROJECT / "Assets/UI/W_TopDown.hbwidget.json"
 KIT = "Assets/UI/Kit/"
+FONT = "Assets/Fonts/DungGeunMo.ttf"  # 둥근모꼴 (픽셀 글꼴, Public Domain: Assets/Fonts/DungGeunMo_LICENSE.txt)
+# 색: 본문 상아색, 강조 금색, 보조 모래색, 위험 붉은색. 패널은 짙은 남색 + 금테 + 둥근 모서리로 한 가지 모양
+INK, GOLD, SAND, RED, SKY = "#f6ecd8", "#ffd56a", "#c9b48a", "#ff8a7a", "#8fd8ff"
+FRAME = dict(background="#0d1419eb", borderColor="#c9a24acc", borderWidth=2, radius=8)
+SOFT = dict(background="#0d1419b8", borderColor="#c9a24a55", borderWidth=1, radius=6)  # HUD 글씨 받침 (게임 화면 위)
+SIZES = {12: 14, 13: 15, 14: 16, 15: 17, 16: 18, 17: 19, 18: 20, 20: 22, 22: 26, 24: 28, 26: 30, 28: 34, 36: 42, 40: 48, 44: 52, 46: 54}
 
 w = json.loads(WIDGET.read_text(encoding="utf-8"))
 base = next(n for n in w["nodes"] if n["name"] == "Title")
@@ -29,7 +35,10 @@ def node(name, kind, corner, x, y, w_, h, z=10, **props):
     n.update(id=name, name=name, type=kind, parent="root", events={}, bindings={})
     n["slot"] = {"anchors": [ax, ay, ax, ay], "offset": [-x if ax == 1 else x, -y if ay == 1 else y, w_, h],
                  "alignment": [ax, ay], "zIndex": z, "fill": 0}
-    n["properties"].update({"text": "", "texture": "", "background": "#00000000", "deviceVisibility": "all", **props})
+    if "fontSize" in props:
+        props["fontSize"] = SIZES.get(props["fontSize"], props["fontSize"])  # 픽셀 글꼴은 조금 커야 읽힘
+    n["properties"].update({"text": "", "texture": "", "background": "#00000000", "deviceVisibility": "all", "font": FONT,
+                            "borderWidth": 0, "radius": 0, **props})
     nodes.append(n)
     return n
 
@@ -40,7 +49,7 @@ def image(name, file, corner, x, y, z=10, **props):
 
 
 def text(name, value, corner, x, y, w_, h, size=18, align="left", z=20):
-    return node(name, "Text", corner, x, y, w_, h, z, text=value, fontSize=size, color="#fff3e5", align=align)
+    return node(name, "Text", corner, x, y, w_, h, z, text=value, fontSize=size, color=INK, align=align)
 
 
 def touch(name, key, corner, x, y, size):
@@ -56,7 +65,9 @@ for i in (1, 2, 3):
 text("HpText", "3 / 3", "tl", 24 + 64, 24 + 14, 220, 28, align="center")
 image("BagIcon", "icon_bag.png", "tl", 30, 92)
 text("WeightText", "0 / 100", "tl", 68, 86, 160, 32)
-text("GoldText", "0 G", "tl", 340, 34, 200, 32, size=18)
+node("GoldBack", "Panel", "tl", 330, 30, 196, 40, 9, **SOFT)
+node("WeightBack", "Panel", "tl", 24, 84, 190, 36, 9, **SOFT)
+text("GoldText", "0 G", "tl", 342, 36, 180, 32, size=18)
 node("Fps", "Text", "tl", 24, 380, 300, 26, 60, text="", fontSize=16, color="#7dff9a", visible=False)  # F3 성능 표시
 image("FatigueBack", "fatigue_back.png", "tl", 24, 132)
 # 피로도: 세로 막대 하나 (C++ UI::SetValue 0~1, 아래에서 위로 참)
@@ -65,9 +76,11 @@ node("Fatigue", "ProgressBar", "tl", 24 + 8, 132 + 8, 16, 220, 11, value=0, max=
 image("FatigueTicks", "fatigue_ticks.png", "tl", 24 + 8, 132 + 52, z=12)
 
 # 위 가운데: 탐색 층 / 상태 문구
+node("AreaBack", "Panel", "t", 0, 12, 220, 58, 9, **SOFT)
 text("Title", "탐색", "t", 0, 18, 400, 28, size=20, align="center")
 text("Floor", "1F", "t", 0, 44, 400, 22, size=14, align="center")
-text("Hint", "", "t", 0, 70, 600, 24, size=15, align="center")  # 가까운 상호작용 안내 (E: 채집 등)
+node("HintBack", "Panel", "t", 0, 76, 520, 32, 9, visible=False, **SOFT)
+text("Hint", "", "t", 0, 80, 600, 24, size=15, align="center")  # 가까운 상호작용 안내 (E: 채집 등)
 
 # 오른쪽 위: 가방, 일시정지, 미니맵 틀
 image("PauseButton", "btn_pause.png", "tr", 24, 24)
@@ -75,10 +88,10 @@ image("BagButton", "btn_inventory.png", "tr", 24 + 72 + 12, 24)
 image("Minimap", "minimap.png", "tr", 24, 108)
 
 # 오른쪽 아래: 공격, 회피, 상호작용, 제작 (UI 키트 시안 배치)
-image("AttackButton", "btn_attack_valen.png", "br", 40, 40)  # 캐릭터·귀환 테마에 맞는 그림은 C++ UI::SetTexture
-image("DodgeButton", "btn_dodge.png", "br", 40 + 140 + 16, 24)
-image("InteractButton", "btn_interact.png", "br", 40 + 140 + 4, 40 + 96 + 8)
-image("CraftButton", "btn_craft.png", "br", 40 + 24, 40 + 140 + 16)
+image("AttackButton", "btn_attack_valen.png", "br", 40, 40, deviceVisibility="touch")  # 캐릭터·귀환 테마에 맞는 그림은 C++ UI::SetTexture
+image("DodgeButton", "btn_dodge.png", "br", 40 + 140 + 16, 24, deviceVisibility="touch")
+image("InteractButton", "btn_interact.png", "br", 40 + 140 + 4, 40 + 96 + 8, deviceVisibility="touch")
+image("CraftButton", "btn_craft.png", "br", 40 + 24, 40 + 140 + 16, deviceVisibility="touch")  # PC에선 키보드·마우스라 숨김
 touch("AttackTouch", "LeftMouseButton", "br", 40, 40, 140)  # 터치로 누르면 C++가 마지막 입력 장치(touch)를 보고 자동 조준
 touch("DodgeTouch", "space", "br", 40 + 140 + 16, 24, 96)
 touch("InteractTouch", "e", "br", 40 + 140 + 4, 40 + 96 + 8, 88)
@@ -124,7 +137,7 @@ def panel_image(name, file, px, py, z=41):
 
 
 def panel_text(name, value, px, py, w_, h_, size=16, align="left"):
-    return panel(name, "Text", px, py, w_, h_, 42, text=value, fontSize=size, color="#fff3e5", align=align)
+    return panel(name, "Text", px, py, w_, h_, 42, text=value, fontSize=size, color=INK, align=align)
 
 
 panel_image("CraftPanel", "craft_panel.png", 0, 0, z=40)
@@ -163,13 +176,14 @@ def dialog(name, kind, px, py, w_, h_, z, **props):
     return n
 
 
-dialog("DialogBox", "Image", 0, 0, DW, DH, 50, texture=KIT + "dialog_box.png")
+dialog("DialogBox", "Panel", 0, 0, DW, DH, 50, **FRAME)
 dialog("DialogPortraitFrame", "Image", 20, 19, 132, 132, 51, texture=KIT + "dialog_portrait_frame.png")
 iw, ih = Image.open(PROJECT / KIT / "portrait_collector.png").size  # 말하는 사람 초상화 하나: C++가 그림·크기·위치를 바꿈
 dialog("DialogPortrait", "Image", 26 + (120 - iw) // 2, 25 + (120 - ih) // 2, iw, ih, 52, texture=KIT + "portrait_collector.png")
-dialog("DialogName", "Text", 172, 22, 400, 28, 52, text="수금원", fontSize=20, color="#ffd666")
-dialog("DialogText", "Text", 172, 58, 790, 90, 52, text="", fontSize=18, color="#fff3e5")
-dialog("DialogNext", "Text", DW - 60, DH - 44, 40, 28, 52, text="▼", fontSize=18, color="#ffd666")
+dialog("DialogNameTag", "Panel", 160, -18, 200, 36, 53, background="#2a2112f2", borderColor="#c9a24a", borderWidth=2, radius=6)
+dialog("DialogName", "Text", 160, -14, 200, 30, 54, text="수금원", fontSize=20, color=GOLD, align="center")
+dialog("DialogText", "Text", 176, 34, 780, 110, 52, text="", fontSize=18, color=INK, wrap=True, align="left")
+dialog("DialogNext", "Text", DW - 56, DH - 46, 40, 30, 52, text="▼", fontSize=18, color=GOLD)
 dialog("DialogTouch", "TouchButton", 0, 0, DW, DH, 53, inputKey="e", inputMode="keys",
        background="#00000000", pressed="#ffffff11", hover="#00000000")
 
@@ -183,32 +197,32 @@ def full(name, kind, z, **props):
 
 full("TitleBack", "Panel", 90, background="#05090aff")
 full("TitleScreen", "Image", 91, texture=KIT + "title_v2.png")
-hint = node("TitleHint", "Text", "b", 0, 0, 600, 30, 92, text="클릭하거나 아무 키나 눌러 시작", fontSize=16, color="#cdb98a", align="center")
+hint = node("TitleHint", "Text", "b", 0, 0, 600, 30, 92, text="클릭하거나 아무 키나 눌러 시작", fontSize=16, color=SAND, align="center")
 hint["slot"].update(anchors=[0.5, 1, 0.5, 1], alignment=[0.5, 1], offset=[0, -40, 600, 30])
 full("LoadingBack", "Panel", 95, background="#0d1716ff")
 node("LoadingCoin", "Image", "c", 0, -40, 144, 144, 96, texture=KIT + "loading_coin.gif")
-node("LoadingText", "Text", "c", 0, 70, 300, 30, 96, text="Loading...", fontSize=20, color="#fff3e5", align="center")
+node("LoadingText", "Text", "c", 0, 70, 300, 30, 96, text="불러오는 중...", fontSize=20, color=INK, align="center")
 
 # ---- 캐릭터 선택 (기획서 2장 흐름 2): 타이틀 다음. 카드를 누르면 1·2·3 키, 결정은 Enter ----
 CARDS = [("valen", "발렌", "검 · 부채꼴 베기, 적 탄환을 지움", 9800),
          ("sherry", "셰리", "활 · 1초 장전, 한 발이 강함", 14500),
          ("alea", "알레아", "마탄 · 연사, 닿으면 작은 폭발", 31700)]
 full("SelectBack", "Panel", 80, background="#0b1314f2", visible=False)
-node("SelectTitle", "Text", "c", 0, -300, 600, 40, 81, text="누구의 빚을 갚을까?", fontSize=28, color="#ffd666", align="center", visible=False)
+node("SelectTitle", "Text", "c", 0, -300, 600, 40, 81, text="누구의 빚을 갚을까?", fontSize=28, color=GOLD, align="center", visible=False)
 for i, (who, name, weapon, debt) in enumerate(CARDS):
     cx = (i - 1) * 340
-    node(f"SelectPick{i}", "Panel", "c", cx, 10, 312, 432, 81, background="#ffd666cc", visible=False)
-    node(f"SelectCard{i}", "Panel", "c", cx, 10, 300, 420, 82, background="#1b2a2bff", visible=False)
+    node(f"SelectPick{i}", "Panel", "c", cx, 10, 316, 436, 81, background="#ffd56a40", borderColor=GOLD, borderWidth=4, radius=12, visible=False)
+    node(f"SelectCard{i}", "Panel", "c", cx, 10, 300, 420, 82, background="#111b20f5", borderColor="#c9a24a88", borderWidth=2, radius=10, visible=False)
     iw, ih = Image.open(PROJECT / KIT / f"select_{who}.png").size
     node(f"SelectArt{i}", "Image", "c", cx, -60, iw, ih, 83, texture=KIT + f"select_{who}.png", visible=False)
-    node(f"SelectName{i}", "Text", "c", cx, 110, 280, 32, 83, text=f"{i + 1}. {name}", fontSize=24, color="#fff3e5", align="center", visible=False)
-    node(f"SelectWeapon{i}", "Text", "c", cx, 150, 280, 26, 83, text=weapon, fontSize=14, color="#cdb98a", align="center", visible=False)
-    node(f"SelectDebt{i}", "Text", "c", cx, 186, 280, 26, 83, text=f"빚 {debt:,} G", fontSize=16, color="#ff8a7a", align="center", visible=False)
+    node(f"SelectName{i}", "Text", "c", cx, 110, 280, 32, 83, text=f"{i + 1}. {name}", fontSize=24, color=INK, align="center", visible=False)
+    node(f"SelectWeapon{i}", "Text", "c", cx, 150, 280, 26, 83, text=weapon, fontSize=14, color=SAND, align="center", visible=False)
+    node(f"SelectDebt{i}", "Text", "c", cx, 186, 280, 26, 83, text=f"빚 {debt:,} G", fontSize=16, color=RED, align="center", visible=False)
     node(f"SelectTouch{i}", "TouchButton", "c", cx, 10, 300, 420, 84, inputKey=str(i + 1), inputMode="keys",
          background="#00000000", pressed="#ffffff22", hover="#ffffff11", visible=False)
-node("SelectHint", "Text", "c", 0, 270, 700, 26, 81, text="←→·A·D·1·2·3으로 고르고 Enter·Space 또는 카드를 한 번 더 눌러 결정", fontSize=15, color="#cdb98a", align="center", visible=False)
-node("SelectConfirm", "TouchButton", "c", 0, 312, 240, 48, 84, text="결정", fontSize=18, inputKey="enter", inputMode="keys",
-     background="#3a4a3aee", pressed="#ffffff33", hover="#ffffff22", visible=False)
+node("SelectHint", "Text", "c", 0, 270, 700, 26, 81, text="←→·A·D·1·2·3으로 고르고 Enter·Space 또는 카드를 한 번 더 눌러 결정", fontSize=15, color=SAND, align="center", visible=False)
+node("SelectConfirm", "TouchButton", "c", 0, 312, 240, 50, 84, text="결정", fontSize=18, color=GOLD, inputKey="enter", inputMode="keys",
+     background="#2a2112f2", borderColor=GOLD, borderWidth=2, radius=8, pressed="#ffd56a44", hover="#ffd56a22", visible=False)
 
 # ---- 엔딩 카드 (기획서 2장 흐름 13, 8장): 키아트·로고 위에 Coming Soon. 아무 키나 누르면 타이틀로 ----
 full("EndingBack", "Panel", 97, background="#05090aff", visible=False)
@@ -227,20 +241,20 @@ n["slot"].update(anchors=[0, 1, 1, 1], offset=[0, -90, 0, 90], alignment=[0, 0])
 node("BossName", "Text", "c", 0, 150, 900, 60, 66, text="해골 대장", fontSize=46, color="#ffd666", align="center", visible=False)
 node("BossSub", "Text", "c", 0, 205, 900, 30, 66, text="", fontSize=20, color="#ff9a7a", align="center", visible=False)
 node("BossBarName", "Text", "t", 0, 96, 520, 22, 22, text="", fontSize=15, color="#ffd666", align="center", visible=False)
-node("BossBarBack", "Panel", "t", 0, 120, 520, 16, 21, background="#1a0d0dcc", visible=False)
+node("BossBarBack", "Panel", "t", 0, 119, 524, 18, 21, background="#1a0d0dcc", borderColor="#c9a24a99", borderWidth=1, radius=4, visible=False)
 node("BossBar", "ProgressBar", "t", 0, 122, 514, 12, 22, value=1, max=1, fillDirection="leftToRight", fillTexture="", backgroundTexture="",
      background="#00000000", accent="#e04a3aff", visible=False)
 
 # ---- 안내 문구 띠 (기획서 9장) ----
-node("TipBack", "Panel", "t", 0, 140, 760, 44, 30, background="#0b1314dd", visible=False)
-node("Tip", "Text", "t", 0, 150, 740, 26, 31, text="", fontSize=17, color="#ffe9a8", align="center", visible=False)
+node("TipBack", "Panel", "t", 0, 140, 780, 48, 30, visible=False, **FRAME)
+node("Tip", "Text", "t", 0, 151, 760, 28, 31, text="", fontSize=17, color="#ffe9a8", align="center", visible=False)
 
 # ---- 가방 (Tab) ----
-node("BagPanel", "Panel", "c", 0, -40, 620, 260, 45, background="#16222ae6", visible=False)
-node("BagTitle", "Text", "c", 0, -150, 580, 32, 46, text="가방", fontSize=22, color="#ffd666", align="center", visible=False)
+node("BagPanel", "Panel", "c", 0, -40, 640, 280, 45, visible=False, **FRAME)
+node("BagTitle", "Text", "c", 0, -150, 580, 32, 46, text="가방", fontSize=22, color=GOLD, align="center", visible=False)
 for i in range(5):
-    node(f"BagRow{i}", "Text", "c", 0, -105 + i * 36, 580, 28, 46, text="", fontSize=17, color="#ffd666" if i == 4 else "#fff3e5", align="center", visible=False)
-node("BagHint", "Text", "c", 0, 70, 580, 22, 46, text="Tab: 닫기", fontSize=13, color="#cdb98a", align="center", visible=False)
+    node(f"BagRow{i}", "Text", "c", 0, -105 + i * 36, 580, 28, 46, text="", fontSize=17, color=GOLD if i == 4 else INK, align="center", visible=False)
+node("BagHint", "Text", "c", 0, 70, 580, 22, 46, text="Tab: 닫기", fontSize=13, color=SAND, align="center", visible=False)
 touch("BagTouch", "tab", "tr", 24 + 72 + 12, 24, 72)
 n = node("BagUseTouch", "TouchButton", "c", 0, 39, 580, 34, 47, inputKey="enter", inputMode="keys", deviceVisibility="touch",
          background="#00000000", pressed="#ffffff22", hover="#00000000", visible=False)  # 가방이 열렸을 때만 ([귀환] 줄 터치)
@@ -248,9 +262,10 @@ n = node("BagUseTouch", "TouchButton", "c", 0, 39, 580, 34, 47, inputKey="enter"
 # ---- 일시정지 (Esc·P, 모바일 일시정지 버튼) ----
 touch("PauseTouch", "escape", "tr", 24, 24, 72)
 full("PauseBack", "Panel", 85, background="#05090ac8", visible=False)
-node("PauseTitle", "Text", "c", 0, -60, 600, 50, 86, text="일시정지", fontSize=36, color="#ffd666", align="center", visible=False)
-node("PauseResume", "Text", "c", 0, 10, 600, 30, 86, text="Esc · P : 계속하기", fontSize=20, color="#fff3e5", align="center", visible=False)
-node("PauseQuit", "Text", "c", 0, 50, 600, 30, 86, text="F12 : 처음으로", fontSize=17, color="#cdb98a", align="center", visible=False)
+node("PausePanel", "Panel", "c", 0, -5, 460, 220, 85, visible=False, **FRAME)
+node("PauseTitle", "Text", "c", 0, -60, 600, 50, 86, text="일시정지", fontSize=36, color=GOLD, align="center", visible=False)
+node("PauseResume", "Text", "c", 0, 10, 600, 30, 86, text="Esc · P : 계속하기", fontSize=20, color=INK, align="center", visible=False)
+node("PauseQuit", "Text", "c", 0, 50, 600, 30, 86, text="F12 : 처음으로", fontSize=17, color=SAND, align="center", visible=False)
 node("PauseResumeTouch", "TouchButton", "c", 0, 10, 300, 40, 87, inputKey="escape", inputMode="keys", deviceVisibility="touch",
      background="#ffffff11", pressed="#ffffff33", hover="#00000000", visible=False)
 node("PauseQuitTouch", "TouchButton", "c", 0, 50, 300, 34, 87, inputKey="F12", inputMode="keys", deviceVisibility="touch",
@@ -263,13 +278,13 @@ node("KoSub", "Text", "c", 0, 30, 900, 30, 71, text="", fontSize=18, color="#fff
 
 # ---- 정산 화면 (기획서 6-4): 줄마다 나타나고 남은 빚 숫자가 줄어듦. C++ UpdateSettle ----
 full("SettleBack", "Panel", 72, background="#05090ad0", visible=False)
-node("SettlePanel", "Panel", "c", 0, 0, 640, 470, 73, background="#16222acc", visible=False)
-node("SettleTitle", "Text", "c", 0, -195, 600, 40, 74, text="정산", fontSize=28, color="#ffd666", align="center", visible=False)
+node("SettlePanel", "Panel", "c", 0, 0, 660, 490, 73, visible=False, **FRAME)
+node("SettleTitle", "Text", "c", 0, -195, 600, 40, 74, text="정산", fontSize=28, color=GOLD, align="center", visible=False)
 for i in range(7):
-    node(f"SettleRow{i}", "Text", "c", 0, -140 + i * 34, 560, 30, 74, text="", fontSize=18, color="#ffd666" if i in (4, 6) else "#fff3e5", align="center", visible=False)
+    node(f"SettleRow{i}", "Text", "c", 0, -140 + i * 34, 560, 30, 74, text="", fontSize=18, color=GOLD if i in (4, 6) else INK, align="center", visible=False)
 node("SettleDebt", "Text", "c", 0, 120, 600, 40, 74, text="", fontSize=26, color="#ff8a7a", align="center", visible=False)
 node("SettleNote", "Text", "c", 0, 165, 600, 24, 74, text="", fontSize=14, color="#cdb98a", align="center", visible=False)
-node("SettleHint", "Text", "c", 0, 205, 600, 24, 74, text="E · 클릭 · Enter: 확인", fontSize=15, color="#7dd9ff", align="center", visible=False)
+node("SettleHint", "Text", "c", 0, 205, 600, 24, 74, text="E · 클릭 · Enter: 확인", fontSize=15, color=SKY, align="center", visible=False)
 
 w["nodes"] = nodes
 WIDGET.write_text(json.dumps(w, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

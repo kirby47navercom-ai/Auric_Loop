@@ -1,0 +1,9 @@
+둥근모꼴 (DungGeunMo) Version 1.301
+
+글꼴 파일 안의 이름 정보(name table)에 적힌 그대로 옮김:
+  저작권(Copyright): Public Domain
+  제작(Manufacturer): Kil Hyung-jin
+  디자이너(Designer): Kim Jung-tae, Darien Gavin Valentine
+  배포처(Vendor URL): http://cactus.tistory.com
+
+Auric Loop의 UI 글꼴로 Assets/Fonts/DungGeunMo.ttf를 그대로 함께 배포한다.

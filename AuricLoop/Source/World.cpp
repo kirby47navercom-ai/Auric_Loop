@@ -272,7 +272,7 @@ void TopDownShooter::Tip(int id){
 void TopDownShooter::SetPaused(bool paused){
   // 일시정지: 플레이어·적·탄을 세우고 메뉴. 풀면 탄 속도를 되돌림 (적은 Tick이 다시 보냄)
   Paused=paused;
-  for(auto* n:{"PauseBack","PauseTitle","PauseResume","PauseQuit","PauseResumeTouch","PauseQuitTouch"})UiVisible(n,paused);
+  for(auto* n:{"PauseBack","PausePanel","PauseTitle","PauseResume","PauseQuit","PauseResumeTouch","PauseQuitTouch"})UiVisible(n,paused);
   hb::Movement2D::SetSpeed(player,paused?0.f:rules->MoveSpeed);sentSpeed=-1;  // 이동은 엔진 이동 컴포넌트가 입력으로 직접 하므로 속도를 0으로
   if(paused){hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
     for(auto* e:Enemies())hb::Physics::SetVelocity(e,hb::Vec3{0,0,0});
