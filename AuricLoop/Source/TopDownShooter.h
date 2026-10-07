@@ -298,6 +298,10 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   float SlowRate = 0.75f;
   HB_PROPERTY(BlueprintReadWrite)
+  float AttackMoveRate = 0.15f;   // 검 베기 중 이동속도 배율 (공격 그림이 서 있는 자세라 그대로 움직이면 미끄러져 보임)
+  HB_PROPERTY(BlueprintReadWrite)
+  float ChargeMoveRate = 0.35f;   // 활 당기는 중 이동속도 배율
+  HB_PROPERTY(BlueprintReadWrite)
   int FlashPrice = 10;
   HB_PROPERTY(BlueprintReadWrite)
   float FlashStun = 1.0f;

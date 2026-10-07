@@ -988,12 +988,13 @@ void TopDownShooter::Animate(float delta,bool moving){
   const bool flip=sector>=3&&sector<=5;
   if(flip!=playerFlipped){playerFlipped=flip;hb::Sprites::SetFlip(player,flip,false);}
   std::string next=std::string(dirs[sector])+"_";
+  if(attackAnim>0)attackAnim-=delta;
   if(dodgeTimer>0){  // 구르기: 웅크림 → 몸을 만 두 장을 번갈아 → 일어남. 그림은 아래·옆·위 셋이라 대각선은 가까운 쪽
     const float t=rules->DodgeTime-dodgeTimer;const int f=t<0.08f?0:dodgeTimer<0.12f?3:1+int((t-0.08f)/0.09f)%2;
     const char* row=sector==2||sector==1||sector==3?"N":sector>=5&&sector<=7?"S":"E";
     next=std::string(row)+"_Roll_"+std::to_string(f);}
   else if(charge>0)next+=charge<rules->ArrowCharge*0.5f?"Attack_0":"Attack_1";  // 셰리 장전: 시위 걸기 → 당기기
-  else if(attackAnim>0){attackAnim-=delta;const int f=attackAnim>0.2f?0:attackAnim>0.1f?1:2;next+="Attack_"+std::to_string(f);}
+  else if(attackAnim>0&&!(Character==2&&moving)){const int f=attackAnim>0.2f?0:attackAnim>0.1f?1:2;next+="Attack_"+std::to_string(f);}
   else if(moving){walkTime+=delta;next+="Walk_"+std::to_string(int(walkTime*10)%4);}
   else{walkTime=0;next+="Idle_0";}
   if(next!=currentSprite){currentSprite=next;if(Character<(int)rules->CharacterSprites.size())hb::Sprites::SetSprite(player,rules->CharacterSprites[Character]+next+".hbsprite.json");}
@@ -1184,7 +1185,9 @@ void TopDownShooter::Update(float delta){
   else if(moving)facing=hb::VectorMath::NormalizeVector(move);
   Animate(delta,moving);
   // 적재량 초과·피로도 75% 이상이면 이동속도 -25% (기획서 4-1)
-  {const float speed=rules->MoveSpeed*((Weight()>rules->WeightLimit||Fatigue*4>=FatigueMax*3)?rules->SlowRate:1.f);
+  // 검 베기·활 당기기 중에는 거의 멈춤 (서서 하는 공격 그림이 미끄러지지 않게). 알레아는 걸으면서 쏘고 그림도 걷기로
+  {const float act=Character==0&&attackAnim>0?rules->AttackMoveRate:Character==1&&charge>0?rules->ChargeMoveRate:1.f;
+   const float speed=act*rules->MoveSpeed*((Weight()>rules->WeightLimit||Fatigue*4>=FatigueMax*3)?rules->SlowRate:1.f);
    if(speed!=sentSpeed){sentSpeed=speed;hb::Movement2D::SetSpeed(player,speed);}}
   attackCooldown-=delta;dodgeCooldownLeft-=delta;invulnerable-=delta;
 
