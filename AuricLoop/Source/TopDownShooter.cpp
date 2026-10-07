@@ -1046,6 +1046,14 @@ void TopDownShooter::ShowSelect(bool visible){
     UiVisible("SelectPick"+k,visible&&i==pick);}
 }
 
+// 아무 키·마우스 버튼·터치를 이번 프레임에 눌렀는지. 일시정지·운영자 키는 빼고, move=false면 이동 키도 뺀다 (대화 중 걷다가 넘어가지 않게)
+static bool AnyPressed(bool move){
+  if(!hb::Input::AnyKeyPressed())return false;
+  for(auto* k:{"escape","p","tab","F3","F9","F10","F12"})if(hb::Input::WasPressedThisFrame(k))return false;
+  if(!move)for(auto* k:{"w","a","s","d","arrowup","arrowdown","arrowleft","arrowright"})if(hb::Input::WasPressedThisFrame(k))return false;
+  return true;
+}
+
 bool TopDownShooter::UpdateIntro(float delta,bool anyKey){
   // 로딩(금화 GIF) → 타이틀(아무 키) → 캐릭터 선택 → 오프닝 대화 (기획서 2장)
   if(Phase>=2)return false;
@@ -1055,13 +1063,16 @@ bool TopDownShooter::UpdateIntro(float delta,bool anyKey){
   else if(Phase==1&&!selecting&&anyKey&&phaseTime>0.3f){selecting=true;phaseTime=0;
     for(auto* n:{"TitleBack","TitleScreen","TitleHint"})UiVisible(n,false);introHidden=true;confirmHeld=true;ShowSelect(true);}
   else if(Phase==1&&selecting){
-    // 1·2·3 또는 A·D로 고르고 Enter·E로 결정. 카드를 누르면 그 숫자 키가 눌린다
+    // 1·2·3, A·D, ←→로 고르고 Enter·E·Space로 결정. 카드를 누르면 그 숫자 키가 눌리고, 고른 카드를 한 번 더 누르면 결정
     int key=0;for(int i=1;i<=3;++i)if(hb::Input::IsKeyDown(std::to_string(i)))key=i;
-    const int side=hb::Input::IsKeyDown("d")?4:hb::Input::IsKeyDown("a")?5:0;const int now=key?key:side;
-    if(now&&now!=pickHeld){pick=key?key-1:(pick+(side==4?1:2))%3;ShowSelect(true);Sfx("Select");}
-    pickHeld=now;
+    const int side=hb::Input::IsKeyDown("d")||hb::Input::IsKeyDown("arrowright")?4:hb::Input::IsKeyDown("a")||hb::Input::IsKeyDown("arrowleft")?5:0;
+    const int now=key?key:side;
     const bool confirm=hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("space");
-    const bool fresh=confirm&&!confirmHeld;confirmHeld=confirm;
+    if(phaseTime<0.25f){pickHeld=now;confirmHeld=confirm;return true;}  // 타이틀을 넘긴 그 키가 바로 고르거나 결정하지 않게
+    const bool again=key&&now!=pickHeld&&key-1==pick;
+    if(now&&now!=pickHeld&&!again){pick=key?key-1:(pick+(side==4?1:2))%3;ShowSelect(true);Sfx("Select");}
+    pickHeld=now;
+    const bool fresh=(confirm&&!confirmHeld)||again;confirmHeld=confirm;
     if(!fresh)return true;
     selecting=false;Phase=2;Character=pick;if(pick<(int)rules->Debts.size())Debt=rules->Debts[pick];currentSprite="";ShowSelect(false);advanceHeld=true;Animate(0,false);Hud();
     Talk("Opening1");Talk(std::string("Intro_")+faces[pick]);Talk("Opening2");  // 오프닝: 수금원 → 고른 캐릭터 한마디 → 수금원
@@ -1105,7 +1116,7 @@ void TopDownShooter::Update(float delta){
    bool any=hb::VectorMath::Vector2Length(hb::Input::GetMouseDelta())>0;
    for(auto* k:{"w","a","s","d","e","q","space","enter","tab","LeftMouseButton","1","2","3","4","5"})any=any||hb::Input::IsKeyDown(k);
    const bool anyPressed=any&&!anyHeld;anyHeld=any;idleTime=any?0:idleTime+delta;
-   if(hb::Input::IsKeyDown("F12")||(idleTime>=rules->IdleReset&&!(Phase<2&&!selecting))||(ending&&anyPressed)){ResetToTitle();return;}
+   if(hb::Input::IsKeyDown("F12")||(idleTime>=rules->IdleReset&&!(Phase<2&&!selecting))||(ending&&(anyPressed||AnyPressed(true)))){ResetToTitle();return;}
    if(ending)return;
    if(Phase>=2&&!Returning&&!ReturnSuccess&&area>=0&&roomKind!="Boss"){runTime+=delta;
      if(runTime>=rules->RunNotice){if(hint.empty()){hint="10분이 지났어요 - F10을 누르면 보스방 앞으로";Hud();}
@@ -1121,7 +1132,7 @@ void TopDownShooter::Update(float delta){
   else MoveCamera(position,touchMode?position+facing*(rules->CameraLeadMax/rules->CameraLead*0.5f):aim,(hasAim||touchMode)&&Phase>=2,delta);
   {const bool adv=hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("space");
    const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
-   if(frame>=2&&UpdateIntro(delta,pressed))return;
+   if(frame>=2&&UpdateIntro(delta,pressed||AnyPressed(true)))return;
    {const bool p=hb::Input::IsKeyDown("escape")||hb::Input::IsKeyDown("p");  // 일시정지 (Esc·P)
     if(p&&!pauseHeld&&Phase>=2&&settleTime<0&&!ending)SetPaused(!Paused);pauseHeld=p;
     if(Paused)return;}
@@ -1136,7 +1147,7 @@ void TopDownShooter::Update(float delta){
      return;}
    if(bannerTime>0&&(bannerTime-=delta)<=0)UiVisible("BossSub",false);
    if(UpdateSettle(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}
-   if(UpdateDialog(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}}  // 대화 중엔 행동·이동 막음
+   if(UpdateDialog(delta,pressed||AnyPressed(false))){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}}  // 대화 중엔 행동·이동 막음
   if(!inDungeon&&!inHome&&Phase>=2&&settleTime<0)Tip(0);  // 거점: 북쪽 계단으로 (오프닝 대화가 끝난 뒤)
   if(inHome){if(position.y<exitY){Leave(-1,"HomeDoor");return;}}  // 원룸 문 → 거점 집 앞
   else if(!inDungeon){  // 거점 계단 끝 → 던전 (들어갈 때마다 새 층). 계단에 막 도착했으면 한 번 내려와야 다시 들어감 (W를 누른 채 왔다 갔다 방지)
