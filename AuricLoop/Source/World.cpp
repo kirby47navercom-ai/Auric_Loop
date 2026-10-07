@@ -58,6 +58,7 @@ void TopDownShooter::Begin(){
     area=r->Index;roomKind=r->Kind;exitY=r->ExitY;inDungeon=r->Kind=="Dungeon";inHome=r->Kind=="Home";}
   for(auto* a:hb::Scene::GetAllActorsOfClass("Interactable"))if(auto* i=dynamic_cast<Interactable*>(a))interactables.push_back(i);
   auto cams=hb::Scene::GetActorsWithTag("MainCamera");camera=cams.empty()?nullptr:cams.front();
+  if(camera)hb::Components::SetFloat(camera,"Camera","orthographicSize",rules->CameraSize);  // 줌은 BP_AuricRules.CameraSize 하나로
   const bool carried=LoadRun();
   if(!carried&&KeepProgress){const auto p=hb::Save::Read("Auric.progress");
     if(p.is_object()){Debt=p.value("debt",Debt);SofaLevel=p.value("sofa",SofaLevel);HomeLevel=p.value("home",HomeLevel);MaxHp=3+SofaLevel;Hp=MaxHp;}}

@@ -27,6 +27,7 @@ Enemy* TopDownShooter::SpawnEnemy(const std::string& blueprint,const hb::Vec3& a
 }
 
 void TopDownShooter::ParkEnemy(Enemy* e){
+  e->CancelAttack();
   const bool pooled=hb::Tags::Has(e,"Enemy.S",true)||hb::Tags::Has(e,"Enemy.M",true)||hb::Tags::Has(e,"Enemy.C",true);
   if(!pooled){hb::Scene::Destroy(e);return;}
   if(e->brainRunning){hb::States::Stop(e);e->brainRunning=false;}
@@ -104,11 +105,11 @@ void TopDownShooter::Effect(const std::string& name,const hb::Vec3& at,float ang
   PlayFx("Assets/Animations/SA_"+name+".hbspriteanimation.json",it!=length.end()?it->second:0.3f,at,angle,glow,flip);
 }
 
-void TopDownShooter::Warn(const hb::Vec3& from,const hb::Vec3& dir,float length,float seconds){
+void TopDownShooter::Warn(const hb::Vec3& from,const hb::Vec3& dir,float length,float seconds,float width){
   // 돌진 예고선: 장면에 놓아 둔 붉은 띠(Pool.Warn)를 돌진 방향으로 돌려 길이만큼 깔았다가 치움
   if(warnPool.empty())return;auto* a=warnPool.back();warnPool.pop_back();
   hb::Transform t;t.position=from+dir*(length/2);t.position.z=0.02f;t.rotation=hb::Vec3{0,0,Angle(dir)};hb::Scene::SetTransform(a,t);
-  hb::Sprites::SetSize(a,hb::Vec2{length,1.4f});warns.push_back({a,seconds});
+  hb::Sprites::SetSize(a,hb::Vec2{length,width});warns.push_back({a,seconds});
 }
 
 void TopDownShooter::BossSlam(const hb::Vec3& at,int count,float speed,const std::string& clip){
@@ -211,6 +212,15 @@ void TopDownShooter::UpdateShots(float delta,const std::vector<Enemy*>& enemies)
       if(len<rules->BoomRadius&&len>0.05f)HitEnemy(e,d*(1/len),rules->BoomDamage*WeaponDamage()/rules->BoltDamage);}
   }
   for(auto* s:done){Give(shotPool,s);shots.erase(s);shotBoom.erase(s);}
+}
+
+void TopDownShooter::KeepInside(Enemy* e) const{
+  // 돌진·도약·밀려남으로 벽을 뚫고 나간 적은 싸우는 방 안 가장 가까운 자리로 (방은 철창으로 잠겨 있음)
+  if(!inDungeon||fightingRoom<0||fightingRoom>=int(map.rooms.size())||e->Parked)return;
+  const auto& room=map.rooms[fightingRoom];const float m=e->Radius+0.2f;
+  auto p=hb::Scene::GetPosition(e);if(room.Inside(p,m))return;
+  p.x=std::clamp(p.x,room.cx-room.hw+m,room.cx+room.hw-m);p.y=std::clamp(p.y,room.cy-room.hh+m,room.cy+room.hh-m);
+  hb::Scene::SetPosition(e,p);
 }
 
 void TopDownShooter::UpdateBullets(float delta,const hb::Vec3& position){

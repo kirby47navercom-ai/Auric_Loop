@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <cstdlib>
+#include <cmath>
 
 // Auric Loop 게임 규칙. 언리얼처럼 C++는 계산만 맡고, 수치·그림·소리·배치는 BP 기본값과 장면에서 고친다.
 //   TopDownShooter (BP_TopDownShooter): 플레이어·전투·정산·UI 흐름 (게임 모드 역할, 장면마다 Director 하나)
@@ -72,6 +73,27 @@ public:
   std::string DeathClip = "Assets/Animations/SA_Skeleton_Death.hbspriteanimation.json";  // 쓰러지는 애니메이션 (이펙트로 재생)
   HB_PROPERTY(BlueprintReadWrite)
   std::string ShotClip = "";      // 이 적이 쏘는 탄 그림 (비우면 BP_AuricRules.EnemyShotClip)
+  // 근접 공격 (KeepDistance 0인 적): 예고(붉게·바닥 표시) → 공격 → 빈틈. 닿기만 해서는 맞지 않는다
+  //   베기: 가까우면 앞으로 휘두름 / 돌진 찌르기: 붉은 띠 방향으로 짧게 돌진 / 도약: 바닥 원 자리로 뛰어 내려찍음
+  //   보스는 맴돌다 가까우면 대검 베기만 (돌진·점프는 상태 머신 패턴)
+  HB_PROPERTY(BlueprintReadWrite)
+  float MeleeWindup = 0.5f;       // 예고 시간 (초)
+  HB_PROPERTY(BlueprintReadWrite)
+  float AttackCooldown = 1.1f;    // 공격 사이 쉬는 시간 (초, 매번 0.8~1.3배)
+  HB_PROPERTY(BlueprintReadWrite)
+  float SlashRange = 1.3f;        // 베기 거리 (몸 반지름에 더함)
+  HB_PROPERTY(BlueprintReadWrite)
+  float LungeRange = 5.0f;        // 이 거리 안이면 돌진 찌르기 (0이면 안 씀)
+  HB_PROPERTY(BlueprintReadWrite)
+  float LungeSpeed = 11.0f;
+  HB_PROPERTY(BlueprintReadWrite)
+  float LeapRange = 6.5f;         // 이 거리 안이면 도약 내려찍기 (0이면 안 씀)
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string AttackClip = "Assets/Animations/SA_Skeleton_Attack.hbspriteanimation.json";
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string WalkClip = "Assets/Animations/SA_Skeleton_Walk.hbspriteanimation.json";
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string WindupSprite = "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Attack_0.hbsprite.json";  // 예고 동안 멈춰 있는 자세
 
   // 상태 머신이 상태에 들어갈 때 BP 사용자 이벤트가 한 번 부른다 (매 프레임 부르지 않음: C++ 호출 비용)
   HB_FUNCTION(BlueprintCallable, DisplayName="생성", Category="적")
@@ -107,6 +129,7 @@ public:
   void Tick(float delta);
   bool TakeHit(float damage,const hb::Vec3& push,float stunSeconds,float burnSeconds);  // 쓰러지면 true
   void Stun(float seconds);
+  void CancelAttack(){EndAttack();}  // 풀로 돌려보낼 때 (도약 중 꺼 둔 충돌 복구)
   float burnLeft=0,burnDamage=0;
   bool burnedOut=false;          // 화상으로 체력이 다함 (게임 규칙이 처리)
   bool Parked=false;             // 장면에 화면 밖으로 대기 중 (게임 규칙이 꺼내 씀, 실행 중 생성은 끊김)
@@ -128,6 +151,13 @@ private:
   float detour=0;hb::Vec3 detourDir{0,0,0};  // 엄폐물에 막히면 잠깐 옆으로 돌아감
   int ring=0,pattern=0;
   hb::Vec3 dashDir{0,-1,0};
+  // 근접 공격 진행: atk 0 없음 1 베기 2 돌진 찌르기 3 도약, atkPhase 0 예고 1 공격 2 빈틈
+  int atk=0,atkPhase=0;float atkTime=0,atkCool=0.6f,lungeTime=0;bool atkHit=false;
+  hb::Vec3 atkDir{1,0,0},atkTarget{0,0,0};
+  bool UpdateMelee(float delta,const hb::Vec3& dir,float distance,bool frozen);
+  void EndAttack();
+  void Move(const hb::Vec3& v){if(Length3(v-sentVelocity)<0.01f)return;sentVelocity=v;velocityAge=0;hb::Physics::SetVelocity(this,v);}
+  static float Length3(const hb::Vec3& v){return std::sqrt(v.x*v.x+v.y*v.y+v.z*v.z);}
 };
 
 HB_CLASS(Blueprintable)
@@ -281,6 +311,10 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   float CameraFollow = 8.0f;
   HB_PROPERTY(BlueprintReadWrite)
+  float CameraSize = 7.5f;       // 화면 세로 절반 (m). 클수록 멀리 보임 (예전 5.625)
+  HB_PROPERTY(BlueprintReadWrite)
+  float CameraRoomPad = 1.5f;    // 방 기준 카메라에서 바닥 밖으로 더 보여 줄 벽 두께 (m)
+  HB_PROPERTY(BlueprintReadWrite)
   float AutoAimRange = 12.0f;    // 모바일 자동 조준
   HB_PROPERTY(BlueprintReadWrite)
   float IdleReset = 60.0f;       // 부스: 입력이 없으면 처음으로
@@ -430,7 +464,7 @@ public:
   void FireRing(const hb::Vec3& from,int count,float angle,float speed,const std::string& clip="");  // 사방으로 한 번에
   void ClearBullets(){pendingShots.clear();hb::Projectiles::Clear();}
   // 보스 연출 (Enemy가 부름)
-  void Warn(const hb::Vec3& from,const hb::Vec3& dir,float length,float seconds);   // 돌진 예고선
+  void Warn(const hb::Vec3& from,const hb::Vec3& dir,float length,float seconds,float width=1.4f);   // 공격 예고 붉은 띠 (풀 3개, 다 쓰면 생략)
   void BossSlam(const hb::Vec3& at,int bullets,float speed,const std::string& clip); // 내려찍기 충격파·탄·흔들림
   void BossEnraged(Enemy* e);                                                        // 2페이즈 포효
   void Effect(const std::string& name,const hb::Vec3& at,float angle=0,float glow=0,bool flip=false);  // Assets/Animations/SA_<name> 한 번 재생
@@ -475,6 +509,7 @@ private:
   void Shoot(const hb::Vec3& from);
   void UpdateShots(float delta,const std::vector<Enemy*>& enemies);
   void UpdateBullets(float delta,const hb::Vec3& position);
+  void KeepInside(Enemy* e) const;  // 싸우는 방 밖으로 밀려난 적을 방 안으로 되돌림
   bool HitEnemy(Enemy* e,const hb::Vec3& push,float damage);
   void KillEnemy(Enemy* e);
   void DropCoin(const hb::Vec3& at,int value);

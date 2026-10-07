@@ -15,6 +15,11 @@ void TopDownShooter::MoveCamera(const hb::Vec3& position,const hb::Vec3& aim,boo
   if(!camera)return;
   hb::Vec3 target=position;
   if(hasAim)target=target+hb::VectorMath::ClampVectorLength((aim-position)*rules->CameraLead,rules->CameraLeadMax);
+  // 던전 방 안에서는 방 기준: 방이 화면에 다 들어가면 방 가운데에 고정, 크면 벽 밖이 보이지 않게 가둠. 복도에서는 플레이어를 따라감
+  if(inDungeon&&cutscene<=0){const int r=map.RoomAt(position);
+    if(r>=0){const auto& room=map.rooms[r];const float vh=rules->CameraSize,vw=vh*16.f/9.f,pad=rules->CameraRoomPad;
+      auto fit=[](float t,float c,float half,float view){return half<=view?c:std::clamp(t,c-half+view,c+half-view);};
+      target.x=fit(target.x,room.cx,room.hw+pad,vw);target.y=fit(target.y,room.cy,room.hh+pad,vh);}}
   target.z=hb::Scene::GetPosition(camera).z;
   if(!cameraReady){cameraAt=target;cameraReady=true;}else cameraAt=hb::VectorMath::VInterpTo(cameraAt,target,delta,rules->CameraFollow);
   auto at=cameraAt;
@@ -96,7 +101,7 @@ void TopDownShooter::Update(float delta){
   }
 
   std::vector<Enemy*> enemies;
-  for(auto* e:Enemies()){e->Tick(delta);  // 적 이동은 여기서 한 번에 (상태 머신은 상태가 바뀔 때만 C++를 부름)
+  for(auto* e:Enemies()){e->Tick(delta);KeepInside(e);  // 적 이동은 여기서 한 번에 (상태 머신은 상태가 바뀔 때만 C++를 부름)
     if(e->burnedOut){e->burnedOut=false;KillEnemy(e);}else enemies.push_back(e);}  // 화상으로 쓰러짐
   boss=nullptr;for(auto* e:enemies)if(e->Boss)boss=e;  // 적 포인터는 프레임을 넘겨 들고 있지 않는다 (엔진이 다시 만들 수 있음)
   UpdateBullets(delta,position);

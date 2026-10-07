@@ -80,13 +80,13 @@ const rooms = layout.filter(r => r.kind !== 'Shortage');
   const dir = rooms[before].links.indexOf(prev);  // 0 북 1 동 2 남 3 서
   const key = ['w', 'd', 's', 'a'][dir], walk = Math.ceil(((dir % 2 ? rooms[before].hw : rooms[before].hh) - 1) / 6 * 60);
   let returnGates = 0;
-  const r = await runProject(project, {scene: scene('Test_Valen'), frames: 3600, delta: 1 / 60, nativeDefaults: startIn('Boss'), inputs: [
+  const r = await runProject(project, {scene: scene('Test_Valen'), frames: 4200, delta: 1 / 60, nativeDefaults: startIn('Boss'), inputs: [
     ...press(80, 'e'), ...press(90, 'e'),  // 해골 대장 대사
-    ...touchHold(100, 2400), ...press(2405, 'tab'), ...press(2410, 'enter'), ...press(2420, 'e'), ...press(2430, 'e'),  // 가방(Tab) 열고 Enter로 [귀환]
-    ...press(2440, 'F9'), {frame: 2460, key, value: 1}, {frame: 2460 + walk, key, value: 0},
-    {frame: 2465 + walk, key: 'LeftMouseButton', value: 1}, {frame: 2900 + walk, key: 'LeftMouseButton', value: 0},
-    {frame: 2910 + walk, key, value: 1}, {frame: 2910 + walk + Math.ceil((36 - walk / 10) / 6 * 60), key, value: 0},  // 복도를 지나 앞 방 가운데쯤까지
-  ], onFrame: (frame, vm) => { if (frame === 2455) returnGates = gatesLocked(vm); }});
+    ...touchHold(100, 3000), ...press(3005, 'tab'), ...press(3010, 'enter'), ...press(3020, 'e'), ...press(3030, 'e'),  // 가방(Tab) 열고 Enter로 [귀환]
+    ...press(3040, 'F9'), {frame: 3060, key, value: 1}, {frame: 3060 + walk, key, value: 0},
+    {frame: 3065 + walk, key: 'LeftMouseButton', value: 1}, {frame: 3500 + walk, key: 'LeftMouseButton', value: 0},
+    {frame: 3510 + walk, key, value: 1}, {frame: 3510 + walk + Math.ceil((36 - walk / 10) / 6 * 60), key, value: 0},  // 복도를 지나 앞 방 가운데쯤까지
+  ], onFrame: (frame, vm) => { if (frame === 3055) returnGates = gatesLocked(vm); }});
   const s = director(r);
   assert.ok(s.Shots >= 12, '해골 대장이 원형 탄막을 쏨');
   assert.ok(s.BossHp <= 0 && s.Kills >= 1, '해골 대장 처치');
@@ -194,4 +194,26 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   assert.equal(d.Phase, 2, '아무 키로 타이틀 → 선택 → 결정');
   assert.equal(d.Character, 1, '→로 셰리, 다시 2로 결정');
   console.log('타이틀·선택 입력 검사 통과', 'Character', d.Character);
+}
+
+// 근접 해골은 예고 뒤 공격 (가만히 있으면 맞음), 싸우는 방 밖으로 나가지 않음, 방 기준 카메라·줌
+{
+  const room = rooms.find(r => r.path === 1);
+  let outside = 0, cam = null, size = 0, seen = 0;
+  const r = await runProject(project, {scene: scene('Test_Valen'), frames: 900, delta: 1 / 60, inputs: [...warps(5, 1)],
+    onFrame: (frame, vm) => {
+      const enemies = vm.objects.filter(o => /Skeleton/.test(o.blueprintAsset || '') && o.position[1] > -150);
+      seen = Math.max(seen, enemies.length);
+      for (const e of enemies) if (Math.abs(e.position[0] - room.x) > room.hw + 0.5 || Math.abs(e.position[1] - room.y) > room.hh + 0.5) outside++;
+      if (frame === 899) { const c = vm.objects.find(o => o.tags?.includes('MainCamera')); cam = c.position; size = c.components.find(k => k.type === 'Camera').properties.orthographicSize; }
+    }});
+  const s = director(r);
+  assert.ok(s.Hp < 30, `가만히 있으면 해골의 예고 공격에 맞음 (hp ${s.Hp})`);
+  assert.ok(seen >= 2, `해골을 찾음 (${seen})`);
+  assert.equal(outside, 0, '해골이 싸우는 방 밖으로 나가지 않음');
+  assert.equal(size, 7.5, '카메라 줌 7.5');
+  const fits = room.hw + 1.5 <= 7.5 * 16 / 9, fitsY = room.hh + 1.5 <= 7.5;
+  if (fits) assert.ok(Math.abs(cam[0] - room.x) < 0.3, `방이 화면에 들어가면 카메라는 방 가운데 (x ${cam[0]} / ${room.x})`);
+  if (fitsY) assert.ok(Math.abs(cam[1] - room.y) < 0.3, `방이 화면에 들어가면 카메라는 방 가운데 (y ${cam[1]} / ${room.y})`);
+  console.log('근접 예고 공격·방 카메라 검사 통과', 'hp', s.Hp, 'room', `${room.hw * 2}x${room.hh * 2}`, 'cam', cam.map(v => v.toFixed(1)).join(','));
 }

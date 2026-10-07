@@ -33,15 +33,15 @@ void Enemy::Tick(float delta){
   if(flash>0&&(flash-=delta)<=0)Tint(false);
   if(burnLeft>0){burnLeft-=delta;if(!Invulnerable){Hp-=burnDamage*delta;burnedOut=Hp<=0.001f;}}
   // 상태 머신 파라미터·뒤집기는 바뀔 때만 보낸다 (적 수 × 매 프레임 명령을 줄임)
-  const bool ready=KeepDistance>0&&(shotTimer-=delta)<=0,stunned=stun>0,flip=dir.x<0,near=distance<Radius+1.2f;
+  const bool ready=KeepDistance>0&&(shotTimer-=delta)<=0,stunned=stun>0,flip=(atk?atkDir.x:dir.x)<0,near=false;
   if(ready!=sentReady){sentReady=ready;hb::States::SetBool(this,"Ready",ready);}
   if(near!=sentNear){sentNear=near;hb::States::SetBool(this,"Near",near);}  // 근거리 해골의 휘두르기 그림
   if(stunned!=sentStunned){sentStunned=stunned;hb::States::SetBool(this,"Stunned",stunned);}
   if(flip!=flipped){flipped=flip;hb::Sprites::SetFlip(this,flip,false);}
   const bool frozen=!game||game->Frozen();
-  // 몸통 박치기: 맞히면 잠깐 물러남 (붙어서 무적이 끝나자마자 또 때리지 않게)
-  if(!frozen&&stun<=0&&mode!=Mode::Jump&&distance<Radius+0.35f&&game->DamagePlayer(ContactDamage,hb::Scene::GetPosition(this))&&!Boss){
-    Stun(0.6f);sentVelocity=dir*-4.f;hb::Physics::SetVelocity(this,sentVelocity);mode=Mode::Stagger;}
+  // 닿기만 해서는 맞지 않는다. 보스 돌진(붉은 띠로 예고)에 부딪힐 때만 피해, 근접 공격은 UpdateMelee
+  if(!frozen&&Boss&&mode==Mode::Dash&&distance<Radius+0.35f)game->DamagePlayer(ContactDamage,hb::Scene::GetPosition(this));
+  if(KeepDistance<=0&&UpdateMelee(delta,dir,distance,frozen))return;
   if(mode==Mode::Dash||mode==Mode::Stagger||mode==Mode::Jump)return;  // 돌진·점프 속도·밀려남은 그대로 둔다
   hb::Vec3 v{0,0,0};
   if(!frozen&&stun<=0){
@@ -121,6 +121,62 @@ void Enemy::Summon(){if(Parked)return;
   for(int i=0;i<SummonCount+(phase2?1:0);++i){hb::Transform t;t.position=at+hb::Vec3{i%2?2.5f:-2.5f,-1.5f-i/2,0};
     if(auto* game=TopDownShooter::Current)if(auto* e=game->SpawnEnemy(SummonBlueprint,t.position,false))e->Stun(0.5f);}
   NextPattern(0);
+}
+
+bool Enemy::UpdateMelee(float delta,const hb::Vec3& dir,float distance,bool frozen){
+  // 근접 공격: 예고 → 공격 → 빈틈. true면 이번 프레임 이동을 여기서 정함 (추격은 건너뜀)
+  auto* game=TopDownShooter::Current;if(!game)return false;
+  const bool canAct=!frozen&&stun<=0&&(Boss?mode==Mode::Prowl:mode==Mode::Chase);
+  if(atk&&!canAct){EndAttack();return false;}  // 맞아서 경직되거나 보스 패턴이 바뀌면 취소
+  const auto at=hb::Scene::GetPosition(this);
+  const float reach=SlashRange+Radius;
+  if(!atk){
+    if(!canAct)return false;
+    const bool close=!Boss&&distance<reach*0.9f;  // 쉬는 동안 칼 닿는 거리에서 멈춰 기다림 (플레이어 위로 겹치지 않게)
+    if(close)Move(hb::Vec3{0,0,0});
+    if((atkCool-=delta)>0)return close;
+    const int roll=std::rand()%100;int pick=0;
+    if(distance<reach)pick=1;
+    else if(!Boss&&LungeRange>0&&distance<LungeRange&&roll<55)pick=2;
+    else if(!Boss&&LeapRange>0&&distance>2.5f&&distance<LeapRange&&roll<80)pick=3;
+    if(!pick){atkCool=0.3f;return false;}  // 거리가 안 맞으면 조금 더 쫓아가서 다시 고름
+    atk=pick;atkPhase=0;atkTime=MeleeWindup*(pick==1?1.f:1.2f);atkDir=dir;atkHit=false;
+    Move(hb::Vec3{0,0,0});Tint(true);hb::Sprites::SetSprite(this,WindupSprite);
+    if(Boss)game->Sfx("BossCharge");
+    if(pick==1)game->Warn(at,dir,reach+0.6f,atkTime,Boss?reach*1.4f:1.6f);
+    else if(pick==2){const float len=std::min(distance+1.5f,LungeRange+1.f);lungeTime=len/LungeSpeed;game->Warn(at,dir,len,atkTime,1.0f);}
+    else{atkTarget=game->PlayerPosition();game->Effect("Spawn",hb::Vec3{atkTarget.x,atkTarget.y-0.5f,0.02f},0,1.f);}
+    return true;
+  }
+  atkTime-=delta;
+  if(atkPhase==0){  // 예고: 멈춰서 붉게
+    Move(hb::Vec3{0,0,0});if(atkTime>0)return true;
+    atkPhase=1;Tint(false);hb::Sprites::PlayAnimation(this,AttackClip,false);
+    if(atk==1){atkTime=0.15f;
+      game->Effect("HurtClaw",at+atkDir*(reach*0.6f),Angle(atkDir));
+      if(distance<reach+0.3f&&hb::VectorMath::DotProduct(dir,atkDir)>0.35f)game->DamagePlayer(1,at);}  // 예고한 방향 앞쪽만
+    else if(atk==2){atkTime=lungeTime;Move(atkDir*LungeSpeed);game->Effect("Dust",at+hb::Vec3{0,-0.6f,0});}
+    else{atkTime=0.5f;auto v=(atkTarget-at)*(1/0.5f);v.z=0;Move(v);game->Effect("Dust",at+hb::Vec3{0,-0.6f,0});
+      hb::Physics::SetCollisionEnabled(this,false);}  // 뛰는 동안은 엄폐물을 넘어감 (방 밖은 게임 규칙이 막음)
+    return true;
+  }
+  if(atkPhase==1){  // 공격 중: 돌진은 부딪히면 한 번 피해, 도약은 착지에 둘레 피해
+    if(atk==2&&!atkHit&&distance<Radius+0.55f)atkHit=game->DamagePlayer(1,at);
+    if(atkTime>0)return true;
+    if(atk==3){hb::Physics::SetCollisionEnabled(this,true);game->Effect("Dust",at+hb::Vec3{0,-0.6f,0});game->Effect("Shockwave",hb::Vec3{at.x,at.y-0.5f,0.03f},0,0.3f);
+      if(distance<1.5f)game->DamagePlayer(1,at);}
+    atkPhase=2;atkTime=atk==1?0.45f:0.65f;Move(hb::Vec3{0,0,0});return true;
+  }
+  Move(hb::Vec3{0,0,0});  // 빈틈: 이때 때리라고 멈춰 있음
+  if(atkTime>0)return true;
+  EndAttack();return true;
+}
+
+void Enemy::EndAttack(){
+  if(!atk)return;
+  if(atk==3&&atkPhase==1)hb::Physics::SetCollisionEnabled(this,true);  // 뛰다가 취소됨
+  atk=0;Tint(false);atkCool=AttackCooldown*(0.8f+0.5f*float(std::rand()%100)/100.f);
+  hb::Sprites::PlayAnimation(this,WalkClip,true);
 }
 
 void Enemy::Stun(float seconds){stun=std::max(stun,seconds);sentVelocity={0,0,0};hb::Physics::SetVelocity(this,hb::Vec3{0,0,0});}
