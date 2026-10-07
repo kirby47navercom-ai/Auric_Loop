@@ -579,7 +579,7 @@ private:
   float attackCooldown=0,dodgeTimer=0,dodgeCooldownLeft=0,invulnerable=0,gameOver=0,charge=0;
   float cutscene=0,bannerTime=0,bossBarShown=-1;hb::Vec3 cutsceneAt{0,0,0};bool roared=false;  // 보스 등장 컷신·자막
   std::vector<hb::Actor*> warnPool;struct WarnLine{hb::Actor* actor;float left;};std::vector<WarnLine> warns;
-  float attackAnim=0,walkTime=0,shake=0,aimHold=0,sentSpeed=0,knockTimer=0,idleTime=0,runTime=0,typeTime=0,phaseTime=0;
+  float attackAnim=0,walkTime=0,breathTime=0,shake=0,aimHold=0,sentSpeed=0,knockTimer=0,idleTime=0,runTime=0,typeTime=0,phaseTime=0;
   std::string currentSprite,currentMusic,hint,shownWho;
   // 적 탄은 엔진 탄막 시스템(hb::Projectiles)이 오브젝트 없이 한꺼번에 움직이고 그린다.
   // 탄 주인은 발사한 액터라서 적 함수(적 맥락)에서 바로 쏘지 않고 모았다가 Director Tick에서 쏜다 (충돌 묶음을 Director가 받음)

@@ -52,7 +52,8 @@ void TopDownShooter::CraftDetail(){
     UiTexture("CraftCostIcon"+id,std::string("Assets/UI/Items/")+n.icon+".png");
     UiText("CraftCostText"+id,std::to_string(n.have)+" / "+std::to_string(n.need));
     UiColor("CraftCostText"+id,n.have>=n.need?hb::Color{0.96f,0.93f,0.85f,1}:hb::Color{1,0.54f,0.48f,1});}
-  const std::string cost=craftPick>=3?"각인은 하나만 (새로 하면 덮어씀)":craftPick==1&&Hp>=MaxHp?"체력이 가득 차 있으면 못 마셔":"";
+  bool enough=craftPick!=1||Hp<MaxHp;for(const auto& n:needs)enough=enough&&n.have>=n.need;
+  UiColor("CraftConfirm",enough?hb::Color{1,0.835f,0.416f,1}:hb::Color{0.47f,0.42f,0.33f,1});  // 못 만들면 글씨를 어둡게 (바탕은 그대로 가려 둠)
   {// 선택 테두리는 고른 칸으로 옮기고, 설명 아이콘은 고른 아이템 그림으로 (좌표: 제작 창 920x516 가운데 기준, tools/gen_hud.py)
    static const char* icons[]={"potion","flash","crystal_power","crystal_burn","crystal_pierce"};
    const int col=(craftPick-1)%3,row=(craftPick-1)/3;
@@ -62,14 +63,13 @@ void TopDownShooter::CraftDetail(){
   UiText("CraftName",names[craftPick]);
   UiText("CraftEffect",craftPick==5?(Character?"화살·마탄이 적을 뚫고 지나감":"베기 사거리 +1.5m"):effects[craftPick]);
   UiText("CraftType",craftPick<=2?"소모 아이템":"무기 각인 (귀환하면 사라짐)");
-  UiText("CraftCost",cost);
 }
 
 void TopDownShooter::Craft(bool toggle,int which,bool confirm){
   // 제작 창 (기획서 6-2-2): Q로 열고 닫음, 1~5 선택, Enter로 제작. 열려 있어도 게임은 계속된다
   static const char* parts[]={"CraftPanel","CraftTitle","CraftSub","CraftIcon1","CraftIcon2","CraftIcon3","CraftIcon4","CraftIcon5",
     "CraftKey1","CraftKey2","CraftKey3","CraftKey4","CraftKey5","CraftSlot1","CraftSlot2","CraftSlot3","CraftSlot4","CraftSlot5",
-    "CraftName","CraftEffect","CraftType","CraftNeed","CraftCost","CraftConfirm","CraftConfirmButton","CraftClose","CraftFooter"};
+    "CraftName","CraftEffect","CraftType","CraftNeed","CraftConfirmBack","CraftConfirm","CraftConfirmButton","CraftClose"};
   if(toggle&&!craftOpen&&bagOpen)Bag(true,false);  // 제작 창을 열면 가방은 닫음
   if(toggle){craftOpen=!craftOpen;for(auto* n:parts)UiVisible(n,craftOpen);CraftDetail();}
   if(!craftOpen)return;

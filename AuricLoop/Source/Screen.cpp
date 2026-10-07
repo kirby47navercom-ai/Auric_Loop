@@ -45,8 +45,9 @@ void TopDownShooter::Animate(float delta,bool moving){
   if(flip!=playerFlipped){playerFlipped=flip;hb::Sprites::SetFlip(player,flip,false);}
   std::string next=std::string(dirs[sector])+"_";
   if(attackAnim>0)attackAnim-=delta;
-  if(dodgeTimer>0){  // 구르기: 웅크림 → 몸을 만 두 장을 번갈아 → 일어남. 그림은 아래·옆·위 셋이라 대각선은 가까운 쪽
-    const float t=rules->DodgeTime-dodgeTimer;const int f=t<0.08f?0:dodgeTimer<0.12f?3:1+int((t-0.08f)/0.09f)%2;
+  if(dodgeTimer>0){  // 구르기: 웅크림 → 90·180·270도로 굴러 → 일어남 (서 있는 그림을 돌린 것, tools/unify_sprites.py). 그림은 아래·옆·위 셋
+    static const int spin[]={1,2,4};
+    const float t=rules->DodgeTime-dodgeTimer;const int f=t<0.08f?0:dodgeTimer<0.12f?3:spin[int((t-0.08f)/0.07f)%3];
     const char* row=sector==2||sector==1||sector==3?"N":sector>=5&&sector<=7?"S":"E";
     next=std::string(row)+"_Roll_"+std::to_string(f);}
   else if(charge>0||attackAnim>0){  // 셰리 장전(시위 걸기 → 당기기) 또는 공격 3장
@@ -55,7 +56,7 @@ void TopDownShooter::Animate(float delta,bool moving){
     if(moving){walkTime+=delta;next+="WalkAttack_"+std::to_string(f)+"_"+std::to_string(int(walkTime*10)%4);}
     else next+="Attack_"+std::to_string(f);}
   else if(moving){walkTime+=delta;next+="Walk_"+std::to_string(int(walkTime*10)%4);}
-  else{walkTime=0;next+="Idle_0";}
+  else{walkTime=0;breathTime+=delta;next+="Idle_"+std::to_string(int(breathTime*1.6f)%2);}  // 서 있으면 숨쉬기 두 장
   if(next!=currentSprite){currentSprite=next;if(Character<(int)rules->CharacterSprites.size())hb::Sprites::SetSprite(player,rules->CharacterSprites[Character]+next+".hbsprite.json");}
 }
 

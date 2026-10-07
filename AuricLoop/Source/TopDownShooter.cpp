@@ -37,7 +37,7 @@ void TopDownShooter::Update(float delta){
    const bool f3=hb::Input::IsKeyDown("F3");if(f3&&!fpsHeld){ShowFps=!ShowFps;if(player&&frame>=2)UiVisible("Fps",ShowFps);}fpsHeld=f3;
    fpsTime+=delta;fpsFrames++;fpsWorst=std::max(fpsWorst,delta);
    if(fpsTime>=0.5f){if(ShowFps&&player&&frame>=2){UiVisible("Fps",true);
-       UiText("Fps",std::to_string(int(fpsFrames/fpsTime+0.5f))+" FPS  최장 "+std::to_string(int(fpsWorst*1000+0.5f))+"ms");}
+       UiText("Fps",std::to_string(int(fpsFrames/fpsTime+0.5f))+" FPS");}
      fpsTime=0;fpsFrames=0;fpsWorst=0;}}
   if(minimapDirty&&frame>=2){minimapDirty=false;UpdateMinimap();}  // 위젯은 첫 프레임 뒤에 생김
   if(!started)Begin();

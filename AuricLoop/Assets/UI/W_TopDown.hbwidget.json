@@ -789,21 +789,21 @@
       "slot": {
         "anchors": [
           0,
+          1,
           0,
-          0,
-          0
+          1
         ],
         "offset": [
-          24,
-          380,
-          300,
-          26
+          12,
+          -8,
+          160,
+          22
         ],
         "alignment": [
           0,
-          0
+          1
         ],
-        "zIndex": 60,
+        "zIndex": 99,
         "fill": 0
       },
       "properties": {
@@ -820,7 +820,7 @@
         "deviceVisibility": "all",
         "text": "",
         "texture": "",
-        "fontSize": 18,
+        "fontSize": 16,
         "color": "#7dff9a",
         "background": "#00000000",
         "accent": "#589ad6",
@@ -5258,7 +5258,7 @@
         "offset": [
           -428.0,
           -188.0,
-          620,
+          400,
           22
         ],
         "alignment": [
@@ -5280,7 +5280,7 @@
         "deadZone": 0.15,
         "floating": false,
         "deviceVisibility": "all",
-        "text": "제작서를 보유한 아이템  (1~5 선택, Enter 제작, Q 닫기)",
+        "text": "1~5 선택 · Enter 제작 · Q 닫기",
         "texture": "",
         "fontSize": 15,
         "color": "#f6ecd8",
@@ -7213,10 +7213,10 @@
       "bindings": {}
     },
     {
-      "id": "CraftCost",
-      "name": "CraftCost",
+      "id": "CraftConfirmBack",
+      "name": "CraftConfirmBack",
       "parent": "root",
-      "type": "Text",
+      "type": "Panel",
       "slot": {
         "anchors": [
           0.5,
@@ -7226,9 +7226,9 @@
         ],
         "offset": [
           20.0,
-          100.0,
+          126.0,
           380,
-          20
+          64
         ],
         "alignment": [
           0,
@@ -7251,21 +7251,21 @@
         "deviceVisibility": "all",
         "text": "",
         "texture": "",
-        "fontSize": 14,
+        "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#00000000",
+        "background": "#2a2112f5",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#4a5f73",
-        "borderWidth": 0,
-        "radius": 0,
+        "borderColor": "#ffd56a",
+        "borderWidth": 2,
+        "radius": 8,
         "opacity": 1,
         "visible": false,
         "enabled": true,
         "focusable": true,
         "tooltip": "",
-        "align": "left",
+        "align": "center",
         "value": 0,
         "min": 0,
         "max": 1,
@@ -7298,13 +7298,13 @@
           20.0,
           142.0,
           380,
-          30
+          32
         ],
         "alignment": [
           0,
           0
         ],
-        "zIndex": 42,
+        "zIndex": 43,
         "fill": 0
       },
       "properties": {
@@ -7321,8 +7321,8 @@
         "deviceVisibility": "all",
         "text": "제작하기",
         "texture": "",
-        "fontSize": 20,
-        "color": "#2a2112",
+        "fontSize": 22,
+        "color": "#ffd56a",
         "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
@@ -7476,76 +7476,6 @@
         "focusable": true,
         "tooltip": "",
         "align": "center",
-        "value": 0,
-        "min": 0,
-        "max": 1,
-        "step": 0.01,
-        "padding": 8,
-        "gap": 8,
-        "columns": 2,
-        "checked": false,
-        "placeholder": "",
-        "maxLength": 256,
-        "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
-      },
-      "events": {},
-      "bindings": {}
-    },
-    {
-      "id": "CraftFooter",
-      "name": "CraftFooter",
-      "parent": "root",
-      "type": "Text",
-      "slot": {
-        "anchors": [
-          0.5,
-          0.5,
-          0.5,
-          0.5
-        ],
-        "offset": [
-          20.0,
-          204.0,
-          380,
-          20
-        ],
-        "alignment": [
-          0,
-          0
-        ],
-        "zIndex": 42,
-        "fill": 0
-      },
-      "properties": {
-        "inputKey": "space",
-        "inputMode": "keys",
-        "axisX": "MoveX",
-        "axisY": "MoveY",
-        "keyUp": "w",
-        "keyDown": "s",
-        "keyLeft": "a",
-        "keyRight": "d",
-        "deadZone": 0.15,
-        "floating": false,
-        "deviceVisibility": "all",
-        "text": "제작 중에도 전투가 계속됩니다",
-        "texture": "",
-        "fontSize": 14,
-        "color": "#f6ecd8",
-        "background": "#00000000",
-        "accent": "#589ad6",
-        "hover": "#365778",
-        "pressed": "#1e4061",
-        "borderColor": "#4a5f73",
-        "borderWidth": 0,
-        "radius": 0,
-        "opacity": 1,
-        "visible": false,
-        "enabled": true,
-        "focusable": true,
-        "tooltip": "",
-        "align": "left",
         "value": 0,
         "min": 0,
         "max": 1,

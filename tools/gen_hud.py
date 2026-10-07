@@ -71,7 +71,7 @@ text("WeightText", "0 / 100", "tl", 68, 86, 160, 32)
 node("GoldBack", "Panel", "tl", 330, 30, 196, 40, 9, **SOFT)
 node("WeightBack", "Panel", "tl", 24, 84, 190, 36, 9, **SOFT)
 text("GoldText", "0 G", "tl", 342, 36, 180, 32, size=18)
-node("Fps", "Text", "tl", 24, 380, 300, 26, 60, text="", fontSize=16, color="#7dff9a", visible=False)  # F3 성능 표시
+node("Fps", "Text", "bl", 12, 8, 160, 22, 99, text="", fontSize=14, color="#7dff9a", visible=False)  # F3 성능 표시 (왼쪽 아래 구석)
 image("FatigueBack", "fatigue_back.png", "tl", 24, 132)
 # 피로도: 세로 막대 하나 (C++ UI::SetValue 0~1, 아래에서 위로 참)
 node("Fatigue", "ProgressBar", "tl", 24 + 8, 132 + 8, 16, 220, 11, value=0, max=1, fillDirection="bottomToTop",
@@ -145,7 +145,7 @@ def panel_text(name, value, px, py, w_, h_, size=16, align="left"):
 
 panel_image("CraftPanel", "craft_panel.png", 0, 0, z=40)
 panel_text("CraftTitle", "제작", 32, 32, 300, 28, size=22)
-panel_text("CraftSub", "제작서를 보유한 아이템  (1~5 선택, Enter 제작, Q 닫기)", 32, 70, 620, 22, size=13)
+panel_text("CraftSub", "1~5 선택 · Enter 제작 · Q 닫기", 32, 70, 400, 22, size=13)
 SLOTS = [(32, 128), (148, 128), (264, 128), (32, 244), (148, 244)]  # 키트 slot_01~05
 ICONS = ["potion", "flash", "crystal_power", "crystal_burn", "crystal_pierce"]
 for i, ((sx, sy), icon) in enumerate(zip(SLOTS, ICONS), 1):
@@ -163,13 +163,12 @@ for k in (1, 2):  # 필요 소재 두 칸: 아이콘 + 가진 수 / 필요한 �
     panel(f"CraftCostBox{k}", "Panel", 480 + (k - 1) * 190, 300, 176, 52, 41, **SOFT)
     panel(f"CraftCostIcon{k}", "Image", 486 + (k - 1) * 190, 306, 40, 40, 42, texture=ITEMS + "herb.png")
     panel_text(f"CraftCostText{k}", "", 534 + (k - 1) * 190, 314, 130, 26, size=17)
-panel_text("CraftCost", "", 480, 358, 380, 20, size=12)  # 덧붙임 (각인은 하나만 등)
-panel_text("CraftConfirm", "제작하기", 480, 400, 380, 30, size=18, align="center")["properties"]["color"] = "#2a2112"
+panel("CraftConfirmBack", "Panel", 480, 384, 380, 64, 42, background="#2a2112f5", borderColor=GOLD, borderWidth=2, radius=8)  # 키트 버튼 그림 위에 금테 버튼
+panel("CraftConfirm", "Text", 480, 400, 380, 32, 43, text="제작하기", fontSize=20, color=GOLD, align="center")
 panel("CraftConfirmButton", "TouchButton", 480, 384, 380, 64, 44, inputKey="enter", inputMode="keys",
       background="#00000000", pressed="#ffffff22", hover="#ffffff11")
 panel("CraftClose", "TouchButton", 820, 24, 72, 72, 44, inputKey="q", inputMode="keys",
       background="#00000000", pressed="#ffffff22", hover="#ffffff11")
-panel_text("CraftFooter", "제작 중에도 전투가 계속됩니다", 480, 462, 380, 20, size=12)
 
 # ---- 대화창 (기획서 6-5): 아래 가운데, 초상화·이름·본문·넘김 표시. 처음엔 숨김 ----
 DW, DH = 1000, 170
