@@ -126,9 +126,7 @@ void Enemy::Dash(){if(Parked)return;if(TopDownShooter::Current&&TopDownShooter::
 void Enemy::Ring(){if(Parked)return;
   // 나선 탄막: 세 번 쏘며 매번 12도씩 돌려서 소용돌이처럼 (분노하면 더 촘촘히)
   Halt();auto* game=TopDownShooter::Current;
-  if(game&&!game->Frozen())for(int i=0;i<RingCount;++i){
-    const auto d=Rotate(hb::Vec3{1,0,0},360.f*i/RingCount+ring*12.f);
-    game->FireBullets(hb::Scene::GetPosition(this)+d*1.6f,d,1,0,ShotSpeed,ShotClip);}
+  if(game&&!game->Frozen())game->FireRing(hb::Scene::GetPosition(this),RingCount,ring*12.f,ShotSpeed,ShotClip);
   if(++ring%3==0)NextPattern(2);
 }
 
@@ -406,13 +404,25 @@ bool TopDownShooter::DamagePlayer(int amount,const hb::Vec3& from){
   return true;
 }
 
+// 적 탄 패턴 (엔진 탄막 시스템). 탄 그림은 클립 SA_<이름>의 첫 장 S_<이름>_0 한 장, 맞는 대상은 플레이어(무적이 아닐 때)·방 벽·발렌 베기
+static hb::Json ShotPattern(const AuricRules* rules,const hb::Vec3& origin,int count,float speed,const std::string& clip){
+  const std::string c=clip.empty()?rules->EnemyShotClip:clip;
+  const auto a=c.rfind("SA_"),b=c.rfind(".hbspriteanimation");
+  const std::string name=a==std::string::npos||b==std::string::npos||b<a?"EnemyOrb":c.substr(a+3,b-a-3);
+  return {{"origin",{origin.x,origin.y,0.15f}},{"count",count},{"speed",speed},{"lifetime",rules->EnemyShotLife},{"radius",rules->EnemyShotRadius},
+    {"size",name=="BossOrb"?0.63f:0.44f},{"plane","XY"},{"texture","Assets/Sprites/FX/S_"+name+"_0.hbsprite.json"},
+    {"targetTags",{"Player.Hittable","Dungeon.Cap","Dungeon.Face","Dungeon.Gate","Dungeon.GateSide","ShotGuard"}}};
+}
+
 void TopDownShooter::FireBullets(const hb::Vec3& from,const hb::Vec3& dir,int count,float spread,float speed,const std::string& clip){
-  for(int i=0;i<count;++i){
-    const auto d=Rotate(dir,(i-(count-1)/2.0f)*spread);
-    hb::Transform t;t.position=from+d*0.6f;t.position.z=0.15f;
-    if(auto* b=Take(bulletPool,rules->EnemyShotPrefab,t)){hb::Physics::SetVelocity(b,d*speed);hb::Sprites::PlayAnimation(b,clip.empty()?rules->EnemyShotClip:clip,true);
-      bullets[b]=rules->EnemyShotLife;Shots++;}
-  }
+  auto p=ShotPattern(rules,from+dir*0.6f,count,speed,clip);
+  p["mode"]=count>1?"fan":"aim";p["direction"]={dir.x,dir.y,0};p["spread"]=std::min(360.f,spread*(count-1));  // 우리 spread는 탄 사이 각도, 엔진은 전체 각도
+  pendingShots.push_back(std::move(p));Shots+=count;
+}
+
+void TopDownShooter::FireRing(const hb::Vec3& from,int count,float angle,float speed,const std::string& clip){
+  auto p=ShotPattern(rules,from,count,speed,clip);p["mode"]="circle";p["angle"]=angle;
+  pendingShots.push_back(std::move(p));Shots+=count;
 }
 
 void TopDownShooter::DropCoin(const hb::Vec3& at,int value){
@@ -460,7 +470,7 @@ void TopDownShooter::BossSlam(const hb::Vec3& at,int count,float speed,const std
   // 내려찍기: 충격파·흙먼지, 원형 탄, 크게 흔들림. 가까이 있으면 맞음
   Effect("Shockwave",hb::Vec3{at.x,at.y-0.8f,0.03f},0,0.4f);Effect("Dust",hb::Vec3{at.x-1,at.y-1,0.03f});Effect("Dust",hb::Vec3{at.x+1,at.y-1,0.03f},0,0,true);
   shake=0.45f;Sfx("Boom");
-  for(int i=0;i<count;++i){const auto d=Rotate(hb::Vec3{1,0,0},360.f*i/count);FireBullets(at+d*1.2f,d,1,0,speed,clip);}
+  FireRing(at,count,0,speed,clip);
   if(Length(playerAt-at)<3.0f)DamagePlayer(1,at);
 }
 
@@ -480,6 +490,9 @@ void TopDownShooter::UpdateFx(float delta){
 void TopDownShooter::Prewarm(){
   bulletPool=hb::Scene::GetActorsWithTag("Pool.EnemyShot");
   shotPool=hb::Scene::GetActorsWithTag("Pool.PlayerShot");
+  // 발렌 베기용 탄 지우개: 플레이어 탄 하나를 빌려 투명하게 (투명도는 렌더 재질을 다시 만들어서 로딩 중 한 번만)
+  if(!shotGuard&&!shotPool.empty()){shotGuard=shotPool.back();shotPool.pop_back();hb::Tags::Add(shotGuard,"ShotGuard");
+    hb::Sprites::SetColor(shotGuard,hb::Color{1,1,1,0});hb::Scene::SetPosition(shotGuard,hb::Vec3{-500,-500,0});}
   coinPool=hb::Scene::GetActorsWithTag("Pool.Coin");
   fxPool=hb::Scene::GetActorsWithTag("Pool.Fx");warnPool=hb::Scene::GetActorsWithTag("Pool.Warn");
   for(auto* tag:{"Enemy.S","Enemy.M","Enemy.C"})for(auto* a:hb::Scene::GetActorsWithTag(tag))if(auto* e=dynamic_cast<Enemy*>(a))ParkEnemy(e);
@@ -520,8 +533,9 @@ void TopDownShooter::Slash(const hb::Vec3& position,const std::vector<Enemy*>& e
   for(auto* e:enemies){const auto at=hb::Scene::GetPosition(e);if(!inFan(at,e->Boss?e->Radius:0))continue;
     HitEnemy(e,Normal(at-position,facing),WeaponDamage());}
   HitReturnGate(position,rules->DoorReach,1);
-  for(auto it=bullets.begin();it!=bullets.end();)
-    if(inFan(hb::Scene::GetPosition(it->first),0)){Give(bulletPool,it->first);it=bullets.erase(it);}else ++it;
+  // 앞쪽 부채꼴을 덮는 투명 상자를 잠깐 놓아 그 안의 적 탄을 지운다 (탄막 시스템이 상자를 맞은 것으로 치고 없앰)
+  if(shotGuard){hb::Transform t;t.position=position+facing*(reach*0.5f);t.position.z=0.15f;t.rotation=hb::Vec3{0,0,Angle(facing)};
+    t.scale=hb::Vec3{(reach*0.5f+0.3f)/0.07f,(reach*0.75f)/0.07f,1};hb::Scene::SetTransform(shotGuard,t);guardTime=0.12f;}
 }
 
 void TopDownShooter::Shoot(const hb::Vec3& from){
@@ -555,12 +569,15 @@ void TopDownShooter::UpdateShots(float delta,const std::vector<Enemy*>& enemies)
 }
 
 void TopDownShooter::UpdateBullets(float delta,const hb::Vec3& position){
-  for(auto it=bullets.begin();it!=bullets.end();){
-    const auto p=hb::Scene::GetPosition(it->first);it->second-=delta;
-    if(Hp>0&&Length(p-position)<rules->EnemyShotHit&&DamagePlayer(1,p))it->second=0;  // 무적 중엔 탄이 지나감
-    const int in=fightingRoom>=0?fightingRoom:area;
-    if(it->second<=0||(inDungeon&&in>=0&&!map.rooms[in].Inside(p,-0.5f))){Give(bulletPool,it->first);it=bullets.erase(it);}else ++it;  // 방 벽에서 사라짐
-  }
+  (void)position;
+  for(const auto& p:pendingShots)hb::Projectiles::Fire(p);
+  pendingShots.clear();
+  // 구르기·무적 중엔 플레이어 태그를 빼서 탄이 지나가게
+  const bool hittable=Hp>0&&invulnerable<=0&&dodgeTimer<=0;
+  if(hittable!=playerHittable){playerHittable=hittable;if(hittable)hb::Tags::Add(player,"Player.Hittable");else hb::Tags::Remove(player,"Player.Hittable");}
+  for(const auto& h:hb::Projectiles::TakeHits())
+    if(h.value("target","")=="Player"&&!Frozen()){const auto& at=h["position"];DamagePlayer(1,hb::Vec3{at[0].get<float>(),at[1].get<float>(),0});}
+  if(guardTime>0&&(guardTime-=delta)<=0)hb::Scene::SetPosition(shotGuard,hb::Vec3{-500,-500,0});
 }
 
 // ---- 구역·장면 전환 ----------------------------------------------------------------
@@ -676,7 +693,7 @@ void TopDownShooter::Warp(int room){
   // 부스 운영자·검사용: 지나친 주 경로 방은 클리어로 치고 그 방 가운데로 옮긴다 (싸우던 적·탄은 치움)
   if(room<0)return;
   for(auto* e:Enemies())ParkEnemy(e);pending.clear();waveAlive=0;
-  for(auto& [b,life]:bullets)life=0;
+  ClearBullets();
   if(fightingRoom>=0){map.Lock(fightingRoom,false);map.rooms[fightingRoom].state=2;fightingRoom=-1;}
   for(auto& r:map.rooms)if(r.path>=0&&r.path<map.rooms[room].path&&!Returning)r.state=2;
   const auto& r=map.rooms[room];const bool fight=(r.kind=="Boss"||r.kind=="Combat")&&!Returning;
@@ -830,8 +847,8 @@ void TopDownShooter::SetPaused(bool paused){
   hb::Movement2D::SetSpeed(player,paused?0.f:rules->MoveSpeed);sentSpeed=-1;  // 이동은 엔진 이동 컴포넌트가 입력으로 직접 하므로 속도를 0으로
   if(paused){hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
     for(auto* e:Enemies())hb::Physics::SetVelocity(e,hb::Vec3{0,0,0});
-    for(auto* m:{&bullets,&shots})for(auto& [b,life]:*m){frozenVelocity[b]=hb::Physics::GetVelocity(b);hb::Physics::SetVelocity(b,hb::Vec3{0,0,0});}}
-  else{for(auto& [b,v]:frozenVelocity)if(bullets.count(b)||shots.count(b))hb::Physics::SetVelocity(b,v);frozenVelocity.clear();}
+    for(auto* m:{&shots})for(auto& [b,life]:*m){frozenVelocity[b]=hb::Physics::GetVelocity(b);hb::Physics::SetVelocity(b,hb::Vec3{0,0,0});}}
+  else{for(auto& [b,v]:frozenVelocity)if(shots.count(b))hb::Physics::SetVelocity(b,v);frozenVelocity.clear();}
 }
 
 void TopDownShooter::Bag(bool toggle,bool use){
@@ -1174,7 +1191,7 @@ void TopDownShooter::Update(float delta){
   if(inDungeon)UpdateWaves(delta);
   if(Hp<=0){  // 쓰러짐 (기획서 2장): "빈손으로 끌려 나왔다" → 소재를 잃고 거점에서 정산
     hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
-    for(auto& [b,life]:bullets)hb::Physics::SetVelocity(b,hb::Vec3{0,0,0});
+    ClearBullets();
     if(gameOver==rules->RespawnDelay){
       UiText("KoTitle",Fatigue>=FatigueMax?"지쳐 쓰러졌다":"쓰러졌다");
       UiText("KoSub","빈손으로 끌려 나왔다 - 들고 있던 소재를 잃었다");
@@ -1222,7 +1239,7 @@ void TopDownShooter::Update(float delta){
   const bool flash=hb::Input::IsKeyDown("e");
   if(!Returning)Interact(position,flash&&!flashHeld);
   else if(flash&&!flashHeld&&(Flashbangs>0||Gold>=rules->FlashPrice)){if(Flashbangs>0)Flashbangs--;else Gold-=rules->FlashPrice;StunAll(rules->FlashStun);Sfx("Flash");
-    for(auto& [b,life]:bullets)life=0;Hud();}
+    ClearBullets();Hud();}
   flashHeld=flash;
   {const bool q=hb::Input::IsKeyDown("q"),enter=hb::Input::IsKeyDown("enter");int which=0;
    for(int i=1;i<=5;++i)if(hb::Input::IsKeyDown(std::to_string(i)))which=i;

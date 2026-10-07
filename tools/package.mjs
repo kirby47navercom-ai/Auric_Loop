@@ -10,7 +10,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
 
-const ENGINE = process.env.HB_ENGINE || 'C:/Users/kirby/HBEngine/Versions/d03c655dc25a2bb6';
+const ENGINE = process.env.HB_ENGINE || 'C:/Users/kirby/HBEngine/Versions/88db6de5ffe7c1bf';
 const tool = name => import(pathToFileURL(path.join(ENGINE, 'tools', name)).href);
 const {readProjectManifest} = await tool('project-manifest.mjs');
 const {readBuildProfiles, buildGame} = await tool('build-game.mjs');

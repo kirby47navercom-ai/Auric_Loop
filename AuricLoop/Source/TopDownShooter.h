@@ -262,6 +262,8 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   float EnemyShotHit = 0.45f;
   HB_PROPERTY(BlueprintReadWrite)
+  float EnemyShotRadius = 0.12f;   // 엔진 탄막 시스템의 탄 반지름 (m). 플레이어 충돌체에 더해져 맞음
+  HB_PROPERTY(BlueprintReadWrite)
   float PlayerShotLife = 1.6f;
   HB_PROPERTY(BlueprintReadWrite)
   float PlayerShotHit = 0.7f;
@@ -474,6 +476,8 @@ public:
   Enemy* SpawnEnemy(const std::string& blueprint,const hb::Vec3& at,bool invulnerable);  // 대기 중인 적을 꺼냄 (없으면 생성)
   bool DamagePlayer(int amount,const hb::Vec3& from);  // 맞았으면 true (무적·회피 중이면 false)
   void FireBullets(const hb::Vec3& from,const hb::Vec3& dir,int count,float spread,float speed,const std::string& clip="");
+  void FireRing(const hb::Vec3& from,int count,float angle,float speed,const std::string& clip="");  // 사방으로 한 번에
+  void ClearBullets(){pendingShots.clear();hb::Projectiles::Clear();}
   // 보스 연출 (Enemy가 부름)
   void Warn(const hb::Vec3& from,const hb::Vec3& dir,float length,float seconds);   // 돌진 예고선
   void BossSlam(const hb::Vec3& at,int bullets,float speed,const std::string& clip); // 내려찍기 충격파·탄·흔들림
@@ -589,7 +593,11 @@ private:
   std::vector<hb::Actor*> warnPool;struct WarnLine{hb::Actor* actor;float left;};std::vector<WarnLine> warns;
   float attackAnim=0,walkTime=0,shake=0,aimHold=0,sentSpeed=0,knockTimer=0,idleTime=0,runTime=0,typeTime=0,phaseTime=0;
   std::string currentSprite,currentMusic,hint,shownWho;
-  std::map<hb::Actor*,float> bullets;      // 적 탄: 남은 시간
+  // 적 탄은 엔진 탄막 시스템(hb::Projectiles)이 오브젝트 없이 한꺼번에 움직이고 그린다.
+  // 탄 주인은 발사한 액터라서 적 함수(적 맥락)에서 바로 쏘지 않고 모았다가 Director Tick에서 쏜다 (충돌 묶음을 Director가 받음)
+  std::vector<hb::Json> pendingShots;
+  hb::Actor* shotGuard=nullptr;float guardTime=0;  // 발렌 베기가 탄을 지우는 상자 (플레이어 탄 풀에서 하나를 빌려 투명하게)
+  bool playerHittable=false;
   std::map<hb::Actor*,float> shots;        // 플레이어 탄
   std::map<hb::Actor*,bool> shotBoom;
   std::map<hb::Actor*,int> coins;
