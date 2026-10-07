@@ -70,7 +70,7 @@
       "name": "휘두르기",
       "x": 600,
       "y": 150,
-      "clip": "Assets/Animations/SA_Skeleton_Attack.hbspriteanimation.json",
+      "clip": "Assets/Animations/SA_Skeleton_WalkAttack.hbspriteanimation.json",
       "loop": false,
       "duration": 0.4,
       "onEnter": "Chase",

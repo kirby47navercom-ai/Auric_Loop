@@ -173,3 +173,15 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   assert.ok(x > 3, '오른쪽으로 굴러 나감');
   console.log('구르기 검사 통과', rolling.split('/').at(-1), 'x', x.toFixed(1));
 }
+
+// 걸으며 공격: 움직이면서 베면 서서 베는 그림이 아니라 윗몸은 공격·다리는 걷기인 합성 그림
+{
+  const seen = new Set();
+  await runProject(project, {scene: scene('Test_Valen'), frames: 60, delta: 1 / 60, inputs: [
+    {frame: 5, key: 'd', value: 1}, {frame: 10, key: 'LeftMouseButton', value: 1}, {frame: 50, key: 'LeftMouseButton', value: 0}, {frame: 55, key: 'd', value: 0}],
+    onFrame: (frame, vm) => { if (frame > 12 && frame < 50) seen.add(vm.objects.find(o => o.id === 'Player').components.find(c => c.type === 'SpriteRenderer').properties.sprite.split('/').at(-1)); }});
+  const names = [...seen];
+  assert.ok(names.some(n => /_WalkAttack_\d_\d/.test(n)), `걸으며 공격 그림 (${names.join(', ')})`);
+  assert.ok(!names.some(n => /_Attack_\d\.hbsprite/.test(n) && !/WalkAttack/.test(n)), `움직이는 동안 서서 공격 그림 없음 (${names.join(', ')})`);
+  console.log('걸으며 공격 검사 통과', names.filter(n => /WalkAttack/.test(n)).length, '종류');
+}

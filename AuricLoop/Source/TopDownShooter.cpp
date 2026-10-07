@@ -993,8 +993,11 @@ void TopDownShooter::Animate(float delta,bool moving){
     const float t=rules->DodgeTime-dodgeTimer;const int f=t<0.08f?0:dodgeTimer<0.12f?3:1+int((t-0.08f)/0.09f)%2;
     const char* row=sector==2||sector==1||sector==3?"N":sector>=5&&sector<=7?"S":"E";
     next=std::string(row)+"_Roll_"+std::to_string(f);}
-  else if(charge>0)next+=charge<rules->ArrowCharge*0.5f?"Attack_0":"Attack_1";  // 셰리 장전: 시위 걸기 → 당기기
-  else if(attackAnim>0&&!(Character==2&&moving)){const int f=attackAnim>0.2f?0:attackAnim>0.1f?1:2;next+="Attack_"+std::to_string(f);}
+  else if(charge>0||attackAnim>0){  // 셰리 장전(시위 걸기 → 당기기) 또는 공격 3장
+    const int f=charge>0?(charge<rules->ArrowCharge*0.5f?0:1):attackAnim>0.2f?0:attackAnim>0.1f?1:2;
+    // 공격 그림은 서서 하는 자세라 움직이는 중엔 윗몸은 공격·다리는 걷기인 합성 그림 (tools/make_walk_attack.py)
+    if(moving){walkTime+=delta;next+="WalkAttack_"+std::to_string(f)+"_"+std::to_string(int(walkTime*10)%4);}
+    else next+="Attack_"+std::to_string(f);}
   else if(moving){walkTime+=delta;next+="Walk_"+std::to_string(int(walkTime*10)%4);}
   else{walkTime=0;next+="Idle_0";}
   if(next!=currentSprite){currentSprite=next;if(Character<(int)rules->CharacterSprites.size())hb::Sprites::SetSprite(player,rules->CharacterSprites[Character]+next+".hbsprite.json");}
@@ -1185,7 +1188,7 @@ void TopDownShooter::Update(float delta){
   else if(moving)facing=hb::VectorMath::NormalizeVector(move);
   Animate(delta,moving);
   // 적재량 초과·피로도 75% 이상이면 이동속도 -25% (기획서 4-1)
-  // 검 베기·활 당기기 중에는 거의 멈춤 (서서 하는 공격 그림이 미끄러지지 않게). 알레아는 걸으면서 쏘고 그림도 걷기로
+  // 공격·활 당기기 중 이동속도 배율 (그림은 걸으며 공격하는 합성 그림이라 멈출 필요는 없음)
   {const float act=Character==0&&attackAnim>0?rules->AttackMoveRate:Character==1&&charge>0?rules->ChargeMoveRate:1.f;
    const float speed=act*rules->MoveSpeed*((Weight()>rules->WeightLimit||Fatigue*4>=FatigueMax*3)?rules->SlowRate:1.f);
    if(speed!=sentSpeed){sentSpeed=speed;hb::Movement2D::SetSpeed(player,speed);}}

@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_Sherry_N_WalkAttack_2_3",
+  "texture": "Assets/Sprites/Sherry/Sherry_N_WalkAttack_2_3.png",
+  "pixelsPerUnit": 32,
+  "rect": [
+    0,
+    0,
+    60,
+    69
+  ],
+  "pivot": [
+    0.5,
+    0.4406
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}
