@@ -142,7 +142,12 @@ void TopDownShooter::Update(float delta){
   Animate(delta,moving);
   // 적재량 초과·피로도 75% 이상이면 이동속도 -25% (기획서 4-1)
   // 공격·활 당기기 중 이동속도 배율 (그림은 걸으며 공격하는 합성 그림이라 멈출 필요는 없음)
-  {const float act=Character==0&&attackAnim>0?rules->AttackMoveRate:Character==1&&charge>0?rules->ChargeMoveRate:1.f;
+  // 새 시트: 발렌은 베는 동안 이동 키를 받지 않고 그림의 내딛기만큼만 나감, 겨눈 채 뒷걸음질은 더 느리게
+  const bool backpedal=moving&&hb::VectorMath::DotProduct(move,facing)<-0.3f;
+  {const float act=NewSheet()&&Character==0&&attackAnim>0?0.f
+     :Character==0&&attackAnim>0?rules->AttackMoveRate
+     :Character==1&&charge>0?(NewSheet()&&backpedal?rules->BackpedalRate:rules->ChargeMoveRate)
+     :NewSheet()&&Character==2&&attackDown&&backpedal?rules->ChargeMoveRate:1.f;
    const float speed=act*rules->MoveSpeed*((Weight()>rules->WeightLimit||Fatigue*4>=FatigueMax*3)?rules->SlowRate:1.f);
    if(speed!=sentSpeed){sentSpeed=speed;hb::Movement2D::SetSpeed(player,speed);}}
   attackCooldown-=delta;dodgeCooldownLeft-=delta;invulnerable-=delta;
@@ -153,6 +158,7 @@ void TopDownShooter::Update(float delta){
     Effect("Dust",hb::Vec3{position.x,position.y-0.8f,0.03f},0,0,facing.x>0);}
   dodgeHeld=dodgeDown;
   if(dodgeTimer>0){dodgeTimer-=delta;hb::Physics::SetVelocity(player,facing*rules->DodgeSpeed);}
+  else if(NewSheet()&&Character==0&&attackAnim>0.12f&&attackAnim<=0.22f)hb::Physics::SetVelocity(player,facing*(rules->SlashStep/0.1f));  // 베기 프레임 동안 한 발 내딛음
   else if(knockTimer>0){knockTimer-=delta;hb::Physics::SetVelocity(player,knock);}
   {const bool blink=invulnerable>0&&int(invulnerable*12)%2==0;  // 무적 시간 깜빡임
    if(blink!=blinkShown){blinkShown=blink;const float v=blink?0.4f:1.f;hb::Sprites::SetColor(player,hb::Color{v,v,v,1});}}  // 투명도를 바꾸면 렌더 재질을 다시 만들어 끊김

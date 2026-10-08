@@ -293,6 +293,23 @@ public:
   float AttackMoveRate = 1.0f;    // 검 베기 중 이동속도 배율
   HB_PROPERTY(BlueprintReadWrite)
   float ChargeMoveRate = 0.7f;    // 활 당기는 중 이동속도 배율
+  // ---- 새 캐릭터 시트 (docs/캐릭터_시트_요청.md). 캐릭터마다 그림이 들어오면 AnimSets를 1로 ----
+  HB_PROPERTY(BlueprintReadWrite)
+  std::vector<int> AnimSets = {0,0,0};  // 0 지금 그림(5방향+반전, 합성 이동공격) / 1 새 시트(8방향, 위상 걷기, 캐릭터별 공격, 대기 행동)
+  HB_PROPERTY(BlueprintReadWrite)
+  float Stride = 0.5f;            // 새 시트: 걷기 한 장 = 이만큼 움직였을 때 (m). 속도가 바뀌어도 발이 미끄러지지 않음
+  HB_PROPERTY(BlueprintReadWrite)
+  int IdleFrames = 4;             // 새 시트: 숨쉬기 장수 (0.25초씩)
+  HB_PROPERTY(BlueprintReadWrite)
+  float SlashStep = 0.45f;        // 새 시트 발렌: 베면서 내딛는 거리 (그림의 발걸음과 같게)
+  HB_PROPERTY(BlueprintReadWrite)
+  float BackpedalRate = 0.5f;     // 새 시트: 겨눈 채 뒷걸음질 이동속도 배율 (셰리; 알레아는 ChargeMoveRate와 같은 0.7)
+  HB_PROPERTY(BlueprintReadWrite)
+  float FidgetDelay = 6;          // 새 시트: 이만큼 가만히 있으면 대기 행동 (그 뒤로는 8~12초마다)
+  HB_PROPERTY(BlueprintReadWrite)
+  std::vector<std::string> Fidgets = {"10,12,8","12,10,6","12,10,8"};  // 캐릭터별 대기 행동 3개의 장수 (0.16초씩)
+  HB_PROPERTY(BlueprintReadWrite)
+  std::vector<std::string> Muzzles;  // "Sherry_E=150,40": 그 방향 그림(192x96)에서 화살·카드가 나가는 픽셀. 없으면 몸 앞
   HB_PROPERTY(BlueprintReadWrite)
   int FlashPrice = 10;
   HB_PROPERTY(BlueprintReadWrite)
@@ -508,7 +525,10 @@ private:
   void Settle();
   void SetPaused(bool paused);
   void UpdateMenu();              // Esc 메뉴: 계속하기 / 효과음 크기 / 메인 화면으로
-  void TitleFx(float delta,bool visible);  // 타이틀: 횃불 빛 깜빡임, 별 반짝임, 떠오르는 금가루
+  void TitleFx(float delta,bool visible);
+  bool NewSheet() const{return Character<(int)rules->AnimSets.size()&&rules->AnimSets[Character]==1;}
+  void AnimateSheet(float delta,bool moving,const char* dir);  // 새 시트 (Screen.cpp)
+  hb::Vec3 Muzzle(const hb::Vec3& from) const;  // 화살·카드가 나가는 자리  // 타이틀: 횃불 빛 깜빡임, 별 반짝임, 떠오르는 금가루
   void Bag(bool toggle,bool use);  // 가방 (Tab): 소재·아이템, [귀환]은 가방에서 Enter로 사용
   bool UpdateSettle(float delta,bool advance);  // 정산 화면이 떠 있으면 true (이동·행동 막음)
   void ShowSettle(bool visible);
@@ -614,6 +634,7 @@ private:
   float fpsTime=0,fpsWorst=0;int fpsFrames=0;bool fpsHeld=false;
   struct Critter{hb::Actor* a=nullptr;int kind=0,state=0;hb::Vec3 home,at,vel;float t=0,timer=0;bool flip=false;};
   std::vector<Critter> critters;bool ambientReady=false;hb::Vec3 camMin{0,0,0},camMax{0,0,0};
+  float walkDist=0,stillTime=0,fidgetTime=0;int fidget=0,lastFidget=0;bool slashB=false;hb::Vec3 animPos{0,0,0};  // 새 시트 애니메이션 상태
   float tipTime=0,titleTime=0;bool pauseHeld=false,bagOpen=false;int menuPick=0,menuHeld=0;
   std::map<hb::Actor*,hb::Vec3> frozenVelocity;   // 일시정지 동안 멈춘 탄의 속도
   // 정산 화면: 줄이 하나씩 나타나고 남은 빚이 줄어드는 숫자 연출

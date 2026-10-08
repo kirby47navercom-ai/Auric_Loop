@@ -36,11 +36,62 @@ void TopDownShooter::Hud(){
     :HasReturnItem?"[귀환] 획득 - Tab으로 사용":boss?"해골 대장  "+std::to_string(int(std::ceil(BossHp)))+" HP":inHome?"원룸 Lv"+std::to_string(HomeLevel):area<0?"거점":"탐색");
 }
 
+static const char* kDirs8[]={"E","NE","N","NW","W","SW","S","SE"};
+static int Sector(const hb::Vec3& v){return ((int)std::lround(Angle(v)/45)%8+8)%8;}
+
+hb::Vec3 TopDownShooter::Muzzle(const hb::Vec3& from) const{
+  // 새 시트는 방향마다 화살촉·카드 끝 픽셀을 기록해 둔다 (docs/캐릭터_시트_요청.md 9장). 192x96 그림, 원점은 발끝 0.95m 위
+  static const char* names[]={"Valen","Sherry","Alea"};
+  const std::string key=std::string(names[std::clamp(Character,0,2)])+"_"+kDirs8[Sector(facing)]+"=";
+  for(const auto& m:rules->Muzzles)if(m.rfind(key,0)==0){const auto comma=m.find(',',key.size());if(comma==std::string::npos)break;
+    const float px=std::stof(m.substr(key.size(),comma-key.size())),py=std::stof(m.substr(comma+1));
+    return from+hb::Vec3{(px-96)/32,(96-py-38.4f)/32,0.25f};}
+  return from+facing*1.0f+hb::Vec3{0,0.3f,0.25f};
+}
+
+void TopDownShooter::AnimateSheet(float delta,bool moving,const char* dir){
+  // 새 시트: 8방향 그대로(반전 없음). 걷기 그림은 움직인 거리로 넘김 → 속도가 바뀌어도 발이 땅에 붙음
+  // 다리 위상(0 오른발 디딤, 1 지나감, 2 왼발 디딤, 3 지나감)은 걷기·겨누고 걷기가 같이 쓰므로 공격으로 바뀌어도 다리가 이어짐
+  if(playerFlipped){playerFlipped=false;hb::Sprites::SetFlip(player,false,false);}
+  const auto at=hb::Scene::GetPosition(player);auto step=at-animPos;step.z=0;animPos=at;
+  const float moved=Length(step)<1.f?Length(step):0.f;  // 순간이동(장면 전환·워프)은 걸음으로 안 셈
+  const bool backward=moving&&hb::VectorMath::DotProduct(step,facing)<0;
+  walkDist+=backward?-moved:moved;  // 뒷걸음질이면 위상을 거꾸로 (3→2→1→0)
+  const int phase=((int)std::floor(walkDist/rules->Stride)%4+4)%4;
+  const std::string d=std::string(dir)+"_";
+  if(attackAnim>0)attackAnim-=delta;
+  const bool busy=dodgeTimer>0||attackAnim>0||charge>0||moving||hb::Input::IsKeyDown("LeftMouseButton");
+  stillTime=busy?0:stillTime+delta;
+  std::string next;
+  if(dodgeTimer>0){  // 구르기 5장 (0.3초 안에)
+    const float t=rules->DodgeTime-dodgeTimer;next=d+"Roll_"+std::to_string(std::min(4,int(t/rules->DodgeTime*5)));fidget=0;}
+  else if(Character==0&&attackAnim>0){  // 발렌: 내딛으며 베기 A/B (준비 0.08 → 베기 0.1 → 마무리 0.12)
+    const float t=0.3f-attackAnim;next=d+(slashB?"SlashB_":"SlashA_")+std::to_string(t<0.08f?0:t<0.18f?1:2);fidget=0;
+    if(attackAnim<=delta)walkDist=(slashB?0.f:2.f)*rules->Stride;}  // 끝나면 마지막 디딤발에 맞는 위상으로 걷기 이어감
+  else if(Character==1&&(charge>0||attackAnim>0)){  // 셰리: 시위 걸기 → 다 당김 → 놓기, 걸으면 다리 위상 그대로
+    const char* pose=charge<=0?"Loose":charge<rules->ArrowCharge*0.5f?"AimHalf":"AimFull";
+    next=d+pose+(moving?"_W"+std::to_string(phase):std::string("_S"));fidget=0;}
+  else if(Character==2&&(attackAnim>0||hb::Input::IsKeyDown("LeftMouseButton"))){  // 알레아: 겨눔, 던질 때마다 0.06초 튕김
+    next=d+(attackAnim>0.14f?"Throw":"Hold")+(moving?"_W"+std::to_string(phase):std::string("_S"));fidget=0;}
+  else if(moving){next=d+"Walk_"+std::to_string(phase);fidget=0;}
+  else{
+    if(phase%2)walkDist+=rules->Stride;  // 지나감 자세에서 멈추면 다음 디딤 자세로
+    if(!fidget&&stillTime>=rules->FidgetDelay&&Character<(int)rules->Fidgets.size()){  // 대기 행동: 정면을 보고 셋 중 하나 (직전 것 빼고)
+      do fidget=1+std::rand()%3;while(fidget==lastFidget);lastFidget=fidget;fidgetTime=0;facing=hb::Vec3{0,-1,0};}
+    if(fidget){std::stringstream ss(rules->Fidgets[Character]);std::string n;int count=8;for(int i=0;i<fidget&&std::getline(ss,n,',');++i)count=std::stoi(n);
+      fidgetTime+=delta;const int f=int(fidgetTime/0.16f);
+      if(f<count)next="S_Fidget"+std::to_string(fidget)+"_"+std::to_string(f);
+      else{fidget=0;stillTime=rules->FidgetDelay-(8+std::rand()%5);}}  // 다음은 8~12초 뒤
+    if(next.empty()){breathTime+=delta;next=d+"Idle_"+std::to_string(int(breathTime*4)%std::max(1,rules->IdleFrames));}}
+  if(next!=currentSprite){currentSprite=next;if(Character<(int)rules->CharacterSprites.size())hb::Sprites::SetSprite(player,rules->CharacterSprites[Character]+next+".hbsprite.json");}
+}
+
 void TopDownShooter::Animate(float delta,bool moving){
   // 8방향: 그림은 남·남동·동·북동·북 5방향이고 서쪽 셋은 동쪽 그림을 뒤집는다
   // 프레임: 공격 3장(0.1초씩) > 걷기 4장(초당 8장) > 서 있기
   static const char* dirs[]={"E","NE","N","NE","E","SE","S","SE"};
-  const int sector=((int)std::lround(Angle(facing)/45)%8+8)%8;
+  const int sector=Sector(facing);
+  if(NewSheet()){AnimateSheet(delta,moving,kDirs8[sector]);return;}
   const bool flip=sector>=3&&sector<=5;
   if(flip!=playerFlipped){playerFlipped=flip;hb::Sprites::SetFlip(player,flip,false);}
   std::string next=std::string(dirs[sector])+"_";

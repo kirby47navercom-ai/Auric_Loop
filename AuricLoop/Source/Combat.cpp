@@ -172,6 +172,7 @@ bool TopDownShooter::HitEnemy(Enemy* e,const hb::Vec3& push,float damage){
 void TopDownShooter::Slash(const hb::Vec3& position,const std::vector<Enemy*>& enemies){
   // 검 부채꼴 베기: 적에게 피해, 범위 안의 적 탄은 지움 (기획: 투사체 삭제)
   attackCooldown=rules->SwordInterval;Swings++;attackAnim=0.3f;Sfx("Slash");
+  if(NewSheet())slashB=(((int)std::floor(walkDist/rules->Stride)%4+4)%4)>=2;  // 왼발이 앞이면 오른발로(B), 아니면 왼발로(A). 서서 연달아 베면 A·B가 번갈아 나옴
   PlayFx(rules->SlashClip,0.2f,position+facing*0.9f+hb::Vec3{0,0.2f,0.2f},Angle(facing),0.5f,false,(Swings&1)!=0);  // 번갈아 위·아래로 벰  // 캐릭터 그림과 따로, 공격 방향으로 돌린 베기
   const float minDot=std::cos(rules->SwordHalfAngle*3.14159265f/180),reach=rules->SwordRange+(Enchant==3?rules->SlashExtend:0);
   auto inFan=[&](const hb::Vec3& at,float radius){const auto d=at-position;const float len=Length(d);
@@ -188,7 +189,7 @@ void TopDownShooter::Shoot(const hb::Vec3& from){
   hb::Transform t;t.position=from+facing*0.8f;t.position.z=0.2f;t.rotation=hb::Vec3{0,0,Angle(facing)};
   auto* s=Take(shotPool,rules->PlayerShotPrefab,t);if(!s)return;
   hb::Sprites::PlayAnimation(s,Character==1?rules->ArrowClip:rules->CardClip,true);
-  Effect(Character==1?"Muzzle":"CardCast",from+facing*1.0f+hb::Vec3{0,0.3f,0.25f},Angle(facing),1.f);Sfx(Character==1?"Arrow":"Bolt");
+  Effect(Character==1?"Muzzle":"CardCast",Muzzle(from),Angle(facing),1.f);Sfx(Character==1?"Arrow":"Bolt");
   hb::Physics::SetVelocity(s,facing*(Character==1?rules->ArrowSpeed:rules->BoltSpeed));
   shots[s]=rules->PlayerShotLife;shotBoom[s]=false;Swings++;
 }

@@ -218,3 +218,44 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   if (fitsY) assert.ok(Math.abs(cam[1] - room.y) < 0.3, `방이 화면에 들어가면 카메라는 방 가운데 (y ${cam[1]} / ${room.y})`);
   console.log('근접 예고 공격·방 카메라 검사 통과', 'hp', s.Hp, 'room', `${room.hw * 2}x${room.hh * 2}`, 'cam', cam.map(v => v.toFixed(1)).join(','));
 }
+
+// 새 캐릭터 시트 (docs/캐릭터_시트_요청.md, AnimSets=1): 그림이 아직 없으므로 임시 스프라이트 에셋을 만들어 이름 순서만 본다
+//   발렌: 걷다가 베면 앞발 반대쪽으로 내딛는 A/B, 끝나면 그 발에 맞는 걷기 위상, 가만히 있으면 정면 대기 행동
+//   셰리: 걸으면서 당기면 겨누고 걷기(다리 위상 유지) → 다 당김 → 놓기 / 알레아: 겨누고 걷다가 던질 때마다 튕김
+{
+  const fs = await import('node:fs');
+  const dir = path.join(path.dirname(project), 'Assets/_animtest');
+  const D = ['S', 'SE', 'E', 'NE', 'N', 'NW', 'W', 'SW'], poses = {Valen: [], Sherry: ['AimHalf', 'AimFull', 'Loose'], Alea: ['Hold', 'Throw']};
+  fs.mkdirSync(dir, {recursive: true});
+  try {
+    for (const [who, sets] of Object.entries(poses)) {
+      const names = [];
+      for (const d of D) {
+        for (let i = 0; i < 5; i++) names.push(`${d}_Idle_${i}`, `${d}_Walk_${i}`, `${d}_Roll_${i}`);
+        for (const s of sets) { names.push(`${d}_${s}_S`); for (let i = 0; i < 4; i++) names.push(`${d}_${s}_W${i}`); }
+        if (who === 'Valen') for (const s of ['SlashA', 'SlashB']) for (let i = 0; i < 3; i++) names.push(`${d}_${s}_${i}`);
+      }
+      for (let f = 1; f <= 3; f++) for (let i = 0; i < 12; i++) names.push(`S_Fidget${f}_${i}`);
+      for (const n of names) fs.writeFileSync(path.join(dir, `S_${who}_${n}.hbsprite.json`), JSON.stringify({version: 1, name: `S_${who}_${n}`,
+        texture: `Assets/Sprites/${who}/${who}_S_Idle_0.png`, pixelsPerUnit: 32, rect: [0, 0, 192, 96], pivot: [0.5, 0.4], filter: 'nearest', border: [0, 0, 0, 0]}));
+    }
+    const nativeDefaults = {Rules: {AnimSets: [1, 1, 1], FidgetDelay: 2, CharacterSprites: ['Valen', 'Sherry', 'Alea'].map(w => `Assets/_animtest/S_${w}_`)}};
+    const run = async (name, frames, inputs) => {
+      const seq = [];
+      await runProject(project, {scene: scene(name), frames, delta: 1 / 60, inputs, nativeDefaults, onFrame: (f, vm) => {
+        const s = vm.objects.find(o => o.id === 'Player').components.find(c => c.type === 'SpriteRenderer').properties.sprite.split('/').at(-1).replace(/^S_\w+?_|\.hbsprite\.json$/g, '');
+        if (seq.at(-1) !== s) seq.push(s); }});
+      return seq.join(' > ');
+    };
+    const valen = await run('Test_Valen', 420, [{frame: 5, key: 'd', value: 1}, {frame: 40, key: 'LeftMouseButton', value: 1}, {frame: 80, key: 'LeftMouseButton', value: 0}, {frame: 85, key: 'd', value: 0}]);
+    assert.match(valen, /E_SlashB_0 > E_SlashB_1 > E_SlashB_2 > E_Walk_0/, `왼발 앞(위상 2)에서 베면 오른발 내딛기 B, 끝나면 위상 0 (${valen})`);
+    assert.match(valen, /E_SlashA_2/, `연달아 베면 A·B 번갈아 (${valen})`);
+    assert.match(valen, /S_Fidget\d_0 > S_Fidget\d_1/, `가만히 있으면 정면 대기 행동 (${valen})`);
+    assert.ok(!/(^|> )(NE|NW|SE|SW|E|W|N|S)_Attack/.test(valen) && !/WalkAttack/.test(valen), '예전 합성 그림 안 씀');
+    const sherry = await run('Test_Sherry', 200, [{frame: 5, key: 'a', value: 1}, {frame: 20, key: 'LeftMouseButton', value: 1}, {frame: 110, key: 'LeftMouseButton', value: 0}, {frame: 130, key: 'a', value: 0}]);
+    assert.match(sherry, /AimHalf_W\d > .*AimFull_W\d > .*Loose_W\d/, `걸으며 시위 걸기 → 다 당김 → 놓기 (${sherry})`);
+    const alea = await run('Test_Alea', 120, [{frame: 5, key: 'w', value: 1}, {frame: 20, key: 'LeftMouseButton', value: 1}, {frame: 60, key: 'LeftMouseButton', value: 0}, {frame: 70, key: 'w', value: 0}]);
+    assert.match(alea, /Hold_W\d > N_Throw_W\d > N_Hold_W\d/, `걸으며 겨눔·튕김 (${alea})`);
+    console.log('새 시트 애니메이션 검사 통과');
+  } finally { fs.rmSync(dir, {recursive: true, force: true}); }
+}
