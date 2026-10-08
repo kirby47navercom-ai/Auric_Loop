@@ -151,7 +151,7 @@ bool TopDownShooter::UpdateDialog(float delta,bool advance){
 }
 
 void TopDownShooter::ShowSelect(bool visible){
-  for(auto* n:{"SelectBack","SelectTitle","SelectHint","SelectConfirm"})UiVisible(n,visible);
+  for(auto* n:{"SelectBack","SelectTitle","SelectConfirm"})UiVisible(n,visible);
   for(int i=0;i<3;++i){const std::string k=std::to_string(i);
     for(auto* n:{"SelectCard","SelectArt","SelectName","SelectWeapon","SelectDebt","SelectTouch"})UiVisible(n+k,visible);
     UiVisible("SelectPick"+k,visible&&i==pick);}

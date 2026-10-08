@@ -264,7 +264,6 @@ for i, (who, name, weapon, debt) in enumerate(CARDS):
     node(f"SelectDebt{i}", "Text", "c", cx, 186, 280, 26, 83, text=f"빚 {debt:,} G", fontSize=16, color=RED, align="center", visible=False)
     node(f"SelectTouch{i}", "TouchButton", "c", cx, 10, 300, 420, 84, inputKey=str(i + 1), inputMode="keys",
          background="#00000000", pressed="#ffffff22", hover="#ffffff11", visible=False)
-node("SelectHint", "Text", "c", 0, 270, 700, 26, 81, text="A·D·1·2·3으로 고르고 Enter·Space 또는 카드를 한 번 더 눌러 결정", fontSize=15, color=SAND, align="center", visible=False)
 node("SelectConfirm", "TouchButton", "c", 0, 312, 240, 50, 84, text="결정", fontSize=18, color=GOLD, inputKey="enter", inputMode="keys",
      background="#2a2112f2", borderColor=GOLD, borderWidth=2, radius=8, pressed="#ffd56a44", hover="#ffd56a22", visible=False)
 
