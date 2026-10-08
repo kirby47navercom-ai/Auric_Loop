@@ -50,7 +50,7 @@ await patch('prototype/player.js',
 await patch('prototype/player.js', "held=new Set()", "held=new Set(),heldName=new Map()");
 await patch('prototype/player.js',
   "if(!e.repeat&&!held.has(e.key)){held.add(e.key);vm?.input(e.key,1).catch(fail);}",
-  "{const k=/^Key[A-Z]$/.test(e.code)?e.code.slice(3).toLowerCase():/^Digit[0-9]$/.test(e.code)?e.code.slice(5):e.code==='Space'?' ':e.key,c=e.code||e.key;if(!e.repeat&&!held.has(c)){held.add(c);heldName.set(c,k);vm?.input(k,1).catch(fail);}}");
+  "{const k=/^Key[A-Z]$/.test(e.code)?e.code.slice(3).toLowerCase():/^Digit[0-9]$/.test(e.code)?e.code.slice(5):e.code==='Space'?' ':(e.key&&e.key!=='Unidentified'?e.key:e.code),c=e.code||e.key;if(!k||!c)return;if(!e.repeat&&!held.has(c)){held.add(c);heldName.set(c,k);vm?.input(k,1).catch(fail);}}");
 await patch('prototype/player.js',
   "document.addEventListener('keyup',e=>{if(held.delete(e.key)){e.preventDefault();vm?.input(e.key,0).catch(fail);}});",
   "document.addEventListener('keyup',e=>{const c=e.code||e.key;if(held.delete(c)){e.preventDefault();vm?.input(heldName.get(c)??e.key,0).catch(fail);heldName.delete(c);}});");

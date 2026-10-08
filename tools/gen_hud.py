@@ -19,6 +19,10 @@ FONT = "Assets/Fonts/DungGeunMo.ttf"  # 둥근모꼴 (픽셀 글꼴, Public Doma
 INK, GOLD, SAND, RED, SKY = "#f6ecd8", "#ffd56a", "#c9b48a", "#ff8a7a", "#8fd8ff"
 FRAME = dict(background="#0d1419eb", borderColor="#c9a24acc", borderWidth=2, radius=8)
 SOFT = dict(background="#0d1419b8", borderColor="#c9a24a55", borderWidth=1, radius=6)  # HUD 글씨 받침 (게임 화면 위)
+ART = "Assets/UI/Art/"  # tools/make_ui_art.py
+FRAMED = dict(texture=ART + "frame_gold.png", nineSlice=[22, 22, 22, 22], imageRendering="pixelated")    # 금테 창 (모서리 장식)
+BUTTON = dict(texture=ART + "frame_button.png", nineSlice=[22, 22, 22, 22], imageRendering="pixelated")  # 버튼·칸
+PLAQUE = dict(texture=ART + "plaque.png", nineSlice=[16, 16, 16, 16], imageRendering="pixelated")       # 작은 글씨 받침 (금테 나무 명패)
 SIZES = {12: 14, 13: 15, 14: 16, 15: 17, 16: 18, 17: 19, 18: 20, 20: 22, 22: 26, 24: 28, 26: 30, 28: 34, 36: 42, 40: 48, 44: 52, 46: 54}
 
 w = json.loads(WIDGET.read_text(encoding="utf-8"))
@@ -69,8 +73,8 @@ for i in (1, 2, 3):
 text("HpText", "3 / 3", "tl", 24 + 64, 24 + 14, 220, 28, align="center")
 image("BagIcon", "icon_bag.png", "tl", 30, 92)
 text("WeightText", "0 / 100", "tl", 68, 86, 160, 32)
-node("GoldBack", "Panel", "tl", 330, 30, 196, 40, 9, **SOFT)
-node("WeightBack", "Panel", "tl", 24, 84, 190, 36, 9, **SOFT)
+node("GoldBack", "Image", "tl", 330, 28, 200, 44, 9, **PLAQUE)
+node("WeightBack", "Image", "tl", 24, 82, 190, 40, 9, **PLAQUE)
 text("GoldText", "0 G", "tl", 342, 36, 180, 32, size=18)
 node("Fps", "Text", "bl", 12, 8, 160, 22, 99, text="", fontSize=14, color="#7dff9a", visible=False)  # F3 성능 표시 (왼쪽 아래 구석)
 image("FatigueBack", "fatigue_back.png", "tl", 24, 132)
@@ -80,10 +84,10 @@ node("Fatigue", "ProgressBar", "tl", 24 + 8, 132 + 8, 16, 220, 11, value=0, max=
 image("FatigueTicks", "fatigue_ticks.png", "tl", 24 + 8, 132 + 52, z=12)
 
 # 위 가운데: 상태 문구 (귀환 진행·[귀환] 획득 등 있을 때만). 지역 이름은 도착할 때 가운데에 크게 (AreaBanner)
-node("AreaBack", "Panel", "t", 0, 12, 420, 44, 9, visible=False, **SOFT)
+node("AreaBack", "Image", "t", 0, 12, 420, 46, 9, visible=False, **PLAQUE)
 text("Title", "", "t", 0, 20, 420, 28, size=20, align="center")
 nodes[-1]["properties"]["visible"] = False
-node("HintBack", "Panel", "t", 0, 64, 640, 40, 9, visible=False, **{**SOFT, "background": "#0d1419e6"})
+node("HintBack", "Image", "t", 0, 60, 640, 48, 9, visible=False, **FRAMED)
 text("Hint", "", "t", 0, 70, 640, 30, size=18, align="center")  # 물체와 상관없는 알림 (제작 완료 등)
 # 도착한 곳 이름: 가운데에 크게 떴다가 사라짐 (C++ AreaBanner). M·미니맵을 누르면 다시
 node("AreaBannerBack", "Panel", "c", 0, -150, 1280, 132, 59, background="#05090ab4", visible=False)  # 글씨가 바닥 무늬에 묻히지 않게 어두운 띠
@@ -91,7 +95,7 @@ node("AreaBanner", "Text", "c", 0, -170, 900, 60, 60, text="", fontSize=44, colo
 node("AreaBannerLine", "Panel", "c", 0, -134, 420, 2, 60, background="#c9a24acc", padding=0, visible=False)
 node("AreaBannerSub", "Text", "c", 0, -112, 900, 30, 60, text="", fontSize=20, color=SAND, align="center", visible=False)
 # 상호작용 말풍선: 가까운 대상 머리 위에 따라붙음 (C++가 화면 좌표로 옮기고 크기를 글자 수에 맞춤)
-node("PromptBack", "Panel", "c", 0, 0, 200, 40, 25, visible=False, background="#0d1419f2", borderColor=GOLD, borderWidth=2, radius=8)
+node("PromptBack", "Image", "c", 0, 0, 200, 40, 25, visible=False, **PLAQUE)
 node("PromptKey", "Text", "c", 0, 0, 30, 28, 26, text="E", fontSize=18, color=INK, align="center", visible=False,
      background="#2a2112ff", borderColor=GOLD, borderWidth=2, radius=5)
 node("PromptText", "Text", "c", 0, 0, 600, 28, 26, text="", fontSize=18, color=INK, align="left", visible=False)
@@ -173,10 +177,10 @@ panel_text("CraftEffect", "체력 1 회복", 568, 190, 300, 22)
 panel_text("CraftType", "소모 아이템", 568, 220, 300, 20, size=13)
 panel_text("CraftNeed", "필요 소재", 480, 272, 300, 22)
 for k in (1, 2):  # 필요 소재 두 칸: 아이콘 + 가진 수 / 필요한 수 (모자라면 붉은 글씨)
-    panel(f"CraftCostBox{k}", "Panel", 480 + (k - 1) * 190, 300, 176, 52, 41, **SOFT)
+    panel(f"CraftCostBox{k}", "Image", 480 + (k - 1) * 190, 300, 176, 52, 41, **BUTTON)
     panel(f"CraftCostIcon{k}", "Image", 486 + (k - 1) * 190, 306, 40, 40, 42, texture=ITEMS + "herb.png")
     panel_text(f"CraftCostText{k}", "", 534 + (k - 1) * 190, 314, 130, 26, size=17)
-panel("CraftConfirmBack", "Panel", 480, 384, 380, 64, 42, background="#2a2112f5", borderColor=GOLD, borderWidth=2, radius=8)  # 키트 버튼 그림 위에 금테 버튼
+panel("CraftConfirmBack", "Image", 480, 384, 380, 64, 42, **FRAMED)  # 키트 버튼 그림 위에 금테 버튼
 panel("CraftConfirm", "Text", 480, 400, 380, 32, 43, text="제작하기", fontSize=20, color=GOLD, align="center")
 panel("CraftConfirmButton", "TouchButton", 480, 384, 380, 64, 44, inputKey="enter", inputMode="keys",
       background="#00000000", pressed="#ffffff22", hover="#ffffff11")
@@ -193,12 +197,12 @@ def dialog(name, kind, px, py, w_, h_, z, **props):
     return n
 
 
-dialog("DialogBox", "Panel", 0, 0, DW, DH, 50, **{**FRAME, "background": "#0d1419ff"})
+dialog("DialogBox", "Image", 0, 0, DW, DH, 50, **FRAMED)
 dialog("DialogPortraitFrame", "Image", 20, 19, 132, 132, 51, texture=KIT + "dialog_portrait_frame.png")
 iw, ih = Image.open(PROJECT / KIT / "portrait_collector.png").size  # 말하는 사람 초상화 하나: C++가 그림·크기·위치를 바꿈
 dialog("DialogPortrait", "Image", 26 + (120 - iw) // 2, 25 + (120 - ih) // 2, iw, ih, 52, texture=KIT + "portrait_collector.png")
-dialog("DialogNameTag", "Panel", 160, -18, 200, 36, 53, background="#2a2112ff", borderColor="#c9a24a", borderWidth=2, radius=6)  # 불투명 (뒤 대화창 테두리가 비치지 않게)
-dialog("DialogName", "Text", 160, -14, 200, 30, 54, text="수금원", fontSize=20, color=GOLD, align="center")
+dialog("DialogNameTag", "Image", 150, -26, 220, 52, 53, texture=ART + "ribbon.png")  # 불투명 (뒤 대화창 테두리가 비치지 않게)
+dialog("DialogName", "Text", 150, -22, 220, 30, 54, text="수금원", fontSize=19, color="#fff3e5", align="center")  # 리본 위 이름
 dialog("DialogText", "Text", 176, 34, 780, 110, 52, text="", fontSize=18, color=INK, wrap=True, align="left")
 dialog("DialogNext", "Text", DW - 56, DH - 46, 40, 30, 52, text="▼", fontSize=18, color=GOLD)
 dialog("DialogTouch", "TouchButton", 0, 0, DW, DH, 53, inputKey="e", inputMode="keys",
@@ -218,6 +222,15 @@ full("TitleScreen", "Image", 91, texture=KIT + "title_v2.png")
 TITLE_FX = [("TitleTorchL", "fx_torch_glow.png", 42, 205, 92), ("TitleTorchR", "fx_torch_glow.png", 1222, 205, 92)] + [
     (f"TitleStar{k}", "fx_star.png", x, y, 93) for k, (x, y) in enumerate([(572, 102), (388, 192), (757, 208), (903, 255), (712, 492), (452, 560), (858, 120)])] + [
     (f"TitleDust{k}", "fx_dust.png", 0, 0, 93) for k in range(8)]
+# 로고를 감싼 금빛 고리를 따라 도는 동전(돌아가는 금화 GIF), "Tap To Start" 뒤에서 숨 쉬는 금빛, 바닥에 선 세 사람 (C++ TitleFx가 움직임)
+for k in range(6):
+    n = node(f"TitleOrbit{k}", "Image", "tl", 0, 0, 52, 52, 93, texture=KIT + "loading_coin.gif")
+    n["slot"]["alignment"] = [0.5, 0.5]
+n = node("TitleTapShade", "Image", "tl", 643, 608, 520, 110, 90, texture="Assets/Sprites/FX/FX_Glow.png", opacity=0)  # 글씨 뒤 금빛 (깜빡이듯 번짐)
+n["slot"]["alignment"] = [0.5, 0.5]
+for k, (who, x) in enumerate([("Valen", 250), ("Sherry", 1010), ("Alea", 1130)]):
+    n = node(f"TitleHero{k}", "Image", "tl", x, 584, 384, 192, 92, texture=f"Assets/Sprites/{who}/{who}_S_Idle_0.png")
+    n["slot"]["alignment"] = [0.5, 0.5]
 for name, file, x, y, z in TITLE_FX:
     iw, ih = Image.open(PROJECT / KIT / file).size
     n = node(name, "Image", "tl", x, y, iw, ih, z, texture=KIT + file)
@@ -255,8 +268,8 @@ full("SelectBack", "Panel", 80, background="#0b1314ff", visible=False)  # 불투
 node("SelectTitle", "Text", "c", 0, -300, 600, 40, 81, text="캐릭터 선택", fontSize=28, color=GOLD, align="center", visible=False)
 for i, (who, name, weapon, debt) in enumerate(CARDS):
     cx = (i - 1) * 340
-    node(f"SelectPick{i}", "Panel", "c", cx, 10, 316, 436, 81, background="#ffd56a40", borderColor=GOLD, borderWidth=4, radius=12, visible=False)
-    node(f"SelectCard{i}", "Panel", "c", cx, 10, 300, 420, 82, background="#111b20f5", borderColor="#c9a24a88", borderWidth=2, radius=10, visible=False)
+    node(f"SelectPick{i}", "Panel", "c", cx, 10, 316, 436, 81, background="#ffd56a30", borderColor=GOLD, borderWidth=4, radius=14, visible=False)
+    node(f"SelectCard{i}", "Image", "c", cx, 10, 300, 420, 82, visible=False, **FRAMED)
     iw, ih = Image.open(PROJECT / KIT / f"select_{who}.png").size
     node(f"SelectArt{i}", "Image", "c", cx, -60, iw, ih, 83, texture=KIT + f"select_{who}.png", visible=False)
     node(f"SelectName{i}", "Text", "c", cx, 110, 280, 32, 83, text=f"{i + 1}. {name}", fontSize=24, color=INK, align="center", visible=False)
@@ -289,23 +302,23 @@ node("BossBar", "ProgressBar", "t", 0, 122, 514, 12, 22, value=1, max=1, fillDir
      background="#00000000", accent="#e04a3aff", visible=False)
 
 # ---- 안내 문구 띠 (기획서 9장) ----
-node("TipBack", "Panel", "t", 0, 140, 780, 48, 30, visible=False, **FRAME)
+node("TipBack", "Image", "t", 0, 136, 800, 56, 30, visible=False, **FRAMED)
 node("Tip", "Text", "t", 0, 151, 760, 28, 31, text="", fontSize=17, color="#ffe9a8", align="center", visible=False)
 
 # ---- 가방 (Tab): 위 줄은 소재·아이템 칸(아이콘·개수·이름), 아래 줄은 무기·각인·[귀환], 오른쪽 아래 적재량 막대 ----
 BAG_ITEMS = [("ore", "광물"), ("herb", "약초"), ("bone", "마물 소재"), ("bottle", "빈 병"), ("flash", "섬광탄"), ("gold", "골드")]
-node("BagPanel", "Panel", "c", 0, -20, 660, 380, 45, visible=False, **FRAME)
+node("BagPanel", "Image", "c", 0, -20, 680, 400, 45, visible=False, **FRAMED)
 node("BagTitle", "Text", "c", 0, -180, 600, 32, 46, text="가방", fontSize=22, color=GOLD, align="center", visible=False)
 for i, (icon, label) in enumerate(BAG_ITEMS):
     x = -250 + i * 100
-    node(f"BagSlot{i}", "Panel", "c", x, -100, 84, 84, 46, visible=False, **SOFT)
+    node(f"BagSlot{i}", "Image", "c", x, -100, 88, 88, 46, visible=False, **BUTTON)
     node(f"BagIcon{i}", "Image", "c", x, -100, 80, 80, 47, texture=ITEMS + icon + ".png", visible=False)
     node(f"BagCount{i}", "Text", "c", x + 10, -74, 56, 22, 48, text="0", fontSize=16, color=INK, align="right", visible=False)
     node(f"BagName{i}", "Text", "c", x, -44, 96, 20, 47, text=label, fontSize=13, color=SAND, align="center", visible=False)
 node("BagGearTitle", "Text", "c", -250, -2, 120, 20, 46, text="장비", fontSize=14, color=GOLD, align="left", visible=False)
 for k, (icon, label) in enumerate([("sword", "무기"), ("crystal_power", "각인"), ("scroll", "[귀환]")]):
     x = -250 + k * 100
-    node(f"BagGearSlot{k}", "Panel", "c", x, 62, 84, 84, 46, visible=False, **SOFT)
+    node(f"BagGearSlot{k}", "Image", "c", x, 62, 88, 88, 46, visible=False, **BUTTON)
     node(f"BagGearIcon{k}", "Image", "c", x, 62, 80, 80, 47, texture=ITEMS + icon + ".png", visible=False)
     node(f"BagGearBadge{k}", "Text", "c", x + 10, 88, 56, 22, 48, text="", fontSize=16, color=GOLD, align="right", visible=False)
     node(f"BagGearName{k}", "Text", "c", x, 118, 120, 20, 47, text=label, fontSize=13, color=SAND, align="center", visible=False)
@@ -322,12 +335,12 @@ n = node("BagUseTouch", "TouchButton", "c", -50, 62, 84, 84, 49, inputKey="enter
 # ---- 일시정지 (Esc·P, 모바일 일시정지 버튼) ----
 touch("PauseTouch", "escape", "tr", 24, 24, 72, devices="all")
 full("MenuBack", "Panel", 85, background="#05090ad8", visible=False)
-node("MenuPanel", "Panel", "c", 0, 8, 420, 330, 85, visible=False, **{**FRAME, "background": "#0d1419ff"})
+node("MenuPanel", "Image", "c", 0, 8, 440, 350, 85, visible=False, **FRAMED)
 node("MenuTitle", "Text", "c", 0, -112, 380, 40, 86, text="메뉴", fontSize=28, color=GOLD, align="center", visible=False)
 MENU = [("MenuResume", "계속하기", "escape"), ("MenuVolume", "효과음", ""), ("MenuQuit", "메인 화면으로", "F12")]
 for i, (name, label, key) in enumerate(MENU):
     y = -42 + i * 66
-    node(name + "Back", "Panel", "c", 0, y, 340, 52, 86, background="#1a2228ff", borderColor="#c9a24a66", borderWidth=2, radius=8, visible=False)
+    node(name + "Back", "Image", "c", 0, y, 340, 52, 86, visible=False, **PLAQUE)
     node(name, "Text", "c", 0, y - 1, 320, 30, 87, text=label, fontSize=20, color=INK, align="center", visible=False)
     if key:
         node(name + "Touch", "TouchButton", "c", 0, y, 340, 52, 88, inputKey=key, inputMode="keys",
@@ -345,7 +358,6 @@ node("KoSub", "Text", "c", 0, 30, 900, 30, 71, text="", fontSize=18, color="#fff
 
 # ---- 정산 화면 (기획서 6-4): 가운데 큰 동전. 위에 늘어선 소재·골드 아이콘이 하나씩 동전으로 날아 들어가 동전이 금으로 차오르고,
 #      마지막에 빚 상환분이 동전에서 빠져나가 아래 명패로 날아가며 남은 빚이 줄어든다 (C++ UpdateSettle)
-ART = "Assets/UI/Art/"
 full("SettleBack", "Panel", 72, background="#05090af5", visible=False)
 node("SettleGlow", "Image", "c", 0, -10, 420, 420, 72, texture="Assets/Sprites/FX/FX_Glow.png", opacity=0.55, visible=False)  # 동전 뒤 금빛
 node("SettleRibbon", "Image", "c", 0, -268, 400, 68, 73, texture=ART + "ribbon.png", visible=False)

@@ -575,7 +575,7 @@
       "id": "GoldBack",
       "name": "GoldBack",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0,
@@ -585,8 +585,85 @@
         ],
         "offset": [
           330,
-          30,
-          196,
+          28,
+          200,
+          44
+        ],
+        "alignment": [
+          0,
+          0
+        ],
+        "zIndex": 9,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "Assets/UI/Art/plaque.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": true,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "WeightBack",
+      "name": "WeightBack",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          82,
+          190,
           40
         ],
         "alignment": [
@@ -609,16 +686,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/plaque.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419b8",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24a55",
-        "borderWidth": 1,
-        "radius": 6,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": true,
         "enabled": true,
@@ -636,77 +713,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
-      },
-      "events": {},
-      "bindings": {}
-    },
-    {
-      "id": "WeightBack",
-      "name": "WeightBack",
-      "parent": "root",
-      "type": "Panel",
-      "slot": {
-        "anchors": [
-          0,
-          0,
-          0,
-          0
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          16,
+          16,
+          16,
+          16
         ],
-        "offset": [
-          24,
-          84,
-          190,
-          36
-        ],
-        "alignment": [
-          0,
-          0
-        ],
-        "zIndex": 9,
-        "fill": 0
-      },
-      "properties": {
-        "inputKey": "space",
-        "inputMode": "keys",
-        "axisX": "MoveX",
-        "axisY": "MoveY",
-        "keyUp": "w",
-        "keyDown": "s",
-        "keyLeft": "a",
-        "keyRight": "d",
-        "deadZone": 0.15,
-        "floating": false,
-        "deviceVisibility": "all",
-        "text": "",
-        "texture": "",
-        "fontSize": 22,
-        "color": "#f6ecd8",
-        "background": "#0d1419b8",
-        "accent": "#589ad6",
-        "hover": "#365778",
-        "pressed": "#1e4061",
-        "borderColor": "#c9a24a55",
-        "borderWidth": 1,
-        "radius": 6,
-        "opacity": 1,
-        "visible": true,
-        "enabled": true,
-        "focusable": true,
-        "tooltip": "",
-        "align": "center",
-        "value": 0,
-        "min": 0,
-        "max": 1,
-        "step": 0.01,
-        "padding": 8,
-        "gap": 8,
-        "columns": 2,
-        "checked": false,
-        "placeholder": "",
-        "maxLength": 256,
-        "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -1070,7 +1084,7 @@
       "id": "AreaBack",
       "name": "AreaBack",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -1082,7 +1096,7 @@
           0,
           12,
           420,
-          44
+          46
         ],
         "alignment": [
           0.5,
@@ -1104,16 +1118,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/plaque.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419b8",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24a55",
-        "borderWidth": 1,
-        "radius": 6,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -1131,7 +1145,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -1210,7 +1231,7 @@
       "id": "HintBack",
       "name": "HintBack",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -1220,9 +1241,9 @@
         ],
         "offset": [
           0,
-          64,
+          60,
           640,
-          40
+          48
         ],
         "alignment": [
           0.5,
@@ -1244,16 +1265,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_gold.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419e6",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24a55",
-        "borderWidth": 1,
-        "radius": 6,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -1271,7 +1292,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -1630,7 +1658,7 @@
       "id": "PromptBack",
       "name": "PromptBack",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -1664,16 +1692,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/plaque.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419f2",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#ffd56a",
-        "borderWidth": 2,
-        "radius": 8,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -1691,7 +1719,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -7354,7 +7389,7 @@
       "id": "CraftCostBox1",
       "name": "CraftCostBox1",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -7388,16 +7423,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_button.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419b8",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24a55",
-        "borderWidth": 1,
-        "radius": 6,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -7415,7 +7450,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -7565,7 +7607,7 @@
       "id": "CraftCostBox2",
       "name": "CraftCostBox2",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -7599,16 +7641,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_button.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419b8",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24a55",
-        "borderWidth": 1,
-        "radius": 6,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -7626,7 +7668,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -7776,7 +7825,7 @@
       "id": "CraftConfirmBack",
       "name": "CraftConfirmBack",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -7810,16 +7859,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_gold.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#2a2112f5",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#ffd56a",
-        "borderWidth": 2,
-        "radius": 8,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -7837,7 +7886,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -8056,7 +8112,7 @@
       "id": "DialogBox",
       "name": "DialogBox",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -8090,16 +8146,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_gold.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419ff",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24acc",
-        "borderWidth": 2,
-        "radius": 8,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -8117,7 +8173,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -8268,7 +8331,7 @@
       "id": "DialogNameTag",
       "name": "DialogNameTag",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -8277,10 +8340,10 @@
           1
         ],
         "offset": [
-          -340.0,
-          -212,
-          200,
-          36
+          -350.0,
+          -220,
+          220,
+          52
         ],
         "alignment": [
           0,
@@ -8302,16 +8365,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/ribbon.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#2a2112ff",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24a",
-        "borderWidth": 2,
-        "radius": 6,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -8329,7 +8392,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -8347,9 +8411,9 @@
           1
         ],
         "offset": [
-          -340.0,
-          -208,
-          200,
+          -350.0,
+          -216,
+          220,
           30
         ],
         "alignment": [
@@ -8373,8 +8437,8 @@
         "deviceVisibility": "all",
         "text": "수금원",
         "texture": "",
-        "fontSize": 22,
-        "color": "#ffd56a",
+        "fontSize": 19,
+        "color": "#fff3e5",
         "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
@@ -9111,7 +9175,7 @@
       "id": "TipBack",
       "name": "TipBack",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -9121,9 +9185,9 @@
         ],
         "offset": [
           0,
-          140,
-          780,
-          48
+          136,
+          800,
+          56
         ],
         "alignment": [
           0.5,
@@ -9145,16 +9209,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_gold.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419eb",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24acc",
-        "borderWidth": 2,
-        "radius": 8,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -9172,7 +9236,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -9251,7 +9322,7 @@
       "id": "BagPanel",
       "name": "BagPanel",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -9262,8 +9333,8 @@
         "offset": [
           0,
           -20,
-          660,
-          380
+          680,
+          400
         ],
         "alignment": [
           0.5,
@@ -9285,16 +9356,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_gold.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419eb",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24acc",
-        "borderWidth": 2,
-        "radius": 8,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -9312,7 +9383,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -9391,7 +9469,7 @@
       "id": "BagSlot0",
       "name": "BagSlot0",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -9402,8 +9480,8 @@
         "offset": [
           -250,
           -100,
-          84,
-          84
+          88,
+          88
         ],
         "alignment": [
           0.5,
@@ -9425,16 +9503,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_button.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419b8",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24a55",
-        "borderWidth": 1,
-        "radius": 6,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -9452,7 +9530,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -9672,7 +9757,7 @@
       "id": "BagSlot1",
       "name": "BagSlot1",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -9683,8 +9768,8 @@
         "offset": [
           -150,
           -100,
-          84,
-          84
+          88,
+          88
         ],
         "alignment": [
           0.5,
@@ -9706,16 +9791,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_button.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419b8",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24a55",
-        "borderWidth": 1,
-        "radius": 6,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -9733,7 +9818,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -9953,7 +10045,7 @@
       "id": "BagSlot2",
       "name": "BagSlot2",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -9964,8 +10056,8 @@
         "offset": [
           -50,
           -100,
-          84,
-          84
+          88,
+          88
         ],
         "alignment": [
           0.5,
@@ -9987,16 +10079,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_button.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419b8",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24a55",
-        "borderWidth": 1,
-        "radius": 6,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -10014,7 +10106,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -10234,7 +10333,7 @@
       "id": "BagSlot3",
       "name": "BagSlot3",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -10245,8 +10344,8 @@
         "offset": [
           50,
           -100,
-          84,
-          84
+          88,
+          88
         ],
         "alignment": [
           0.5,
@@ -10268,16 +10367,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_button.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419b8",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24a55",
-        "borderWidth": 1,
-        "radius": 6,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -10295,7 +10394,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -10515,7 +10621,7 @@
       "id": "BagSlot4",
       "name": "BagSlot4",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -10526,8 +10632,8 @@
         "offset": [
           150,
           -100,
-          84,
-          84
+          88,
+          88
         ],
         "alignment": [
           0.5,
@@ -10549,16 +10655,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_button.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419b8",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24a55",
-        "borderWidth": 1,
-        "radius": 6,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -10576,7 +10682,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -10796,7 +10909,7 @@
       "id": "BagSlot5",
       "name": "BagSlot5",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -10807,8 +10920,8 @@
         "offset": [
           250,
           -100,
-          84,
-          84
+          88,
+          88
         ],
         "alignment": [
           0.5,
@@ -10830,16 +10943,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_button.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419b8",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24a55",
-        "borderWidth": 1,
-        "radius": 6,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -10857,7 +10970,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -11147,7 +11267,7 @@
       "id": "BagGearSlot0",
       "name": "BagGearSlot0",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -11158,8 +11278,8 @@
         "offset": [
           -250,
           62,
-          84,
-          84
+          88,
+          88
         ],
         "alignment": [
           0.5,
@@ -11181,16 +11301,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_button.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419b8",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24a55",
-        "borderWidth": 1,
-        "radius": 6,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -11208,7 +11328,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -11428,7 +11555,7 @@
       "id": "BagGearSlot1",
       "name": "BagGearSlot1",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -11439,8 +11566,8 @@
         "offset": [
           -150,
           62,
-          84,
-          84
+          88,
+          88
         ],
         "alignment": [
           0.5,
@@ -11462,16 +11589,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_button.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419b8",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24a55",
-        "borderWidth": 1,
-        "radius": 6,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -11489,7 +11616,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
@@ -11709,7 +11843,7 @@
       "id": "BagGearSlot2",
       "name": "BagGearSlot2",
       "parent": "root",
-      "type": "Panel",
+      "type": "Image",
       "slot": {
         "anchors": [
           0.5,
@@ -11720,8 +11854,8 @@
         "offset": [
           -50,
           62,
-          84,
-          84
+          88,
+          88
         ],
         "alignment": [
           0.5,
@@ -11743,16 +11877,16 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "",
+        "texture": "Assets/UI/Art/frame_button.png",
         "fontSize": 22,
         "color": "#f6ecd8",
-        "background": "#0d1419b8",
+        "background": "#00000000",
         "accent": "#589ad6",
         "hover": "#365778",
         "pressed": "#1e4061",
-        "borderColor": "#c9a24a55",
-        "borderWidth": 1,
-        "radius": 6,
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
         "opacity": 1,
         "visible": false,
         "enabled": true,
@@ -11770,7 +11904,14 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
       },
       "events": {},
       "bindings": {}
