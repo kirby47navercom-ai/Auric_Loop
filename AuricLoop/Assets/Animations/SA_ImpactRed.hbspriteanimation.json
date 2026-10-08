@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "SA_ImpactRed",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_ImpactRed_0.hbsprite.json",
+      "duration": 0.03
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_ImpactRed_1.hbsprite.json",
+      "duration": 0.04
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_ImpactRed_2.hbsprite.json",
+      "duration": 0.05
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_ImpactRed_3.hbsprite.json",
+      "duration": 0.05
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

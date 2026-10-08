@@ -91,7 +91,8 @@ gm["variables"] = []
 write(BP / "BP_TopDownShooter.hbblueprint.json", gm)
 
 # ---- 적 ----
-ENEMY_EVENTS = ["Halt", "Chase", "Range", "Stagger", "Windup", "Fire", "Dash", "Ring", "Summon", "Prowl", "JumpWindup", "Jump", "Slam"]  # 상태에 들어갈 때만 (매 프레임 이동은 C++ 게임 규칙이 한 번에)
+ENEMY_EVENTS = ["Halt", "Chase", "Range", "Stagger", "Windup", "Fire", "Dash", "Ring", "Summon", "Prowl", "JumpWindup", "Jump", "Slam",
+                "SpinWindup", "Spin", "QuakeWindup", "Quake", "GoldRain"]  # 상태에 들어갈 때만 (매 프레임 이동은 C++ 게임 규칙이 한 번에)
 nodes = [node("begin", "beginPlay", 60, 40), node("awake", "nativeCall", 360, 40, nativeId="Enemy.Awake")]
 edges = [edge("begin", "then", "awake", "exec")]
 for i, ev in enumerate(ENEMY_EVENTS):
@@ -104,16 +105,18 @@ write(BP / "Enemies/BP_Enemy.hbblueprint.json", blueprint(
     "BP_Enemy", "Enemy", [transform(), sprite("", 0.90625, 1.375, asset=ENEMY_SPRITE.format("Skeleton", "Walk_0")), box((0.35, 0.3, 0.1), (0, -0.35, 0), **enemy_layer), body(), pool(16)],
     nodes, edges, native_from=True))
 ENEMIES = {
-    "BP_Skeleton": ("Skeleton", {"Enemy.DisplayName": "해골", "Enemy.Brain": "Assets/AI/FSM_Skeleton.hbstatemachine.json"}),
+    "BP_Skeleton": ("Skeleton", {"Enemy.DisplayName": "해골", "Enemy.Brain": "Assets/AI/FSM_Skeleton.hbstatemachine.json",
+                                 "Enemy.WindupSprite": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_SlashWindup.hbsprite.json"}),  # 자세 그림: tools/make_enemy_poses.py
     "BP_SkeletonMage": ("SkeletonMage", {"Enemy.DisplayName": "해골 마법사", "Enemy.Brain": "Assets/AI/FSM_SkeletonMage.hbstatemachine.json",
                                                    "Enemy.KeepDistance": 6, "Enemy.GoldMin": 2, "Enemy.GoldMax": 3}),
     "BP_SkeletonCaptain": ("SkeletonCaptain", {"Enemy.DisplayName": "해골 대장", "Enemy.ShotClip": "Assets/Animations/SA_BossOrb.hbspriteanimation.json", "Enemy.Brain": "Assets/AI/FSM_SkeletonCaptain.hbstatemachine.json",
                                                         "Enemy.Boss": True, "Enemy.MaxHp": 40, "Enemy.Speed": 3.6, "Enemy.Radius": 1.4,
                                                         "Enemy.GoldMin": 30, "Enemy.GoldMax": 30,
                                                         # 대검 베기만 (돌진·도약은 대장 패턴이 따로), 예고 길게, 자기 그림으로
-                                                        "Enemy.AttackClip": "Assets/Animations/SA_SkeletonCaptain_Attack.hbspriteanimation.json",
+                                                        "Enemy.AttackClip": "Assets/Animations/SA_SkeletonCaptain_Slash.hbspriteanimation.json",
                                                         "Enemy.WalkClip": "Assets/Animations/SA_SkeletonCaptain_Walk.hbspriteanimation.json",
-                                                        "Enemy.WindupSprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Attack_0.hbsprite.json",
+                                                        "Enemy.WindupSprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_SlashWindup.hbsprite.json",
+                                                        "Enemy.RoarSprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Roar.hbsprite.json",
                                                         "Enemy.SlashRange": 1.8, "Enemy.MeleeWindup": 0.7, "Enemy.AttackCooldown": 2.0,
                                                         "Enemy.LungeRange": 0, "Enemy.LeapRange": 0}),
 }
@@ -133,7 +136,7 @@ def _sfx(k):
     a = json.loads((PROJECT / f"Assets/Audio/S_{k}.hbaudioasset.json").read_text(encoding="utf-8"))
     return f"{k}={a['clip']}|{a['volume']}"
 SOUNDS = [_sfx(k) for k in ["Slash", "Arrow", "Bolt", "Boom", "Hit", "Kill", "Hurt", "Coin", "Dodge", "DoorHit", "DoorOpen",
-                            "Flash", "Craft", "Gather", "Select", "BossCharge"]] + ["Type=Assets/Audio/Type.wav|0.25"]
+                            "Flash", "Craft", "Gather", "Select", "BossCharge"]] + ["Type=Assets/Audio/Type.wav|0.25", "Swing=Assets/Audio/Swing.wav|0.45", "Impact=Assets/Audio/Impact.wav|0.6"]
 SOUNDS += [f"{k}=Assets/Audio/S_BGM_{k}.hbaudioasset.json" for k in ["Hub", "Dungeon", "Boss", "Return"]]
 rules = blueprint("BP_AuricRules", "AuricRules", [transform()], native_from=True, defaults={
     "AuricRules.Debts": [9800, 14500, 31700],  # 기획서 6-4
@@ -246,39 +249,50 @@ fsm("FSM_Skeleton", "appear", PARAMS, [
 fsm("FSM_SkeletonMage", "appear", PARAMS, [
     state("appear", "등장", 120, 150, 0.6, enter="Halt", clip=M + "Walk"),
     state("move", "거리 유지", 360, 150, enter="Range", clip=M + "Walk"),
-    state("windup", "시전 예고", 600, 80, 0.4, enter="Windup", clip=M + "Attack", loop=False),
+    state("windup", "시전 예고", 600, 80, 0.4, enter="Windup", clip=M + "Cast", loop=False),
     state("fire", "3갈래 발사", 840, 150, 0.15, enter="Fire"),
     state("stun", "경직", 360, 320, enter="Stagger", clip=M + "Hurt", loop=False),
 ], [go("appear_move", "appear", "move", exit_time=1), go("move_windup", "move", "windup", conditions=[("Ready", "equal", True)]),
     go("windup_fire", "windup", "fire", exit_time=1), go("fire_move", "fire", "move", exit_time=1),
     *stunned, go("stun_move", "stun", "move", conditions=[("Stunned", "equal", False)])])
 
-# 해골 대장 (기획서 5장, 보스답게 보강): 등장 → 맴돌며 쉬기 → 패턴 넷을 차례로 (Next 0~3, C++가 다음 패턴을 정함)
-#   0 연속 돌진 (예고선 → 돌진, 2번·분노 3번)  1 나선 탄막 3번  2 점프 내려찍기 (착지 충격파·원형 탄)  3 졸개 소환
-#   체력 절반 아래면 분노 (빨라지고 탄·돌진·졸개가 늘어남, C++ Enemy::TakeHit)
+# 해골 대장 (기획서 5장, 보스답게 보강): 등장 → 맴돌며 쉬기(대검 베기 예고) → 패턴을 차례로 (Next, C++ Enemy::NextAfter가 순서를 정함)
+#   0 연속 돌진  4 회전 베기  1 나선 탄막  5 충격파(바위 파편 부채꼴)  2 점프 내려찍기  6 금화 비(분노 뒤만)  3 졸개 소환
+#   체력 절반 아래면 분노 (포효 자세, 빨라지고 탄·돌진·졸개가 늘어남, C++ Enemy::TakeHit). 자세 그림: tools/make_enemy_poses.py
 fsm("FSM_SkeletonCaptain", "intro", PARAMS, [
     state("intro", "등장", 120, 60, 3.4, enter="Halt", clip=C + "Walk"),
     state("rest", "맴돌며 쉬기", 120, 260, 2.6, enter="Prowl", clip=C + "Walk"),  # 맴도는 동안 대검 베기 예고 (Enemy.cpp)
     state("charge", "연속 돌진", 420, 40, initial="windup"),
-    state("windup", "돌진 예고", 420, 120, 0.8, enter="Windup", parent="charge", clip=C + "Attack", loop=False),
-    state("dash", "돌진", 640, 120, 0.45, enter="Dash", parent="charge", clip=C + "Walk"),
+    state("windup", "돌진 예고", 420, 120, 0.8, enter="Windup", parent="charge", clip=C + "Dash"),
+    state("dash", "돌진", 640, 120, 0.45, enter="Dash", parent="charge", clip=C + "Dash"),
     state("ring", "나선 탄막", 420, 240, initial="burst1"),
-    state("burst1", "탄막 1", 420, 320, 0.4, enter="Ring", parent="ring", clip=C + "Attack", loop=False),
-    state("burst2", "탄막 2", 600, 320, 0.4, enter="Ring", parent="ring", clip=C + "Attack", loop=False),
-    state("burst3", "탄막 3", 780, 320, 0.5, enter="Ring", parent="ring", clip=C + "Attack", loop=False),
+    state("burst1", "탄막 1", 420, 320, 0.4, enter="Ring", parent="ring", clip=C + "Cast", loop=False),
+    state("burst2", "탄막 2", 600, 320, 0.4, enter="Ring", parent="ring", clip=C + "Cast", loop=False),
+    state("burst3", "탄막 3", 780, 320, 0.5, enter="Ring", parent="ring", clip=C + "Cast", loop=False),
     state("jump", "점프 내려찍기", 420, 440, initial="jwind"),
-    state("jwind", "웅크림", 420, 520, 0.55, enter="JumpWindup", parent="jump", clip=C + "Attack", loop=False),
-    state("jair", "점프", 600, 520, 0.6, enter="Jump", parent="jump", clip=C + "Walk"),
-    state("jland", "착지", 780, 520, 0.7, enter="Slam", parent="jump", clip=C + "Hurt", loop=False),
-    state("summon", "졸개 소환", 420, 640, 0.6, enter="Summon", clip=C + "Attack", loop=False),
+    state("jwind", "웅크림", 420, 520, 0.55, enter="JumpWindup", parent="jump", clip=C + "JumpCrouch", loop=False),
+    state("jair", "점프", 600, 520, 0.6, enter="Jump", parent="jump", clip=C + "JumpAir"),
+    state("jland", "착지", 780, 520, 0.7, enter="Slam", parent="jump", clip=C + "Slam", loop=False),
+    state("summon", "졸개 소환", 420, 640, 0.6, enter="Summon", clip=C + "Summon", loop=False),
+    state("spin", "회전 베기", 1000, 40, initial="spinwind"),
+    state("spinwind", "회전 준비", 1000, 120, 0.7, enter="SpinWindup", parent="spin", clip=C + "SlashWindup", loop=False),
+    state("spinning", "회전", 1200, 120, 1.2, enter="Spin", parent="spin", clip=C + "Spin"),
+    state("quake", "충격파", 1000, 240, initial="qwind"),
+    state("qwind", "충격파 준비", 1000, 320, 0.6, enter="QuakeWindup", parent="quake", clip=C + "Cast", loop=False),
+    state("quaking", "내리꽂기", 1200, 320, 0.7, enter="Quake", parent="quake", clip=C + "Slam", loop=False),
+    state("rain", "금화 비", 1000, 440, 1.6, enter="GoldRain", clip=C + "Cast", loop=False),
 ], [go("intro_rest", "intro", "rest", exit_time=1),
-    *[go(f"rest_{to}", "rest", to, exit_time=1, conditions=[("Next", "equal", n)]) for n, to in enumerate(["charge", "ring", "jump", "summon"])],
+    *[go(f"rest_{to}", "rest", to, exit_time=1, conditions=[("Next", "equal", n)])
+      for n, to in [(0, "charge"), (1, "ring"), (2, "jump"), (3, "summon"), (4, "spin"), (5, "quake"), (6, "rain")]],
     go("windup_dash", "windup", "dash", exit_time=1),
     go("dash_again", "dash", "windup", exit_time=1, conditions=[("Again", "equal", True)]),
     go("dash_rest", "dash", "rest", exit_time=1, conditions=[("Again", "equal", False)]),
     go("burst1_burst2", "burst1", "burst2", exit_time=1), go("burst2_burst3", "burst2", "burst3", exit_time=1), go("burst3_rest", "burst3", "rest", exit_time=1),
     go("jwind_jair", "jwind", "jair", exit_time=1), go("jair_jland", "jair", "jland", exit_time=1), go("jland_rest", "jland", "rest", exit_time=1),
-    go("summon_rest", "summon", "rest", exit_time=1)])
+    go("summon_rest", "summon", "rest", exit_time=1),
+    go("spinwind_spinning", "spinwind", "spinning", exit_time=1), go("spinning_rest", "spinning", "rest", exit_time=1),
+    go("qwind_quaking", "qwind", "quaking", exit_time=1), go("quaking_rest", "quaking", "rest", exit_time=1),
+    go("rain_rest", "rain", "rest", exit_time=1)])
 print("BP·프리팹·상태 머신 생성 완료")
 
 # ---- 대사 (기획서 6-6). who: 초상화 (collector·valen·sherry·alea·boss, $me는 지금 캐릭터), name: 이름표, text의 {이름}은 C++가 채움 ----

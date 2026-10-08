@@ -70,7 +70,7 @@
       "name": "시전 예고",
       "x": 600,
       "y": 80,
-      "clip": "Assets/Animations/SA_SkeletonMage_Attack.hbspriteanimation.json",
+      "clip": "Assets/Animations/SA_SkeletonMage_Cast.hbspriteanimation.json",
       "loop": false,
       "duration": 0.4,
       "onEnter": "Windup",

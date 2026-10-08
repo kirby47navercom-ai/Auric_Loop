@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_SkeletonCaptain_Roar",
+  "texture": "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Roar.png",
+  "pixelsPerUnit": 32,
+  "rect": [
+    0,
+    0,
+    175,
+    141
+  ],
+  "pivot": [
+    0.5,
+    0.450354609929078
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

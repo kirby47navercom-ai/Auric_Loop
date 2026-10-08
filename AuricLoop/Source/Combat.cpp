@@ -44,8 +44,8 @@ bool TopDownShooter::DamagePlayer(int amount,const hb::Vec3& from){
   // 맞으면: 무적 시간 동안 깜빡임, 맞은 반대쪽으로 살짝 밀려남, 붉게 번쩍·화면 흔들림
   if(invulnerable>0||dodgeTimer>0||Hp<=0)return false;
   Hp-=amount;invulnerable=rules->InvulnerableTime;Sfx("Hurt");if(Hp<=0){Hp=0;gameOver=rules->RespawnDelay;}
-  knock=Normal(playerAt-from,hb::Vec3{0,-1,0})*rules->HurtKnockback;knockTimer=0.12f;shake=rules->ShakeTime*2;
-  Tip(2);hb::Sprites::Flash(player,0.15f,1.f);Effect("HurtClaw",hb::Vec3{playerAt.x,playerAt.y+0.6f,0.3f});
+  knock=Normal(playerAt-from,hb::Vec3{0,-1,0})*rules->HurtKnockback;knockTimer=0.12f;Shake(rules->ShakeTime*2.5f,2.2f);HitStop(0.09f);Sfx("Impact");
+  Tip(2);hb::Sprites::Flash(player,0.15f,1.f);Effect("ImpactRed",hb::Vec3{playerAt.x,playerAt.y+0.2f,0.3f});  // 맞는 순간 멈칫·크게 흔들림·붉은 불꽃
   hb::Camera::Flash(hb::Color{0.7f,0.05f,0.05f,0.3f},0.18f);Hud();
   return true;
 }
@@ -100,7 +100,8 @@ void TopDownShooter::PlayFx(const std::string& clip,float length,const hb::Vec3&
 
 void TopDownShooter::Effect(const std::string& name,const hb::Vec3& at,float angle,float glow,bool flip){
   static const std::map<std::string,float> length={{"Dust",0.24f},{"BoneBurst",0.24f},{"Shockwave",0.26f},{"Muzzle",0.12f},{"CardCast",0.15f},
-    {"HurtClaw",0.15f},{"CoinSparkle",0.18f},{"Spawn",0.9f},{"Hit",0.16f}};
+    {"HurtClaw",0.15f},{"CoinSparkle",0.18f},{"Spawn",0.9f},{"Hit",0.16f},{"Alert",0.6f},{"EnemySlash",0.16f},{"BossSlash",0.2f},
+    {"Impact",0.17f},{"ImpactRed",0.17f},{"GoldDrop",0.36f}};
   const auto it=length.find(name);
   PlayFx("Assets/Animations/SA_"+name+".hbspriteanimation.json",it!=length.end()?it->second:0.3f,at,angle,glow,flip);
 }
@@ -161,7 +162,8 @@ bool TopDownShooter::HitEnemy(Enemy* e,const hb::Vec3& push,float damage){
   // 타격감: 맞은 자리에 불꽃, 화면 살짝 흔들림, 밀려남
   const auto at=hb::Scene::GetPosition(e);
   PlayFx(rules->HitClip,0.16f,hb::Vec3{at.x-push.x*0.3f,at.y-push.y*0.3f+0.2f,0.3f},float(std::rand()%360),1.5f,false);
-  shake=rules->ShakeTime;
+  shake=std::max(shake,rules->ShakeTime);HitStop(crit?0.07f:e->Boss?0.05f:0.035f);  // 때린 순간 아주 잠깐 멈칫 (묵직하게)
+  Effect("Impact",hb::Vec3{at.x-push.x*0.3f,at.y-push.y*0.3f+0.2f,0.32f},0,1.2f);
   const bool dead=e->TakeHit(Returning?0:damage,push*rules->Knockback,rules->HitStun,Enchant==2?rules->BurnTime:0);
   if(Enchant==2)e->burnDamage=WeaponDamage()*rules->BurnRate;
   if(e->Boss)BossHp=e->Hp;

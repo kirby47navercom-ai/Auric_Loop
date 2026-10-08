@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_Skeleton_LeapCrouch",
+  "texture": "Assets/Sprites/Enemies/Skeleton/Skeleton_LeapCrouch.png",
+  "pixelsPerUnit": 32,
+  "rect": [
+    0,
+    0,
+    78,
+    64
+  ],
+  "pivot": [
+    0.5,
+    0.468725
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

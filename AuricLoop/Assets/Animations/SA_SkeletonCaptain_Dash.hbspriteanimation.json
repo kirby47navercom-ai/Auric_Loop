@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "name": "SA_SkeletonCaptain_Dash",
+  "loop": true,
+  "playRate": 1,
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Dash.hbsprite.json",
+      "duration": 0.3
+    }
+  ]
+}

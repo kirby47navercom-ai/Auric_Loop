@@ -18,6 +18,7 @@
     "nativeDefaults": {
       "Enemy.DisplayName": "해골",
       "Enemy.Brain": "Assets/AI/FSM_Skeleton.hbstatemachine.json",
+      "Enemy.WindupSprite": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_SlashWindup.hbsprite.json",
       "Enemy.DeathClip": "Assets/Animations/SA_Skeleton_Death.hbspriteanimation.json"
     },
     "componentOverrides": {

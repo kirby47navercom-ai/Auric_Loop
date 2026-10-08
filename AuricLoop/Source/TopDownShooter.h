@@ -94,6 +94,18 @@ public:
   std::string WalkClip = "Assets/Animations/SA_Skeleton_Walk.hbspriteanimation.json";
   HB_PROPERTY(BlueprintReadWrite)
   std::string WindupSprite = "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Attack_0.hbsprite.json";  // 예고 동안 멈춰 있는 자세
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string LungeReadySprite = "Assets/Sprites/Enemies/Skeleton/S_Skeleton_LungeReady.hbsprite.json";  // 돌진 예고 (몸을 낮추고 겨눔). tools/make_enemy_poses.py
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string LungeSprite = "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Lunge.hbsprite.json";            // 돌진 중 (앞으로 기울여 찌름)
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string LeapCrouchSprite = "Assets/Sprites/Enemies/Skeleton/S_Skeleton_LeapCrouch.hbsprite.json";  // 도약 예고 (웅크림)
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string LeapAirSprite = "Assets/Sprites/Enemies/Skeleton/S_Skeleton_LeapAir.hbsprite.json";        // 도약 중 (공중)
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string LeapLandSprite = "Assets/Sprites/Enemies/Skeleton/S_Skeleton_LeapLand.hbsprite.json";      // 착지 (내려찍고 무릎) — 빈틈 동안 유지
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string RoarSprite = "";   // 보스: 분노할 때 포효 자세
 
   // 상태 머신이 상태에 들어갈 때 BP 사용자 이벤트가 한 번 부른다 (매 프레임 부르지 않음: C++ 호출 비용)
   HB_FUNCTION(BlueprintCallable, DisplayName="생성", Category="적")
@@ -124,6 +136,16 @@ public:
   void Jump();
   HB_FUNCTION(BlueprintCallable, DisplayName="보스: 내려찍기", Category="적")
   void Slam();
+  HB_FUNCTION(BlueprintCallable, DisplayName="보스: 회전 베기 준비", Category="적")
+  void SpinWindup();
+  HB_FUNCTION(BlueprintCallable, DisplayName="보스: 회전 베기", Category="적")
+  void Spin();
+  HB_FUNCTION(BlueprintCallable, DisplayName="보스: 충격파 준비", Category="적")
+  void QuakeWindup();
+  HB_FUNCTION(BlueprintCallable, DisplayName="보스: 충격파", Category="적")
+  void Quake();
+  HB_FUNCTION(BlueprintCallable, DisplayName="보스: 금화 비", Category="적")
+  void GoldRain();
 
   // 게임 규칙(TopDownShooter)이 직접 부른다 (같은 C++ 빌드라 실제 객체). Tick은 게임 규칙의 한 프레임 호출 안에서 모든 적을 한 번에 움직인다
   void Tick(float delta);
@@ -138,7 +160,9 @@ public:
   hb::Vec3 sep{0,0,0};           // 다른 적·플레이어와 겹친 만큼 벌리는 속도 (게임 규칙 Separate가 정함)
 private:
   hb::Vec3 ToPlayer(float& distance) const;
-  enum class Mode{Halt,Chase,Range,Stagger,Dash,Prowl,Jump};
+  enum class Mode{Halt,Chase,Range,Stagger,Dash,Prowl,Jump,Spin};
+  float spinTick=0,rainTime=0,roarTime=0;std::vector<hb::Vec3> rainSpots;hb::Vec3 quakeDir{0,-1,0};  // 보스 회전 베기·금화 비·포효
+  int NextAfter(int current) const;  // 보스 패턴 순서
   int dashCount=0;bool phase2=false;     // 보스: 연속 돌진 횟수, 체력 절반 아래 분노
   hb::Vec3 jumpTarget{0,0,0};
   void NextPattern(int next);
@@ -502,6 +526,7 @@ public:
   void BossSlam(const hb::Vec3& at,int bullets,float speed,const std::string& clip); // 내려찍기 충격파·탄·흔들림
   void BossEnraged(Enemy* e);                                                        // 2페이즈 포효
   void Effect(const std::string& name,const hb::Vec3& at,float angle=0,float glow=0,bool flip=false);  // Assets/Animations/SA_<name> 한 번 재생
+  void Shake(float seconds,float power){shake=std::max(shake,seconds);shakePower=std::max(shakePower,power);}  // 화면 흔들림 (seconds 동안, power 세기 배율)
   std::string Sound(const std::string& name) const;  // Sounds에서 이름으로 찾은 경로 (없으면 "")
   static inline int SfxLevel=8;  // 메뉴의 효과음 크기 0~10 (처음으로 돌아가도 유지: 모듈 정적 변수)
   void Sfx(const std::string& name,float pitch=1.f){  // Sounds 값은 "wav 경로|볼륨". 첫 입력 전 효과음은 엔진이 버림
@@ -536,7 +561,8 @@ private:
   void TitleFx(float delta,bool visible);
   void UpdatePrompt(float delta);  // 상호작용 말풍선을 대상 머리 위로 (Screen.cpp)
   void AreaBanner(float delta,bool show);  // 도착한 곳 이름을 가운데에 크게 (Screen.cpp)
-  void Notify(const std::string& text){hint=text;hintTime=2.5f;Hud();}  // 물체와 상관없는 알림 (위 가운데, 잠깐)
+  void Notify(const std::string& text){hint=text;hintTime=2.5f;Hud();}
+  void HitStop(float seconds){if(Paused)return;hitStopLeft=std::max(hitStopLeft,seconds);hb::Clock::SetTimeScale(0.06f);}  // 타격감: 맞은 순간 멈칫  // 물체와 상관없는 알림 (위 가운데, 잠깐)
   bool NewSheet() const{return Character<(int)rules->AnimSets.size()&&rules->AnimSets[Character]==1;}
   void AnimateSheet(float delta,bool moving,const char* dir);  // 새 시트 (Screen.cpp)
   hb::Vec3 Muzzle(const hb::Vec3& from) const;  // 화살·카드가 나가는 자리  // 타이틀: 횃불 빛 깜빡임, 별 반짝임, 떠오르는 금가루
@@ -648,6 +674,7 @@ private:
   std::vector<Critter> critters;bool ambientReady=false;hb::Vec3 camMin{0,0,0},camMax{0,0,0};
   float walkDist=0,stillTime=0,fidgetTime=0;int fidget=0,lastFidget=0;bool slashB=false;hb::Vec3 animPos{0,0,0};  // 새 시트 애니메이션 상태
   Interactable* promptTarget=nullptr;std::string promptText;float hintTime=0,areaBannerTime=0;bool bannerPending=false,mapHeld=false;  // 상호작용 말풍선·알림·지역 이름
+  float hitStopLeft=0,shakePower=1;  // 맞는 순간 아주 잠깐 느려짐(남은 실제 시간), 흔들림 세기 배율
   float tipTime=0,titleTime=0;bool pauseHeld=false,bagOpen=false;int menuPick=0,menuHeld=0;
   std::map<hb::Actor*,hb::Vec3> frozenVelocity;   // 일시정지 동안 멈춘 탄의 속도
   // 정산 화면: 줄이 하나씩 나타나고 남은 빚이 줄어드는 숫자 연출
