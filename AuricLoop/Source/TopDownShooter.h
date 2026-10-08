@@ -470,9 +470,10 @@ public:
   void BossEnraged(Enemy* e);                                                        // 2페이즈 포효
   void Effect(const std::string& name,const hb::Vec3& at,float angle=0,float glow=0,bool flip=false);  // Assets/Animations/SA_<name> 한 번 재생
   std::string Sound(const std::string& name) const;  // Sounds에서 이름으로 찾은 경로 (없으면 "")
-  void Sfx(const std::string& name){  // Sounds 값은 "wav 경로|볼륨". 첫 입력 전 효과음은 엔진이 버림
-    const auto s=Sound(name);if(s.empty())return;const auto bar=s.find('|');
-    if(bar==std::string::npos)hb::Audio::Play(s);else hb::Audio::Play(s.substr(0,bar),std::stof(s.substr(bar+1)),1.f,"master");}
+  static inline int SfxLevel=8;  // 메뉴의 효과음 크기 0~10 (처음으로 돌아가도 유지: 모듈 정적 변수)
+  void Sfx(const std::string& name,float pitch=1.f){  // Sounds 값은 "wav 경로|볼륨". 첫 입력 전 효과음은 엔진이 버림
+    const auto s=Sound(name);if(s.empty()||SfxLevel<=0)return;const auto bar=s.find('|');const float v=SfxLevel/8.f;
+    if(bar==std::string::npos)hb::Audio::Play(s,v,pitch);else hb::Audio::Play(s.substr(0,bar),std::stof(s.substr(bar+1))*v,pitch,"master");}
   void Say(const std::string& who,const std::string& name,const std::string& text){dialog.push_back({who,name,text});}
   void Talk(const std::string& row,const std::map<std::string,std::string>& vars={});  // DT_Dialogue 행의 대사를 차례로
   bool Frozen() const{return Hp<=0||dialogIndex<dialog.size()||Phase<2||cutscene>0||Paused;}
@@ -498,6 +499,8 @@ private:
   void ClearRoom();
   void Settle();
   void SetPaused(bool paused);
+  void UpdateMenu();              // Esc 메뉴: 계속하기 / 효과음 크기 / 메인 화면으로
+  void TitleFx(float delta,bool visible);  // 타이틀: 횃불 빛 깜빡임, 별 반짝임, 떠오르는 금가루
   void Bag(bool toggle,bool use);  // 가방 (Tab): 소재·아이템, [귀환]은 가방에서 Enter로 사용
   bool UpdateSettle(float delta,bool advance);  // 정산 화면이 떠 있으면 true (이동·행동 막음)
   void ShowSettle(bool visible);
@@ -549,14 +552,18 @@ private:
     if(uiOwner!=player){uiOwner=player;uiSent.clear();}
     auto it=uiSent.find(key);if(it!=uiSent.end()&&it->second==value)return false;uiSent[key]=value;return true;}
   static std::string UiNum(float a,float b){return std::to_string(a)+","+std::to_string(b);}
-  void UiVisible(const std::string& n,bool v){if(UiChanged("v"+n,v?"1":"0"))hb::UI::SetVisible(player,"HUD",n,v);}
-  void UiText(const std::string& n,const std::string& v){if(UiChanged("t"+n,v))hb::UI::SetText(player,"HUD",n,v);}
-  void UiTexture(const std::string& n,const std::string& v){if(UiChanged("x"+n,v))hb::UI::SetTexture(player,"HUD",n,v);}
-  void UiValue(const std::string& n,float v){if(UiChanged("f"+n,std::to_string(v)))hb::UI::SetValue(player,"HUD",n,v);}
-  void UiPosition(const std::string& n,const hb::Vec2& v){if(UiChanged("p"+n,UiNum(v.x,v.y)))hb::UI::SetPosition(player,"HUD",n,v);}
-  void UiSize(const std::string& n,const hb::Vec2& v){if(UiChanged("s"+n,UiNum(v.x,v.y)))hb::UI::SetSize(player,"HUD",n,v);}
-  void UiOpacity(const std::string& n,float v){if(UiChanged("o"+n,std::to_string(v)))hb::UI::SetOpacity(player,"HUD",n,v);}
-  void UiColor(const std::string& n,const hb::Color& c){if(UiChanged("c"+n,UiNum(c.r,c.g)+UiNum(c.b,c.a)))hb::UI::SetColor(player,"HUD",n,c);}
+  static const char* UiInstance(const std::string& n){  // 앞 화면(타이틀·로딩·선택·엔딩·메뉴)은 W_Front, 나머지는 W_TopDown (tools/gen_hud.py FRONT)
+    for(auto* p:{"Title","Loading","Select","Ending","Menu"})if(n.rfind(p,0)==0)return "Front";
+    return "HUD";}
+  void UiVisible(const std::string& n,bool v){if(UiChanged("v"+n,v?"1":"0"))hb::UI::SetVisible(player,UiInstance(n),n,v);}
+  void UiText(const std::string& n,const std::string& v){if(UiChanged("t"+n,v))hb::UI::SetText(player,UiInstance(n),n,v);}
+  void UiTexture(const std::string& n,const std::string& v){if(UiChanged("x"+n,v))hb::UI::SetTexture(player,UiInstance(n),n,v);}
+  void UiValue(const std::string& n,float v){if(UiChanged("f"+n,std::to_string(v)))hb::UI::SetValue(player,UiInstance(n),n,v);}
+  void UiPosition(const std::string& n,const hb::Vec2& v){if(UiChanged("p"+n,UiNum(v.x,v.y)))hb::UI::SetPosition(player,UiInstance(n),n,v);}
+  void UiSize(const std::string& n,const hb::Vec2& v){if(UiChanged("s"+n,UiNum(v.x,v.y)))hb::UI::SetSize(player,UiInstance(n),n,v);}
+  void UiOpacity(const std::string& n,float v){if(UiChanged("o"+n,std::to_string(v)))hb::UI::SetOpacity(player,UiInstance(n),n,v);}
+  void UiColor(const std::string& n,const hb::Color& c){if(UiChanged("c"+n,UiNum(c.r,c.g)+UiNum(c.b,c.a)))hb::UI::SetColor(player,UiInstance(n),n,c);}
+  void UiScale(const std::string& n,float v){if(UiChanged("k"+n,std::to_string(v)))hb::UI::SetScale(player,UiInstance(n),n,hb::Vec2{v,v});}
   hb::Vec3 playerAt{0,0,0},facing{1,0,0},cameraAt{0,0,0};
   bool playerFlipped=false,blinkShown=false;
   hb::Vec3 knock{0,0,0};
@@ -595,7 +602,7 @@ private:
   std::vector<Line> dialog;
   size_t dialogIndex=0,shownChars=0;
   float fpsTime=0,fpsWorst=0;int fpsFrames=0;bool fpsHeld=false;
-  float tipTime=0;bool pauseHeld=false,bagOpen=false;
+  float tipTime=0,titleTime=0;bool pauseHeld=false,bagOpen=false;int menuPick=0,menuHeld=0;
   std::map<hb::Actor*,hb::Vec3> frozenVelocity;   // 일시정지 동안 멈춘 탄의 속도
   // 정산 화면: 줄이 하나씩 나타나고 남은 빚이 줄어드는 숫자 연출
   std::vector<std::string> settleRows;

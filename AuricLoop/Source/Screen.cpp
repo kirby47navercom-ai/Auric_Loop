@@ -13,7 +13,7 @@ void TopDownShooter::Hud(){
   if(frame<2||!player){hudDirty=true;return;}
   hudDirty=false;
   if(Phase>=2&&!introHidden){introHidden=true;
-    for(auto* n:{"LoadingBack","LoadingCoin","LoadingText","TitleBack","TitleScreen","TitleHint"})UiVisible(n,false);}
+    for(auto* n:{"LoadingBack","LoadingCoin","LoadingText","TitleBack","TitleScreen"})UiVisible(n,false);TitleFx(0,false);}
   const int hp=std::max(0,Hp);
   const bool rot=Returning;const int fill=hp<=0?0:std::max(1,(hp*3+MaxHp-1)/MaxHp);  // 귀환 중엔 황금 침식 테마
   UiVisible("HpBack",!rot);
@@ -89,7 +89,9 @@ bool TopDownShooter::UpdateDialog(float delta,bool advance){
     Sfx("Select");if(shownChars<total)shownChars=total;
     else{dialogIndex++;shownChars=0;typeTime=0;if(dialogIndex<dialog.size()&&dialog[dialogIndex].who==shownWho)UiText("DialogName",dialog[dialogIndex].name);
       UiText("DialogText","");return true;}
-  }else if(shownChars<total){typeTime+=delta;const size_t next=std::min(total,size_t(typeTime*rules->TypeSpeed));if(next==shownChars)return true;shownChars=next;}
+  }else if(shownChars<total){typeTime+=delta;const size_t next=std::min(total,size_t(typeTime*rules->TypeSpeed));if(next==shownChars)return true;
+    const auto added=Utf8Prefix(l.text,next).substr(Utf8Prefix(l.text,shownChars).size());shownChars=next;
+    if(added.find_first_not_of(" .,!?'\"-")!=std::string::npos)Sfx("Type",0.92f+0.16f*float(next%5)/4);}
   else return true;
   UiText("DialogText",Utf8Prefix(l.text,shownChars));
   UiVisible("DialogNext",shownChars>=total);
@@ -103,14 +105,37 @@ void TopDownShooter::ShowSelect(bool visible){
     UiVisible("SelectPick"+k,visible&&i==pick);}
 }
 
+void TopDownShooter::TitleFx(float delta,bool visible){
+  // 타이틀 그림 위 층 (tools/gen_hud.py TITLE_FX·KEYS): 보일 때만 움직이고, 넘어가면 모두 숨김
+  static const int keyCounts[]={4,1,1,1,1,1,1};
+  if(!visible){if(titleTime<0)return;titleTime=-1;
+    for(int g=0;g<7;++g){UiVisible("TitleKeyName"+std::to_string(g),false);
+      for(int k=0;k<keyCounts[g];++k)UiVisible("TitleKey"+std::to_string(g)+"_"+std::to_string(k),false);}
+    for(auto* n:{"TitleTorchL","TitleTorchR"})UiVisible(n,false);
+    for(int i=0;i<8;++i){if(i<7)UiVisible("TitleStar"+std::to_string(i),false);UiVisible("TitleDust"+std::to_string(i),false);}
+    return;}
+  if(titleTime<0)titleTime=0;titleTime+=delta;const float t=titleTime;
+  // 횃불: 두 겹 사인 + 작은 흔들림으로 불규칙하게 밝기·크기
+  for(int i=0;i<2;++i){const float f=0.5f+0.25f*std::sin(t*9.1f+i*2)+0.15f*std::sin(t*23.7f+i*5)+0.1f*std::sin(t*3.3f+i);
+    const std::string n=i?"TitleTorchR":"TitleTorchL";UiOpacity(n,0.55f+0.4f*f);UiScale(n,0.92f+0.12f*f);}
+  // 별: 서로 다른 박자로 커졌다 사라짐
+  for(int i=0;i<7;++i){const float p=std::fmod(t*0.55f+i*0.37f,1.f),s=p<0.35f?std::sin(p/0.35f*3.14159f):0.f;
+    const std::string n="TitleStar"+std::to_string(i);UiScale(n,0.2f+0.9f*s);UiOpacity(n,s);}
+  // 금가루: 바닥 쪽에서 천천히 떠올라 흐려짐 (화면 아래 1/3에서 시작, 좌우로 살랑)
+  for(int i=0;i<8;++i){const float life=5.f+i%3,p=std::fmod(t+i*1.37f,life)/life;
+    const float x=120+std::fmod(i*331.f,1040.f)+std::sin(t*1.3f+i)*14,y=690-p*420;
+    const std::string n="TitleDust"+std::to_string(i);UiPosition(n,hb::Vec2{x,y});UiOpacity(n,std::sin(p*3.14159f)*0.9f);}
+}
+
 bool TopDownShooter::UpdateIntro(float delta,bool anyKey){
   // 로딩(금화 GIF) → 타이틀(아무 키) → 캐릭터 선택 → 오프닝 대화 (기획서 2장)
   if(Phase>=2)return false;
   phaseTime+=delta;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
   if(Phase==0&&phaseTime>=rules->LoadingTime){Phase=1;phaseTime=0;
     for(auto* n:{"LoadingBack","LoadingCoin","LoadingText"})UiVisible(n,false);}
-  else if(Phase==1&&!selecting&&anyKey&&phaseTime>0.3f){selecting=true;phaseTime=0;
-    for(auto* n:{"TitleBack","TitleScreen","TitleHint"})UiVisible(n,false);introHidden=true;confirmHeld=true;ShowSelect(true);}
+  TitleFx(delta,Phase==1&&!selecting);
+  if(Phase==1&&!selecting&&anyKey&&phaseTime>0.3f){selecting=true;phaseTime=0;
+    for(auto* n:{"TitleBack","TitleScreen"})UiVisible(n,false);TitleFx(0,false);introHidden=true;confirmHeld=true;ShowSelect(true);}
   else if(Phase==1&&selecting){
     // 1·2·3, A·D로 고르고 Enter·E·Space로 결정 (방향키는 쓰지 않음). 카드를 누르면 그 숫자 키가 눌리고, 고른 카드를 한 번 더 누르면 결정
     int key=0;for(int i=1;i<=3;++i)if(hb::Input::IsKeyDown(std::to_string(i)))key=i;

@@ -71,7 +71,7 @@ void TopDownShooter::Update(float delta){
    if(frame>=2&&UpdateIntro(delta,pressed||AnyPressed(true)))return;
    {const bool p=hb::Input::IsKeyDown("escape")||hb::Input::IsKeyDown("p");  // 일시정지 (Esc·P)
     if(p&&!pauseHeld&&Phase>=2&&settleTime<0&&!ending)SetPaused(!Paused);pauseHeld=p;
-    if(Paused)return;}
+    if(Paused){if(!leaving)UpdateMenu();return;}}
    if(tipTime>0&&(tipTime-=delta)<=0){UiVisible("TipBack",false);UiVisible("Tip",false);}
    if(cutscene>0){  // 보스 등장: 1초 마법진 → 보스 → 1.3초 포효(흔들림)·이름 자막 → 끝나면 대사
      cutscene-=delta;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});

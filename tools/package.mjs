@@ -4,6 +4,7 @@
 // 엔진 플레이어 UI 문제를 빌드 결과에서만 고친다 (엔진 설치본은 건드리지 않음, docs/엔진_요청_UI입력.md):
 //   1) 그림·글자(Image·Text) 위젯이 마우스 클릭을 받아 게임 화면(canvas)까지 안 감 → 타이틀 그림을 눌러도 시작 안 됨
 //   2) 클릭으로 포커스를 가진 위젯이 모든 키를 삼킴 (keydown stopPropagation) → 그 뒤로 키보드가 안 먹음
+//   3) Esc를 플레이어 기본 일시정지 창이 가로챔 → 게임 메뉴로 넘김
 import {createHash} from 'node:crypto';
 import fs from 'node:fs/promises';
 import os from 'node:os';
@@ -40,6 +41,14 @@ await patch('prototype/ui-runtime.css', '.hb-ui-Spacer{pointer-events:none}', '.
 await patch('prototype/ui-runtime.js',
   "control.addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Enter'&&node.type==='TextInput')signal('submit');});",
   "control.addEventListener('keydown',e=>{if(node.type!=='TextInput')return;e.stopPropagation();if(e.key==='Enter')signal('submit');});");
+// 3) Esc를 플레이어가 가로채 엔진 기본 일시정지 창(계속·전체 화면·종료)을 띄움 → 게임이 Esc를 못 받음. 게임의 메뉴가 받게 넘긴다
+await patch('prototype/player.js',
+  "if(e.key==='Escape'&&kiosk.enabled&&!operatorMenu){e.preventDefault();return;}if(e.key==='Escape'){e.preventDefault();releaseKeys();if(menu.open)menu.close();else{menu.showModal();services?.pauseAudio(true)?.catch(fail);}return;}",
+  "if(e.key==='Escape'&&menu.open){e.preventDefault();menu.close();return;}");
+//    엔진 기본 일시정지 버튼(화면 구석)도 숨김. 운영자 메뉴(Ctrl+Alt+Shift+Q)는 그대로
+await patch('prototype/player.js',
+  "if(kiosk.enabled){$('#quit').hidden=true;$('#fullscreen').hidden=true;$('#pause-toggle').hidden=true;}",
+  "$('#pause-toggle').hidden=true;if(kiosk.enabled){$('#quit').hidden=true;$('#fullscreen').hidden=true;}");
 
 await fs.writeFile(packFile, JSON.stringify(pack, null, 2) + '\n');
 await fs.cp(build.output, dest, {recursive: true});

@@ -93,6 +93,7 @@ SFX = {
     "Craft": (seq(*[tone(0.07, triangle, f, vol=0.5) for f in (523, 659, 784)], tone(0.18, triangle, 1047, vol=0.5, decay=0.1)), 0.6),
     "Gather": (seq(tone(0.06, triangle, 440, vol=0.5, decay=0.04), tone(0.1, triangle, 660, vol=0.5, decay=0.06)), 0.6),
     "Select": (tone(0.04, square, 880, vol=0.25, duty=0.25), 0.4),
+    "Type": (tone(0.025, square, 620, vol=0.18, duty=0.125, decay=0.012), 0.25),  # 대화 글자마다 (C++가 음높이를 조금씩 바꿈)
     "BossCharge": (tone(0.6, square, 70, 160, vol=0.4, duty=0.5, attack=0.1, vibrato=0.05), 0.7),
 }
 

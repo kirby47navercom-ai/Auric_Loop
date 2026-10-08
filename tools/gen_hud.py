@@ -55,10 +55,10 @@ def text(name, value, corner, x, y, w_, h, size=18, align="left", z=20):
     return node(name, "Text", corner, x, y, w_, h, z, text=value, fontSize=size, color=INK, align=align)
 
 
-def touch(name, key, corner, x, y, size):
-    """모바일용 투명 버튼. 그림은 같은 자리의 Image가 보여 준다."""
+def touch(name, key, corner, x, y, size, devices="touch"):
+    """투명 버튼. 그림은 같은 자리의 Image가 보여 준다. devices="all"이면 PC 마우스로도 누름"""
     return node(name, "TouchButton", corner, x, y, size, size, 30, inputKey=key, inputMode="keys",
-                deviceVisibility="touch", background="#00000000", pressed="#ffffff22", hover="#00000000")
+                deviceVisibility=devices, background="#00000000", pressed="#ffffff22", hover="#ffffff14" if devices == "all" else "#00000000")
 
 
 # 왼쪽 위: HP, 적재량, 피로도
@@ -180,11 +180,11 @@ def dialog(name, kind, px, py, w_, h_, z, **props):
     return n
 
 
-dialog("DialogBox", "Panel", 0, 0, DW, DH, 50, **FRAME)
+dialog("DialogBox", "Panel", 0, 0, DW, DH, 50, **{**FRAME, "background": "#0d1419ff"})
 dialog("DialogPortraitFrame", "Image", 20, 19, 132, 132, 51, texture=KIT + "dialog_portrait_frame.png")
 iw, ih = Image.open(PROJECT / KIT / "portrait_collector.png").size  # 말하는 사람 초상화 하나: C++가 그림·크기·위치를 바꿈
 dialog("DialogPortrait", "Image", 26 + (120 - iw) // 2, 25 + (120 - ih) // 2, iw, ih, 52, texture=KIT + "portrait_collector.png")
-dialog("DialogNameTag", "Panel", 160, -18, 200, 36, 53, background="#2a2112f2", borderColor="#c9a24a", borderWidth=2, radius=6)
+dialog("DialogNameTag", "Panel", 160, -18, 200, 36, 53, background="#2a2112ff", borderColor="#c9a24a", borderWidth=2, radius=6)  # 불투명 (뒤 대화창 테두리가 비치지 않게)
 dialog("DialogName", "Text", 160, -14, 200, 30, 54, text="수금원", fontSize=20, color=GOLD, align="center")
 dialog("DialogText", "Text", 176, 34, 780, 110, 52, text="", fontSize=18, color=INK, wrap=True, align="left")
 dialog("DialogNext", "Text", DW - 56, DH - 46, 40, 30, 52, text="▼", fontSize=18, color=GOLD)
@@ -201,8 +201,34 @@ def full(name, kind, z, **props):
 
 full("TitleBack", "Panel", 90, background="#05090aff")
 full("TitleScreen", "Image", 91, texture=KIT + "title_v2.png")
-hint = node("TitleHint", "Text", "b", 0, 0, 600, 30, 92, text="클릭하거나 아무 키나 눌러 시작", fontSize=16, color=SAND, align="center")
-hint["slot"].update(anchors=[0.5, 1, 0.5, 1], alignment=[0.5, 1], offset=[0, -40, 600, 30])
+# 타이틀 그림 위에 살아 있는 층: 횃불 빛(깜빡임), 별 반짝임, 떠오르는 금가루. 위치는 title_v2.png(1273x718)를 1280x720에 깐 좌표
+TITLE_FX = [("TitleTorchL", "fx_torch_glow.png", 42, 205, 92), ("TitleTorchR", "fx_torch_glow.png", 1222, 205, 92)] + [
+    (f"TitleStar{k}", "fx_star.png", x, y, 93) for k, (x, y) in enumerate([(572, 102), (388, 192), (757, 208), (903, 255), (712, 492), (452, 560), (858, 120)])] + [
+    (f"TitleDust{k}", "fx_dust.png", 0, 0, 93) for k in range(8)]
+for name, file, x, y, z in TITLE_FX:
+    iw, ih = Image.open(PROJECT / KIT / file).size
+    n = node(name, "Image", "tl", x, y, iw, ih, z, texture=KIT + file)
+    n["slot"]["alignment"] = [0.5, 0.5]
+# 조작 안내 (타이틀 아래): 키 모양 상자 + 짧은 이름. 방향키가 아니라 WASD
+KEYS = [(["W", "A", "S", "D"], "이동"), (["좌클릭"], "공격"), (["Space"], "구르기"), (["E"], "상호작용"), (["Tab"], "가방"), (["Q"], "제작"), (["Esc"], "메뉴")]
+def keycap(name, label, x, y, w_):
+    node(name, "Text", "b", x, y, w_, 28, 94, text=label, fontSize=14, color=INK, align="center",
+         background="#1a2228ff", borderColor="#c9a24a", borderWidth=2, radius=5, padding=3)
+
+
+widths = [sum(26 if len(k) == 1 else 14 + 9 * len(k) for k in keys) + 4 * (len(keys) - 1) + 8 + 16 * len(label) for keys, label in KEYS]
+x = -(sum(widths) + 28 * (len(KEYS) - 1)) / 2
+for g, ((keys, label), gw) in enumerate(zip(KEYS, widths)):
+    cx = x
+    for k, key in enumerate(keys):
+        kw = 26 if len(key) == 1 else 14 + 9 * len(key)
+        keycap(f"TitleKey{g}_{k}", key, cx + kw / 2, 26, kw)
+        cx += kw + 4
+    node(f"TitleKeyName{g}", "Text", "b", cx + 4 + 8 * len(label), 30, 16 * len(label) + 4, 22, 94, text=label, fontSize=14, color=SAND, align="left")
+    x += gw + 28
+for n in nodes:  # "b" 기준 x는 가운데에서의 거리
+    if n["id"].startswith("TitleKey"):
+        n["slot"]["alignment"] = [0.5, 1]
 full("LoadingBack", "Panel", 95, background="#0d1716ff")
 node("LoadingCoin", "Image", "c", 0, -40, 144, 144, 96, texture=KIT + "loading_coin.gif")
 node("LoadingText", "Text", "c", 0, 70, 300, 30, 96, text="불러오는 중...", fontSize=20, color=INK, align="center")
@@ -211,8 +237,8 @@ node("LoadingText", "Text", "c", 0, 70, 300, 30, 96, text="불러오는 중...",
 CARDS = [("valen", "발렌", "검 · 부채꼴 베기, 적 탄환을 지움", 9800),
          ("sherry", "셰리", "활 · 1초 장전, 한 발이 강함", 14500),
          ("alea", "알레아", "마탄 · 연사, 닿으면 작은 폭발", 31700)]
-full("SelectBack", "Panel", 80, background="#0b1314f2", visible=False)
-node("SelectTitle", "Text", "c", 0, -300, 600, 40, 81, text="누구의 빚을 갚을까?", fontSize=28, color=GOLD, align="center", visible=False)
+full("SelectBack", "Panel", 80, background="#0b1314ff", visible=False)  # 불투명 (뒤 HUD가 비치지 않게)
+node("SelectTitle", "Text", "c", 0, -300, 600, 40, 81, text="캐릭터 선택", fontSize=28, color=GOLD, align="center", visible=False)
 for i, (who, name, weapon, debt) in enumerate(CARDS):
     cx = (i - 1) * 340
     node(f"SelectPick{i}", "Panel", "c", cx, 10, 316, 436, 81, background="#ffd56a40", borderColor=GOLD, borderWidth=4, radius=12, visible=False)
@@ -276,21 +302,28 @@ node("BagWeight", "ProgressBar", "c", 150, 70, 294, 12, 47, value=0, max=1, fill
      background="#00000000", accent="#e0b040ff", visible=False)
 node("BagUseText", "Text", "c", 150, 108, 300, 22, 46, text="", fontSize=15, color=GOLD, align="left", visible=False)
 node("BagHint", "Text", "c", 0, 150, 600, 22, 46, text="Tab: 닫기", fontSize=13, color=SAND, align="center", visible=False)
-touch("BagTouch", "tab", "tr", 24 + 72 + 12, 24, 72)
+touch("BagTouch", "tab", "tr", 24 + 72 + 12, 24, 72, devices="all")
 n = node("BagUseTouch", "TouchButton", "c", -50, 62, 84, 84, 49, inputKey="enter", inputMode="keys", deviceVisibility="touch",
          background="#00000000", pressed="#ffffff22", hover="#00000000", visible=False)  # 가방이 열렸을 때만 ([귀환] 줄 터치)
 
 # ---- 일시정지 (Esc·P, 모바일 일시정지 버튼) ----
-touch("PauseTouch", "escape", "tr", 24, 24, 72)
-full("PauseBack", "Panel", 85, background="#05090ac8", visible=False)
-node("PausePanel", "Panel", "c", 0, -5, 460, 220, 85, visible=False, **FRAME)
-node("PauseTitle", "Text", "c", 0, -60, 600, 50, 86, text="일시정지", fontSize=36, color=GOLD, align="center", visible=False)
-node("PauseResume", "Text", "c", 0, 10, 600, 30, 86, text="Esc · P : 계속하기", fontSize=20, color=INK, align="center", visible=False)
-node("PauseQuit", "Text", "c", 0, 50, 600, 30, 86, text="F12 : 처음으로", fontSize=17, color=SAND, align="center", visible=False)
-node("PauseResumeTouch", "TouchButton", "c", 0, 10, 300, 40, 87, inputKey="escape", inputMode="keys", deviceVisibility="touch",
-     background="#ffffff11", pressed="#ffffff33", hover="#00000000", visible=False)
-node("PauseQuitTouch", "TouchButton", "c", 0, 50, 300, 34, 87, inputKey="F12", inputMode="keys", deviceVisibility="touch",
-     background="#ffffff11", pressed="#ffffff33", hover="#00000000", visible=False)
+touch("PauseTouch", "escape", "tr", 24, 24, 72, devices="all")
+full("MenuBack", "Panel", 85, background="#05090ad8", visible=False)
+node("MenuPanel", "Panel", "c", 0, 0, 420, 300, 85, visible=False, **{**FRAME, "background": "#0d1419ff"})
+node("MenuTitle", "Text", "c", 0, -112, 380, 40, 86, text="메뉴", fontSize=28, color=GOLD, align="center", visible=False)
+MENU = [("MenuResume", "계속하기", "escape"), ("MenuVolume", "효과음", ""), ("MenuQuit", "메인 화면으로", "F12")]
+for i, (name, label, key) in enumerate(MENU):
+    y = -42 + i * 66
+    node(name + "Back", "Panel", "c", 0, y, 340, 52, 86, background="#1a2228ff", borderColor="#c9a24a66", borderWidth=2, radius=8, visible=False)
+    node(name, "Text", "c", 0, y - 1, 320, 30, 87, text=label, fontSize=20, color=INK, align="center", visible=False)
+    if key:
+        node(name + "Touch", "TouchButton", "c", 0, y, 340, 52, 88, inputKey=key, inputMode="keys",
+             background="#00000000", pressed="#ffd56a33", hover="#ffd56a18", visible=False)
+for side, key, dx in (("Down", "[", -140), ("Up", "]", 140)):  # 효과음 크기 ◀ ▶
+    node(f"MenuVol{side}", "TouchButton", "c", dx, 24, 52, 52, 88, inputKey=key, inputMode="keys", text="◀" if side == "Down" else "▶",
+         fontSize=18, color=GOLD, background="#00000000", pressed="#ffd56a33", hover="#ffd56a18", visible=False)
+node("MenuSelect", "Panel", "c", 0, -42, 348, 60, 86, background="#00000000", borderColor=GOLD, borderWidth=3, radius=10, visible=False)  # 고른 줄 테두리
+node("MenuHelp", "Text", "c", 0, 122, 400, 22, 86, text="W·S 고르기  ·  A·D 크기  ·  Enter 결정", fontSize=13, color=SAND, align="center", visible=False)
 
 # ---- 쓰러짐 (기획서 2장 게임 오버): 화면을 붉게 덮고 문구 ----
 full("KoBack", "Panel", 70, background="#2a0508dd", visible=False)
@@ -307,6 +340,11 @@ node("SettleDebt", "Text", "c", 0, 120, 600, 40, 74, text="", fontSize=26, color
 node("SettleNote", "Text", "c", 0, 165, 600, 24, 74, text="", fontSize=14, color="#cdb98a", align="center", visible=False)
 node("SettleHint", "Text", "c", 0, 205, 600, 24, 74, text="E · 클릭 · Enter: 확인", fontSize=15, color=SKY, align="center", visible=False)
 
-w["nodes"] = nodes
+FRONT = ("Title", "Loading", "Select", "Ending", "Menu")  # C++ TopDownShooter::UiInstance와 같은 접두어
+front = [n for n in nodes[1:] if n["name"].startswith(FRONT)]
+w["nodes"] = [n for n in nodes if not n["name"].startswith(FRONT)]
 WIDGET.write_text(json.dumps(w, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-print("제작 창·대화창·타이틀·캐릭터 선택 추가:", len(nodes), "nodes")
+f = copy.deepcopy(w)
+f.update(name="W_Front", nodes=[copy.deepcopy(root)] + front)
+(PROJECT / "Assets/UI/W_Front.hbwidget.json").write_text(json.dumps(f, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+print("HUD", len(w["nodes"]), "nodes / front", len(f["nodes"]), "nodes")

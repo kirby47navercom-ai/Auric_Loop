@@ -271,13 +271,31 @@ void TopDownShooter::Tip(int id){
 
 void TopDownShooter::SetPaused(bool paused){
   // 일시정지: 플레이어·적·탄을 세우고 메뉴. 풀면 탄 속도를 되돌림 (적은 Tick이 다시 보냄)
-  Paused=paused;
-  for(auto* n:{"PauseBack","PausePanel","PauseTitle","PauseResume","PauseQuit","PauseResumeTouch","PauseQuitTouch"})UiVisible(n,paused);
+  Paused=paused;menuPick=0;menuHeld=~0;  // 연 키가 바로 고르지 않게
+  for(auto* n:{"MenuBack","MenuPanel","MenuTitle","MenuSelect","MenuHelp","MenuResume","MenuResumeBack","MenuResumeTouch","MenuVolume","MenuVolumeBack",
+               "MenuVolDown","MenuVolUp","MenuQuit","MenuQuitBack","MenuQuitTouch"})UiVisible(n,paused);
+  if(paused)UpdateMenu();
   hb::Movement2D::SetSpeed(player,paused?0.f:rules->MoveSpeed);sentSpeed=-1;  // 이동은 엔진 이동 컴포넌트가 입력으로 직접 하므로 속도를 0으로
   if(paused){hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
     for(auto* e:Enemies())hb::Physics::SetVelocity(e,hb::Vec3{0,0,0});
     for(auto* m:{&shots})for(auto& [b,life]:*m){frozenVelocity[b]=hb::Physics::GetVelocity(b);hb::Physics::SetVelocity(b,hb::Vec3{0,0,0});}}
   else{for(auto& [b,v]:frozenVelocity)if(shots.count(b))hb::Physics::SetVelocity(b,v);frozenVelocity.clear();}
+}
+
+void TopDownShooter::UpdateMenu(){
+  // Esc 메뉴: W·S로 고르고 Enter·E·Space로 결정, A·D 또는 ◀▶로 효과음 크기. 마우스는 줄을 바로 누름 (계속하기=Esc, 메인 화면으로=F12)
+  static const char* keys[]={"w","s","a","d","enter","e","space","[","]"};
+  int down=0;for(int i=0;i<9;++i)if(hb::Input::IsKeyDown(keys[i]))down|=1<<i;
+  const int pressed=down&~menuHeld;menuHeld=down;
+  if(pressed&1)menuPick=(menuPick+2)%3;
+  if(pressed&2)menuPick=(menuPick+1)%3;
+  const int vol=(pressed&256||(menuPick==1&&pressed&8))?1:(pressed&128||(menuPick==1&&pressed&4))?-1:0;
+  if(vol){SfxLevel=std::clamp(SfxLevel+vol,0,10);Sfx("Select");}
+  if(pressed&(1|2))Sfx("Select");
+  if(pressed&(16|32|64)){if(menuPick==0){SetPaused(false);return;}if(menuPick==2){ResetToTitle();return;}}
+  UiPosition("MenuSelect",hb::Vec2{0,-42.f+menuPick*66});
+  UiText("MenuVolume","효과음  "+std::string(SfxLevel,'|')+std::string(10-SfxLevel,'.'));
+  for(int i=0;i<3;++i)UiColor(i==0?"MenuResume":i==1?"MenuVolume":"MenuQuit",i==menuPick?hb::Color{1,0.835f,0.416f,1}:hb::Color{0.965f,0.925f,0.847f,1});
 }
 
 void TopDownShooter::Bag(bool toggle,bool use){

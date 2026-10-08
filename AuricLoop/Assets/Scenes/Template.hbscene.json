@@ -158,6 +158,17 @@
             "instance": "HUD",
             "showOnStart": true
           }
+        },
+        {
+          "id": "ui-front",
+          "name": "UIWidget Front",
+          "type": "UIWidget",
+          "properties": {
+            "enabled": true,
+            "asset": "Assets/UI/W_Front.hbwidget.json",
+            "instance": "Front",
+            "showOnStart": true
+          }
         }
       ]
     },

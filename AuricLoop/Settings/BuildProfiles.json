@@ -16,6 +16,14 @@
         {
           "path": "Assets/Scenes/Dungeon.hbscene.json",
           "enabled": true
+        },
+        {
+          "path": "Assets/Scenes/Home_1.hbscene.json",
+          "enabled": true
+        },
+        {
+          "path": "Assets/Scenes/Home_2.hbscene.json",
+          "enabled": true
         }
       ]
     },
@@ -42,6 +50,14 @@
         {
           "path": "Assets/Scenes/Dungeon.hbscene.json",
           "enabled": true
+        },
+        {
+          "path": "Assets/Scenes/Home_1.hbscene.json",
+          "enabled": true
+        },
+        {
+          "path": "Assets/Scenes/Home_2.hbscene.json",
+          "enabled": true
         }
       ]
     },
@@ -67,6 +83,14 @@
         },
         {
           "path": "Assets/Scenes/Dungeon.hbscene.json",
+          "enabled": true
+        },
+        {
+          "path": "Assets/Scenes/Home_1.hbscene.json",
+          "enabled": true
+        },
+        {
+          "path": "Assets/Scenes/Home_2.hbscene.json",
           "enabled": true
         }
       ]
