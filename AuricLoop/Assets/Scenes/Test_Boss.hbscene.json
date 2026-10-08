@@ -28557,7 +28557,8 @@
           "sprite": {
             "texture": "Assets/Sprites/Prop_Ore.png",
             "width": 1.4375,
-            "height": 1.875
+            "height": 1.875,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
@@ -28632,7 +28633,8 @@
           "sprite": {
             "texture": "Assets/Sprites/Prop_Herb.png",
             "width": 1.59375,
-            "height": 2.09375
+            "height": 2.09375,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
@@ -28706,18 +28708,19 @@
         "components": {
           "sprite": {
             "texture": "Assets/Sprites/NPC_Blacksmith.png",
-            "width": 2.0625,
-            "height": 3.03125
+            "width": 1.6594852684290207,
+            "height": 2.8240363339932455,
+            "pixelsPerUnit": 34.348
           },
           "collider": {
             "extent": [
-              0.8250000000000001,
-              0.6062500000000001,
+              0.6637941073716083,
+              0.5648072667986491,
               0.5
             ],
             "center": [
               0,
-              -0.9093749999999999,
+              -0.8472109001979736,
               0
             ],
             "enabled": true
@@ -28782,7 +28785,8 @@
           "sprite": {
             "texture": "Assets/Sprites/Prop_Stall.png",
             "width": 4.125,
-            "height": 4.96875
+            "height": 4.96875,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
@@ -28809,7 +28813,7 @@
       "position": [
         0,
         0,
-        0.2
+        -11.8
       ],
       "rotation": [
         0,

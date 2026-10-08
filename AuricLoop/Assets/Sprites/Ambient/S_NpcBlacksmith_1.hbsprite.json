@@ -2,11 +2,11 @@
   "version": 1,
   "name": "S_NpcBlacksmith_1",
   "texture": "Assets/Sprites/Ambient/NpcBlacksmith_1.png",
-  "pixelsPerUnit": 32,
+  "pixelsPerUnit": 34.348,
   "rect": [
     0,
     0,
-    66,
+    57,
     97
   ],
   "pivot": [

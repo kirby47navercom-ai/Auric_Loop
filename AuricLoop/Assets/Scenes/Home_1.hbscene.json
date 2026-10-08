@@ -9,7 +9,7 @@
       "group": "WORLD",
       "position": [
         0,
-        -1.8,
+        -0.6000000000000001,
         0.1
       ],
       "rotation": [
@@ -204,7 +204,7 @@
       "group": "WORLD",
       "position": [
         0,
-        -1.8,
+        -0.6000000000000001,
         12
       ],
       "rotation": [
@@ -630,7 +630,7 @@
       "group": "WORLD",
       "position": [
         0,
-        -1.8,
+        -0.6000000000000001,
         0.1
       ],
       "rotation": [
@@ -874,7 +874,11 @@
         "nativeProperties": {
           "Index": -2,
           "Kind": "Home",
-          "ExitY": -3.3
+          "ExitY": -3.3,
+          "CamMinX": -5,
+          "CamMinY": -4,
+          "CamMaxX": 5,
+          "CamMaxY": 6
         }
       },
       "parent": "Group_0"
@@ -1032,12 +1036,12 @@
       "parent": "Group_2"
     },
     {
-      "id": "WindowLight-2.0",
-      "name": "WindowLight-2.0",
+      "id": "WindowBeam-2.0",
+      "name": "WindowBeam-2.0",
       "kind": "sprite",
       "position": [
-        -2.0,
-        1.8,
+        -1.7,
+        1.7,
         0.05
       ],
       "rotation": [
@@ -1080,41 +1084,29 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_FX_Glow_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Ambient/WindowBeam.png",
             "color": [
               1,
-              0.92,
-              0.7,
-              0.55
+              1,
+              1,
+              1
             ],
-            "width": 3.2,
-            "height": 3.2,
+            "width": 1.5,
+            "height": 3,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -11,
+            "sortingOrder": 5,
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit",
             "sortPoint": "feet",
             "blendMode": "additive"
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Glow.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 0.25
           }
         }
       ],
@@ -1126,8 +1118,8 @@
       "kind": "empty",
       "group": "WORLD",
       "position": [
-        -2.0,
-        2.0,
+        -1.7,
+        1.6,
         0.2
       ],
       "rotation": [
@@ -1193,9 +1185,9 @@
             ],
             "gravity": 0,
             "simulationSpace": "world",
-            "maxParticles": 14,
+            "maxParticles": 16,
             "seed": 41959,
-            "rate": 1.6,
+            "rate": 2.2,
             "rateOverDistance": 0,
             "burstCount": 0,
             "burstTime": 0,
@@ -1206,8 +1198,8 @@
             "radius": 0.2,
             "angle": 20,
             "extent": [
-              0.9,
-              1.2,
+              0.6,
+              1.3,
               0
             ],
             "force": [
@@ -1807,7 +1799,8 @@
           "sprite": {
             "texture": "Assets/Sprites/Furniture_Sofa.png",
             "width": 2.5,
-            "height": 2.5625
+            "height": 2.5625,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
@@ -1882,7 +1875,8 @@
           "sprite": {
             "texture": "Assets/Sprites/Furniture_Bed.png",
             "width": 2.5,
-            "height": 2.5625
+            "height": 2.5625,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
@@ -1957,7 +1951,8 @@
           "sprite": {
             "texture": "Assets/Sprites/Furniture_Fridge.png",
             "width": 2.5,
-            "height": 2.5625
+            "height": 2.5625,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
@@ -2032,7 +2027,8 @@
           "sprite": {
             "texture": "Assets/Sprites/Furniture_TV.png",
             "width": 2.5,
-            "height": 2.5625
+            "height": 2.5625,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [

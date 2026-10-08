@@ -33,9 +33,16 @@ def transform():
     return {"id": "component_0", "name": "Transform", "type": "Transform", "properties": {"position": [0, 0, 0], "rotation": [0, 0, 0], "scale": [1, 1, 1]}}
 
 
+NPC_PPU = json.loads((ASSETS / "Sprites/npc_ppu.json").read_text(encoding="utf-8"))  # tools/make_npc_sd.py: 해상도를 줄이지 않고 키를 맞춘 NPC
+
+
+def ppu_of(texture):
+    return NPC_PPU.get(texture.removeprefix("Assets/"), PPU)
+
+
 def size_of(texture):
     w, h = Image.open(ASSETS / texture.removeprefix("Assets/")).size
-    return w / PPU, h / PPU
+    return w / ppu_of(texture), h / ppu_of(texture)
 
 
 SHADOWED = set(json.loads((ASSETS / "Sprites/shadowed.json").read_text(encoding="utf-8")))  # tools/make_shadows.py: 위아래 8px 여백
@@ -43,7 +50,7 @@ SHADOWED = set(json.loads((ASSETS / "Sprites/shadowed.json").read_text(encoding=
 
 def pad_of(texture):
     """그림자 여백(m). 이 그림의 내용 맨 아래(밑동)는 그림 맨 아래보다 이만큼 위"""
-    return 8 / PPU if texture.removeprefix("Assets/") in SHADOWED else 0
+    return round(8 * ppu_of(texture) / PPU) / ppu_of(texture) if texture.removeprefix("Assets/") in SHADOWED else 0
 
 
 def animate(o, clip, speed=1.0, sprite=None):
@@ -97,7 +104,7 @@ def sprite_obj(oid, texture, x, y, order=-1, collider=None, pooled=None, width=N
     keep = {"Transform", "SpriteRenderer"} | ({"BoxCollider2D"} if collider else set()) | ({"PooledActor"} if pooled is not None else set())
     o["components"] = [c for c in o["components"] if c["type"] in keep]
     w, h = size_of(texture)
-    comp(o, "SpriteRenderer")["properties"].update(texture=texture, sprite="", width=width or w, height=height or h, pixelsPerUnit=PPU,
+    comp(o, "SpriteRenderer")["properties"].update(texture=texture, sprite="", width=width or w, height=height or h, pixelsPerUnit=ppu_of(texture),
                                                    sortingOrder=order, color=[1, 1, 1, 1], useCustomSize=width is not None, sortPoint="feet")
     if collider:
         comp(o, "BoxCollider2D")["properties"].update(trigger=False, layer=0, mask=4294967295, extent=[collider[0], collider[1], 0.5], center=[0, collider[2], 0])
@@ -125,7 +132,7 @@ def interactable(oid, texture, x, y, kind, text="", price=0, solid=True):
     w, h = size_of(texture)
     col = {"extent": [w * 0.4, h * 0.2, 0.5], "center": [0, -h * 0.3, 0], "enabled": solid}
     return bp_obj(oid, "BP_Interactable", x, y, {"Kind": kind, "Text": text, "Price": price},
-                  {"sprite": {"texture": texture, "width": w, "height": h}, "collider": col})
+                  {"sprite": {"texture": texture, "width": w, "height": h, "pixelsPerUnit": ppu_of(texture)}, "collider": col})
 
 
 def start(oid, x, y):
@@ -363,6 +370,7 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
     # 살아 있는 던전: 떠다니는 먼지(카메라를 따라감), 가끔 방을 가로지르는 박쥐, 벽 밑을 달리는 쥐 (C++ Ambient)
     dust = particles("DungeonDust", 0, 0, **DUST)
     dust["parent"] = "Camera"
+    dust["position"][2] = -11.8  # 카메라(z 12) 앞쪽 바닥 높이에
     objects.append(dust)
     for k in range(2):
         objects += [critter(f"Bat{k}", "Ambient.Bat", "Bat_0", "SA_Bat", 0, -400), critter(f"Rat{k}", "Ambient.Rat", "Rat_0", "SA_Rat", 0, -400)]
@@ -602,6 +610,7 @@ for k, (x, y) in enumerate([(-30, 2), (8, 11), (40, -6)]):
     hub.append(o)
 pollen = particles("Pollen", 0, 0, **{**DUST, "rate": 3, "color": [1, 1, 0.85, 0.4]})  # 떠다니는 꽃가루 (카메라를 따라감)
 pollen["parent"] = "Camera"
+pollen["position"][2] = -11.8  # 카메라(z 12) 앞쪽 바닥 높이에 (자식 위치는 카메라 기준)
 hub.append(pollen)
 # 마을 바깥 경계 (나무 줄 안쪽)
 hub += [block("EdgeW", -42, -20, WEST, 34), block("EdgeE", EAST, -20, 64, 34), block("EdgeS", -42, -20, 64, SOUTH),
@@ -612,17 +621,17 @@ counts["Hub"] = write("Hub", hub)
 # ---- 원룸 (기획서 3-1): 레벨마다 장면 하나. Lv1 좁고 낡은 방, Lv2(세공사 공사) 넓어지고 책상·러그·화분 추가
 def home_scene(level):
     W, D = (4, 3) if level == 1 else (6, 4)  # 반너비, 반깊이 (m)
-    objects = base_objects(at=(0, -D + 1.2))
+    objects = base_objects(at=(0, -D + 2.4))  # 문과 겹치지 않게 한 걸음 안쪽
     objects += [ground("Floor", "Assets/Tiles/T_HomeWood.png", -W, -D, W, D, -13), background("Background", 0, 0, 40, 30)]
-    objects.append(bp_obj("Room", "BP_RoomInfo", 0, 0, {"Index": -2, "Kind": "Home", "ExitY": -D - 0.3}))
+    objects.append(bp_obj("Room", "BP_RoomInfo", 0, 0, {"Index": -2, "Kind": "Home", "ExitY": -D - 0.3,  # 방이 화면보다 작아 카메라는 방 가운데 고정
+                                                        "CamMinX": -W - 1, "CamMinY": -D - 1, "CamMaxX": W + 1, "CamMaxY": D + 3}))
     ww, wh = size_of(TOWN + "HomeWall.png")
     for k, x in enumerate([-W + ww / 2 + i * ww for i in range(int(2 * W / ww + 0.99))]):
         objects.append(sprite_obj(f"Wall{k}", TOWN + "HomeWall.png", min(x, W - ww / 2), D + wh / 2, order=-9))
-    for wx in ([-W / 2] if level == 1 else [-W / 2, W / 2]):
-        light = glow(f"WindowLight{wx}", wx, D - 1.2, 3.2, order=-11)
-        comp(light, "SpriteRenderer")["properties"]["color"] = [1, 0.92, 0.7, 0.55]
-        objects += [animate(light, "SA_Glow", 0.25, "Assets/Sprites/FX/S_FX_Glow_0.hbsprite.json"),
-                    particles(f"WindowDust{wx}", wx, D - 1.0, **{**DUST, "rate": 1.6, "extent": [0.9, 1.2, 0], "maxParticles": 14})]
+    for wx in ([-W / 2] if level == 1 else [-W / 2, W / 2]):  # 창에서 바닥으로 드는 빛줄기, 그 안에 떠다니는 먼지
+        beam = sprite_obj(f"WindowBeam{wx}", AMB + "WindowBeam.png", wx + 0.3, D - 1.3, order=-11, width=1.5, height=3)
+        comp(beam, "SpriteRenderer")["properties"].update(blendMode="additive", sortingLayer="overlay", sortingOrder=5)
+        objects += [beam, particles(f"WindowDust{wx}", wx + 0.3, D - 1.4, **{**DUST, "rate": 2.2, "extent": [0.6, 1.3, 0], "maxParticles": 16})]
     objects += [sprite_obj("Window", TOWN + "HomeWindow.png", -W / 2, D + 1.6, order=-8),
                 sprite_obj("Door", TOWN + "HomeDoor.png", 0, -D - 0.2, order=0),
                 block("WallN", -W - 1, D, W + 1, D + 1), block("WallW", -W - 1, -D - 1, -W, D + 1), block("WallE", W, -D - 1, W + 1, D + 1),

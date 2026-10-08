@@ -2729,9 +2729,9 @@
               1,
               1
             ],
-            "width": 0.71875,
-            "height": 2.4375,
-            "pixelsPerUnit": 32,
+            "width": 0.9993849938499385,
+            "height": 2.5625256252562525,
+            "pixelsPerUnit": 39.024,
             "flipX": false,
             "flipY": false,
             "sortingOrder": 0,
@@ -2816,9 +2816,9 @@
               1,
               1
             ],
-            "width": 0.875,
-            "height": 2.3125,
-            "pixelsPerUnit": 32,
+            "width": 1.0133333333333334,
+            "height": 2.48,
+            "pixelsPerUnit": 37.5,
             "flipX": false,
             "flipY": false,
             "sortingOrder": 0,
@@ -6963,7 +6963,8 @@
           "sprite": {
             "texture": "Assets/UI/Map/map_link.png",
             "width": 0.1875,
-            "height": 0.1875
+            "height": 0.1875,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
@@ -7038,7 +7039,8 @@
           "sprite": {
             "texture": "Assets/Sprites/Prop_DebtBoard.png",
             "width": 2.03125,
-            "height": 4.5
+            "height": 4.5,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
@@ -11284,7 +11286,8 @@
           "sprite": {
             "texture": "Assets/UI/Map/map_link.png",
             "width": 0.1875,
-            "height": 0.1875
+            "height": 0.1875,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
@@ -12325,7 +12328,8 @@
           "sprite": {
             "texture": "Assets/Sprites/Ambient/Invisible.png",
             "width": 0.0625,
-            "height": 0.0625
+            "height": 0.0625,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
@@ -12335,7 +12339,7 @@
             ],
             "center": [
               0,
-              -0.66875,
+              -0.7250102501025009,
               0
             ],
             "enabled": true
@@ -12550,7 +12554,8 @@
           "sprite": {
             "texture": "Assets/Sprites/Ambient/Invisible.png",
             "width": 0.0625,
-            "height": 0.0625
+            "height": 0.0625,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
@@ -12560,7 +12565,7 @@
             ],
             "center": [
               0,
-              -0.60625,
+              -0.7,
               0
             ],
             "enabled": true
@@ -12775,7 +12780,8 @@
           "sprite": {
             "texture": "Assets/Sprites/Ambient/Invisible.png",
             "width": 0.0625,
-            "height": 0.0625
+            "height": 0.0625,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
@@ -13000,7 +13006,8 @@
           "sprite": {
             "texture": "Assets/Sprites/Ambient/Invisible.png",
             "width": 0.0625,
-            "height": 0.0625
+            "height": 0.0625,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
@@ -13225,7 +13232,8 @@
           "sprite": {
             "texture": "Assets/Sprites/Ambient/Invisible.png",
             "width": 0.0625,
-            "height": 0.0625
+            "height": 0.0625,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
@@ -13450,7 +13458,8 @@
           "sprite": {
             "texture": "Assets/Sprites/Ambient/Invisible.png",
             "width": 0.0625,
-            "height": 0.0625
+            "height": 0.0625,
+            "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
@@ -51728,7 +51737,7 @@
       "position": [
         0,
         0,
-        0.2
+        -11.8
       ],
       "rotation": [
         0,

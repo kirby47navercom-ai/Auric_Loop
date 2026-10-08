@@ -17,6 +17,8 @@ from PIL import Image, ImageDraw
 ASSETS = Path(__file__).resolve().parent.parent / "AuricLoop/Assets"
 MANIFEST = ASSETS / "Sprites/shadowed.json"
 PAD = 8
+PPU_FILE = ASSETS / "Sprites/npc_ppu.json"  # tools/make_npc_sd.py: 1m당 픽셀이 32가 아닌 그림
+PPU = json.loads(PPU_FILE.read_text(encoding="utf-8")) if PPU_FILE.exists() else {}
 SHADOW = (6, 8, 12, 120)
 
 # 그림자를 넣을 그림: (파일 glob, 그림자 너비 비율: 밑동 너비 기준, 음수면 그림 전체 너비 기준 - 나무는 잎 그늘). 바닥에 붙은 그림·벽에 걸린 그림은 뺌
@@ -30,7 +32,7 @@ TARGETS = [
     ("Sprites/Props/Prop_Pillar.png", 1.0), ("Sprites/Props/Prop_Crates*.png", 1.0), ("Sprites/Props/Prop_Barrel*.png", 1.0),
     ("Sprites/Props/Prop_LowWall.png", 1.0), ("Sprites/Props/Prop_Statue.png", 1.0), ("Sprites/Props/Prop_GoldChest.png", 1.0),
     ("Sprites/Props/Prop_Plant.png", 0.8), ("Sprites/Props/Prop_Stump.png", 0.9),
-    ("Sprites/NPC_*.png", 0.75), ("Sprites/Furniture_*.png", 0.95), ("Sprites/Prop_DebtBoard.png", 0.7),
+    ("Sprites/NPC_Collector.png", 0.75), ("Sprites/NPC_Interior.png", 0.75), ("Sprites/NPC_Blacksmith.png", 0.75), ("Sprites/Furniture_*.png", 0.95), ("Sprites/Prop_DebtBoard.png", 0.7),
     ("Sprites/Prop_Ore.png", 0.85), ("Sprites/Prop_Herb.png", 0.7), ("Sprites/Prop_Stall.png", 0.95),
     ("Sprites/Enemies/*/*.png", 0.62),
 ]
@@ -40,10 +42,10 @@ def digest(im):
     return hashlib.sha256(im.tobytes() + str(im.size).encode()).hexdigest()[:16]
 
 
-def shadowed(im, ratio):
+def shadowed(im, ratio, pad=PAD):
     w, h = im.size
     box = im.getbbox() or (0, 0, w, h)
-    out = Image.new("RGBA", (w, h + 2 * PAD))
+    out = Image.new("RGBA", (w, h + 2 * pad))
     # 밑동 쪽 실제 너비 (아래 1/4에서 불투명 픽셀이 있는 가로 범위)로 그림자 폭을 정함
     alpha = im.getchannel("A")
     rows = range(max(box[1], box[3] - max(4, (box[3] - box[1]) // 4)), box[3])
@@ -53,11 +55,11 @@ def shadowed(im, ratio):
     if ratio < 0:
         lo, hi, ratio = box[0], box[2] - 1, -ratio
     sw = max(6, (hi - lo + 1) * ratio + 4)
-    sh = max(4, min(PAD + 10, sw * 0.3))
-    base = box[3] + PAD  # 내용 맨 아래 줄 (새 그림 좌표)
+    sh = max(4, min(pad + 10, sw * 0.3))
+    base = box[3] + pad  # 내용 맨 아래 줄 (새 그림 좌표)
     d = ImageDraw.Draw(out)
     d.ellipse([cx - sw / 2, base - sh * 0.55, cx + sw / 2, base + sh * 0.45], fill=SHADOW)
-    out.alpha_composite(im, (0, PAD))
+    out.alpha_composite(im, (0, pad))
     return out
 
 
@@ -70,7 +72,7 @@ def main():
             im = Image.open(path).convert("RGBA")
             if done.get(rel) == digest(im):
                 continue  # 이미 처리함
-            out = shadowed(im, ratio)
+            out = shadowed(im, ratio, round(PAD * PPU.get(rel, 32) / 32))
             out.save(path)
             done[rel] = digest(Image.open(path).convert("RGBA"))
             count += 1

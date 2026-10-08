@@ -23,10 +23,13 @@ rng = random.Random(11)
 INK = (20, 16, 18, 255)
 
 
-def sprite_asset(png, pivot=(0.5, 0.5)):
+NPC_PPU = json.loads((ASSETS / "Sprites/npc_ppu.json").read_text(encoding="utf-8"))
+
+
+def sprite_asset(png, pivot=(0.5, 0.5), ppu=32):
     im = Image.open(png)
     rel = png.relative_to(ASSETS.parent).as_posix()
-    data = {"version": 1, "name": "S_" + png.stem, "texture": rel, "pixelsPerUnit": 32, "rect": [0, 0, im.width, im.height],
+    data = {"version": 1, "name": "S_" + png.stem, "texture": rel, "pixelsPerUnit": ppu, "rect": [0, 0, im.width, im.height],
             "pivot": list(pivot), "filter": "nearest", "border": [0, 0, 0, 0]}
     path = png.parent / f"S_{png.stem}.hbsprite.json"
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -40,12 +43,12 @@ def clip(name, sprites, durations, loop=True):
     (ANIM / f"{name}.hbspriteanimation.json").write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def frames(name, images, durations, folder=OUT, loop=True):
+def frames(name, images, durations, folder=OUT, loop=True, ppu=32):
     paths = []
     for i, im in enumerate(images):
         png = folder / f"{name}_{i}.png"
         im.save(png)
-        paths.append(sprite_asset(png))
+        paths.append(sprite_asset(png, ppu=ppu))
     clip("SA_" + name, paths, durations, loop)
     return paths
 
@@ -104,7 +107,7 @@ def breathe(im):
 
 for npc in ("Collector", "Interior", "Blacksmith"):
     im = Image.open(ASSETS / f"Sprites/NPC_{npc}.png").convert("RGBA")
-    frames(f"Npc{npc}", [im, breathe(im)], [1.1, 0.9])
+    frames(f"Npc{npc}", [im, breathe(im)], [1.1, 0.9], ppu=NPC_PPU.get(f"Sprites/NPC_{npc}.png", 32))
 
 
 # ---- 빛 번짐 깜빡임 (가산 혼합) ---------------------------------------------------------
@@ -242,6 +245,19 @@ done = json.loads(manifest.read_text(encoding="utf-8"))
 saved = Image.open(ASSETS / "Sprites/Prop_DebtBoard.png").convert("RGBA")
 done["Sprites/Prop_DebtBoard.png"] = hashlib.sha256(saved.tobytes() + str(saved.size).encode()).hexdigest()[:16]
 manifest.write_text(json.dumps(done, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+
+# 창으로 드는 빛줄기 (원룸): 창 폭에서 시작해 바닥으로 갈수록 넓고 옅어짐. 가산 혼합으로 바닥을 밝힘
+beam = Image.new("RGBA", (48, 96))
+for y in range(96):
+    k = y / 95
+    half = 12 + 12 * k
+    a = int(70 * (1 - k) ** 0.8 + 18)
+    band = int(a * (0.85 if (y // 6) % 2 else 1))  # 도트 느낌의 계단
+    for x in range(48):
+        if abs(x - 23.5) <= half:
+            edge = 1 - max(0.0, abs(x - 23.5) - (half - 4)) / 4
+            beam.putpixel((x, y), (255, 226, 160, int(band * edge)))
+beam.save(OUT / "WindowBeam.png")
 
 Image.new("RGBA", (2, 2)).save(OUT / "Invisible.png")
 print("살아 있는 맵 그림 완료:", len(list(OUT.glob("*.png"))), "장 (Ambient)")

@@ -2,12 +2,12 @@
   "version": 1,
   "name": "S_NpcInterior_0",
   "texture": "Assets/Sprites/Ambient/NpcInterior_0.png",
-  "pixelsPerUnit": 32,
+  "pixelsPerUnit": 37.5,
   "rect": [
     0,
     0,
-    28,
-    74
+    38,
+    93
   ],
   "pivot": [
     0.5,
