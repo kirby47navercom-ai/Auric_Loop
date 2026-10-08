@@ -112,10 +112,10 @@ void TopDownShooter::UpdateMinimap(){
 }
 
 void TopDownShooter::ShowSofa(){
-  // 원룸 소파 그림을 레벨에 맞게 (낡은 소파 → 가죽 → 황금 벨벳)
+  // 원룸 소파 그림을 레벨에 맞게 (0 빈 자리 → 낡은 소파 → 가죽 → 황금 벨벳). 빈 자리일 땐 걸어 지나갈 수 있게 충돌 끔
   if(rules->SofaSprites.empty())return;
   const auto& path=rules->SofaSprites[std::min<size_t>(SofaLevel,rules->SofaSprites.size()-1)];
-  for(auto* i:interactables)if(i->Kind=="Sofa")hb::Sprites::SetSprite(i,path);
+  for(auto* i:interactables)if(i->Kind=="Sofa"){hb::Sprites::SetSprite(i,path);hb::Components::SetBool(i,"BoxCollider2D","enabled",SofaLevel>0);}
 }
 
 void TopDownShooter::Warp(int room){

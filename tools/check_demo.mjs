@@ -259,3 +259,16 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
     console.log('새 시트 애니메이션 검사 통과');
   } finally { fs.rmSync(dir, {recursive: true, force: true}); }
 }
+
+// 원룸은 처음엔 텅 빈 방: 소파 자리(바닥 표시)만 있고 골드로 들여놓으면 낡은 소파가 생김. 침대·냉장고·TV 없음
+{
+  let first = '';
+  const r = await runProject(project, {scene: scene('Home_1'), frames: 120, delta: 1 / 60, nativeDefaults: {Director: {Phase: 2, Gold: 60}},
+    inputs: [{frame: 5, key: 'w', value: 1}, {frame: 40, key: 'w', value: 0}, {frame: 42, key: 'a', value: 1}, {frame: 62, key: 'a', value: 0}, ...press(80, 'e')],
+    onFrame: (f, vm) => { if (f === 10) first = vm.objects.find(o => o.id === 'Sofa').components.find(c => c.type === 'SpriteRenderer').properties.sprite; }});
+  const d = director(r), sofa = r.objects.find(o => o.id === 'Sofa').components.find(c => c.type === 'SpriteRenderer').properties.sprite;
+  assert.match(first, /S_Sofa_0/, '처음엔 소파 자리만');
+  assert.ok(d.SofaLevel === 1 && /S_Sofa_1/.test(sofa) && d.Gold === 10, `골드로 소파 들이기 (${sofa}, gold ${d.Gold})`);
+  assert.equal(r.objects.filter(o => /^(Bed|Fridge|TV)$/.test(o.id)).length, 0, '침대·냉장고·TV 없음');
+  console.log('빈 원룸 → 소파 들이기 검사 통과');
+}

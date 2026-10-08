@@ -1,13 +1,13 @@
 {
   "version": 1,
   "name": "S_Sofa_1",
-  "texture": "Assets/Sprites/Town/Sofa2.png",
+  "texture": "Assets/Sprites/Furniture_Sofa.png",
   "pixelsPerUnit": 32,
   "rect": [
     0,
     0,
-    76,
-    50
+    80,
+    82
   ],
   "pivot": [
     0.5,

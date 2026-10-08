@@ -636,10 +636,9 @@ def home_scene(level):
                 sprite_obj("Door", TOWN + "HomeDoor.png", 0, -D - 0.2, order=0),
                 block("WallN", -W - 1, D, W + 1, D + 1), block("WallW", -W - 1, -D - 1, -W, D + 1), block("WallE", W, -D - 1, W + 1, D + 1),
                 block("WallSL", -W, -D - 1, -1.2, -D), block("WallSR", 1.2, -D - 1, W, -D)]
-    objects += [interactable("Sofa", "Assets/Sprites/Furniture_Sofa.png", -W + 2, D - 1.2, "Sofa", "푹신한 소파. 더는 바꿀 수 없다", price=50),
-                interactable("Bed", "Assets/Sprites/Furniture_Bed.png", W - 1.8, D - 1.4, "Note", "삐걱거리는 침대. 오늘 밤도 빚 꿈을 꾸겠지"),
-                interactable("Fridge", "Assets/Sprites/Furniture_Fridge.png", W - 0.9, -D + 1.6, "Note", "텅 빈 냉장고. 물 한 병뿐이다"),
-                interactable("TV", "Assets/Sprites/Furniture_TV.png", -W + 1.2, -D + 1.4, "Note", "꺼진 TV. 화면에 비친 내 얼굴이 피곤해 보인다")]
+    # 처음 원룸은 텅 빈 방: 소파 놓을 자리(바닥 분필 표시)만 있고, 골드로 들여놓을 때마다 소파가 생기고 좋아짐 (C++ ShowSofa).
+    # 침대·냉장고·TV는 유료 재화 커스텀(기획서)이라 데모에는 없음. 세공사 공사(Lv2)로 방이 넓어지면 러그·책상·화분이 생김
+    objects += [interactable("Sofa", "Assets/Sprites/Furniture_Sofa.png", -W + 2, D - 1.2, "Sofa", "황금 벨벳 소파. 더는 바꿀 수 없다", price=50)]
     if level >= 2:
         objects += [sprite_obj("Window2", TOWN + "HomeWindow.png", W / 2, D + 1.6, order=-8),
                     sprite_obj("Rug", TOWN + "Rug.png", 0, 0.3, order=-11),

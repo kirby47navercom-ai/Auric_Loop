@@ -259,5 +259,24 @@ for y in range(96):
             beam.putpixel((x, y), (255, 226, 160, int(band * edge)))
 beam.save(OUT / "WindowBeam.png")
 
+# 원룸 소파 단계 (C++ ShowSofa): 0 빈 자리(바닥에 분필 테두리와 먼지 자국) → 1 낡은 소파 → 2 가죽 → 3 황금 벨벳
+#   처음 원룸은 텅 빈 방이고, 골드로 하나씩 들여놓는다
+spot = Image.new("RGBA", (80, 50))
+d = ImageDraw.Draw(spot)
+for x in range(6, 74, 4):
+    d.line([(x, 14), (x + 2, 14)], fill=(214, 200, 170, 150))
+    d.line([(x, 42), (x + 2, 42)], fill=(214, 200, 170, 150))
+for y in range(14, 43, 4):
+    d.line([(6, y), (6, y + 2)], fill=(214, 200, 170, 150))
+    d.line([(73, y), (73, y + 2)], fill=(214, 200, 170, 150))
+for _ in range(14):
+    spot.putpixel((rng.randint(10, 69), rng.randint(17, 39)), (170, 150, 120, 110))
+spot.save(OUT / "SofaSpot.png")
+for level, file in enumerate([OUT / "SofaSpot.png", ASSETS / "Sprites/Furniture_Sofa.png", TOWN / "Sofa2.png", TOWN / "Sofa3.png"]):
+    im = Image.open(file)
+    data = {"version": 1, "name": f"S_Sofa_{level}", "texture": file.relative_to(ASSETS.parent).as_posix(), "pixelsPerUnit": 32,
+            "rect": [0, 0, im.width, im.height], "pivot": [0.5, 0.5], "filter": "nearest", "border": [0, 0, 0, 0]}
+    (TOWN / f"S_Sofa_{level}.hbsprite.json").write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
 Image.new("RGBA", (2, 2)).save(OUT / "Invisible.png")
 print("살아 있는 맵 그림 완료:", len(list(OUT.glob("*.png"))), "장 (Ambient)")

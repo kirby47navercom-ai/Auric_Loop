@@ -31,7 +31,7 @@ void TopDownShooter::Interact(const hb::Vec3& position,bool pressed){
     if(pressed&&Gold>0){Debt=std::max(0,Debt-Gold);LastRepaid+=Gold;Gold=0;Sfx("Coin");next="수금원: 거래 감사합니다, 고객님";}}
   else if(kind=="Interior"){next=HomeLevel>=2?text:"E: 원룸 공사 Lv2 ("+std::to_string(price)+" G, 피로도 한계 +"+std::to_string(rules->HomeFatigueBonus)+")";
     if(pressed&&HomeLevel<2&&Gold>=price){Gold-=price;HomeLevel=2;Sfx("Coin");FatigueMax+=rules->HomeFatigueBonus;next="원룸이 넓어졌다!";}}
-  else if(kind=="Sofa"){next=SofaLevel>=rules->SofaMax?text:"E: 소파 바꾸기 ("+std::to_string(price)+" G, 최대 체력 +1)";
+  else if(kind=="Sofa"){next=SofaLevel>=rules->SofaMax?text:std::string(SofaLevel==0?"E: 소파 들이기 (":"E: 소파 바꾸기 (")+std::to_string(price)+" G, 최대 체력 +1)";
     if(pressed&&SofaLevel<rules->SofaMax&&Gold>=price){Gold-=price;SofaLevel++;Sfx("Coin");MaxHp++;Hp=MaxHp;ShowSofa();}}
   else if(kind=="Home"){next="E: 집에 들어가기 (원룸 Lv"+std::to_string(HomeLevel)+")";if(pressed){Leave(-2,"");return;}}
   else{next=text;if(pressed&&!text.empty())Say(faces[Character],koreanNames[Character],text);}  // Note: 가구·문 닫은 가게 등은 조사하면 혼잣말
