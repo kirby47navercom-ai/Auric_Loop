@@ -194,7 +194,7 @@ write(PROJECT / "Assets/Data/DA_Floor.hbdata.json", {"version": 1, "name": "DA_F
     {"name": "spacing", "type": "float", "value": 36}]})  # 격자 한 칸 (m)
 ROOM_COLUMNS = [("minHalf", "float"), ("maxHalf", "float"), ("square", "bool"), ("waves", "string"), ("monsterDrop", "bool")]
 ROOM_ROWS = {
-    "Start": (6, 6, True, "", False),
+    "Start": (8, 8, True, "", False),  # 튜토리얼 표지판 7개가 들어가게
     "Combat1": (6, 9, False, "S,S|S,S,S", False),          # 시작 바로 옆: 작은 방도 나옴
     "Combat2": (7, 11, False, "S,S,M|S,M,M", True),        # 마지막 해골이 마물 소재를 확정으로 떨굼 (인챈트 체험)
     "Combat3": (8, 12, False, "S,S,S,M|S,S,M,M|S,M,M", False),  # 깊은 방: 큰 방, 웨이브 3번

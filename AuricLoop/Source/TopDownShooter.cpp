@@ -98,7 +98,7 @@ void TopDownShooter::Update(float delta){
      return;}
    if(bannerTime>0&&(bannerTime-=delta)<=0)UiVisible("BossSub",false);
    if(hintTime>0&&(hintTime-=delta)<=0){hint="";Hud();}
-   {const bool m=hb::Input::IsKeyDown("m");const bool arrive=bannerPending&&frame>=2&&dialogIndex>=dialog.size();  // 대화가 끝난 뒤에
+   {const bool m=hb::Input::IsKeyDown("m");const bool arrive=bannerPending&&frame>=2&&dialogIndex>=dialog.size()&&settleTime<0;  // 대화가 끝난 뒤에
     AreaBanner(delta,(m&&!mapHeld)||arrive);mapHeld=m;if(arrive)bannerPending=false;}  // 도착하면 한 번, 그 뒤엔 M·미니맵
    if(UpdateSettle(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}
    if(UpdateDialog(delta,pressed||AnyPressed(false))){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}}  // 대화 중엔 행동·이동 막음

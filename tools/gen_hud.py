@@ -343,15 +343,25 @@ full("KoBack", "Panel", 70, background="#2a0508dd", visible=False)
 node("KoTitle", "Text", "c", 0, -30, 900, 60, 71, text="쓰러졌다", fontSize=44, color="#ff7a6a", align="center", visible=False)
 node("KoSub", "Text", "c", 0, 30, 900, 30, 71, text="", fontSize=18, color="#fff3e5", align="center", visible=False)
 
-# ---- 정산 화면 (기획서 6-4): 줄마다 나타나고 남은 빚 숫자가 줄어듦. C++ UpdateSettle ----
-full("SettleBack", "Panel", 72, background="#05090ad0", visible=False)
-node("SettlePanel", "Panel", "c", 0, 0, 660, 490, 73, visible=False, **FRAME)
-node("SettleTitle", "Text", "c", 0, -195, 600, 40, 74, text="정산", fontSize=28, color=GOLD, align="center", visible=False)
-for i in range(7):
-    node(f"SettleRow{i}", "Text", "c", 0, -140 + i * 34, 560, 30, 74, text="", fontSize=18, color=GOLD if i in (4, 6) else INK, align="center", visible=False)
-node("SettleDebt", "Text", "c", 0, 120, 600, 40, 74, text="", fontSize=26, color="#ff8a7a", align="center", visible=False)
-node("SettleNote", "Text", "c", 0, 165, 600, 24, 74, text="", fontSize=14, color="#cdb98a", align="center", visible=False)
-node("SettleHint", "Text", "c", 0, 205, 600, 24, 74, text="E · 클릭 · Enter: 확인", fontSize=15, color=SKY, align="center", visible=False)
+# ---- 정산 화면 (기획서 6-4): 가운데 큰 동전. 위에 늘어선 소재·골드 아이콘이 하나씩 동전으로 날아 들어가 동전이 금으로 차오르고,
+#      마지막에 빚 상환분이 동전에서 빠져나가 아래 명패로 날아가며 남은 빚이 줄어든다 (C++ UpdateSettle)
+ART = "Assets/UI/Art/"
+full("SettleBack", "Panel", 72, background="#05090af5", visible=False)
+node("SettleGlow", "Image", "c", 0, -10, 420, 420, 72, texture="Assets/Sprites/FX/FX_Glow.png", opacity=0.55, visible=False)  # 동전 뒤 금빛
+node("SettleRibbon", "Image", "c", 0, -268, 400, 68, 73, texture=ART + "ribbon.png", visible=False)
+node("SettleTitle", "Text", "c", 0, -276, 400, 30, 74, text="", fontSize=20, color="#fff3e5", align="center", visible=False)
+node("SettleCoinBack", "Image", "c", 0, -10, 192, 192, 73, texture=ART + "coin_empty.png", visible=False)
+node("SettleCoin", "ProgressBar", "c", 0, -10, 192, 192, 74, value=0, max=1, fillDirection="radial", fillTexture=ART + "coin_full.png",
+     backgroundTexture="", background="#00000000", accent="#00000000", visible=False)
+node("SettleCoinText", "Text", "c", 0, 112, 360, 36, 75, text="", fontSize=28, color=GOLD, align="center", visible=False)
+for k, (icon, label) in enumerate([("ore", "광물"), ("herb", "약초"), ("bone", "마물 소재"), ("gold", "골드")]):
+    x = -270 + k * 180
+    node(f"SettleIcon{k}", "Image", "c", x, -180, 64, 64, 76, texture=ITEMS + icon + ".png", visible=False)
+    node(f"SettleCount{k}", "Text", "c", x, -134, 170, 24, 76, text="", fontSize=15, color=INK, align="center", visible=False)
+node("SettleRepay", "Text", "c", 0, 150, 300, 30, 77, text="", fontSize=22, color=RED, align="center", visible=False)
+node("SettlePlaque", "Image", "c", 0, 214, 360, 68, 73, texture=ART + "plaque.png", visible=False)
+node("SettleDebt", "Text", "c", 0, 205, 340, 34, 74, text="", fontSize=24, color="#ff8a7a", align="center", visible=False)
+node("SettleHint", "Text", "c", 0, 300, 600, 24, 74, text="E · 클릭 · Enter", fontSize=15, color=SKY, align="center", visible=False)
 
 FRONT = ("Title", "Loading", "Select", "Ending", "Menu")  # C++ TopDownShooter::UiInstance와 같은 접두어
 is_front = lambda n: n["name"].startswith(FRONT) and n["name"] != "Title"  # noqa: E731  "Title"은 HUD의 지역 이름

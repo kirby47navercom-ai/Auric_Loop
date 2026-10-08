@@ -134,8 +134,8 @@ void TopDownShooter::Warp(int room){
 void TopDownShooter::EnterRoom(int room){
   // 방 가장자리에서 조금 들어오면 문이 잠기고, DT_Rooms의 웨이브가 하나씩 마법진 예고 뒤 나온다 (엔터 더 건전·소울 나이트)
   auto& r=map.rooms[room];if(r.state)return;
-  if(r.kind!="Combat"&&r.kind!="Boss"){r.state=2;if(r.kind=="Gather")Tip(4);if(r.kind=="Shop")Tip(6);return;}  // 시작·채집·상점은 싸움 없음
-  r.state=1;fightingRoom=room;map.Lock(room,true);Tip(1);
+  if(r.kind!="Combat"&&r.kind!="Boss"){r.state=2;if(r.kind=="Shop")Tip(6);return;}  // 시작·채집·상점은 싸움 없음
+  r.state=1;fightingRoom=room;map.Lock(room,true);  // 조작 안내는 글 대신 시작 방 그림 표지판
   if(r.kind=="Boss"){cutscene=3.2f;cutsceneAt=hb::Vec3{r.cx,r.cy+2,0};roared=false;bannerTime=0;  // 보스 등장 컷신: 화면 위아래 검은 띠, 카메라가 보스 쪽으로
     for(auto* n:{"CineTop","CineBottom"})UiVisible(n,true);}
   const hb::Json row=roomTable.contains(r.row)?roomTable.at(r.row):hb::Json::object();
@@ -209,44 +209,62 @@ void TopDownShooter::HitReturnGate(const hb::Vec3& at,float reach,int hits){
 }
 
 void TopDownShooter::Settle(){
-  // 정산 (기획서 6-4): 소재를 골드로 바꾸고 일부를 빚에서 자동 상환, 강화는 초기화. 화면에 줄마다 보여 주고 남은 빚이 줄어드는 연출
-  auto line=[](const std::string& name,int count,int price){return name+"  "+std::to_string(count)+" x "+std::to_string(price)+" G  =  "+std::to_string(count*price)+" G";};
-  const int total=Gold+Ore*rules->OrePrice+Herb*rules->HerbPrice+Monster*rules->MonsterPrice;
-  settleRows.clear();
-  settleRows.push_back(line("광물",Ore,rules->OrePrice));settleRows.push_back(line("약초",Herb,rules->HerbPrice));
-  settleRows.push_back(line("마물 소재",Monster,rules->MonsterPrice));settleRows.push_back("주운 골드  "+std::to_string(Gold)+" G");
-  settleRows.push_back("합계  "+std::to_string(total)+" G");
-  LastRepaid=int(total*rules->RepayRate);debtFrom=Debt;Debt=std::max(0,Debt-LastRepaid);debtTo=Debt;
-  settleRows.push_back("빚 자동 상환 ("+std::to_string(int(rules->RepayRate*100+0.5f))+"%)  - "+std::to_string(LastRepaid)+" G");
-  settleRows.push_back("내 몫  "+std::to_string(total-LastRepaid)+" G");
-  Gold=total-LastRepaid;Ore=Herb=Monster=0;WeaponLevel=0;Enchant=0;
+  // 정산 (기획서 6-4): 소재를 골드로 바꾸고 일부를 빚에서 자동 상환, 강화는 초기화. 연출은 UpdateSettle (동전이 차오름)
+  settleItems={{Ore,Ore*rules->OrePrice},{Herb,Herb*rules->HerbPrice},{Monster,Monster*rules->MonsterPrice},{Gold,Gold}};
+  settleTotal=Gold+Ore*rules->OrePrice+Herb*rules->HerbPrice+Monster*rules->MonsterPrice;
+  LastRepaid=int(settleTotal*rules->RepayRate);debtFrom=Debt;Debt=std::max(0,Debt-LastRepaid);debtTo=Debt;
+  Gold=settleTotal-LastRepaid;Ore=Herb=Monster=0;WeaponLevel=0;Enchant=0;
   settleTime=0;settleShown=0;debtShown=-1;settleDone=false;
   SaveRun();Hud();
 }
 
 void TopDownShooter::ShowSettle(bool visible){
-  for(auto* n:{"SettleBack","SettlePanel","SettleTitle","SettleDebt","SettleNote","SettleHint"})UiVisible(n,visible);
-  for(int i=0;i<7;++i)UiVisible("SettleRow"+std::to_string(i),visible&&i<settleShown);
+  for(auto* n:{"SettleBack","SettleGlow","SettleRibbon","SettleTitle","SettleCoinBack","SettleCoin","SettleCoinText","SettlePlaque","SettleDebt"})UiVisible(n,visible);
+  for(int k=0;k<4;++k){UiVisible("SettleIcon"+std::to_string(k),visible);UiVisible("SettleCount"+std::to_string(k),visible);}
+  if(!visible){UiVisible("SettleRepay",false);UiVisible("SettleHint",false);}
 }
 
 bool TopDownShooter::UpdateSettle(float delta,bool advance){
+  // 동전 정산: 0.4초 뒤부터 소재·골드 아이콘이 0.55초마다 하나씩 가운데 동전으로 날아가(0.35초) 들어가면 동전이 그만큼 차오르고 금액이 오름.
+  // 다 들어가면 상환분 "-N G"가 동전에서 아래 빚 명패로 날아가고 남은 빚이 1초 동안 줄어듦. 누르면 끝으로 건너뜀
   if(settleTime<0||frame<2)return settleTime>=0;
+  static const char* names[]={"광물","약초","마물 소재","골드"};
+  static const float iconX[]={-270,-90,90,270};
   if(settleTime==0){
-    UiText("SettleTitle",KnockedOut?"정산 - 빈손으로 끌려 나왔다":"정산 - 귀환 성공");
-    UiText("SettleNote",KnockedOut?"쓰러져서 소재를 잃었다. 무기 강화·각인도 초기화":"무기 강화·각인은 던전 밖에서 초기화된다");
-    for(int i=0;i<7;++i)UiText("SettleRow"+std::to_string(i),i<int(settleRows.size())?settleRows[i]:"");
+    UiText("SettleTitle",KnockedOut?"빈손으로 끌려 나왔다":"귀환 성공");
+    for(int k=0;k<4;++k){const auto& it=settleItems[k];
+      UiText("SettleCount"+std::to_string(k),std::string(names[k])+(k==3?"  ":" x"+std::to_string(it.count)+"  ")+std::to_string(it.value)+" G");
+      UiColor("SettleCount"+std::to_string(k),it.value>0?hb::Color{0.96f,0.93f,0.85f,1}:hb::Color{0.45f,0.42f,0.38f,1});
+      UiOpacity("SettleIcon"+std::to_string(k),it.value>0?1.f:0.3f);UiPosition("SettleIcon"+std::to_string(k),hb::Vec2{iconX[k],-180});UiScale("SettleIcon"+std::to_string(k),1);}
+    UiValue("SettleCoin",0);UiText("SettleCoinText","0 G");UiScale("SettleCoinBack",1);UiScale("SettleCoin",1);
     settleShown=0;ShowSettle(true);}
   settleTime+=delta;
-  // 0.3초마다 한 줄, 다 나오면 남은 빚이 1.2초 동안 줄어듦
-  const int rows=std::min(int(settleRows.size()),int(settleTime/0.3f));
-  if(rows!=settleShown){settleShown=rows;ShowSettle(true);Sfx("Coin");}
-  const float t=std::clamp((settleTime-0.3f*settleRows.size())/1.2f,0.f,1.f);
-  const int shown=debtFrom+int((debtTo-debtFrom)*t);
-  if(shown!=debtShown){debtShown=shown;UiText("SettleDebt",std::string(koreanNames[Character])+"의 남은 빚  "+std::to_string(shown)+" G");}
-  if(t>=1&&!settleDone){settleDone=true;UiVisible("SettleHint",true);}
+  const float start=0.4f,gap=0.55f,fly=0.35f;
+  float filled=0;int shownValue=0;bool bump=false;
+  for(int k=0;k<4;++k){const auto& it=settleItems[k];if(it.value<=0)continue;
+    const float t=(settleTime-start-gap*k)/fly;const std::string n="SettleIcon"+std::to_string(k);
+    if(t<=0)continue;
+    if(t<1){const float e=t*t;  // 빨려 들어가듯 점점 빠르게, 작아지며 위로 살짝 떴다가
+      UiPosition(n,hb::Vec2{iconX[k]*(1-e),-180*(1-e)-10*e-std::sin(t*3.14159f)*40});UiScale(n,1-0.6f*e);}
+    else{UiOpacity(n,0);filled+=float(it.value);shownValue+=it.value;bump=bump||t<1.3f;  // 들어간 직후 0.1초 동안 동전이 톡 커짐
+      if(settleShown<=k){settleShown=k+1;Sfx("Coin",0.9f+0.08f*k);}}}
+  UiScale("SettleCoinBack",bump?1.1f:1.f);UiScale("SettleCoin",bump?1.1f:1.f);
+  const float coinT=settleTotal>0?filled/settleTotal:0;
+  UiValue("SettleCoin",coinT);if(!settleDone)UiText("SettleCoinText",std::to_string(shownValue)+" G");
+  UiOpacity("SettleGlow",0.35f+0.25f*coinT+0.08f*std::sin(settleTime*4));UiScale("SettleGlow",0.8f+0.3f*coinT);  // 차오를수록 빛이 커짐
+  const float last=start+gap*3+fly;  // 마지막 아이콘이 들어간 뒤
+  // 상환: 동전에서 빠져나가 명패로 (0.5초), 그다음 빚이 1초 동안 줄어듦
+  const float rt=(settleTime-last-0.3f)/0.5f;
+  if(LastRepaid>0&&rt>0){UiVisible("SettleRepay",rt<1.4f);UiText("SettleRepay","빚 상환  -"+std::to_string(LastRepaid)+" G");
+    UiPosition("SettleRepay",hb::Vec2{0,40.f+std::min(rt,1.f)*150});
+    if(settleTotal>0)UiValue("SettleCoin",coinT*(1-std::min(rt,1.f)*float(LastRepaid)/settleTotal));}  // 상환한 만큼 동전이 다시 줄어듦
+  const float t=std::clamp((settleTime-last-0.8f)/1.0f,0.f,1.f);
+  const int debt=debtFrom+int((debtTo-debtFrom)*t);
+  if(debt!=debtShown){debtShown=debt;UiText("SettleDebt","남은 빚  "+std::to_string(debt)+" G");if(t>0&&t<1&&int(t*20)%3==0)Sfx("Type",0.7f);}
+  if(t>=1&&!settleDone){settleDone=true;UiText("SettleCoinText","내 몫  "+std::to_string(settleTotal-LastRepaid)+" G");Sfx("Craft");}
   UiVisible("SettleHint",settleDone);
   if(advance){
-    if(!settleDone){settleTime=0.3f*settleRows.size()+1.2f;return true;}  // 누르면 연출 건너뛰기
+    if(!settleDone){settleTime=last+1.9f;return true;}  // 누르면 끝으로
     settleTime=-1;ShowSettle(false);Talk("Settle",{{"debt",std::to_string(Debt)}});KnockedOut=false;Hud();return false;}
   return true;
 }

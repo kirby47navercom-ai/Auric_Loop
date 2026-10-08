@@ -33,6 +33,7 @@ public:
   std::vector<DungeonRoom> rooms;
   int start=0,boss=-1;
   hb::Actor* stairs=nullptr;     // 시작 방의 거점 계단
+  std::vector<hb::Actor*> signs; // 시작 방 튜토리얼 표지판 (태그 Dungeon.Sign, 장면 순서: 이동·공격·구르기·줍기·제작·가방·귀환)
 
   // floor: DA_Floor (rooms 방 수, loops 고리 수, spacing 격자 간격), table: DT_Rooms 전체 (행 → minHalf, maxHalf, waves …)
   void Generate(unsigned seed,const hb::Json& floor,const hb::Json& table);

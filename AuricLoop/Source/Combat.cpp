@@ -46,7 +46,7 @@ bool TopDownShooter::DamagePlayer(int amount,const hb::Vec3& from){
   if(invulnerable>0||dodgeTimer>0||Hp<=0)return false;
   Hp-=amount;invulnerable=rules->InvulnerableTime;Sfx("Hurt");if(Hp<=0){Hp=0;gameOver=rules->RespawnDelay;}
   knock=Normal(playerAt-from,hb::Vec3{0,-1,0})*rules->HurtKnockback;knockTimer=0.12f;Shake(rules->ShakeTime*2.5f,2.2f);HitStop(0.09f);Sfx("Impact");
-  Tip(2);hb::Sprites::Flash(player,0.15f,1.f);Effect("ImpactRed",hb::Vec3{playerAt.x,playerAt.y+0.2f,0.3f});  // 맞는 순간 멈칫·크게 흔들림·붉은 불꽃
+  hb::Sprites::Flash(player,0.15f,1.f);Effect("ImpactRed",hb::Vec3{playerAt.x,playerAt.y+0.2f,0.3f});  // 맞는 순간 멈칫·크게 흔들림·붉은 불꽃
   hb::Camera::Flash(hb::Color{0.7f,0.05f,0.05f,0.3f},0.18f);Hud();
   return true;
 }
@@ -174,7 +174,7 @@ void TopDownShooter::Prewarm(){
 void TopDownShooter::KillEnemy(Enemy* e){
   const auto at=hb::Scene::GetPosition(e);Kills++;Sfx("Kill");if(waveAlive>0)waveAlive--;
   DropCoin(at,e->GoldMin+Kills%std::max(1,e->GoldMax-e->GoldMin+1));
-  if(e->Boss){HasReturnItem=true;Monster++;boss=nullptr;BossHp=0;Hud();Tip(7);}
+  if(e->Boss){HasReturnItem=true;Monster++;boss=nullptr;BossHp=0;Hud();}  // 귀환 쓰는 법은 시작 방 표지판
   if(monsterDrop&&fightingRoom>=0&&pending.empty()&&wave+1>=waves.size()&&Enemies().size()<=1){Monster++;Tip(5);}  // 이 방 마지막 해골은 마물 소재 확정
   const hb::Vec3 dir=Normal(e->lastPush,hb::Vec3{e->Flipped()?1.f:-1.f,0,0});
   PlayFx(e->DeathClip,0.9f,at,0,0,e->Flipped());  // 쓰러지는 그림은 이펙트로 (적은 바로 화면 밖 대기로). 맞은 방향으로 밀려나며 쓰러짐

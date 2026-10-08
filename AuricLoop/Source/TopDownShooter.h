@@ -698,7 +698,7 @@ private:
   float tipTime=0,titleTime=0;bool pauseHeld=false,bagOpen=false;int menuPick=0,menuHeld=0;
   std::map<hb::Actor*,hb::Vec3> frozenVelocity;   // 일시정지 동안 멈춘 탄의 속도
   // 정산 화면: 줄이 하나씩 나타나고 남은 빚이 줄어드는 숫자 연출
-  std::vector<std::string> settleRows;
+  struct SettleItem{int count,value;};std::vector<SettleItem> settleItems;int settleTotal=0;  // 정산: 광물·약초·마물 소재·골드 (개수, 골드 값)
   float settleTime=-1;int settleShown=0,debtFrom=0,debtTo=0,debtShown=-1;bool settleDone=false;
   bool warpHeld=false,dodgeHeld=false,returnHeld=false,flashHeld=false,craftOpen=false,craftKeyHeld=false,confirmHeld=false;
   bool advanceHeld=true,selecting=false,ending=false,anyHeld=true,touchMode=false,gatherTold=false;

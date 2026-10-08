@@ -121,6 +121,7 @@ void Dungeon::Build(){
     pools[tag]=hb::Scene::GetActorsWithTag(tag);
   gateFree=hb::Scene::GetActorsWithTag("Dungeon.Gate");sideFree=hb::Scene::GetActorsWithTag("Dungeon.GateSide");
   {auto s=hb::Scene::GetActorsWithTag("Dungeon.Stairs");stairs=s.empty()?nullptr:s.front();}
+  signs=hb::Scene::GetActorsWithTag("Dungeon.Sign");
   shortages=0;placed.clear();
   {// 맵 밖: 벽 윗면 무늬를 어둡게 한 장. 맵 전체 크기로 깔면 큰 층에서 엔진의 반복 무늬 한도(1만 칸)를 넘어
    // 장면이 안 열리므로 화면보다 조금 큰 크기로 두고 카메라를 따라 무늬 한 칸(2m)씩 옮긴다 (Follow)
@@ -159,9 +160,14 @@ void Dungeon::Build(){
     // 바닥 잔해·뼈, 보스·채집방엔 금화 더미
     for(int k=0,n=int(r.hw*r.hh/30);k<n;++k){const float x=between(x0+1,x1-1),y=between(y0+1,y1-1);
       if(std::fabs(x-r.cx)<2&&std::fabs(y-r.cy)<2)continue;
+      if(r.kind=="Start")continue;  // 시작 방은 표지판만 (잔해가 표지판에 겹치지 않게)
       r.props.push_back({(r.kind=="Boss"||r.kind=="Gather")&&k%3==0?"Dungeon.Gold":k%2?"Dungeon.Bones":"Dungeon.Rubble",x,y});}
   }
   if(stairs)hb::Scene::SetPosition(stairs,hb::Vec3{rooms[start].cx-rooms[start].hw+2.2f,rooms[start].cy+rooms[start].hh-1.6f,0.05f});  // 문(벽 가운데)을 막지 않게 왼쪽 위 구석
+  {// 튜토리얼 표지판: 네 문으로 가는 십자 길을 비우고 양옆에 (아래 줄 이동·공격·구르기·줍기, 위 줄 귀환·제작·가방)
+   static const float at[][2]={{-5.6f,-4.6f},{-2.8f,-4.6f},{2.8f,-4.6f},{5.6f,-4.6f},{-2.8f,3.4f},{2.8f,3.4f},{5.6f,3.4f}};
+   const auto& r=rooms[start];
+   for(size_t i=0;i<signs.size()&&i<7;++i)hb::Scene::SetPosition(signs[i],hb::Vec3{r.cx+at[i][0],r.cy+at[i][1],0.05f});}
   Show(start);
 }
 

@@ -362,6 +362,10 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
         parked(objects, "Dungeon." + tag, count, lambda i, f=file, c=col: sprite_obj(i, PROP + f + ".png", 0, 0, order=0, collider=c))
     for name, count in (("Rubble", 10), ("Bones", 10), ("GoldPile", 6)):
         parked(objects, "Dungeon." + ("Gold" if name == "GoldPile" else name), count, lambda i, n=name: shiny(sprite_obj(i, PROP + n + ".png", 0, 0, order=-2), n))
+    for n in ("Move", "Attack", "Dodge", "Interact", "Craft", "Bag", "Return"):  # 튜토리얼 표지판 (시작 방, C++ Dungeon::Build가 놓음)
+        o = sprite_obj("Sign" + n, "Assets/Sprites/Props/Sign_" + n + ".png", 0, -230, order=0, collider=(0.15, 0.12, -1.2))  # 기둥만 막음
+        o["tags"] = ["Dungeon.Sign"]
+        objects.append(o)
     parked(objects, "Dungeon.Stairs", 1, lambda i: sprite_obj(i, "Assets/Sprites/Prop_DungeonEntrance.png", 0, 0, order=-2))
     # 채집방·상점 상호작용 대상: C++가 그 방으로 옮김
     for k, (oid, texture, kind, price) in enumerate([("Ore", "Assets/Sprites/Prop_Ore.png", "Ore", 0), ("Herb", "Assets/Sprites/Prop_Herb.png", "Herb", 0),

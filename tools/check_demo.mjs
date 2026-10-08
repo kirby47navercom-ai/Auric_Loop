@@ -118,8 +118,8 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   const h = await runProject(project, {scene: scene('Hub'), frames: 420, delta: 1 / 60, nativeDefaults: {Director: {Phase: 2}},  // 타이틀 건너뜀
     inputs: [{frame: 2, key: 'a', value: 1}, {frame: 20, key: 'a', value: 0}, {frame: 2, key: 'w', value: 1}]});  // 부채 전광판 옆으로 돌아 계단으로
   assert.equal(h.sceneHistory.at(-1).scene, scene('Dungeon'), '거점 계단 끝 → 던전');
-  const back = await runProject(project, {scene: scene('Test_Valen'), frames: 150, delta: 1 / 60, inputs: [
-    {frame: 5, key: 'a', value: 1}, {frame: 59, key: 'a', value: 0}, {frame: 5, key: 'w', value: 1}, {frame: 140, key: 'w', value: 0}]});  // 거점에 도착해도 W가 눌린 채라 계단 위에 머묾
+  const back = await runProject(project, {scene: scene('Test_Valen'), frames: 200, delta: 1 / 60, inputs: [  // 시작 방이 16m라 더 걸음
+    {frame: 5, key: 'a', value: 1}, {frame: 92, key: 'a', value: 0}, {frame: 5, key: 'w', value: 1}, {frame: 190, key: 'w', value: 0}]});  // 거점에 도착해도 W가 눌린 채라 계단 위에 머묾
   const hp = back.objects.find(o => o.id === 'Player').position;
   assert.equal(back.sceneHistory.at(-1).scene, scene('Hub'), '시작 방 계단 → 거점');
   assert.ok(hp[1] > 15 && hp[1] < 24, '거점 계단 끝에 섬 (W를 누른 채여도 바로 던전으로 돌아가지 않음)');
@@ -151,7 +151,7 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   console.log('원룸 검사 통과', scenes.map(s => s.split('/').at(-1)).join(' → '));
 }
 
-// 일시정지(Esc): 멈춘 동안 W를 눌러도 안 움직이고, 다시 Esc면 계속. 첫 전투방 안내 문구가 한 번 나옴
+// 일시정지(Esc): 멈춘 동안 W를 눌러도 안 움직이고, 다시 Esc면 계속. 조작은 글 대신 시작 방 표지판 7개
 {
   const r = await runProject(project, {scene: scene('Test_Valen'), frames: 160, delta: 1 / 60, inputs: [
     ...press(20, 'escape'), {frame: 30, key: 'w', value: 1}, {frame: 90, key: 'w', value: 0}]});
@@ -159,8 +159,10 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   assert.ok(s.Paused, 'Esc로 일시정지');
   assert.ok(Math.abs(y - -1) < 0.3, '멈춘 동안 움직이지 않음');
   const t = await runProject(project, {scene: scene('Test_Valen'), frames: 60, delta: 1 / 60, inputs: [...warps(5, 1)]});
-  assert.ok(director(t).TipsShown & 2, '첫 전투방 안내 문구');
-  console.log('일시정지·안내 문구 검사 통과', 'tips', director(t).TipsShown);
+  assert.ok(!(director(t).TipsShown & 2), '조작 글 안내 없음 (시작 방 그림 표지판으로)');
+  const signs = t.objects.filter(o => (o.tags || []).includes('Dungeon.Sign') && o.position[1] > -150).length;
+  assert.equal(signs, 7, '시작 방 표지판 7개');
+  console.log('일시정지·표지판 검사 통과', 'signs', signs);
 }
 
 // 구르기(Space): 바라보는 방향으로 1초 대시(이동속도 2배·무적), 그림이 구르기로 바뀜 (기획서 4-1)
