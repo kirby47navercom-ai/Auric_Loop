@@ -109,7 +109,13 @@ ENEMIES = {
                                                    "Enemy.KeepDistance": 6, "Enemy.GoldMin": 2, "Enemy.GoldMax": 3}),
     "BP_SkeletonCaptain": ("SkeletonCaptain", {"Enemy.DisplayName": "해골 대장", "Enemy.ShotClip": "Assets/Animations/SA_BossOrb.hbspriteanimation.json", "Enemy.Brain": "Assets/AI/FSM_SkeletonCaptain.hbstatemachine.json",
                                                         "Enemy.Boss": True, "Enemy.MaxHp": 40, "Enemy.Speed": 3.6, "Enemy.Radius": 1.4,
-                                                        "Enemy.GoldMin": 30, "Enemy.GoldMax": 30}),
+                                                        "Enemy.GoldMin": 30, "Enemy.GoldMax": 30,
+                                                        # 대검 베기만 (돌진·도약은 대장 패턴이 따로), 예고 길게, 자기 그림으로
+                                                        "Enemy.AttackClip": "Assets/Animations/SA_SkeletonCaptain_Attack.hbspriteanimation.json",
+                                                        "Enemy.WalkClip": "Assets/Animations/SA_SkeletonCaptain_Walk.hbspriteanimation.json",
+                                                        "Enemy.WindupSprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Attack_0.hbsprite.json",
+                                                        "Enemy.SlashRange": 1.8, "Enemy.MeleeWindup": 0.7, "Enemy.AttackCooldown": 2.0,
+                                                        "Enemy.LungeRange": 0, "Enemy.LeapRange": 0}),
 }
 from PIL import Image  # noqa: E402
 for name, (who, defaults) in ENEMIES.items():

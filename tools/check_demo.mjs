@@ -296,3 +296,12 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   assert.ok(spam <= 2, `덜 당긴 화살은 쉬는 시간이 있어 연타가 안 됨 (1.5초에 ${spam}발)`);
   console.log('셰리 당긴 만큼 발사 검사 통과');
 }
+
+// 해골 대장은 자기 그림으로 공격·걷기·예고 (BP 기본값이 생성기에서 빠져 일반 해골 그림으로 바뀐 적 있음)
+{
+  const r = await runProject(project, {scene: scene('Test_Boss'), frames: 3, delta: 1 / 60});
+  const boss = r.objects.find(o => /^SkeletonCaptain/.test(o.id)).nativeProperties;
+  for (const k of ['AttackClip', 'WalkClip', 'WindupSprite']) assert.match(boss[k], /SkeletonCaptain/, `대장 ${k} (${boss[k]})`);
+  assert.ok(Math.abs(boss.SlashRange - 1.8) < 1e-3, '대장 대검 거리');
+  console.log('해골 대장 그림 검사 통과');
+}
