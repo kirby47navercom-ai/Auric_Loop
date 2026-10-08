@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "name": "SA_Bush",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Town/S_Bush_0.hbsprite.json",
+      "duration": 0.3
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_Bush_1.hbsprite.json",
+      "duration": 0.3
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_Bush_2.hbsprite.json",
+      "duration": 0.3
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_Bush_3.hbsprite.json",
+      "duration": 0.3
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_Bush_4.hbsprite.json",
+      "duration": 0.3
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_Bush_5.hbsprite.json",
+      "duration": 0.3
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_Bush_6.hbsprite.json",
+      "duration": 0.3
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_Bush_7.hbsprite.json",
+      "duration": 0.3
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

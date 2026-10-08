@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "name": "SA_BirdFly",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Ambient/S_BirdFly_0.hbsprite.json",
+      "duration": 0.08
+    },
+    {
+      "sprite": "Assets/Sprites/Ambient/S_BirdFly_1.hbsprite.json",
+      "duration": 0.08
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

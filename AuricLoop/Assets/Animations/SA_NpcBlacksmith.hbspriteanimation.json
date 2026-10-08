@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "name": "SA_NpcBlacksmith",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Ambient/S_NpcBlacksmith_0.hbsprite.json",
+      "duration": 1.1
+    },
+    {
+      "sprite": "Assets/Sprites/Ambient/S_NpcBlacksmith_1.hbsprite.json",
+      "duration": 0.9
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

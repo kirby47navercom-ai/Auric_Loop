@@ -103,6 +103,7 @@ out = {
 }
 for path, im in out.items():
     old = Image.open(path).size
-    assert im.size == old, (path.name, im.size, old)  # 크기가 같아야 장면 배치·충돌체가 그대로 맞음
+    assert im.size in (old, (old[0], old[1] - 16)), (path.name, im.size, old)  # 크기가 같아야 장면 배치·충돌체가 그대로 맞음 (16 = make_shadows 여백)
     im.save(path)
     print(path.name, im.size)
+print("다음: python tools/make_shadows.py (그림자·정렬 여백)")

@@ -137,10 +137,11 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   console.log('게임 오버 검사 통과', 'ore', s.Ore, 'repaid', s.LastRepaid);
 }
 
-// 거점 서쪽 내 집: 문 앞에서 E → 원룸 장면(Lv1), 아래 문으로 나가면 거점 집 앞
+// 거점 서쪽 내 집: 우물을 돌아 문 앞에서 E → 원룸 장면(Lv1), 아래 문으로 나가면 거점 집 앞
 {
   const r = await runProject(project, {scene: scene('Hub'), frames: 520, delta: 1 / 60, nativeDefaults: {Director: {Phase: 2}}, inputs: [
-    {frame: 2, key: 'w', value: 1}, {frame: 40, key: 'w', value: 0}, {frame: 42, key: 'a', value: 1}, {frame: 290, key: 'a', value: 0},
+    {frame: 2, key: 'a', value: 1}, {frame: 62, key: 'a', value: 0}, {frame: 64, key: 'w', value: 1}, {frame: 104, key: 'w', value: 0},
+    {frame: 106, key: 'a', value: 1}, {frame: 290, key: 'a', value: 0},  // 광장 가운데 우물을 왼쪽으로 돌아서
     ...press(300, 'e'), {frame: 400, key: 's', value: 1}, {frame: 500, key: 's', value: 0}]});
   const scenes = r.sceneHistory.map(h => h.scene);
   assert.ok(scenes.includes(scene('Home_1')), '집 문에서 E → 원룸 Lv1');

@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "name": "SA_FlowerBed",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Town/S_FlowerBed_0.hbsprite.json",
+      "duration": 0.25
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_FlowerBed_1.hbsprite.json",
+      "duration": 0.25
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_FlowerBed_2.hbsprite.json",
+      "duration": 0.25
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_FlowerBed_3.hbsprite.json",
+      "duration": 0.25
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_FlowerBed_4.hbsprite.json",
+      "duration": 0.25
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_FlowerBed_5.hbsprite.json",
+      "duration": 0.25
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_FlowerBed_6.hbsprite.json",
+      "duration": 0.25
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_FlowerBed_7.hbsprite.json",
+      "duration": 0.25
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

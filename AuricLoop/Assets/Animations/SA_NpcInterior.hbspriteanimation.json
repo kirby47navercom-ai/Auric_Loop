@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "name": "SA_NpcInterior",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Ambient/S_NpcInterior_0.hbsprite.json",
+      "duration": 1.1
+    },
+    {
+      "sprite": "Assets/Sprites/Ambient/S_NpcInterior_1.hbsprite.json",
+      "duration": 0.9
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

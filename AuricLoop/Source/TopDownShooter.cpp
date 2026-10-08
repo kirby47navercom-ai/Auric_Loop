@@ -20,6 +20,9 @@ void TopDownShooter::MoveCamera(const hb::Vec3& position,const hb::Vec3& aim,boo
     if(r>=0){const auto& room=map.rooms[r];const float vh=rules->CameraSize,vw=vh*16.f/9.f,pad=rules->CameraRoomPad;
       auto fit=[](float t,float c,float half,float view){return half<=view?c:std::clamp(t,c-half+view,c+half-view);};
       target.x=fit(target.x,room.cx,room.hw+pad,vw);target.y=fit(target.y,room.cy,room.hh+pad,vh);}}
+  else if(!inDungeon&&camMax.x>camMin.x){const float vh=rules->CameraSize,vw=vh*16.f/9.f;  // 거점·원룸: 맵 바깥이 안 보이게
+    auto fit=[](float t,float lo,float hi,float view){return hi-lo<=2*view?(lo+hi)/2:std::clamp(t,lo+view,hi-view);};
+    target.x=fit(target.x,camMin.x,camMax.x,vw);target.y=fit(target.y,camMin.y,camMax.y,vh);}
   target.z=hb::Scene::GetPosition(camera).z;
   if(!cameraReady){cameraAt=target;cameraReady=true;}else cameraAt=hb::VectorMath::VInterpTo(cameraAt,target,delta,rules->CameraFollow);
   auto at=cameraAt;
@@ -66,6 +69,7 @@ void TopDownShooter::Update(float delta){
   touchMode=hb::Input::GetLastDevice()=="touch";  // 모바일 공격 버튼도 LeftMouseButton. 마지막 입력 장치로 자동 조준을 정함
   if(cutscene>0)MoveCamera(cutsceneAt,cutsceneAt,false,delta);  // 보스 등장 컷신: 카메라가 보스 자리로
   else MoveCamera(position,touchMode?position+facing*(rules->CameraLeadMax/rules->CameraLead*0.5f):aim,(hasAim||touchMode)&&Phase>=2,delta);
+  if(!Paused)UpdateAmbient(delta,position,Phase>=2&&hb::Input::IsKeyDown("LeftMouseButton"));
   {const bool adv=hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("space");
    const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
    if(frame>=2&&UpdateIntro(delta,pressed||AnyPressed(true)))return;

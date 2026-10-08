@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "name": "SA_TreeRound",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Town/S_TreeRound_0.hbsprite.json",
+      "duration": 0.4
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_TreeRound_1.hbsprite.json",
+      "duration": 0.4
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_TreeRound_2.hbsprite.json",
+      "duration": 0.4
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_TreeRound_3.hbsprite.json",
+      "duration": 0.4
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_TreeRound_4.hbsprite.json",
+      "duration": 0.4
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_TreeRound_5.hbsprite.json",
+      "duration": 0.4
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_TreeRound_6.hbsprite.json",
+      "duration": 0.4
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_TreeRound_7.hbsprite.json",
+      "duration": 0.4
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

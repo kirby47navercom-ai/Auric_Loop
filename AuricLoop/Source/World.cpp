@@ -55,7 +55,7 @@ void TopDownShooter::Begin(){
   rules=&fallbackRules;for(auto* a:hb::Scene::GetAllActorsOfClass("AuricRules"))if(auto* r=dynamic_cast<AuricRules*>(a))rules=r;
   Lines("");  // 대사표 미리 읽기 (로딩 화면 동안)
   for(auto* a:hb::Scene::GetAllActorsOfClass("RoomInfo"))if(auto* r=dynamic_cast<RoomInfo*>(a)){
-    area=r->Index;roomKind=r->Kind;exitY=r->ExitY;inDungeon=r->Kind=="Dungeon";inHome=r->Kind=="Home";}
+    area=r->Index;roomKind=r->Kind;exitY=r->ExitY;camMin={r->CamMinX,r->CamMinY,0};camMax={r->CamMaxX,r->CamMaxY,0};inDungeon=r->Kind=="Dungeon";inHome=r->Kind=="Home";}
   for(auto* a:hb::Scene::GetAllActorsOfClass("Interactable"))if(auto* i=dynamic_cast<Interactable*>(a))interactables.push_back(i);
   auto cams=hb::Scene::GetActorsWithTag("MainCamera");camera=cams.empty()?nullptr:cams.front();
   if(camera)hb::Components::SetFloat(camera,"Camera","orthographicSize",rules->CameraSize);  // 줌은 BP_AuricRules.CameraSize 하나로

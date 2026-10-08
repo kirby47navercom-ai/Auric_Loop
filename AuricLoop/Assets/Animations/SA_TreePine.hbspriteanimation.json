@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "name": "SA_TreePine",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Town/S_TreePine_0.hbsprite.json",
+      "duration": 0.45
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_TreePine_1.hbsprite.json",
+      "duration": 0.45
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_TreePine_2.hbsprite.json",
+      "duration": 0.45
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_TreePine_3.hbsprite.json",
+      "duration": 0.45
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_TreePine_4.hbsprite.json",
+      "duration": 0.45
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_TreePine_5.hbsprite.json",
+      "duration": 0.45
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_TreePine_6.hbsprite.json",
+      "duration": 0.45
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_TreePine_7.hbsprite.json",
+      "duration": 0.45
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

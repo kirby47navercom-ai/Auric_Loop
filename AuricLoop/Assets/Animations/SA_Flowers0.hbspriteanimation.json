@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "SA_Flowers0",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Ambient/S_Flowers0_0.hbsprite.json",
+      "duration": 0.7
+    },
+    {
+      "sprite": "Assets/Sprites/Ambient/S_Flowers0_1.hbsprite.json",
+      "duration": 0.5
+    },
+    {
+      "sprite": "Assets/Sprites/Ambient/S_Flowers0_2.hbsprite.json",
+      "duration": 0.7
+    },
+    {
+      "sprite": "Assets/Sprites/Ambient/S_Flowers0_3.hbsprite.json",
+      "duration": 0.5
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

@@ -183,6 +183,14 @@ public:
   std::string Kind = "Hub";      // Hub·Home·Dungeon (던전은 들어올 때마다 방을 무작위로 만듦)
   HB_PROPERTY(BlueprintReadWrite)
   float ExitY = 21;              // 거점: 이보다 위(계단 끝)로 가면 던전. 원룸: 이보다 아래(문)로 가면 거점
+  HB_PROPERTY(BlueprintReadWrite)
+  float CamMinX = 0;             // 거점·원룸 카메라가 보여 줄 범위 (최소 = 최대면 제한 없음). 맵 바깥이 안 보이게
+  HB_PROPERTY(BlueprintReadWrite)
+  float CamMinY = 0;
+  HB_PROPERTY(BlueprintReadWrite)
+  float CamMaxX = 0;
+  HB_PROPERTY(BlueprintReadWrite)
+  float CamMaxY = 0;
 };
 
 HB_CLASS(Blueprintable)
@@ -529,6 +537,7 @@ private:
   std::vector<Fx> fxs;
   void PlayFx(const std::string& clip,float length,const hb::Vec3& at,float angle,float glow,bool flipX,bool flipY=false);  // glow: 블룸용 발광  // clip: 스프라이트 애니메이션, length초 뒤 풀로
   void UpdateFx(float delta);
+  void UpdateAmbient(float delta,const hb::Vec3& player,bool attacking);  // 새·나비·구름 그늘·박쥐·쥐 (Ambient.cpp)
   float WeaponDamage() const;
   int Weight() const{return Ore*30+Herb*5+Monster*15;}
   // 상호작용·UI
@@ -553,6 +562,7 @@ private:
     auto it=uiSent.find(key);if(it!=uiSent.end()&&it->second==value)return false;uiSent[key]=value;return true;}
   static std::string UiNum(float a,float b){return std::to_string(a)+","+std::to_string(b);}
   static const char* UiInstance(const std::string& n){  // 앞 화면(타이틀·로딩·선택·엔딩·메뉴)은 W_Front, 나머지는 W_TopDown (tools/gen_hud.py FRONT)
+    if(n=="Title")return "HUD";  // HUD의 지역 이름
     for(auto* p:{"Title","Loading","Select","Ending","Menu"})if(n.rfind(p,0)==0)return "Front";
     return "HUD";}
   void UiVisible(const std::string& n,bool v){if(UiChanged("v"+n,v?"1":"0"))hb::UI::SetVisible(player,UiInstance(n),n,v);}
@@ -602,6 +612,8 @@ private:
   std::vector<Line> dialog;
   size_t dialogIndex=0,shownChars=0;
   float fpsTime=0,fpsWorst=0;int fpsFrames=0;bool fpsHeld=false;
+  struct Critter{hb::Actor* a=nullptr;int kind=0,state=0;hb::Vec3 home,at,vel;float t=0,timer=0;bool flip=false;};
+  std::vector<Critter> critters;bool ambientReady=false;hb::Vec3 camMin{0,0,0},camMax{0,0,0};
   float tipTime=0,titleTime=0;bool pauseHeld=false,bagOpen=false;int menuPick=0,menuHeld=0;
   std::map<hb::Actor*,hb::Vec3> frozenVelocity;   // 일시정지 동안 멈춘 탄의 속도
   // 정산 화면: 줄이 하나씩 나타나고 남은 빚이 줄어드는 숫자 연출

@@ -25,15 +25,7 @@
       "Enemy.Radius": 1.4,
       "Enemy.GoldMin": 30,
       "Enemy.GoldMax": 30,
-      "Enemy.DeathClip": "Assets/Animations/SA_SkeletonCaptain_Death.hbspriteanimation.json",
-      "Enemy.AttackClip": "Assets/Animations/SA_SkeletonCaptain_Attack.hbspriteanimation.json",
-      "Enemy.WalkClip": "Assets/Animations/SA_SkeletonCaptain_Walk.hbspriteanimation.json",
-      "Enemy.WindupSprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Attack_0.hbsprite.json",
-      "Enemy.SlashRange": 1.8,
-      "Enemy.MeleeWindup": 0.7,
-      "Enemy.AttackCooldown": 2.0,
-      "Enemy.LungeRange": 0,
-      "Enemy.LeapRange": 0
+      "Enemy.DeathClip": "Assets/Animations/SA_SkeletonCaptain_Death.hbspriteanimation.json"
     },
     "componentOverrides": {
       "sprite": {

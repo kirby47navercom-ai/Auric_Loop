@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "name": "SA_Glow",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_FX_Glow_0.hbsprite.json",
+      "duration": 0.09
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_FX_Glow_1.hbsprite.json",
+      "duration": 0.13
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_FX_Glow_4.hbsprite.json",
+      "duration": 0.07
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_FX_Glow_2.hbsprite.json",
+      "duration": 0.15
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_FX_Glow_3.hbsprite.json",
+      "duration": 0.1
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_FX_Glow_5.hbsprite.json",
+      "duration": 0.08
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_FX_Glow_1.hbsprite.json",
+      "duration": 0.12
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_FX_Glow_0.hbsprite.json",
+      "duration": 0.09
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_FX_Glow_4.hbsprite.json",
+      "duration": 0.14
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_FX_Glow_3.hbsprite.json",
+      "duration": 0.07
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_FX_Glow_2.hbsprite.json",
+      "duration": 0.11
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_FX_Glow_5.hbsprite.json",
+      "duration": 0.1
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

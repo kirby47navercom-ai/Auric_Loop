@@ -22,7 +22,8 @@ SOFT = dict(background="#0d1419b8", borderColor="#c9a24a55", borderWidth=1, radi
 SIZES = {12: 14, 13: 15, 14: 16, 15: 17, 16: 18, 17: 19, 18: 20, 20: 22, 22: 26, 24: 28, 26: 30, 28: 34, 36: 42, 40: 48, 44: 52, 46: 54}
 
 w = json.loads(WIDGET.read_text(encoding="utf-8"))
-base = next(n for n in w["nodes"] if n["name"] == "Title")
+FRONT_FILE = PROJECT / "Assets/UI/W_Front.hbwidget.json"
+base = next(n for n in w["nodes"] + (json.loads(FRONT_FILE.read_text(encoding="utf-8"))["nodes"] if FRONT_FILE.exists() else []) if n["name"] == "Title")
 root = next(n for n in w["nodes"] if n["type"] == "Canvas")
 nodes = [root]
 
@@ -216,12 +217,13 @@ def keycap(name, label, x, y, w_):
          background="#1a2228ff", borderColor="#c9a24a", borderWidth=2, radius=5, padding=3)
 
 
-widths = [sum(26 if len(k) == 1 else 14 + 9 * len(k) for k in keys) + 4 * (len(keys) - 1) + 8 + 16 * len(label) for keys, label in KEYS]
+kw_of = lambda k: 26 if len(k) == 1 else 14 + sum(16 if ord(ch) > 0x3000 else 9 for ch in k)  # noqa: E731  한글은 글자가 넓음
+widths = [sum(kw_of(k) for k in keys) + 4 * (len(keys) - 1) + 8 + 16 * len(label) for keys, label in KEYS]
 x = -(sum(widths) + 28 * (len(KEYS) - 1)) / 2
 for g, ((keys, label), gw) in enumerate(zip(KEYS, widths)):
     cx = x
     for k, key in enumerate(keys):
-        kw = 26 if len(key) == 1 else 14 + 9 * len(key)
+        kw = kw_of(key)
         keycap(f"TitleKey{g}_{k}", key, cx + kw / 2, 26, kw)
         cx += kw + 4
     node(f"TitleKeyName{g}", "Text", "b", cx + 4 + 8 * len(label), 30, 16 * len(label) + 4, 22, 94, text=label, fontSize=14, color=SAND, align="left")
@@ -309,7 +311,7 @@ n = node("BagUseTouch", "TouchButton", "c", -50, 62, 84, 84, 49, inputKey="enter
 # ---- 일시정지 (Esc·P, 모바일 일시정지 버튼) ----
 touch("PauseTouch", "escape", "tr", 24, 24, 72, devices="all")
 full("MenuBack", "Panel", 85, background="#05090ad8", visible=False)
-node("MenuPanel", "Panel", "c", 0, 0, 420, 300, 85, visible=False, **{**FRAME, "background": "#0d1419ff"})
+node("MenuPanel", "Panel", "c", 0, 8, 420, 330, 85, visible=False, **{**FRAME, "background": "#0d1419ff"})
 node("MenuTitle", "Text", "c", 0, -112, 380, 40, 86, text="메뉴", fontSize=28, color=GOLD, align="center", visible=False)
 MENU = [("MenuResume", "계속하기", "escape"), ("MenuVolume", "효과음", ""), ("MenuQuit", "메인 화면으로", "F12")]
 for i, (name, label, key) in enumerate(MENU):
@@ -323,7 +325,7 @@ for side, key, dx in (("Down", "[", -140), ("Up", "]", 140)):  # 효과음 크�
     node(f"MenuVol{side}", "TouchButton", "c", dx, 24, 52, 52, 88, inputKey=key, inputMode="keys", text="◀" if side == "Down" else "▶",
          fontSize=18, color=GOLD, background="#00000000", pressed="#ffd56a33", hover="#ffd56a18", visible=False)
 node("MenuSelect", "Panel", "c", 0, -42, 348, 60, 86, background="#00000000", borderColor=GOLD, borderWidth=3, radius=10, visible=False)  # 고른 줄 테두리
-node("MenuHelp", "Text", "c", 0, 122, 400, 22, 86, text="W·S 고르기  ·  A·D 크기  ·  Enter 결정", fontSize=13, color=SAND, align="center", visible=False)
+node("MenuHelp", "Text", "c", 0, 140, 400, 22, 86, text="W·S 고르기  ·  A·D 크기  ·  Enter 결정", fontSize=13, color=SAND, align="center", visible=False)
 
 # ---- 쓰러짐 (기획서 2장 게임 오버): 화면을 붉게 덮고 문구 ----
 full("KoBack", "Panel", 70, background="#2a0508dd", visible=False)
@@ -341,8 +343,9 @@ node("SettleNote", "Text", "c", 0, 165, 600, 24, 74, text="", fontSize=14, color
 node("SettleHint", "Text", "c", 0, 205, 600, 24, 74, text="E · 클릭 · Enter: 확인", fontSize=15, color=SKY, align="center", visible=False)
 
 FRONT = ("Title", "Loading", "Select", "Ending", "Menu")  # C++ TopDownShooter::UiInstance와 같은 접두어
-front = [n for n in nodes[1:] if n["name"].startswith(FRONT)]
-w["nodes"] = [n for n in nodes if not n["name"].startswith(FRONT)]
+is_front = lambda n: n["name"].startswith(FRONT) and n["name"] != "Title"  # noqa: E731  "Title"은 HUD의 지역 이름
+front = [n for n in nodes[1:] if is_front(n)]
+w["nodes"] = [n for n in nodes if not is_front(n)]
 WIDGET.write_text(json.dumps(w, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 f = copy.deepcopy(w)
 f.update(name="W_Front", nodes=[copy.deepcopy(root)] + front)

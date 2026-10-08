@@ -60,7 +60,8 @@ def transform():
 
 def sprite(texture, w, h, order=0, asset=""):  # 순서 0 = 플레이어와 같은 층에서 Y 정렬
     p = copy.deepcopy(comp(objs["Enemy0"], "SpriteRenderer")["properties"])
-    p.update(texture="" if asset else texture, sprite=asset, width=w, height=h, pixelsPerUnit=PPU, sortingOrder=order, color=[1, 1, 1, 1], useCustomSize=False)
+    p.update(texture="" if asset else texture, sprite=asset, width=w, height=h, pixelsPerUnit=PPU, sortingOrder=order, color=[1, 1, 1, 1], useCustomSize=False,
+             sortPoint="feet")  # 발끝 정렬 (tools/make_shadows.py 여백 규칙)
     return {"id": "sprite", "name": "SpriteRenderer", "type": "SpriteRenderer", "properties": p}
 
 

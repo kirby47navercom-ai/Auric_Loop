@@ -72,7 +72,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "sortPoint": "feet"
           }
         },
         {
@@ -83,7 +84,7 @@
             "enabled": true,
             "center": [
               0,
-              0,
+              -0.72,
               0
             ],
             "collisionMode": "both",
@@ -96,8 +97,8 @@
             "restitution": 0,
             "restitutionCombine": "average",
             "density": 1,
-            "radius": 0.35,
-            "height": 1.8
+            "radius": 0.32,
+            "height": 0.64
           }
         },
         {
@@ -168,6 +169,30 @@
             "asset": "Assets/UI/W_Front.hbwidget.json",
             "instance": "Front",
             "showOnStart": true
+          }
+        },
+        {
+          "id": "hitbox",
+          "name": "CircleCollider2D",
+          "type": "CircleCollider2D",
+          "properties": {
+            "enabled": true,
+            "center": [
+              0,
+              -0.15,
+              0
+            ],
+            "collisionMode": "both",
+            "trigger": true,
+            "layer": 1,
+            "mask": 0,
+            "physicalMaterial": "",
+            "friction": 0,
+            "frictionCombine": "min",
+            "restitution": 0,
+            "restitutionCombine": "average",
+            "density": 1,
+            "radius": 0.42
           }
         }
       ]
@@ -519,6 +544,82 @@
       ]
     },
     {
+      "id": "PlayerShadow",
+      "name": "PlayerShadow",
+      "kind": "sprite",
+      "position": [
+        0,
+        -0.95,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_Shadow.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 0.9375,
+            "height": 0.375,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 5,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": false,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "parent": "Player"
+    },
+    {
       "id": "Director",
       "name": "Director",
       "kind": "empty",
@@ -731,6 +832,7 @@
             "sortingLayer": "ground",
             "maskInteraction": "none",
             "shading": "unlit",
+            "sortPoint": "feet",
             "blendMode": "opaque"
           }
         }
@@ -807,6 +909,7 @@
             "sortingLayer": "back",
             "maskInteraction": "none",
             "shading": "unlit",
+            "sortPoint": "feet",
             "blendMode": "opaque"
           }
         }
@@ -937,7 +1040,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "sortPoint": "feet"
           }
         }
       ],
@@ -1012,7 +1116,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "sortPoint": "feet"
           }
         }
       ],
@@ -1087,7 +1192,404 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "WindowLight-3.0",
+      "name": "WindowLight-3.0",
+      "kind": "sprite",
+      "position": [
+        -3.0,
+        2.8,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_FX_Glow_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              0.92,
+              0.7,
+              0.55
+            ],
+            "width": 3.2,
+            "height": 3.2,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -11,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet",
+            "blendMode": "additive"
+          }
+        },
+        {
+          "id": "animator",
+          "name": "Animator",
+          "type": "Animator",
+          "properties": {
+            "enabled": true,
+            "clip": "Assets/Animations/SA_Glow.hbspriteanimation.json",
+            "playOnStart": true,
+            "loop": true,
+            "speed": 0.25
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "WindowDust-3.0",
+      "name": "WindowDust-3.0",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        -3.0,
+        3.0,
+        0.2
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "particles",
+          "name": "ParticleSystem",
+          "type": "ParticleSystem",
+          "properties": {
+            "enabled": true,
+            "playOnStart": true,
+            "duration": 5,
+            "loop": true,
+            "startDelay": 0,
+            "lifetime": 4,
+            "lifetimeMax": 7,
+            "speed": 0,
+            "size": 0.09,
+            "endSize": 1,
+            "color": [
+              1,
+              0.95,
+              0.8,
+              0.7
+            ],
+            "endColor": [
+              1,
+              0.95,
+              0.8,
+              0
+            ],
+            "gravity": 0,
+            "simulationSpace": "world",
+            "maxParticles": 14,
+            "seed": 16272,
+            "rate": 1.6,
+            "rateOverDistance": 0,
+            "burstCount": 0,
+            "burstTime": 0,
+            "burstCycles": 1,
+            "burstInterval": 1,
+            "burstProbability": 1,
+            "shape": "box",
+            "radius": 0.2,
+            "angle": 20,
+            "extent": [
+              0.9,
+              1.2,
+              0
+            ],
+            "force": [
+              0.06,
+              0.05,
+              0
+            ],
+            "drag": 1,
+            "texture": "Assets/Sprites/Ambient/P_Dust.png",
+            "blend": "additive",
+            "sortingLayer": "default",
+            "sortingOrder": 40,
+            "maskInteraction": "none",
+            "sortMode": "none",
+            "minParticleSize": 0,
+            "maxParticleSize": 1
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "WindowLight3.0",
+      "name": "WindowLight3.0",
+      "kind": "sprite",
+      "position": [
+        3.0,
+        2.8,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "Assets/Sprites/FX/S_FX_Glow_0.hbsprite.json",
+            "drawMode": "simple",
+            "texture": "",
+            "color": [
+              1,
+              0.92,
+              0.7,
+              0.55
+            ],
+            "width": 3.2,
+            "height": 3.2,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -11,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet",
+            "blendMode": "additive"
+          }
+        },
+        {
+          "id": "animator",
+          "name": "Animator",
+          "type": "Animator",
+          "properties": {
+            "enabled": true,
+            "clip": "Assets/Animations/SA_Glow.hbspriteanimation.json",
+            "playOnStart": true,
+            "loop": true,
+            "speed": 0.25
+          }
+        }
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "WindowDust3.0",
+      "name": "WindowDust3.0",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        3.0,
+        3.0,
+        0.2
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "particles",
+          "name": "ParticleSystem",
+          "type": "ParticleSystem",
+          "properties": {
+            "enabled": true,
+            "playOnStart": true,
+            "duration": 5,
+            "loop": true,
+            "startDelay": 0,
+            "lifetime": 4,
+            "lifetimeMax": 7,
+            "speed": 0,
+            "size": 0.09,
+            "endSize": 1,
+            "color": [
+              1,
+              0.95,
+              0.8,
+              0.7
+            ],
+            "endColor": [
+              1,
+              0.95,
+              0.8,
+              0
+            ],
+            "gravity": 0,
+            "simulationSpace": "world",
+            "maxParticles": 14,
+            "seed": 73631,
+            "rate": 1.6,
+            "rateOverDistance": 0,
+            "burstCount": 0,
+            "burstTime": 0,
+            "burstCycles": 1,
+            "burstInterval": 1,
+            "burstProbability": 1,
+            "shape": "box",
+            "radius": 0.2,
+            "angle": 20,
+            "extent": [
+              0.9,
+              1.2,
+              0
+            ],
+            "force": [
+              0.06,
+              0.05,
+              0
+            ],
+            "drag": 1,
+            "texture": "Assets/Sprites/Ambient/P_Dust.png",
+            "blend": "additive",
+            "sortingLayer": "default",
+            "sortingOrder": 40,
+            "maskInteraction": "none",
+            "sortMode": "none",
+            "minParticleSize": 0,
+            "maxParticleSize": 1
           }
         }
       ],
@@ -1162,7 +1664,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "sortPoint": "feet"
           }
         }
       ],
@@ -1237,7 +1740,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "sortPoint": "feet"
           }
         }
       ],
@@ -1669,17 +2173,17 @@
           "sprite": {
             "texture": "Assets/Sprites/Furniture_Sofa.png",
             "width": 2.5,
-            "height": 2.0625
+            "height": 2.5625
           },
           "collider": {
             "extent": [
               1.0,
-              0.41250000000000003,
+              0.5125000000000001,
               0.5
             ],
             "center": [
               0,
-              -0.61875,
+              -0.7687499999999999,
               0
             ],
             "enabled": true
@@ -1744,17 +2248,17 @@
           "sprite": {
             "texture": "Assets/Sprites/Furniture_Bed.png",
             "width": 2.5,
-            "height": 2.0625
+            "height": 2.5625
           },
           "collider": {
             "extent": [
               1.0,
-              0.41250000000000003,
+              0.5125000000000001,
               0.5
             ],
             "center": [
               0,
-              -0.61875,
+              -0.7687499999999999,
               0
             ],
             "enabled": true
@@ -1819,17 +2323,17 @@
           "sprite": {
             "texture": "Assets/Sprites/Furniture_Fridge.png",
             "width": 2.5,
-            "height": 2.0625
+            "height": 2.5625
           },
           "collider": {
             "extent": [
               1.0,
-              0.41250000000000003,
+              0.5125000000000001,
               0.5
             ],
             "center": [
               0,
-              -0.61875,
+              -0.7687499999999999,
               0
             ],
             "enabled": true
@@ -1894,17 +2398,17 @@
           "sprite": {
             "texture": "Assets/Sprites/Furniture_TV.png",
             "width": 2.5,
-            "height": 2.0625
+            "height": 2.5625
           },
           "collider": {
             "extent": [
               1.0,
-              0.41250000000000003,
+              0.5125000000000001,
               0.5
             ],
             "center": [
               0,
-              -0.61875,
+              -0.7687499999999999,
               0
             ],
             "enabled": true
@@ -1982,7 +2486,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "sortPoint": "feet"
           }
         }
       ],
@@ -2057,7 +2562,8 @@
             "useCustomSize": false,
             "sortingLayer": "overlay",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "sortPoint": "feet"
           }
         }
       ],
@@ -2119,17 +2625,17 @@
           "sprite": {
             "texture": "Assets/Sprites/Town/Desk.png",
             "width": 1.3125,
-            "height": 1.5625
+            "height": 2.0625
           },
           "collider": {
             "extent": [
               0.525,
-              0.3125,
+              0.41250000000000003,
               0.5
             ],
             "center": [
               0,
-              -0.46875,
+              -0.61875,
               0
             ],
             "enabled": true
@@ -2187,9 +2693,9 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "",
+            "sprite": "Assets/Sprites/Town/S_PottedPlant_0.hbsprite.json",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Town/PottedPlant.png",
+            "texture": "",
             "color": [
               1,
               1,
@@ -2197,7 +2703,7 @@
               1
             ],
             "width": 1.0,
-            "height": 1.4375,
+            "height": 1.9375,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -2207,7 +2713,8 @@
             "useCustomSize": false,
             "sortingLayer": "default",
             "maskInteraction": "none",
-            "shading": "unlit"
+            "shading": "unlit",
+            "sortPoint": "feet"
           }
         },
         {
@@ -2236,6 +2743,18 @@
               0.4,
               0.5
             ]
+          }
+        },
+        {
+          "id": "animator",
+          "name": "Animator",
+          "type": "Animator",
+          "properties": {
+            "enabled": true,
+            "clip": "Assets/Animations/SA_PottedPlant.hbspriteanimation.json",
+            "playOnStart": true,
+            "loop": true,
+            "speed": 1.0
           }
         }
       ],

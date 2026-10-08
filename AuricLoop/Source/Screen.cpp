@@ -114,7 +114,11 @@ void TopDownShooter::TitleFx(float delta,bool visible){
     for(auto* n:{"TitleTorchL","TitleTorchR"})UiVisible(n,false);
     for(int i=0;i<8;++i){if(i<7)UiVisible("TitleStar"+std::to_string(i),false);UiVisible("TitleDust"+std::to_string(i),false);}
     return;}
-  if(titleTime<0)titleTime=0;titleTime+=delta;const float t=titleTime;
+  if(titleTime<0){titleTime=0;  // 로딩 동안 숨겼던 것을 다시 보임
+    for(int g=0;g<7;++g){UiVisible("TitleKeyName"+std::to_string(g),true);for(int k=0;k<keyCounts[g];++k)UiVisible("TitleKey"+std::to_string(g)+"_"+std::to_string(k),true);}
+    for(auto* n:{"TitleTorchL","TitleTorchR"})UiVisible(n,true);
+    for(int i=0;i<8;++i){if(i<7)UiVisible("TitleStar"+std::to_string(i),true);UiVisible("TitleDust"+std::to_string(i),true);}}
+  titleTime+=delta;const float t=titleTime;
   // 횃불: 두 겹 사인 + 작은 흔들림으로 불규칙하게 밝기·크기
   for(int i=0;i<2;++i){const float f=0.5f+0.25f*std::sin(t*9.1f+i*2)+0.15f*std::sin(t*23.7f+i*5)+0.1f*std::sin(t*3.3f+i);
     const std::string n=i?"TitleTorchR":"TitleTorchL";UiOpacity(n,0.55f+0.4f*f);UiScale(n,0.92f+0.12f*f);}

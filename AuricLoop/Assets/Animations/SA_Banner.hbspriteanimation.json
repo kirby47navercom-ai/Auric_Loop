@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "name": "SA_Banner",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Props/S_Banner_0.hbsprite.json",
+      "duration": 0.35
+    },
+    {
+      "sprite": "Assets/Sprites/Props/S_Banner_1.hbsprite.json",
+      "duration": 0.35
+    },
+    {
+      "sprite": "Assets/Sprites/Props/S_Banner_2.hbsprite.json",
+      "duration": 0.35
+    },
+    {
+      "sprite": "Assets/Sprites/Props/S_Banner_3.hbsprite.json",
+      "duration": 0.35
+    },
+    {
+      "sprite": "Assets/Sprites/Props/S_Banner_4.hbsprite.json",
+      "duration": 0.35
+    },
+    {
+      "sprite": "Assets/Sprites/Props/S_Banner_5.hbsprite.json",
+      "duration": 0.35
+    },
+    {
+      "sprite": "Assets/Sprites/Props/S_Banner_6.hbsprite.json",
+      "duration": 0.35
+    },
+    {
+      "sprite": "Assets/Sprites/Props/S_Banner_7.hbsprite.json",
+      "duration": 0.35
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}
