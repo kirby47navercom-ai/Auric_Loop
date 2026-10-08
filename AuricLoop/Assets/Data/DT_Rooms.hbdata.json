@@ -25,8 +25,8 @@
   ],
   "rows": {
     "Start": {
-      "minHalf": 6,
-      "maxHalf": 6,
+      "minHalf": 8,
+      "maxHalf": 8,
       "square": true,
       "waves": "",
       "monsterDrop": false
