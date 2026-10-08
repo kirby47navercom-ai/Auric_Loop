@@ -281,8 +281,8 @@ n = node("CineTop", "Panel", "t", 0, 0, 0, 90, 65, background="#000000ff", visib
 n["slot"].update(anchors=[0, 0, 1, 0], offset=[0, 0, 0, 90], alignment=[0, 0])
 n = node("CineBottom", "Panel", "b", 0, 0, 0, 90, 65, background="#000000ff", visible=False)
 n["slot"].update(anchors=[0, 1, 1, 1], offset=[0, -90, 0, 90], alignment=[0, 0])
-node("BossName", "Text", "c", 0, 150, 900, 60, 66, text="해골 대장", fontSize=46, color="#ffd666", align="center", visible=False)
-node("BossSub", "Text", "c", 0, 205, 900, 30, 66, text="", fontSize=20, color="#ff9a7a", align="center", visible=False)
+node("BossName", "Text", "c", 0, 235, 900, 60, 66, text="해골 대장", fontSize=46, color="#ffd666", align="center", visible=False)
+node("BossSub", "Text", "c", 0, 285, 900, 30, 66, text="", fontSize=20, color="#ff9a7a", align="center", visible=False)
 node("BossBarName", "Text", "t", 0, 96, 520, 22, 22, text="", fontSize=15, color="#ffd666", align="center", visible=False)
 node("BossBarBack", "Panel", "t", 0, 119, 524, 18, 21, background="#1a0d0dcc", borderColor="#c9a24a99", borderWidth=1, radius=4, visible=False)
 node("BossBar", "ProgressBar", "t", 0, 122, 514, 12, 22, value=1, max=1, fillDirection="leftToRight", fillTexture="", backgroundTexture="",

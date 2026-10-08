@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "name": "SA_SkeletonCaptain_Roar",
+  "loop": false,
+  "playRate": 1,
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Roar.hbsprite.json",
+      "duration": 0.3
+    }
+  ]
+}

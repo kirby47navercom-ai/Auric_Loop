@@ -24,7 +24,7 @@ void TopDownShooter::MoveCamera(const hb::Vec3& position,const hb::Vec3& aim,boo
     auto fit=[](float t,float lo,float hi,float view){return hi-lo<=2*view?(lo+hi)/2:std::clamp(t,lo+view,hi-view);};
     target.x=fit(target.x,camMin.x,camMax.x,vw);target.y=fit(target.y,camMin.y,camMax.y,vh);}
   target.z=hb::Scene::GetPosition(camera).z;
-  if(!cameraReady){cameraAt=target;cameraReady=true;}else cameraAt=hb::VectorMath::VInterpTo(cameraAt,target,delta,rules->CameraFollow);
+  if(!cameraReady){cameraAt=target;cameraReady=true;}else cameraAt=hb::VectorMath::VInterpTo(cameraAt,target,delta,cutscene>0?14.f:rules->CameraFollow);  // 컷신은 빠르게 보스를 잡음
   auto at=cameraAt;
   if(shake>0){shake-=delta;const float a=rules->ShakeAmount*shakePower;if(shake<=0)shakePower=1;at.x+=a*(std::rand()%201-100)/100;at.y+=a*(std::rand()%201-100)/100;}  // 때렸을 때 흔들림
   hb::Scene::SetPosition(camera,at);
@@ -69,7 +69,11 @@ void TopDownShooter::Update(float delta){
   hb::Vec3 aim;const bool hasAim=hb::Input::GetMouseWorldPosition(hb::Vec3{0,0,1},position,aim);
   // 모바일 공격 버튼은 K. 터치 위치는 조준이 아니라서 자동 조준·바라보는 방향으로 카메라를 끈다
   touchMode=hb::Input::GetLastDevice()=="touch";  // 모바일 공격 버튼도 LeftMouseButton. 마지막 입력 장치로 자동 조준을 정함
-  if(cutscene>0)MoveCamera(cutsceneAt,cutsceneAt,false,delta);  // 보스 등장 컷신: 카메라가 보스 자리로
+  if(cutscene>0){  // 보스 등장 컷신: 카메라가 보스(나타나기 전엔 나올 자리)를 빠르게 잡고 살짝 확대
+    hb::Vec3 at=cutsceneAt;for(auto* e:Enemies())if(e->Boss){at=hb::Scene::GetPosition(e);at.y+=0.6f;}
+    MoveCamera(at,at,false,delta);
+    if(camera){cutZoom=std::max(0.72f,cutZoom-delta*0.8f);hb::Components::SetFloat(camera,"Camera","orthographicSize",rules->CameraSize*cutZoom);}}
+  else if(cutZoom<1){cutZoom=std::min(1.f,cutZoom+delta*1.5f);if(camera)hb::Components::SetFloat(camera,"Camera","orthographicSize",rules->CameraSize*cutZoom);}  // 끝나면 원래 크기로
   else MoveCamera(position,touchMode?position+facing*(rules->CameraLeadMax/rules->CameraLead*0.5f):aim,(hasAim||touchMode)&&Phase>=2,delta);
   if(!Paused)UpdateAmbient(delta,position,Phase>=2&&hb::Input::IsKeyDown("LeftMouseButton"));
   {const bool adv=hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("space");
@@ -81,8 +85,9 @@ void TopDownShooter::Update(float delta){
    if(tipTime>0&&(tipTime-=delta)<=0){UiVisible("TipBack",false);UiVisible("Tip",false);}
    if(cutscene>0){  // 보스 등장: 1초 마법진 → 보스 → 1.3초 포효(흔들림)·이름 자막 → 끝나면 대사
      cutscene-=delta;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
-     if(!roared&&cutscene<1.9f){roared=true;shake=0.7f;Sfx("BossCharge");hb::Camera::Flash(hb::Color{1,0.85f,0.4f,0.35f},0.3f);
-       for(auto* e:Enemies())if(e->Boss){UiText("BossName",e->DisplayName);UiText("BossSub","황금에 잠식된 1층의 문지기");}
+     UpdateFx(delta);  // 등장 마법진 등 이펙트도 제때 사라지게 (안 그러면 컷신 내내 보스 몸 위에서 빛남)
+     if(!roared&&cutscene<1.9f){roared=true;Shake(0.7f,1.8f);Sfx("BossCharge");hb::Camera::Flash(hb::Color{1,0.85f,0.4f,0.12f},0.2f);  // 번쩍임은 약하게 (보스가 묻히지 않게)
+       for(auto* e:Enemies())if(e->Boss){UiText("BossName",e->DisplayName);UiText("BossSub","황금에 잠식된 1층의 문지기");e->Roar(1.6f);}
        for(auto* n:{"BossName","BossSub"})UiVisible(n,true);}
      if(cutscene<=0){for(auto* n:{"CineTop","CineBottom","BossName","BossSub"})UiVisible(n,false);
        for(auto* e:Enemies())if(e->Boss)Talk("Boss",{{"boss",e->DisplayName}});}

@@ -105,7 +105,7 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   std::string LeapLandSprite = "Assets/Sprites/Enemies/Skeleton/S_Skeleton_LeapLand.hbsprite.json";      // 착지 (내려찍고 무릎) — 빈틈 동안 유지
   HB_PROPERTY(BlueprintReadWrite)
-  std::string RoarSprite = "";   // 보스: 분노할 때 포효 자세
+  std::string RoarClip = "";     // 보스: 등장·분노 때 포효 자세 클립 (걷기 애니메이션 위에 덮어 재생)
   // 공격 직전 반짝임 자리 "눈x,눈y;무기끝x,무기끝y" (m, 오른쪽 볼 때). tools/make_blueprints.py가 자세 그림에서 찾음
   HB_PROPERTY(BlueprintReadWrite)
   std::string GlintSlash = "";
@@ -163,6 +163,7 @@ public:
   bool TakeHit(float damage,const hb::Vec3& push,float stunSeconds,float burnSeconds);  // 쓰러지면 true
   void Stun(float seconds);
   void CancelAttack(){EndAttack();}  // 풀로 돌려보낼 때 (도약 중 꺼 둔 충돌 복구)
+  void Roar(float seconds){if(RoarClip.empty())return;hb::Sprites::PlayAnimation(this,RoarClip,false);roarTime=seconds;}  // 보스 등장·분노 포효 자세
   float burnLeft=0,burnDamage=0;
   bool burnedOut=false;          // 화상으로 체력이 다함 (게임 규칙이 처리)
   bool Parked=false;             // 장면에 화면 밖으로 대기 중 (게임 규칙이 꺼내 씀, 실행 중 생성은 끊김)
@@ -689,7 +690,7 @@ private:
   std::vector<Critter> critters;bool ambientReady=false;hb::Vec3 camMin{0,0,0},camMax{0,0,0};
   float walkDist=0,stillTime=0,fidgetTime=0;int fidget=0,lastFidget=0;bool slashB=false;hb::Vec3 animPos{0,0,0};  // 새 시트 애니메이션 상태
   Interactable* promptTarget=nullptr;std::string promptText;float hintTime=0,areaBannerTime=0;bool bannerPending=false,mapHeld=false;  // 상호작용 말풍선·알림·지역 이름
-  float hitStopLeft=0,shakePower=1;  // 맞는 순간 아주 잠깐 느려짐(남은 실제 시간), 흔들림 세기 배율
+  float hitStopLeft=0,shakePower=1,cutZoom=1;  // 맞는 순간 아주 잠깐 느려짐(남은 실제 시간), 흔들림 세기 배율
   float tipTime=0,titleTime=0;bool pauseHeld=false,bagOpen=false;int menuPick=0,menuHeld=0;
   std::map<hb::Actor*,hb::Vec3> frozenVelocity;   // 일시정지 동안 멈춘 탄의 속도
   // 정산 화면: 줄이 하나씩 나타나고 남은 빚이 줄어드는 숫자 연출

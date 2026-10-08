@@ -147,7 +147,7 @@ ENEMIES = {
                                                         "Enemy.AttackClip": "Assets/Animations/SA_SkeletonCaptain_Slash.hbspriteanimation.json",
                                                         "Enemy.WalkClip": "Assets/Animations/SA_SkeletonCaptain_Walk.hbspriteanimation.json",
                                                         "Enemy.WindupSprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_SlashWindup.hbsprite.json",
-                                                        "Enemy.RoarSprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Roar.hbsprite.json",
+                                                        "Enemy.RoarClip": "Assets/Animations/SA_SkeletonCaptain_Roar.hbspriteanimation.json",
                                                         "Enemy.SlashRange": 1.8, "Enemy.MeleeWindup": 0.7, "Enemy.AttackCooldown": 2.0,
                                                         "Enemy.LungeRange": 0, "Enemy.LeapRange": 0,
                                                         "Enemy.GlintSlash": glint("SkeletonCaptain", "SlashWindup"), "Enemy.GlintDash": glint("SkeletonCaptain", "Dash", "front"),

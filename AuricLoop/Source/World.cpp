@@ -142,6 +142,7 @@ void TopDownShooter::EnterRoom(int room){
   waves.clear();std::stringstream ss(row.value("waves",std::string("S,S,S")));std::string w;while(std::getline(ss,w,'|'))if(!w.empty())waves.push_back(w);
   wave=0;monsterDrop=row.value("monsterDrop",false);
   if(!waves.empty())SpawnWave(waves[0],false);
+  if(r.kind=="Boss")for(auto& p:pending)p.left=std::min(p.left,0.5f);  // 보스는 컷신 시작 0.5초 만에 나타남 (카메라가 비추는 동안)
   Hud();
 }
 

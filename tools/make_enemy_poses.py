@@ -37,7 +37,7 @@ ENEMIES = {
         "Slash": ([("SlashHit", 0.3)], False), "Dash": ([("Dash", 0.3)], True), "Cast": ([("Cast", 0.3)], False),
         "JumpCrouch": ([("JumpCrouch", 0.3)], False), "JumpAir": ([("JumpAir", 0.3)], True), "Slam": ([("Slam", 0.3)], False),
         "Summon": ([("Summon", 0.3)], False), "Spin": ([("Spin_0", 0.07), ("Spin_1", 0.07), ("Spin_2", 0.07)], True),
-        "SlashWindup": ([("SlashWindup", 0.3)], False)}),
+        "SlashWindup": ([("SlashWindup", 0.3)], False), "Roar": ([("Roar", 0.3)], False)}),
 }
 
 

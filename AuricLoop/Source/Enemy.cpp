@@ -46,7 +46,7 @@ void Enemy::Tick(float delta){
     if(rainTime>0&&(rainTime-=delta)<=0){  // 금화 비 떨어짐: 자리마다 금화 줄기·불꽃, 그 자리에 서 있으면 맞음
       for(const auto& s:rainSpots){game->Effect("GoldDrop",hb::Vec3{s.x,s.y+1.1f,0.35f});if(Length(game->PlayerPosition()+hb::Vec3{0,-0.9f,0}-s)<1.2f)game->DamagePlayer(1,s);}
       game->Shake(0.25f,1.6f);game->Sfx("Coin");game->Sfx("Impact");rainSpots.clear();}
-    if(roarTime>0&&(roarTime-=delta)<=0)hb::Sprites::PlayAnimation(this,WalkClip,true);
+    if(roarTime>0&&(roarTime-=delta)<=0&&(mode==Mode::Prowl||mode==Mode::Halt))hb::Sprites::PlayAnimation(this,WalkClip,true);  // 포효 끝: 패턴 자세 중이면 그대로
     if(mode==Mode::Spin){  // 회전 베기: 천천히 다가오며 0.25초마다 둘레를 벰
       Move(dir*(Speed*0.7f));
       if((spinTick-=delta)<=0){spinTick=0.25f;const auto at=hb::Scene::GetPosition(this);game->Sfx("Swing");
@@ -261,6 +261,6 @@ bool Enemy::TakeHit(float damage,const hb::Vec3& push,float stunSeconds,float bu
   if(!Boss){stun=std::max(stun,stunSeconds);sentVelocity=push;hb::Physics::SetVelocity(this,sentVelocity);}
   else if(!phase2&&Hp<=MaxHp*0.5f&&Hp>0.001f){  // 보스 2페이즈: 체력 절반 아래면 분노 (빨라지고 탄이 늘어남)
     phase2=true;Speed*=1.25f;DashSpeed*=1.15f;RingCount+=4;if(auto* game=TopDownShooter::Current)game->BossEnraged(this);
-    if(!RoarSprite.empty()){hb::Sprites::SetSprite(this,RoarSprite);roarTime=1.0f;}}  // 분노: 잠깐 포효 자세
+    Roar(1.0f);}  // 분노: 잠깐 포효 자세
   return Hp<=0.001f;  // 소수 오차로 0에 못 닿는 경우
 }
