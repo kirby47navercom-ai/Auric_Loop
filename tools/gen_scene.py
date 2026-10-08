@@ -434,6 +434,12 @@ def standing(oid, file, x, base, depth=0.8, solid=True, half_width=None, sway=No
     return o
 
 
+def low(oid, file, x, base, sway, speed=1.0):
+    """꽃밭·덤불처럼 낮은 물체: 몸통 전체를 막아 캐릭터가 그 안으로 들어가지 않게 (들어가면 물체가 캐릭터를 덮어 발만 보임)"""
+    w, h = size_of(file)
+    return standing(oid, file, x, base, depth=h - 2 * pad_of(file) - 0.15, half_width=w * 0.45, sway=sway, speed=speed)
+
+
 rng = random.Random(5)
 
 
@@ -474,8 +480,8 @@ for k, (x, y) in enumerate(LAMPS):
     hub.append(standing(f"Lamp{k}", PROP + "Lamp.png", x, y, 0.4, half_width=0.25))
     hub.append(animate(glow(f"Lamp{k}Glow", x, y + h - pad_of(PROP + "Lamp.png") - 0.75, 3.2, order=-2), "SA_Glow", rng.uniform(0.8, 1.25),
                        "Assets/Sprites/FX/S_FX_Glow_0.hbsprite.json"))
-hub += [standing("FlowerBedA", TOWN + "FlowerBed.png", -3.2, 5.6, solid=False, sway="FlowerBed", speed=1.1),
-        standing("FlowerBedB", TOWN + "FlowerBed.png", 3.2, 5.6, solid=False, sway="FlowerBed", speed=0.9),
+hub += [low("FlowerBedA", TOWN + "FlowerBed.png", -3.2, 5.6, "FlowerBed", speed=1.1),
+        low("FlowerBedB", TOWN + "FlowerBed.png", 3.2, 5.6, "FlowerBed", speed=0.9),
         standing("NoticeBoard", PROP + "NoticeBoard.png", 7.2, 7.0, 0.4),
         standing("Bench0", PROP + "Bench.png", -5, -6.9, 0.4), standing("Bench1", PROP + "Bench.png", 5, -6.9, 0.4),
         standing("PlantA", TOWN + "PottedPlant.png", -7, -7.0, 0.4, sway="PottedPlant"),
@@ -484,7 +490,7 @@ hub += [standing("FlowerBedA", TOWN + "FlowerBed.png", -3.2, 5.6, solid=False, s
         standing("PlantD", TOWN + "PottedPlant.png", 7, -7.0, 0.4, sway="PottedPlant", speed=1.1),
         standing("Well", TOWN + "Well.png", 0, -2.2), standing("WellBarrel", PROP + "Barrel.png", 1.9, -2.5, 0.4)]
 for k, (x, y) in enumerate([(-3.4, -1.2), (3.6, -0.9), (-3.0, -4.6), (3.2, -4.4)]):  # 광장 가운데 우물을 꽃밭이 둘러쌈
-    hub.append(standing(f"WellFlowers{k}", TOWN + "FlowerBed.png", x, y, solid=False, sway="FlowerBed", speed=0.8 + 0.1 * k))
+    hub.append(low(f"WellFlowers{k}", TOWN + "FlowerBed.png", x, y, "FlowerBed", speed=0.8 + 0.1 * k))
 
 # 서쪽: 내 집 (문 앞에서 E로 들어가면 원룸 장면). 장작·덤불, 굴뚝 연기, 길 남쪽은 울타리 친 작은 마당
 hw_, hh_ = size_of(TOWN + "PlayerHouse.png")
@@ -493,12 +499,12 @@ hub += [sprite_obj("PlayerHouse", TOWN + "PlayerHouse.png", -24, house_y, order=
         block("HouseBody", -24 - hw_ / 2 + 0.3, 0.6, -24 + hw_ / 2 - 0.3, 4.5),
         interactable("HomeEnter", "Assets/UI/Map/map_link.png", -24, 1.4, "Home", solid=False),
         particles("HouseSmoke", -24 + (42 - 73) / 32, house_y + (120 - 11) / 32, **{**SMOKE, "rate": 0.8}),
-        standing("Firewood", TOWN + "Firewood.png", -20.6, 0.5), standing("HomeBush", TOWN + "Bush.png", -27.8, 0.7, solid=False, sway="Bush"),
-        standing("HomeFlowers", TOWN + "FlowerBed.png", -21.2, -3.4, solid=False, sway="FlowerBed")]
+        standing("Firewood", TOWN + "Firewood.png", -20.6, 0.5), low("HomeBush", TOWN + "Bush.png", -27.8, 0.7, "Bush"),
+        low("HomeFlowers", TOWN + "FlowerBed.png", -21.2, -3.4, "FlowerBed")]
 for k, x in enumerate([-30.2, -28.4, -26.6, -24.8, -19.4, -17.6]):  # 길 남쪽 울타리 (가운데는 마당 입구)
     hub.append(standing(f"HomeFence{k}", TOWN + "Fence.png", x, -2.4, 0.4, half_width=0.88))
-hub += [standing("YardFlowersA", TOWN + "FlowerBed.png", -28.6, -5, solid=False, sway="FlowerBed", speed=0.8),
-        standing("YardFlowersB", TOWN + "FlowerBed.png", -25.8, -5.4, solid=False, sway="FlowerBed", speed=1.15),
+hub += [low("YardFlowersA", TOWN + "FlowerBed.png", -28.6, -5, "FlowerBed", speed=0.8),
+        low("YardFlowersB", TOWN + "FlowerBed.png", -25.8, -5.4, "FlowerBed", speed=1.15),
         standing("YardBarrel", PROP + "Barrel.png", -22.6, -6, 0.4)]
 
 # 북서쪽: 울타리 친 텃밭 (꽃밭 두 줄)
@@ -506,7 +512,7 @@ for k, x in enumerate([-24.2, -22.4, -20.6, -18.8, -17.0]):
     hub += [standing(f"GardenFenceS{k}", TOWN + "Fence.png", x, 5.6, 0.4, half_width=0.88),
             standing(f"GardenFenceN{k}", TOWN + "Fence.png", x, 10.4, 0.4, half_width=0.88)]
 for k, (x, y) in enumerate([(-23.4, 7.0), (-21.2, 7.0), (-19.0, 7.0), (-16.8, 7.0), (-23.4, 8.8), (-21.2, 8.8), (-19.0, 8.8), (-16.8, 8.8)]):
-    hub.append(standing(f"GardenBed{k}", TOWN + "FlowerBed.png", x, y, solid=False, sway="FlowerBed", speed=0.75 + 0.07 * k))
+    hub.append(low(f"GardenBed{k}", TOWN + "FlowerBed.png", x, y, "FlowerBed", speed=0.75 + 0.07 * k))
 hub += [standing("GardenBarrel", PROP + "Barrel2.png", -25.6, 6.0, 0.4), standing("GardenWood", TOWN + "Firewood.png", -15.0, 6.2, 0.4)]
 
 # 동쪽 가게 거리: 대부업 사무소(수금원)·인테리어 공방(세공사)·문 닫은 가게 넷(판자로 막힌 문 앞에서 E로 안내)
@@ -538,9 +544,9 @@ hub += [particles("WorkshopSmoke", 27.5 + (166 - 114) / 32, 3.6 + wh_ / 2 - 0.25
 for k, x in enumerate([20, 36, 44]):
     hub.append(standing(f"StreetBench{k}", PROP + "Bench.png", x, -4.6, 0.4))
 for k, x in enumerate([18, 28, 39, 50]):
-    hub.append(standing(f"StreetFlowers{k}", TOWN + "FlowerBed.png", x, -6.4, solid=False, sway="FlowerBed", speed=rng.uniform(0.8, 1.2)))
+    hub.append(low(f"StreetFlowers{k}", TOWN + "FlowerBed.png", x, -6.4, "FlowerBed", speed=rng.uniform(0.8, 1.2)))
 for k, x in enumerate([23, 33.5, 45]):
-    hub.append(standing(f"StreetBush{k}", TOWN + "Bush.png", x, -6.8, solid=False, sway="Bush", speed=rng.uniform(0.8, 1.2)))
+    hub.append(low(f"StreetBush{k}", TOWN + "Bush.png", x, -6.8, "Bush", speed=rng.uniform(0.8, 1.2)))
 
 
 def free(x, y):
@@ -554,7 +560,7 @@ def free(x, y):
 bushes = [(x, -9.6 + rng.uniform(-0.2, 0.3)) for x in [-29 + 3.3 * i for i in range(25)]] + [(-30.8, y) for y in [-5, 0, 5, 10]] +          [(53.4, y) for y in [-7, -2, 2, 8, 12]] + [(x, 14.6) for x in [-28, -22, -12, -6, 6, 13, 19, 26, 33, 40, 47, 52]] +          [(x, 12.2) for x in [31.5, 37.5, 43.5, 49.5]]
 for k, (x, y) in enumerate(bushes):
     if free(x, y) or y > 12:
-        hub.append(standing(f"EdgeBush{k}", TOWN + "Bush.png", x, y, solid=False, sway="Bush", speed=rng.uniform(0.7, 1.3)))
+        hub.append(low(f"EdgeBush{k}", TOWN + "Bush.png", x, y, "Bush", speed=rng.uniform(0.7, 1.3)))
 
 # 나무: 마을 안쪽 몇 그루(잎이 떨어짐) + 가장자리를 두 줄로 막는 숲 (앞줄은 흔들림·충돌, 뒷줄은 그림만)
 def tree_at(oid, x, base, front=True, leaves=False):

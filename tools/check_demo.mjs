@@ -272,3 +272,14 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   assert.equal(r.objects.filter(o => /^(Bed|Fridge|TV)$/.test(o.id)).length, 0, '침대·냉장고·TV 없음');
   console.log('빈 원룸 → 소파 들이기 검사 통과');
 }
+
+// Esc 메뉴: 게임 시간이 멈춤(적·시간 그대로), 다시 Esc면 이어짐. 가만히 둬도 처음 화면으로 돌아가지 않음
+{
+  const snap = {};
+  await runProject(project, {scene: scene('Test_Valen'), frames: 560, delta: 1 / 60, inputs: [...press(5, 'F9'), ...press(300, 'escape'), ...press(500, 'escape')],
+    onFrame: (f, vm) => { if ([320, 480, 540].includes(f)) snap[f] = {t: vm.core.time, e: vm.objects.filter(o => /^Skeleton/.test(o.id) && o.position[1] > -150).map(o => o.position.join()).join('|'),
+      paused: vm.objects.find(o => o.id === 'Director').nativeProperties.Paused}; }});
+  assert.ok(snap[320].paused && snap[480].paused && Math.abs(snap[480].t - snap[320].t) < 0.01 && snap[480].e === snap[320].e, `멈춘 동안 시간·적 그대로 (${JSON.stringify(snap)})`);
+  assert.ok(!snap[540].paused && snap[540].t > snap[480].t + 0.3, '다시 Esc면 시간이 흐름');
+  console.log('Esc 시간 정지 검사 통과');
+}

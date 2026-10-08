@@ -26,12 +26,6 @@
   "AuricLoop.hbproject": {
     "id": "2eb37a92-f98b-456b-a602-d07cecce32bc"
   },
-  "Source/DoorController.cpp": {
-    "id": "5bd2864a-5544-4a2c-913c-feb1799fb8c6"
-  },
-  "Source/DoorController.h": {
-    "id": "092734b6-0ab5-4647-9b84-6ec9a57403cf"
-  },
   "Assets/Sprites/Floor_Stone.png": {
     "id": "917c0ffe-5486-4b9b-8dbb-ad6df6cbd35f"
   },
@@ -805,9 +799,6 @@
   },
   "Assets/Tiles/T_World.png": {
     "id": "bda63253-4ade-438c-b8f2-5aeca6e3be87"
-  },
-  "Source/AuricSession.cpp": {
-    "id": "28fa75e0-4ac5-4060-b3f2-5f34b52d43aa"
   },
   "Source/AuricSession.h": {
     "id": "62426173-97b7-4ef2-b668-ab51db3932d8"
@@ -2668,5 +2659,8 @@
   },
   "Assets/Data/DA_Preload.hbdata.json": {
     "id": "e27994ef-307d-4f87-b49f-05e0c1db50ac"
+  },
+  "Source/AuricSession.cpp": {
+    "id": "28fa75e0-4ac5-4060-b3f2-5f34b52d43aa"
   }
 }

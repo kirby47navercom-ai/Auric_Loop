@@ -51,11 +51,11 @@ void TopDownShooter::Update(float delta){
   {// 배경음: 거점·던전·보스방·귀환
    const std::string music=Sound(Returning?"Return":area<0?"Hub":roomKind=="Boss"?"Boss":"Dungeon");
    if((Phase>=2||selecting)&&music!=currentMusic){hb::Audio::PlayMusic(music,0.5f);currentMusic=music;}}  // 첫 입력 전이면 엔진이 기다렸다 틂
-  {// 부스 운영 (기획서 10장): F12 바로 처음으로, 60초 무입력이면 처음으로, 엔딩 카드에서 아무 키나 누르면 처음으로
+  {// 부스 운영 (기획서 10장): F12 바로 처음으로, 엔딩 카드에서 아무 키나 누르면 처음으로 (무입력 자동 복귀는 테스트에 불편해서 뺌)
    bool any=hb::VectorMath::Vector2Length(hb::Input::GetMouseDelta())>0;
    for(auto* k:{"w","a","s","d","e","q","space","enter","tab","LeftMouseButton","1","2","3","4","5"})any=any||hb::Input::IsKeyDown(k);
    const bool anyPressed=any&&!anyHeld;anyHeld=any;idleTime=any?0:idleTime+delta;
-   if(hb::Input::IsKeyDown("F12")||(idleTime>=rules->IdleReset&&!(Phase<2&&!selecting))||(ending&&(anyPressed||AnyPressed(true)))){ResetToTitle();return;}
+   if(hb::Input::IsKeyDown("F12")||(ending&&(anyPressed||AnyPressed(true)))){ResetToTitle();return;}
    if(ending)return;
    if(Phase>=2&&!Returning&&!ReturnSuccess&&area>=0&&roomKind!="Boss"){runTime+=delta;
      if(runTime>=rules->RunNotice){if(hint.empty()){hint="10분이 지났어요 - F10을 누르면 보스방 앞으로";Hud();}

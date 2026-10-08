@@ -17,7 +17,7 @@
 //
 // 파일: BP 클래스 선언은 엔진이 이 헤더만 읽으므로 여기에 모으고, 구현은 역할별 .cpp로 나눈다 (Source/ 전체가 한 모듈로 빌드됨)
 //   TopDownShooter.cpp  한 프레임(Update)·카메라      Combat.cpp    적 생성·피해·플레이어 공격·적 탄·이펙트
-//   Enemy.cpp           적 행동 (상태 머신이 부름)     World.cpp     구역 전환·던전 방·웨이브·정산·일시정지·가방·대사
+//   Enemy.cpp           적 행동 (상태 머신이 부름)     World.cpp     구역 전환·던전 방·웨이브·정산·메뉴·가방·대사, 살아 있는 맵(새·나비·박쥐·쥐·구름 그늘)
 //   Dungeon.h/.cpp      던전 층 생성·배치               Interact.cpp  상호작용(E)·제작(Q)
 //   Screen.cpp          HUD·캐릭터 그림·대화창·인트로    Common.h      여러 파일이 쓰는 수학·입력 도우미
 
@@ -557,7 +557,7 @@ private:
   std::vector<Fx> fxs;
   void PlayFx(const std::string& clip,float length,const hb::Vec3& at,float angle,float glow,bool flipX,bool flipY=false);  // glow: 블룸용 발광  // clip: 스프라이트 애니메이션, length초 뒤 풀로
   void UpdateFx(float delta);
-  void UpdateAmbient(float delta,const hb::Vec3& player,bool attacking);  // 새·나비·구름 그늘·박쥐·쥐 (Ambient.cpp)
+  void UpdateAmbient(float delta,const hb::Vec3& player,bool attacking);  // 새·나비·구름 그늘·박쥐·쥐 (World.cpp)
   float WeaponDamage() const;
   int Weight() const{return Ore*30+Herb*5+Monster*15;}
   // 상호작용·UI
