@@ -26,6 +26,7 @@ void TopDownShooter::MoveCamera(const hb::Vec3& position,const hb::Vec3& aim,boo
   target.z=hb::Scene::GetPosition(camera).z;
   if(!cameraReady){cameraAt=target;cameraReady=true;}else cameraAt=hb::VectorMath::VInterpTo(cameraAt,target,delta,cutscene>0?14.f:rules->CameraFollow);  // 컷신은 빠르게 보스를 잡음
   auto at=cameraAt;
+  at=at+kick;kick=kick*std::exp(-delta*14);  // 때린 방향으로 밀렸다 빠르게 돌아옴
   if(shake>0){shake-=delta;const float a=rules->ShakeAmount*shakePower;if(shake<=0)shakePower=1;at.x+=a*(std::rand()%201-100)/100;at.y+=a*(std::rand()%201-100)/100;}  // 때렸을 때 흔들림
   hb::Scene::SetPosition(camera,at);
   if(inDungeon)map.FollowBackdrop(at);
@@ -71,9 +72,11 @@ void TopDownShooter::Update(float delta){
   touchMode=hb::Input::GetLastDevice()=="touch";  // 모바일 공격 버튼도 LeftMouseButton. 마지막 입력 장치로 자동 조준을 정함
   if(cutscene>0){  // 보스 등장 컷신: 카메라가 보스(나타나기 전엔 나올 자리)를 빠르게 잡고 살짝 확대
     hb::Vec3 at=cutsceneAt;for(auto* e:Enemies())if(e->Boss){at=hb::Scene::GetPosition(e);at.y+=0.6f;}
-    MoveCamera(at,at,false,delta);
-    if(camera){cutZoom=std::max(0.72f,cutZoom-delta*0.8f);hb::Components::SetFloat(camera,"Camera","orthographicSize",rules->CameraSize*cutZoom);}}
-  else if(cutZoom<1){cutZoom=std::min(1.f,cutZoom+delta*1.5f);if(camera)hb::Components::SetFloat(camera,"Camera","orthographicSize",rules->CameraSize*cutZoom);}  // 끝나면 원래 크기로
+    MoveCamera(at,at,false,delta);cutZoom=std::max(0.72f,cutZoom-delta*0.8f);}
+  else if(cutZoom<1)cutZoom=std::min(1.f,cutZoom+delta*1.5f);  // 끝나면 원래 크기로
+  {punch=std::max(0.f,punch-delta*4);const float ortho=rules->CameraSize*cutZoom*(1-0.05f*punch);  // 처치·크리티컬 순간 살짝 확대
+   if(camera&&std::abs(ortho-lastOrtho)>0.001f){lastOrtho=ortho;hb::Components::SetFloat(camera,"Camera","orthographicSize",ortho);}}
+  if(chainTime>0)chainTime-=delta;
   else MoveCamera(position,touchMode?position+facing*(rules->CameraLeadMax/rules->CameraLead*0.5f):aim,(hasAim||touchMode)&&Phase>=2,delta);
   if(!Paused)UpdateAmbient(delta,position,Phase>=2&&hb::Input::IsKeyDown("LeftMouseButton"));
   {const bool adv=hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("space");

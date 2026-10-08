@@ -95,6 +95,7 @@ SFX = {
     "Select": (tone(0.04, square, 880, vol=0.25, duty=0.25), 0.4),
     "Type": (tone(0.025, square, 620, vol=0.18, duty=0.125, decay=0.012), 0.25),
     "Swing": (tone(0.16, noise, 0, vol=0.32, attack=0.03, decay=0.05), 0.45),  # 적이 휘두르는 바람 소리
+    "Crack": (mix(tone(0.07, noise, 0, vol=0.5, decay=0.015), tone(0.05, square, 900, 300, vol=0.25, duty=0.25, decay=0.02)), 0.55),  # 뼈가 부서지는 소리
     "Impact": (mix(tone(0.1, noise, 0, vol=0.45, decay=0.02), tone(0.14, square, 140, 60, vol=0.4, duty=0.5, decay=0.05)), 0.6),  # 묵직하게 맞음  # 대화 글자마다 (C++가 음높이를 조금씩 바꿈)
     "BossCharge": (tone(0.6, square, 70, 160, vol=0.4, duty=0.5, attack=0.1, vibrato=0.05), 0.7),
 }

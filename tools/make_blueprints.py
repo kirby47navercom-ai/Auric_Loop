@@ -169,7 +169,7 @@ def _sfx(k):
     a = json.loads((PROJECT / f"Assets/Audio/S_{k}.hbaudioasset.json").read_text(encoding="utf-8"))
     return f"{k}={a['clip']}|{a['volume']}"
 SOUNDS = [_sfx(k) for k in ["Slash", "Arrow", "Bolt", "Boom", "Hit", "Kill", "Hurt", "Coin", "Dodge", "DoorHit", "DoorOpen",
-                            "Flash", "Craft", "Gather", "Select", "BossCharge"]] + ["Type=Assets/Audio/Type.wav|0.25", "Swing=Assets/Audio/Swing.wav|0.45", "Impact=Assets/Audio/Impact.wav|0.6"]
+                            "Flash", "Craft", "Gather", "Select", "BossCharge"]] + ["Type=Assets/Audio/Type.wav|0.25", "Swing=Assets/Audio/Swing.wav|0.45", "Impact=Assets/Audio/Impact.wav|0.6", "Crack=Assets/Audio/Crack.wav|0.55"]
 SOUNDS += [f"{k}=Assets/Audio/S_BGM_{k}.hbaudioasset.json" for k in ["Hub", "Dungeon", "Boss", "Return"]]
 rules = blueprint("BP_AuricRules", "AuricRules", [transform()], native_from=True, defaults={
     "AuricRules.Debts": [9800, 14500, 31700],  # 기획서 6-4

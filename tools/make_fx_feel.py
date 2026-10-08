@@ -144,3 +144,19 @@ disc = Image.new("RGBA", (128, 128))
 ImageDraw.Draw(disc).ellipse([1, 1, 126, 126], fill=WARN_FILL)
 disc.save(FX / "FX_WarnCircleFill.png")
 print("반짝임·범위 예고 그림 완료")
+
+# ---- 처치 파편: 쓰러진 적이 흩어지는 조각 (C++가 튀고 구르게 움직이고 바닥에 잠시 남김) ----------------------
+BONE = {"K": (40, 30, 30, 255), "W": (238, 230, 210, 255), "S": (196, 186, 166, 255), "B": (60, 110, 200, 255),
+        "P": (120, 70, 150, 255), "p": (80, 46, 104, 255), "G": (240, 186, 84, 255), "g": (176, 120, 44, 255)}
+DEBRIS = {
+    "Skull": ["  KKKK  ", " KWWWWK ", "KWWWWWWK", "KWKWWKWK", "KWBWWBWK", " KWWWWK ", "  KWSK  ", "   KK   "],
+    "Bone": ["KK    KK", "KWKKKKWK", " KWWWWK ", "KWKKKKWK", "KK    KK"],
+    "Rib": ["  KKK ", " KWWSK", "KWK KK", "KWK   ", " KK   "],
+    "Shard": [" KK ", "KWSK", "KWK ", " K  "],
+    "Cloth": [" KKK ", "KPPpK", "KPPPK", " KpK ", "  K  "],
+    "Gold": [" KK ", "KGGK", "KGgK", " KK "],
+}
+for name, rows in DEBRIS.items():
+    im = pixels(rows, BONE)
+    save_clip("Debris" + name, [im.resize((im.width * 3, im.height * 3), Image.NEAREST)], 1.0)  # 캐릭터 옆에서 잘 보이게 3배
+print("처치 파편 그림 완료")

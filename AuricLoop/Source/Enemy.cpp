@@ -31,6 +31,8 @@ void Enemy::Tick(float delta){
   auto* game=TopDownShooter::Current;
   float distance;const auto dir=ToPlayer(distance);
   if(stun>0)stun-=delta;
+  if(squash>0){squash-=delta;const float k=std::max(0.f,squash)/(Boss?0.09f:0.14f);  // 찌그러짐: 옆으로 퍼지고 위아래로 눌림 → 원래대로
+    hb::Scene::SetScale(this,hb::Vec3{1+(Boss?0.12f:0.3f)*k,1-(Boss?0.1f:0.24f)*k,1});}
   if(flash>0&&(flash-=delta)<=0)Tint(false);
   if(burnLeft>0){burnLeft-=delta;if(!Invulnerable){Hp-=burnDamage*delta;burnedOut=Hp<=0.001f;}}
   // 상태 머신 파라미터·뒤집기는 바뀔 때만 보낸다 (적 수 × 매 프레임 명령을 줄임)
@@ -256,6 +258,7 @@ void Enemy::Stun(float seconds){stun=std::max(stun,seconds);sentVelocity={0,0,0}
 
 bool Enemy::TakeHit(float damage,const hb::Vec3& push,float stunSeconds,float burnSeconds){
   if(!Invulnerable){Hp-=damage;if(burnSeconds>0){burnLeft=burnSeconds;}}
+  lastPush=push;squash=Boss?0.09f:0.14f;  // 맞으면 몸이 납작해졌다가 튀어 돌아옴 (Tick)
   // 맞은 순간 하얗게 번쩍, 보스가 아니면 밀려나며 잠깐 경직(상태 머신이 맞는 그림)
   if(flash<=0){hb::Sprites::Flash(this,0.08f,Boss?0.45f:0.65f);flash=Boss?0.2f:0.1f;}  // 연타 중엔 번쩍임을 띄엄띄엄 (계속 하얗게 덮이지 않게)
   if(!Boss){stun=std::max(stun,stunSeconds);sentVelocity=push;hb::Physics::SetVelocity(this,sentVelocity);}

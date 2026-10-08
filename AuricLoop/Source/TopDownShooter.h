@@ -163,6 +163,7 @@ public:
   bool TakeHit(float damage,const hb::Vec3& push,float stunSeconds,float burnSeconds);  // 쓰러지면 true
   void Stun(float seconds);
   void CancelAttack(){EndAttack();}  // 풀로 돌려보낼 때 (도약 중 꺼 둔 충돌 복구)
+  hb::Vec3 lastPush{0,0,0};float squash=0;  // 마지막으로 맞은 방향(쓰러질 때 날아갈 쪽), 맞아서 찌그러짐
   void Roar(float seconds){if(RoarClip.empty())return;hb::Sprites::PlayAnimation(this,RoarClip,false);roarTime=seconds;}  // 보스 등장·분노 포효 자세
   float burnLeft=0,burnDamage=0;
   bool burnedOut=false;          // 화상으로 체력이 다함 (게임 규칙이 처리)
@@ -576,7 +577,7 @@ private:
   void UpdatePrompt(float delta);  // 상호작용 말풍선을 대상 머리 위로 (Screen.cpp)
   void AreaBanner(float delta,bool show);  // 도착한 곳 이름을 가운데에 크게 (Screen.cpp)
   void Notify(const std::string& text){hint=text;hintTime=2.5f;Hud();}
-  void HitStop(float seconds){if(Paused)return;hitStopLeft=std::max(hitStopLeft,seconds);hb::Clock::SetTimeScale(0.06f);}  // 타격감: 맞은 순간 멈칫  // 물체와 상관없는 알림 (위 가운데, 잠깐)
+  void HitStop(float seconds,float scale=0.06f){if(Paused)return;hitStopLeft=std::max(hitStopLeft,seconds);hb::Clock::SetTimeScale(scale);}  // 타격감: 맞은 순간 멈칫 (scale>0.06이면 슬로모션)  // 물체와 상관없는 알림 (위 가운데, 잠깐)
   bool NewSheet() const{return Character<(int)rules->AnimSets.size()&&rules->AnimSets[Character]==1;}
   void AnimateSheet(float delta,bool moving,const char* dir);  // 새 시트 (Screen.cpp)
   hb::Vec3 Muzzle(const hb::Vec3& from) const;  // 화살·카드가 나가는 자리  // 타이틀: 횃불 빛 깜빡임, 별 반짝임, 떠오르는 금가루
@@ -604,7 +605,10 @@ private:
   void Give(std::vector<hb::Actor*>& pool,hb::Actor* actor);  // 풀로 돌려놓기
   std::vector<hb::Actor*> bulletPool,shotPool,coinPool,fxPool;
   // 이펙트: 풀에서 꺼낸 그림 오브젝트에 프레임을 차례로 바꿔 끼운다 (베기·타격 불꽃·적 쓰러짐)
-  struct Fx{hb::Actor* actor;float left;};
+  // 이펙트 하나. moving이면 바닥(ground) 위를 미끄러지고 높이(h)로 튀며 돈다 (처치 파편·쓰러지는 몸)
+  struct Fx{hb::Actor* actor;float left;bool moving=false;hb::Vec3 ground{0,0,0},vel{0,0,0};float h=0,vh=0,spin=0,angle=0;bool settled=false;};
+  void Debris(const hb::Vec3& at,const hb::Vec3& dir,const std::string& who);  // 처치: 뼈·천·금 조각이 튀어 흩어짐
+  hb::Vec3 kick{0,0,0};float punch=0,lastOrtho=0;int hitChain=0;float chainTime=0;  // 타격감: 때린 방향으로 화면 밀림, 처치 확대, 연타 음높이
   std::vector<Fx> fxs;
   void PlayFx(const std::string& clip,float length,const hb::Vec3& at,float angle,float glow,bool flipX,bool flipY=false);  // glow: 블룸용 발광  // clip: 스프라이트 애니메이션, length초 뒤 풀로
   void UpdateFx(float delta);

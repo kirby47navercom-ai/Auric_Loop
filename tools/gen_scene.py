@@ -392,7 +392,7 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
             objects.append(bp_obj(f"{name}{k}", f"Enemies/BP_{name}", -60 + k * 4 + (40 if code != "S" else 0), -300 - (k % 2) * 4,
                                   components={"pool": {"initiallyActive": True}}, tags=["Enemy." + code]))
     # 탄·골드·이펙트 풀 (TopDownShooter::Prewarm)
-    for tag, prefab, count in (("Pool.EnemyShot", "PF_EnemyShot", 32), ("Pool.PlayerShot", "PF_PlayerShot", 16), ("Pool.Coin", "PF_Coin", 16), ("Pool.Fx", "PF_Fx", 32)):
+    for tag, prefab, count in (("Pool.EnemyShot", "PF_EnemyShot", 32), ("Pool.PlayerShot", "PF_PlayerShot", 16), ("Pool.Coin", "PF_Coin", 16), ("Pool.Fx", "PF_Fx", 64)):
         base = json.loads((ASSETS / f"Prefabs/{prefab}.hbprefab.json").read_text(encoding="utf-8"))["objects"][0]
         for k in range(count):
             o = copy.deepcopy(base)

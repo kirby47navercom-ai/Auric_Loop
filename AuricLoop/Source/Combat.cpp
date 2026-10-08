@@ -32,6 +32,7 @@ void TopDownShooter::ParkEnemy(Enemy* e){
   if(!pooled){hb::Scene::Destroy(e);return;}
   if(e->brainRunning){hb::States::Stop(e);e->brainRunning=false;}
   hb::Physics::SetVelocity(e,hb::Vec3{0,0,0});e->Parked=true;e->burnLeft=0;
+  e->squash=0;hb::Scene::SetScale(e,hb::Vec3{1,1,1});  // 찌그러진 채로 풀에 들어가지 않게
   hb::Scene::SetPosition(e,hb::Vec3{-60.f+float(std::rand()%120),-300.f-float(std::rand()%20),0});
 }
 
@@ -147,8 +148,15 @@ void TopDownShooter::UpdateFx(float delta){
       else{hb::Transform t;t.position=it->from+it->dir*(it->length*k/2);t.position.z=0.025f;t.rotation=hb::Vec3{0,0,Angle(it->dir)};
         hb::Scene::SetTransform(it->fill,t);hb::Sprites::SetSize(it->fill,hb::Vec2{it->length*k,it->width});}}
     ++it;}
-  for(auto it=fxs.begin();it!=fxs.end();)
-    if((it->left-=delta)<=0){Give(fxPool,it->actor);it=fxs.erase(it);}else ++it;
+  for(auto it=fxs.begin();it!=fxs.end();){
+    if((it->left-=delta)<=0){hb::Scene::SetScale(it->actor,hb::Vec3{1,1,1});Give(fxPool,it->actor);it=fxs.erase(it);continue;}
+    if(it->moving&&!it->settled){  // 튀는 조각: 바닥을 미끄러지며(마찰) 높이로 튕기고 돎. 멈추면 더 옮기지 않음 (명령 줄임)
+      auto& f=*it;f.ground=f.ground+f.vel*delta;f.vel=f.vel*std::max(0.f,1-delta*(f.h>0?1.2f:5.f));
+      f.vh-=28*delta;f.h+=f.vh*delta;if(f.h<0){f.h=0;f.vh=-f.vh*0.35f;f.spin*=0.5f;if(f.vh<1.2f)f.vh=0;}
+      f.angle+=f.spin*delta;
+      if(f.h<=0&&f.vh==0&&Length(f.vel)<0.15f)f.settled=true;
+      hb::Transform t;t.position=f.ground+hb::Vec3{0,f.h,0};t.position.z=0.3f;t.rotation=hb::Vec3{0,0,f.angle};hb::Scene::SetTransform(f.actor,t);}
+    ++it;}
 }
 
 void TopDownShooter::Prewarm(){
@@ -168,20 +176,41 @@ void TopDownShooter::KillEnemy(Enemy* e){
   DropCoin(at,e->GoldMin+Kills%std::max(1,e->GoldMax-e->GoldMin+1));
   if(e->Boss){HasReturnItem=true;Monster++;boss=nullptr;BossHp=0;Hud();Tip(7);}
   if(monsterDrop&&fightingRoom>=0&&pending.empty()&&wave+1>=waves.size()&&Enemies().size()<=1){Monster++;Tip(5);}  // 이 방 마지막 해골은 마물 소재 확정
-  PlayFx(e->DeathClip,0.9f,at,0,0,e->Flipped());  // 쓰러지는 그림은 이펙트로 (적은 바로 화면 밖 대기로)
-  Effect("BoneBurst",hb::Vec3{at.x,at.y+0.2f,0.3f});shake=std::max(shake,rules->ShakeTime*1.5f);
+  const hb::Vec3 dir=Normal(e->lastPush,hb::Vec3{e->Flipped()?1.f:-1.f,0,0});
+  PlayFx(e->DeathClip,0.9f,at,0,0,e->Flipped());  // 쓰러지는 그림은 이펙트로 (적은 바로 화면 밖 대기로). 맞은 방향으로 밀려나며 쓰러짐
+  if(!fxs.empty()&&fxs.back().left==0.9f){auto& f=fxs.back();f.moving=true;f.ground=at;f.vel=dir*(e->Boss?2.f:7.f);f.vh=e->Boss?0.f:3.f;}
+  Effect("BoneBurst",hb::Vec3{at.x,at.y+0.2f,0.3f});Shake(rules->ShakeTime*2,1.6f);
+  Debris(at,dir,e->Boss?"Boss":e->KeepDistance>0?"Mage":"Skeleton");
+  Sfx("Crack",0.9f+float(std::rand()%20)/100);punch=1;kick=kick+dir*0.35f;
+  if(e->Boss)HitStop(0.7f,0.15f);else HitStop(0.14f,0.22f);  // 처치 순간 잠깐 느려짐 (마지막 일격을 크게)
   ParkEnemy(e);
 }
 
+void TopDownShooter::Debris(const hb::Vec3& at,const hb::Vec3& dir,const std::string& who){
+  // 처치 파편: 맞은 방향 쪽으로 튀어 오르고 바닥에 몇 번 튕긴 뒤 굴러 멈춰 잠시 남음 (UpdateFx)
+  const std::vector<const char*> parts=who=="Boss"?std::vector<const char*>{"Skull","Gold","Gold","Gold","Gold","Bone","Bone","Shard","Gold"}
+    :who=="Mage"?std::vector<const char*>{"Skull","Cloth","Cloth","Cloth","Shard","Bone"}:std::vector<const char*>{"Skull","Bone","Bone","Rib","Rib","Shard","Shard"};
+  const hb::Vec3 side{-dir.y,dir.x,0};
+  for(const char* p:parts){
+    PlayFx(std::string("Assets/Animations/SA_Debris")+p+".hbspriteanimation.json",2.6f,at,0,0,std::rand()%2!=0);
+    if(fxs.empty()||fxs.back().left!=2.6f)break;  // 풀이 모자라면 그만
+    auto& f=fxs.back();f.moving=true;f.ground=at+hb::Vec3{0,-0.5f,0};
+    f.vel=dir*(2.f+float(std::rand()%50)/10)+side*(float(std::rand()%61-30)/10);f.vh=4.f+float(std::rand()%50)/10;
+    f.h=0.5f;f.spin=float(std::rand()%1441-720);}
+}
+
 bool TopDownShooter::HitEnemy(Enemy* e,const hb::Vec3& push,float damage){
-  Hits++;Sfx("Hit");
+  Hits++;hitChain=chainTime>0?std::min(hitChain+1,12):0;chainTime=0.8f;  // 끊지 않고 이어 때릴수록 타격음이 조금씩 높아짐
+  Sfx("Hit",0.92f+hitChain*0.035f+float(std::rand()%5)/100);
+  kick=kick+Normal(push,hb::Vec3{1,0,0})*(e->Boss?0.1f:0.18f);  // 때린 방향으로 화면이 살짝 밀림
   const bool crit=std::rand()%10000<int(rules->CritChance*100);  // 크리티컬: 피해 2배, 불꽃 두 겹·크게 흔들림
-  if(crit){damage*=rules->CritDamage;const auto c=hb::Scene::GetPosition(e);Effect("Hit",hb::Vec3{c.x,c.y+0.4f,0.31f},45,2.f);shake=rules->ShakeTime*3;}
+  if(crit){damage*=rules->CritDamage;const auto c=hb::Scene::GetPosition(e);Effect("Hit",hb::Vec3{c.x,c.y+0.4f,0.31f},45,2.f);Shake(rules->ShakeTime*3,2.f);
+    Sfx("Crack",1.15f);punch=std::max(punch,0.6f);}
   // 타격감: 맞은 자리에 불꽃, 화면 살짝 흔들림, 밀려남
   const auto at=hb::Scene::GetPosition(e);
   PlayFx(rules->HitClip,0.16f,hb::Vec3{at.x-push.x*0.3f,at.y-push.y*0.3f+0.2f,0.3f},float(std::rand()%360),1.5f,false);
   shake=std::max(shake,rules->ShakeTime);HitStop(crit?0.07f:e->Boss?0.05f:0.035f);  // 때린 순간 아주 잠깐 멈칫 (묵직하게)
-  Effect("Impact",hb::Vec3{at.x-push.x*0.3f,at.y-push.y*0.3f+0.2f,0.32f},0,1.2f);
+  Effect("Impact",hb::Vec3{at.x-push.x*0.3f,at.y-push.y*0.3f+0.2f,0.32f},0,0.5f);  // 발광을 낮춰 화면이 하얗게 번지지 않게
   const bool dead=e->TakeHit(Returning?0:damage,push*rules->Knockback,rules->HitStun,Enchant==2?rules->BurnTime:0);
   if(Enchant==2)e->burnDamage=WeaponDamage()*rules->BurnRate;
   if(e->Boss)BossHp=e->Hp;
@@ -191,7 +220,8 @@ bool TopDownShooter::HitEnemy(Enemy* e,const hb::Vec3& push,float damage){
 
 void TopDownShooter::Slash(const hb::Vec3& position,const std::vector<Enemy*>& enemies){
   // 검 부채꼴 베기: 적에게 피해, 범위 안의 적 탄은 지움 (기획: 투사체 삭제)
-  attackCooldown=rules->SwordInterval;Swings++;attackAnim=0.3f;Sfx("Slash");
+  attackCooldown=rules->SwordInterval;Swings++;attackAnim=0.3f;Sfx("Slash",0.95f+float(std::rand()%10)/100);
+  if(!NewSheet()&&knockTimer<=0){knock=facing*3.5f;knockTimer=0.07f;}  // 휘두르며 반 걸음 내딛음 (새 시트는 그림 속 내딛기로)
   if(NewSheet())slashB=(((int)std::floor(walkDist/rules->Stride)%4+4)%4)>=2;  // 왼발이 앞이면 오른발로(B), 아니면 왼발로(A). 서서 연달아 베면 A·B가 번갈아 나옴
   PlayFx(rules->SlashClip,0.2f,position+facing*0.9f+hb::Vec3{0,0.2f,0.2f},Angle(facing),0.5f,false,(Swings&1)!=0);  // 번갈아 위·아래로 벰  // 캐릭터 그림과 따로, 공격 방향으로 돌린 베기
   const float minDot=std::cos(rules->SwordHalfAngle*3.14159265f/180),reach=rules->SwordRange+(Enchant==3?rules->SlashExtend:0);
