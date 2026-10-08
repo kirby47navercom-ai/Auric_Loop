@@ -232,7 +232,7 @@ S, M, C = "Skeleton_", "SkeletonMage_", "SkeletonCaptain_"
 fsm("FSM_Skeleton", "appear", PARAMS, [
     state("appear", "등장", 120, 150, 0.6, enter="Halt", clip=S + "Walk"),
     state("chase", "추격", 360, 150, enter="Chase", clip=S + "Walk"),
-    state("swing", "휘두르기", 600, 150, 0.4, enter="Chase", clip=S + "Attack", loop=False),  # 붙으면 칼을 휘두름 (피해는 접촉)
+    state("swing", "휘두르기", 600, 150, 0.4, enter="Chase", clip=S + "WalkAttack", loop=False),  # 걸으며 휘두름 (근접 공격 판정은 Enemy.cpp)
     state("stun", "경직", 360, 320, enter="Stagger", clip=S + "Hurt", loop=False),
 ], [go("appear_chase", "appear", "chase", exit_time=1), go("chase_swing", "chase", "swing", conditions=[("Near", "equal", True)]),
     go("swing_chase", "swing", "chase", exit_time=1), *stunned, go("stun_chase", "stun", "chase", conditions=[("Stunned", "equal", False)])])
@@ -252,7 +252,7 @@ fsm("FSM_SkeletonMage", "appear", PARAMS, [
 #   체력 절반 아래면 분노 (빨라지고 탄·돌진·졸개가 늘어남, C++ Enemy::TakeHit)
 fsm("FSM_SkeletonCaptain", "intro", PARAMS, [
     state("intro", "등장", 120, 60, 3.4, enter="Halt", clip=C + "Walk"),
-    state("rest", "맴돌며 쉬기", 120, 260, 1.3, enter="Prowl", clip=C + "Walk"),
+    state("rest", "맴돌며 쉬기", 120, 260, 2.6, enter="Prowl", clip=C + "Walk"),  # 맴도는 동안 대검 베기 예고 (Enemy.cpp)
     state("charge", "연속 돌진", 420, 40, initial="windup"),
     state("windup", "돌진 예고", 420, 120, 0.8, enter="Windup", parent="charge", clip=C + "Attack", loop=False),
     state("dash", "돌진", 640, 120, 0.45, enter="Dash", parent="charge", clip=C + "Walk"),
