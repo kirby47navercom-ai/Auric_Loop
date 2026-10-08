@@ -104,11 +104,42 @@ enemy_layer = dict(layer=2, mask=(1 << 0) | (1 << 2))  # 벽(층 0)·다른 적(
 write(BP / "Enemies/BP_Enemy.hbblueprint.json", blueprint(
     "BP_Enemy", "Enemy", [transform(), sprite("", 0.90625, 1.375, asset=ENEMY_SPRITE.format("Skeleton", "Walk_0")), box((0.35, 0.3, 0.1), (0, -0.35, 0), **enemy_layer), body(), pool(16)],
     nodes, edges, native_from=True))
+def glint(who, pose, tip="top"):
+    """공격 직전 반짝일 자리: "눈x,눈y;무기끝x,무기끝y" (m, 원점 기준, 오른쪽 보는 그림). 자세 그림에서 찾음
+    눈: 파란 눈 픽셀(해골) 또는 해골 머리(흰 부분)의 앞쪽 가운데. 무기 끝: tip=top이면 가장 위 픽셀(치켜든 무기), front면 가운데 높이에서 가장 앞"""
+    from PIL import Image  # noqa: PLC0415
+    sp = json.loads((PROJECT / f"Assets/Sprites/Enemies/{who}/S_{who}_{pose}.hbsprite.json").read_text(encoding="utf-8"))
+    im = Image.open(PROJECT / sp["texture"]).convert("RGBA")
+    w, h = im.size
+    px = im.load()
+    solid = [(x, y) for y in range(h) for x in range(w) if px[x, y][3] > 128]
+    blue = [(x, y) for x, y in solid if px[x, y][2] > 140 and px[x, y][2] > px[x, y][0] + 40 and y < h * 0.6]
+    skull = [(x, y) for x, y in solid if min(px[x, y][:3]) > 190 and y < h * 0.6]
+    if blue:
+        ex, ey = sum(x for x, _ in blue) / len(blue), sum(y for _, y in blue) / len(blue)
+    else:
+        x0, x1, y0, y1 = min(x for x, _ in skull), max(x for x, _ in skull), min(y for _, y in skull), max(y for _, y in skull)
+        ex, ey = x0 + 0.68 * (x1 - x0), y0 + 0.55 * (y1 - y0)
+    top = min(y for _, y in solid)
+    if tip == "top":
+        tx, ty = max(x for x, y in solid if y == top), top + 1
+    else:
+        band = [(x, y) for x, y in solid if h * 0.35 < y < h * 0.85]
+        tx = max(x for x, _ in band)
+        ys = [y for x, y in band if x == tx]
+        ty = sum(ys) / len(ys)
+    to_m = lambda x, y: ((x - w / 2) / PPU, ((h - y) - sp["pivot"][1] * h) / PPU)  # noqa: E731
+    (a, b), (c, d) = to_m(ex, ey), to_m(tx, ty)
+    return f"{a:.2f},{b:.2f};{c:.2f},{d:.2f}"
+
+
 ENEMIES = {
     "BP_Skeleton": ("Skeleton", {"Enemy.DisplayName": "해골", "Enemy.Brain": "Assets/AI/FSM_Skeleton.hbstatemachine.json",
-                                 "Enemy.WindupSprite": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_SlashWindup.hbsprite.json"}),  # 자세 그림: tools/make_enemy_poses.py
+                                 "Enemy.WindupSprite": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_SlashWindup.hbsprite.json",  # 자세 그림: tools/make_enemy_poses.py
+                                 "Enemy.GlintSlash": glint("Skeleton", "SlashWindup"), "Enemy.GlintLunge": glint("Skeleton", "LungeReady", "front"),
+                                 "Enemy.GlintLeap": glint("Skeleton", "LeapCrouch")}),
     "BP_SkeletonMage": ("SkeletonMage", {"Enemy.DisplayName": "해골 마법사", "Enemy.Brain": "Assets/AI/FSM_SkeletonMage.hbstatemachine.json",
-                                                   "Enemy.KeepDistance": 6, "Enemy.GoldMin": 2, "Enemy.GoldMax": 3}),
+                                                   "Enemy.KeepDistance": 6, "Enemy.GoldMin": 2, "Enemy.GoldMax": 3, "Enemy.GlintCast": glint("SkeletonMage", "CastReady")}),
     "BP_SkeletonCaptain": ("SkeletonCaptain", {"Enemy.DisplayName": "해골 대장", "Enemy.ShotClip": "Assets/Animations/SA_BossOrb.hbspriteanimation.json", "Enemy.Brain": "Assets/AI/FSM_SkeletonCaptain.hbstatemachine.json",
                                                         "Enemy.Boss": True, "Enemy.MaxHp": 40, "Enemy.Speed": 3.6, "Enemy.Radius": 1.4,
                                                         "Enemy.GoldMin": 30, "Enemy.GoldMax": 30,
@@ -118,7 +149,9 @@ ENEMIES = {
                                                         "Enemy.WindupSprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_SlashWindup.hbsprite.json",
                                                         "Enemy.RoarSprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Roar.hbsprite.json",
                                                         "Enemy.SlashRange": 1.8, "Enemy.MeleeWindup": 0.7, "Enemy.AttackCooldown": 2.0,
-                                                        "Enemy.LungeRange": 0, "Enemy.LeapRange": 0}),
+                                                        "Enemy.LungeRange": 0, "Enemy.LeapRange": 0,
+                                                        "Enemy.GlintSlash": glint("SkeletonCaptain", "SlashWindup"), "Enemy.GlintDash": glint("SkeletonCaptain", "Dash", "front"),
+                                                        "Enemy.GlintCast": glint("SkeletonCaptain", "Cast"), "Enemy.GlintLeap": glint("SkeletonCaptain", "JumpCrouch")}),
 }
 from PIL import Image  # noqa: E402
 for name, (who, defaults) in ENEMIES.items():

@@ -374,7 +374,18 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
     objects.append(dust)
     for k in range(2):
         objects += [critter(f"Bat{k}", "Ambient.Bat", "Bat_0", "SA_Bat", 0, -400), critter(f"Rat{k}", "Ambient.Rat", "Rat_0", "SA_Rat", 0, -400)]
-    parked(objects, "Pool.Warn", 3, lambda i: sprite_obj(i, "Assets/Sprites/FX/FX_Warning.png", 0, 0, order=-3, width=4, height=1.4))  # 보스 돌진 예고선
+    # 공격 범위 예고 (C++ Warn·WarnCircle): 테두리 + 시간에 따라 차오르는 안쪽. 바닥 위·캐릭터 아래 층
+    def warn(i, file, w, h, order, sliced=False):
+        o = sprite_obj(i, "Assets/Sprites/FX/" + file, 0, 0, order=order, width=w, height=h)
+        sp = comp(o, "SpriteRenderer")["properties"]
+        sp.update(sortingLayer="overlay", sortPoint="center")
+        if sliced:
+            sp.update(drawMode="sliced", borderLeft=3, borderRight=3, borderTop=3, borderBottom=3)
+        return o
+    parked(objects, "Pool.Warn", 10, lambda i: warn(i, "FX_WarnBand.png", 4, 1.4, 30, sliced=True))
+    parked(objects, "Pool.WarnFill", 10, lambda i: warn(i, "FX_WarnFill.png", 1, 1.4, 31))
+    parked(objects, "Pool.WarnCircle", 8, lambda i: warn(i, "FX_WarnCircle.png", 3, 3, 30))
+    parked(objects, "Pool.WarnCircleFill", 8, lambda i: warn(i, "FX_WarnCircleFill.png", 1, 1, 31))
     # 적 풀: 웨이브·소환·귀환 때 C++가 꺼내 씀 (태그 Enemy.기호 = BP_AuricRules.Enemies). 엔진 풀(PooledActor)은 꺼 둔 채 시작하므로 켜서 놓음
     for code, name, count in (("S", "Skeleton", 10), ("M", "SkeletonMage", 6), ("C", "SkeletonCaptain", 1)):
         for k in range(count):

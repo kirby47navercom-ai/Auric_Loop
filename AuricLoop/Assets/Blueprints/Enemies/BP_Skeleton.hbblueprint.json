@@ -19,6 +19,9 @@
       "Enemy.DisplayName": "해골",
       "Enemy.Brain": "Assets/AI/FSM_Skeleton.hbstatemachine.json",
       "Enemy.WindupSprite": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_SlashWindup.hbsprite.json",
+      "Enemy.GlintSlash": "0.30,0.14;-0.47,0.78",
+      "Enemy.GlintLunge": "-0.12,0.08;0.78,-0.06",
+      "Enemy.GlintLeap": "0.21,-0.11;-0.34,0.44",
       "Enemy.DeathClip": "Assets/Animations/SA_Skeleton_Death.hbspriteanimation.json"
     },
     "componentOverrides": {

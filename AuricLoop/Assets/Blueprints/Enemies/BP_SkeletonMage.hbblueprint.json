@@ -21,6 +21,7 @@
       "Enemy.KeepDistance": 6,
       "Enemy.GoldMin": 2,
       "Enemy.GoldMax": 3,
+      "Enemy.GlintCast": "0.39,0.51;0.62,0.83",
       "Enemy.DeathClip": "Assets/Animations/SA_SkeletonMage_Death.hbspriteanimation.json"
     },
     "componentOverrides": {

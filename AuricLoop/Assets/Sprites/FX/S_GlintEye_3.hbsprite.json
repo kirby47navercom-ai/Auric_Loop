@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_GlintEye_3",
+  "texture": "Assets/Sprites/FX/GlintEye_3.png",
+  "pixelsPerUnit": 32,
+  "rect": [
+    0,
+    0,
+    30,
+    30
+  ],
+  "pivot": [
+    0.5,
+    0.5
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

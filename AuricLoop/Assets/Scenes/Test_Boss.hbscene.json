@@ -28964,8 +28964,8 @@
           "properties": {
             "enabled": true,
             "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/FX/FX_Warning.png",
+            "drawMode": "sliced",
+            "texture": "Assets/Sprites/FX/FX_WarnBand.png",
             "color": [
               1,
               1,
@@ -28977,14 +28977,18 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -3,
+            "sortingOrder": 30,
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit",
-            "sortPoint": "feet"
+            "sortPoint": "center",
+            "borderLeft": 3,
+            "borderRight": 3,
+            "borderTop": 3,
+            "borderBottom": 3
           }
         }
       ],
@@ -29043,8 +29047,8 @@
           "properties": {
             "enabled": true,
             "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/FX/FX_Warning.png",
+            "drawMode": "sliced",
+            "texture": "Assets/Sprites/FX/FX_WarnBand.png",
             "color": [
               1,
               1,
@@ -29056,14 +29060,18 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -3,
+            "sortingOrder": 30,
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit",
-            "sortPoint": "feet"
+            "sortPoint": "center",
+            "borderLeft": 3,
+            "borderRight": 3,
+            "borderTop": 3,
+            "borderBottom": 3
           }
         }
       ],
@@ -29122,8 +29130,8 @@
           "properties": {
             "enabled": true,
             "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/FX/FX_Warning.png",
+            "drawMode": "sliced",
+            "texture": "Assets/Sprites/FX/FX_WarnBand.png",
             "color": [
               1,
               1,
@@ -29135,19 +29143,2658 @@
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -3,
+            "sortingOrder": 30,
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
-            "sortingLayer": "default",
+            "sortingLayer": "overlay",
             "maskInteraction": "none",
             "shading": "unlit",
-            "sortPoint": "feet"
+            "sortPoint": "center",
+            "borderLeft": 3,
+            "borderRight": 3,
+            "borderTop": 3,
+            "borderBottom": 3
           }
         }
       ],
       "tags": [
         "Pool.Warn"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Warn3",
+      "name": "Warn3",
+      "kind": "sprite",
+      "position": [
+        -48,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "sliced",
+            "texture": "Assets/Sprites/FX/FX_WarnBand.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center",
+            "borderLeft": 3,
+            "borderRight": 3,
+            "borderTop": 3,
+            "borderBottom": 3
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Warn"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Warn4",
+      "name": "Warn4",
+      "kind": "sprite",
+      "position": [
+        -44,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "sliced",
+            "texture": "Assets/Sprites/FX/FX_WarnBand.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center",
+            "borderLeft": 3,
+            "borderRight": 3,
+            "borderTop": 3,
+            "borderBottom": 3
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Warn"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Warn5",
+      "name": "Warn5",
+      "kind": "sprite",
+      "position": [
+        -40,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "sliced",
+            "texture": "Assets/Sprites/FX/FX_WarnBand.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center",
+            "borderLeft": 3,
+            "borderRight": 3,
+            "borderTop": 3,
+            "borderBottom": 3
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Warn"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Warn6",
+      "name": "Warn6",
+      "kind": "sprite",
+      "position": [
+        -36,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "sliced",
+            "texture": "Assets/Sprites/FX/FX_WarnBand.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center",
+            "borderLeft": 3,
+            "borderRight": 3,
+            "borderTop": 3,
+            "borderBottom": 3
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Warn"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Warn7",
+      "name": "Warn7",
+      "kind": "sprite",
+      "position": [
+        -32,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "sliced",
+            "texture": "Assets/Sprites/FX/FX_WarnBand.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center",
+            "borderLeft": 3,
+            "borderRight": 3,
+            "borderTop": 3,
+            "borderBottom": 3
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Warn"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Warn8",
+      "name": "Warn8",
+      "kind": "sprite",
+      "position": [
+        -28,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "sliced",
+            "texture": "Assets/Sprites/FX/FX_WarnBand.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center",
+            "borderLeft": 3,
+            "borderRight": 3,
+            "borderTop": 3,
+            "borderBottom": 3
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Warn"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "Warn9",
+      "name": "Warn9",
+      "kind": "sprite",
+      "position": [
+        -24,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "sliced",
+            "texture": "Assets/Sprites/FX/FX_WarnBand.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center",
+            "borderLeft": 3,
+            "borderRight": 3,
+            "borderTop": 3,
+            "borderBottom": 3
+          }
+        }
+      ],
+      "tags": [
+        "Pool.Warn"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnFill0",
+      "name": "WarnFill0",
+      "kind": "sprite",
+      "position": [
+        -60,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnFill1",
+      "name": "WarnFill1",
+      "kind": "sprite",
+      "position": [
+        -56,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnFill2",
+      "name": "WarnFill2",
+      "kind": "sprite",
+      "position": [
+        -52,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnFill3",
+      "name": "WarnFill3",
+      "kind": "sprite",
+      "position": [
+        -48,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnFill4",
+      "name": "WarnFill4",
+      "kind": "sprite",
+      "position": [
+        -44,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnFill5",
+      "name": "WarnFill5",
+      "kind": "sprite",
+      "position": [
+        -40,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnFill6",
+      "name": "WarnFill6",
+      "kind": "sprite",
+      "position": [
+        -36,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnFill7",
+      "name": "WarnFill7",
+      "kind": "sprite",
+      "position": [
+        -32,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnFill8",
+      "name": "WarnFill8",
+      "kind": "sprite",
+      "position": [
+        -28,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnFill9",
+      "name": "WarnFill9",
+      "kind": "sprite",
+      "position": [
+        -24,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1.4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircle0",
+      "name": "WarnCircle0",
+      "kind": "sprite",
+      "position": [
+        -60,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircle.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3,
+            "height": 3,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircle"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircle1",
+      "name": "WarnCircle1",
+      "kind": "sprite",
+      "position": [
+        -56,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircle.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3,
+            "height": 3,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircle"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircle2",
+      "name": "WarnCircle2",
+      "kind": "sprite",
+      "position": [
+        -52,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircle.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3,
+            "height": 3,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircle"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircle3",
+      "name": "WarnCircle3",
+      "kind": "sprite",
+      "position": [
+        -48,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircle.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3,
+            "height": 3,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircle"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircle4",
+      "name": "WarnCircle4",
+      "kind": "sprite",
+      "position": [
+        -44,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircle.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3,
+            "height": 3,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircle"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircle5",
+      "name": "WarnCircle5",
+      "kind": "sprite",
+      "position": [
+        -40,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircle.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3,
+            "height": 3,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircle"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircle6",
+      "name": "WarnCircle6",
+      "kind": "sprite",
+      "position": [
+        -36,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircle.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3,
+            "height": 3,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircle"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircle7",
+      "name": "WarnCircle7",
+      "kind": "sprite",
+      "position": [
+        -32,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircle.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 3,
+            "height": 3,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 30,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircle"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircleFill0",
+      "name": "WarnCircleFill0",
+      "kind": "sprite",
+      "position": [
+        -60,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircleFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircleFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircleFill1",
+      "name": "WarnCircleFill1",
+      "kind": "sprite",
+      "position": [
+        -56,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircleFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircleFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircleFill2",
+      "name": "WarnCircleFill2",
+      "kind": "sprite",
+      "position": [
+        -52,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircleFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircleFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircleFill3",
+      "name": "WarnCircleFill3",
+      "kind": "sprite",
+      "position": [
+        -48,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircleFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircleFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircleFill4",
+      "name": "WarnCircleFill4",
+      "kind": "sprite",
+      "position": [
+        -44,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircleFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircleFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircleFill5",
+      "name": "WarnCircleFill5",
+      "kind": "sprite",
+      "position": [
+        -40,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircleFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircleFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircleFill6",
+      "name": "WarnCircleFill6",
+      "kind": "sprite",
+      "position": [
+        -36,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircleFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircleFill"
+      ],
+      "parent": "Group_6"
+    },
+    {
+      "id": "WarnCircleFill7",
+      "name": "WarnCircleFill7",
+      "kind": "sprite",
+      "position": [
+        -32,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/FX/FX_WarnCircleFill.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 1,
+            "height": 1,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 31,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "overlay",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "center"
+          }
+        }
+      ],
+      "tags": [
+        "Pool.WarnCircleFill"
       ],
       "parent": "Group_6"
     },

@@ -101,7 +101,7 @@ void TopDownShooter::PlayFx(const std::string& clip,float length,const hb::Vec3&
 void TopDownShooter::Effect(const std::string& name,const hb::Vec3& at,float angle,float glow,bool flip){
   static const std::map<std::string,float> length={{"Dust",0.24f},{"BoneBurst",0.24f},{"Shockwave",0.26f},{"Muzzle",0.12f},{"CardCast",0.15f},
     {"HurtClaw",0.15f},{"CoinSparkle",0.18f},{"Spawn",0.9f},{"Hit",0.16f},{"Alert",0.6f},{"EnemySlash",0.16f},{"BossSlash",0.2f},
-    {"Impact",0.17f},{"ImpactRed",0.17f},{"GoldDrop",0.36f}};
+    {"Impact",0.17f},{"ImpactRed",0.17f},{"GoldDrop",0.36f},{"GlintEye",0.32f},{"GlintTip",0.32f}};
   const auto it=length.find(name);
   PlayFx("Assets/Animations/SA_"+name+".hbspriteanimation.json",it!=length.end()?it->second:0.3f,at,angle,glow,flip);
 }
@@ -109,8 +109,17 @@ void TopDownShooter::Effect(const std::string& name,const hb::Vec3& at,float ang
 void TopDownShooter::Warn(const hb::Vec3& from,const hb::Vec3& dir,float length,float seconds,float width){
   // 돌진 예고선: 장면에 놓아 둔 붉은 띠(Pool.Warn)를 돌진 방향으로 돌려 길이만큼 깔았다가 치움
   if(warnPool.empty())return;auto* a=warnPool.back();warnPool.pop_back();
+  hb::Actor* fill=nullptr;if(!warnFillPool.empty()){fill=warnFillPool.back();warnFillPool.pop_back();}
   hb::Transform t;t.position=from+dir*(length/2);t.position.z=0.02f;t.rotation=hb::Vec3{0,0,Angle(dir)};hb::Scene::SetTransform(a,t);
-  hb::Sprites::SetSize(a,hb::Vec2{length,width});warns.push_back({a,seconds});
+  hb::Sprites::SetSize(a,hb::Vec2{length,width});warns.push_back({a,fill,seconds,seconds,false,from,dir,length,width});
+}
+
+void TopDownShooter::WarnCircle(const hb::Vec3& at,float radius,float seconds){
+  // 원형 범위: 실제 맞는 반경 크기의 붉은 원, 안쪽이 가운데부터 차오름
+  if(circlePool.empty())return;auto* a=circlePool.back();circlePool.pop_back();
+  hb::Actor* fill=nullptr;if(!circleFillPool.empty()){fill=circleFillPool.back();circleFillPool.pop_back();}
+  hb::Scene::SetPosition(a,hb::Vec3{at.x,at.y,0.02f});hb::Sprites::SetSize(a,hb::Vec2{radius*2,radius*2});
+  warns.push_back({a,fill,seconds,seconds,true,at,{1,0,0},radius,radius});
 }
 
 void TopDownShooter::BossSlam(const hb::Vec3& at,int count,float speed,const std::string& clip){
@@ -128,8 +137,16 @@ void TopDownShooter::BossEnraged(Enemy* e){
 }
 
 void TopDownShooter::UpdateFx(float delta){
-  for(auto it=warns.begin();it!=warns.end();)
-    if((it->left-=delta)<=0){hb::Scene::SetPosition(it->actor,hb::Vec3{0,-200,0});warnPool.push_back(it->actor);it=warns.erase(it);}else ++it;
+  for(auto it=warns.begin();it!=warns.end();){
+    if((it->left-=delta)<=0){
+      hb::Scene::SetPosition(it->actor,hb::Vec3{0,-200,0});(it->circle?circlePool:warnPool).push_back(it->actor);
+      if(it->fill){hb::Scene::SetPosition(it->fill,hb::Vec3{0,-200,0});(it->circle?circleFillPool:warnFillPool).push_back(it->fill);}
+      it=warns.erase(it);continue;}
+    if(it->fill){const float k=std::clamp(1-it->left/it->total,0.02f,1.f);  // 차오름: 띠는 시작점에서 앞으로, 원은 가운데에서 바깥으로
+      if(it->circle){hb::Scene::SetPosition(it->fill,hb::Vec3{it->from.x,it->from.y,0.025f});hb::Sprites::SetSize(it->fill,hb::Vec2{it->length*2*k,it->length*2*k});}
+      else{hb::Transform t;t.position=it->from+it->dir*(it->length*k/2);t.position.z=0.025f;t.rotation=hb::Vec3{0,0,Angle(it->dir)};
+        hb::Scene::SetTransform(it->fill,t);hb::Sprites::SetSize(it->fill,hb::Vec2{it->length*k,it->width});}}
+    ++it;}
   for(auto it=fxs.begin();it!=fxs.end();)
     if((it->left-=delta)<=0){Give(fxPool,it->actor);it=fxs.erase(it);}else ++it;
 }
@@ -142,6 +159,7 @@ void TopDownShooter::Prewarm(){
     hb::Sprites::SetColor(shotGuard,hb::Color{1,1,1,0});hb::Scene::SetPosition(shotGuard,hb::Vec3{-500,-500,0});}
   coinPool=hb::Scene::GetActorsWithTag("Pool.Coin");
   fxPool=hb::Scene::GetActorsWithTag("Pool.Fx");warnPool=hb::Scene::GetActorsWithTag("Pool.Warn");
+  warnFillPool=hb::Scene::GetActorsWithTag("Pool.WarnFill");circlePool=hb::Scene::GetActorsWithTag("Pool.WarnCircle");circleFillPool=hb::Scene::GetActorsWithTag("Pool.WarnCircleFill");
   for(auto* tag:{"Enemy.S","Enemy.M","Enemy.C"})for(auto* a:hb::Scene::GetActorsWithTag(tag))if(auto* e=dynamic_cast<Enemy*>(a))ParkEnemy(e);
 }
 

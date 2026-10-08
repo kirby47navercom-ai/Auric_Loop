@@ -113,3 +113,34 @@ splash.alpha_composite(burst(16, 10, (255, 214, 106, 255), 4).resize((48, 48), I
 drops.append(splash)
 save_clip("GoldDrop", drops, [0.06, 0.06, 0.06, 0.06, 0.12])
 print("이펙트 완료")
+
+# ---- 공격 직전 반짝임: 눈(붉은 주황 빛) · 무기 끝(흰 별빛). 몸을 붉게 물들이는 대신 (패턴 게임처럼) ----------
+def star(size, arm, color, core):
+    im = Image.new("RGBA", (size, size))
+    d = ImageDraw.Draw(im)
+    c = size // 2
+    d.line([(c - arm, c), (c + arm, c)], fill=color, width=1)
+    d.line([(c, c - arm), (c, c + arm)], fill=color, width=1)
+    if arm > 3:
+        d.line([(c - arm // 2, c - arm // 2), (c + arm // 2, c + arm // 2)], fill=color[:3] + (150,), width=1)
+        d.line([(c - arm // 2, c + arm // 2), (c + arm // 2, c - arm // 2)], fill=color[:3] + (150,), width=1)
+    d.ellipse([c - core, c - core, c + core, c + core], fill=(255, 255, 240, 255))
+    return im.resize((size * 2, size * 2), Image.NEAREST)
+
+
+save_clip("GlintEye", [star(15, a, (255, 120, 60, 255), c) for a, c in ((2, 1), (5, 2), (7, 2), (4, 1), (2, 1))], [0.04, 0.05, 0.12, 0.06, 0.05])
+save_clip("GlintTip", [star(21, a, (255, 250, 220, 255), c) for a, c in ((3, 1), (7, 2), (10, 2), (6, 1), (3, 1))], [0.04, 0.05, 0.12, 0.06, 0.05])
+
+# ---- 공격 범위 예고: 테두리(정적) + 안쪽 채움(시간에 따라 차오름, 다 차면 맞는 순간) --------------------------
+WARN_EDGE, WARN_FILL = (255, 70, 50, 230), (255, 60, 40, 90)
+band = Image.new("RGBA", (32, 32), (255, 60, 40, 40))
+ImageDraw.Draw(band).rectangle([0, 0, 31, 31], outline=WARN_EDGE, width=2)
+band.save(FX / "FX_WarnBand.png")
+Image.new("RGBA", (8, 8), WARN_FILL).save(FX / "FX_WarnFill.png")
+ring = Image.new("RGBA", (128, 128))
+ImageDraw.Draw(ring).ellipse([1, 1, 126, 126], fill=(255, 60, 40, 40), outline=WARN_EDGE, width=3)
+ring.save(FX / "FX_WarnCircle.png")
+disc = Image.new("RGBA", (128, 128))
+ImageDraw.Draw(disc).ellipse([1, 1, 126, 126], fill=WARN_FILL)
+disc.save(FX / "FX_WarnCircleFill.png")
+print("반짝임·범위 예고 그림 완료")

@@ -106,6 +106,17 @@ public:
   std::string LeapLandSprite = "Assets/Sprites/Enemies/Skeleton/S_Skeleton_LeapLand.hbsprite.json";      // 착지 (내려찍고 무릎) — 빈틈 동안 유지
   HB_PROPERTY(BlueprintReadWrite)
   std::string RoarSprite = "";   // 보스: 분노할 때 포효 자세
+  // 공격 직전 반짝임 자리 "눈x,눈y;무기끝x,무기끝y" (m, 오른쪽 볼 때). tools/make_blueprints.py가 자세 그림에서 찾음
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string GlintSlash = "";
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string GlintLunge = "";
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string GlintLeap = "";
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string GlintCast = "";
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string GlintDash = "";
 
   // 상태 머신이 상태에 들어갈 때 BP 사용자 이벤트가 한 번 부른다 (매 프레임 부르지 않음: C++ 호출 비용)
   HB_FUNCTION(BlueprintCallable, DisplayName="생성", Category="적")
@@ -163,6 +174,7 @@ private:
   enum class Mode{Halt,Chase,Range,Stagger,Dash,Prowl,Jump,Spin};
   float spinTick=0,rainTime=0,roarTime=0;std::vector<hb::Vec3> rainSpots;hb::Vec3 quakeDir{0,-1,0};  // 보스 회전 베기·금화 비·포효
   int NextAfter(int current) const;  // 보스 패턴 순서
+  void Glint(const std::string& spec,bool left);  // 공격 직전 눈·무기 끝 반짝임 (몸을 붉게 물들이는 대신)
   int dashCount=0;bool phase2=false;     // 보스: 연속 돌진 횟수, 체력 절반 아래 분노
   hb::Vec3 jumpTarget{0,0,0};
   void NextPattern(int next);
@@ -522,7 +534,8 @@ public:
   void FireRing(const hb::Vec3& from,int count,float angle,float speed,const std::string& clip="");  // 사방으로 한 번에
   void ClearBullets(){pendingShots.clear();hb::Projectiles::Clear();}
   // 보스 연출 (Enemy가 부름)
-  void Warn(const hb::Vec3& from,const hb::Vec3& dir,float length,float seconds,float width=1.4f);   // 공격 예고 붉은 띠 (풀 3개, 다 쓰면 생략)
+  void Warn(const hb::Vec3& from,const hb::Vec3& dir,float length,float seconds,float width=1.4f);
+  void WarnCircle(const hb::Vec3& at,float radius,float seconds);  // 원형 공격 범위 예고 (at은 바닥 높이)   // 공격 예고 붉은 띠 (풀 3개, 다 쓰면 생략)
   void BossSlam(const hb::Vec3& at,int bullets,float speed,const std::string& clip); // 내려찍기 충격파·탄·흔들림
   void BossEnraged(Enemy* e);                                                        // 2페이즈 포효
   void Effect(const std::string& name,const hb::Vec3& at,float angle=0,float glow=0,bool flip=false);  // Assets/Animations/SA_<name> 한 번 재생
@@ -654,7 +667,9 @@ private:
   std::vector<Interactable*> interactables;
   float attackCooldown=0,dodgeTimer=0,dodgeCooldownLeft=0,invulnerable=0,gameOver=0,charge=0;
   float cutscene=0,bannerTime=0,bossBarShown=-1;hb::Vec3 cutsceneAt{0,0,0};bool roared=false;  // 보스 등장 컷신·자막
-  std::vector<hb::Actor*> warnPool;struct WarnLine{hb::Actor* actor;float left;};std::vector<WarnLine> warns;
+  // 공격 범위 예고: 테두리 + 안쪽 채움 (시간에 따라 차오르고 다 차면 맞는 순간). 띠(돌진·베기)·원(도약·회전·금화 비)
+  std::vector<hb::Actor*> warnPool,warnFillPool,circlePool,circleFillPool;
+  struct WarnLine{hb::Actor* actor;hb::Actor* fill;float left,total;bool circle;hb::Vec3 from,dir;float length,width;};std::vector<WarnLine> warns;
   float attackAnim=0,walkTime=0,breathTime=0,shake=0,aimHold=0,sentSpeed=0,knockTimer=0,idleTime=0,runTime=0,typeTime=0,phaseTime=0;
   std::string currentSprite,currentMusic,hint,shownWho;
   // 적 탄은 엔진 탄막 시스템(hb::Projectiles)이 오브젝트 없이 한꺼번에 움직이고 그린다.
