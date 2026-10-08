@@ -200,18 +200,21 @@ void TopDownShooter::Debris(const hb::Vec3& at,const hb::Vec3& dir,const std::st
 }
 
 bool TopDownShooter::HitEnemy(Enemy* e,const hb::Vec3& push,float damage){
+  // 타격감은 한 대의 세기에 비례: 발렌 베기(1) 기준, 셰리 다 당긴 화살(3.5)은 크게, 알레아 마탄·폭발(0.5)은 가볍게.
+  // 가벼운 연사는 불꽃 하나·멈칫 없음 (초당 7발이 매번 화면을 덮고 끊기지 않게)
+  const float weight=std::clamp(damage/std::max(0.01f,rules->SwordDamage),0.2f,3.f);const bool light=weight<0.7f;
   Hits++;hitChain=chainTime>0?std::min(hitChain+1,12):0;chainTime=0.8f;  // 끊지 않고 이어 때릴수록 타격음이 조금씩 높아짐
-  Sfx("Hit",0.92f+hitChain*0.035f+float(std::rand()%5)/100);
-  kick=kick+Normal(push,hb::Vec3{1,0,0})*(e->Boss?0.1f:0.18f);  // 때린 방향으로 화면이 살짝 밀림
+  if(!light||Hits%2)Sfx("Hit",0.92f+hitChain*0.035f+float(std::rand()%5)/100);
+  kick=kick+Normal(push,hb::Vec3{1,0,0})*((e->Boss?0.1f:0.18f)*std::min(weight,1.6f));  // 때린 방향으로 화면이 살짝 밀림
   const bool crit=std::rand()%10000<int(rules->CritChance*100);  // 크리티컬: 피해 2배, 불꽃 두 겹·크게 흔들림
-  if(crit){damage*=rules->CritDamage;const auto c=hb::Scene::GetPosition(e);Effect("Hit",hb::Vec3{c.x,c.y+0.4f,0.31f},45,2.f);Shake(rules->ShakeTime*3,2.f);
+  if(crit){damage*=rules->CritDamage;const auto c=hb::Scene::GetPosition(e);Effect("Hit",hb::Vec3{c.x,c.y+0.4f,0.31f},45,1.f);Shake(rules->ShakeTime*3,2.f);
     Sfx("Crack",1.15f);punch=std::max(punch,0.6f);}
-  // 타격감: 맞은 자리에 불꽃, 화면 살짝 흔들림, 밀려남
-  const auto at=hb::Scene::GetPosition(e);
-  PlayFx(rules->HitClip,0.16f,hb::Vec3{at.x-push.x*0.3f,at.y-push.y*0.3f+0.2f,0.3f},float(std::rand()%360),1.5f,false);
-  shake=std::max(shake,rules->ShakeTime);HitStop(crit?0.07f:e->Boss?0.05f:0.035f);  // 때린 순간 아주 잠깐 멈칫 (묵직하게)
-  Effect("Impact",hb::Vec3{at.x-push.x*0.3f,at.y-push.y*0.3f+0.2f,0.32f},0,0.5f);  // 발광을 낮춰 화면이 하얗게 번지지 않게
-  const bool dead=e->TakeHit(Returning?0:damage,push*rules->Knockback,rules->HitStun,Enchant==2?rules->BurnTime:0);
+  const auto at=hb::Scene::GetPosition(e);const hb::Vec3 spot{at.x-push.x*0.3f,at.y-push.y*0.3f+0.2f,0.32f};
+  if(light)PlayFx(rules->HitClip,0.12f,spot,float(std::rand()%360),0.3f,false);  // 가벼운 타격: 작은 불꽃 하나
+  else{Effect("Impact",spot,float(std::rand()%360),0.4f);  // 무거운 타격: 퍼지는 불꽃 + 멈칫 (세기만큼 길게)
+    shake=std::max(shake,rules->ShakeTime);HitStop(crit?0.07f:std::min(0.08f,(e->Boss?0.04f:0.03f)*weight));
+    if(weight>2.f){Shake(rules->ShakeTime*2,1.6f);Sfx("Crack",1.05f);}}  // 셰리 다 당긴 화살: 뼈 부서지는 소리·크게 흔들림
+  const bool dead=e->TakeHit(Returning?0:damage,push*(rules->Knockback*std::clamp(weight,0.35f,1.8f)),rules->HitStun*std::min(1.f,weight+0.3f),Enchant==2?rules->BurnTime:0);
   if(Enchant==2)e->burnDamage=WeaponDamage()*rules->BurnRate;
   if(e->Boss)BossHp=e->Hp;
   if(dead)KillEnemy(e);
