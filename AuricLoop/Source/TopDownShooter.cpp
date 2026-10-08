@@ -58,7 +58,7 @@ void TopDownShooter::Update(float delta){
    if(hb::Input::IsKeyDown("F12")||(ending&&(anyPressed||AnyPressed(true)))){ResetToTitle();return;}
    if(ending)return;
    if(Phase>=2&&!Returning&&!ReturnSuccess&&area>=0&&roomKind!="Boss"){runTime+=delta;
-     if(runTime>=rules->RunNotice){if(hint.empty()){hint="10분이 지났어요 - F10을 누르면 보스방 앞으로";Hud();}
+     if(runTime>=rules->RunNotice){if(hint.empty())Notify("10분이 지났어요 - F10을 누르면 보스방 앞으로");hintTime=1e9f;
        if(hb::Input::IsKeyDown("F10")&&inDungeon){runTime=0;hint="";Warp(map.PathRoom(map.rooms[map.boss].path-1));}}}
    // 부스 운영자: F9로 주 경로 다음 방으로 (귀환 중이면 시작 방 쪽으로)
    const bool warp=hb::Input::IsKeyDown("F9");
@@ -86,6 +86,9 @@ void TopDownShooter::Update(float delta){
        for(auto* e:Enemies())if(e->Boss)Talk("Boss",{{"boss",e->DisplayName}});}
      return;}
    if(bannerTime>0&&(bannerTime-=delta)<=0)UiVisible("BossSub",false);
+   if(hintTime>0&&(hintTime-=delta)<=0){hint="";Hud();}
+   {const bool m=hb::Input::IsKeyDown("m");const bool arrive=bannerPending&&frame>=2&&dialogIndex>=dialog.size();  // 대화가 끝난 뒤에
+    AreaBanner(delta,(m&&!mapHeld)||arrive);mapHeld=m;if(arrive)bannerPending=false;}  // 도착하면 한 번, 그 뒤엔 M·미니맵
    if(UpdateSettle(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}
    if(UpdateDialog(delta,pressed||AnyPressed(false))){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}}  // 대화 중엔 행동·이동 막음
   if(!inDungeon&&!inHome&&Phase>=2&&settleTime<0)Tip(0);  // 거점: 북쪽 계단으로 (오프닝 대화가 끝난 뒤)
@@ -169,8 +172,10 @@ void TopDownShooter::Update(float delta){
   returnHeld=tab;
   const bool flash=hb::Input::IsKeyDown("e");
   if(!Returning)Interact(position,flash&&!flashHeld);
-  else if(flash&&!flashHeld&&(Flashbangs>0||Gold>=rules->FlashPrice)){if(Flashbangs>0)Flashbangs--;else Gold-=rules->FlashPrice;StunAll(rules->FlashStun);Sfx("Flash");
-    ClearBullets();Hud();}
+  else{promptTarget=nullptr;
+    if(flash&&!flashHeld&&(Flashbangs>0||Gold>=rules->FlashPrice)){if(Flashbangs>0)Flashbangs--;else Gold-=rules->FlashPrice;StunAll(rules->FlashStun);Sfx("Flash");
+      ClearBullets();Hud();}}
+  UpdatePrompt(delta);
   flashHeld=flash;
   {const bool q=hb::Input::IsKeyDown("q"),enter=hb::Input::IsKeyDown("enter");int which=0;
    for(int i=1;i<=5;++i)if(hb::Input::IsKeyDown(std::to_string(i)))which=i;

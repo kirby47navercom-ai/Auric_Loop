@@ -526,6 +526,9 @@ private:
   void SetPaused(bool paused);
   void UpdateMenu();              // Esc 메뉴: 계속하기 / 효과음 크기 / 메인 화면으로
   void TitleFx(float delta,bool visible);
+  void UpdatePrompt(float delta);  // 상호작용 말풍선을 대상 머리 위로 (Screen.cpp)
+  void AreaBanner(float delta,bool show);  // 도착한 곳 이름을 가운데에 크게 (Screen.cpp)
+  void Notify(const std::string& text){hint=text;hintTime=2.5f;Hud();}  // 물체와 상관없는 알림 (위 가운데, 잠깐)
   bool NewSheet() const{return Character<(int)rules->AnimSets.size()&&rules->AnimSets[Character]==1;}
   void AnimateSheet(float delta,bool moving,const char* dir);  // 새 시트 (Screen.cpp)
   hb::Vec3 Muzzle(const hb::Vec3& from) const;  // 화살·카드가 나가는 자리  // 타이틀: 횃불 빛 깜빡임, 별 반짝임, 떠오르는 금가루
@@ -635,6 +638,7 @@ private:
   struct Critter{hb::Actor* a=nullptr;int kind=0,state=0;hb::Vec3 home,at,vel;float t=0,timer=0;bool flip=false;};
   std::vector<Critter> critters;bool ambientReady=false;hb::Vec3 camMin{0,0,0},camMax{0,0,0};
   float walkDist=0,stillTime=0,fidgetTime=0;int fidget=0,lastFidget=0;bool slashB=false;hb::Vec3 animPos{0,0,0};  // 새 시트 애니메이션 상태
+  Interactable* promptTarget=nullptr;std::string promptText;float hintTime=0,areaBannerTime=0;bool bannerPending=false,mapHeld=false;  // 상호작용 말풍선·알림·지역 이름
   float tipTime=0,titleTime=0;bool pauseHeld=false,bagOpen=false;int menuPick=0,menuHeld=0;
   std::map<hb::Actor*,hb::Vec3> frozenVelocity;   // 일시정지 동안 멈춘 탄의 속도
   // 정산 화면: 줄이 하나씩 나타나고 남은 빚이 줄어드는 숫자 연출

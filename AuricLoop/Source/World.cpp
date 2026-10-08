@@ -52,7 +52,7 @@ void TopDownShooter::Leave(int to,const std::string& spawn){
 
 void TopDownShooter::Begin(){
   // 장면 첫 프레임: 이 장면의 구역(RoomInfo), 상호작용 대상, 카메라를 찾고 진행을 이어받는다
-  started=true;Hp=MaxHp;
+  started=true;Hp=MaxHp;bannerPending=true;  // 도착한 곳 이름을 가운데에
   rules=&fallbackRules;for(auto* a:hb::Scene::GetAllActorsOfClass("AuricRules"))if(auto* r=dynamic_cast<AuricRules*>(a))rules=r;
   Lines("");  // 대사표 미리 읽기 (로딩 화면 동안)
   for(auto* a:hb::Scene::GetAllActorsOfClass("RoomInfo"))if(auto* r=dynamic_cast<RoomInfo*>(a)){

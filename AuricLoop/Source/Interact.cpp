@@ -35,7 +35,8 @@ void TopDownShooter::Interact(const hb::Vec3& position,bool pressed){
     if(pressed&&SofaLevel<rules->SofaMax&&Gold>=price){Gold-=price;SofaLevel++;Sfx("Coin");MaxHp++;Hp=MaxHp;ShowSofa();}}
   else if(kind=="Home"){next="E: 집에 들어가기 (원룸 Lv"+std::to_string(HomeLevel)+")";if(pressed){Leave(-2,"");return;}}
   else{next=text;if(pressed&&!text.empty())Say(faces[Character],koreanNames[Character],text);}  // Note: 가구·문 닫은 가게 등은 조사하면 혼잣말
-  if(next!=hint||pressed){hint=next;Hud();}
+  promptTarget=next.empty()?nullptr:best;  // 말풍선은 대상 머리 위에 (UpdatePrompt). 위 가운데 알림 줄은 쓰지 않음
+  promptText=next;
 }
 
 // ---- 제작 (Q) ------------------------------------------------------------------------
@@ -79,7 +80,7 @@ void TopDownShooter::Craft(bool toggle,int which,bool confirm){
   if(craftPick==1&&Herb>=3&&Bottle>=1&&Hp<MaxHp){Herb-=3;Bottle--;Hp++;done=true;}
   else if(craftPick==2&&Ore>=1){Ore--;Flashbangs++;done=true;}
   else if(craftPick>=3&&Monster>=1){Monster--;Enchant=craftPick-2;done=true;}
-  if(done){Crafted++;Sfx("Craft");hint=std::string("제작 완료: ")+(craftPick==1?"회복 물약":craftPick==2?"섬광탄":"각인 결정");}
-  else hint="소재가 모자라요";
-  CraftDetail();Hud();
+  if(done){Crafted++;Sfx("Craft");Notify(std::string("제작 완료: ")+(craftPick==1?"회복 물약":craftPick==2?"섬광탄":"각인 결정"));}
+  else Notify("소재가 모자라요");
+  CraftDetail();
 }

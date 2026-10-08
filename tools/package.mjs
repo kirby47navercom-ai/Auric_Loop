@@ -5,6 +5,7 @@
 //   1) 그림·글자(Image·Text) 위젯이 마우스 클릭을 받아 게임 화면(canvas)까지 안 감 → 타이틀 그림을 눌러도 시작 안 됨
 //   2) 클릭으로 포커스를 가진 위젯이 모든 키를 삼킴 (keydown stopPropagation) → 그 뒤로 키보드가 안 먹음
 //   3) Esc를 플레이어 기본 일시정지 창이 가로챔 → 게임 메뉴로 넘김
+//   4·5) 키가 눌린 채로 남아 혼자 걸어가던 문제
 import {createHash} from 'node:crypto';
 import fs from 'node:fs/promises';
 import os from 'node:os';
@@ -45,6 +46,17 @@ await patch('prototype/ui-runtime.js',
 await patch('prototype/player.js',
   "if(e.key==='Escape'&&kiosk.enabled&&!operatorMenu){e.preventDefault();return;}if(e.key==='Escape'){e.preventDefault();releaseKeys();if(menu.open)menu.close();else{menu.showModal();services?.pauseAudio(true)?.catch(fail);}return;}",
   "if(e.key==='Escape'&&menu.open){e.preventDefault();menu.close();return;}");
+// 4) 키를 누를 때·뗄 때 e.key로 짝을 맞춤 → Shift를 같이 누르거나 한글 입력 상태면 이름이 달라져 뗀 키가 계속 눌린 채로 남음(혼자 걸어감).
+//    물리 키(e.code)로 짝을 맞추고, 글자·숫자 키는 입력기 상태와 상관없이 같은 이름(w, 1 …)으로 보냄
+await patch('prototype/player.js', "held=new Set()", "held=new Set(),heldName=new Map()");
+await patch('prototype/player.js',
+  "if(!e.repeat&&!held.has(e.key)){held.add(e.key);vm?.input(e.key,1).catch(fail);}",
+  "{const k=/^Key[A-Z]$/.test(e.code)?e.code.slice(3).toLowerCase():/^Digit[0-9]$/.test(e.code)?e.code.slice(5):e.code==='Space'?' ':e.key,c=e.code||e.key;if(!e.repeat&&!held.has(c)){held.add(c);heldName.set(c,k);vm?.input(k,1).catch(fail);}}");
+await patch('prototype/player.js',
+  "document.addEventListener('keyup',e=>{if(held.delete(e.key)){e.preventDefault();vm?.input(e.key,0).catch(fail);}});",
+  "document.addEventListener('keyup',e=>{const c=e.code||e.key;if(held.delete(c)){e.preventDefault();vm?.input(heldName.get(c)??e.key,0).catch(fail);heldName.delete(c);}});");
+// 5) 장면을 넘을 때 눌린 키를 그대로 넘김 → 로딩 중에 뗀 키는 해제가 사라져 새 장면에서 혼자 걸어감. 장면마다 입력을 비우고 시작
+await patch('prototype/player.js', "const carriedInput=vm?.active?vm.inputState:undefined;", "const carriedInput=undefined;held.clear();heldName.clear();");
 //    엔진 기본 일시정지 버튼(화면 구석)도 숨김. 운영자 메뉴(Ctrl+Alt+Shift+Q)는 그대로
 await patch('prototype/player.js',
   "if(kiosk.enabled){$('#quit').hidden=true;$('#fullscreen').hidden=true;$('#pause-toggle').hidden=true;}",

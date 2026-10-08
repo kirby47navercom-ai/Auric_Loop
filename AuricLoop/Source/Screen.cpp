@@ -28,12 +28,13 @@ void TopDownShooter::Hud(){
   UiText("HpText",std::to_string(hp)+" / "+std::to_string(MaxHp));
   UiText("WeightText",std::to_string(Weight())+" / "+std::to_string(rules->WeightLimit));
   UiText("GoldText",std::to_string(Gold)+" G   빚 "+std::to_string(Debt));
-  UiText("Hint",hint);UiVisible("HintBack",!hint.empty());UiVisible("Minimap",inDungeon);  // 안내 받침은 문구 있을 때만, 미니맵은 던전에서만
+  UiText("Hint",hint);UiVisible("HintBack",!hint.empty());UiVisible("Minimap",inDungeon);UiVisible("MapTouch",inDungeon);  // 알림 받침은 문구 있을 때만, 미니맵은 던전에서만
   UiValue("Fatigue",FatigueMax>0?std::min(1.f,float(Fatigue)/FatigueMax):1.f);
-  UiText("Title",Hp<=0?(Fatigue>=FatigueMax?"지쳐 쓰러졌다":"쓰러졌다")
-    :ReturnSuccess?"귀환 성공 - 정산 "+std::to_string(LastRepaid)+" G 상환"
+  // 위 가운데 칸은 진행 상태가 있을 때만 (지역 이름은 도착할 때 가운데에 크게: AreaBanner)
+  const std::string status=Hp<=0?"":ReturnSuccess?"귀환 성공 - 정산 "+std::to_string(LastRepaid)+" G 상환"
     :Returning?"귀환 - 문 "+std::to_string(DoorHits)+"/"+std::to_string(rules->DoorHitsToOpen)+"  섬광탄 "+(Flashbangs?std::to_string(Flashbangs):std::to_string(rules->FlashPrice)+"G")
-    :HasReturnItem?"[귀환] 획득 - Tab으로 사용":boss?"해골 대장  "+std::to_string(int(std::ceil(BossHp)))+" HP":inHome?"원룸 Lv"+std::to_string(HomeLevel):area<0?"거점":"탐색");
+    :HasReturnItem?"[귀환] 획득 - Tab으로 사용":"";
+  UiText("Title",status);UiVisible("Title",!status.empty());UiVisible("AreaBack",!status.empty());
 }
 
 static const char* kDirs8[]={"E","NE","N","NW","W","SW","S","SE"};
@@ -156,17 +157,53 @@ void TopDownShooter::ShowSelect(bool visible){
     UiVisible("SelectPick"+k,visible&&i==pick);}
 }
 
+void TopDownShooter::AreaBanner(float delta,bool show){
+  // 도착한 곳 이름: 가운데에 크게 0.4초 동안 나타나 2.2초 머물고 0.6초 동안 사라짐 (건전·소울 나이트처럼). M이나 미니맵을 누르면 다시
+  static const char* parts[]={"AreaBannerBack","AreaBanner","AreaBannerSub","AreaBannerLine"};
+  if(show&&Phase>=2){areaBannerTime=3.2f;
+    UiText("AreaBanner",inHome?"원룸":inDungeon?"황금 던전":"빚쟁이 마을");
+    UiText("AreaBannerSub",inHome?"Lv "+std::to_string(HomeLevel):inDungeon?"1층 - 마몬의 입 속":"거점");
+    for(auto* n:parts)UiVisible(n,true);}
+  if(areaBannerTime<=0)return;
+  areaBannerTime-=delta;
+  const float t=3.2f-areaBannerTime,a=areaBannerTime<=0?0.f:t<0.4f?t/0.4f:areaBannerTime<0.6f?areaBannerTime/0.6f:1.f;
+  for(auto* n:parts){UiOpacity(n,a);if(areaBannerTime<=0)UiVisible(n,false);}
+}
+
+void TopDownShooter::UpdatePrompt(float delta){
+  // 상호작용 말풍선: 가까운 대상 머리 위에 [E] 하는 일 (말풍선 꼬리가 대상을 가리킴)
+  static const char* parts[]={"PromptBack","PromptKey","PromptText","PromptTail"};
+  const bool on=promptTarget&&!promptText.empty()&&!Paused&&dialogIndex>=dialog.size();
+  for(auto* n:parts)UiVisible(n,on);
+  if(!on)return;
+  const bool key=promptText.rfind("E: ",0)==0;
+  const std::string label=key?promptText.substr(3):promptText;
+  size_t chars=0;for(unsigned char ch:label)chars+=(ch&0xC0)!=0x80;
+  const float w=std::min(860.f,chars*19.f+(key?60.f:28.f)),h=40;
+  // 대상 그림의 위쪽 끝 (그림자 여백 0.25m 빼고) → 화면 좌표 (1m = 화면 높이 720 / (2 × 카메라 크기))
+  static Interactable* sized=nullptr;static float top=1.0f;  // 그림 크기는 엔진에 묻는 값이라 대상이 바뀔 때만 읽음
+  if(sized!=promptTarget){sized=promptTarget;top=std::max(1.0f,hb::Sprites::GetSize(promptTarget).y*0.5f-0.25f);}
+  const auto at=hb::Scene::GetPosition(promptTarget);
+  const float ppm=360.f/rules->CameraSize;
+  float x=(at.x-cameraAt.x)*ppm,y=-(at.y+top+0.35f-cameraAt.y)*ppm-h/2;
+  x=std::clamp(x,-640+w/2+8,640-w/2-8);y=std::clamp(y,-360+h/2+90,360-h/2-8);  // 화면 밖으로 나가지 않게 (위쪽은 HUD 아래까지)
+  UiSize("PromptBack",hb::Vec2{w,h});UiPosition("PromptBack",hb::Vec2{x,y});
+  UiVisible("PromptKey",key);UiPosition("PromptKey",hb::Vec2{x-w/2+24,y});
+  UiText("PromptText",label);UiPosition("PromptText",hb::Vec2{x-w/2+(key?46.f:14.f)+300,y+1});  // 왼쪽 정렬 600px 상자의 왼쪽 끝을 맞춤
+  UiPosition("PromptTail",hb::Vec2{x,y+h/2+5});
+}
+
 void TopDownShooter::TitleFx(float delta,bool visible){
   // 타이틀 그림 위 층 (tools/gen_hud.py TITLE_FX·KEYS): 보일 때만 움직이고, 넘어가면 모두 숨김
-  static const int keyCounts[]={4,1,1,1,1,1,1};
+  static const int keyCounts[]={4,1,1,1,1,1,1,1};
   if(!visible){if(titleTime<0)return;titleTime=-1;
-    for(int g=0;g<7;++g){UiVisible("TitleKeyName"+std::to_string(g),false);
+    for(int g=0;g<8;++g){UiVisible("TitleKeyName"+std::to_string(g),false);
       for(int k=0;k<keyCounts[g];++k)UiVisible("TitleKey"+std::to_string(g)+"_"+std::to_string(k),false);}
     for(auto* n:{"TitleTorchL","TitleTorchR"})UiVisible(n,false);
     for(int i=0;i<8;++i){if(i<7)UiVisible("TitleStar"+std::to_string(i),false);UiVisible("TitleDust"+std::to_string(i),false);}
     return;}
   if(titleTime<0){titleTime=0;  // 로딩 동안 숨겼던 것을 다시 보임
-    for(int g=0;g<7;++g){UiVisible("TitleKeyName"+std::to_string(g),true);for(int k=0;k<keyCounts[g];++k)UiVisible("TitleKey"+std::to_string(g)+"_"+std::to_string(k),true);}
+    for(int g=0;g<8;++g){UiVisible("TitleKeyName"+std::to_string(g),true);for(int k=0;k<keyCounts[g];++k)UiVisible("TitleKey"+std::to_string(g)+"_"+std::to_string(k),true);}
     for(auto* n:{"TitleTorchL","TitleTorchR"})UiVisible(n,true);
     for(int i=0;i<8;++i){if(i<7)UiVisible("TitleStar"+std::to_string(i),true);UiVisible("TitleDust"+std::to_string(i),true);}}
   titleTime+=delta;const float t=titleTime;

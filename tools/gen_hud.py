@@ -42,7 +42,7 @@ def node(name, kind, corner, x, y, w_, h, z=10, **props):
     if "fontSize" in props:
         props["fontSize"] = SIZES.get(props["fontSize"], props["fontSize"])  # 픽셀 글꼴은 조금 커야 읽힘
     n["properties"].update({"text": "", "texture": "", "background": "#00000000", "deviceVisibility": "all", "font": FONT,
-                            "borderWidth": 0, "radius": 0, **props})
+                            "borderWidth": 0, "radius": 0, "visible": True, "opacity": 1, **props})  # 본뜬 노드의 값을 물려받지 않게
     nodes.append(n)
     return n
 
@@ -79,17 +79,29 @@ node("Fatigue", "ProgressBar", "tl", 24 + 8, 132 + 8, 16, 220, 11, value=0, max=
      fillTexture=KIT + "fatigue_100.png", backgroundTexture="", background="#00000000", accent="#00000000")
 image("FatigueTicks", "fatigue_ticks.png", "tl", 24 + 8, 132 + 52, z=12)
 
-# 위 가운데: 탐색 층 / 상태 문구
-node("AreaBack", "Panel", "t", 0, 12, 220, 58, 9, **SOFT)
-text("Title", "탐색", "t", 0, 18, 400, 28, size=20, align="center")
-text("Floor", "1F", "t", 0, 44, 400, 22, size=14, align="center")
-node("HintBack", "Panel", "t", 0, 76, 520, 32, 9, visible=False, **SOFT)
-text("Hint", "", "t", 0, 80, 600, 24, size=15, align="center")  # 가까운 상호작용 안내 (E: 채집 등)
+# 위 가운데: 상태 문구 (귀환 진행·[귀환] 획득 등 있을 때만). 지역 이름은 도착할 때 가운데에 크게 (AreaBanner)
+node("AreaBack", "Panel", "t", 0, 12, 420, 44, 9, visible=False, **SOFT)
+text("Title", "", "t", 0, 20, 420, 28, size=20, align="center")
+nodes[-1]["properties"]["visible"] = False
+node("HintBack", "Panel", "t", 0, 64, 640, 40, 9, visible=False, **{**SOFT, "background": "#0d1419e6"})
+text("Hint", "", "t", 0, 70, 640, 30, size=18, align="center")  # 물체와 상관없는 알림 (제작 완료 등)
+# 도착한 곳 이름: 가운데에 크게 떴다가 사라짐 (C++ AreaBanner). M·미니맵을 누르면 다시
+node("AreaBannerBack", "Panel", "c", 0, -150, 1280, 132, 59, background="#05090ab4", visible=False)  # 글씨가 바닥 무늬에 묻히지 않게 어두운 띠
+node("AreaBanner", "Text", "c", 0, -170, 900, 60, 60, text="", fontSize=44, color=GOLD, align="center", visible=False)
+node("AreaBannerLine", "Panel", "c", 0, -134, 420, 2, 60, background="#c9a24acc", padding=0, visible=False)
+node("AreaBannerSub", "Text", "c", 0, -112, 900, 30, 60, text="", fontSize=20, color=SAND, align="center", visible=False)
+# 상호작용 말풍선: 가까운 대상 머리 위에 따라붙음 (C++가 화면 좌표로 옮기고 크기를 글자 수에 맞춤)
+node("PromptBack", "Panel", "c", 0, 0, 200, 40, 25, visible=False, background="#0d1419f2", borderColor=GOLD, borderWidth=2, radius=8)
+node("PromptKey", "Text", "c", 0, 0, 30, 28, 26, text="E", fontSize=18, color=INK, align="center", visible=False,
+     background="#2a2112ff", borderColor=GOLD, borderWidth=2, radius=5)
+node("PromptText", "Text", "c", 0, 0, 600, 28, 26, text="", fontSize=18, color=INK, align="left", visible=False)
+node("PromptTail", "Text", "c", 0, 0, 20, 16, 26, text="▼", fontSize=12, color=GOLD, align="center", visible=False)
 
 # 오른쪽 위: 가방, 일시정지, 미니맵 틀
 image("PauseButton", "btn_pause.png", "tr", 24, 24)
 image("BagButton", "btn_inventory.png", "tr", 24 + 72 + 12, 24)
 image("Minimap", "minimap.png", "tr", 24, 108)
+touch("MapTouch", "m", "tr", 24, 108, 152, devices="all")  # 미니맵을 누르면 지역 이름 다시 (M)
 
 # 오른쪽 아래: 공격, 회피, 상호작용, 제작 (UI 키트 시안 배치)
 image("AttackButton", "btn_attack_valen.png", "br", 40, 40, deviceVisibility="touch")  # 캐릭터·귀환 테마에 맞는 그림은 C++ UI::SetTexture
@@ -211,7 +223,7 @@ for name, file, x, y, z in TITLE_FX:
     n = node(name, "Image", "tl", x, y, iw, ih, z, texture=KIT + file)
     n["slot"]["alignment"] = [0.5, 0.5]
 # 조작 안내 (타이틀 아래): 키 모양 상자 + 짧은 이름. 방향키가 아니라 WASD
-KEYS = [(["W", "A", "S", "D"], "이동"), (["좌클릭"], "공격"), (["Space"], "구르기"), (["E"], "상호작용"), (["Tab"], "가방"), (["Q"], "제작"), (["Esc"], "메뉴")]
+KEYS = [(["W", "A", "S", "D"], "이동"), (["좌클릭"], "공격"), (["Space"], "구르기"), (["E"], "상호작용"), (["Tab"], "가방"), (["Q"], "제작"), (["M"], "지도"), (["Esc"], "메뉴")]
 def keycap(name, label, x, y, w_):
     node(name, "Text", "b", x, y, w_, 28, 94, text=label, fontSize=14, color=INK, align="center",
          background="#1a2228ff", borderColor="#c9a24a", borderWidth=2, radius=5, padding=3)
