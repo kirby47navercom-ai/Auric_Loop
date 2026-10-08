@@ -30,7 +30,7 @@ ENEMIES = {
         "LeapCrouch": "skel_leap_crouch.png", "LeapAir": "skel_leap_air.png", "LeapLand": "skel_leap_land.png"}, {}),
     "SkeletonMage": ("mage_cast_ready.png", {"CastReady": "mage_cast_ready.png", "Cast": "mage_cast.png"},
                      {"Cast": ([("CastReady", 0.25), ("Cast", 0.2)], False)}),
-    "SkeletonCaptain": ("boss_slash_windup.png", {
+    "SkeletonCaptain": ("boss_summon.png", {
         "SlashWindup": "boss_slash_windup.png", "SlashHit": "boss_slash_hit.png", "Dash": "boss_dash.png", "Cast": "boss_cast.png",
         "JumpCrouch": "boss_jump_crouch.png", "JumpAir": "boss_jump_air.png", "Slam": "boss_slam.png", "Summon": "boss_summon.png",
         "Spin_0": "boss_spin_1.png", "Spin_1": "boss_spin_2.png", "Spin_2": "boss_spin_3.png", "Roar": "boss_roar.png"}, {
@@ -61,6 +61,9 @@ def generated(file):
     return im.crop(im.getbbox())
 
 
+FIX = {("SkeletonCaptain", "Roar"): 0.78}  # 머리를 잘못 재는 자세 보정 (포효: 입을 벌려 해골이 작게 잡힘)
+
+
 def write_sprite(who, pose, im, pivot_y):
     folder = ASSETS / f"Sprites/Enemies/{who}"
     png = folder / f"{who}_{pose}.png"
@@ -70,16 +73,50 @@ def write_sprite(who, pose, im, pivot_y):
     (folder / f"S_{who}_{pose}.hbsprite.json").write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def skull(im):
+    """해골 머리: 가장 큰 밝은 덩어리. (크기, 맨 위 y)"""
+    px = im.load()
+    w, h = im.size
+    white = {(x, y) for y in range(h) for x in range(w) if px[x, y][3] > 128 and min(px[x, y][:3]) > 150}
+    best, seen = [], set()
+    for start in white:
+        if start in seen:
+            continue
+        stack, blob = [start], []
+        seen.add(start)
+        while stack:
+            x, y = stack.pop()
+            blob.append((x, y))
+            for n in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+                if n in white and n not in seen:
+                    seen.add(n)
+                    stack.append(n)
+        if len(blob) > len(best):
+            best = blob
+    xs, ys = [x for x, _ in best], [y for _, y in best]
+    return ((max(xs) - min(xs) + 1) + (max(ys) - min(ys) + 1)) / 2, min(ys)
+
+
+def body(im):
+    """머리 꼭대기(해골 맨 위)부터 발끝까지 키"""
+    return im.getbbox()[3] - skull(im)[1]
+
+
 for who, (ref_file, poses, clips) in ENEMIES.items():
     walk, h0, p0 = unpadded(who, "Walk_0")
     attack, _, _ = unpadded(who, "Attack_0")
     have = (SRC / ref_file).exists()
-    scale = attack.crop(attack.getbbox()).height / generated(ref_file).height if have else 1
+    # 크기: 새 자세끼리는 머리 크기로 맞추고(생성 그림마다 그려진 크기가 달라서), 전체는 기준 자세(서 있는 자세)의
+    # 머리~발 키를 걷기 그림과 같게 (새 그림이 걷기 그림보다 머리 비율이 작아 머리로만 맞추면 몸이 커짐)
+    ref = generated(ref_file) if have else None
+    ref_head = skull(ref)[0] if ref else 1
+    G = body(walk.crop(walk.getbbox())) / body(ref) if ref else 1
     feet = p0 * h0  # 캔버스 맨 아래에서 원점까지 (px). 새 캔버스도 이 거리를 지킴
     made = []
     for pose, file in poses.items():
         if (SRC / file).exists():
             g = generated(file)
+            scale = G * ref_head / skull(g)[0] * FIX.get((who, pose), 1)
             g = g.resize((max(1, round(g.width * scale)), max(1, round(g.height * scale))), Image.NEAREST)
             made.append(pose)
         else:
@@ -92,4 +129,4 @@ for who, (ref_file, poses, clips) in ENEMIES.items():
         data = {"version": 1, "name": f"SA_{who}_{name}", "loop": loop, "playRate": 1,
                 "frames": [{"sprite": f"Assets/Sprites/Enemies/{who}/S_{who}_{pose}.hbsprite.json", "duration": d} for pose, d in frames]}
         (ASSETS / f"Animations/SA_{who}_{name}.hbspriteanimation.json").write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(who, "배율", round(scale, 3), "새 자세", len(made), "/", len(poses), "(나머지는 지금 공격 그림으로 대신)")
+    print(who, "배율", round(G, 3), "새 자세", len(made), "/", len(poses), "(나머지는 지금 공격 그림으로 대신)")

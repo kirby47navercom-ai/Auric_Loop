@@ -83,17 +83,18 @@ void TopDownShooter::Update(float delta){
    const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
    if(frame>=2&&UpdateIntro(delta,pressed||AnyPressed(true)))return;
    {const bool p=hb::Input::IsKeyDown("escape")||hb::Input::IsKeyDown("p");  // 일시정지 (Esc·P)
-    if(p&&!pauseHeld&&Phase>=2&&settleTime<0&&!ending)SetPaused(!Paused);pauseHeld=p;
+    if(p&&!pauseHeld&&Phase>=2&&settleTime<0&&!ending&&cutscene<=0)SetPaused(!Paused);pauseHeld=p;  // 보스 등장 중엔 메뉴도 안 열림
     if(Paused){if(!leaving)UpdateMenu();return;}}
    if(tipTime>0&&(tipTime-=delta)<=0){UiVisible("TipBack",false);UiVisible("Tip",false);}
    if(cutscene>0){  // 보스 등장: 1초 마법진 → 보스 → 1.3초 포효(흔들림)·이름 자막 → 끝나면 대사
      cutscene-=delta;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
+     if(sentSpeed!=0){sentSpeed=0;hb::Movement2D::SetSpeed(player,0);}  // 이동 컴포넌트가 키로 움직이지 않게 (컷신 동안 모든 조작 막음)
      UpdateFx(delta);  // 등장 마법진 등 이펙트도 제때 사라지게 (안 그러면 컷신 내내 보스 몸 위에서 빛남)
      if(!roared&&cutscene<1.9f){roared=true;Shake(0.7f,1.8f);Sfx("BossCharge");hb::Camera::Flash(hb::Color{1,0.85f,0.4f,0.12f},0.2f);  // 번쩍임은 약하게 (보스가 묻히지 않게)
        for(auto* e:Enemies())if(e->Boss){UiText("BossName",e->DisplayName);UiText("BossSub","황금에 잠식된 1층의 문지기");e->Roar(1.6f);}
        for(auto* n:{"BossName","BossSub"})UiVisible(n,true);}
      if(cutscene<=0){for(auto* n:{"CineTop","CineBottom","BossName","BossSub"})UiVisible(n,false);
-       for(auto* e:Enemies())if(e->Boss)Talk("Boss",{{"boss",e->DisplayName}});}
+       sentSpeed=-1;dodgeHeld=flashHeld=true;attackCooldown=0.3f;advanceHeld=true;}  // 끝: 이동 속도 되돌림, 컷신 중 누르고 있던 키가 바로 동작하지 않게
      return;}
    if(bannerTime>0&&(bannerTime-=delta)<=0)UiVisible("BossSub",false);
    if(hintTime>0&&(hintTime-=delta)<=0){hint="";Hud();}

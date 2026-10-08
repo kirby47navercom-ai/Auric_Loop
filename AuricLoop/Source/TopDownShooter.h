@@ -18,8 +18,8 @@
 // 파일: BP 클래스 선언은 엔진이 이 헤더만 읽으므로 여기에 모으고, 구현은 역할별 .cpp로 나눈다 (Source/ 전체가 한 모듈로 빌드됨)
 //   TopDownShooter.cpp  한 프레임(Update)·카메라      Combat.cpp    적 생성·피해·플레이어 공격·적 탄·이펙트
 //   Enemy.cpp           적 행동 (상태 머신이 부름)     World.cpp     구역 전환·던전 방·웨이브·정산·메뉴·가방·대사, 살아 있는 맵(새·나비·박쥐·쥐·구름 그늘)
-//   Dungeon.h/.cpp      던전 층 생성·배치               Interact.cpp  상호작용(E)·제작(Q)
-//   Screen.cpp          HUD·캐릭터 그림·대화창·인트로    Common.h      여러 파일이 쓰는 수학·입력 도우미
+//   Dungeon.h/.cpp      던전 층 생성·배치               Interact.inl  상호작용(E)·제작(Q)
+//   Screen.inl          HUD·캐릭터 그림·대화창·인트로 (inl 둘은 World.cpp가 포함)    Common.h      여러 파일이 쓰는 수학·입력 도우미
 
 class TopDownShooter;
 
@@ -574,12 +574,12 @@ private:
   void SetPaused(bool paused);
   void UpdateMenu();              // Esc 메뉴: 계속하기 / 효과음 크기 / 메인 화면으로
   void TitleFx(float delta,bool visible);
-  void UpdatePrompt(float delta);  // 상호작용 말풍선을 대상 머리 위로 (Screen.cpp)
-  void AreaBanner(float delta,bool show);  // 도착한 곳 이름을 가운데에 크게 (Screen.cpp)
+  void UpdatePrompt(float delta);  // 상호작용 말풍선을 대상 머리 위로 (Screen.inl)
+  void AreaBanner(float delta,bool show);  // 도착한 곳 이름을 가운데에 크게 (Screen.inl)
   void Notify(const std::string& text){hint=text;hintTime=2.5f;Hud();}
   void HitStop(float seconds,float scale=0.06f){if(Paused)return;hitStopLeft=std::max(hitStopLeft,seconds);hb::Clock::SetTimeScale(scale);}  // 타격감: 맞은 순간 멈칫 (scale>0.06이면 슬로모션)  // 물체와 상관없는 알림 (위 가운데, 잠깐)
   bool NewSheet() const{return Character<(int)rules->AnimSets.size()&&rules->AnimSets[Character]==1;}
-  void AnimateSheet(float delta,bool moving,const char* dir);  // 새 시트 (Screen.cpp)
+  void AnimateSheet(float delta,bool moving,const char* dir);  // 새 시트 (Screen.inl)
   hb::Vec3 Muzzle(const hb::Vec3& from) const;  // 화살·카드가 나가는 자리  // 타이틀: 횃불 빛 깜빡임, 별 반짝임, 떠오르는 금가루
   void Bag(bool toggle,bool use);  // 가방 (Tab): 소재·아이템, [귀환]은 가방에서 Enter로 사용
   bool UpdateSettle(float delta,bool advance);  // 정산 화면이 떠 있으면 true (이동·행동 막음)

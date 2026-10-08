@@ -305,3 +305,15 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   assert.ok(Math.abs(boss.SlashRange - 1.8) < 1e-3, '대장 대검 거리');
   console.log('해골 대장 그림 검사 통과');
 }
+
+// 보스 등장 컷신: 그동안 이동·메뉴 키가 먹지 않음 (등장 후 대사는 코드에서 뺐음)
+{
+  let start, during, paused = false;
+  await runProject(project, {scene: scene('Test_Boss'), frames: 330, delta: 1 / 60,
+    inputs: [{frame: 40, key: 'd', value: 1}, {frame: 150, key: 'd', value: 0}, ...press(80, 'escape')],
+    onFrame: (f, vm) => { const p = vm.objects.find(o => o.id === 'Player').position, d = director(vm);
+      if (f === 39) start = p[0]; if (f === 149) during = p[0]; paused = paused || d.Paused; }});
+  assert.ok(Math.abs(during - start) < 0.05, `컷신 동안 이동 안 됨 (${start} → ${during})`);
+  assert.ok(!paused, '컷신 동안 메뉴 안 열림');
+  console.log('보스 등장 컷신 조작 막힘 검사 통과');
+}

@@ -427,3 +427,7 @@ void TopDownShooter::UpdateAmbient(float delta,const hb::Vec3& at,bool attacking
     }
   }
 }
+
+// 같은 컴파일 단위로 묶는 역할별 파일 (엔진 C++ 빌드는 .cpp마다 엔진 헤더를 다시 읽어 60초 한도에 걸림, docs/엔진_요청_C++빌드시간.md)
+#include "Interact.inl"   // 상호작용(E)·제작(Q)
+#include "Screen.inl"     // HUD·캐릭터 그림·대화창·인트로·타이틀

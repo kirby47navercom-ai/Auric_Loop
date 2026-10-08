@@ -1,3 +1,4 @@
+#pragma once  // World.cpp가 포함 (따로 컴파일하지 않음)
 #include "Common.h"
 #include <algorithm>
 #include <map>
