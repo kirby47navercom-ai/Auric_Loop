@@ -1,5 +1,6 @@
 // 부스용 패키지를 만들어 바탕화면에 복사한다.
-// 실행: <HBEngine 사용자용 폴더>/runtime/node.exe tools/package.mjs [프로필 id=windows] [대상 폴더=바탕화면\AuricLoop_데모_MMDD]
+// 실행: <HBEngine 사용자용 폴더>/runtime/node.exe tools/package.mjs [프로필 id=windows] [대상 폴더=바탕화면\AuricLoop_데모]
+// 바탕화면에는 폴더 하나만 둔다: 빌드가 끝나면 같은 이름의 이전 패키지를 지우고 바꿔 넣음 (실행 중이면 실패)
 //
 // 엔진 플레이어 UI 문제를 빌드 결과에서만 고친다 (엔진 설치본은 건드리지 않음, docs/엔진_요청_UI입력.md):
 //   1) 그림·글자(Image·Text) 위젯이 마우스 클릭을 받아 게임 화면(canvas)까지 안 감 → 타이틀 그림을 눌러도 시작 안 됨
@@ -18,9 +19,7 @@ const {readProjectManifest} = await tool('project-manifest.mjs');
 const {readBuildProfiles, buildGame} = await tool('build-game.mjs');
 
 const [id = 'windows', target] = process.argv.slice(2);
-const now = new Date(), mmdd = String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
-const dest = target || path.join(os.homedir(), 'OneDrive', '바탕 화면', `AuricLoop_데모_${mmdd}`);
-await fs.access(dest).then(() => { throw Error(`이미 있음: ${dest} (지우거나 다른 이름을 주세요)`); }, () => {});
+const dest = target || path.join(os.homedir(), 'OneDrive', '바탕 화면', 'AuricLoop_데모');
 
 const project = path.join(path.dirname(fileURLToPath(import.meta.url)), '../AuricLoop/AuricLoop.hbproject');
 const record = await readProjectManifest(project);
@@ -63,5 +62,6 @@ await patch('prototype/player.js',
   "$('#pause-toggle').hidden=true;if(kiosk.enabled){$('#quit').hidden=true;$('#fullscreen').hidden=true;}");
 
 await fs.writeFile(packFile, JSON.stringify(pack, null, 2) + '\n');
+await fs.rm(dest, {recursive: true, force: true});  // 이전 패키지 교체 (게임이 켜져 있으면 여기서 실패)
 await fs.cp(build.output, dest, {recursive: true});
 console.log('패키지:', path.join(dest, 'Game.exe'));
