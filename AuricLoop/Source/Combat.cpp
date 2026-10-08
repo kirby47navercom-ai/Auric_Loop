@@ -185,13 +185,15 @@ void TopDownShooter::Slash(const hb::Vec3& position,const std::vector<Enemy*>& e
     t.scale=hb::Vec3{(reach*0.5f+0.3f)/0.07f,(reach*0.75f)/0.07f,1};hb::Scene::SetTransform(shotGuard,t);guardTime=0.12f;}
 }
 
-void TopDownShooter::Shoot(const hb::Vec3& from){
+void TopDownShooter::Shoot(const hb::Vec3& from,float power){
   hb::Transform t;t.position=from+facing*0.8f;t.position.z=0.2f;t.rotation=hb::Vec3{0,0,Angle(facing)};
   auto* s=Take(shotPool,rules->PlayerShotPrefab,t);if(!s)return;
   hb::Sprites::PlayAnimation(s,Character==1?rules->ArrowClip:rules->CardClip,true);
   Effect(Character==1?"Muzzle":"CardCast",Muzzle(from),Angle(facing),1.f);Sfx(Character==1?"Arrow":"Bolt");
-  hb::Physics::SetVelocity(s,facing*(Character==1?rules->ArrowSpeed:rules->BoltSpeed));
+  const float speed=Character==1?rules->ArrowMinSpeed+(rules->ArrowSpeed-rules->ArrowMinSpeed)*power:rules->BoltSpeed;
+  hb::Physics::SetVelocity(s,facing*speed);
   shots[s]=rules->PlayerShotLife;shotBoom[s]=false;Swings++;
+  shotPower[s]=Character==1?rules->ArrowMinPower+(1-rules->ArrowMinPower)*power*power:1.f;  // 끝까지 당길수록 많이 세짐 (제곱)
 }
 
 void TopDownShooter::UpdateShots(float delta,const std::vector<Enemy*>& enemies){
@@ -202,9 +204,9 @@ void TopDownShooter::UpdateShots(float delta,const std::vector<Enemy*>& enemies)
     const int in=fightingRoom>=0?fightingRoom:area;  // 싸우는 방(문이 잠김) 벽에 막힘
     bool wall=inDungeon&&in>=0&&!map.rooms[in].Inside(p,0.2f),hit=false;
     if(Returning&&returnRoom>=0&&map.Locked(returnRoom,returnDir)&&Length(map.DoorPosition(returnRoom,returnDir)-p)<1.5f){
-      HitReturnGate(p,1.5f,Character==1?rules->ArrowDoorHits:1);wall=true;}
+      HitReturnGate(p,1.5f,Character==1?std::max(1,int(std::lround(rules->ArrowDoorHits*shotPower[s]))):1);wall=true;}
     for(auto* e:enemies){if(wall||(hit&&Enchant!=3))break;
-      if(Length(hb::Scene::GetPosition(e)-p)<rules->PlayerShotHit+(e->Boss?e->Radius:0)){HitEnemy(e,dir,WeaponDamage());hit=true;if(e->Boss)wall=true;}}
+      if(Length(hb::Scene::GetPosition(e)-p)<rules->PlayerShotHit+(e->Boss?e->Radius:0)){HitEnemy(e,dir,WeaponDamage()*shotPower[s]);hit=true;if(e->Boss)wall=true;}}
     if(!wall&&!(hit&&Enchant!=3)&&life>0)continue;  // 각인 관통(3)이면 적을 뚫고 벽·문·보스에서 멈춤
     if(Character!=2){done.push_back(s);continue;}
     // 알레아 마탄: 작은 폭발로 주변 적에게 피해
@@ -212,7 +214,7 @@ void TopDownShooter::UpdateShots(float delta,const std::vector<Enemy*>& enemies)
     for(auto* e:Enemies()){const auto d=hb::Scene::GetPosition(e)-p;const float len=Length(d);
       if(len<rules->BoomRadius&&len>0.05f)HitEnemy(e,d*(1/len),rules->BoomDamage*WeaponDamage()/rules->BoltDamage);}
   }
-  for(auto* s:done){Give(shotPool,s);shots.erase(s);shotBoom.erase(s);}
+  for(auto* s:done){Give(shotPool,s);shots.erase(s);shotBoom.erase(s);shotPower.erase(s);}
 }
 
 void TopDownShooter::Separate(const std::vector<Enemy*>& list,const hb::Vec3& player){

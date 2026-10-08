@@ -185,7 +185,8 @@ void TopDownShooter::Update(float delta){
   if(Character==1){  // 누르는 동안 당기고(1초면 다 당김, 그 뒤로는 유지) 떼는 순간 발사. 덜 당기고 떼면 취소
     if(attackDown&&attackCooldown<=0){const bool full=charge>=rules->ArrowCharge;charge=std::min(charge+delta,rules->ArrowCharge);
       if(!full&&charge>=rules->ArrowCharge){hb::Sprites::Flash(player,0.08f,0.5f);Sfx("Select");}}
-    else if(!attackDown&&charge>0){if(charge>=rules->ArrowCharge){Shoot(position);attackAnim=0.1f;attackCooldown=0.15f;}charge=0;}}
+    else if(!attackDown&&charge>0){  // 떼는 순간 발사: 당긴 정도(0~1)에 따라 피해·속도·문 타격이 커짐. 너무 짧게 떼면 취소
+      if(charge>=rules->ArrowMinCharge){Shoot(position,std::min(1.f,charge/rules->ArrowCharge));attackAnim=0.1f;attackCooldown=0.15f;}charge=0;}}
   else if(Character==2&&attackDown&&attackCooldown<=0){attackCooldown=rules->BoltInterval;attackAnim=0.2f;Shoot(position);}
   else if(Character==0&&attackDown&&attackCooldown<=0)Slash(position,enemies);
   UpdateShots(delta,enemies);

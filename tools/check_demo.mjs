@@ -283,3 +283,13 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   assert.ok(!snap[540].paused && snap[540].t > snap[480].t + 0.3, '다시 Esc면 시간이 흐름');
   console.log('Esc 시간 정지 검사 통과');
 }
+
+// 셰리 활: 당긴 만큼 세짐. 0.3초만 당겨도 쏘고(약하고 느린 화살), 0.05초 톡 치면 취소
+{
+  const shotsAfter = async hold => director(await runProject(project, {scene: scene('Test_Sherry'), frames: 60, delta: 1 / 60,
+    inputs: [{frame: 10, key: 'LeftMouseButton', value: 1}, {frame: 10 + hold, key: 'LeftMouseButton', value: 0}]})).Swings;
+  const tap = await shotsAfter(3), short = await shotsAfter(18);
+  assert.equal(tap, 0, '0.05초는 취소');
+  assert.equal(short, 1, '0.3초 당겨도 발사');
+  console.log('셰리 당긴 만큼 발사 검사 통과');
+}

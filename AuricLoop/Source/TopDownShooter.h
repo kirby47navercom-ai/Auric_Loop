@@ -293,6 +293,12 @@ public:
   float AttackMoveRate = 1.0f;    // 검 베기 중 이동속도 배율
   HB_PROPERTY(BlueprintReadWrite)
   float ChargeMoveRate = 0.7f;    // 활 당기는 중 이동속도 배율
+  HB_PROPERTY(BlueprintReadWrite)
+  float ArrowMinCharge = 0.12f;   // 셰리: 이만큼은 당겨야 쏨 (그보다 짧게 떼면 취소). 그 뒤로는 당긴 만큼 세짐
+  HB_PROPERTY(BlueprintReadWrite)
+  float ArrowMinPower = 0.3f;     // 셰리: 살짝 당겨 쏜 화살의 피해 배율 (다 당기면 1, 그 사이는 점점)
+  HB_PROPERTY(BlueprintReadWrite)
+  float ArrowMinSpeed = 10.0f;    // 셰리: 살짝 당겨 쏜 화살 속도 (다 당기면 ArrowSpeed)
   // ---- 새 캐릭터 시트 (docs/캐릭터_시트_요청.md). 캐릭터마다 그림이 들어오면 AnimSets를 1로 ----
   HB_PROPERTY(BlueprintReadWrite)
   std::vector<int> AnimSets = {0,0,0};  // 0 지금 그림(5방향+반전, 합성 이동공격) / 1 새 시트(8방향, 위상 걷기, 캐릭터별 공격, 대기 행동)
@@ -541,7 +547,7 @@ private:
   std::vector<Enemy*> Enemies() const;                       // 나와 있는 적 (대기 중인 적은 뺌)
   void ParkEnemy(Enemy* e);                                  // 화면 밖 대기로 되돌림
   void Slash(const hb::Vec3& position,const std::vector<Enemy*>& enemies);
-  void Shoot(const hb::Vec3& from);
+  void Shoot(const hb::Vec3& from,float power=1.f);  // power: 셰리 활을 당긴 정도 0~1 (피해·속도·문 타격)
   void UpdateShots(float delta,const std::vector<Enemy*>& enemies);
   void UpdateBullets(float delta,const hb::Vec3& position);
   void KeepInside(Enemy* e) const;
@@ -630,6 +636,7 @@ private:
   bool playerHittable=false;
   std::map<hb::Actor*,float> shots;        // 플레이어 탄
   std::map<hb::Actor*,bool> shotBoom;
+  std::map<hb::Actor*,float> shotPower;  // 화살마다 당긴 정도 (피해 배율)
   std::map<hb::Actor*,int> coins;
   Enemy* boss=nullptr;
   std::vector<Line> dialog;
