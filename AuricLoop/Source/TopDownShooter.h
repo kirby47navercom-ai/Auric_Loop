@@ -299,6 +299,8 @@ public:
   float ArrowMinPower = 0.3f;     // 셰리: 살짝 당겨 쏜 화살의 피해 배율 (다 당기면 1, 그 사이는 점점)
   HB_PROPERTY(BlueprintReadWrite)
   float ArrowMinSpeed = 10.0f;    // 셰리: 살짝 당겨 쏜 화살 속도 (다 당기면 ArrowSpeed)
+  HB_PROPERTY(BlueprintReadWrite)
+  float ArrowPartialCooldown = 0.6f;  // 셰리: 다 당기지 않고 쏘면 다음 당기기까지 쉬는 시간 (덜 당길수록 길게, 최대 이만큼 + 0.15초). 연타 방지
   // ---- 새 캐릭터 시트 (docs/캐릭터_시트_요청.md). 캐릭터마다 그림이 들어오면 AnimSets를 1로 ----
   HB_PROPERTY(BlueprintReadWrite)
   std::vector<int> AnimSets = {0,0,0};  // 0 지금 그림(5방향+반전, 합성 이동공격) / 1 새 시트(8방향, 위상 걷기, 캐릭터별 공격, 대기 행동)
