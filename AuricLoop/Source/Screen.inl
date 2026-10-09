@@ -95,18 +95,27 @@ static const int kHands[2][4][4][2]={
 
 void TopDownShooter::AnimateSocket(float delta,bool moving){
   // 몸: 조준 쪽 4방향(반전 없음), 달리기 위상은 움직인 거리로 (뒷걸음질이면 거꾸로). 대시도 같은 달리기 그림
+  // 다리 (v14 메타데이터): 조준과 45~135도 어긋나게 걸으면 옆걸음, 135도 넘으면 앞걸음 다리. 90도 넘게 등지면 위상을 거꾸로
   // 검: 손 위치에 붙어 조준 각도로 돎 (64방향). 베면 조준 둘레를 0.14초에 200도 휘두르고 0.12초에 돌아옴, 번갈아 반대쪽에서
   if(playerFlipped){playerFlipped=false;hb::Sprites::SetFlip(player,false,false);}
   const auto at=hb::Scene::GetPosition(player);auto step=at-animPos;step.z=0;animPos=at;
   const float moved=Length(step)<1.f?Length(step):0.f;
-  walkDist+=hb::VectorMath::DotProduct(step,facing)<0?-moved:moved;
+  const bool backward=hb::VectorMath::DotProduct(step,facing)<0;
+  walkDist+=backward?-moved:moved;
   if(attackAnim>0)attackAnim-=delta;
   const bool go=moving||dodgeTimer>0;const int gait=go?1:0;
   const float aim=Angle(facing);  // 반시계, 0 = 오른쪽
   const int row=aim>=-45&&aim<45?3:aim>=45&&aim<135?2:aim>=-135&&aim<-45?0:1;
   const int phase=go?((int)std::floor(walkDist/0.48f)%4+4)%4:row==2?0:1;  // 달리기 한 걸음 0.48m (80ms x 6m/s), 서 있으면 1 (뒤는 0)
-  const std::string body=std::string("Assets/Sprites/ValenSocket/S_VS_")+(go?"run_":"walk_")+std::to_string(row)+"_"+std::to_string(phase)+".hbsprite.json";
+  int legs=0;  // 0 앞으로, 1 옆걸음 ccw, 2 옆걸음 cw (화면 시계 방향 기준: 조준 - 이동 > 0 이면 cw)
+  if(go&&moved>0){const float d=std::fmod(aim-Angle(step)+540.f,360.f)-180;if(std::abs(d)>=45&&std::abs(d)<135)legs=d>0?2:1;}
+  const std::string g=std::string(go?"run_":"walk_"),rp=std::to_string(row)+"_"+std::to_string(phase);
+  const std::string body="Assets/Sprites/ValenSocket/S_VS_"+g+std::to_string(legs)+"_"+rp+".hbsprite.json";
   if(body!=currentSprite){currentSprite=body;hb::Sprites::SetSprite(player,body);}
+  if(grip){  // 손가락 덮개: 왼쪽을 보면 몸에 합쳐져 있으므로 치움
+    const std::string gs=row==1?"":"S_VS_Grip_"+g+rp;const hb::Vec3 to=row==1?hb::Vec3{0,-500,0}:at+hb::Physics::GetVelocity(player)*delta;
+    if(gs!=gripShown){gripShown=gs;if(!gs.empty())hb::Sprites::SetSprite(grip,"Assets/Sprites/ValenSocket/"+gs+".hbsprite.json");}
+    if(Length(to-gripAt)>0.001f){gripAt=to;hb::Scene::SetPosition(grip,to);}}
   if(!weapon)return;
   float angle=aim;
   if(swingT>=0){swingT+=delta;const float t=swingT/0.14f;
@@ -127,7 +136,8 @@ void TopDownShooter::Animate(float delta,bool moving){
   // 프레임: 공격 3장(0.1초씩) > 걷기 4장(초당 8장) > 서 있기
   static const char* dirs[]={"E","NE","N","NE","E","SE","S","SE"};
   if(Character==0){AnimateSocket(delta,moving);return;}
-  if(weapon&&!weaponShown.empty()){weaponShown.clear();hb::Scene::SetPosition(weapon,hb::Vec3{0,-500,0});}  // 다른 캐릭터는 검을 치움
+  if(weapon&&!weaponShown.empty()){weaponShown.clear();hb::Scene::SetPosition(weapon,hb::Vec3{0,-500,0});}  // 다른 캐릭터는 검·손가락을 치움
+  if(grip&&!gripShown.empty()){gripShown.clear();hb::Scene::SetPosition(grip,hb::Vec3{0,-500,0});}
   const int sector=Sector(facing);
   if(NewSheet()){AnimateSheet(delta,moving,kDirs8[sector]);return;}
   const bool flip=sector>=3&&sector<=5;

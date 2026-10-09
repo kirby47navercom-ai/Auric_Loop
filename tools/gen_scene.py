@@ -171,7 +171,10 @@ def base_objects(director_bp="BP_TopDownShooter", at=(0, 0)):
     weapon = sprite_obj("PlayerWeapon", "Assets/Sprites/ValenSocket/sword.png", 0, -500, order=0)
     weapon.update(tags=["PlayerWeapon"])
     comp(weapon, "SpriteRenderer")["properties"].update(sprite="Assets/Sprites/ValenSocket/S_VS_Sword_F_0.hbsprite.json", texture="", useCustomSize=False)
-    return [player, shadow, weapon, cam, director, bp_obj("Rules", "BP_AuricRules", 0, 0), start("PlayerStart", *at)]
+    grip = copy.deepcopy(weapon)  # 검 손잡이 위 손가락 (앞·뒤·오른쪽을 볼 때)
+    grip.update(id="PlayerGrip", name="PlayerGrip", tags=["PlayerGrip"])
+    comp(grip, "SpriteRenderer")["properties"]["sprite"] = "Assets/Sprites/ValenSocket/S_VS_Grip_walk_0_1.hbsprite.json"
+    return [player, shadow, weapon, grip, cam, director, bp_obj("Rules", "BP_AuricRules", 0, 0), start("PlayerStart", *at)]
 
 
 # ---- 타일맵 ------------------------------------------------------------------------------

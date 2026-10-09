@@ -581,6 +581,7 @@ private:
   bool NewSheet() const{return Character<(int)rules->AnimSets.size()&&rules->AnimSets[Character]==1;}
   void AnimateSheet(float delta,bool moving,const char* dir);  // 새 시트 (Screen.inl)
   void AnimateSocket(float delta,bool moving);  // 발렌 손 소켓 무기: v14 몸 + 손에 단 검이 조준 쪽으로 돎 (Screen.inl)
+  hb::Actor* grip=nullptr;std::string gripShown;hb::Vec3 gripAt{0,0,0};  // 검 손잡이 위 손가락 (PlayerGrip)
   hb::Actor* weapon=nullptr;std::string weaponShown;hb::Vec3 weaponAt{0,0,0};float swingT=-1;int swingSide=1;  // 손에 단 검 (PlayerWeapon, 매 프레임 손 위치로), 휘두르기 시간·방향
   hb::Vec3 Muzzle(const hb::Vec3& from) const;  // 화살·카드가 나가는 자리  // 타이틀: 횃불 빛 깜빡임, 별 반짝임, 떠오르는 금가루
   void Bag(bool toggle,bool use);  // 가방 (Tab): 소재·아이템, [귀환]은 가방에서 Enter로 사용

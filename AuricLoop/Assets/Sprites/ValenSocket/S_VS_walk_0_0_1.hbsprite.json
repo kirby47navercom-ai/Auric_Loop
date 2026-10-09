@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_VS_walk_0_0_1",
+  "texture": "Assets/Sprites/ValenSocket/body_walk.png",
+  "pixelsPerUnit": 16,
+  "rect": [
+    64,
+    0,
+    64,
+    56
+  ],
+  "pivot": [
+    0.5,
+    0.27143
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

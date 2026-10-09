@@ -166,7 +166,8 @@ void TopDownShooter::Prewarm(){
   if(!shotGuard&&!shotPool.empty()){shotGuard=shotPool.back();shotPool.pop_back();hb::Tags::Add(shotGuard,"ShotGuard");
     hb::Sprites::SetColor(shotGuard,hb::Color{1,1,1,0});hb::Scene::SetPosition(shotGuard,hb::Vec3{-500,-500,0});}
   coinPool=hb::Scene::GetActorsWithTag("Pool.Coin");
-  {const auto w=hb::Scene::GetActorsWithTag("PlayerWeapon");weapon=w.empty()?nullptr:w.front();weaponShown.clear();}
+  {const auto w=hb::Scene::GetActorsWithTag("PlayerWeapon");weapon=w.empty()?nullptr:w.front();weaponShown.clear();
+   const auto g=hb::Scene::GetActorsWithTag("PlayerGrip");grip=g.empty()?nullptr:g.front();gripShown.clear();}
   fxPool=hb::Scene::GetActorsWithTag("Pool.Fx");warnPool=hb::Scene::GetActorsWithTag("Pool.Warn");
   warnFillPool=hb::Scene::GetActorsWithTag("Pool.WarnFill");circlePool=hb::Scene::GetActorsWithTag("Pool.WarnCircle");circleFillPool=hb::Scene::GetActorsWithTag("Pool.WarnCircleFill");
   for(auto* tag:{"Enemy.S","Enemy.M","Enemy.C"})for(auto* a:hb::Scene::GetActorsWithTag(tag))if(auto* e=dynamic_cast<Enemy*>(a))ParkEnemy(e);
