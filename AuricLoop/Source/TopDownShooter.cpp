@@ -151,7 +151,7 @@ void TopDownShooter::Update(float delta){
   if(touchMode){float best=rules->AutoAimRange;
     for(auto* e:enemies){const float len=Length(hb::Scene::GetPosition(e)-position);if(len<best){best=len;target=e;}}}
   if(target)facing=Normal(hb::Scene::GetPosition(target)-position,facing);
-  else if((aimHold>0||Character==0)&&hasAim&&!touchMode)facing=Normal(aim-position,facing);
+  else if(aimHold>0&&hasAim&&!touchMode)facing=Normal(aim-position,facing);
   else if(moving)facing=hb::VectorMath::NormalizeVector(move);
   Animate(delta,moving);
   // 적재량 초과·피로도 75% 이상이면 이동속도 -25% (기획서 4-1)
@@ -171,7 +171,9 @@ void TopDownShooter::Update(float delta){
   if(dodgeDown&&!dodgeHeld&&dodgeCooldownLeft<=0&&dodgeTimer<=0){dodgeTimer=rules->DodgeTime;dodgeCooldownLeft=rules->DodgeCooldown;Sfx("Dodge");
     Effect("Dust",hb::Vec3{position.x,position.y-0.8f,0.03f},0,0,facing.x>0);}
   dodgeHeld=dodgeDown;
-  if(dodgeTimer>0){dodgeTimer-=delta;hb::Physics::SetVelocity(player,facing*rules->DodgeSpeed);}
+  if(dodgeTimer>0){dodgeTimer-=delta;hb::Physics::SetVelocity(player,facing*rules->DodgeSpeed);
+    if((ghostTime-=delta)<=0){ghostTime=0.08f;Ghost(position);}  // 0.08초마다 잔상 (1m쯤 간격)
+    if(dodgeTimer<=0)Effect("Dust",hb::Vec3{position.x,position.y-0.8f,0.03f},0,0,facing.x<0);}  // 멈추며 흙먼지
   else if(NewSheet()&&Character==0&&attackAnim>0.12f&&attackAnim<=0.22f)hb::Physics::SetVelocity(player,facing*(rules->SlashStep/0.1f));  // 베기 프레임 동안 한 발 내딛음
   else if(knockTimer>0){knockTimer-=delta;hb::Physics::SetVelocity(player,knock);}
   {const bool blink=invulnerable>0&&int(invulnerable*12)%2==0;  // 무적 시간 깜빡임

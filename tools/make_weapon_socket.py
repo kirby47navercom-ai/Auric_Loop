@@ -56,6 +56,15 @@ for gait in ("walk", "run"):
             sprite(f"S_VS_Grip_{gait}_{row}_{phase}", OUT / f"grip_{gait}.png", [phase * CELL, y, CELL, FEET + GRIP_PAD],
                    (0.5, (GRIP_PAD + ORIGIN) / (FEET + GRIP_PAD)))
     sheet.save(OUT / f"body_{gait}.png")
+    if gait == "run":  # 대시 잔상: 금빛으로 물들인 반투명 몸 (C++ Ghost), 이름은 몸과 같은 자리
+        ghost = sheet.copy()
+        ghost.putdata([(int(r * 0.2 + 255 * 0.8), int(g * 0.2 + 240 * 0.8), int(b * 0.2 + 185 * 0.8), int(al * 0.5))
+                       for r, g, b, al in sheet.get_flattened_data()])
+        ghost.save(OUT / "ghost_run.png")
+        for v in range(3):
+            for row in range(4):
+                for phase in range(4):
+                    sprite(f"S_VS_Ghost_{v}_{row}_{phase}", OUT / "ghost_run.png", [phase * CELL, (v * 4 + row) * FEET, CELL, FEET], (0.5, ORIGIN / FEET))
     grips.save(OUT / f"grip_{gait}.png")
 
 # 검: 8배로 키워 쥐는 곳 둘레로 돌린 뒤 다시 줄임 (도트가 뭉개지지 않게 가장 가까운 픽셀)

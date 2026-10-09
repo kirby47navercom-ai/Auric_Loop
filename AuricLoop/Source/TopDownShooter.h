@@ -250,7 +250,7 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   float SwordInterval = 0.35f;
   HB_PROPERTY(BlueprintReadWrite)
-  float SwordRange = 2.5f;
+  float SwordRange = 3.2f;
   HB_PROPERTY(BlueprintReadWrite)
   float SwordHalfAngle = 50.0f;
   HB_PROPERTY(BlueprintReadWrite)
@@ -609,7 +609,8 @@ private:
   std::vector<hb::Actor*> bulletPool,shotPool,coinPool,fxPool;
   // 이펙트: 풀에서 꺼낸 그림 오브젝트에 프레임을 차례로 바꿔 끼운다 (베기·타격 불꽃·적 쓰러짐)
   // 이펙트 하나. moving이면 바닥(ground) 위를 미끄러지고 높이(h)로 튀며 돈다 (처치 파편·쓰러지는 몸)
-  struct Fx{hb::Actor* actor;float left;bool moving=false;hb::Vec3 ground{0,0,0},vel{0,0,0};float h=0,vh=0,spin=0,angle=0;bool settled=false;};
+  struct Fx{hb::Actor* actor;float left;bool moving=false;hb::Vec3 ground{0,0,0},vel{0,0,0};float h=0,vh=0,spin=0,angle=0;bool settled=false,ghost=false;};
+  void Ghost(const hb::Vec3& at);float ghostTime=0;  // 대시 잔상
   void Debris(const hb::Vec3& at,const hb::Vec3& dir,const std::string& who);  // 처치: 뼈·천·금 조각이 튀어 흩어짐
   hb::Vec3 kick{0,0,0};float punch=0,lastOrtho=0;int hitChain=0;float chainTime=0;  // 타격감: 때린 방향으로 화면 밀림, 처치 확대, 연타 음높이
   std::vector<Fx> fxs;

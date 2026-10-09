@@ -99,6 +99,14 @@ void TopDownShooter::PlayFx(const std::string& clip,float length,const hb::Vec3&
   fxs.push_back(Fx{a,length});
 }
 
+void TopDownShooter::Ghost(const hb::Vec3& at){
+  // 대시 잔상: 지금 몸 그림의 금빛 반투명판(tools/make_weapon_socket.py ghost_run)을 그 자리에 0.2초. 몸보다 뒤(순서 -1)
+  const auto i=currentSprite.find("S_VS_run_");if(i==std::string::npos)return;
+  hb::Transform t;t.position=at;auto* a=Take(fxPool,rules->FxPrefab,t);if(!a)return;
+  hb::Sprites::SetSorting(a,"default",-1);hb::Sprites::SetSprite(a,std::string(currentSprite).replace(i,9,"S_VS_Ghost_"));
+  Fx f{a,0.2f};f.ghost=true;fxs.push_back(f);
+}
+
 void TopDownShooter::Effect(const std::string& name,const hb::Vec3& at,float angle,float glow,bool flip){
   static const std::map<std::string,float> length={{"Dust",0.24f},{"BoneBurst",0.24f},{"Shockwave",0.26f},{"Muzzle",0.12f},{"CardCast",0.15f},
     {"HurtClaw",0.15f},{"CoinSparkle",0.18f},{"Spawn",0.9f},{"Hit",0.16f},{"Alert",0.6f},{"EnemySlash",0.16f},{"BossSlash",0.2f},
@@ -149,7 +157,8 @@ void TopDownShooter::UpdateFx(float delta){
         hb::Scene::SetTransform(it->fill,t);hb::Sprites::SetSize(it->fill,hb::Vec2{it->length*k,it->width});}}
     ++it;}
   for(auto it=fxs.begin();it!=fxs.end();){
-    if((it->left-=delta)<=0){hb::Scene::SetScale(it->actor,hb::Vec3{1,1,1});Give(fxPool,it->actor);it=fxs.erase(it);continue;}
+    if((it->left-=delta)<=0){hb::Scene::SetScale(it->actor,hb::Vec3{1,1,1});if(it->ghost)hb::Sprites::SetSorting(it->actor,"default",4);
+      Give(fxPool,it->actor);it=fxs.erase(it);continue;}
     if(it->moving&&!it->settled){  // 튀는 조각: 바닥을 미끄러지며(마찰) 높이로 튕기고 돎. 멈추면 더 옮기지 않음 (명령 줄임)
       auto& f=*it;f.ground=f.ground+f.vel*delta;f.vel=f.vel*std::max(0.f,1-delta*(f.h>0?1.2f:5.f));
       f.vh-=28*delta;f.h+=f.vh*delta;if(f.h<0){f.h=0;f.vh=-f.vh*0.35f;f.spin*=0.5f;if(f.vh<1.2f)f.vh=0;}
@@ -166,8 +175,6 @@ void TopDownShooter::Prewarm(){
   if(!shotGuard&&!shotPool.empty()){shotGuard=shotPool.back();shotPool.pop_back();hb::Tags::Add(shotGuard,"ShotGuard");
     hb::Sprites::SetColor(shotGuard,hb::Color{1,1,1,0});hb::Scene::SetPosition(shotGuard,hb::Vec3{-500,-500,0});}
   coinPool=hb::Scene::GetActorsWithTag("Pool.Coin");
-  {const auto w=hb::Scene::GetActorsWithTag("PlayerWeapon");weapon=w.empty()?nullptr:w.front();weaponShown.clear();
-   const auto g=hb::Scene::GetActorsWithTag("PlayerGrip");grip=g.empty()?nullptr:g.front();gripShown.clear();}
   fxPool=hb::Scene::GetActorsWithTag("Pool.Fx");warnPool=hb::Scene::GetActorsWithTag("Pool.Warn");
   warnFillPool=hb::Scene::GetActorsWithTag("Pool.WarnFill");circlePool=hb::Scene::GetActorsWithTag("Pool.WarnCircle");circleFillPool=hb::Scene::GetActorsWithTag("Pool.WarnCircleFill");
   for(auto* tag:{"Enemy.S","Enemy.M","Enemy.C"})for(auto* a:hb::Scene::GetActorsWithTag(tag))if(auto* e=dynamic_cast<Enemy*>(a))ParkEnemy(e);
@@ -229,7 +236,9 @@ void TopDownShooter::Slash(const hb::Vec3& position,const std::vector<Enemy*>& e
   if(!NewSheet()&&knockTimer<=0){knock=facing*3.5f;knockTimer=0.07f;}  // 휘두르며 반 걸음 내딛음 (새 시트는 그림 속 내딛기로)
   swingT=0;swingSide=-swingSide;  // 손에 단 검을 휘두름: 번갈아 반대쪽에서 (Screen.inl AnimateSocket)
   if(NewSheet())slashB=(((int)std::floor(walkDist/rules->Stride)%4+4)%4)>=2;  // 왼발이 앞이면 오른발로(B), 아니면 왼발로(A). 서서 연달아 베면 A·B가 번갈아 나옴
-  PlayFx(rules->SlashClip,0.2f,position+facing*0.9f+hb::Vec3{0,0.2f,0.2f},Angle(facing),0.5f,false,(Swings&1)!=0);  // 번갈아 위·아래로 벰  // 캐릭터 그림과 따로, 공격 방향으로 돌린 베기
+  // 베기 그림: 검 끝 쪽(1.6m 앞)에 1.6배로. 판정 반경(SwordRange 3.2m)과 같은 크기
+  {const size_t before=fxs.size();PlayFx(rules->SlashClip,0.2f,position+facing*1.6f+hb::Vec3{0,0.2f,0.2f},Angle(facing),0.5f,false,(Swings&1)!=0);
+   if(fxs.size()>before)hb::Scene::SetScale(fxs.back().actor,hb::Vec3{1.6f,1.6f,1});}  // 번갈아 위·아래로 벰  // 캐릭터 그림과 따로, 공격 방향으로 돌린 베기
   const float minDot=std::cos(rules->SwordHalfAngle*3.14159265f/180),reach=rules->SwordRange+(Enchant==3?rules->SlashExtend:0);
   auto inFan=[&](const hb::Vec3& at,float radius){const auto d=at-position;const float len=Length(d);
     return len<=reach+radius&&(len<=radius+0.75f||hb::VectorMath::DotProduct(d*(1/len),facing)>=minDot);};  // 바로 붙은 적은 방향과 관계없이 맞음
