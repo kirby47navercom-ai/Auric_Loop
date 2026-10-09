@@ -37,7 +37,10 @@ async function patch(name, from, to) {
   await fs.writeFile(file, bytes);
   Object.assign(entry, {bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')});
 }
-await patch('prototype/ui-runtime.css', '.hb-ui-Spacer{pointer-events:none}', '.hb-ui-Spacer,.hb-ui-Image,.hb-ui-Text{pointer-events:none}');
+// 마우스 포인터를 게임 조준점으로 (tools/make_cursor.py, 가운데 16,16이 찍는 곳)
+const cursor = (await fs.readFile(path.join(path.dirname(project), 'Assets/UI/cursor_crosshair.png'))).toString('base64');
+await patch('prototype/ui-runtime.css', '.hb-ui-Spacer{pointer-events:none}', '.hb-ui-Spacer,.hb-ui-Image,.hb-ui-Text{pointer-events:none}'
+  + `html,body,*{cursor:url(data:image/png;base64,${cursor}) 16 16,crosshair!important}`);
 await patch('prototype/ui-runtime.js',
   "control.addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Enter'&&node.type==='TextInput')signal('submit');});",
   "control.addEventListener('keydown',e=>{if(node.type!=='TextInput')return;e.stopPropagation();if(e.key==='Enter')signal('submit');});");

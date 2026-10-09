@@ -248,14 +248,12 @@ void TopDownShooter::TitleFx(float delta,bool visible){
       for(int k=0;k<keyCounts[g];++k)UiVisible("TitleKey"+std::to_string(g)+"_"+std::to_string(k),false);}
     for(auto* n:{"TitleTorchL","TitleTorchR"})UiVisible(n,false);
     for(int i=0;i<8;++i){if(i<7)UiVisible("TitleStar"+std::to_string(i),false);UiVisible("TitleDust"+std::to_string(i),false);}
-    for(int i=0;i<6;++i){UiVisible("TitleOrbit"+std::to_string(i),false);if(i<3)UiVisible("TitleHero"+std::to_string(i),false);}
     UiVisible("TitleTapShade",false);UiScale("TitleScreen",1);
     return;}
   if(titleTime<0){titleTime=0;  // 로딩 동안 숨겼던 것을 다시 보임
     for(int g=0;g<8;++g){UiVisible("TitleKeyName"+std::to_string(g),true);for(int k=0;k<keyCounts[g];++k)UiVisible("TitleKey"+std::to_string(g)+"_"+std::to_string(k),true);}
     for(auto* n:{"TitleTorchL","TitleTorchR"})UiVisible(n,true);
     for(int i=0;i<8;++i){if(i<7)UiVisible("TitleStar"+std::to_string(i),true);UiVisible("TitleDust"+std::to_string(i),true);}
-    for(int i=0;i<6;++i){UiVisible("TitleOrbit"+std::to_string(i),true);if(i<3)UiVisible("TitleHero"+std::to_string(i),true);}
     UiVisible("TitleTapShade",true);}
   titleTime+=delta;const float t=titleTime;
   // 횃불: 두 겹 사인 + 작은 흔들림으로 불규칙하게 밝기·크기
@@ -270,18 +268,8 @@ void TopDownShooter::TitleFx(float delta,bool visible){
     const std::string n="TitleDust"+std::to_string(i);UiPosition(n,hb::Vec2{x,y});UiOpacity(n,std::sin(p*3.14159f)*0.9f);}
   // 그림 전체가 아주 천천히 숨 쉬듯 (확대 1~1.5%)
   UiScale("TitleScreen",1.0075f+0.0075f*std::sin(t*0.45f));
-  // 로고 둘레 금빛 고리를 따라 도는 동전: 아래쪽(앞)일 때 크고 밝게, 위쪽(뒤)일 때 작고 어둡게. 고리는 오른쪽 위로 살짝 기울어 있음
-  for(int i=0;i<6;++i){const float a=t*0.55f+i*1.0472f,cs=std::cos(a),sn=std::sin(a);
-    const float x=643+300*cs,y=352+190*sn-0.22f*300*cs,front=0.5f+0.5f*sn;
-    const std::string n="TitleOrbit"+std::to_string(i);UiPosition(n,hb::Vec2{x,y});UiScale(n,0.55f+0.5f*front);UiOpacity(n,0.45f+0.55f*front);}
   // "Tap To Start" 뒤 금빛이 숨 쉬듯 번짐
   {const float b=0.5f+0.5f*std::sin(t*3.2f);UiOpacity("TitleTapShade",0.15f+0.6f*b*b);UiScale("TitleTapShade",0.9f+0.15f*b);}
-  // 바닥에 선 세 사람: 숨쉬기 두 장, 가끔 옆을 봄 (서로 다른 박자)
-  static const char* who[]={"Valen","Sherry","Alea"};
-  for(int i=0;i<3;++i){const float u=t+i*1.7f;const bool look=std::fmod(u,5.5f)>4.3f;
-    const bool turn=look&&i==0;  // 왼쪽에 선 발렌만 가운데(오른쪽 아래)를 봄 (서쪽 그림이 없어 오른쪽 둘은 숨쉬기만)
-    const std::string dir=turn?"SE":"S",frame=turn?"0":std::to_string(int(u*1.6f)%2);
-    UiTexture("TitleHero"+std::to_string(i),std::string("Assets/Sprites/")+who[i]+"/"+who[i]+"_"+dir+"_Idle_"+frame+".png");}
 }
 
 bool TopDownShooter::UpdateIntro(float delta,bool anyKey){

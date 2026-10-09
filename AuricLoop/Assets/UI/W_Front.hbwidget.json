@@ -218,432 +218,6 @@
       "bindings": {}
     },
     {
-      "id": "TitleOrbit0",
-      "name": "TitleOrbit0",
-      "parent": "root",
-      "type": "Image",
-      "slot": {
-        "anchors": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "offset": [
-          0,
-          0,
-          52,
-          52
-        ],
-        "alignment": [
-          0.5,
-          0.5
-        ],
-        "zIndex": 93,
-        "fill": 0
-      },
-      "properties": {
-        "inputKey": "space",
-        "inputMode": "keys",
-        "axisX": "MoveX",
-        "axisY": "MoveY",
-        "keyUp": "w",
-        "keyDown": "s",
-        "keyLeft": "a",
-        "keyRight": "d",
-        "deadZone": 0.15,
-        "floating": false,
-        "deviceVisibility": "all",
-        "text": "",
-        "texture": "Assets/UI/Kit/loading_coin.gif",
-        "fontSize": 22,
-        "color": "#f6ecd8",
-        "background": "#00000000",
-        "accent": "#589ad6",
-        "hover": "#365778",
-        "pressed": "#1e4061",
-        "borderColor": "#4a5f73",
-        "borderWidth": 0,
-        "radius": 0,
-        "opacity": 1,
-        "visible": true,
-        "enabled": true,
-        "focusable": true,
-        "tooltip": "",
-        "align": "center",
-        "value": 0,
-        "min": 0,
-        "max": 1,
-        "step": 0.01,
-        "padding": 8,
-        "gap": 8,
-        "columns": 2,
-        "checked": false,
-        "placeholder": "",
-        "maxLength": 256,
-        "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf",
-        "imageRendering": "pixelated"
-      },
-      "events": {},
-      "bindings": {}
-    },
-    {
-      "id": "TitleOrbit1",
-      "name": "TitleOrbit1",
-      "parent": "root",
-      "type": "Image",
-      "slot": {
-        "anchors": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "offset": [
-          0,
-          0,
-          52,
-          52
-        ],
-        "alignment": [
-          0.5,
-          0.5
-        ],
-        "zIndex": 93,
-        "fill": 0
-      },
-      "properties": {
-        "inputKey": "space",
-        "inputMode": "keys",
-        "axisX": "MoveX",
-        "axisY": "MoveY",
-        "keyUp": "w",
-        "keyDown": "s",
-        "keyLeft": "a",
-        "keyRight": "d",
-        "deadZone": 0.15,
-        "floating": false,
-        "deviceVisibility": "all",
-        "text": "",
-        "texture": "Assets/UI/Kit/loading_coin.gif",
-        "fontSize": 22,
-        "color": "#f6ecd8",
-        "background": "#00000000",
-        "accent": "#589ad6",
-        "hover": "#365778",
-        "pressed": "#1e4061",
-        "borderColor": "#4a5f73",
-        "borderWidth": 0,
-        "radius": 0,
-        "opacity": 1,
-        "visible": true,
-        "enabled": true,
-        "focusable": true,
-        "tooltip": "",
-        "align": "center",
-        "value": 0,
-        "min": 0,
-        "max": 1,
-        "step": 0.01,
-        "padding": 8,
-        "gap": 8,
-        "columns": 2,
-        "checked": false,
-        "placeholder": "",
-        "maxLength": 256,
-        "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf",
-        "imageRendering": "pixelated"
-      },
-      "events": {},
-      "bindings": {}
-    },
-    {
-      "id": "TitleOrbit2",
-      "name": "TitleOrbit2",
-      "parent": "root",
-      "type": "Image",
-      "slot": {
-        "anchors": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "offset": [
-          0,
-          0,
-          52,
-          52
-        ],
-        "alignment": [
-          0.5,
-          0.5
-        ],
-        "zIndex": 93,
-        "fill": 0
-      },
-      "properties": {
-        "inputKey": "space",
-        "inputMode": "keys",
-        "axisX": "MoveX",
-        "axisY": "MoveY",
-        "keyUp": "w",
-        "keyDown": "s",
-        "keyLeft": "a",
-        "keyRight": "d",
-        "deadZone": 0.15,
-        "floating": false,
-        "deviceVisibility": "all",
-        "text": "",
-        "texture": "Assets/UI/Kit/loading_coin.gif",
-        "fontSize": 22,
-        "color": "#f6ecd8",
-        "background": "#00000000",
-        "accent": "#589ad6",
-        "hover": "#365778",
-        "pressed": "#1e4061",
-        "borderColor": "#4a5f73",
-        "borderWidth": 0,
-        "radius": 0,
-        "opacity": 1,
-        "visible": true,
-        "enabled": true,
-        "focusable": true,
-        "tooltip": "",
-        "align": "center",
-        "value": 0,
-        "min": 0,
-        "max": 1,
-        "step": 0.01,
-        "padding": 8,
-        "gap": 8,
-        "columns": 2,
-        "checked": false,
-        "placeholder": "",
-        "maxLength": 256,
-        "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf",
-        "imageRendering": "pixelated"
-      },
-      "events": {},
-      "bindings": {}
-    },
-    {
-      "id": "TitleOrbit3",
-      "name": "TitleOrbit3",
-      "parent": "root",
-      "type": "Image",
-      "slot": {
-        "anchors": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "offset": [
-          0,
-          0,
-          52,
-          52
-        ],
-        "alignment": [
-          0.5,
-          0.5
-        ],
-        "zIndex": 93,
-        "fill": 0
-      },
-      "properties": {
-        "inputKey": "space",
-        "inputMode": "keys",
-        "axisX": "MoveX",
-        "axisY": "MoveY",
-        "keyUp": "w",
-        "keyDown": "s",
-        "keyLeft": "a",
-        "keyRight": "d",
-        "deadZone": 0.15,
-        "floating": false,
-        "deviceVisibility": "all",
-        "text": "",
-        "texture": "Assets/UI/Kit/loading_coin.gif",
-        "fontSize": 22,
-        "color": "#f6ecd8",
-        "background": "#00000000",
-        "accent": "#589ad6",
-        "hover": "#365778",
-        "pressed": "#1e4061",
-        "borderColor": "#4a5f73",
-        "borderWidth": 0,
-        "radius": 0,
-        "opacity": 1,
-        "visible": true,
-        "enabled": true,
-        "focusable": true,
-        "tooltip": "",
-        "align": "center",
-        "value": 0,
-        "min": 0,
-        "max": 1,
-        "step": 0.01,
-        "padding": 8,
-        "gap": 8,
-        "columns": 2,
-        "checked": false,
-        "placeholder": "",
-        "maxLength": 256,
-        "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf",
-        "imageRendering": "pixelated"
-      },
-      "events": {},
-      "bindings": {}
-    },
-    {
-      "id": "TitleOrbit4",
-      "name": "TitleOrbit4",
-      "parent": "root",
-      "type": "Image",
-      "slot": {
-        "anchors": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "offset": [
-          0,
-          0,
-          52,
-          52
-        ],
-        "alignment": [
-          0.5,
-          0.5
-        ],
-        "zIndex": 93,
-        "fill": 0
-      },
-      "properties": {
-        "inputKey": "space",
-        "inputMode": "keys",
-        "axisX": "MoveX",
-        "axisY": "MoveY",
-        "keyUp": "w",
-        "keyDown": "s",
-        "keyLeft": "a",
-        "keyRight": "d",
-        "deadZone": 0.15,
-        "floating": false,
-        "deviceVisibility": "all",
-        "text": "",
-        "texture": "Assets/UI/Kit/loading_coin.gif",
-        "fontSize": 22,
-        "color": "#f6ecd8",
-        "background": "#00000000",
-        "accent": "#589ad6",
-        "hover": "#365778",
-        "pressed": "#1e4061",
-        "borderColor": "#4a5f73",
-        "borderWidth": 0,
-        "radius": 0,
-        "opacity": 1,
-        "visible": true,
-        "enabled": true,
-        "focusable": true,
-        "tooltip": "",
-        "align": "center",
-        "value": 0,
-        "min": 0,
-        "max": 1,
-        "step": 0.01,
-        "padding": 8,
-        "gap": 8,
-        "columns": 2,
-        "checked": false,
-        "placeholder": "",
-        "maxLength": 256,
-        "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf",
-        "imageRendering": "pixelated"
-      },
-      "events": {},
-      "bindings": {}
-    },
-    {
-      "id": "TitleOrbit5",
-      "name": "TitleOrbit5",
-      "parent": "root",
-      "type": "Image",
-      "slot": {
-        "anchors": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "offset": [
-          0,
-          0,
-          52,
-          52
-        ],
-        "alignment": [
-          0.5,
-          0.5
-        ],
-        "zIndex": 93,
-        "fill": 0
-      },
-      "properties": {
-        "inputKey": "space",
-        "inputMode": "keys",
-        "axisX": "MoveX",
-        "axisY": "MoveY",
-        "keyUp": "w",
-        "keyDown": "s",
-        "keyLeft": "a",
-        "keyRight": "d",
-        "deadZone": 0.15,
-        "floating": false,
-        "deviceVisibility": "all",
-        "text": "",
-        "texture": "Assets/UI/Kit/loading_coin.gif",
-        "fontSize": 22,
-        "color": "#f6ecd8",
-        "background": "#00000000",
-        "accent": "#589ad6",
-        "hover": "#365778",
-        "pressed": "#1e4061",
-        "borderColor": "#4a5f73",
-        "borderWidth": 0,
-        "radius": 0,
-        "opacity": 1,
-        "visible": true,
-        "enabled": true,
-        "focusable": true,
-        "tooltip": "",
-        "align": "center",
-        "value": 0,
-        "min": 0,
-        "max": 1,
-        "step": 0.01,
-        "padding": 8,
-        "gap": 8,
-        "columns": 2,
-        "checked": false,
-        "placeholder": "",
-        "maxLength": 256,
-        "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf",
-        "imageRendering": "pixelated"
-      },
-      "events": {},
-      "bindings": {}
-    },
-    {
       "id": "TitleTapShade",
       "name": "TitleTapShade",
       "parent": "root",
@@ -692,219 +266,6 @@
         "borderWidth": 0,
         "radius": 0,
         "opacity": 0,
-        "visible": true,
-        "enabled": true,
-        "focusable": true,
-        "tooltip": "",
-        "align": "center",
-        "value": 0,
-        "min": 0,
-        "max": 1,
-        "step": 0.01,
-        "padding": 8,
-        "gap": 8,
-        "columns": 2,
-        "checked": false,
-        "placeholder": "",
-        "maxLength": 256,
-        "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf",
-        "imageRendering": "pixelated"
-      },
-      "events": {},
-      "bindings": {}
-    },
-    {
-      "id": "TitleHero0",
-      "name": "TitleHero0",
-      "parent": "root",
-      "type": "Image",
-      "slot": {
-        "anchors": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "offset": [
-          250,
-          584,
-          384,
-          192
-        ],
-        "alignment": [
-          0.5,
-          0.5
-        ],
-        "zIndex": 92,
-        "fill": 0
-      },
-      "properties": {
-        "inputKey": "space",
-        "inputMode": "keys",
-        "axisX": "MoveX",
-        "axisY": "MoveY",
-        "keyUp": "w",
-        "keyDown": "s",
-        "keyLeft": "a",
-        "keyRight": "d",
-        "deadZone": 0.15,
-        "floating": false,
-        "deviceVisibility": "all",
-        "text": "",
-        "texture": "Assets/Sprites/Valen/Valen_S_Idle_0.png",
-        "fontSize": 22,
-        "color": "#f6ecd8",
-        "background": "#00000000",
-        "accent": "#589ad6",
-        "hover": "#365778",
-        "pressed": "#1e4061",
-        "borderColor": "#4a5f73",
-        "borderWidth": 0,
-        "radius": 0,
-        "opacity": 1,
-        "visible": true,
-        "enabled": true,
-        "focusable": true,
-        "tooltip": "",
-        "align": "center",
-        "value": 0,
-        "min": 0,
-        "max": 1,
-        "step": 0.01,
-        "padding": 8,
-        "gap": 8,
-        "columns": 2,
-        "checked": false,
-        "placeholder": "",
-        "maxLength": 256,
-        "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf",
-        "imageRendering": "pixelated"
-      },
-      "events": {},
-      "bindings": {}
-    },
-    {
-      "id": "TitleHero1",
-      "name": "TitleHero1",
-      "parent": "root",
-      "type": "Image",
-      "slot": {
-        "anchors": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "offset": [
-          1010,
-          584,
-          384,
-          192
-        ],
-        "alignment": [
-          0.5,
-          0.5
-        ],
-        "zIndex": 92,
-        "fill": 0
-      },
-      "properties": {
-        "inputKey": "space",
-        "inputMode": "keys",
-        "axisX": "MoveX",
-        "axisY": "MoveY",
-        "keyUp": "w",
-        "keyDown": "s",
-        "keyLeft": "a",
-        "keyRight": "d",
-        "deadZone": 0.15,
-        "floating": false,
-        "deviceVisibility": "all",
-        "text": "",
-        "texture": "Assets/Sprites/Sherry/Sherry_S_Idle_0.png",
-        "fontSize": 22,
-        "color": "#f6ecd8",
-        "background": "#00000000",
-        "accent": "#589ad6",
-        "hover": "#365778",
-        "pressed": "#1e4061",
-        "borderColor": "#4a5f73",
-        "borderWidth": 0,
-        "radius": 0,
-        "opacity": 1,
-        "visible": true,
-        "enabled": true,
-        "focusable": true,
-        "tooltip": "",
-        "align": "center",
-        "value": 0,
-        "min": 0,
-        "max": 1,
-        "step": 0.01,
-        "padding": 8,
-        "gap": 8,
-        "columns": 2,
-        "checked": false,
-        "placeholder": "",
-        "maxLength": 256,
-        "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf",
-        "imageRendering": "pixelated"
-      },
-      "events": {},
-      "bindings": {}
-    },
-    {
-      "id": "TitleHero2",
-      "name": "TitleHero2",
-      "parent": "root",
-      "type": "Image",
-      "slot": {
-        "anchors": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "offset": [
-          1130,
-          584,
-          384,
-          192
-        ],
-        "alignment": [
-          0.5,
-          0.5
-        ],
-        "zIndex": 92,
-        "fill": 0
-      },
-      "properties": {
-        "inputKey": "space",
-        "inputMode": "keys",
-        "axisX": "MoveX",
-        "axisY": "MoveY",
-        "keyUp": "w",
-        "keyDown": "s",
-        "keyLeft": "a",
-        "keyRight": "d",
-        "deadZone": 0.15,
-        "floating": false,
-        "deviceVisibility": "all",
-        "text": "",
-        "texture": "Assets/Sprites/Alea/Alea_S_Idle_0.png",
-        "fontSize": 22,
-        "color": "#f6ecd8",
-        "background": "#00000000",
-        "accent": "#589ad6",
-        "hover": "#365778",
-        "pressed": "#1e4061",
-        "borderColor": "#4a5f73",
-        "borderWidth": 0,
-        "radius": 0,
-        "opacity": 1,
         "visible": true,
         "enabled": true,
         "focusable": true,
@@ -2147,7 +1508,7 @@
           1
         ],
         "offset": [
-          -467.5,
+          -459.5,
           -26,
           26,
           28
@@ -2217,7 +1578,7 @@
           1
         ],
         "offset": [
-          -437.5,
+          -429.5,
           -26,
           26,
           28
@@ -2287,7 +1648,7 @@
           1
         ],
         "offset": [
-          -407.5,
+          -399.5,
           -26,
           26,
           28
@@ -2357,7 +1718,7 @@
           1
         ],
         "offset": [
-          -377.5,
+          -369.5,
           -26,
           26,
           28
@@ -2427,7 +1788,7 @@
           1
         ],
         "offset": [
-          -340.5,
+          -332.5,
           -30,
           36,
           22
@@ -2497,7 +1858,7 @@
           1
         ],
         "offset": [
-          -265.5,
+          -257.5,
           -26,
           62,
           28
@@ -2567,7 +1928,7 @@
           1
         ],
         "offset": [
-          -210.5,
+          -202.5,
           -30,
           36,
           22
@@ -2637,7 +1998,7 @@
           1
         ],
         "offset": [
-          -137.0,
+          -129.0,
           -26,
           59,
           28
@@ -2709,7 +2070,7 @@
         "offset": [
           -75.5,
           -30,
-          52,
+          36,
           22
         ],
         "alignment": [
@@ -2731,7 +2092,7 @@
         "deadZone": 0.15,
         "floating": false,
         "deviceVisibility": "all",
-        "text": "구르기",
+        "text": "대시",
         "texture": "",
         "fontSize": 16,
         "color": "#c9b48a",
@@ -2777,7 +2138,7 @@
           1
         ],
         "offset": [
-          -10.5,
+          -18.5,
           -26,
           26,
           28
@@ -2847,7 +2208,7 @@
           1
         ],
         "offset": [
-          42.5,
+          34.5,
           -30,
           68,
           22
@@ -2917,7 +2278,7 @@
           1
         ],
         "offset": [
-          123.0,
+          115.0,
           -26,
           41,
           28
@@ -2987,7 +2348,7 @@
           1
         ],
         "offset": [
-          167.5,
+          159.5,
           -30,
           36,
           22
@@ -3057,7 +2418,7 @@
           1
         ],
         "offset": [
-          224.5,
+          216.5,
           -26,
           26,
           28
@@ -3127,7 +2488,7 @@
           1
         ],
         "offset": [
-          261.5,
+          253.5,
           -30,
           36,
           22
@@ -3197,7 +2558,7 @@
           1
         ],
         "offset": [
-          318.5,
+          310.5,
           -26,
           26,
           28
@@ -3267,7 +2628,7 @@
           1
         ],
         "offset": [
-          355.5,
+          347.5,
           -30,
           36,
           22
@@ -3337,7 +2698,7 @@
           1
         ],
         "offset": [
-          420.0,
+          412.0,
           -26,
           41,
           28
@@ -3407,7 +2768,7 @@
           1
         ],
         "offset": [
-          464.5,
+          456.5,
           -30,
           36,
           22

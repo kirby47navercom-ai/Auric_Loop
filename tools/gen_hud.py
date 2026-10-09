@@ -222,21 +222,15 @@ full("TitleScreen", "Image", 91, texture=KIT + "title_v2.png")
 TITLE_FX = [("TitleTorchL", "fx_torch_glow.png", 42, 205, 92), ("TitleTorchR", "fx_torch_glow.png", 1222, 205, 92)] + [
     (f"TitleStar{k}", "fx_star.png", x, y, 93) for k, (x, y) in enumerate([(572, 102), (388, 192), (757, 208), (903, 255), (712, 492), (452, 560), (858, 120)])] + [
     (f"TitleDust{k}", "fx_dust.png", 0, 0, 93) for k in range(8)]
-# 로고를 감싼 금빛 고리를 따라 도는 동전(돌아가는 금화 GIF), "Tap To Start" 뒤에서 숨 쉬는 금빛, 바닥에 선 세 사람 (C++ TitleFx가 움직임)
-for k in range(6):
-    n = node(f"TitleOrbit{k}", "Image", "tl", 0, 0, 52, 52, 93, texture=KIT + "loading_coin.gif")
-    n["slot"]["alignment"] = [0.5, 0.5]
+# "Tap To Start" 뒤에서 숨 쉬는 금빛 (C++ TitleFx가 움직임)
 n = node("TitleTapShade", "Image", "tl", 643, 608, 520, 110, 90, texture="Assets/Sprites/FX/FX_Glow.png", opacity=0)  # 글씨 뒤 금빛 (깜빡이듯 번짐)
 n["slot"]["alignment"] = [0.5, 0.5]
-for k, (who, x) in enumerate([("Valen", 250), ("Sherry", 1010), ("Alea", 1130)]):
-    n = node(f"TitleHero{k}", "Image", "tl", x, 584, 384, 192, 92, texture=f"Assets/Sprites/{who}/{who}_S_Idle_0.png")
-    n["slot"]["alignment"] = [0.5, 0.5]
 for name, file, x, y, z in TITLE_FX:
     iw, ih = Image.open(PROJECT / KIT / file).size
     n = node(name, "Image", "tl", x, y, iw, ih, z, texture=KIT + file)
     n["slot"]["alignment"] = [0.5, 0.5]
 # 조작 안내 (타이틀 아래): 키 모양 상자 + 짧은 이름. 방향키가 아니라 WASD
-KEYS = [(["W", "A", "S", "D"], "이동"), (["좌클릭"], "공격"), (["Space"], "구르기"), (["E"], "상호작용"), (["Tab"], "가방"), (["Q"], "제작"), (["M"], "지도"), (["Esc"], "메뉴")]
+KEYS = [(["W", "A", "S", "D"], "이동"), (["좌클릭"], "공격"), (["Space"], "대시"), (["E"], "상호작용"), (["Tab"], "가방"), (["Q"], "제작"), (["M"], "지도"), (["Esc"], "메뉴")]
 def keycap(name, label, x, y, w_):
     node(name, "Text", "b", x, y, w_, 28, 94, text=label, fontSize=14, color=INK, align="center",
          background="#1a2228ff", borderColor="#c9a24a", borderWidth=2, radius=5, padding=3)
