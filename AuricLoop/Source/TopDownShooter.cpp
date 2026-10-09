@@ -151,7 +151,7 @@ void TopDownShooter::Update(float delta){
   if(touchMode){float best=rules->AutoAimRange;
     for(auto* e:enemies){const float len=Length(hb::Scene::GetPosition(e)-position);if(len<best){best=len;target=e;}}}
   if(target)facing=Normal(hb::Scene::GetPosition(target)-position,facing);
-  else if(aimHold>0&&hasAim&&!touchMode)facing=Normal(aim-position,facing);
+  else if((aimHold>0||Character==0)&&hasAim&&!touchMode)facing=Normal(aim-position,facing);
   else if(moving)facing=hb::VectorMath::NormalizeVector(move);
   Animate(delta,moving);
   // 적재량 초과·피로도 75% 이상이면 이동속도 -25% (기획서 4-1)

@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_VS_Sword_R_39",
+  "texture": "Assets/Sprites/ValenSocket/sword.png",
+  "pixelsPerUnit": 16,
+  "rect": [
+    448,
+    256,
+    64,
+    46
+  ],
+  "pivot": [
+    0.5,
+    0.30435
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

@@ -165,28 +165,29 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   console.log('일시정지·표지판 검사 통과', 'signs', signs);
 }
 
-// 구르기(Space): 바라보는 방향으로 1초 대시(이동속도 2배·무적), 그림이 구르기로 바뀜 (기획서 4-1)
+// 회피(Space): 바라보는 방향으로 대시(이동속도 2배·무적). 발렌 v14는 구르지 않고 달리기 그림 그대로 (아트팀: 구르기 없는 빠른 이동)
 {
   let rolling = '';
   const r = await runProject(project, {scene: scene('Test_Valen'), frames: 90, delta: 1 / 60, inputs: [
     {frame: 5, key: 'd', value: 1}, {frame: 8, key: 'd', value: 0}, ...press(10, 'space')],
     onFrame: (frame, vm) => { if (frame === 25) rolling = vm.objects.find(o => o.id === 'Player').components.find(c => c.type === 'SpriteRenderer').properties.sprite; }});
   const x = r.objects.find(o => o.id === 'Player').position[0];
-  assert.ok(/_Roll_/.test(rolling), `구르는 동안 구르기 그림 (${rolling})`);
+  assert.ok(/S_VS_run_/.test(rolling), `대시 동안 달리기 그림 (${rolling})`);
   assert.ok(x > 3, '오른쪽으로 굴러 나감');
-  console.log('구르기 검사 통과', rolling.split('/').at(-1), 'x', x.toFixed(1));
+  console.log('대시 검사 통과', rolling.split('/').at(-1), 'x', x.toFixed(1));
 }
 
-// 걸으며 공격: 움직이면서 베면 서서 베는 그림이 아니라 윗몸은 공격·다리는 걷기인 합성 그림
+// 걸으며 공격 (손 소켓): 몸은 계속 달리기 그림, 손에 단 검만 조준 둘레로 휘둘러짐 (여러 각도 그림을 지나감)
 {
-  const seen = new Set();
+  const seen = new Set(), swords = new Set();
   await runProject(project, {scene: scene('Test_Valen'), frames: 60, delta: 1 / 60, inputs: [
     {frame: 5, key: 'd', value: 1}, {frame: 10, key: 'LeftMouseButton', value: 1}, {frame: 50, key: 'LeftMouseButton', value: 0}, {frame: 55, key: 'd', value: 0}],
-    onFrame: (frame, vm) => { if (frame > 12 && frame < 50) seen.add(vm.objects.find(o => o.id === 'Player').components.find(c => c.type === 'SpriteRenderer').properties.sprite.split('/').at(-1)); }});
+    onFrame: (frame, vm) => { if (frame > 12 && frame < 50) for (const [id, set] of [['Player', seen], ['PlayerWeapon', swords]])
+      set.add(vm.objects.find(o => o.id === id).components.find(c => c.type === 'SpriteRenderer').properties.sprite.split('/').at(-1)); }});
   const names = [...seen];
-  assert.ok(names.some(n => /_WalkAttack_\d_\d/.test(n)), `걸으며 공격 그림 (${names.join(', ')})`);
-  assert.ok(!names.some(n => /_Attack_\d\.hbsprite/.test(n) && !/WalkAttack/.test(n)), `움직이는 동안 서서 공격 그림 없음 (${names.join(', ')})`);
-  console.log('걸으며 공격 검사 통과', names.filter(n => /WalkAttack/.test(n)).length, '종류');
+  assert.ok(names.every(n => /^S_VS_run_/.test(n)), `베는 동안에도 몸은 달리기 그림 (${names.join(', ')})`);
+  assert.ok(swords.size >= 8 && [...swords].every(n => /^S_VS_Sword_[FR]_\d+\./.test(n)), `검이 여러 각도로 휘둘러짐 (${[...swords].join(', ')})`);
+  console.log('걸으며 공격 검사 통과', '검 각도', swords.size, '종류');
 }
 
 // 타이틀·선택 입력: 아무 키(K)로 타이틀을 넘기고, D로 셰리를 고른 뒤 2를 한 번 더 누르면 결정
@@ -222,7 +223,6 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
 }
 
 // 새 캐릭터 시트 (docs/캐릭터_시트_요청.md, AnimSets=1): 그림이 아직 없으므로 임시 스프라이트 에셋을 만들어 이름 순서만 본다
-//   발렌: 걷다가 베면 앞발 반대쪽으로 내딛는 A/B, 끝나면 그 발에 맞는 걷기 위상, 가만히 있으면 정면 대기 행동
 //   셰리: 걸으면서 당기면 겨누고 걷기(다리 위상 유지) → 다 당김 → 놓기 / 알레아: 겨누고 걷다가 던질 때마다 튕김
 {
   const fs = await import('node:fs');
@@ -249,11 +249,7 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
         if (seq.at(-1) !== s) seq.push(s); }});
       return seq.join(' > ');
     };
-    const valen = await run('Test_Valen', 420, [{frame: 5, key: 'd', value: 1}, {frame: 40, key: 'LeftMouseButton', value: 1}, {frame: 80, key: 'LeftMouseButton', value: 0}, {frame: 85, key: 'd', value: 0}]);
-    assert.match(valen, /E_SlashB_0 > E_SlashB_1 > E_SlashB_2 > E_Walk_0/, `왼발 앞(위상 2)에서 베면 오른발 내딛기 B, 끝나면 위상 0 (${valen})`);
-    assert.match(valen, /E_SlashA_2/, `연달아 베면 A·B 번갈아 (${valen})`);
-    assert.match(valen, /S_Fidget\d_0 > S_Fidget\d_1/, `가만히 있으면 정면 대기 행동 (${valen})`);
-    assert.ok(!/(^|> )(NE|NW|SE|SW|E|W|N|S)_Attack/.test(valen) && !/WalkAttack/.test(valen), '예전 합성 그림 안 씀');
+    // 발렌은 손 소켓 무기(AnimateSocket)라 이 시트의 베기 A/B·대기 행동을 쓰지 않음 (위 '걸으며 공격' 검사)
     const sherry = await run('Test_Sherry', 200, [{frame: 5, key: 'a', value: 1}, {frame: 20, key: 'LeftMouseButton', value: 1}, {frame: 110, key: 'LeftMouseButton', value: 0}, {frame: 130, key: 'a', value: 0}]);
     assert.match(sherry, /AimHalf_W\d > .*AimFull_W\d > .*Loose_W\d/, `걸으며 시위 걸기 → 다 당김 → 놓기 (${sherry})`);
     const alea = await run('Test_Alea', 120, [{frame: 5, key: 'w', value: 1}, {frame: 20, key: 'LeftMouseButton', value: 1}, {frame: 60, key: 'LeftMouseButton', value: 0}, {frame: 70, key: 'w', value: 0}]);

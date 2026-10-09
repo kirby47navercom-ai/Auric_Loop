@@ -166,7 +166,12 @@ def base_objects(director_bp="BP_TopDownShooter", at=(0, 0)):
     shadow = sprite_obj("PlayerShadow", "Assets/Sprites/FX/FX_Shadow.png", 0, -0.95, order=5)  # 발밑 그림자: 플레이어 자식이라 같이 움직임
     shadow["parent"] = "Player"
     comp(shadow, "SpriteRenderer")["properties"]["sortingLayer"] = "overlay"
-    return [player, shadow, cam, director, bp_obj("Rules", "BP_AuricRules", 0, 0), start("PlayerStart", *at)]
+    # 손에 단 검 (발렌, tools/make_weapon_socket.py): C++가 매 프레임 손 위치로 옮기고 조준 각도 그림으로 바꿈. 다른 캐릭터면 멀리 치워 둠
+    # 플레이어 자식으로 두면 스프라이트 에셋 그림이 그려지지 않아(엔진, 텍스처 그림인 그림자는 됨) 따로 둔다
+    weapon = sprite_obj("PlayerWeapon", "Assets/Sprites/ValenSocket/sword.png", 0, -500, order=0)
+    weapon.update(tags=["PlayerWeapon"])
+    comp(weapon, "SpriteRenderer")["properties"].update(sprite="Assets/Sprites/ValenSocket/S_VS_Sword_F_0.hbsprite.json", texture="", useCustomSize=False)
+    return [player, shadow, weapon, cam, director, bp_obj("Rules", "BP_AuricRules", 0, 0), start("PlayerStart", *at)]
 
 
 # ---- 타일맵 ------------------------------------------------------------------------------

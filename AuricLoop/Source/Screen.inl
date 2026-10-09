@@ -88,10 +88,46 @@ void TopDownShooter::AnimateSheet(float delta,bool moving,const char* dir){
   if(next!=currentSprite){currentSprite=next;if(Character<(int)rules->CharacterSprites.size())hb::Sprites::SetSprite(player,rules->CharacterSprites[Character]+next+".hbsprite.json");}
 }
 
+// 손 위치 (아트팀 v14 메타데이터 hand_anchors, 64px 칸의 픽셀). [걷기·달리기][앞·왼·뒤·오른][위상]
+static const int kHands[2][4][4][2]={
+  {{{23,46},{23,47},{23,46},{23,45}},{{23,43},{24,44},{25,45},{24,44}},{{38,44},{38,43},{38,42},{38,43}},{{33,44},{32,45},{31,45},{32,45}}},
+  {{{22,46},{23,47},{24,46},{23,47}},{{23,42},{24,44},{26,46},{24,44}},{{38,45},{38,43},{38,41},{38,43}},{{34,43},{32,45},{30,46},{32,45}}}};
+
+void TopDownShooter::AnimateSocket(float delta,bool moving){
+  // 몸: 조준 쪽 4방향(반전 없음), 달리기 위상은 움직인 거리로 (뒷걸음질이면 거꾸로). 대시도 같은 달리기 그림
+  // 검: 손 위치에 붙어 조준 각도로 돎 (64방향). 베면 조준 둘레를 0.14초에 200도 휘두르고 0.12초에 돌아옴, 번갈아 반대쪽에서
+  if(playerFlipped){playerFlipped=false;hb::Sprites::SetFlip(player,false,false);}
+  const auto at=hb::Scene::GetPosition(player);auto step=at-animPos;step.z=0;animPos=at;
+  const float moved=Length(step)<1.f?Length(step):0.f;
+  walkDist+=hb::VectorMath::DotProduct(step,facing)<0?-moved:moved;
+  if(attackAnim>0)attackAnim-=delta;
+  const bool go=moving||dodgeTimer>0;const int gait=go?1:0;
+  const float aim=Angle(facing);  // 반시계, 0 = 오른쪽
+  const int row=aim>=-45&&aim<45?3:aim>=45&&aim<135?2:aim>=-135&&aim<-45?0:1;
+  const int phase=go?((int)std::floor(walkDist/0.48f)%4+4)%4:row==2?0:1;  // 달리기 한 걸음 0.48m (80ms x 6m/s), 서 있으면 1 (뒤는 0)
+  const std::string body=std::string("Assets/Sprites/ValenSocket/S_VS_")+(go?"run_":"walk_")+std::to_string(row)+"_"+std::to_string(phase)+".hbsprite.json";
+  if(body!=currentSprite){currentSprite=body;hb::Sprites::SetSprite(player,body);}
+  if(!weapon)return;
+  float angle=aim;
+  if(swingT>=0){swingT+=delta;const float t=swingT/0.14f;
+    angle+=swingSide*(t<1?-100+200*(1-(1-t)*(1-t)):100*std::max(0.f,1-(swingT-0.14f)/0.12f));
+    if(swingT>0.26f)swingT=-1;}
+  const bool rear=row==1||(aim>=45&&aim<=135);  // 왼쪽을 보면 검 든 손이 먼 쪽, 위를 겨누면 등 뒤
+  const int index=(((int)std::lround(angle/5.625f))%64+64)%64;
+  const auto* hand=kHands[gait][row][phase];
+  // 손 = 몸 원점(발끝 0.95m·15.2px 위) + 손 픽셀 가운데. 이번 프레임 물리 이동만큼 앞질러 놓아 몸을 늦게 따라가지 않게
+  const hb::Vec3 to=at+hb::Physics::GetVelocity(player)*delta+hb::Vec3{(hand[0]+0.5f-32)/16,(40.8f-hand[1]-0.5f)/16,0};
+  if(Length(to-weaponAt)>0.001f){weaponAt=to;hb::Scene::SetPosition(weapon,to);}
+  const std::string key=std::string(rear?"R_":"F_")+std::to_string(index);
+  if(key!=weaponShown){weaponShown=key;hb::Sprites::SetSprite(weapon,"Assets/Sprites/ValenSocket/S_VS_Sword_"+key+".hbsprite.json");}
+}
+
 void TopDownShooter::Animate(float delta,bool moving){
   // 8방향: 그림은 남·남동·동·북동·북 5방향이고 서쪽 셋은 동쪽 그림을 뒤집는다
   // 프레임: 공격 3장(0.1초씩) > 걷기 4장(초당 8장) > 서 있기
   static const char* dirs[]={"E","NE","N","NE","E","SE","S","SE"};
+  if(Character==0){AnimateSocket(delta,moving);return;}
+  if(weapon&&!weaponShown.empty()){weaponShown.clear();hb::Scene::SetPosition(weapon,hb::Vec3{0,-500,0});}  // 다른 캐릭터는 검을 치움
   const int sector=Sector(facing);
   if(NewSheet()){AnimateSheet(delta,moving,kDirs8[sector]);return;}
   const bool flip=sector>=3&&sector<=5;
