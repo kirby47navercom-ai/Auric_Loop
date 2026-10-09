@@ -14,7 +14,7 @@ void TopDownShooter::Hud(){
   if(frame<2||!player){hudDirty=true;return;}
   hudDirty=false;
   if(Phase>=2&&!introHidden){introHidden=true;
-    for(auto* n:{"LoadingBack","LoadingCoin","LoadingText","TitleBack","TitleScreen"})UiVisible(n,false);TitleFx(0,false);}
+    for(auto* n:{"LoadingBack","LoadingLogo","LoadingFade","TitleBack","TitleScreen"})UiVisible(n,false);TitleFx(0,false);}
   const int hp=std::max(0,Hp);
   const bool rot=Returning;const int fill=hp<=0?0:std::max(1,(hp*3+MaxHp-1)/MaxHp);  // 귀환 중엔 황금 침식 테마
   UiVisible("HpBack",!rot);
@@ -240,46 +240,103 @@ void TopDownShooter::UpdatePrompt(float delta){
   UiPosition("PromptTail",hb::Vec2{x,y+h/2+5});
 }
 
+#include "TitleLayout.inl"
+// 시작 연출 박자 (초, titleTime 기준): 바탕이 밝아짐 → 글자가 하나씩 → 땅 → 동전 튀어나옴 → 고리·별·Tap To Start
+static const float kLetterStart=0.9f,kLetterGap=0.16f,kLetterPop=0.2f;
+static float SlamTime(){return kLetterStart+kLetterGap*(kTitleLetters-1)+0.42f;}
+static float TitleDone(){return SlamTime()+0.8f;}
+static float EaseBack(float p){p=std::clamp(p,0.f,1.f);const float c=1.9f,q=p-1;return 1+(c+1)*q*q*q+c*q*q;}  // 살짝 넘쳤다 돌아옴
+
 void TopDownShooter::TitleFx(float delta,bool visible){
-  // 타이틀 그림 위 층 (tools/gen_hud.py TITLE_FX·KEYS): 보일 때만 움직이고, 넘어가면 모두 숨김
+  // 타이틀 그림 위 층 (tools/gen_hud.py TITLE_FX·KEYS·시작 연출 조각): 보일 때만 움직이고, 넘어가면 모두 숨김
   static const int keyCounts[]={4,1,1,1,1,1,1,1};
-  if(!visible){if(titleTime<0)return;titleTime=-1;
-    for(int g=0;g<8;++g){UiVisible("TitleKeyName"+std::to_string(g),false);
-      for(int k=0;k<keyCounts[g];++k)UiVisible("TitleKey"+std::to_string(g)+"_"+std::to_string(k),false);}
+  auto keys=[&](bool on){for(int g=0;g<8;++g){UiVisible("TitleKeyName"+std::to_string(g),on);
+    for(int k=0;k<keyCounts[g];++k)UiVisible("TitleKey"+std::to_string(g)+"_"+std::to_string(k),on);}};
+  auto pieces=[&](bool on){UiVisible("TitleRing",on);UiVisible("TitleTap",on);
+    for(int k=0;k<kTitleLetters;++k)UiVisible("TitleLetter"+std::to_string(k),on);
+    for(int k=0;k<kTitleCoins;++k)UiVisible("TitleCoin"+std::to_string(k),on);};
+  if(!visible){if(titleTime<0)return;titleTime=-1;keys(false);pieces(false);
     for(auto* n:{"TitleTorchL","TitleTorchR"})UiVisible(n,false);
     for(int i=0;i<8;++i){if(i<7)UiVisible("TitleStar"+std::to_string(i),false);UiVisible("TitleDust"+std::to_string(i),false);}
-    UiVisible("TitleTapShade",false);UiScale("TitleScreen",1);
+    UiVisible("TitleTapShade",false);
+    for(auto* n:{"TitleRays","TitleShine","TitleFade","TitleFlash","TitleFogA0","TitleFogA1","TitleFogB0","TitleFogB1"})UiVisible(n,false);
+    for(int i=0;i<10;++i)UiVisible("TitleEmber"+std::to_string(i),false);
     return;}
-  if(titleTime<0){titleTime=0;  // 로딩 동안 숨겼던 것을 다시 보임
-    for(int g=0;g<8;++g){UiVisible("TitleKeyName"+std::to_string(g),true);for(int k=0;k<keyCounts[g];++k)UiVisible("TitleKey"+std::to_string(g)+"_"+std::to_string(k),true);}
+  if(titleTime<0){titleTime=0;titleBeat=0;  // 로딩 동안 숨겼던 것을 다시 보임 (조작 안내·Tap은 땅 뒤에)
     for(auto* n:{"TitleTorchL","TitleTorchR"})UiVisible(n,true);
     for(int i=0;i<8;++i){if(i<7)UiVisible("TitleStar"+std::to_string(i),true);UiVisible("TitleDust"+std::to_string(i),true);}
-    UiVisible("TitleTapShade",true);}
-  titleTime+=delta;const float t=titleTime;
+    pieces(true);keys(false);UiVisible("TitleTapShade",false);
+    for(auto* n:{"TitleRays","TitleFade","TitleFogA0","TitleFogA1","TitleFogB0","TitleFogB1"})UiVisible(n,true);
+    for(int i=0;i<10;++i)UiVisible("TitleEmber"+std::to_string(i),true);}
+  titleTime+=delta;const float t=titleTime,slam=SlamTime(),done=TitleDone();
+  // ---- 시작 연출 ----
+  // 글자: 차례로 1.7배에서 제자리로 쾅 내려앉으며 나타남. 땅 순간엔 모두 1.12배로 부풀었다 돌아옴
+  for(int k=0;k<kTitleLetters;++k){const float p=(t-kLetterStart-kLetterGap*k)/kLetterPop;const std::string n="TitleLetter"+std::to_string(k);
+    const float bump=t>=slam?std::max(0.f,1-(t-slam)/0.25f):0.f;
+    UiOpacity(n,std::clamp(p*2,0.f,1.f));UiScale(n,p<=0?1.7f:p<1?1.7f-0.7f*p*p:1+0.12f*bump*bump);
+    if(p>=0&&titleBeat<=k){titleBeat=k+1;Sfx("Type",0.8f+0.05f*k);}}
+  // 땅: 따뜻한 흰빛이 번쩍, 글자가 부풀고 동전이 가운데에서 제자리로 튀어나감
+  if(t>=slam&&titleBeat<=kTitleLetters){titleBeat=kTitleLetters+1;Sfx("Boom");Sfx("Coin",1.1f);}
+  UiVisible("TitleFlash",t>=slam&&t<slam+0.4f);if(t>=slam)UiOpacity("TitleFlash",std::max(0.f,0.75f*(1-(t-slam)/0.35f)));
+  for(int k=0;k<kTitleCoins;++k){const float p=(t-slam-0.02f*k)/0.5f;const std::string n="TitleCoin"+std::to_string(k);
+    const float e=EaseBack(p),cx=640,cy=330;
+    UiOpacity(n,p<=0?0.f:std::min(1.f,p*4));UiScale(n,p<=0?0.3f:0.3f+0.7f*std::min(1.f,e));
+    UiPosition(n,hb::Vec2{cx+(kTitleCoinAt[k][0]-cx)*e,cy+(kTitleCoinAt[k][1]-cy)*e});}
+  UiOpacity("TitleRing",std::clamp((t-slam-0.15f)/0.45f,0.f,1.f));
+  UiOpacity("TitleTap",std::clamp((t-slam-0.6f)/0.3f,0.f,1.f));
+  if(t>=done&&titleBeat<=kTitleLetters+1){titleBeat=kTitleLetters+2;keys(true);UiVisible("TitleTapShade",true);}
+  // ---- 분위기 층 ----
   // 횃불: 두 겹 사인 + 작은 흔들림으로 불규칙하게 밝기·크기
   for(int i=0;i<2;++i){const float f=0.5f+0.25f*std::sin(t*9.1f+i*2)+0.15f*std::sin(t*23.7f+i*5)+0.1f*std::sin(t*3.3f+i);
     const std::string n=i?"TitleTorchR":"TitleTorchL";UiOpacity(n,0.55f+0.4f*f);UiScale(n,0.92f+0.12f*f);}
-  // 별: 서로 다른 박자로 커졌다 사라짐
-  for(int i=0;i<7;++i){const float p=std::fmod(t*0.55f+i*0.37f,1.f),s=p<0.35f?std::sin(p/0.35f*3.14159f):0.f;
+  // 별: 땅 뒤부터 서로 다른 박자로 커졌다 사라짐
+  for(int i=0;i<7;++i){const float p=std::fmod(t*0.55f+i*0.37f,1.f),s=t<slam?0.f:p<0.35f?std::sin(p/0.35f*3.14159f):0.f;
     const std::string n="TitleStar"+std::to_string(i);UiScale(n,0.2f+0.9f*s);UiOpacity(n,s);}
   // 금가루: 바닥 쪽에서 천천히 떠올라 흐려짐 (화면 아래 1/3에서 시작, 좌우로 살랑)
   for(int i=0;i<8;++i){const float life=5.f+i%3,p=std::fmod(t+i*1.37f,life)/life;
     const float x=120+std::fmod(i*331.f,1040.f)+std::sin(t*1.3f+i)*14,y=690-p*420;
     const std::string n="TitleDust"+std::to_string(i);UiPosition(n,hb::Vec2{x,y});UiOpacity(n,std::sin(p*3.14159f)*0.9f);}
-  // 그림 전체가 아주 천천히 숨 쉬듯 (확대 1~1.5%)
-  UiScale("TitleScreen",1.0075f+0.0075f*std::sin(t*0.45f));
+  // 처음 0.8초: 검은 화면에서 밝아짐 (회사 로고 화면이 검게 끝나므로 이어짐)
+  UiOpacity("TitleFade",std::max(0.f,1-t/0.8f));if(t>1.f)UiVisible("TitleFade",false);
+  // 마우스 쪽으로 앞 층이 조금 따라옴 (안개 > 빛줄기 순으로 많이 → 깊이감). ponytail: 창 크기를 1280x720으로 가정, 다르면 기울기만 달라짐
+  {hb::Vec2 m;if(hb::Input::GetMousePosition(m)){const hb::Vec2 to{std::clamp((m.x-640)/640,-1.f,1.f),std::clamp((m.y-360)/360,-1.f,1.f)};
+     const float k=std::min(1.f,delta*3);titleTilt.x+=(to.x-titleTilt.x)*k;titleTilt.y+=(to.y-titleTilt.y)*k;}}
+  // 아치 빛줄기: 느리게 밝아졌다 흐려짐
+  UiOpacity("TitleRays",std::min(1.f,t/1.5f)*(0.55f+0.25f*std::sin(t*0.7f)+0.1f*std::sin(t*1.9f)));
+  UiPosition("TitleRays",hb::Vec2{640-titleTilt.x*6,0});
+  // 바닥 안개 두 겹: 서로 반대로 흐르고 화면 폭만큼 이어 붙여 끝없이
+  for(int k=0;k<2;++k){const float a=std::fmod(t*14,1280.f),b=std::fmod(t*22,1280.f);
+    UiPosition("TitleFogA"+std::to_string(k),hb::Vec2{a-1280+1280*k-titleTilt.x*10,480-titleTilt.y*4});
+    UiPosition("TitleFogB"+std::to_string(k),hb::Vec2{-b+1280*k-titleTilt.x*20,530-titleTilt.y*8});}
+  // 로고를 훑는 금빛: 연출이 끝난 뒤부터 4.5초마다 0.77초 동안 (14장)
+  {const float u=t-done;const int f=u<0?-1:int(std::fmod(u,4.5f)/0.055f);
+   UiVisible("TitleShine",f>=0&&f<14);if(f>=0&&f<14)UiTexture("TitleShine","Assets/UI/Kit/title_shine_"+std::to_string(f)+".png");}
+  // 횃불 불티: 불꽃에서 튀어 올라 흔들리며 식어 사라짐 (양쪽 5개씩, 서로 다른 박자)
+  for(int i=0;i<10;++i){const float life=1.4f+0.25f*(i%4),p=std::fmod(t*1.f+i*0.53f,life)/life,side=i<5?40.f:1240.f;
+    const std::string n="TitleEmber"+std::to_string(i);
+    UiPosition(n,hb::Vec2{side+std::sin(t*2.3f+i*1.7f)*(6+14*p)+(i%2?4.f:-4.f)*p*10,190-p*150});
+    UiOpacity(n,p<0.15f?p/0.15f:1-(p-0.15f)/0.85f);UiScale(n,1-0.6f*p);}
   // "Tap To Start" 뒤 금빛이 숨 쉬듯 번짐
   {const float b=0.5f+0.5f*std::sin(t*3.2f);UiOpacity("TitleTapShade",0.15f+0.6f*b*b);UiScale("TitleTapShade",0.9f+0.15f*b);}
 }
 
+void TopDownShooter::Splash(){
+  // 회사 로고 (Phase 0, LoadingTime 동안): 검정 → 밝은 바탕에 로고가 살짝 커지며 떠오름 → 잠시 → 다시 검게
+  const float t=phaseTime,end=rules->LoadingTime;
+  UiOpacity("LoadingFade",t<0.4f?1-t/0.4f:t>end-0.5f?std::min(1.f,(t-(end-0.5f))/0.45f):0.f);
+  UiOpacity("LoadingLogo",std::clamp((t-0.3f)/0.6f,0.f,1.f));UiScale("LoadingLogo",0.94f+0.06f*EaseBack((t-0.3f)/0.9f));
+}
+
 bool TopDownShooter::UpdateIntro(float delta,bool anyKey){
-  // 로딩(금화 GIF) → 타이틀(아무 키) → 캐릭터 선택 → 오프닝 대화 (기획서 2장)
+  // 회사 로고 → 타이틀(글자 연출, 아무 키) → 캐릭터 선택 → 오프닝 대화 (기획서 2장)
   if(Phase>=2)return false;
   phaseTime+=delta;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
+  if(Phase==0){if(anyKey&&phaseTime>0.2f)phaseTime=std::max(phaseTime,rules->LoadingTime-0.5f);Splash();}  // 키를 누르면 바로 검게 넘어감
   if(Phase==0&&phaseTime>=rules->LoadingTime){Phase=1;phaseTime=0;
-    for(auto* n:{"LoadingBack","LoadingCoin","LoadingText"})UiVisible(n,false);}
+    for(auto* n:{"LoadingBack","LoadingLogo","LoadingFade"})UiVisible(n,false);}
   TitleFx(delta,Phase==1&&!selecting);
-  if(Phase==1&&!selecting&&anyKey&&phaseTime>0.3f){selecting=true;phaseTime=0;
+  if(Phase==1&&!selecting&&anyKey&&titleTime<TitleDone())titleTime=TitleDone();  // 연출 중 키: 끝 화면으로 건너뜀 (게임 시작은 다음 키)
+  else if(Phase==1&&!selecting&&anyKey&&phaseTime>0.3f){selecting=true;phaseTime=0;
     for(auto* n:{"TitleBack","TitleScreen"})UiVisible(n,false);TitleFx(0,false);introHidden=true;confirmHeld=true;ShowSelect(true);}
   else if(Phase==1&&selecting){
     // 1·2·3, A·D로 고르고 Enter·E·Space로 결정 (방향키는 쓰지 않음). 카드를 누르면 그 숫자 키가 눌리고, 고른 카드를 한 번 더 누르면 결정

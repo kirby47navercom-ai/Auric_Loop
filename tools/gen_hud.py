@@ -217,11 +217,34 @@ def full(name, kind, z, **props):
 
 
 full("TitleBack", "Panel", 90, background="#05090aff")
-full("TitleScreen", "Image", 91, texture=KIT + "title_v2.png")
+full("TitleScreen", "Image", 91, texture=KIT + "title_plate.png")  # 로고를 지운 바탕 (tools/make_title_fx.py). 로고는 아래 조각들이 차례로 나타나 만듦
+# 시작 연출 조각 (tools/make_title_fx.py title_layout.json): 글자 하나씩 → 땅(흰 번쩍) → 동전 튀어나옴 → 고리·별 → Tap To Start
+LAYOUT = json.loads((PROJECT / KIT / "title_layout.json").read_text(encoding="utf-8"))
+def piece(name, it, z):
+    n = node(name, "Image", "tl", it["x"], it["y"], it["w"], it["h"], z, texture=KIT + it["name"] + ".png", opacity=0)
+    n["slot"]["alignment"] = [0.5, 0.5]
+piece("TitleRing", LAYOUT["ring"], 92)
+for k, it in enumerate(LAYOUT["coins"]):
+    piece(f"TitleCoin{k}", it, 93)
+for k, it in enumerate(LAYOUT["letters"]):
+    piece(f"TitleLetter{k}", it, 94)
+piece("TitleTap", LAYOUT["tap"], 94)
+full("TitleFlash", "Panel", 98, background="#fff6dcff", opacity=0)
 # 타이틀 그림 위에 살아 있는 층: 횃불 빛(깜빡임), 별 반짝임, 떠오르는 금가루. 위치는 title_v2.png(1273x718)를 1280x720에 깐 좌표
 TITLE_FX = [("TitleTorchL", "fx_torch_glow.png", 42, 205, 92), ("TitleTorchR", "fx_torch_glow.png", 1222, 205, 92)] + [
     (f"TitleStar{k}", "fx_star.png", x, y, 93) for k, (x, y) in enumerate([(572, 102), (388, 192), (757, 208), (903, 255), (712, 492), (452, 560), (858, 120)])] + [
     (f"TitleDust{k}", "fx_dust.png", 0, 0, 93) for k in range(8)]
+# 분위기 층 (tools/make_title_fx.py, C++ TitleFx가 움직임): 아치 빛줄기, 로고를 훑는 금빛, 바닥 안개 두 겹(이어 붙인 두 장씩), 횃불 불티, 처음 검은 화면
+n = node("TitleRays", "Image", "tl", 640, 0, 720, 600, 92, texture=KIT + "fx_rays.png", opacity=0)
+n["slot"]["alignment"] = [0.5, 0]
+node("TitleShine", "Image", "tl", 340, 150, 590, 380, 92, texture=KIT + "title_shine_0.png", visible=False)
+for k in range(2):
+    node(f"TitleFogA{k}", "Image", "tl", 1280 * k, 480, 1280, 240, 92, texture=KIT + "fx_fog_a.png", opacity=0.8)
+    node(f"TitleFogB{k}", "Image", "tl", 1280 * k, 530, 1280, 240, 94, texture=KIT + "fx_fog_b.png", opacity=0.55)
+for k in range(10):
+    n = node(f"TitleEmber{k}", "Image", "tl", 0, 0, 6, 6, 93, texture=KIT + "fx_ember.png", opacity=0)
+    n["slot"]["alignment"] = [0.5, 0.5]
+full("TitleFade", "Panel", 99, background="#05090aff")
 # "Tap To Start" 뒤에서 숨 쉬는 금빛 (C++ TitleFx가 움직임)
 n = node("TitleTapShade", "Image", "tl", 643, 608, 520, 110, 90, texture="Assets/Sprites/FX/FX_Glow.png", opacity=0)  # 글씨 뒤 금빛 (깜빡이듯 번짐)
 n["slot"]["alignment"] = [0.5, 0.5]
@@ -250,9 +273,11 @@ for g, ((keys, label), gw) in enumerate(zip(KEYS, widths)):
 for n in nodes:  # "b" 기준 x는 가운데에서의 거리
     if n["id"].startswith("TitleKey"):
         n["slot"]["alignment"] = [0.5, 1]
-full("LoadingBack", "Panel", 95, background="#0d1716ff")
-node("LoadingCoin", "Image", "c", 0, -40, 144, 144, 96, texture=KIT + "loading_coin.gif")
-node("LoadingText", "Text", "c", 0, 70, 300, 30, 96, text="불러오는 중...", fontSize=20, color=INK, align="center")
+# 회사 로고 화면 (Phase 0): 밝은 바탕에 Mastiff 로고가 떠올랐다가 검게 사라짐. 로고 그림은 공개 저장소에 올리지 않는 Kit 폴더에만
+full("LoadingBack", "Panel", 95, background="#f3f0eaff")
+n = node("LoadingLogo", "Image", "c", 0, 0, 380, 328, 96, texture=KIT + "mastiff_logo.png", opacity=0, imageRendering="auto")
+n["slot"]["alignment"] = [0.5, 0.5]
+full("LoadingFade", "Panel", 97, background="#05090aff")
 
 # ---- 캐릭터 선택 (기획서 2장 흐름 2): 타이틀 다음. 카드를 누르면 1·2·3 키, 결정은 Enter ----
 CARDS = [("valen", "발렌", "검 · 부채꼴 베기, 적 탄환을 지움", 9800),

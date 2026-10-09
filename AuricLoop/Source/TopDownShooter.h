@@ -373,7 +373,7 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   float CoinPickup = 0.7f;
   HB_PROPERTY(BlueprintReadWrite)
-  float LoadingTime = 1.2f;
+  float LoadingTime = 2.8f;     // 회사 로고 화면 길이 (키를 누르면 바로 넘어감)
   HB_PROPERTY(BlueprintReadWrite)
   float TypeSpeed = 30.0f;       // 대화 글자/초
   HB_PROPERTY(BlueprintReadWrite)
@@ -699,6 +699,9 @@ private:
   float walkDist=0,stillTime=0,fidgetTime=0;int fidget=0,lastFidget=0;bool slashB=false;hb::Vec3 animPos{0,0,0};  // 새 시트 애니메이션 상태
   Interactable* promptTarget=nullptr;std::string promptText;float hintTime=0,areaBannerTime=0;bool bannerPending=false,mapHeld=false;  // 상호작용 말풍선·알림·지역 이름
   float hitStopLeft=0,shakePower=1,cutZoom=1;  // 맞는 순간 아주 잠깐 느려짐(남은 실제 시간), 흔들림 세기 배율
+  int titleBeat=0;  // 시작 연출에서 소리를 낸 단계 (글자 수 + 땅 + 끝)
+  void Splash();  // 회사 로고 화면 (Screen.inl)
+  hb::Vec2 titleTilt{0,0};  // 타이틀 앞 층이 마우스 쪽으로 기우는 정도 (-1~1)
   float tipTime=0,titleTime=0;bool pauseHeld=false,bagOpen=false;int menuPick=0,menuHeld=0;
   std::map<hb::Actor*,hb::Vec3> frozenVelocity;   // 일시정지 동안 멈춘 탄의 속도
   // 정산 화면: 줄이 하나씩 나타나고 남은 빚이 줄어드는 숫자 연출
