@@ -233,8 +233,8 @@
               1,
               1
             ],
-            "width": 16.0,
-            "height": 16.0,
+            "width": 32.0,
+            "height": 8.0,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -311,8 +311,8 @@
               1,
               1
             ],
-            "width": 16.0,
-            "height": 16.0,
+            "width": 32.0,
+            "height": 8.0,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -1034,7 +1034,7 @@
       ]
     },
     {
-      "id": "Group_2",
+      "id": "Group_3",
       "name": "문",
       "kind": "group",
       "group": "WORLD",
@@ -1126,7 +1126,7 @@
       ]
     },
     {
-      "id": "Group_3",
+      "id": "Group_2",
       "name": "장식·조명",
       "kind": "group",
       "group": "WORLD",
@@ -12449,7 +12449,7 @@
               1
             ],
             "width": 4,
-            "height": 3,
+            "height": 3.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -12528,7 +12528,7 @@
               1
             ],
             "width": 4,
-            "height": 3,
+            "height": 3.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -12607,7 +12607,7 @@
               1
             ],
             "width": 4,
-            "height": 3,
+            "height": 3.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -12686,7 +12686,7 @@
               1
             ],
             "width": 4,
-            "height": 3,
+            "height": 3.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -12765,7 +12765,7 @@
               1
             ],
             "width": 4,
-            "height": 3,
+            "height": 3.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -12844,7 +12844,7 @@
               1
             ],
             "width": 4,
-            "height": 3,
+            "height": 3.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -12923,7 +12923,7 @@
               1
             ],
             "width": 4,
-            "height": 3,
+            "height": 3.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -13002,7 +13002,7 @@
               1
             ],
             "width": 4,
-            "height": 3,
+            "height": 3.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -13021,6 +13021,1902 @@
         "Dungeon.Arch"
       ],
       "parent": "Group_1"
+    },
+    {
+      "id": "ArchW0",
+      "name": "ArchW0",
+      "kind": "sprite",
+      "position": [
+        -60,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchW"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchW1",
+      "name": "ArchW1",
+      "kind": "sprite",
+      "position": [
+        -56,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchW"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchW2",
+      "name": "ArchW2",
+      "kind": "sprite",
+      "position": [
+        -52,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchW"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchW3",
+      "name": "ArchW3",
+      "kind": "sprite",
+      "position": [
+        -48,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchW"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchW4",
+      "name": "ArchW4",
+      "kind": "sprite",
+      "position": [
+        -44,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchW"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchW5",
+      "name": "ArchW5",
+      "kind": "sprite",
+      "position": [
+        -40,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchW"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchW6",
+      "name": "ArchW6",
+      "kind": "sprite",
+      "position": [
+        -36,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchW"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchW7",
+      "name": "ArchW7",
+      "kind": "sprite",
+      "position": [
+        -32,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchW"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchE0",
+      "name": "ArchE0",
+      "kind": "sprite",
+      "position": [
+        -60,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchE"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchE1",
+      "name": "ArchE1",
+      "kind": "sprite",
+      "position": [
+        -56,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchE"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchE2",
+      "name": "ArchE2",
+      "kind": "sprite",
+      "position": [
+        -52,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchE"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchE3",
+      "name": "ArchE3",
+      "kind": "sprite",
+      "position": [
+        -48,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchE"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchE4",
+      "name": "ArchE4",
+      "kind": "sprite",
+      "position": [
+        -44,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchE"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchE5",
+      "name": "ArchE5",
+      "kind": "sprite",
+      "position": [
+        -40,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchE"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchE6",
+      "name": "ArchE6",
+      "kind": "sprite",
+      "position": [
+        -36,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchE"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchE7",
+      "name": "ArchE7",
+      "kind": "sprite",
+      "position": [
+        -32,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 2.625,
+            "height": 3.5,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchE"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchS0",
+      "name": "ArchS0",
+      "kind": "sprite",
+      "position": [
+        -60,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 2.71,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchS"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchS1",
+      "name": "ArchS1",
+      "kind": "sprite",
+      "position": [
+        -56,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 2.71,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchS"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchS2",
+      "name": "ArchS2",
+      "kind": "sprite",
+      "position": [
+        -52,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 2.71,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchS"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchS3",
+      "name": "ArchS3",
+      "kind": "sprite",
+      "position": [
+        -48,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 2.71,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchS"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchS4",
+      "name": "ArchS4",
+      "kind": "sprite",
+      "position": [
+        -44,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 2.71,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchS"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchS5",
+      "name": "ArchS5",
+      "kind": "sprite",
+      "position": [
+        -40,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 2.71,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchS"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchS6",
+      "name": "ArchS6",
+      "kind": "sprite",
+      "position": [
+        -36,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 2.71,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchS"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "ArchS7",
+      "name": "ArchS7",
+      "kind": "sprite",
+      "position": [
+        -32,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "simple",
+            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "width": 4,
+            "height": 2.71,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": -8,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.ArchS"
+      ],
+      "parent": "Group_2"
     },
     {
       "id": "Gate0",
@@ -13127,7 +15023,7 @@
       "tags": [
         "Dungeon.Gate"
       ],
-      "parent": "Group_2"
+      "parent": "Group_3"
     },
     {
       "id": "Gate1",
@@ -13234,7 +15130,7 @@
       "tags": [
         "Dungeon.Gate"
       ],
-      "parent": "Group_2"
+      "parent": "Group_3"
     },
     {
       "id": "Gate2",
@@ -13341,7 +15237,7 @@
       "tags": [
         "Dungeon.Gate"
       ],
-      "parent": "Group_2"
+      "parent": "Group_3"
     },
     {
       "id": "Gate3",
@@ -13448,7 +15344,7 @@
       "tags": [
         "Dungeon.Gate"
       ],
-      "parent": "Group_2"
+      "parent": "Group_3"
     },
     {
       "id": "GateSide0",
@@ -13555,7 +15451,7 @@
       "tags": [
         "Dungeon.GateSide"
       ],
-      "parent": "Group_2"
+      "parent": "Group_3"
     },
     {
       "id": "GateSide1",
@@ -13662,7 +15558,7 @@
       "tags": [
         "Dungeon.GateSide"
       ],
-      "parent": "Group_2"
+      "parent": "Group_3"
     },
     {
       "id": "GateSide2",
@@ -13769,7 +15665,7 @@
       "tags": [
         "Dungeon.GateSide"
       ],
-      "parent": "Group_2"
+      "parent": "Group_3"
     },
     {
       "id": "GateSide3",
@@ -13876,7 +15772,7 @@
       "tags": [
         "Dungeon.GateSide"
       ],
-      "parent": "Group_2"
+      "parent": "Group_3"
     },
     {
       "id": "Torch0",
@@ -13927,17 +15823,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -13950,18 +15846,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -14030,7 +15914,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch1",
@@ -14081,17 +15965,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -14104,18 +15988,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -14184,7 +16056,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch2",
@@ -14235,17 +16107,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -14258,18 +16130,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -14338,7 +16198,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch3",
@@ -14389,17 +16249,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -14412,18 +16272,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -14492,7 +16340,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch4",
@@ -14543,17 +16391,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -14566,18 +16414,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -14646,7 +16482,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch5",
@@ -14697,17 +16533,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -14720,18 +16556,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -14800,7 +16624,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch6",
@@ -14851,17 +16675,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -14874,18 +16698,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -14954,7 +16766,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch7",
@@ -15005,17 +16817,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -15028,18 +16840,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -15108,7 +16908,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch8",
@@ -15159,17 +16959,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -15182,18 +16982,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -15262,7 +17050,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch9",
@@ -15313,17 +17101,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -15336,18 +17124,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -15416,7 +17192,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch10",
@@ -15467,17 +17243,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -15490,18 +17266,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -15570,7 +17334,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch11",
@@ -15621,17 +17385,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -15644,18 +17408,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -15724,7 +17476,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch12",
@@ -15775,17 +17527,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -15798,18 +17550,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -15878,7 +17618,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch13",
@@ -15929,17 +17669,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -15952,18 +17692,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -16032,7 +17760,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch14",
@@ -16083,17 +17811,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -16106,18 +17834,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -16186,7 +17902,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch15",
@@ -16237,17 +17953,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -16260,18 +17976,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -16340,7 +18044,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch16",
@@ -16391,17 +18095,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -16414,18 +18118,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -16494,7 +18186,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Torch17",
@@ -16545,17 +18237,17 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+            "sprite": "",
             "drawMode": "simple",
-            "texture": "",
+            "texture": "Assets/Sprites/Props/Prop_TorchWall.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 0.5625,
-            "height": 1.25,
+            "width": 0.75,
+            "height": 1.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -16568,18 +18260,6 @@
             "shading": "unlit",
             "sortPoint": "feet",
             "emissiveIntensity": 1.5
-          }
-        },
-        {
-          "id": "animator",
-          "name": "Animator",
-          "type": "Animator",
-          "properties": {
-            "enabled": true,
-            "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json",
-            "playOnStart": true,
-            "loop": true,
-            "speed": 1
           }
         },
         {
@@ -16648,7 +18328,7 @@
       "tags": [
         "Dungeon.Torch"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow0",
@@ -16740,7 +18420,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow1",
@@ -16832,7 +18512,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow2",
@@ -16924,7 +18604,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow3",
@@ -17016,7 +18696,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow4",
@@ -17108,7 +18788,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow5",
@@ -17200,7 +18880,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow6",
@@ -17292,7 +18972,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow7",
@@ -17384,7 +19064,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow8",
@@ -17476,7 +19156,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow9",
@@ -17568,7 +19248,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow10",
@@ -17660,7 +19340,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow11",
@@ -17752,7 +19432,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow12",
@@ -17844,7 +19524,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow13",
@@ -17936,7 +19616,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow14",
@@ -18028,7 +19708,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow15",
@@ -18120,7 +19800,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow16",
@@ -18212,7 +19892,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Glow17",
@@ -18304,7 +19984,7 @@
       "tags": [
         "Dungeon.Glow"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Banner0",
@@ -18395,7 +20075,7 @@
       "tags": [
         "Dungeon.Banner"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Banner1",
@@ -18486,7 +20166,7 @@
       "tags": [
         "Dungeon.Banner"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Banner2",
@@ -18577,7 +20257,7 @@
       "tags": [
         "Dungeon.Banner"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Banner3",
@@ -18668,7 +20348,7 @@
       "tags": [
         "Dungeon.Banner"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Banner4",
@@ -18759,7 +20439,7 @@
       "tags": [
         "Dungeon.Banner"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Banner5",
@@ -18850,7 +20530,7 @@
       "tags": [
         "Dungeon.Banner"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Banner6",
@@ -18941,7 +20621,7 @@
       "tags": [
         "Dungeon.Banner"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Banner7",
@@ -19032,7 +20712,7 @@
       "tags": [
         "Dungeon.Banner"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Pillar0",
@@ -19092,8 +20772,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -19115,7 +20795,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -19129,7 +20809,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -19199,8 +20879,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -19222,7 +20902,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -19236,7 +20916,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -19306,8 +20986,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -19329,7 +21009,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -19343,7 +21023,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -19413,8 +21093,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -19436,7 +21116,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -19450,7 +21130,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -19520,8 +21200,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -19543,7 +21223,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -19557,7 +21237,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -19627,8 +21307,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -19650,7 +21330,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -19664,7 +21344,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -19734,8 +21414,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -19757,7 +21437,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -19771,7 +21451,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -19841,8 +21521,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -19864,7 +21544,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -19878,7 +21558,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -19948,8 +21628,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -19971,7 +21651,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -19985,7 +21665,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -20055,8 +21735,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -20078,7 +21758,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -20092,7 +21772,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -20162,8 +21842,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -20185,7 +21865,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -20199,7 +21879,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -20269,8 +21949,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -20292,7 +21972,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -20306,7 +21986,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -20376,8 +22056,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -20399,7 +22079,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -20413,7 +22093,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -20483,8 +22163,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -20506,7 +22186,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -20520,7 +22200,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -20590,8 +22270,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -20613,7 +22293,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -20627,7 +22307,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -20697,8 +22377,8 @@
               1,
               1
             ],
-            "width": 0.90625,
-            "height": 2.125,
+            "width": 1.125,
+            "height": 3.25,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -20720,7 +22400,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.6,
+              -1.125,
               0
             ],
             "collisionMode": "both",
@@ -20734,7 +22414,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.35,
+              0.4,
               0.25,
               0.5
             ]
@@ -20804,7 +22484,7 @@
               1,
               1
             ],
-            "width": 1.0,
+            "width": 1.5,
             "height": 2.25,
             "pixelsPerUnit": 32,
             "flipX": false,
@@ -20827,7 +22507,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.5,
+              -0.575,
               0
             ],
             "collisionMode": "both",
@@ -20841,7 +22521,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.45,
+              0.6,
               0.3,
               0.5
             ]
@@ -20904,15 +22584,15 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Crates2.png",
+            "texture": "Assets/Sprites/Props/Prop_CrateStack.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 1.0,
-            "height": 2.25,
+            "width": 1.5,
+            "height": 2.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -20934,7 +22614,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.5,
+              -0.78,
               0
             ],
             "collisionMode": "both",
@@ -20948,7 +22628,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.45,
+              0.6,
               0.3,
               0.5
             ]
@@ -21018,7 +22698,7 @@
               1,
               1
             ],
-            "width": 1.0,
+            "width": 1.5,
             "height": 2.25,
             "pixelsPerUnit": 32,
             "flipX": false,
@@ -21041,7 +22721,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.5,
+              -0.575,
               0
             ],
             "collisionMode": "both",
@@ -21055,7 +22735,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.45,
+              0.6,
               0.3,
               0.5
             ]
@@ -21118,15 +22798,15 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Crates2.png",
+            "texture": "Assets/Sprites/Props/Prop_CrateStack.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 1.0,
-            "height": 2.25,
+            "width": 1.5,
+            "height": 2.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -21148,7 +22828,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.5,
+              -0.78,
               0
             ],
             "collisionMode": "both",
@@ -21162,7 +22842,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.45,
+              0.6,
               0.3,
               0.5
             ]
@@ -21232,7 +22912,7 @@
               1,
               1
             ],
-            "width": 1.0,
+            "width": 1.5,
             "height": 2.25,
             "pixelsPerUnit": 32,
             "flipX": false,
@@ -21255,7 +22935,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.5,
+              -0.575,
               0
             ],
             "collisionMode": "both",
@@ -21269,7 +22949,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.45,
+              0.6,
               0.3,
               0.5
             ]
@@ -21332,15 +23012,15 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Crates2.png",
+            "texture": "Assets/Sprites/Props/Prop_CrateStack.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 1.0,
-            "height": 2.25,
+            "width": 1.5,
+            "height": 2.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -21362,7 +23042,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.5,
+              -0.78,
               0
             ],
             "collisionMode": "both",
@@ -21376,7 +23056,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.45,
+              0.6,
               0.3,
               0.5
             ]
@@ -21446,7 +23126,7 @@
               1,
               1
             ],
-            "width": 1.0,
+            "width": 1.5,
             "height": 2.25,
             "pixelsPerUnit": 32,
             "flipX": false,
@@ -21469,7 +23149,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.5,
+              -0.575,
               0
             ],
             "collisionMode": "both",
@@ -21483,7 +23163,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.45,
+              0.6,
               0.3,
               0.5
             ]
@@ -21546,15 +23226,15 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Crates2.png",
+            "texture": "Assets/Sprites/Props/Prop_CrateStack.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 1.0,
-            "height": 2.25,
+            "width": 1.5,
+            "height": 2.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -21576,7 +23256,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.5,
+              -0.78,
               0
             ],
             "collisionMode": "both",
@@ -21590,7 +23270,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.45,
+              0.6,
               0.3,
               0.5
             ]
@@ -21660,7 +23340,7 @@
               1,
               1
             ],
-            "width": 1.0,
+            "width": 1.5,
             "height": 2.25,
             "pixelsPerUnit": 32,
             "flipX": false,
@@ -21683,7 +23363,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.5,
+              -0.575,
               0
             ],
             "collisionMode": "both",
@@ -21697,7 +23377,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.45,
+              0.6,
               0.3,
               0.5
             ]
@@ -21760,15 +23440,15 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Crates2.png",
+            "texture": "Assets/Sprites/Props/Prop_CrateStack.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 1.0,
-            "height": 2.25,
+            "width": 1.5,
+            "height": 2.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -21790,7 +23470,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.5,
+              -0.78,
               0
             ],
             "collisionMode": "both",
@@ -21804,7 +23484,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.45,
+              0.6,
               0.3,
               0.5
             ]
@@ -21874,7 +23554,7 @@
               1,
               1
             ],
-            "width": 1.0,
+            "width": 1.5,
             "height": 2.25,
             "pixelsPerUnit": 32,
             "flipX": false,
@@ -21897,7 +23577,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.5,
+              -0.575,
               0
             ],
             "collisionMode": "both",
@@ -21911,7 +23591,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.45,
+              0.6,
               0.3,
               0.5
             ]
@@ -21974,15 +23654,15 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Crates2.png",
+            "texture": "Assets/Sprites/Props/Prop_CrateStack.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 1.0,
-            "height": 2.25,
+            "width": 1.5,
+            "height": 2.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -22004,7 +23684,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.5,
+              -0.78,
               0
             ],
             "collisionMode": "both",
@@ -22018,7 +23698,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.45,
+              0.6,
               0.3,
               0.5
             ]
@@ -22088,8 +23768,8 @@
               1,
               1
             ],
-            "width": 0.9375,
-            "height": 1.875,
+            "width": 1.25,
+            "height": 2.125,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -22111,7 +23791,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.4,
+              -0.56,
               0
             ],
             "collisionMode": "both",
@@ -22125,7 +23805,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.4,
+              0.5,
               0.25,
               0.5
             ]
@@ -22195,8 +23875,8 @@
               1,
               1
             ],
-            "width": 0.9375,
-            "height": 1.875,
+            "width": 1.25,
+            "height": 2.125,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -22218,7 +23898,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.4,
+              -0.56,
               0
             ],
             "collisionMode": "both",
@@ -22232,7 +23912,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.4,
+              0.5,
               0.25,
               0.5
             ]
@@ -22302,8 +23982,8 @@
               1,
               1
             ],
-            "width": 0.9375,
-            "height": 1.875,
+            "width": 1.25,
+            "height": 2.125,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -22325,7 +24005,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.4,
+              -0.56,
               0
             ],
             "collisionMode": "both",
@@ -22339,7 +24019,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.4,
+              0.5,
               0.25,
               0.5
             ]
@@ -22409,8 +24089,8 @@
               1,
               1
             ],
-            "width": 0.9375,
-            "height": 1.875,
+            "width": 1.25,
+            "height": 2.125,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -22432,7 +24112,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.4,
+              -0.56,
               0
             ],
             "collisionMode": "both",
@@ -22446,7 +24126,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.4,
+              0.5,
               0.25,
               0.5
             ]
@@ -22516,8 +24196,8 @@
               1,
               1
             ],
-            "width": 0.9375,
-            "height": 1.875,
+            "width": 1.25,
+            "height": 2.125,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -22539,7 +24219,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.4,
+              -0.56,
               0
             ],
             "collisionMode": "both",
@@ -22553,7 +24233,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.4,
+              0.5,
               0.25,
               0.5
             ]
@@ -22623,8 +24303,8 @@
               1,
               1
             ],
-            "width": 0.9375,
-            "height": 1.875,
+            "width": 1.25,
+            "height": 2.125,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -22646,7 +24326,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.4,
+              -0.56,
               0
             ],
             "collisionMode": "both",
@@ -22660,7 +24340,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.4,
+              0.5,
               0.25,
               0.5
             ]
@@ -22730,8 +24410,8 @@
               1,
               1
             ],
-            "width": 0.9375,
-            "height": 1.875,
+            "width": 1.25,
+            "height": 2.125,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -22753,7 +24433,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.4,
+              -0.56,
               0
             ],
             "collisionMode": "both",
@@ -22767,7 +24447,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.4,
+              0.5,
               0.25,
               0.5
             ]
@@ -22837,8 +24517,8 @@
               1,
               1
             ],
-            "width": 0.9375,
-            "height": 1.875,
+            "width": 1.25,
+            "height": 2.125,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -22860,7 +24540,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.4,
+              -0.56,
               0
             ],
             "collisionMode": "both",
@@ -22874,7 +24554,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.4,
+              0.5,
               0.25,
               0.5
             ]
@@ -22944,8 +24624,8 @@
               1,
               1
             ],
-            "width": 0.9375,
-            "height": 1.875,
+            "width": 1.25,
+            "height": 2.125,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -22967,7 +24647,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.4,
+              -0.56,
               0
             ],
             "collisionMode": "both",
@@ -22981,7 +24661,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.4,
+              0.5,
               0.25,
               0.5
             ]
@@ -23051,8 +24731,8 @@
               1,
               1
             ],
-            "width": 0.9375,
-            "height": 1.875,
+            "width": 1.25,
+            "height": 2.125,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -23074,7 +24754,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.4,
+              -0.56,
               0
             ],
             "collisionMode": "both",
@@ -23088,7 +24768,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.4,
+              0.5,
               0.25,
               0.5
             ]
@@ -26368,8 +28048,8 @@
               1,
               1
             ],
-            "width": 1.03125,
-            "height": 0.6875,
+            "width": 1.5,
+            "height": 1.4375,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -26387,7 +28067,7 @@
       "tags": [
         "Dungeon.Rubble"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Rubble1",
@@ -26440,15 +28120,15 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Rubble.png",
+            "texture": "Assets/Sprites/Props/Prop_SmallRock.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 1.03125,
-            "height": 0.6875,
+            "width": 0.75,
+            "height": 0.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -26466,7 +28146,7 @@
       "tags": [
         "Dungeon.Rubble"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Rubble2",
@@ -26519,15 +28199,15 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Rubble.png",
+            "texture": "Assets/Sprites/Props/Prop_Bucket.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 1.03125,
-            "height": 0.6875,
+            "width": 0.75,
+            "height": 0.84375,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -26545,7 +28225,7 @@
       "tags": [
         "Dungeon.Rubble"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Rubble3",
@@ -26605,8 +28285,8 @@
               1,
               1
             ],
-            "width": 1.03125,
-            "height": 0.6875,
+            "width": 1.5,
+            "height": 1.4375,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -26624,7 +28304,7 @@
       "tags": [
         "Dungeon.Rubble"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Rubble4",
@@ -26677,15 +28357,15 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Rubble.png",
+            "texture": "Assets/Sprites/Props/Prop_SmallRock.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 1.03125,
-            "height": 0.6875,
+            "width": 0.75,
+            "height": 0.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -26703,7 +28383,7 @@
       "tags": [
         "Dungeon.Rubble"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Rubble5",
@@ -26756,15 +28436,15 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Rubble.png",
+            "texture": "Assets/Sprites/Props/Prop_Bucket.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 1.03125,
-            "height": 0.6875,
+            "width": 0.75,
+            "height": 0.84375,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -26782,7 +28462,7 @@
       "tags": [
         "Dungeon.Rubble"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Rubble6",
@@ -26842,8 +28522,8 @@
               1,
               1
             ],
-            "width": 1.03125,
-            "height": 0.6875,
+            "width": 1.5,
+            "height": 1.4375,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -26861,7 +28541,7 @@
       "tags": [
         "Dungeon.Rubble"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Rubble7",
@@ -26914,15 +28594,15 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Rubble.png",
+            "texture": "Assets/Sprites/Props/Prop_SmallRock.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 1.03125,
-            "height": 0.6875,
+            "width": 0.75,
+            "height": 0.65625,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -26940,7 +28620,7 @@
       "tags": [
         "Dungeon.Rubble"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Rubble8",
@@ -26993,15 +28673,15 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Rubble.png",
+            "texture": "Assets/Sprites/Props/Prop_Bucket.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 1.03125,
-            "height": 0.6875,
+            "width": 0.75,
+            "height": 0.84375,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -27019,7 +28699,7 @@
       "tags": [
         "Dungeon.Rubble"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Rubble9",
@@ -27079,8 +28759,8 @@
               1,
               1
             ],
-            "width": 1.03125,
-            "height": 0.6875,
+            "width": 1.5,
+            "height": 1.4375,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -27098,7 +28778,7 @@
       "tags": [
         "Dungeon.Rubble"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Bones0",
@@ -27177,7 +28857,7 @@
       "tags": [
         "Dungeon.Bones"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Bones1",
@@ -27256,7 +28936,7 @@
       "tags": [
         "Dungeon.Bones"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Bones2",
@@ -27335,7 +29015,7 @@
       "tags": [
         "Dungeon.Bones"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Bones3",
@@ -27414,7 +29094,7 @@
       "tags": [
         "Dungeon.Bones"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Bones4",
@@ -27493,7 +29173,7 @@
       "tags": [
         "Dungeon.Bones"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Bones5",
@@ -27572,7 +29252,7 @@
       "tags": [
         "Dungeon.Bones"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Bones6",
@@ -27651,7 +29331,7 @@
       "tags": [
         "Dungeon.Bones"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Bones7",
@@ -27730,7 +29410,7 @@
       "tags": [
         "Dungeon.Bones"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Bones8",
@@ -27809,7 +29489,7 @@
       "tags": [
         "Dungeon.Bones"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Bones9",
@@ -27888,7 +29568,7 @@
       "tags": [
         "Dungeon.Bones"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Gold0",
@@ -28029,7 +29709,7 @@
       "tags": [
         "Dungeon.Gold"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Gold1",
@@ -28170,7 +29850,7 @@
       "tags": [
         "Dungeon.Gold"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Gold2",
@@ -28311,7 +29991,7 @@
       "tags": [
         "Dungeon.Gold"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Gold3",
@@ -28452,7 +30132,7 @@
       "tags": [
         "Dungeon.Gold"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Gold4",
@@ -28593,7 +30273,7 @@
       "tags": [
         "Dungeon.Gold"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Gold5",
@@ -28734,7 +30414,7 @@
       "tags": [
         "Dungeon.Gold"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "SignMove",
@@ -28841,7 +30521,7 @@
       "tags": [
         "Dungeon.Sign"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "SignAttack",
@@ -28948,7 +30628,7 @@
       "tags": [
         "Dungeon.Sign"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "SignDodge",
@@ -29055,7 +30735,7 @@
       "tags": [
         "Dungeon.Sign"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "SignInteract",
@@ -29162,7 +30842,7 @@
       "tags": [
         "Dungeon.Sign"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "SignCraft",
@@ -29269,7 +30949,7 @@
       "tags": [
         "Dungeon.Sign"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "SignBag",
@@ -29376,7 +31056,7 @@
       "tags": [
         "Dungeon.Sign"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "SignReturn",
@@ -29483,7 +31163,7 @@
       "tags": [
         "Dungeon.Sign"
       ],
-      "parent": "Group_3"
+      "parent": "Group_2"
     },
     {
       "id": "Stairs0",
@@ -29562,7 +31242,7 @@
       "tags": [
         "Dungeon.Stairs"
       ],
-      "parent": "Group_2"
+      "parent": "Group_3"
     },
     {
       "id": "Ore",
@@ -29619,19 +31299,19 @@
         "components": {
           "sprite": {
             "texture": "Assets/Sprites/Prop_Ore.png",
-            "width": 1.4375,
-            "height": 1.875,
+            "width": 1.5,
+            "height": 1.84375,
             "pixelsPerUnit": 32
           },
           "collider": {
             "extent": [
-              0.5750000000000001,
-              0.375,
+              0.6000000000000001,
+              0.36875,
               0.5
             ],
             "center": [
               0,
-              -0.5625,
+              -0.553125,
               0
             ],
             "enabled": false

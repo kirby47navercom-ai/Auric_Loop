@@ -29,7 +29,7 @@ TARGETS = [
     ("Sprites/Town/Workshop.png", 0.96), ("Sprites/Town/Shop*.png", 0.96), ("Sprites/Town/Desk.png", 0.9),
     ("Sprites/Town/PottedPlant.png", 0.8), ("Sprites/Town/Sofa*.png", 0.95),
     ("Sprites/Props/Prop_Lamp.png", 0.9), ("Sprites/Props/Prop_Bench.png", 0.95), ("Sprites/Props/Prop_NoticeBoard.png", 0.8),
-    ("Sprites/Props/Prop_Pillar.png", 1.0), ("Sprites/Props/Prop_Crates*.png", 1.0), ("Sprites/Props/Prop_Barrel*.png", 1.0),
+    ("Sprites/Props/Prop_Pillar.png", 1.0), ("Sprites/Props/Prop_Crates*.png", 1.0), ("Sprites/Props/Prop_CrateStack.png", 1.0), ("Sprites/Props/Prop_Barrel*.png", 1.0),
     ("Sprites/Props/Prop_LowWall.png", 1.0), ("Sprites/Props/Prop_Statue.png", 1.0), ("Sprites/Props/Prop_GoldChest.png", 1.0),
     ("Sprites/Props/Prop_Plant.png", 0.8), ("Sprites/Props/Prop_Stump.png", 0.9), ("Sprites/Props/Sign_*.png", 0.25),
     ("Sprites/NPC_Collector.png", 0.75), ("Sprites/NPC_Interior.png", 0.75), ("Sprites/NPC_Blacksmith.png", 0.75), ("Sprites/Furniture_*.png", 0.95), ("Sprites/Prop_DebtBoard.png", 0.7),

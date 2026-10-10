@@ -116,7 +116,7 @@ void Dungeon::Move(std::vector<Piece>& out,const char* tag,float x,float y,float
 
 void Dungeon::Build(){
   // 풀: 장면에 화면 밖으로 세워 둔 조각들 (태그 Dungeon.*). 내 주변 방만 깔아서 개수가 적어도 됨
-  for(auto* tag:{"Dungeon.Floor","Dungeon.Cap","Dungeon.Face","Dungeon.Arch","Dungeon.Torch","Dungeon.Glow","Dungeon.Banner","Dungeon.Pillar",
+  for(auto* tag:{"Dungeon.Floor","Dungeon.Cap","Dungeon.Face","Dungeon.Arch","Dungeon.ArchW","Dungeon.ArchE","Dungeon.ArchS","Dungeon.Torch","Dungeon.Glow","Dungeon.Banner","Dungeon.Pillar",
                  "Dungeon.Crate","Dungeon.Barrel","Dungeon.LowWall","Dungeon.Statue","Dungeon.Chest","Dungeon.Rubble","Dungeon.Bones","Dungeon.Gold"})
     pools[tag]=hb::Scene::GetActorsWithTag(tag);
   gateFree=hb::Scene::GetActorsWithTag("Dungeon.Gate");sideFree=hb::Scene::GetActorsWithTag("Dungeon.GateSide");
@@ -137,7 +137,11 @@ void Dungeon::Build(){
     const float x0=r.cx-r.hw,x1=r.cx+r.hw,y0=r.cy-r.hh,y1=r.cy+r.hh;
     // 북쪽 벽 장식: 횃불·빛 (6m마다), 넓은 벽엔 깃발, 위 문엔 아치
     std::vector<std::pair<float,float>> north;
-    if(r.link[0]<0)north.push_back({x0,x1});else{north.push_back({x0,r.cx-C});north.push_back({r.cx+C,x1});r.props.push_back({"Dungeon.Arch",r.cx,y1+1.5f});}
+    if(r.link[0]<0)north.push_back({x0,x1});else{north.push_back({x0,r.cx-C});north.push_back({r.cx+C,x1});r.props.push_back({"Dungeon.Arch",r.cx,y1+1.75f});}
+    // 서·동·남 문에도 출입구 테 (아트팀 던전 부품 v2): 서·동은 벽 쪽에 붙여 문 아래 끝부터, 남은 벽 윗면에 걸쳐
+    if(r.link[3]>=0)r.props.push_back({"Dungeon.ArchW",x0-1+1.3125f,r.cy-C+1.75f});
+    if(r.link[1]>=0)r.props.push_back({"Dungeon.ArchE",x1+1-1.3125f,r.cy-C+1.75f});
+    if(r.link[2]>=0)r.props.push_back({"Dungeon.ArchS",r.cx,y0-1+1.355f});
     for(auto [a,b]:north){for(float x=a+2.5f;x<b-1.5f;x+=6){r.props.push_back({"Dungeon.Torch",x,y1+1.1f});r.props.push_back({"Dungeon.Glow",x,y1+1.45f});}
       if(b-a>9)r.props.push_back({"Dungeon.Banner",(a+b)/2,y1+1.6f});}
     // 엄폐물 배치 (방마다 무작위 하나): 0 기둥 몇 개, 1 네 기둥, 2 가운데 상자 더미, 3 낮은 벽 두 줄(통로),

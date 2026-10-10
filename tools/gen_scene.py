@@ -313,11 +313,9 @@ def glow(oid, x, y, size, order=-5):
 
 
 def torch(oid, x, y):
-    """불꽃이 흔들리는 횃불 (Animator가 SA_Torch를 반복 재생) + 빛 번짐"""
-    o = sprite_obj(oid, PROP + "Torch.png", x, y, order=-4)
-    comp(o, "SpriteRenderer")["properties"].update(texture="", sprite="Assets/Sprites/Props/S_Torch_0.hbsprite.json", emissiveIntensity=1.5)  # 블룸으로 불꽃이 번짐
-    o["components"].append({"id": "animator", "name": "Animator", "type": "Animator", "properties": {
-        "enabled": True, "clip": "Assets/Animations/SA_Torch.hbspriteanimation.json", "playOnStart": True, "loop": True, "speed": 1}})
+    """벽 횃불 (아트팀 던전 부품 v2, tools/make_dungeon_parts.py) + 빛 번짐. 불꽃 흔들림은 뒤의 빛 번짐(SA_Glow)과 불씨 입자로"""
+    o = sprite_obj(oid, PROP + "TorchWall.png", x, y, order=-4)
+    comp(o, "SpriteRenderer")["properties"]["emissiveIntensity"] = 1.5  # 블룸으로 불꽃이 번짐
     o["components"].append(particles(oid + "Embers", 0, 0, **{**EMBERS, "sortingOrder": -3})["components"][1])  # 불씨 (횃불을 따라 움직임)
     return [o, animate(glow(oid + "Glow", x, y + 0.35, 3.5), "SA_Glow", 1, "Assets/Sprites/FX/S_FX_Glow_0.hbsprite.json")]
 
@@ -364,7 +362,11 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
     parked(objects, "Dungeon.Floor", 18, lambda i: tiled(i, T + "T_DungeonFloor.png", -12, False))
     parked(objects, "Dungeon.Cap", 64, lambda i: tiled(i, T + "T_DungeonCap.png", -9, True))
     parked(objects, "Dungeon.Face", 22, lambda i: tiled(i, T + "T_DungeonFace.png", -10, True))
-    parked(objects, "Dungeon.Arch", 8, lambda i: sprite_obj(i, PROP + "Archway.png", 0, 0, order=-8, width=4, height=3))
+    # 출입구 테 (아트팀 던전 부품 v2): 위 문 4x3.5m, 서·동 문 2.625x3.5m, 아래 문 4x2.7m (원래 그림의 1.33배, 문 폭 4m에 맞춤)
+    parked(objects, "Dungeon.Arch", 8, lambda i: sprite_obj(i, PROP + "Archway.png", 0, 0, order=-8, width=4, height=3.5))
+    parked(objects, "Dungeon.ArchW", 8, lambda i: sprite_obj(i, PROP + "ArchW.png", 0, 0, order=-8, width=2.625, height=3.5))
+    parked(objects, "Dungeon.ArchE", 8, lambda i: sprite_obj(i, PROP + "ArchE.png", 0, 0, order=-8, width=2.625, height=3.5))
+    parked(objects, "Dungeon.ArchS", 8, lambda i: sprite_obj(i, PROP + "ArchS.png", 0, 0, order=-8, width=4, height=2.71))
     parked(objects, "Dungeon.Gate", 4, lambda i: sprite_obj(i, PROP + "Portcullis.png", 0, 0, order=-7, collider=(2, 0.5, -1.0), width=4, height=3))
     parked(objects, "Dungeon.GateSide", 4, lambda i: sprite_obj(i, PROP + "GateSide.png", 0, 0, order=0, collider=(0.5, 2, 0)))
     parked(objects, "Dungeon.Torch", 18, lambda i: torch(i, 0, 0)[0])
@@ -372,12 +374,16 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
                                                          "Assets/Sprites/FX/S_FX_Glow_0.hbsprite.json"))
     parked(objects, "Dungeon.Banner", 8, lambda i: animate(sprite_obj(i, PROP + "Banner.png", 0, 0, order=-8), "SA_Banner",
                                                            0.85 + (int(i[6:]) % 4) * 0.1, PROP.rsplit("/", 1)[0] + "/S_Banner_0.hbsprite.json"))
-    parked(objects, "Dungeon.Pillar", 16, lambda i: sprite_obj(i, PROP + "Pillar.png", 0, 0, order=0, collider=(0.35, 0.25, -0.6)))
+    parked(objects, "Dungeon.Pillar", 16, lambda i: sprite_obj(i, PROP + "Pillar.png", 0, 0, order=0, collider=(0.4, 0.25, -1.125)))  # 1.1x2.75m, 밑동만 막음
     # 전투방 엄폐물 (Dungeon::Build의 배치 6가지). 충돌은 그림 아랫부분만
-    for tag, file, count, col in (("Crate", "Crates2", 12, (0.45, 0.3, -0.5)), ("Barrel", "Barrel2", 10, (0.4, 0.25, -0.4)),
+    # 상자는 홀수 번째를 상자 더미로 (아트팀 던전 부품 v2: 상자 1.5x1.75m·더미 1.5x2.2m·통 1.25x1.6m)
+    for tag, file, count, col in (("Crate", "Crates2", 12, (0.6, 0.3, -0.575)), ("Barrel", "Barrel2", 10, (0.5, 0.25, -0.56)),
                                   ("LowWall", "LowWall", 20, (0.8, 0.3, -0.25)), ("Statue", "Statue", 8, (0.45, 0.3, -0.6)), ("Chest", "GoldChest", 2, (0.55, 0.3, -0.3))):
-        parked(objects, "Dungeon." + tag, count, lambda i, f=file, c=col: sprite_obj(i, PROP + f + ".png", 0, 0, order=0, collider=c))
-    for name, count in (("Rubble", 10), ("Bones", 10), ("GoldPile", 6)):
+        parked(objects, "Dungeon." + tag, count, lambda i, f=file, c=col: sprite_obj(i, PROP + ("CrateStack" if f == "Crates2" and int(i[5:]) % 2 else f) + ".png", 0, 0, order=0,
+                                                                                    collider=(c[0], c[1], -0.78) if f == "Crates2" and int(i[5:]) % 2 else c))
+    # 바닥 잔해: 돌무더기·작은 돌·양동이를 번갈아
+    parked(objects, "Dungeon.Rubble", 10, lambda i: sprite_obj(i, PROP + ("Rubble", "SmallRock", "Bucket")[int(i[6:]) % 3] + ".png", 0, 0, order=-2))
+    for name, count in (("Bones", 10), ("GoldPile", 6)):
         parked(objects, "Dungeon." + ("Gold" if name == "GoldPile" else name), count, lambda i, n=name: shiny(sprite_obj(i, PROP + n + ".png", 0, 0, order=-2), n))
     for n in ("Move", "Attack", "Dodge", "Interact", "Craft", "Bag", "Return"):  # 튜토리얼 표지판 (시작 방, C++ Dungeon::Build가 놓음)
         o = sprite_obj("Sign" + n, "Assets/Sprites/Props/Sign_" + n + ".png", 0, -230, order=0, collider=(0.15, 0.12, -1.2))  # 기둥만 막음

@@ -233,8 +233,8 @@
               1,
               1
             ],
-            "width": 16.0,
-            "height": 16.0,
+            "width": 32.0,
+            "height": 8.0,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -311,8 +311,8 @@
               1,
               1
             ],
-            "width": 16.0,
-            "height": 16.0,
+            "width": 32.0,
+            "height": 8.0,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -3093,7 +3093,7 @@
       "kind": "sprite",
       "position": [
         -25.6,
-        6.6875,
+        6.8125,
         0.05
       ],
       "rotation": [
@@ -3145,8 +3145,8 @@
               1,
               1
             ],
-            "width": 0.9375,
-            "height": 1.875,
+            "width": 1.25,
+            "height": 2.125,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -3168,7 +3168,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.4875,
+              -0.6125,
               0
             ],
             "collisionMode": "both",
@@ -3182,7 +3182,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.39375,
+              0.525,
               0.2,
               0.5
             ]
@@ -14815,7 +14815,7 @@
       "kind": "sprite",
       "position": [
         31.9,
-        3.6875,
+        3.8125,
         0.05
       ],
       "rotation": [
@@ -14867,8 +14867,8 @@
               1,
               1
             ],
-            "width": 0.9375,
-            "height": 1.875,
+            "width": 1.25,
+            "height": 2.125,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -14890,7 +14890,7 @@
             "enabled": true,
             "center": [
               0,
-              -0.4875,
+              -0.6125,
               0
             ],
             "collisionMode": "both",
@@ -14904,7 +14904,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.39375,
+              0.525,
               0.2,
               0.5
             ]
@@ -14971,7 +14971,7 @@
               1,
               1
             ],
-            "width": 1.0,
+            "width": 1.5,
             "height": 2.25,
             "pixelsPerUnit": 32,
             "flipX": false,
@@ -15008,7 +15008,7 @@
             "restitutionCombine": "average",
             "density": 1,
             "extent": [
-              0.42,
+              0.63,
               0.2,
               0.5
             ]
