@@ -144,7 +144,7 @@ void TopDownShooter::Ghost(const hb::Vec3& at,float life){
   // 대시 잔상: 지금 방향·위상의 발렌 몸을 금빛 반투명으로 (tools/make_weapon_socket.py ghost_run). 몸보다 뒤(순서 -1)
   if(Character!=0)return;
   hb::Transform t;t.position=at;auto* a=Take(fxPool,rules->FxPrefab,t);if(!a)return;
-  hb::Sprites::SetSorting(a,"default",-1);
+  hb::Components::SetFloat(a,"SpriteRenderer","emissiveIntensity",0);hb::Sprites::SetSorting(a,"default",-1);
   hb::Sprites::SetSprite(a,"Assets/Sprites/ValenSocket/S_VS_Ghost_"+std::to_string(vsLegs)+"_"+std::to_string(vsRow)+"_"+std::to_string(vsPhase)+".hbsprite.json");
   Fx f{a,life};f.ghost=true;fxs.push_back(f);
 }
@@ -152,8 +152,9 @@ void TopDownShooter::Ghost(const hb::Vec3& at,float life){
 void TopDownShooter::BossGhost(Enemy* e){
   // 보스 돌진 잔상: 돌진 자세를 붉은 반투명으로 0.25초 남김 (몸 뒤)
   hb::Transform t;t.position=hb::Scene::GetPosition(e);auto* a=Take(fxPool,rules->FxPrefab,t);if(!a)return;
-  hb::Sprites::SetSorting(a,"default",-1);hb::Sprites::SetSprite(a,"Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_SlashHit.hbsprite.json");
-  hb::Sprites::SetFlip(a,e->Facing()<0,false);hb::Sprites::SetColor(a,hb::Color{1,0.35f,0.2f,0.45f});
+  // 붉은 반투명 그림을 따로 둠 (색·투명도를 바꾸면 렌더 재질을 다시 만들어 끊김). 이펙트 풀의 발광값이 남아 하얗게 빛나지 않게 0으로
+  hb::Components::SetFloat(a,"SpriteRenderer","emissiveIntensity",0);hb::Sprites::SetSorting(a,"default",-1);
+  hb::Sprites::SetSprite(a,"Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Ghost.hbsprite.json");hb::Sprites::SetFlip(a,e->Facing()<0,false);
   Fx f{a,0.25f};f.ghost=true;f.tinted=true;fxs.push_back(f);
 }
 
@@ -235,7 +236,7 @@ void TopDownShooter::BossEnraged(Enemy* e){
   cutscene=1.6f;cutsceneAt=hb::Scene::GetPosition(e);roared=true;ClearBullets();for(auto* n:{"CineTop","CineBottom"})UiVisible(n,true);
   UiText("BossName",e->DisplayName);UiVisible("BossName",true);
   shake=0.6f;hb::Camera::Flash(hb::Color{0.8f,0.1f,0.05f,0.45f},0.5f);Sfx("BossCharge");
-  UiText("BossSub",e->DisplayName+"이(가) 분노했다!");UiVisible("BossSub",true);bannerTime=1.8f;
+  UiText("BossSub",e->DisplayName+"이 분노했다!");UiVisible("BossSub",true);bannerTime=1.8f;
 }
 
 void TopDownShooter::UpdateFx(float delta){
@@ -252,7 +253,7 @@ void TopDownShooter::UpdateFx(float delta){
     ++it;}
   for(auto it=fxs.begin();it!=fxs.end();){
     if((it->left-=delta)<=0){hb::Scene::SetScale(it->actor,hb::Vec3{1,1,1});if(it->ghost)hb::Sprites::SetSorting(it->actor,"default",4);
-      if(it->tinted){hb::Sprites::SetColor(it->actor,hb::Color{1,1,1,1});hb::Sprites::SetFlip(it->actor,false,false);}
+      if(it->tinted)hb::Sprites::SetFlip(it->actor,false,false);
       Give(fxPool,it->actor);it=fxs.erase(it);continue;}
     if(it->moving&&!it->settled){  // 튀는 조각: 바닥을 미끄러지며(마찰) 높이로 튕기고 돎. 멈추면 더 옮기지 않음 (명령 줄임)
       auto& f=*it;f.ground=f.ground+f.vel*delta;f.vel=f.vel*std::max(0.f,1-delta*(f.h>0?1.2f:5.f));

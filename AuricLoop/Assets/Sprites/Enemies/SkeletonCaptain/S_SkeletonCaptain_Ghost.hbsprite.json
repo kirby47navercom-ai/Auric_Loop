@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_SkeletonCaptain_Ghost",
+  "texture": "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Ghost.png",
+  "pixelsPerUnit": 25.6,
+  "rect": [
+    0,
+    0,
+    175,
+    132
+  ],
+  "pivot": [
+    0.5,
+    0.39694
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}
