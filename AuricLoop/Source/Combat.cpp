@@ -64,12 +64,12 @@ static hb::Json ShotPattern(const AuricRules* rules,const hb::Vec3& origin,int c
 void TopDownShooter::FireBullets(const hb::Vec3& from,const hb::Vec3& dir,int count,float spread,float speed,const std::string& clip){
   auto p=ShotPattern(rules,from+dir*0.6f,count,speed,clip);
   p["mode"]=count>1?"fan":"aim";p["direction"]={dir.x,dir.y,0};p["spread"]=std::min(360.f,spread*(count-1));  // 우리 spread는 탄 사이 각도, 엔진은 전체 각도
-  pendingShots.push_back(std::move(p));Shots+=count;
+  pendingShots.push_back(std::move(p));Shots+=count;ShotSfx();
 }
 
 void TopDownShooter::FireRing(const hb::Vec3& from,int count,float angle,float speed,const std::string& clip){
   auto p=ShotPattern(rules,from,count,speed,clip);p["mode"]="circle";p["angle"]=angle;
-  pendingShots.push_back(std::move(p));Shots+=count;
+  pendingShots.push_back(std::move(p));Shots+=count;ShotSfx();
 }
 
 void TopDownShooter::DropCoin(const hb::Vec3& at,int value){

@@ -97,7 +97,7 @@ static int EyeRow(const hb::Vec3& d){return std::fabs(d.x)>std::fabs(d.y)?(d.x>0
 void Enemy::LaserWindup(){if(Parked)return;
   // 눈알: 멈추고 0.48초 동안 눈동자에 빛을 모으며 레이저가 지나갈 줄에 붉은 띠 (벽까지)
   Halt();float distance;laserDir=ToPlayer(distance);eyeAnim="Charge";
-  auto* game=TopDownShooter::Current;if(!game)return;const int r=EyeRow(laserDir);
+  auto* game=TopDownShooter::Current;if(!game)return;game->Sfx("Charge");const int r=EyeRow(laserDir);
   const auto from=hb::Scene::GetPosition(this)+hb::Vec3{kEyeEmit[r][0],kEyeEmit[r][1],0};
   game->Warn(from,laserDir,game->LaserLength(from,laserDir),0.48f,kEyeLaserWidth*1.6f);
   game->Effect("GlintEye",from+hb::Vec3{0,0,0.45f},0,2.f);game->Sfx("BossCharge",1.6f);

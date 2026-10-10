@@ -29,7 +29,7 @@ void TopDownShooter::Hud(){
   UiText("HpText",std::to_string(hp)+" / "+std::to_string(MaxHp));
   UiText("WeightText",std::to_string(Weight())+" / "+std::to_string(rules->WeightLimit));
   UiText("GoldText",std::to_string(Gold)+" G   빚 "+std::to_string(Debt));
-  UiText("Hint",hint);UiVisible("HintBack",!hint.empty());UiVisible("Minimap",inDungeon);UiVisible("MapTouch",inDungeon);  // 알림 받침은 문구 있을 때만, 미니맵은 던전에서만
+  UiText("Hint",hint);UiVisible("HintBack",!hint.empty());UiVisible("MapTouch",inDungeon);  // 알림 받침은 문구 있을 때만, 미니맵은 던전에서만
   UiValue("Fatigue",FatigueMax>0?std::min(1.f,float(Fatigue)/FatigueMax):1.f);
   // 위 가운데 칸은 진행 상태가 있을 때만 (지역 이름은 도착할 때 가운데에 크게: AreaBanner)
   const std::string status=Hp<=0?"":ReturnSuccess?"귀환 성공 - 정산 "+std::to_string(LastRepaid)+" G 상환"

@@ -116,6 +116,10 @@ touch("AttackTouch", "LeftMouseButton", "br", 40, 40, 140)  # 터치로 누르�
 touch("DodgeTouch", "space", "br", 40 + 140 + 16, 24, 96)
 touch("InteractTouch", "e", "br", 40 + 140 + 4, 40 + 96 + 8, 88)
 touch("CraftTouch", "q", "br", 40 + 24, 40 + 140 + 16, 96)
+# 섬광탄 (모바일): 대시 버튼 왼쪽. 누르면 우클릭과 같은 입력 → 바라보는 쪽으로 던짐
+node("FlashButton", "Image", "br", 40 + 140 + 16 + 96 + 14, 30, 84, 84, 20, deviceVisibility="touch", **BUTTON)
+node("FlashIcon", "Image", "br", 40 + 140 + 16 + 96 + 14 + 18, 48, 48, 48, 21, texture=ITEMS + "flash.png", deviceVisibility="touch")
+touch("FlashTouch", "RightMouseButton", "br", 40 + 140 + 16 + 96 + 14, 30, 84)
 
 # 귀환 중 황금 침식 테마 (UI 키트 v8 corrupted): 버튼 그림은 C++가 rot_*로 바꾼다. 체력 막대는 틀째 다른 그림이라 따로 둔다
 for i in (1, 2, 3):
@@ -188,9 +192,10 @@ panel_text("CraftEffect", "체력 1 회복", 568, 190, 300, 22)
 panel_text("CraftType", "소모 아이템", 568, 220, 300, 20, size=13)
 panel_text("CraftNeed", "필요 소재", 480, 272, 300, 22)
 for k in (1, 2):  # 필요 소재 두 칸: 아이콘 + 가진 수 / 필요한 수 (모자라면 붉은 글씨)
-    panel(f"CraftCostBox{k}", "Image", 480 + (k - 1) * 190, 300, 176, 52, 41, **BUTTON)
-    panel(f"CraftCostIcon{k}", "Image", 486 + (k - 1) * 190, 306, 40, 40, 42, texture=ITEMS + "herb.png")
-    panel_text(f"CraftCostText{k}", "", 526 + (k - 1) * 190, 300, 124, 52, size=17, align="center")  # 아이콘 오른쪽 칸 가운데
+    # 명패(테두리 16px) 안쪽에만: 아이콘은 왼쪽 테 안, 숫자는 아이콘 오른쪽 남은 칸 가운데 (버튼 테는 가운데 장식이 숫자와 겹쳤음)
+    panel(f"CraftCostBox{k}", "Image", 480 + (k - 1) * 190, 298, 176, 56, 41, **PLAQUE)
+    panel(f"CraftCostIcon{k}", "Image", 480 + (k - 1) * 190 + 16, 310, 32, 32, 42, texture=ITEMS + "herb.png")
+    panel_text(f"CraftCostText{k}", "", 480 + (k - 1) * 190 + 52, 298, 108, 56, size=17, align="center")
 panel("CraftConfirmBack", "Image", 480, 384, 380, 64, 42, **FRAMED)  # 키트 버튼 그림 위에 금테 버튼
 panel("CraftConfirm", "Text", 480, 384, 380, 64, 43, text="제작하기", fontSize=20, color=GOLD, align="center")
 panel("CraftConfirmButton", "TouchButton", 480, 384, 380, 64, 44, inputKey="enter", inputMode="keys",

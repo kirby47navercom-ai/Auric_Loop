@@ -2222,6 +2222,224 @@
       "bindings": {}
     },
     {
+      "id": "FlashButton",
+      "name": "FlashButton",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -306,
+          -30,
+          84,
+          84
+        ],
+        "alignment": [
+          1,
+          1
+        ],
+        "zIndex": 20,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "touch",
+        "text": "",
+        "texture": "Assets/UI/Art/frame_button.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": true,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          22,
+          22,
+          22,
+          22
+        ],
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "FlashIcon",
+      "name": "FlashIcon",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -324,
+          -48,
+          48,
+          48
+        ],
+        "alignment": [
+          1,
+          1
+        ],
+        "zIndex": 21,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "touch",
+        "text": "",
+        "texture": "Assets/UI/Items/flash.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": true,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "FlashTouch",
+      "name": "FlashTouch",
+      "parent": "root",
+      "type": "TouchButton",
+      "slot": {
+        "anchors": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -306,
+          -30,
+          84,
+          84
+        ],
+        "alignment": [
+          1,
+          1
+        ],
+        "zIndex": 30,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "RightMouseButton",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "touch",
+        "text": "",
+        "texture": "",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#00000000",
+        "pressed": "#ffffff22",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": true,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
       "id": "RotHp1",
       "name": "RotHp1",
       "parent": "root",
@@ -4276,9 +4494,9 @@
         ],
         "offset": [
           20.0,
-          42.0,
+          40.0,
           176,
-          52
+          56
         ],
         "alignment": [
           0,
@@ -4300,7 +4518,7 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "Assets/UI/Art/frame_button.png",
+        "texture": "Assets/UI/Art/plaque.png",
         "fontSize": 22,
         "color": "#f6ecd8",
         "background": "#00000000",
@@ -4329,10 +4547,10 @@
         "wrap": true,
         "font": "Assets/Fonts/DungGeunMo.ttf",
         "nineSlice": [
-          22,
-          22,
-          22,
-          22
+          16,
+          16,
+          16,
+          16
         ],
         "imageRendering": "pixelated"
       },
@@ -4352,10 +4570,10 @@
           0.5
         ],
         "offset": [
-          26.0,
-          48.0,
-          40,
-          40
+          36.0,
+          52.0,
+          32,
+          32
         ],
         "alignment": [
           0,
@@ -4423,10 +4641,10 @@
           0.5
         ],
         "offset": [
-          66.0,
-          42.0,
-          124,
-          52
+          72.0,
+          40.0,
+          108,
+          56
         ],
         "alignment": [
           0,
@@ -4494,9 +4712,9 @@
         ],
         "offset": [
           210.0,
-          42.0,
+          40.0,
           176,
-          52
+          56
         ],
         "alignment": [
           0,
@@ -4518,7 +4736,7 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "Assets/UI/Art/frame_button.png",
+        "texture": "Assets/UI/Art/plaque.png",
         "fontSize": 22,
         "color": "#f6ecd8",
         "background": "#00000000",
@@ -4547,10 +4765,10 @@
         "wrap": true,
         "font": "Assets/Fonts/DungGeunMo.ttf",
         "nineSlice": [
-          22,
-          22,
-          22,
-          22
+          16,
+          16,
+          16,
+          16
         ],
         "imageRendering": "pixelated"
       },
@@ -4570,10 +4788,10 @@
           0.5
         ],
         "offset": [
-          216.0,
-          48.0,
-          40,
-          40
+          226.0,
+          52.0,
+          32,
+          32
         ],
         "alignment": [
           0,
@@ -4641,10 +4859,10 @@
           0.5
         ],
         "offset": [
-          256.0,
-          42.0,
-          124,
-          52
+          262.0,
+          40.0,
+          108,
+          56
         ],
         "alignment": [
           0,

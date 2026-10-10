@@ -73,7 +73,7 @@ void TopDownShooter::Craft(bool toggle,int which,bool confirm){
     "CraftKey1","CraftKey2","CraftKey3","CraftKey4","CraftKey5","CraftSlot1","CraftSlot2","CraftSlot3","CraftSlot4","CraftSlot5",
     "CraftName","CraftEffect","CraftType","CraftNeed","CraftConfirmBack","CraftConfirm","CraftConfirmButton","CraftClose"};
   if(toggle&&!craftOpen&&bagOpen)Bag(true,false);  // 제작 창을 열면 가방은 닫음
-  if(toggle){craftOpen=!craftOpen;for(auto* n:parts)UiVisible(n,craftOpen);CraftDetail();}
+  if(toggle){craftOpen=!craftOpen;Sfx("Open",craftOpen?1.f:0.85f);for(auto* n:parts)UiVisible(n,craftOpen);CraftDetail();}
   if(!craftOpen)return;
   if(which>0){craftPick=which;CraftDetail();Sfx("Select");}
   if(!confirm)return;

@@ -107,7 +107,7 @@ void TopDownShooter::DrawMap(bool big){
   float minX=1e9f,maxX=-1e9f,minY=1e9f,maxY=-1e9f;
   for(auto& r:map.rooms)if(r.seen){minX=std::min(minX,r.cx-r.hw);maxX=std::max(maxX,r.cx+r.hw);minY=std::min(minY,r.cy-r.hh);maxY=std::max(maxY,r.cy+r.hh);}
   if(minX>maxX){minX=-10;maxX=10;minY=-10;maxY=10;}
-  const float L=big?-1000.f:-176.f,T=big?168.f:118.f,W=big?720.f:144.f,H=big?420.f:108.f;
+  const float L=big?-1000.f:-176.f,T=big?200.f:118.f,W=big?720.f:144.f,H=big?390.f:108.f;  // 큰 지도: 제목·부제(위) 와 닫기 안내(아래) 사이
   // 아는 방들만 틀에 맞춤 (처음엔 크게, 많이 알수록 작게). 너무 확대되지 않게 최소 폭 큰 지도 120m·미니맵 90m
   {const float span=big?120.f:90.f,cx=(minX+maxX)/2,cy=(minY+maxY)/2;
    if(maxX-minX<span){minX=cx-span/2;maxX=cx+span/2;}if(maxY-minY<span*H/W){minY=cy-span*H/W/2;maxY=cy+span*H/W/2;}}
@@ -134,13 +134,13 @@ void TopDownShooter::DrawMap(bool big){
   UiSize("MapHere",hb::Vec2{big?12.f:7.f,big?12.f:7.f});
   for(auto* n:{"MapBigBack","MapBigFrame","MapBigTitle","MapBigSub","MapBigHint"})UiVisible(n,big);
   if(big){UiText("MapBigTitle","황금 던전");UiText("MapBigSub","1층 - 마몬의 입 속");}
-  UiVisible("Minimap",!big);
 }
 
 void TopDownShooter::UpdateMapLayer(){
   // 지도 위젯은 HUD 창(가방·메뉴·대화·정산·제작) 위에 그려지므로 그런 창이 열리면 통째로 숨김. 내 위치 점은 1px 넘게 움직일 때만
   const bool show=inDungeon&&Phase>=2&&!bagOpen&&!craftOpen&&!Paused&&settleTime<0&&dialogIndex>=dialog.size()&&!ending&&Hp>0;
   if(show!=mapShown&&uiHosts[3]){mapShown=show;hb::UI::SetVisible(uiHosts[3],"Map","Root",show);}
+  UiVisible("Minimap",show&&!mapOpen);  // 미니맵 틀(HUD)도 지도와 같이: 창이 열리거나 큰 지도면 숨김
   if(!show)return;
   UiVisible("MapHere",true);
   UiPosition("MapHere",hb::Vec2{mapLeft+(playerAt.x-mapMinX)*mapScale,mapTop+(mapMaxY-(playerAt.y-0.95f))*mapScale});
@@ -169,7 +169,7 @@ void TopDownShooter::EnterRoom(int room){
   // 방 가장자리에서 조금 들어오면 문이 잠기고, DT_Rooms의 웨이브가 하나씩 마법진 예고 뒤 나온다 (엔터 더 건전·소울 나이트)
   auto& r=map.rooms[room];if(r.state)return;
   if(r.kind!="Combat"&&r.kind!="Boss"){r.state=2;if(r.kind=="Shop")Tip(6);return;}  // 시작·채집·상점은 싸움 없음
-  r.state=1;fightingRoom=room;map.Lock(room,true);  // 조작 안내는 글 대신 시작 방 그림 표지판
+  r.state=1;fightingRoom=room;map.Lock(room,true);Sfx("Lock");  // 조작 안내는 글 대신 시작 방 그림 표지판
   if(r.kind=="Boss"){cutscene=3.2f;cutsceneAt=hb::Vec3{r.cx,r.cy+2,0};roared=false;bannerTime=0;  // 보스 등장 컷신: 화면 위아래 검은 띠, 카메라가 보스 쪽으로
     for(auto* n:{"CineTop","CineBottom"})UiVisible(n,true);}
   const hb::Json row=roomTable.contains(r.row)?roomTable.at(r.row):hb::Json::object();
@@ -203,6 +203,7 @@ void TopDownShooter::UpdateWaves(float delta){
     if((it->left-=delta)>0){++it;continue;}
     if(auto* e=SpawnEnemy(it->blueprint,it->at,it->invulnerable)){
       if(!it->invulnerable)waveAlive++;
+      if(spawnSfxFrame!=frame){spawnSfxFrame=frame;Sfx("Spawn",0.95f+float(std::rand()%10)/100);}  // 같은 프레임에 여럿 나와도 한 번
       if(it->invulnerable)e->Stun(0.5f);
       if(e->Boss){BossHp=e->MaxHp;roared=false;}}
     it=pending.erase(it);
@@ -214,7 +215,7 @@ void TopDownShooter::UpdateWaves(float delta){
 void TopDownShooter::ClearRoom(){
   // 방 클리어: 문이 열리고 피로도 +1 (기획), 피로도가 가득 차면 쓰러짐
   const int fightingRoomCleared=fightingRoom;
-  map.rooms[fightingRoom].state=2;map.Lock(fightingRoom,false);fightingRoom=-1;waves.clear();
+  map.rooms[fightingRoom].state=2;map.Lock(fightingRoom,false);fightingRoom=-1;waves.clear();Sfx("Clear");
   // 피로도 (기획서 4-1): 방 클리어 +1, 보스 +2, 무게가 넘치면 +1 더
   const bool bossRoom=map.rooms[fightingRoomCleared].kind=="Boss";
   RoomClears++;Fatigue+=1+(bossRoom?1:0)+(Weight()>rules->WeightLimit?1:0);if(Fatigue>=FatigueMax){Hp=0;gameOver=rules->RespawnDelay;}Hud();
@@ -353,8 +354,7 @@ void TopDownShooter::UpdateMenu(){
   const int sfx=(pressed&256||(menuPick==2&&pressed&8))?1:(pressed&128||(menuPick==2&&pressed&4))?-1:0;
   const int mus=(pressed&1024||(menuPick==1&&pressed&8))?1:(pressed&512||(menuPick==1&&pressed&4))?-1:0;
   if(sfx){SfxLevel=std::clamp(SfxLevel+sfx,0,10);Sfx("Select");}
-  if(mus){MusicLevel=std::clamp(MusicLevel+mus,0,10);currentMusic.clear();  // 엔진은 틀 때만 크기를 정하므로 새 크기로 다시 틂
-    if(MusicLevel==0)hb::Audio::StopMusic();else{const std::string m=Sound(Returning?"Return":area<0?"Hub":roomKind=="Boss"?"Boss":"Dungeon");hb::Audio::PlayMusic(m,MusicVolume());currentMusic=m;}}
+  if(mus){const int was=MusicLevel;MusicLevel=std::clamp(MusicLevel+mus,0,10);if(MusicLevel!=was)PlayBgm(BgmName());}  // 엔진은 틀 때만 크기를 정하므로 새 크기로 다시 틂
   if(pressed&(1|2))Sfx("Select");
   if(pressed&(16|32|64)){if(menuPick==0){SetPaused(false);return;}if(menuPick==3){ResetToTitle();return;}}
   UiPosition("MenuSelect",hb::Vec2{0,-75.f+menuPick*66});
@@ -372,7 +372,7 @@ void TopDownShooter::Bag(bool toggle,bool use){
     for(int i=0;i<6;++i)for(auto* p:{"BagSlot","BagIcon","BagCount","BagName"})v.push_back(p+std::to_string(i));
     for(int k=0;k<3;++k)for(auto* p:{"BagGearSlot","BagGearIcon","BagGearBadge","BagGearName"})v.push_back(p+std::to_string(k));
     return v;}();
-  if(toggle){bagOpen=!bagOpen;if(bagOpen&&craftOpen)Craft(true,0,false);
+  if(toggle){bagOpen=!bagOpen;Sfx("Open",bagOpen?1.f:0.85f);if(bagOpen&&craftOpen)Craft(true,0,false);
     for(const auto& n:parts)UiVisible(n,bagOpen);UiVisible("BagUseTouch",bagOpen&&HasReturnItem);}
   const bool canReturn=HasReturnItem&&!Returning&&!ReturnSuccess&&inDungeon&&area>=0;
   if(bagOpen){

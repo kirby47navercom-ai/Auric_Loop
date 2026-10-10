@@ -562,6 +562,12 @@ public:
   static inline int SfxLevel=8;  // 메뉴의 효과음 크기 0~10 (처음으로 돌아가도 유지: 모듈 정적 변수)
   static inline int MusicLevel=6;  // 메뉴의 배경음 크기 0~10
   static float MusicVolume(){return 0.5f*MusicLevel/8.f;}
+  // 배경음: 엔진 PlayMusic의 둘째 값은 크기가 아니라 겹침(페이드) 시간이라 크기를 바꿀 때마다 같은 곡이 한 번 더 겹쳐 들렸음.
+  // 반복 오디오 에셋(loop)을 일반 소리로 틀고 핸들로 끄고 다시 틂 → 크기가 실제로 바뀌고 겹치지 않음
+  void ShotSfx(){if(shotSfxFrame!=frame){shotSfxFrame=frame;Sfx("Shot",0.9f+float(std::rand()%20)/100);}}  // 적 탄: 한 프레임에 한 번 (보스 원형 탄막이 소리를 쌓지 않게)
+  int shotSfxFrame=-1,spawnSfxFrame=-1;float stepTime=0;
+  std::string BgmName() const{return Sound(Returning?"Return":area<0?"Hub":roomKind=="Boss"?"Boss":"Dungeon");}
+  void PlayBgm(const std::string& m){if(!musicHandle.empty())hb::Audio::Stop(musicHandle);musicHandle.clear();currentMusic=m;if(MusicLevel>0&&!m.empty())musicHandle=hb::Audio::Play(m,MusicVolume(),1,"master");}
   void Sfx(const std::string& name,float pitch=1.f){  // Sounds 값은 "wav 경로|볼륨". 첫 입력 전 효과음은 엔진이 버림
     const auto s=Sound(name);if(s.empty()||SfxLevel<=0)return;const auto bar=s.find('|');const float v=SfxLevel/8.f;
     if(bar==std::string::npos)hb::Audio::Play(s,v,pitch);else hb::Audio::Play(s.substr(0,bar),std::stof(s.substr(bar+1))*v,pitch,"master");}
@@ -717,7 +723,7 @@ private:
   std::vector<hb::Actor*> warnPool,warnFillPool,circlePool,circleFillPool;
   struct WarnLine{hb::Actor* actor;hb::Actor* fill;float left,total;bool circle;hb::Vec3 from,dir;float length,width;};std::vector<WarnLine> warns;
   float attackAnim=0,walkTime=0,breathTime=0,shake=0,aimHold=0,sentSpeed=0,knockTimer=0,idleTime=0,runTime=0,typeTime=0,phaseTime=0;
-  std::string currentSprite,currentMusic,hint,shownWho;
+  std::string currentSprite,currentMusic,musicHandle,hint,shownWho;
   // 적 탄은 엔진 탄막 시스템(hb::Projectiles)이 오브젝트 없이 한꺼번에 움직이고 그린다.
   // 탄 주인은 발사한 액터라서 적 함수(적 맥락)에서 바로 쏘지 않고 모았다가 Director Tick에서 쏜다 (충돌 묶음을 Director가 받음)
   std::vector<hb::Json> pendingShots;

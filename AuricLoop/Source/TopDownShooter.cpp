@@ -52,8 +52,8 @@ void TopDownShooter::Update(float delta){
   playerAt=hb::Scene::GetPosition(player);
   const auto position=playerAt;
   {// 배경음: 거점·던전·보스방·귀환
-   const std::string music=Sound(Returning?"Return":area<0?"Hub":roomKind=="Boss"?"Boss":"Dungeon");
-   if((Phase>=2||selecting)&&music!=currentMusic&&MusicLevel>0){hb::Audio::PlayMusic(music,MusicVolume());currentMusic=music;}}  // 첫 입력 전이면 엔진이 기다렸다 틂
+   const std::string music=BgmName();
+   if((Phase>=2||selecting)&&music!=currentMusic)PlayBgm(music);}  // 첫 입력 전이면 엔진이 기다렸다 틂
   {// 부스 운영 (기획서 10장): F12 바로 처음으로, 엔딩 카드에서 아무 키나 누르면 처음으로 (무입력 자동 복귀는 테스트에 불편해서 뺌)
    bool any=hb::VectorMath::Vector2Length(hb::Input::GetMouseDelta())>0;
    for(auto* k:{"w","a","s","d","e","q","space","enter","tab","LeftMouseButton","1","2","3","4","5"})any=any||hb::Input::IsKeyDown(k);
@@ -162,6 +162,7 @@ void TopDownShooter::Update(float delta){
   else if(aimHold>0&&hasAim&&!touchMode)facing=Normal(aim-position,facing);
   else if(moving)facing=hb::VectorMath::NormalizeVector(move);
   Animate(delta,moving);
+  if(moving&&dodgeTimer<=0){if((stepTime-=delta)<=0){stepTime=0.32f;Sfx("Step",0.9f+float(std::rand()%20)/100);}}else stepTime=0.05f;  // 발소리
   // 적재량 초과·피로도 75% 이상이면 이동속도 -25% (기획서 4-1)
   // 공격·활 당기기 중 이동속도 배율 (그림은 걸으며 공격하는 합성 그림이라 멈출 필요는 없음)
   // 새 시트: 발렌은 베는 동안 이동 키를 받지 않고 그림의 내딛기만큼만 나감, 겨눈 채 뒷걸음질은 더 느리게
@@ -222,7 +223,7 @@ void TopDownShooter::Update(float delta){
   // 골드: 가까이 가면 끌려와서 주워짐
   for(auto it=coins.begin();it!=coins.end();){auto* c=it->first;const auto d=position-hb::Scene::GetPosition(c);const float len=Length(d);
     float& age=coinAge[c];age+=delta;const bool fresh=age<0.6f;  // 떨어진 직후는 그 자리에 보이게
-    if(!fresh&&len<rules->CoinPickup){if(it->second<0){Monster++;Sfx("Gather");}else{Gold+=it->second;Sfx("Coin");}
+    if(!fresh&&len<rules->CoinPickup){if(it->second<0){Monster++;Sfx("Pickup");}else{Gold+=it->second;Sfx("Coin");}
       Effect("CoinSparkle",hb::Scene::GetPosition(c)+hb::Vec3{0,0.3f,0.3f},0,1.f);coinAge.erase(c);Give(coinPool,c);it=coins.erase(it);Hud();continue;}
     if(!fresh&&len<rules->CoinMagnet)hb::Scene::SetPosition(c,hb::Scene::GetPosition(c)+d*(std::min(1.f,delta*8)));
     ++it;}
