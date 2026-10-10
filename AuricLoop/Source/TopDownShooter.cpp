@@ -53,7 +53,7 @@ void TopDownShooter::Update(float delta){
   const auto position=playerAt;
   {// 배경음: 거점·던전·보스방·귀환
    const std::string music=Sound(Returning?"Return":area<0?"Hub":roomKind=="Boss"?"Boss":"Dungeon");
-   if((Phase>=2||selecting)&&music!=currentMusic){hb::Audio::PlayMusic(music,0.5f);currentMusic=music;}}  // 첫 입력 전이면 엔진이 기다렸다 틂
+   if((Phase>=2||selecting)&&music!=currentMusic&&MusicLevel>0){hb::Audio::PlayMusic(music,MusicVolume());currentMusic=music;}}  // 첫 입력 전이면 엔진이 기다렸다 틂
   {// 부스 운영 (기획서 10장): F12 바로 처음으로, 엔딩 카드에서 아무 키나 누르면 처음으로 (무입력 자동 복귀는 테스트에 불편해서 뺌)
    bool any=hb::VectorMath::Vector2Length(hb::Input::GetMouseDelta())>0;
    for(auto* k:{"w","a","s","d","e","q","space","enter","tab","LeftMouseButton","1","2","3","4","5"})any=any||hb::Input::IsKeyDown(k);
@@ -83,7 +83,11 @@ void TopDownShooter::Update(float delta){
    const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
    if(frame>=2&&UpdateIntro(delta,pressed||AnyPressed(true)))return;
    {const bool p=hb::Input::IsKeyDown("escape")||hb::Input::IsKeyDown("p");  // 일시정지 (Esc·P)
-    if(p&&!pauseHeld&&Phase>=2&&settleTime<0&&!ending&&cutscene<=0)SetPaused(!Paused);pauseHeld=p;  // 보스 등장 중엔 메뉴도 안 열림
+    if(p&&!pauseHeld&&Phase>=2&&settleTime<0&&!ending&&cutscene<=0){
+      // Esc: 열린 창을 위에서부터 하나씩 닫고, 다 닫혀 있을 때만 메뉴
+      if(!Paused&&craftOpen)Craft(true,0,false);else if(!Paused&&bagOpen)Bag(true,false);
+      else if(!Paused&&mapOpen){mapOpen=false;DrawMap(false);}else SetPaused(!Paused);}
+    pauseHeld=p;  // 보스 등장 중엔 메뉴도 안 열림
     if(Paused){if(!leaving)UpdateMenu();return;}}
    if(tipTime>0&&(tipTime-=delta)<=0){UiVisible("TipBack",false);UiVisible("Tip",false);}
    if(cutscene>0){  // 보스 등장: 1초 마법진 → 보스 → 1.3초 포효(흔들림)·이름 자막 → 끝나면 대사
@@ -207,13 +211,20 @@ void TopDownShooter::Update(float delta){
       charge=0;}}
   else if(Character==2&&attackDown&&attackCooldown<=0){attackCooldown=rules->BoltInterval;attackAnim=0.2f;Shoot(position);}
   else if(Character==0&&attackDown&&attackCooldown<=0)Slash(position,enemies);
+  {const bool rmb=hb::Input::IsKeyDown("RightMouseButton");  // 섬광탄: 우클릭으로 마우스 쪽에 던짐 (최대 6m)
+   if(rmb&&!throwHeld&&Flashbangs>0&&inDungeon){const hb::Vec3 d=hasAim&&!touchMode?aim-position:facing*4;const float l=std::min(6.f,Length(d));
+     ThrowFlash(position+hb::Vec3{0,0.2f,0},position+Normal(d,facing)*l+hb::Vec3{0,-0.6f,0});}
+   throwHeld=rmb;}
+  if(inDungeon)UpdateGoldPiles(position);
   if(slashPending>0&&(slashPending-=delta)<=0)SlashHit(hb::Scene::GetPosition(player),enemies);
   UpdateShots(delta,enemies);
 
   // 골드: 가까이 가면 끌려와서 주워짐
   for(auto it=coins.begin();it!=coins.end();){auto* c=it->first;const auto d=position-hb::Scene::GetPosition(c);const float len=Length(d);
-    if(len<rules->CoinPickup){Gold+=it->second;Sfx("Coin");Effect("CoinSparkle",hb::Scene::GetPosition(c)+hb::Vec3{0,0.3f,0.3f},0,1.f);Give(coinPool,c);it=coins.erase(it);Hud();continue;}
-    if(len<rules->CoinMagnet)hb::Scene::SetPosition(c,hb::Scene::GetPosition(c)+d*(std::min(1.f,delta*8)));
+    float& age=coinAge[c];age+=delta;const bool fresh=age<0.6f;  // 떨어진 직후는 그 자리에 보이게
+    if(!fresh&&len<rules->CoinPickup){if(it->second<0){Monster++;Sfx("Gather");}else{Gold+=it->second;Sfx("Coin");}
+      Effect("CoinSparkle",hb::Scene::GetPosition(c)+hb::Vec3{0,0.3f,0.3f},0,1.f);coinAge.erase(c);Give(coinPool,c);it=coins.erase(it);Hud();continue;}
+    if(!fresh&&len<rules->CoinMagnet)hb::Scene::SetPosition(c,hb::Scene::GetPosition(c)+d*(std::min(1.f,delta*8)));
     ++it;}
   if(boss)BossHp=boss->Hp;
   {// 보스 체력 막대 (화면 위)

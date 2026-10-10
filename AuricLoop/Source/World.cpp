@@ -84,6 +84,7 @@ void TopDownShooter::StartFloor(){
   if(!Seed)std::srand(seed);  // 웨이브 자리·파편 등 std::rand도 판마다 다르게
   map.Generate(seed,floor,roomTable);
   map.Build();
+  goldPiles=hb::Scene::GetActorsWithTag("Dungeon.Gold");goldTaken.clear();  // 방에 쌓인 금 더미 (다가가면 주움)
   // 채집방·상점의 상호작용 대상 자리 (장면에 화면 밖으로 놓아 둔 것을 옮김)
   for(auto* i:interactables){const bool gather=i->Kind=="Ore"||i->Kind=="Herb",shop=i->Kind=="Smith"||i->Kind=="Stall";if(!gather&&!shop)continue;
     for(auto& r:map.rooms)if(r.kind==(gather?"Gather":"Shop")){
@@ -279,7 +280,9 @@ bool TopDownShooter::UpdateSettle(float delta,bool advance){
     if(t<=0)continue;
     if(t<1){const float e=t*t;  // 빨려 들어가듯 점점 빠르게, 작아지며 위로 살짝 떴다가
       UiPosition(n,hb::Vec2{iconX[k]*(1-e),-180*(1-e)-10*e-std::sin(t*3.14159f)*40});UiScale(n,1-0.6f*e);}
-    else{UiOpacity(n,0);filled+=float(it.value);shownValue+=it.value;bump=bump||t<1.3f;  // 들어간 직후 0.1초 동안 동전이 톡 커짐
+    else{const bool back=t>1.4f;  // 동전에 들어간 뒤 0.14초면 제자리에 다시 (끝 화면에도 소재·골드 그림이 남게)
+      UiOpacity(n,back?1.f:0.f);if(back){UiPosition(n,hb::Vec2{iconX[k],-180});UiScale(n,1);}
+      filled+=float(it.value);shownValue+=it.value;bump=bump||t<1.3f;  // 들어간 직후 0.1초 동안 동전이 톡 커짐
       if(settleShown<=k){settleShown=k+1;Sfx("Coin",0.9f+0.08f*k);}}}
   UiScale("SettleCoinBack",bump?1.1f:1.f);UiScale("SettleCoin",bump?1.1f:1.f);
   const float coinT=settleTotal>0?filled/settleTotal:0;
@@ -329,8 +332,9 @@ void TopDownShooter::SetPaused(bool paused){
   hb::Clock::SetTimeScale(paused?0.0001f:1.f);  // 게임 시간 정지: 물리·적 상태 머신·애니메이션·입자·타이머가 멈춤.
                                                 // 완전히 0이면 엔진이 매 프레임 게임 규칙(Tick)도 안 불러 메뉴 입력을 못 받으므로 아주 느리게
   for(auto* n:{"MenuBack","MenuPanel","MenuTitle","MenuSelect","MenuHelp","MenuResume","MenuResumeBack","MenuResumeTouch","MenuVolume","MenuVolumeBack",
-               "MenuVolDown","MenuVolUp","MenuQuit","MenuQuitBack","MenuQuitTouch"})UiVisible(n,paused);
+               "MenuVolDown","MenuVolUp","MenuMusic","MenuMusicBack","MenuMusDown","MenuMusUp","MenuQuit","MenuQuitBack","MenuQuitTouch"})UiVisible(n,paused);
   if(paused)UpdateMenu();
+  for(int k:{2,3})if(uiHosts[k])hb::UI::SetVisible(uiHosts[k],k==2?"Fast":"Map","Root",!paused);mapShown=!paused;  // 말풍선·지도는 따로 그려져 메뉴 위로 올라오므로 숨김
   hb::Movement2D::SetSpeed(player,paused?0.f:rules->MoveSpeed);sentSpeed=-1;  // 이동은 엔진 이동 컴포넌트가 입력으로 직접 하므로 속도를 0으로
   if(paused){hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
     for(auto* e:Enemies())hb::Physics::SetVelocity(e,hb::Vec3{0,0,0});
@@ -340,18 +344,24 @@ void TopDownShooter::SetPaused(bool paused){
 
 void TopDownShooter::UpdateMenu(){
   // Esc 메뉴: W·S로 고르고 Enter·E·Space로 결정, A·D 또는 ◀▶로 효과음 크기. 마우스는 줄을 바로 누름 (계속하기=Esc, 메인 화면으로=F12)
-  static const char* keys[]={"w","s","a","d","enter","e","space","[","]"};
-  int down=0;for(int i=0;i<9;++i)if(hb::Input::IsKeyDown(keys[i]))down|=1<<i;
+  // 줄: 0 계속하기 · 1 배경음 · 2 효과음 · 3 메인 화면으로. ◀▶ 버튼은 배경음 -/=, 효과음 [/]
+  static const char* keys[]={"w","s","a","d","enter","e","space","[","]","-","="};
+  int down=0;for(int i=0;i<11;++i)if(hb::Input::IsKeyDown(keys[i]))down|=1<<i;
   const int pressed=down&~menuHeld;menuHeld=down;
-  if(pressed&1)menuPick=(menuPick+2)%3;
-  if(pressed&2)menuPick=(menuPick+1)%3;
-  const int vol=(pressed&256||(menuPick==1&&pressed&8))?1:(pressed&128||(menuPick==1&&pressed&4))?-1:0;
-  if(vol){SfxLevel=std::clamp(SfxLevel+vol,0,10);Sfx("Select");}
+  if(pressed&1)menuPick=(menuPick+3)%4;
+  if(pressed&2)menuPick=(menuPick+1)%4;
+  const int sfx=(pressed&256||(menuPick==2&&pressed&8))?1:(pressed&128||(menuPick==2&&pressed&4))?-1:0;
+  const int mus=(pressed&1024||(menuPick==1&&pressed&8))?1:(pressed&512||(menuPick==1&&pressed&4))?-1:0;
+  if(sfx){SfxLevel=std::clamp(SfxLevel+sfx,0,10);Sfx("Select");}
+  if(mus){MusicLevel=std::clamp(MusicLevel+mus,0,10);currentMusic.clear();  // 엔진은 틀 때만 크기를 정하므로 새 크기로 다시 틂
+    if(MusicLevel==0)hb::Audio::StopMusic();else{const std::string m=Sound(Returning?"Return":area<0?"Hub":roomKind=="Boss"?"Boss":"Dungeon");hb::Audio::PlayMusic(m,MusicVolume());currentMusic=m;}}
   if(pressed&(1|2))Sfx("Select");
-  if(pressed&(16|32|64)){if(menuPick==0){SetPaused(false);return;}if(menuPick==2){ResetToTitle();return;}}
-  UiPosition("MenuSelect",hb::Vec2{0,-42.f+menuPick*66});
+  if(pressed&(16|32|64)){if(menuPick==0){SetPaused(false);return;}if(menuPick==3){ResetToTitle();return;}}
+  UiPosition("MenuSelect",hb::Vec2{0,-75.f+menuPick*66});
+  UiText("MenuMusic","배경음  "+std::string(MusicLevel,'|')+std::string(10-MusicLevel,'.'));
   UiText("MenuVolume","효과음  "+std::string(SfxLevel,'|')+std::string(10-SfxLevel,'.'));
-  for(int i=0;i<3;++i)UiColor(i==0?"MenuResume":i==1?"MenuVolume":"MenuQuit",i==menuPick?hb::Color{1,0.835f,0.416f,1}:hb::Color{0.965f,0.925f,0.847f,1});
+  static const char* rows[]={"MenuResume","MenuMusic","MenuVolume","MenuQuit"};
+  for(int i=0;i<4;++i)UiColor(rows[i],i==menuPick?hb::Color{1,0.835f,0.416f,1}:hb::Color{0.965f,0.925f,0.847f,1});
 }
 
 void TopDownShooter::Bag(bool toggle,bool use){

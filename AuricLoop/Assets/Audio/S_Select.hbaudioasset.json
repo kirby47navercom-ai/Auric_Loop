@@ -2,7 +2,7 @@
   "version": 1,
   "name": "S_Select",
   "clip": "Assets/Audio/Select.wav",
-  "volume": 0.4,
+  "volume": 0.28,
   "pitch": 1,
   "loop": false,
   "spatial": false,

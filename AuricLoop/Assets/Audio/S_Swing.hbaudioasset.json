@@ -2,7 +2,7 @@
   "version": 1,
   "name": "S_Swing",
   "clip": "Assets/Audio/Swing.wav",
-  "volume": 0.45,
+  "volume": 0.4,
   "pitch": 1,
   "loop": false,
   "spatial": false,

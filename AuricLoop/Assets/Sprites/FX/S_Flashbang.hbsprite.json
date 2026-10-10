@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_Flashbang",
+  "texture": "Assets/UI/Items/flash.png",
+  "pixelsPerUnit": 64,
+  "rect": [
+    0,
+    0,
+    40,
+    40
+  ],
+  "pivot": [
+    0.5,
+    0.5
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

@@ -72,10 +72,10 @@ for i in (1, 2, 3):
     image(f"HpFill{i}", f"hp_fill_{i}.png", "tl", 24 + 64, 24 + 14, z=11, visible=i == 3)
 text("HpText", "3 / 3", "tl", 24 + 64, 24 + 14, 220, 28, align="center")
 image("BagIcon", "icon_bag.png", "tl", 30, 92)
-text("WeightText", "0 / 100", "tl", 68, 86, 160, 32)
+text("WeightText", "0 / 100", "tl", 62, 82, 146, 40, align="center")  # 명패(24~214) 안 가방 아이콘 오른쪽 가운데
 node("GoldBack", "Image", "tl", 330, 28, 200, 44, 9, **PLAQUE)
 node("WeightBack", "Image", "tl", 24, 82, 190, 40, 9, **PLAQUE)
-text("GoldText", "0 G", "tl", 342, 36, 180, 32, size=18)
+text("GoldText", "0 G", "tl", 330, 28, 200, 44, size=18, align="center")  # 명패와 같은 상자 가운데
 node("Fps", "Text", "bl", 12, 8, 160, 22, 99, text="", fontSize=14, color="#7dff9a", visible=False)  # F3 성능 표시 (왼쪽 아래 구석)
 image("FatigueBack", "fatigue_back.png", "tl", 24, 132)
 # 피로도: 세로 막대 하나 (C++ UI::SetValue 0~1, 아래에서 위로 참)
@@ -88,7 +88,7 @@ node("AreaBack", "Image", "t", 0, 84, 460, 44, 9, visible=False, **PLAQUE)  # �
 text("Title", "", "t", 0, 84, 460, 44, size=20, align="center")
 nodes[-1]["properties"]["visible"] = False
 node("HintBack", "Image", "t", 0, 60, 640, 48, 9, visible=False, **FRAMED)
-text("Hint", "", "t", 0, 70, 640, 30, size=18, align="center")  # 물체와 상관없는 알림 (제작 완료 등)
+text("Hint", "", "t", 0, 60, 640, 48, size=18, align="center")  # 물체와 상관없는 알림 (제작 완료 등)
 # 도착한 곳 이름: 가운데에 크게 떴다가 사라짐 (C++ AreaBanner). M·미니맵을 누르면 다시
 node("AreaBannerBack", "Panel", "c", 0, -150, 1280, 132, 59, background="#05090ab4", visible=False)  # 글씨가 바닥 무늬에 묻히지 않게 어두운 띠
 node("AreaBanner", "Text", "c", 0, -170, 900, 60, 60, text="", fontSize=44, color=GOLD, align="center", visible=False)
@@ -190,9 +190,9 @@ panel_text("CraftNeed", "필요 소재", 480, 272, 300, 22)
 for k in (1, 2):  # 필요 소재 두 칸: 아이콘 + 가진 수 / 필요한 수 (모자라면 붉은 글씨)
     panel(f"CraftCostBox{k}", "Image", 480 + (k - 1) * 190, 300, 176, 52, 41, **BUTTON)
     panel(f"CraftCostIcon{k}", "Image", 486 + (k - 1) * 190, 306, 40, 40, 42, texture=ITEMS + "herb.png")
-    panel_text(f"CraftCostText{k}", "", 534 + (k - 1) * 190, 314, 130, 26, size=17)
+    panel_text(f"CraftCostText{k}", "", 526 + (k - 1) * 190, 300, 124, 52, size=17, align="center")  # 아이콘 오른쪽 칸 가운데
 panel("CraftConfirmBack", "Image", 480, 384, 380, 64, 42, **FRAMED)  # 키트 버튼 그림 위에 금테 버튼
-panel("CraftConfirm", "Text", 480, 400, 380, 32, 43, text="제작하기", fontSize=20, color=GOLD, align="center")
+panel("CraftConfirm", "Text", 480, 384, 380, 64, 43, text="제작하기", fontSize=20, color=GOLD, align="center")
 panel("CraftConfirmButton", "TouchButton", 480, 384, 380, 64, 44, inputKey="enter", inputMode="keys",
       background="#00000000", pressed="#ffffff22", hover="#ffffff11")
 panel("CraftClose", "TouchButton", 820, 24, 72, 72, 44, inputKey="q", inputMode="keys",
@@ -212,7 +212,8 @@ dialog("DialogBox", "Image", 0, 0, DW, DH, 50, **FRAMED)
 dialog("DialogPortraitFrame", "Image", 20, 19, 132, 132, 51, texture=KIT + "dialog_portrait_frame.png")
 iw, ih = Image.open(PROJECT / KIT / "portrait_collector.png").size  # 말하는 사람 초상화 하나: C++가 그림·크기·위치를 바꿈
 dialog("DialogPortrait", "Image", 26 + (120 - iw) // 2, 25 + (120 - ih) // 2, iw, ih, 52, texture=KIT + "portrait_collector.png")
-dialog("DialogNameTag", "Image", 150, -26, 220, 52, 53, texture=ART + "ribbon.png")  # 불투명 (뒤 대화창 테두리가 비치지 않게)
+dialog("DialogNameTail", "Image", 122, -28, 276, 60, 49, texture=ART + "ribbon_tails.png")  # 접힌 꼬리: 대화창(50)보다 뒤라 아래가 창 테두리 뒤로 숨음
+dialog("DialogNameTag", "Image", 150, -26, 220, 52, 53, texture=ART + "ribbon_band.png")  # 앞 띠 (불투명, 창 윗변을 덮음)
 dialog("DialogName", "Text", 150, -16, 220, 30, 54, text="수금원", fontSize=19, color="#fff3e5", align="center")  # 리본 띠(그림 위 54/68) 가운데에 글자 가운데
 dialog("DialogText", "Text", 176, 34, 780, 110, 52, text="", fontSize=18, color=INK, wrap=True, align="left")
 dialog("DialogNext", "Text", DW - 56, DH - 46, 40, 30, 52, text="▼", fontSize=18, color=GOLD)
@@ -246,7 +247,7 @@ node("TitleFog", "Image", "tl", 0, 480, 1280, 240, 96, texture=KIT + "title_fog.
 full("TitleFlash", "Panel", 98, background="#fff6dcff", visible=False)
 full("TitleFade", "Panel", 99, background="#05090aff")
 # 조작 안내 (타이틀 아래): 키 모양 상자 + 짧은 이름. 방향키가 아니라 WASD
-KEYS = [(["W", "A", "S", "D"], "이동"), (["좌클릭"], "공격"), (["Space"], "대시"), (["E"], "상호작용"), (["Tab"], "가방"), (["Q"], "제작"), (["M"], "지도"), (["Esc"], "메뉴")]
+KEYS = [(["W", "A", "S", "D"], "이동"), (["좌클릭"], "공격"), (["Space"], "대시"), (["우클릭"], "섬광탄"), (["E"], "상호작용"), (["Tab"], "가방"), (["Q"], "제작"), (["M"], "지도"), (["Esc"], "메뉴")]
 def keycap(name, label, x, y, w_):
     node(name, "Text", "b", x, y, w_, 28, 94, text=label, fontSize=14, color=INK, align="center",
          background="#1a2228ff", borderColor="#c9a24a", borderWidth=2, radius=5, padding=3)
@@ -347,21 +348,22 @@ n = node("BagUseTouch", "TouchButton", "c", -50, 62, 84, 84, 49, inputKey="enter
 # ---- 일시정지 (Esc·P, 모바일 일시정지 버튼) ----
 touch("PauseTouch", "escape", "tr", 24, 24, 72, devices="all")
 full("MenuBack", "Panel", 85, background="#05090ad8", visible=False)
-node("MenuPanel", "Image", "c", 0, 8, 440, 350, 85, visible=False, **FRAMED)
-node("MenuTitle", "Text", "c", 0, -112, 380, 40, 86, text="메뉴", fontSize=28, color=GOLD, align="center", visible=False)
-MENU = [("MenuResume", "계속하기", "escape"), ("MenuVolume", "효과음", ""), ("MenuQuit", "메인 화면으로", "F12")]
+node("MenuPanel", "Image", "c", 0, 22, 440, 420, 85, visible=False, **FRAMED)
+node("MenuTitle", "Text", "c", 0, -142, 380, 40, 86, text="메뉴", fontSize=28, color=GOLD, align="center", visible=False)
+MENU = [("MenuResume", "계속하기", "escape"), ("MenuMusic", "배경음", ""), ("MenuVolume", "효과음", ""), ("MenuQuit", "메인 화면으로", "F12")]
 for i, (name, label, key) in enumerate(MENU):
-    y = -42 + i * 66
+    y = -75 + i * 66
     node(name + "Back", "Image", "c", 0, y, 340, 52, 86, visible=False, **PLAQUE)
     node(name, "Text", "c", 0, y - 1, 320, 30, 87, text=label, fontSize=20, color=INK, align="center", visible=False)
     if key:
         node(name + "Touch", "TouchButton", "c", 0, y, 340, 52, 88, inputKey=key, inputMode="keys",
              background="#00000000", pressed="#ffd56a33", hover="#ffd56a18", visible=False)
-for side, key, dx in (("Down", "[", -140), ("Up", "]", 140)):  # 효과음 크기 ◀ ▶
-    node(f"MenuVol{side}", "TouchButton", "c", dx, 24, 52, 52, 88, inputKey=key, inputMode="keys", text="◀" if side == "Down" else "▶",
-         fontSize=18, color=GOLD, background="#00000000", pressed="#ffd56a33", hover="#ffd56a18", visible=False)
-node("MenuSelect", "Panel", "c", 0, -42, 348, 60, 86, background="#00000000", borderColor=GOLD, borderWidth=3, radius=10, visible=False)  # 고른 줄 테두리
-node("MenuHelp", "Text", "c", 0, 140, 400, 22, 86, text="W·S 고르기  ·  A·D 크기  ·  Enter 결정", fontSize=13, color=SAND, align="center", visible=False)
+for row, y, (down, up) in (("Mus", -9, ("-", "=")), ("Vol", 57, ("[", "]"))):  # 배경음·효과음 크기 ◀ ▶
+    for side, key, dx in (("Down", down, -140), ("Up", up, 140)):
+        node(f"Menu{row}{side}", "TouchButton", "c", dx, y, 52, 52, 88, inputKey=key, inputMode="keys", text="◀" if side == "Down" else "▶",
+             fontSize=18, color=GOLD, background="#00000000", pressed="#ffd56a33", hover="#ffd56a18", visible=False)
+node("MenuSelect", "Panel", "c", 0, -75, 348, 60, 86, background="#00000000", borderColor=GOLD, borderWidth=3, radius=10, visible=False)  # 고른 줄 테두리
+node("MenuHelp", "Text", "c", 0, 178, 400, 22, 86, text="W·S 고르기  ·  A·D 크기  ·  Enter 결정", fontSize=13, color=SAND, align="center", visible=False)
 
 # ---- 쓰러짐 (기획서 2장 게임 오버): 화면을 붉게 덮고 문구 ----
 full("KoBack", "Panel", 70, background="#2a0508dd", visible=False)

@@ -1435,7 +1435,7 @@
           1
         ],
         "offset": [
-          -459.5,
+          -532.5,
           -26,
           26,
           28
@@ -1505,7 +1505,7 @@
           1
         ],
         "offset": [
-          -429.5,
+          -502.5,
           -26,
           26,
           28
@@ -1575,7 +1575,7 @@
           1
         ],
         "offset": [
-          -399.5,
+          -472.5,
           -26,
           26,
           28
@@ -1645,7 +1645,7 @@
           1
         ],
         "offset": [
-          -369.5,
+          -442.5,
           -26,
           26,
           28
@@ -1715,7 +1715,7 @@
           1
         ],
         "offset": [
-          -332.5,
+          -405.5,
           -30,
           36,
           22
@@ -1785,7 +1785,7 @@
           1
         ],
         "offset": [
-          -257.5,
+          -330.5,
           -26,
           62,
           28
@@ -1855,7 +1855,7 @@
           1
         ],
         "offset": [
-          -202.5,
+          -275.5,
           -30,
           36,
           22
@@ -1925,7 +1925,7 @@
           1
         ],
         "offset": [
-          -129.0,
+          -202.0,
           -26,
           59,
           28
@@ -1995,7 +1995,7 @@
           1
         ],
         "offset": [
-          -75.5,
+          -148.5,
           -30,
           36,
           22
@@ -2065,7 +2065,147 @@
           1
         ],
         "offset": [
-          -18.5,
+          -73.5,
+          -26,
+          62,
+          28
+        ],
+        "alignment": [
+          0.5,
+          1
+        ],
+        "zIndex": 94,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "우클릭",
+        "texture": "",
+        "fontSize": 16,
+        "color": "#f6ecd8",
+        "background": "#1a2228ff",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#c9a24a",
+        "borderWidth": 2,
+        "radius": 5,
+        "opacity": 1,
+        "visible": true,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 3,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "TitleKeyName3",
+      "name": "TitleKeyName3",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          1,
+          0.5,
+          1
+        ],
+        "offset": [
+          -10.5,
+          -30,
+          52,
+          22
+        ],
+        "alignment": [
+          0.5,
+          1
+        ],
+        "zIndex": 94,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "섬광탄",
+        "texture": "",
+        "fontSize": 16,
+        "color": "#c9b48a",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": true,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "left",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "TitleKey4_0",
+      "name": "TitleKey4_0",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          1,
+          0.5,
+          1
+        ],
+        "offset": [
+          54.5,
           -26,
           26,
           28
@@ -2123,8 +2263,8 @@
       "bindings": {}
     },
     {
-      "id": "TitleKeyName3",
-      "name": "TitleKeyName3",
+      "id": "TitleKeyName4",
+      "name": "TitleKeyName4",
       "parent": "root",
       "type": "Text",
       "slot": {
@@ -2135,7 +2275,7 @@
           1
         ],
         "offset": [
-          34.5,
+          107.5,
           -30,
           68,
           22
@@ -2193,8 +2333,8 @@
       "bindings": {}
     },
     {
-      "id": "TitleKey4_0",
-      "name": "TitleKey4_0",
+      "id": "TitleKey5_0",
+      "name": "TitleKey5_0",
       "parent": "root",
       "type": "Text",
       "slot": {
@@ -2205,7 +2345,7 @@
           1
         ],
         "offset": [
-          115.0,
+          188.0,
           -26,
           41,
           28
@@ -2263,8 +2403,8 @@
       "bindings": {}
     },
     {
-      "id": "TitleKeyName4",
-      "name": "TitleKeyName4",
+      "id": "TitleKeyName5",
+      "name": "TitleKeyName5",
       "parent": "root",
       "type": "Text",
       "slot": {
@@ -2275,7 +2415,7 @@
           1
         ],
         "offset": [
-          159.5,
+          232.5,
           -30,
           36,
           22
@@ -2333,8 +2473,8 @@
       "bindings": {}
     },
     {
-      "id": "TitleKey5_0",
-      "name": "TitleKey5_0",
+      "id": "TitleKey6_0",
+      "name": "TitleKey6_0",
       "parent": "root",
       "type": "Text",
       "slot": {
@@ -2345,7 +2485,7 @@
           1
         ],
         "offset": [
-          216.5,
+          289.5,
           -26,
           26,
           28
@@ -2403,8 +2543,8 @@
       "bindings": {}
     },
     {
-      "id": "TitleKeyName5",
-      "name": "TitleKeyName5",
+      "id": "TitleKeyName6",
+      "name": "TitleKeyName6",
       "parent": "root",
       "type": "Text",
       "slot": {
@@ -2415,7 +2555,7 @@
           1
         ],
         "offset": [
-          253.5,
+          326.5,
           -30,
           36,
           22
@@ -2473,8 +2613,8 @@
       "bindings": {}
     },
     {
-      "id": "TitleKey6_0",
-      "name": "TitleKey6_0",
+      "id": "TitleKey7_0",
+      "name": "TitleKey7_0",
       "parent": "root",
       "type": "Text",
       "slot": {
@@ -2485,7 +2625,7 @@
           1
         ],
         "offset": [
-          310.5,
+          383.5,
           -26,
           26,
           28
@@ -2543,8 +2683,8 @@
       "bindings": {}
     },
     {
-      "id": "TitleKeyName6",
-      "name": "TitleKeyName6",
+      "id": "TitleKeyName7",
+      "name": "TitleKeyName7",
       "parent": "root",
       "type": "Text",
       "slot": {
@@ -2555,7 +2695,7 @@
           1
         ],
         "offset": [
-          347.5,
+          420.5,
           -30,
           36,
           22
@@ -2613,8 +2753,8 @@
       "bindings": {}
     },
     {
-      "id": "TitleKey7_0",
-      "name": "TitleKey7_0",
+      "id": "TitleKey8_0",
+      "name": "TitleKey8_0",
       "parent": "root",
       "type": "Text",
       "slot": {
@@ -2625,7 +2765,7 @@
           1
         ],
         "offset": [
-          412.0,
+          485.0,
           -26,
           41,
           28
@@ -2683,8 +2823,8 @@
       "bindings": {}
     },
     {
-      "id": "TitleKeyName7",
-      "name": "TitleKeyName7",
+      "id": "TitleKeyName8",
+      "name": "TitleKeyName8",
       "parent": "root",
       "type": "Text",
       "slot": {
@@ -2695,7 +2835,7 @@
           1
         ],
         "offset": [
-          456.5,
+          529.5,
           -30,
           36,
           22
@@ -5172,9 +5312,9 @@
         ],
         "offset": [
           0,
-          8,
+          22,
           440,
-          350
+          420
         ],
         "alignment": [
           0.5,
@@ -5249,7 +5389,7 @@
         ],
         "offset": [
           0,
-          -112,
+          -142,
           380,
           40
         ],
@@ -5319,7 +5459,7 @@
         ],
         "offset": [
           0,
-          -42,
+          -75,
           340,
           52
         ],
@@ -5396,7 +5536,7 @@
         ],
         "offset": [
           0,
-          -43,
+          -76,
           320,
           30
         ],
@@ -5466,7 +5606,7 @@
         ],
         "offset": [
           0,
-          -42,
+          -75,
           340,
           52
         ],
@@ -5523,6 +5663,153 @@
       "bindings": {}
     },
     {
+      "id": "MenuMusicBack",
+      "name": "MenuMusicBack",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          -9,
+          340,
+          52
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 86,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "Assets/UI/Art/plaque.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "nineSlice": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "MenuMusic",
+      "name": "MenuMusic",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          -10,
+          320,
+          30
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 87,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "배경음",
+        "texture": "",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
       "id": "MenuVolumeBack",
       "name": "MenuVolumeBack",
       "parent": "root",
@@ -5536,7 +5823,7 @@
         ],
         "offset": [
           0,
-          24,
+          57,
           340,
           52
         ],
@@ -5613,7 +5900,7 @@
         ],
         "offset": [
           0,
-          23,
+          56,
           320,
           30
         ],
@@ -5683,7 +5970,7 @@
         ],
         "offset": [
           0,
-          90,
+          123,
           340,
           52
         ],
@@ -5760,7 +6047,7 @@
         ],
         "offset": [
           0,
-          89,
+          122,
           320,
           30
         ],
@@ -5830,7 +6117,7 @@
         ],
         "offset": [
           0,
-          90,
+          123,
           340,
           52
         ],
@@ -5887,6 +6174,146 @@
       "bindings": {}
     },
     {
+      "id": "MenuMusDown",
+      "name": "MenuMusDown",
+      "parent": "root",
+      "type": "TouchButton",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -140,
+          -9,
+          52,
+          52
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 88,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "-",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "◀",
+        "texture": "",
+        "fontSize": 20,
+        "color": "#ffd56a",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#ffd56a18",
+        "pressed": "#ffd56a33",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "MenuMusUp",
+      "name": "MenuMusUp",
+      "parent": "root",
+      "type": "TouchButton",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          140,
+          -9,
+          52,
+          52
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 88,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "=",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "▶",
+        "texture": "",
+        "fontSize": 20,
+        "color": "#ffd56a",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#ffd56a18",
+        "pressed": "#ffd56a33",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
       "id": "MenuVolDown",
       "name": "MenuVolDown",
       "parent": "root",
@@ -5900,7 +6327,7 @@
         ],
         "offset": [
           -140,
-          24,
+          57,
           52,
           52
         ],
@@ -5970,7 +6397,7 @@
         ],
         "offset": [
           140,
-          24,
+          57,
           52,
           52
         ],
@@ -6040,7 +6467,7 @@
         ],
         "offset": [
           0,
-          -42,
+          -75,
           348,
           60
         ],
@@ -6110,7 +6537,7 @@
         ],
         "offset": [
           0,
-          140,
+          178,
           400,
           22
         ],

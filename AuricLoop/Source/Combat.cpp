@@ -73,8 +73,49 @@ void TopDownShooter::FireRing(const hb::Vec3& from,int count,float angle,float s
 }
 
 void TopDownShooter::DropCoin(const hb::Vec3& at,int value){
-  hb::Transform t;t.position=hb::Vec3{at.x,at.y,0.05f};
-  if(auto* c=Take(coinPool,rules->CoinPrefab,t)){coins[c]=value;hb::Sprites::PlayAnimation(c,rules->CoinClip,true);}else Gold+=value;
+  // 처치한 자리 둘레에 동전 1~3개로 나눠 흩어 떨어뜨림 (0.6초 동안은 끌려오지 않아 떨어진 게 보임)
+  const int n=std::clamp(value,1,3);
+  for(int k=0;k<n;++k){const int v=value/n+(k<value%n?1:0);const float a=float(std::rand()%360)*3.14159f/180,r=0.4f+float(std::rand()%50)/100;
+    hb::Transform t;t.position=hb::Vec3{at.x+std::cos(a)*r,at.y-0.6f+std::sin(a)*r*0.6f,0.05f};
+    if(auto* c=Take(coinPool,rules->CoinPrefab,t)){coins[c]=v;coinAge[c]=0;hb::Sprites::PlayAnimation(c,rules->CoinClip,true);Effect("CoinSparkle",t.position+hb::Vec3{0,0.2f,0.3f},0,1.f);}
+    else Gold+=v;}
+}
+
+void TopDownShooter::DropMaterial(const hb::Vec3& at){
+  // 마물 소재 (기획서: 처치 4%, 데모는 전투방2 마지막 적·보스 확정): 뼈 아이콘이 바닥에 떨어지고 다가가면 주움
+  hb::Transform t;t.position=hb::Vec3{at.x+0.3f,at.y-0.6f,0.05f};
+  if(auto* c=Take(coinPool,rules->CoinPrefab,t)){coins[c]=-1;coinAge[c]=0;hb::Sprites::PlayAnimation(c,"Assets/Animations/SA_DropMonster.hbspriteanimation.json",true);
+    Effect("CoinSparkle",t.position+hb::Vec3{0,0.2f,0.3f},0,1.5f);}
+  else Monster++;
+}
+
+void TopDownShooter::ThrowFlash(const hb::Vec3& from,const hb::Vec3& to){
+  hb::Transform t;t.position=from;auto* a=Take(fxPool,rules->FxPrefab,t);
+  Flashbangs--;Sfx("Swing",1.3f);Hud();
+  if(!a){StunAll(rules->FlashStun);ClearBullets();Sfx("Flash");return;}
+  hb::Sprites::PlayAnimation(a,"Assets/Animations/SA_Flashbang.hbspriteanimation.json",true);
+  tosses.push_back({a,from,to,0,0.25f+Length(to-from)*0.05f});
+}
+
+void TopDownShooter::UpdateTosses(float delta){
+  for(auto it=tosses.begin();it!=tosses.end();){
+    auto& s=*it;s.t+=delta;const float p=std::min(1.f,s.t/s.dur);
+    hb::Transform t;t.position=s.from+(s.to-s.from)*p+hb::Vec3{0,std::sin(p*3.14159f)*1.4f,0};t.position.z=0.35f;t.rotation=hb::Vec3{0,0,-p*540};
+    hb::Scene::SetTransform(s.actor,t);
+    if(p<1){++it;continue;}
+    // 터짐: 하얀 번쩍임·충격파·흔들림, 모든 적 기절·탄막 지움
+    hb::Scene::SetRotation(s.actor,hb::Vec3{0,0,0});Give(fxPool,s.actor);
+    StunAll(rules->FlashStun);ClearBullets();Sfx("Flash");hb::Camera::Flash(hb::Color{1,1,0.95f,0.85f},0.35f);Shake(0.2f,1.4f);
+    Effect("Shockwave",hb::Vec3{s.to.x,s.to.y,0.3f},0,2.f);it=tosses.erase(it);}
+}
+
+void TopDownShooter::UpdateGoldPiles(const hb::Vec3& position){
+  // 방에 쌓인 금 더미(Dungeon.Gold): 발이 닿으면 4~8 G. 다시 깔려도 주운 자리는 숨김 (방 번호+자리로 기억)
+  for(auto* g:goldPiles){const auto at=hb::Scene::GetPosition(g);if(at.y<-150)continue;
+    const std::string key=std::to_string(int(std::round(at.x*2)))+":"+std::to_string(int(std::round(at.y*2)));
+    if(goldTaken.count(key)){hb::Scene::SetPosition(g,parked);continue;}
+    if(Length(position+hb::Vec3{0,-0.95f,0}-at)<1.1f){goldTaken.insert(key);const int v=4+std::rand()%5;Gold+=v;Sfx("Coin");
+      Effect("CoinSparkle",at+hb::Vec3{0,0.3f,0.3f},0,1.5f);hb::Scene::SetPosition(g,parked);Hud();}}
 }
 
 void TopDownShooter::StunAll(float seconds){for(auto* e:Enemies())e->Stun(seconds);}
@@ -188,7 +229,7 @@ void TopDownShooter::BossEnraged(Enemy* e){
 }
 
 void TopDownShooter::UpdateFx(float delta){
-  UpdateBeams(delta);
+  UpdateBeams(delta);UpdateTosses(delta);
   for(auto it=warns.begin();it!=warns.end();){
     if((it->left-=delta)<=0){
       hb::Scene::SetPosition(it->actor,hb::Vec3{0,-200,0});(it->circle?circlePool:warnPool).push_back(it->actor);
@@ -227,8 +268,9 @@ void TopDownShooter::Prewarm(){
 void TopDownShooter::KillEnemy(Enemy* e){
   const auto at=hb::Scene::GetPosition(e);Kills++;Sfx("Kill");if(waveAlive>0)waveAlive--;
   DropCoin(at,e->GoldMin+Kills%std::max(1,e->GoldMax-e->GoldMin+1));
-  if(e->Boss){HasReturnItem=true;Monster++;boss=nullptr;BossHp=0;Hud();}  // 귀환 쓰는 법은 시작 방 표지판
-  if(monsterDrop&&fightingRoom>=0&&pending.empty()&&wave+1>=waves.size()&&Enemies().size()<=1){Monster++;Tip(5);}  // 이 방 마지막 해골은 마물 소재 확정
+  if(e->Boss){HasReturnItem=true;DropMaterial(at);boss=nullptr;BossHp=0;Hud();}  // 귀환 쓰는 법은 시작 방 표지판
+  else if(monsterDrop&&fightingRoom>=0&&pending.empty()&&wave+1>=waves.size()&&Enemies().size()<=1)DropMaterial(at);  // 이 방 마지막 적은 마물 소재 확정
+  else if(std::rand()%100<4)DropMaterial(at);  // 기획서: 처치 4%
   const hb::Vec3 dir=Normal(e->lastPush,hb::Vec3{e->Flipped()?1.f:-1.f,0,0});
   PlayFx(e->DeathClip,0.9f,at,0,0,e->Flipped());  // 쓰러지는 그림은 이펙트로 (적은 바로 화면 밖 대기로). 맞은 방향으로 밀려나며 쓰러짐
   if(!fxs.empty()&&fxs.back().left==0.9f){auto& f=fxs.back();f.moving=true;f.ground=at;f.vel=dir*(e->Boss?2.f:7.f);f.vh=e->Boss?0.f:3.f;}

@@ -2,7 +2,7 @@
   "version": 1,
   "name": "S_Coin",
   "clip": "Assets/Audio/Coin.wav",
-  "volume": 0.5,
+  "volume": 0.32,
   "pitch": 1,
   "loop": false,
   "spatial": false,

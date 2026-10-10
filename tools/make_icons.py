@@ -168,15 +168,23 @@ def flask(liquid):
 
 
 def flashbang(px, d):
-    body, dark, spark = (120, 128, 140, 255), (80, 86, 98, 255), (255, 236, 120, 255)
-    for y in range(6, 15):
-        for x in range(3, 12):
-            if (x - 7) ** 2 + (y - 10) ** 2 <= 17:
-                px[x, y] = body if x < 8 else dark
-    px[7, 5] = px[8, 4] = (90, 70, 50, 255)  # 심지
-    for x, y in ((10, 2), (9, 3), (11, 3), (10, 4), (12, 1), (10, 1)):
-        px[x, y] = spark
-    px[5, 8] = (200, 206, 214, 255)
+    """섬광탄: 은색 원통 + 노란 경고 띠 + 위 뚜껑, 옆 손잡이(레버)와 안전핀 고리 (수류탄처럼 둥글지 않게)"""
+    light, body, dark, band, band_d = (214, 220, 228, 255), (160, 168, 180, 255), (104, 112, 126, 255), (250, 214, 70, 255), (196, 150, 30, 255)
+    for y in range(5, 15):  # 몸통 (x 5~10), 왼쪽 밝게
+        for x in range(5, 11):
+            c = light if x == 5 else body if x < 9 else dark
+            if y in (9, 10):
+                c = band if x < 9 else band_d
+            px[x, y] = c
+    for x in range(5, 11):  # 위 뚜껑 (조금 넓고 어둡게)
+        px[x, 4] = dark
+    for x in range(6, 10):
+        px[x, 3] = body
+    for y in range(3, 10):  # 옆 레버
+        px[11, y] = light if y < 5 else body
+    px[10, 3] = light
+    for x, y in ((3, 1), (4, 0), (5, 1), (3, 2), (5, 2), (4, 3), (6, 2)):  # 안전핀 고리
+        px[x, y] = band
     outline(px)
 
 

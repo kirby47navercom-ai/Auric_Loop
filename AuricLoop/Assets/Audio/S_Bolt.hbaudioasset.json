@@ -2,7 +2,7 @@
   "version": 1,
   "name": "S_Bolt",
   "clip": "Assets/Audio/Bolt.wav",
-  "volume": 0.35,
+  "volume": 0.32,
   "pitch": 1,
   "loop": false,
   "spatial": false,

@@ -514,10 +514,10 @@
           0
         ],
         "offset": [
-          68,
-          86,
-          160,
-          32
+          62,
+          82,
+          146,
+          40
         ],
         "alignment": [
           0,
@@ -554,7 +554,7 @@
         "enabled": true,
         "focusable": true,
         "tooltip": "",
-        "align": "left",
+        "align": "center",
         "value": 0,
         "min": 0,
         "max": 1,
@@ -738,10 +738,10 @@
           0
         ],
         "offset": [
-          342,
-          36,
-          180,
-          32
+          330,
+          28,
+          200,
+          44
         ],
         "alignment": [
           0,
@@ -778,7 +778,7 @@
         "enabled": true,
         "focusable": true,
         "tooltip": "",
-        "align": "left",
+        "align": "center",
         "value": 0,
         "min": 0,
         "max": 1,
@@ -1318,9 +1318,9 @@
         ],
         "offset": [
           0,
-          70,
+          60,
           640,
-          30
+          48
         ],
         "alignment": [
           0.5,
@@ -4423,10 +4423,10 @@
           0.5
         ],
         "offset": [
-          74.0,
-          56.0,
-          130,
-          26
+          66.0,
+          42.0,
+          124,
+          52
         ],
         "alignment": [
           0,
@@ -4463,7 +4463,7 @@
         "enabled": true,
         "focusable": true,
         "tooltip": "",
-        "align": "left",
+        "align": "center",
         "value": 0,
         "min": 0,
         "max": 1,
@@ -4641,10 +4641,10 @@
           0.5
         ],
         "offset": [
-          264.0,
-          56.0,
-          130,
-          26
+          256.0,
+          42.0,
+          124,
+          52
         ],
         "alignment": [
           0,
@@ -4681,7 +4681,7 @@
         "enabled": true,
         "focusable": true,
         "tooltip": "",
-        "align": "left",
+        "align": "center",
         "value": 0,
         "min": 0,
         "max": 1,
@@ -4789,9 +4789,9 @@
         ],
         "offset": [
           20.0,
-          142.0,
+          126.0,
           380,
-          32
+          64
         ],
         "alignment": [
           0,
@@ -5205,6 +5205,77 @@
       "bindings": {}
     },
     {
+      "id": "DialogNameTail",
+      "name": "DialogNameTail",
+      "parent": "root",
+      "type": "Image",
+      "slot": {
+        "anchors": [
+          0.5,
+          1,
+          0.5,
+          1
+        ],
+        "offset": [
+          -378.0,
+          -222,
+          276,
+          60
+        ],
+        "alignment": [
+          0,
+          0
+        ],
+        "zIndex": 49,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "Assets/UI/Art/ribbon_tails.png",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "imageRendering": "pixelated"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
       "id": "DialogNameTag",
       "name": "DialogNameTag",
       "parent": "root",
@@ -5242,7 +5313,7 @@
         "floating": false,
         "deviceVisibility": "all",
         "text": "",
-        "texture": "Assets/UI/Art/ribbon.png",
+        "texture": "Assets/UI/Art/ribbon_band.png",
         "fontSize": 22,
         "color": "#f6ecd8",
         "background": "#00000000",

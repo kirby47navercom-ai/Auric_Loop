@@ -251,7 +251,7 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   float DodgeTime = 0.15f;       // 대시(순간이동) 뒤 무적 시간
   HB_PROPERTY(BlueprintReadWrite)
-  float DashDistance = 5.0f;     // 대시: 바라보는 쪽으로 이만큼 순간이동 (벽 앞에서 멈춤)
+  float DashDistance = 3.5f;     // 대시: 바라보는 쪽으로 이만큼 순간이동 (벽 앞에서 멈춤)
   HB_PROPERTY(BlueprintReadWrite)
   float DodgeSpeed = 30.0f;
   HB_PROPERTY(BlueprintReadWrite)
@@ -560,6 +560,8 @@ public:
   void Shake(float seconds,float power){shake=std::max(shake,seconds);shakePower=std::max(shakePower,power);}  // 화면 흔들림 (seconds 동안, power 세기 배율)
   std::string Sound(const std::string& name) const;  // Sounds에서 이름으로 찾은 경로 (없으면 "")
   static inline int SfxLevel=8;  // 메뉴의 효과음 크기 0~10 (처음으로 돌아가도 유지: 모듈 정적 변수)
+  static inline int MusicLevel=6;  // 메뉴의 배경음 크기 0~10
+  static float MusicVolume(){return 0.5f*MusicLevel/8.f;}
   void Sfx(const std::string& name,float pitch=1.f){  // Sounds 값은 "wav 경로|볼륨". 첫 입력 전 효과음은 엔진이 버림
     const auto s=Sound(name);if(s.empty()||SfxLevel<=0)return;const auto bar=s.find('|');const float v=SfxLevel/8.f;
     if(bar==std::string::npos)hb::Audio::Play(s,v,pitch);else hb::Audio::Play(s.substr(0,bar),std::stof(s.substr(bar+1))*v,pitch,"master");}
@@ -622,6 +624,12 @@ private:
   void KillEnemy(Enemy* e);
   void DropCoin(const hb::Vec3& at,int value);
   void StunAll(float seconds);
+  // 섬광탄 (우클릭): 마우스 쪽(최대 6m)으로 포물선을 그리며 날아가 터짐 → 모든 적 기절·탄막 지움
+  struct Toss{hb::Actor* actor;hb::Vec3 from,to;float t,dur;};std::vector<Toss> tosses;bool throwHeld=false;
+  void ThrowFlash(const hb::Vec3& from,const hb::Vec3& to);void UpdateTosses(float delta);
+  void DropMaterial(const hb::Vec3& at);  // 마물 소재: 바닥에 떨어지고 다가가면 주움 (coins 값 -1)
+  std::map<hb::Actor*,float> coinAge;      // 떨어진 지 얼마 안 된 동전은 끌려오지 않음 (보이게)
+  std::vector<hb::Actor*> goldPiles;std::set<std::string> goldTaken;void UpdateGoldPiles(const hb::Vec3& position);  // 방에 쌓인 금 더미: 다가가면 주움
   // 실행 중 생성(Scene::Spawn)은 호출마다 수십 ms가 걸려서, 장면에 미리 놓은 풀(태그 Pool.*)을 찾아 꺼내 쓴다
   void Prewarm();
   hb::Actor* Take(std::vector<hb::Actor*>& pool,const std::string& prefab,const hb::Transform& at);

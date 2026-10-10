@@ -2,7 +2,7 @@
   "version": 1,
   "name": "S_BGM_Return",
   "clip": "Assets/Audio/BGM_Return.wav",
-  "volume": 0.32,
+  "volume": 0.28,
   "pitch": 1,
   "loop": true,
   "spatial": false,

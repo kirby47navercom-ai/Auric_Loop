@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "name": "SA_Flashbang",
+  "loop": true,
+  "playRate": 1,
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_Flashbang.hbsprite.json",
+      "duration": 1
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "version": 1,
   "name": "S_DoorHit",
   "clip": "Assets/Audio/DoorHit.wav",
-  "volume": 0.7,
+  "volume": 0.55,
   "pitch": 1,
   "loop": false,
   "spatial": false,

@@ -2,7 +2,7 @@
   "version": 1,
   "name": "S_Type",
   "clip": "Assets/Audio/Type.wav",
-  "volume": 0.25,
+  "volume": 0.2,
   "pitch": 1,
   "loop": false,
   "spatial": false,

@@ -2,7 +2,7 @@
   "version": 1,
   "name": "S_Crack",
   "clip": "Assets/Audio/Crack.wav",
-  "volume": 0.55,
+  "volume": 0.42,
   "pitch": 1,
   "loop": false,
   "spatial": false,

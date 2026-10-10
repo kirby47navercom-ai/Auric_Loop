@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "native/eyeball_v5"
 OUT = ROOT / "AuricLoop/Assets/Sprites/Enemies/Eyeball"
 ANIM = ROOT / "AuricLoop/Assets/Animations"
-PPU, CELL, CX, CY, BELOW = 32, 80, 40, 32, 24
+PPU, CELL, CX, CY, BELOW = 32, 80, 40, 32, 48  # 아래 48px까지 (촉수가 길게 내려가는 프레임이 잘리지 않게)
 DIRS = "FBLR"  # 시트 행 순서: 정면·후면·왼쪽·오른쪽
 OUT.mkdir(parents=True, exist_ok=True)
 meta = json.loads((SRC / "animation.json").read_text(encoding="utf-8"))

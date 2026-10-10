@@ -2,7 +2,7 @@
   "version": 1,
   "name": "S_Arrow",
   "clip": "Assets/Audio/Arrow.wav",
-  "volume": 0.6,
+  "volume": 0.5,
   "pitch": 1,
   "loop": false,
   "spatial": false,

@@ -183,7 +183,7 @@ static std::string Utf8Prefix(const std::string& s,size_t chars){size_t i=0,n=0;
 
 bool TopDownShooter::UpdateDialog(float delta,bool advance){
   // 대화창 (기획서 6-5): 한 글자씩 → E·클릭·Enter로 바로 다 보이기 → 다시 누르면 다음 줄
-  static const char* parts[]={"DialogBox","DialogNameTag","DialogPortraitFrame","DialogName","DialogText","DialogNext","DialogTouch"};
+  static const char* parts[]={"DialogBox","DialogNameTail","DialogNameTag","DialogPortraitFrame","DialogName","DialogText","DialogNext","DialogTouch"};
   // 초상화 하나를 말하는 사람 그림으로 바꿔 120px 틀 가운데에 (좌표: 대화창 1000x170 기준, tools/gen_hud.py)
   static const struct{const char* who;float w,h;}portraits[]={{"collector",108,108},{"valen",96,96},{"sherry",84,66},{"alea",90,72},{"boss",66,66}};
   if(dialogIndex>=dialog.size()){
@@ -270,8 +270,8 @@ void TopDownShooter::TitleFx(float delta,bool visible){
   // 계속 움직이는 층(횃불·불티·금가루·별·안개·로고 금빛·Tap 금빛·동전 튀어나옴)은 스스로 움직이는 WebP이고,
   // C++는 정해진 순간에만 값을 바꿈: 처음 밝아짐(4번), 글자마다 3단계로 내려앉기, 땅(번쩍 3번 + 동전 그림 넣기), 끝(금빛 켜기)
   if(!visible){if(titleTime<0)return;titleTime=-1;
-    static const int keyCounts[]={4,1,1,1,1,1,1,1};  // 조작 안내 (gen_hud.py KEYS)
-    for(int g=0;g<8;++g){UiVisible("TitleKeyName"+std::to_string(g),false);for(int k=0;k<keyCounts[g];++k)UiVisible("TitleKey"+std::to_string(g)+"_"+std::to_string(k),false);}
+    static const int keyCounts[]={4,1,1,1,1,1,1,1,1};  // 조작 안내 (gen_hud.py KEYS)
+    for(int g=0;g<9;++g){UiVisible("TitleKeyName"+std::to_string(g),false);for(int k=0;k<keyCounts[g];++k)UiVisible("TitleKey"+std::to_string(g)+"_"+std::to_string(k),false);}
     for(int k=0;k<kTitleLetters;++k)UiVisible("TitleLetter"+std::to_string(k),false);
     for(auto* n:{"TitleRays","TitleAmbient","TitleTapShade","TitleBurst","TitleShine","TitleFog","TitleFlash","TitleFade"})UiVisible(n,false);
     return;}
@@ -292,8 +292,8 @@ void TopDownShooter::TitleFx(float delta,bool visible){
   UiVisible("TitleFlash",t>=slam&&t<slam+0.3f);if(t>=slam&&t<slam+0.3f)UiOpacity("TitleFlash",t<slam+0.1f?0.75f:t<slam+0.2f?0.4f:0.15f);
   // 끝: 로고 금빛·Tap 금빛 켜기 (둘 다 스스로 반복)
   if(t>=done&&titleBeat<=kTitleLetters+1){titleBeat=kTitleLetters+2;UiVisible("TitleShine",true);UiVisible("TitleTapShade",true);
-    static const int keyCounts[]={4,1,1,1,1,1,1,1};  // 조작 안내 (회사 로고 화면에서 숨긴 것을 연출이 끝나면 보임)
-    for(int g=0;g<8;++g){UiVisible("TitleKeyName"+std::to_string(g),true);for(int k=0;k<keyCounts[g];++k)UiVisible("TitleKey"+std::to_string(g)+"_"+std::to_string(k),true);}}
+    static const int keyCounts[]={4,1,1,1,1,1,1,1,1};  // 조작 안내 (회사 로고 화면에서 숨긴 것을 연출이 끝나면 보임)
+    for(int g=0;g<9;++g){UiVisible("TitleKeyName"+std::to_string(g),true);for(int k=0;k<keyCounts[g];++k)UiVisible("TitleKey"+std::to_string(g)+"_"+std::to_string(k),true);}}
 }
 
 void TopDownShooter::Splash(){

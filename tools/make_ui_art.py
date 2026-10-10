@@ -92,6 +92,37 @@ def ribbon(w=200, h=26):
 ribbon().save(OUT / "ribbon.png")
 
 
+def name_ribbon():
+    """대화창 이름표: 앞 띠(110x26 → 220x52)와 뒤로 접혀 대화창 뒤로 들어가는 꼬리(138x30 → 276x60)를 따로.
+    꼬리는 대화창보다 뒤에 그려져 아랫부분이 창 테두리 뒤로 숨어서, 띠가 창 윗변을 감싸 넘어가는 것처럼 보임"""
+    RED, RED_D, RED_L, FOLD = (176, 40, 40, 255), (112, 26, 28, 255), (222, 84, 74, 255), (70, 14, 16, 255)
+    band = Image.new("RGBA", (110, 26))
+    d = ImageDraw.Draw(band)
+    d.rectangle([0, 0, 109, 25], fill=RED, outline=INK)
+    d.line([(1, 1), (108, 1)], fill=RED_L)
+    d.line([(1, 24), (108, 24)], fill=RED_D)
+    d.line([(2, 3), (107, 3)], fill=GOLD)
+    d.line([(2, 22), (107, 22)], fill=GOLD)
+    tails = Image.new("RGBA", (138, 30))
+    d = ImageDraw.Draw(tails)
+    for side in (0, 1):
+        x0 = 0 if side == 0 else 138 - 20
+        inner = 18 if side == 0 else 138 - 18
+        notch = 5 if side == 0 else 138 - 5
+        pts = [(x0 if side == 0 else 137, 6), (inner, 6), (inner, 29), (x0 if side == 0 else 137, 29), (notch, 17)]
+        d.polygon(pts, fill=RED_D, outline=INK)
+        d.line([(x0 + (2 if side == 0 else 1), 8), (inner - (1 if side == 0 else -1), 8)], fill=GOLD)
+        # 접힌 자리: 띠 끝 바로 바깥 꼬리 윗부분을 어둡게 (띠가 뒤로 꺾여 들어가는 그늘)
+        for y in range(7, 29):
+            for x in ((range(12, 14)) if side == 0 else range(124, 126)):
+                tails.putpixel((x, y), FOLD)
+    band.resize((220, 52), Image.NEAREST).save(OUT / "ribbon_band.png")
+    tails.resize((276, 60), Image.NEAREST).save(OUT / "ribbon_tails.png")
+
+
+name_ribbon()
+
+
 # ---- 명패 (빚) ----------------------------------------------------------------------------
 def plaque(w=180, h=34):
     im = Image.new("RGBA", (w, h))

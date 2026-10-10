@@ -2,7 +2,7 @@
   "version": 1,
   "name": "S_Hurt",
   "clip": "Assets/Audio/Hurt.wav",
-  "volume": 0.7,
+  "volume": 0.55,
   "pitch": 1,
   "loop": false,
   "spatial": false,
