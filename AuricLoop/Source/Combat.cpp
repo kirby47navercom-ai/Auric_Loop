@@ -99,12 +99,23 @@ void TopDownShooter::PlayFx(const std::string& clip,float length,const hb::Vec3&
   fxs.push_back(Fx{a,length});
 }
 
-void TopDownShooter::Ghost(const hb::Vec3& at){
-  // 대시 잔상: 지금 몸 그림의 금빛 반투명판(tools/make_weapon_socket.py ghost_run)을 그 자리에 0.2초. 몸보다 뒤(순서 -1)
-  const auto i=currentSprite.find("S_VS_run_");if(i==std::string::npos)return;
+void TopDownShooter::Ghost(const hb::Vec3& at,float life){
+  // 대시 잔상: 지금 방향·위상의 발렌 몸을 금빛 반투명으로 (tools/make_weapon_socket.py ghost_run). 몸보다 뒤(순서 -1)
+  if(Character!=0)return;
   hb::Transform t;t.position=at;auto* a=Take(fxPool,rules->FxPrefab,t);if(!a)return;
-  hb::Sprites::SetSorting(a,"default",-1);hb::Sprites::SetSprite(a,std::string(currentSprite).replace(i,9,"S_VS_Ghost_"));
-  Fx f{a,0.3f};f.ghost=true;fxs.push_back(f);
+  hb::Sprites::SetSorting(a,"default",-1);
+  hb::Sprites::SetSprite(a,"Assets/Sprites/ValenSocket/S_VS_Ghost_"+std::to_string(vsLegs)+"_"+std::to_string(vsRow)+"_"+std::to_string(vsPhase)+".hbsprite.json");
+  Fx f{a,life};f.ghost=true;fxs.push_back(f);
+}
+
+void TopDownShooter::Blink(const hb::Vec3& position){
+  // 대시: 바라보는(걷는) 쪽으로 DashDistance만큼 그 자리에서 바로 옮김. 벽·물체(층 0)가 있으면 그 앞에서 멈춤 (발 둘레로 잼)
+  const hb::Vec3 dir=facing,feet=position+hb::Vec3{0,-0.72f,0};
+  const float dist=std::max(0.f,std::min(rules->DashDistance,LaserLength(feet,dir,rules->DashDistance+0.5f)-0.45f));
+  const hb::Vec3 to=position+dir*dist;
+  for(int k=0;k<5;++k)Ghost(position+dir*(dist*k/5),0.1f+0.05f*k);  // 지나온 길에 잔상 5개: 출발점 쪽부터 먼저 사라짐
+  hb::Scene::SetPosition(player,hb::Vec3{to.x,to.y,position.z});playerAt=to;
+  Effect("Dust",hb::Vec3{position.x,position.y-0.8f,0.03f},0,0,dir.x>0);Effect("Dust",hb::Vec3{to.x,to.y-0.8f,0.03f},0,0,dir.x<0);
 }
 
 void TopDownShooter::Effect(const std::string& name,const hb::Vec3& at,float angle,float glow,bool flip){
@@ -268,9 +279,12 @@ void TopDownShooter::Slash(const hb::Vec3& position,const std::vector<Enemy*>& e
   // 검 부채꼴 베기: 적에게 피해, 범위 안의 적 탄은 지움 (기획: 투사체 삭제)
   attackCooldown=rules->SwordInterval;Swings++;attackAnim=0.3f;Sfx("Slash",0.95f+float(std::rand()%10)/100);
   if(!NewSheet()&&knockTimer<=0){knock=facing*3.5f;knockTimer=0.07f;}  // 휘두르며 반 걸음 내딛음 (새 시트는 그림 속 내딛기로)
-  swingT=0;  // 베기 8프레임·검기는 Screen.inl AnimateSocket
+  swingT=0;slashPending=0.095f;  // 베기 8프레임·검기는 Screen.inl AnimateSocket. 맞는 판정은 검기가 나오는 3번째 프레임(55+40ms)에 SlashHit
   if(NewSheet())slashB=(((int)std::floor(walkDist/rules->Stride)%4+4)%4)>=2;  // 왼발이 앞이면 오른발로(B), 아니면 왼발로(A). 서서 연달아 베면 A·B가 번갈아 나옴
-  // 번갈아 위·아래로 벰  // 캐릭터 그림과 따로, 공격 방향으로 돌린 베기
+}
+
+void TopDownShooter::SlashHit(const hb::Vec3& position,const std::vector<Enemy*>& enemies){
+  slashPending=-1;
   const float minDot=std::cos(rules->SwordHalfAngle*3.14159265f/180),reach=rules->SwordRange+(Enchant==3?rules->SlashExtend:0);
   auto inFan=[&](const hb::Vec3& at,float radius){const auto d=at-position;const float len=Length(d);
     return len<=reach+radius&&(len<=radius+0.75f||hb::VectorMath::DotProduct(d*(1/len),facing)>=minDot);};  // 바로 붙은 적은 방향과 관계없이 맞음

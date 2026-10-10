@@ -249,7 +249,9 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   float HurtKnockback = 9.0f;      // 맞으면 밀려나는 속도 (0.12초)
   HB_PROPERTY(BlueprintReadWrite)
-  float DodgeTime = 0.18f;       // 대시: 거의 순간이동처럼 0.18초에 5.4m (DodgeSpeed x DodgeTime), 그동안 무적
+  float DodgeTime = 0.15f;       // 대시(순간이동) 뒤 무적 시간
+  HB_PROPERTY(BlueprintReadWrite)
+  float DashDistance = 5.0f;     // 대시: 바라보는 쪽으로 이만큼 순간이동 (벽 앞에서 멈춤)
   HB_PROPERTY(BlueprintReadWrite)
   float DodgeSpeed = 30.0f;
   HB_PROPERTY(BlueprintReadWrite)
@@ -576,7 +578,10 @@ private:
   void ShowSofa();
   // 던전 (Dungeon.h): 들어오면 층을 만들고, 방에 들어서면 문이 잠기며 웨이브가 마법진 예고 뒤 나온다
   void StartFloor();
-  void UpdateMinimap();          // 미니맵: 들어간 방과 그 이웃만, 지금 방은 금색 (HUD MapRoom*/MapLink*)
+  void UpdateMinimap(){DrawMap(mapOpen);}  // 방을 옮기면 다시 그림
+  void DrawMap(bool big);         // 지도 (World.cpp): 실제 방 크기·자리·복도 폭 그대로. big이면 화면 가운데 크게 + 지역 이름
+  void UpdateMapLayer();          // 매 프레임: 내 위치 표시, 다른 창이 열리면 지도 위젯을 통째로 숨김
+  bool mapOpen=false,mapShown=true;float mapLeft=0,mapTop=0,mapScale=1,mapMinX=0,mapMaxY=0;
   void EnterRoom(int room);
   void SpawnWave(const std::string& wave,bool invulnerable);
   void UpdateWaves(float delta);
@@ -590,6 +595,7 @@ private:
   void TitleFx(float delta,bool visible);
   void UpdatePrompt(float delta);  // 상호작용 말풍선을 대상 머리 위로 (Screen.inl)
   void AreaBanner(float delta,bool show);  // 도착한 곳 이름을 가운데에 크게 (Screen.inl)
+  void SettleFill(float t){char n[48];std::snprintf(n,sizeof n,"Assets/UI/Art/coin_fill_%02d.png",int(std::clamp(t,0.f,1.f)*20+0.5f));UiTexture("SettleCoinBack",n);}  // 정산 동전이 아래부터 차오름 (tools/make_coin_fill.py)
   void Notify(const std::string& text){hint=text;hintTime=2.5f;Hud();}
   void HitStop(float seconds,float scale=0.06f){if(Paused)return;hitStopLeft=std::max(hitStopLeft,seconds);hb::Clock::SetTimeScale(scale);}  // 타격감: 맞은 순간 멈칫 (scale>0.06이면 슬로모션)  // 물체와 상관없는 알림 (위 가운데, 잠깐)
   bool NewSheet() const{return Character<(int)rules->AnimSets.size()&&rules->AnimSets[Character]==1;}
@@ -624,7 +630,9 @@ private:
   // 이펙트: 풀에서 꺼낸 그림 오브젝트에 프레임을 차례로 바꿔 끼운다 (베기·타격 불꽃·적 쓰러짐)
   // 이펙트 하나. moving이면 바닥(ground) 위를 미끄러지고 높이(h)로 튀며 돈다 (처치 파편·쓰러지는 몸)
   struct Fx{hb::Actor* actor;float left;bool moving=false;hb::Vec3 ground{0,0,0},vel{0,0,0};float h=0,vh=0,spin=0,angle=0;bool settled=false,ghost=false;};
-  void Ghost(const hb::Vec3& at);float ghostTime=0;  // 대시 잔상
+  void Ghost(const hb::Vec3& at,float life);float ghostTime=0;int vsRow=0,vsPhase=1,vsLegs=0;  // 대시 잔상 (발렌 몸 그림의 지금 방향·위상)
+  void Blink(const hb::Vec3& position);  // 대시: 순간이동 + 지나온 길에 잔상
+  float slashPending=-1;void SlashHit(const hb::Vec3& position,const std::vector<Enemy*>& enemies);  // 베기 판정은 검기가 나오는 순간(0.095초 뒤)
   void Debris(const hb::Vec3& at,const hb::Vec3& dir,const std::string& who);  // 처치: 뼈·천·금 조각이 튀어 흩어짐
   hb::Vec3 kick{0,0,0};float punch=0,lastOrtho=0;int hitChain=0;float chainTime=0;  // 타격감: 때린 방향으로 화면 밀림, 처치 확대, 연타 음높이
   std::vector<Fx> fxs;
@@ -660,9 +668,10 @@ private:
     if(n=="Title")return "HUD";  // HUD의 지역 이름
     for(auto* p:{"Title","Loading","Select","Ending","Menu"})if(n.rfind(p,0)==0)return "Front";
     for(auto* p:{"Prompt","AreaBanner"})if(n.rfind(p,0)==0)return "Fast";
+    for(auto* p:{"MapRoom","MapLink","MapIcon","MapHere","MapBig"})if(n.rfind(p,0)==0)return "Map";
     return "HUD";}
-  hb::Actor* uiHosts[3]={nullptr,nullptr,nullptr};  // HUD·Front·Fast 위젯을 붙인 빈 액터 (gen_scene.py UI_*, Begin에서 찾음)
-  hb::Actor* UiOwnerOf(const std::string& n){const char* i=UiInstance(n);hb::Actor* a=uiHosts[i[0]=='H'?0:i[1]=='r'?1:2];return a?a:player;}
+  hb::Actor* uiHosts[4]={nullptr,nullptr,nullptr,nullptr};  // HUD·Front·Fast·Map 위젯을 붙인 빈 액터 (gen_scene.py UI_*, Begin에서 찾음)
+  hb::Actor* UiOwnerOf(const std::string& n){const char* i=UiInstance(n);hb::Actor* a=uiHosts[i[0]=='H'?0:i[0]=='M'?3:i[1]=='r'?1:2];return a?a:player;}
   void UiVisible(const std::string& n,bool v){if(UiChanged("v"+n,v?"1":"0"))hb::UI::SetVisible(UiOwnerOf(n),UiInstance(n),n,v);}
   void UiText(const std::string& n,const std::string& v){if(UiChanged("t"+n,v))hb::UI::SetText(UiOwnerOf(n),UiInstance(n),n,v);}
   void UiTexture(const std::string& n,const std::string& v){if(UiChanged("x"+n,v))hb::UI::SetTexture(UiOwnerOf(n),UiInstance(n),n,v);}

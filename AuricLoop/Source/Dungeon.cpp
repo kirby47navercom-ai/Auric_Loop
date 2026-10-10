@@ -9,7 +9,7 @@
 // =====================================================================================
 // 던전 층 생성·배치
 // 장면 Dungeon에 tools/gen_scene.py가 놓은 풀 (태그 Dungeon.*): 화면 밖(y -200)에 세워 두고 여기서 옮겨 쓴다 (parked는 아래 탄 풀과 같음)
-static constexpr float CORRIDOR=2;  // 복도 반폭 (문 폭 4m)
+static constexpr float CORRIDOR=4.f/3;  // 복도 반폭 (문 폭 2.67m = 위 문 아치 안쪽 폭, tools/make_dungeon_parts.py)
 
 static std::vector<std::string> Split(const std::string& text,char sep){
   std::vector<std::string> out;std::stringstream ss(text);std::string item;
@@ -116,7 +116,7 @@ void Dungeon::Move(std::vector<Piece>& out,const char* tag,float x,float y,float
 
 void Dungeon::Build(){
   // 풀: 장면에 화면 밖으로 세워 둔 조각들 (태그 Dungeon.*). 내 주변 방만 깔아서 개수가 적어도 됨
-  for(auto* tag:{"Dungeon.Floor","Dungeon.Cap","Dungeon.Face","Dungeon.Arch","Dungeon.ArchW","Dungeon.ArchE","Dungeon.ArchS","Dungeon.Torch","Dungeon.Glow","Dungeon.Banner","Dungeon.Pillar",
+  for(auto* tag:{"Dungeon.Floor","Dungeon.Cap","Dungeon.Face","Dungeon.Lintel","Dungeon.Arch","Dungeon.Torch","Dungeon.Glow","Dungeon.Banner","Dungeon.Pillar",
                  "Dungeon.Crate","Dungeon.Barrel","Dungeon.LowWall","Dungeon.Statue","Dungeon.Chest","Dungeon.Rubble","Dungeon.Bones","Dungeon.Gold"})
     pools[tag]=hb::Scene::GetActorsWithTag(tag);
   gateFree=hb::Scene::GetActorsWithTag("Dungeon.Gate");sideFree=hb::Scene::GetActorsWithTag("Dungeon.GateSide");
@@ -137,12 +137,9 @@ void Dungeon::Build(){
     const float x0=r.cx-r.hw,x1=r.cx+r.hw,y0=r.cy-r.hh,y1=r.cy+r.hh;
     // 북쪽 벽 장식: 횃불·빛 (6m마다), 넓은 벽엔 깃발, 위 문엔 아치
     std::vector<std::pair<float,float>> north;
-    if(r.link[0]<0)north.push_back({x0,x1});else{north.push_back({x0,r.cx-C});north.push_back({r.cx+C,x1});r.props.push_back({"Dungeon.Arch",r.cx,y1+1.75f});}
-    // 서·동·남 문에도 출입구 테 (아트팀 던전 부품 v2): 서·동은 벽 쪽에 붙여 문 아래 끝부터, 남은 벽 윗면에 걸쳐
-    if(r.link[3]>=0)r.props.push_back({"Dungeon.ArchW",x0-1+1.3125f,r.cy-C+1.75f});
-    if(r.link[1]>=0)r.props.push_back({"Dungeon.ArchE",x1+1-1.3125f,r.cy-C+1.75f});
-    if(r.link[2]>=0)r.props.push_back({"Dungeon.ArchS",r.cx,y0-1+1.355f});
-    for(auto [a,b]:north){for(float x=a+2.5f;x<b-1.5f;x+=6){r.props.push_back({"Dungeon.Torch",x,y1+1.1f});r.props.push_back({"Dungeon.Glow",x,y1+1.45f});}
+    if(r.link[0]<0)north.push_back({x0,x1});else{north.push_back({x0,r.cx-C});north.push_back({r.cx+C,x1});r.props.push_back({"Dungeon.Arch",r.cx,y1+2});}  // 아치 아랫변 = 벽 밑
+    const float stairX=r.kind=="Start"?x0+3.3f:-1e9f;  // 시작 방: 북쪽 벽 왼쪽에 올라가는 계단 (그 자리엔 횃불을 두지 않음)
+    for(auto [a,b]:north){for(float x=a+2.5f;x<b-1.5f;x+=6){if(std::fabs(x-stairX)<3)continue;r.props.push_back({"Dungeon.Torch",x,y1+1.1f});r.props.push_back({"Dungeon.Glow",x,y1+1.45f});}
       if(b-a>9)r.props.push_back({"Dungeon.Banner",(a+b)/2,y1+1.6f});}
     // 엄폐물 배치 (방마다 무작위 하나): 0 기둥 몇 개, 1 네 기둥, 2 가운데 상자 더미, 3 낮은 벽 두 줄(통로),
     // 4 상자·통 흩뿌리기, 5 네 귀퉁이 황금 석상 + 가운데 보물 상자. 문 앞 3.5m는 비워서 문을 막지 않음
@@ -167,7 +164,7 @@ void Dungeon::Build(){
       if(r.kind=="Start")continue;  // 시작 방은 표지판만 (잔해가 표지판에 겹치지 않게)
       r.props.push_back({(r.kind=="Boss"||r.kind=="Gather")&&k%3==0?"Dungeon.Gold":k%2?"Dungeon.Bones":"Dungeon.Rubble",x,y});}
   }
-  if(stairs)hb::Scene::SetPosition(stairs,hb::Vec3{rooms[start].cx-rooms[start].hw+2.2f,rooms[start].cy+rooms[start].hh-1.6f,0.05f});  // 문(벽 가운데)을 막지 않게 왼쪽 위 구석
+  if(stairs)hb::Scene::SetPosition(stairs,hb::Vec3{rooms[start].cx-rooms[start].hw+3.3f,rooms[start].cy+rooms[start].hh+2,0.05f});  // 북쪽 벽 왼쪽에 박힘 (아랫변 = 벽 밑) 구석
   {// 튜토리얼 표지판: 네 문으로 가는 십자 길을 비우고 양옆에 (아래 줄 이동·공격·구르기·줍기, 위 줄 귀환·제작·가방)
    static const float at[][2]={{-5.6f,-4.6f},{-2.8f,-4.6f},{2.8f,-4.6f},{5.6f,-4.6f},{-2.8f,3.4f},{2.8f,3.4f},{5.6f,3.4f}};
    const auto& r=rooms[start];
@@ -180,9 +177,11 @@ void Dungeon::PlaceRoom(int i){
   Put(out,"Dungeon.Floor",x0,y0,x1,y1,0,0.f);
   // 북쪽 벽: 위로 솟은 벽면 3m (아래 1m만 막힘), 남쪽 벽(윗면 1m), 서·동 벽(윗면, 북쪽 벽면 높이까지). 문 자리는 비움
   if(r.link[0]<0)Put(out,"Dungeon.Face",x0,y1,x1,y1+3,2,0.02f);else{Put(out,"Dungeon.Face",x0,y1,r.cx-C,y1+3,2,0.02f);Put(out,"Dungeon.Face",r.cx+C,y1,x1,y1+3,2,0.02f);}
-  if(r.link[2]<0)Put(out,"Dungeon.Cap",x0-1,y0-1,x1+1,y0,1,0.03f);else{Put(out,"Dungeon.Cap",x0-1,y0-1,r.cx-C,y0,1,0.03f);Put(out,"Dungeon.Cap",r.cx+C,y0-1,x1+1,y0,1,0.03f);}
+  if(r.link[2]<0)Put(out,"Dungeon.Cap",x0-1,y0-1,x1+1,y0,1,0.03f);else{Put(out,"Dungeon.Cap",x0-1,y0-1,r.cx-C,y0,1,0.03f);Put(out,"Dungeon.Cap",r.cx+C,y0-1,x1+1,y0,1,0.03f);
+    Put(out,"Dungeon.Lintel",r.cx-C,y0-1,r.cx+C,y0,0,0.04f);}  // 남쪽 문: 벽 밑으로 지나감
   for(int side:{3,1}){const float a=side==3?x0-1:x1,b=a+1;
-    if(r.link[side]<0)Put(out,"Dungeon.Cap",a,y0,b,y1+3,1,0.03f);else{Put(out,"Dungeon.Cap",a,y0,b,r.cy-C,1,0.03f);Put(out,"Dungeon.Cap",a,r.cy+C,b,y1+3,1,0.03f);}}
+    if(r.link[side]<0)Put(out,"Dungeon.Cap",a,y0,b,y1+3,1,0.03f);else{Put(out,"Dungeon.Cap",a,y0,b,r.cy-C,1,0.03f);Put(out,"Dungeon.Cap",a,r.cy+C,b,y1+3,1,0.03f);
+      Put(out,"Dungeon.Lintel",a,r.cy-C,b,r.cy+C,0,0.04f);}}  // 서·동 문: 벽 밑으로 지나감
   for(const auto& p:r.props)Move(out,p.tag,p.x,p.y);
 }
 
@@ -212,10 +211,11 @@ void Dungeon::Lock(int room,bool locked,int only){
     if(locked&&!g&&!pool.empty()){g=pool.back();pool.pop_back();
       const float x0=r.cx-r.hw,x1=r.cx+r.hw,y0=r.cy-r.hh,y1=r.cy+r.hh;
       // 위 문은 아치 안의 큰 철창, 아래 문은 낮은 철창, 옆문은 옆에서 본 철창 (철창 그림·충돌은 장면 풀에 정해 둠)
-      const hb::Vec3 at=d==0?hb::Vec3{r.cx,y1+1.5f,0.06f}:d==2?hb::Vec3{r.cx,y0-0.4f,0.06f}:hb::Vec3{d==1?x1+0.5f:x0-0.5f,r.cy+0.3f,0.06f};
-      hb::Scene::SetPosition(g,at);
-      if(d==0){hb::Sprites::SetSize(g,hb::Vec2{4,3});hb::Components::SetVector(g,"BoxCollider2D","center",hb::Vec3{0,-1,0});}
-      if(d==2){hb::Sprites::SetSize(g,hb::Vec2{4,1.6f});hb::Components::SetVector(g,"BoxCollider2D","center",hb::Vec3{0,0,0});}}
+      const hb::Vec3 at=d==0?hb::Vec3{r.cx,y1+1.5f,0.06f}:d==2?hb::Vec3{r.cx,y0-0.4f,0.06f}:hb::Vec3{d==1?x1+0.5f:x0-0.5f,r.cy+0.1f,0.06f};
+      hb::Scene::SetPosition(g,at);const float w=CORRIDOR*2+0.2f;  // 문 폭에 맞춘 철창
+      if(d==0){hb::Sprites::SetSize(g,hb::Vec2{w,3});hb::Components::SetVector(g,"BoxCollider2D","center",hb::Vec3{0,-1,0});hb::Components::SetVector(g,"BoxCollider2D","extent",hb::Vec3{w/2,0.5f,0.5f});}
+      if(d==2){hb::Sprites::SetSize(g,hb::Vec2{w,1.6f});hb::Components::SetVector(g,"BoxCollider2D","center",hb::Vec3{0,0,0});hb::Components::SetVector(g,"BoxCollider2D","extent",hb::Vec3{w/2,0.5f,0.5f});}
+      if(d%2){hb::Sprites::SetSize(g,hb::Vec2{1,w+0.4f});hb::Components::SetVector(g,"BoxCollider2D","extent",hb::Vec3{0.5f,w/2,0.5f});}}
     else if(!locked&&g){hb::Scene::SetPosition(g,parked);pool.push_back(g);g=nullptr;}
   }
 }

@@ -84,8 +84,8 @@ node("Fatigue", "ProgressBar", "tl", 24 + 8, 132 + 8, 16, 220, 11, value=0, max=
 image("FatigueTicks", "fatigue_ticks.png", "tl", 24 + 8, 132 + 52, z=12)
 
 # 위 가운데: 상태 문구 (귀환 진행·[귀환] 획득 등 있을 때만). 지역 이름은 도착할 때 가운데에 크게 (AreaBanner)
-node("AreaBack", "Image", "t", 0, 12, 420, 46, 9, visible=False, **PLAQUE)
-text("Title", "", "t", 0, 20, 420, 28, size=20, align="center")
+node("AreaBack", "Image", "t", 0, 84, 460, 44, 9, visible=False, **PLAQUE)  # 위 줄(체력·골드) 아래 가운데: 골드 명패와 겹치지 않게
+text("Title", "", "t", 0, 84, 460, 44, size=20, align="center")
 nodes[-1]["properties"]["visible"] = False
 node("HintBack", "Image", "t", 0, 60, 640, 48, 9, visible=False, **FRAMED)
 text("Hint", "", "t", 0, 70, 640, 30, size=18, align="center")  # 물체와 상관없는 알림 (제작 완료 등)
@@ -121,13 +121,24 @@ touch("CraftTouch", "q", "br", 40 + 24, 40 + 140 + 16, 96)
 for i in (1, 2, 3):
     image(f"RotHp{i}", f"rot_hp_{i}.png", "tl", 24, 24, z=12, visible=False)
 
-# 미니맵 (오른쪽 위 틀 안): 방 칸 16개, 복도 막대 20개. C++ UpdateMinimap이 위치·크기·그림을 정하고 들어간 방 주변만 보임
+# 지도 (W_Map, C++ DrawMap): 방을 실제 크기·자리 그대로, 복도도 실제 폭으로 이어 그림. 평소엔 오른쪽 위 틀 안, M·미니맵을 누르면 화면 가운데 크게 + 지역 이름
+MAP = "Assets/UI/Map/"
+n = node("MapBigBack", "Panel", "tl", 0, 0, 0, 0, 1, background="#05090ad0", visible=False)
+n["slot"].update(anchors=[0, 0, 1, 1], offset=[0, 0, 0, 0], alignment=[0, 0])  # 화면 전체 어둡게
+node("MapBigFrame", "Image", "c", 0, 16, 820, 540, 2, visible=False, **FRAMED)
+node("MapBigTitle", "Text", "c", 0, -222, 700, 44, 3, text="", fontSize=30, color=GOLD, align="center", visible=False)
+node("MapBigSub", "Text", "c", 0, -186, 700, 26, 3, text="", fontSize=17, color=SAND, align="center", visible=False)
+node("MapBigHint", "Text", "c", 0, 264, 700, 24, 3, text="M · 닫기", fontSize=15, color=SKY, align="center", visible=False)
+for k in range(24):
+    n = node(f"MapLink{k}", "Image", "tr", 0, 0, 4, 4, 13, texture=MAP + "cell_corr.png", imageFit="fill", visible=False)
+    n["slot"]["alignment"] = [0, 0]
 for k in range(16):
-    n = node(f"MapRoom{k}", "Image", "tr", 0, 0, 8, 8, 14, texture="Assets/UI/Map/map_room.png", visible=False)
+    n = node(f"MapRoom{k}", "Image", "tr", 0, 0, 12, 12, 14, texture=MAP + "cell_seen.png", nineSlice=[3, 3, 3, 3], imageFit="fill", visible=False)
     n["slot"]["alignment"] = [0, 0]
-for k in range(20):
-    n = node(f"MapLink{k}", "Image", "tr", 0, 0, 4, 4, 13, texture="Assets/UI/Map/map_link.png", visible=False)
-    n["slot"]["alignment"] = [0, 0]
+    n = node(f"MapIcon{k}", "Image", "tr", 0, 0, 12, 12, 15, texture=MAP + "icon_boss.png", visible=False)
+    n["slot"]["alignment"] = [0.5, 0.5]
+n = node("MapHere", "Image", "tr", 0, 0, 8, 8, 16, texture=MAP + "map_here.png", visible=False)
+n["slot"]["alignment"] = [0.5, 0.5]
 
 # 왼쪽 아래: 조이스틱(모바일만). 기존 Joystick 입력 노드를 키트 그림 위에 둔다.
 move = copy.deepcopy(next(n for n in w["nodes"] if n["type"] == "Joystick"))
@@ -314,7 +325,7 @@ for i, (icon, label) in enumerate(BAG_ITEMS):
     x = -250 + i * 100
     node(f"BagSlot{i}", "Image", "c", x, -100, 88, 88, 46, visible=False, **BUTTON)
     node(f"BagIcon{i}", "Image", "c", x, -100, 80, 80, 47, texture=ITEMS + icon + ".png", visible=False)
-    node(f"BagCount{i}", "Text", "c", x + 10, -74, 56, 22, 48, text="0", fontSize=16, color=INK, align="right", visible=False)
+    node(f"BagCount{i}", "Text", "c", x + 2, -82, 50, 22, 48, text="0", fontSize=16, color=INK, align="right", visible=False)  # 칸 안쪽 오른쪽 아래 (테 모서리 장식에 닿지 않게)
     node(f"BagName{i}", "Text", "c", x, -44, 96, 20, 47, text=label, fontSize=13, color=SAND, align="center", visible=False)
 node("BagGearTitle", "Text", "c", -250, -2, 120, 20, 46, text="장비", fontSize=14, color=GOLD, align="left", visible=False)
 for k, (icon, label) in enumerate([("sword", "무기"), ("crystal_power", "각인"), ("scroll", "[귀환]")]):
@@ -378,6 +389,10 @@ node("SettleHint", "Text", "c", 0, 300, 600, 24, 74, text="E · 클릭 · Enter"
 
 FRONT = ("Title", "Loading", "Select", "Ending", "Menu")  # C++ TopDownShooter::UiInstance와 같은 접두어
 FAST = ("Prompt", "AreaBanner")  # 매 프레임 움직이는 것만 모은 작은 위젯 (감독 액터에 붙어 값 바꾸기가 싸다)
+MAPN = ("MapRoom", "MapLink", "MapIcon", "MapHere", "MapBig")  # 지도 위젯 (HUD 창 위에 그려지므로 C++가 다른 창이 열리면 통째로 숨김)
+is_map = lambda n: n["name"].startswith(MAPN)  # noqa: E731
+mapn = [n for n in nodes[1:] if is_map(n)]
+nodes = [n for n in nodes if not is_map(n)]
 is_front = lambda n: n["name"].startswith(FRONT) and n["name"] != "Title"  # noqa: E731  "Title"은 HUD의 지역 이름
 is_fast = lambda n: n["name"].startswith(FAST)  # noqa: E731
 front = [n for n in nodes[1:] if is_front(n)]
@@ -387,6 +402,9 @@ WIDGET.write_text(json.dumps(w, ensure_ascii=False, indent=2) + "\n", encoding="
 f = copy.deepcopy(w)
 f.update(name="W_Front", nodes=[copy.deepcopy(root)] + front)
 (PROJECT / "Assets/UI/W_Front.hbwidget.json").write_text(json.dumps(f, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+f3 = copy.deepcopy(w)
+f3.update(name="W_Map", nodes=[copy.deepcopy(root)] + mapn)
+(PROJECT / "Assets/UI/W_Map.hbwidget.json").write_text(json.dumps(f3, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 f2 = copy.deepcopy(w)
 f2.update(name="W_Fast", nodes=[copy.deepcopy(root)] + fast)
 (PROJECT / "Assets/UI/W_Fast.hbwidget.json").write_text(json.dumps(f2, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

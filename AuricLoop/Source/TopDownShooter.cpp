@@ -99,7 +99,10 @@ void TopDownShooter::Update(float delta){
    if(bannerTime>0&&(bannerTime-=delta)<=0)UiVisible("BossSub",false);
    if(hintTime>0&&(hintTime-=delta)<=0){hint="";Hud();}
    {const bool m=hb::Input::IsKeyDown("m");const bool arrive=bannerPending&&frame>=2&&dialogIndex>=dialog.size()&&settleTime<0;  // 대화가 끝난 뒤에
-    AreaBanner(delta,(m&&!mapHeld)||arrive);mapHeld=m;if(arrive)bannerPending=false;}  // 도착하면 한 번, 그 뒤엔 M·미니맵
+    const bool toggle=m&&!mapHeld;mapHeld=m;
+    if(toggle&&inDungeon){mapOpen=!mapOpen;DrawMap(mapOpen);Sfx("Select");}  // 던전: M·미니맵을 누르면 큰 지도 + 지역 이름 (다시 누르면 닫힘)
+    AreaBanner(delta,(toggle&&!inDungeon)||arrive);if(arrive)bannerPending=false;  // 도착하면 한 번 (거점엔 지도가 없어 M이면 이름만)
+    UpdateMapLayer();}
    if(UpdateSettle(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}
    if(UpdateDialog(delta,pressed||AnyPressed(false))){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}}  // 대화 중엔 행동·이동 막음
   if(!inDungeon&&!inHome&&Phase>=2&&settleTime<0)Tip(0);  // 거점: 북쪽 계단으로 (오프닝 대화가 끝난 뒤)
@@ -109,7 +112,8 @@ void TopDownShooter::Update(float delta){
     if(exitArmed&&position.y>exitY){Leave(0,"");return;}}
   else{
     // 시작 방 계단에 닿으면 거점으로 (귀환 중이면 귀환 성공)
-    if(map.stairs&&fightingRoom<0&&Length(hb::Scene::GetPosition(map.stairs)-position)<1.0f){Leave(-1,"StairTop");return;}
+    if(map.stairs&&fightingRoom<0){const auto s=hb::Scene::GetPosition(map.stairs);  // 계단 아랫변(벽 밑) 앞에 서면 거점으로
+      if(std::fabs(s.x-position.x)<1.2f&&position.y-0.95f>s.y-2-0.7f&&position.y-0.95f<s.y){Leave(-1,"StairTop");return;}}
     const int at=map.RoomAt(position);
     if(at>=0&&at!=area){area=at;RoomIndex=at;roomKind=map.rooms[at].kind;
       map.Show(at);Layout=map.Describe().dump();  // 내 주변 방만 깔기
@@ -168,12 +172,11 @@ void TopDownShooter::Update(float delta){
 
   // 회피: Space를 누른 순간 바라보는 방향으로 대시, 대시 중 무적
   const bool dodgeDown=hb::Input::IsKeyDown("space")||hb::Input::IsKeyDown(" ");
-  if(dodgeDown&&!dodgeHeld&&dodgeCooldownLeft<=0&&dodgeTimer<=0){dodgeTimer=rules->DodgeTime;dodgeCooldownLeft=rules->DodgeCooldown;ghostTime=0;Sfx("Dodge");
-    Effect("Dust",hb::Vec3{position.x,position.y-0.8f,0.03f},0,0,facing.x>0);}
+  if(dodgeDown&&!dodgeHeld&&dodgeCooldownLeft<=0&&dodgeTimer<=0){dodgeTimer=rules->DodgeTime;dodgeCooldownLeft=rules->DodgeCooldown;Sfx("Dodge");
+    if(moving)facing=hb::VectorMath::NormalizeVector(move);  // 걷던 쪽으로 (조준 중이어도)
+    Blink(position);}
   dodgeHeld=dodgeDown;
-  if(dodgeTimer>0){dodgeTimer-=delta;hb::Physics::SetVelocity(player,facing*rules->DodgeSpeed);
-    if((ghostTime-=delta)<=0){ghostTime=0.03f;Ghost(position);}  // 0.03초마다 잔상 (거의 순간이동이라 지나간 자리에 0.9m 간격으로 남김)
-    if(dodgeTimer<=0)Effect("Dust",hb::Vec3{position.x,position.y-0.8f,0.03f},0,0,facing.x<0);}  // 멈추며 흙먼지
+  if(dodgeTimer>0)dodgeTimer-=delta;  // 순간이동 뒤 잠깐 무적
   else if(NewSheet()&&Character==0&&attackAnim>0.12f&&attackAnim<=0.22f)hb::Physics::SetVelocity(player,facing*(rules->SlashStep/0.1f));  // 베기 프레임 동안 한 발 내딛음
   else if(knockTimer>0){knockTimer-=delta;hb::Physics::SetVelocity(player,knock);}
   {const bool blink=invulnerable>0&&int(invulnerable*12)%2==0;  // 무적 시간 깜빡임
@@ -204,6 +207,7 @@ void TopDownShooter::Update(float delta){
       charge=0;}}
   else if(Character==2&&attackDown&&attackCooldown<=0){attackCooldown=rules->BoltInterval;attackAnim=0.2f;Shoot(position);}
   else if(Character==0&&attackDown&&attackCooldown<=0)Slash(position,enemies);
+  if(slashPending>0&&(slashPending-=delta)<=0)SlashHit(hb::Scene::GetPosition(player),enemies);
   UpdateShots(delta,enemies);
 
   // 골드: 가까이 가면 끌려와서 주워짐

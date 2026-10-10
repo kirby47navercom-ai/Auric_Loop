@@ -1,6 +1,7 @@
 #include "Common.h"
 #include <cmath>
 #include <algorithm>
+#include <chrono>
 #include <map>
 #include <random>
 #include <set>
@@ -51,7 +52,7 @@ void TopDownShooter::Leave(int to,const std::string& spawn){
 }
 
 void TopDownShooter::Begin(){
-  {int k=0;for(auto* tag:{"UI.HUD","UI.Front","UI.Fast"}){const auto a=hb::Scene::GetActorsWithTag(tag);uiHosts[k++]=a.empty()?nullptr:a.front();}uiSent.clear();}
+  {int k=0;for(auto* tag:{"UI.HUD","UI.Front","UI.Fast","UI.Map"}){const auto a=hb::Scene::GetActorsWithTag(tag);uiHosts[k++]=a.empty()?nullptr:a.front();}uiSent.clear();}
   // 장면 첫 프레임: 이 장면의 구역(RoomInfo), 상호작용 대상, 카메라를 찾고 진행을 이어받는다
   started=true;Hp=MaxHp;bannerPending=true;  // 도착한 곳 이름을 가운데에
   rules=&fallbackRules;for(auto* a:hb::Scene::GetAllActorsOfClass("AuricRules"))if(auto* r=dynamic_cast<AuricRules*>(a))rules=r;
@@ -78,7 +79,10 @@ void TopDownShooter::Begin(){
 void TopDownShooter::StartFloor(){
   // 새 층: 데이터 에셋으로 방을 무작위로 잇고, 장면 풀로 바닥·벽·장식을 깐다. 플레이어는 시작 방 계단 아래에 선다
   const auto floor=hb::Data::Get(rules->FloorData);roomTable=hb::Data::Get(rules->RoomTable);
-  map.Generate(Seed?unsigned(Seed):unsigned(std::rand()^(frame*7919)^int(hb::Game::GetSessionId().size()*131)),floor,roomTable);
+  // 들어갈 때마다 다른 층: 진짜 난수 + 시계 (std::rand는 씨앗을 안 줘서 매번 같은 수였음). Seed를 정하면(검사용) 그 층 그대로
+  const unsigned seed=Seed?unsigned(Seed):unsigned(std::random_device{}()^unsigned(std::chrono::steady_clock::now().time_since_epoch().count()));
+  if(!Seed)std::srand(seed);  // 웨이브 자리·파편 등 std::rand도 판마다 다르게
+  map.Generate(seed,floor,roomTable);
   map.Build();
   // 채집방·상점의 상호작용 대상 자리 (장면에 화면 밖으로 놓아 둔 것을 옮김)
   for(auto* i:interactables){const bool gather=i->Kind=="Ore"||i->Kind=="Herb",shop=i->Kind=="Smith"||i->Kind=="Stall";if(!gather&&!shop)continue;
@@ -93,27 +97,52 @@ void TopDownShooter::StartFloor(){
   if(!StartRoom.empty())for(int i=0;i<int(map.rooms.size());++i)if(map.rooms[i].kind==StartRoom){Warp(i);break;}
 }
 
-void TopDownShooter::UpdateMinimap(){
-  // HUD 오른쪽 위 미니맵 틀(160x128) 안: 격자 칸마다 방 칸, 이어진 방 사이에 복도 막대. 그림은 Assets/UI/Map
+void TopDownShooter::DrawMap(bool big){
+  // 지도 (W_Map): 방을 실제 크기·자리 그대로, 복도도 실제 폭(2.67m)으로 이어 그림. 아는 방(지나간 방의 이웃)만 보이고
+  // 지금 방 금빛, 가 본 방 밝게, 아직 안 간 방 어둡게, 보스방 붉게. 특별한 방엔 아이콘(보스·상점·채집·시작 계단), 내 위치는 흰 점
+  // 미니맵: 오른쪽 위 틀(160x128) 안 144x108 / 크게: 화면 가운데 720x420 + 지역 이름
   if(!inDungeon||frame<2)return;
-  int minx=1<<20,maxx=-(1<<20),miny=1<<20,maxy=-(1<<20);
-  for(auto& r:map.rooms){minx=std::min(minx,r.gx);maxx=std::max(maxx,r.gx);miny=std::min(miny,r.gy);maxy=std::max(maxy,r.gy);}
-  const float cell=std::min({22.f,144.f/(maxx-minx+1),108.f/(maxy-miny+1)});
-  const float left=-176+(144-cell*(maxx-minx+1))/2,top=118+(108-cell*(maxy-miny+1))/2,box=cell*0.64f,bar=std::max(2.f,cell*0.18f);
-  auto at=[&](const DungeonRoom& r){return hb::Vec2{left+(r.gx-minx+0.5f)*cell,top+(maxy-r.gy+0.5f)*cell};};
-  // 자리·크기는 층을 시작할 때 모든 방·복도에 한 번 정해 두고(HUD 호출 캐시가 같은 값은 거름), 방을 옮길 땐 보이기·그림만 바뀐다
+  const float C=4.f/3;  // Dungeon.cpp CORRIDOR
+  float minX=1e9f,maxX=-1e9f,minY=1e9f,maxY=-1e9f;
+  for(auto& r:map.rooms)if(r.seen){minX=std::min(minX,r.cx-r.hw);maxX=std::max(maxX,r.cx+r.hw);minY=std::min(minY,r.cy-r.hh);maxY=std::max(maxY,r.cy+r.hh);}
+  if(minX>maxX){minX=-10;maxX=10;minY=-10;maxY=10;}
+  const float L=big?-1000.f:-176.f,T=big?168.f:118.f,W=big?720.f:144.f,H=big?420.f:108.f;
+  // 아는 방들만 틀에 맞춤 (처음엔 크게, 많이 알수록 작게). 너무 확대되지 않게 최소 폭 큰 지도 120m·미니맵 90m
+  {const float span=big?120.f:90.f,cx=(minX+maxX)/2,cy=(minY+maxY)/2;
+   if(maxX-minX<span){minX=cx-span/2;maxX=cx+span/2;}if(maxY-minY<span*H/W){minY=cy-span*H/W/2;maxY=cy+span*H/W/2;}}
+  const float s=std::min(W/(maxX-minX),H/(maxY-minY));
+  mapScale=s;mapLeft=L+(W-(maxX-minX)*s)/2;mapTop=T+(H-(maxY-minY)*s)/2;mapMinX=minX;mapMaxY=maxY;
+  auto px=[&](float x){return mapLeft+(x-minX)*s;};auto py=[&](float y){return mapTop+(maxY-y)*s;};
+  auto rect=[&](const std::string& n,float x0,float y0,float x1,float y1){
+    UiPosition(n,hb::Vec2{px(x0),py(y1)});UiSize(n,hb::Vec2{std::max(2.f,(x1-x0)*s),std::max(2.f,(y1-y0)*s)});};
   int links=0;
   for(int i=0;i<int(map.rooms.size())&&i<16;++i){
-    const auto& r=map.rooms[i];const auto name="MapRoom"+std::to_string(i);const auto c=at(r);
-    UiPosition(name,hb::Vec2{c.x-box/2,c.y-box/2});UiSize(name,hb::Vec2{box,box});UiVisible(name,r.seen);
-    if(r.seen)UiTexture(name,"Assets/UI/Map/map_"+std::string(i==area?"current":!r.visited?"unknown":r.kind=="Boss"?"boss":r.kind=="Shop"?"shop":r.kind=="Gather"?"gather":r.kind=="Start"?"start":"room")+".png");
-    for(int d:{0,1}){const int j=r.link[d];if(j<0||links>=20)continue;
-      const auto o=at(map.rooms[j]);const auto lname="MapLink"+std::to_string(links++);
-      if(d==0)UiPosition(lname,hb::Vec2{c.x-bar/2,o.y}),UiSize(lname,hb::Vec2{bar,c.y-o.y});
-      else UiPosition(lname,hb::Vec2{c.x,c.y-bar/2}),UiSize(lname,hb::Vec2{o.x-c.x,bar});
-      UiVisible(lname,r.seen&&map.rooms[j].seen);}
+    const auto& r=map.rooms[i];const std::string id=std::to_string(i);
+    rect("MapRoom"+id,r.cx-r.hw,r.cy-r.hh,r.cx+r.hw,r.cy+r.hh);UiVisible("MapRoom"+id,r.seen);
+    if(r.seen)UiTexture("MapRoom"+id,std::string("Assets/UI/Map/cell_")+(i==area?"current":r.kind=="Boss"?"boss":r.visited?"visited":"seen")+".png");
+    const char* icon=r.kind=="Boss"?"boss":r.kind=="Shop"?"shop":r.kind=="Gather"?"gather":r.kind=="Start"?"start":nullptr;
+    UiVisible("MapIcon"+id,r.seen&&icon);
+    if(r.seen&&icon){const float k=big?28:std::min(12.f,std::min(r.hw,r.hh)*2*s);UiTexture("MapIcon"+id,std::string("Assets/UI/Map/icon_")+icon+".png");
+      UiPosition("MapIcon"+id,hb::Vec2{px(r.cx),py(r.cy)});UiSize("MapIcon"+id,hb::Vec2{k,k});}
+    for(int d:{0,1}){const int j=r.link[d];if(j<0||links>=24)continue;const auto& o=map.rooms[j];const std::string ln="MapLink"+std::to_string(links++);
+      if(d==0)rect(ln,r.cx-C,r.cy+r.hh,r.cx+C,o.cy-o.hh);else rect(ln,r.cx+r.hw,r.cy-C,o.cx-o.hw,r.cy+C);
+      UiVisible(ln,r.seen&&o.seen);}
   }
-  for(int k=links;k<20;++k)UiVisible("MapLink"+std::to_string(k),false);
+  for(int k=links;k<24;++k)UiVisible("MapLink"+std::to_string(k),false);
+  for(int i=int(map.rooms.size());i<16;++i){UiVisible("MapRoom"+std::to_string(i),false);UiVisible("MapIcon"+std::to_string(i),false);}
+  UiSize("MapHere",hb::Vec2{big?12.f:7.f,big?12.f:7.f});
+  for(auto* n:{"MapBigBack","MapBigFrame","MapBigTitle","MapBigSub","MapBigHint"})UiVisible(n,big);
+  if(big){UiText("MapBigTitle","황금 던전");UiText("MapBigSub","1층 - 마몬의 입 속");}
+  UiVisible("Minimap",!big);
+}
+
+void TopDownShooter::UpdateMapLayer(){
+  // 지도 위젯은 HUD 창(가방·메뉴·대화·정산·제작) 위에 그려지므로 그런 창이 열리면 통째로 숨김. 내 위치 점은 1px 넘게 움직일 때만
+  const bool show=inDungeon&&Phase>=2&&!bagOpen&&!craftOpen&&!Paused&&settleTime<0&&dialogIndex>=dialog.size()&&!ending&&Hp>0;
+  if(show!=mapShown&&uiHosts[3]){mapShown=show;hb::UI::SetVisible(uiHosts[3],"Map","Root",show);}
+  if(!show)return;
+  UiVisible("MapHere",true);
+  UiPosition("MapHere",hb::Vec2{mapLeft+(playerAt.x-mapMinX)*mapScale,mapTop+(mapMaxY-(playerAt.y-0.95f))*mapScale});
 }
 
 void TopDownShooter::ShowSofa(){
@@ -223,7 +252,7 @@ void TopDownShooter::Settle(){
 }
 
 void TopDownShooter::ShowSettle(bool visible){
-  for(auto* n:{"SettleBack","SettleGlow","SettleRibbon","SettleTitle","SettleCoinBack","SettleCoin","SettleCoinText","SettlePlaque","SettleDebt"})UiVisible(n,visible);
+  for(auto* n:{"SettleBack","SettleGlow","SettleRibbon","SettleTitle","SettleCoinBack","SettleCoinText","SettlePlaque","SettleDebt"})UiVisible(n,visible);
   for(int k=0;k<4;++k){UiVisible("SettleIcon"+std::to_string(k),visible);UiVisible("SettleCount"+std::to_string(k),visible);}
   if(!visible){UiVisible("SettleRepay",false);UiVisible("SettleHint",false);}
 }
@@ -240,7 +269,7 @@ bool TopDownShooter::UpdateSettle(float delta,bool advance){
       UiText("SettleCount"+std::to_string(k),std::string(names[k])+(k==3?"  ":" x"+std::to_string(it.count)+"  ")+std::to_string(it.value)+" G");
       UiColor("SettleCount"+std::to_string(k),it.value>0?hb::Color{0.96f,0.93f,0.85f,1}:hb::Color{0.45f,0.42f,0.38f,1});
       UiOpacity("SettleIcon"+std::to_string(k),it.value>0?1.f:0.3f);UiPosition("SettleIcon"+std::to_string(k),hb::Vec2{iconX[k],-180});UiScale("SettleIcon"+std::to_string(k),1);}
-    UiValue("SettleCoin",0);UiText("SettleCoinText","0 G");UiScale("SettleCoinBack",1);UiScale("SettleCoin",1);
+    SettleFill(0);UiText("SettleCoinText","0 G");UiScale("SettleCoinBack",1);UiScale("SettleCoin",1);
     settleShown=0;ShowSettle(true);}
   settleTime+=delta;
   const float start=0.4f,gap=0.55f,fly=0.35f;
@@ -254,14 +283,14 @@ bool TopDownShooter::UpdateSettle(float delta,bool advance){
       if(settleShown<=k){settleShown=k+1;Sfx("Coin",0.9f+0.08f*k);}}}
   UiScale("SettleCoinBack",bump?1.1f:1.f);UiScale("SettleCoin",bump?1.1f:1.f);
   const float coinT=settleTotal>0?filled/settleTotal:0;
-  UiValue("SettleCoin",coinT);if(!settleDone)UiText("SettleCoinText",std::to_string(shownValue)+" G");
+  SettleFill(coinT);if(!settleDone)UiText("SettleCoinText",std::to_string(shownValue)+" G");
   UiOpacity("SettleGlow",0.35f+0.25f*coinT+0.08f*std::sin(settleTime*4));UiScale("SettleGlow",0.8f+0.3f*coinT);  // 차오를수록 빛이 커짐
   const float last=start+gap*3+fly;  // 마지막 아이콘이 들어간 뒤
   // 상환: 동전에서 빠져나가 명패로 (0.5초), 그다음 빚이 1초 동안 줄어듦
   const float rt=(settleTime-last-0.3f)/0.5f;
   if(LastRepaid>0&&rt>0){UiVisible("SettleRepay",rt<1.4f);UiText("SettleRepay","빚 상환  -"+std::to_string(LastRepaid)+" G");
     UiPosition("SettleRepay",hb::Vec2{0,40.f+std::min(rt,1.f)*150});
-    if(settleTotal>0)UiValue("SettleCoin",coinT*(1-std::min(rt,1.f)*float(LastRepaid)/settleTotal));}  // 상환한 만큼 동전이 다시 줄어듦
+    if(settleTotal>0)SettleFill(coinT*(1-std::min(rt,1.f)*float(LastRepaid)/settleTotal));}  // 상환한 만큼 동전이 다시 줄어듦
   const float t=std::clamp((settleTime-last-0.8f)/1.0f,0.f,1.f);
   const int debt=debtFrom+int((debtTo-debtFrom)*t);
   if(debt!=debtShown){debtShown=debt;UiText("SettleDebt","남은 빚  "+std::to_string(debt)+" G");if(t>0&&t<1&&int(t*20)%3==0)Sfx("Type",0.7f);}

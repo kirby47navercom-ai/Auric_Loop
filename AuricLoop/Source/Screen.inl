@@ -113,6 +113,7 @@ void TopDownShooter::AnimateSocket(float delta,bool moving){
   if(swingT>=0){swingT+=delta;float ms=swingT*1000;frame=0;while(frame<7&&ms>=kVsAttackMs[frame]){ms-=kVsAttackMs[frame];frame++;}
     if(swingT>=0.32f){swingT=-1;frame=-1;}}
   const int aimIdx=((int)std::floor((std::fmod(360.f-aim,360.f)+11.25f)/22.5f))%16;  // 화면 시계 방향 0=오른쪽, 22.5도씩
+  vsRow=row;vsPhase=phase;vsLegs=legs;  // 대시 잔상이 지금 몸과 같은 그림을 쓰게
   const std::string dir="Assets/Sprites/ValenSocket/",g=go?"run_":"walk_",rp=std::to_string(row)+"_"+std::to_string(phase);
   const std::string body=frame<0?dir+"S_VS_"+g+std::to_string(legs)+"_"+rp+".hbsprite.json"
     :go?dir+"S_VS_A_run_"+std::to_string(legs)+"_"+rp+"_"+std::to_string(frame)+".hbsprite.json"
@@ -237,13 +238,13 @@ void TopDownShooter::AreaBanner(float delta,bool show){
 void TopDownShooter::UpdatePrompt(float delta){
   // 상호작용 말풍선: 가까운 대상 머리 위에 [E] 하는 일 (말풍선 꼬리가 대상을 가리킴)
   static const char* parts[]={"PromptBack","PromptKey","PromptText","PromptTail"};
-  const bool on=promptTarget&&!promptText.empty()&&!Paused&&dialogIndex>=dialog.size();
+  const bool on=promptTarget&&!promptText.empty()&&!Paused&&dialogIndex>=dialog.size()&&!bagOpen&&!craftOpen&&settleTime<0&&!ending;  // 다른 창이 열리면 숨김 (말풍선 위젯이 따로라 HUD 창 위에 그려짐)
   for(auto* n:parts)UiVisible(n,on);
   if(!on)return;
   const bool key=promptText.rfind("E: ",0)==0;
   const std::string label=key?promptText.substr(3):promptText;
   size_t chars=0;for(unsigned char ch:label)chars+=(ch&0xC0)!=0x80;
-  const float w=std::min(860.f,chars*19.f+(key?60.f:28.f)),h=40;
+  const float w=std::min(860.f,chars*19.f+(key?74.f:48.f)),h=40;  // 글자 양옆에 명패 테두리만큼 여백
   // 대상 그림의 위쪽 끝 (그림자 여백 0.25m 빼고) → 화면 좌표 (1m = 화면 높이 720 / (2 × 카메라 크기))
   static Interactable* sized=nullptr;static float top=1.0f;  // 그림 크기는 엔진에 묻는 값이라 대상이 바뀔 때만 읽음
   if(sized!=promptTarget){sized=promptTarget;top=std::max(1.0f,hb::Sprites::GetSize(promptTarget).y*0.5f-0.25f);}
@@ -252,8 +253,8 @@ void TopDownShooter::UpdatePrompt(float delta){
   float x=(at.x-cameraAt.x)*ppm,y=-(at.y+top+0.35f-cameraAt.y)*ppm-h/2;
   x=std::clamp(x,-640+w/2+8,640-w/2-8);y=std::clamp(y,-360+h/2+90,360-h/2-8);  // 화면 밖으로 나가지 않게 (위쪽은 HUD 아래까지)
   UiSize("PromptBack",hb::Vec2{w,h});UiPosition("PromptBack",hb::Vec2{x,y});
-  UiVisible("PromptKey",key);UiPosition("PromptKey",hb::Vec2{x-w/2+24,y});
-  UiText("PromptText",label);UiPosition("PromptText",hb::Vec2{x-w/2+(key?46.f:14.f)+300,y+1});  // 왼쪽 정렬 600px 상자의 왼쪽 끝을 맞춤
+  UiVisible("PromptKey",key);UiPosition("PromptKey",hb::Vec2{x-w/2+30,y});
+  UiText("PromptText",label);UiPosition("PromptText",hb::Vec2{x-w/2+(key?54.f:24.f)+300,y});  // 왼쪽 정렬 600px 상자의 왼쪽 끝을 맞춤
   UiPosition("PromptTail",hb::Vec2{x,y+h/2+5});
 }
 
@@ -290,7 +291,9 @@ void TopDownShooter::TitleFx(float delta,bool visible){
     UiTexture("TitleBurst","Assets/UI/Kit/title_burst.webp");UiVisible("TitleBurst",true);}
   UiVisible("TitleFlash",t>=slam&&t<slam+0.3f);if(t>=slam&&t<slam+0.3f)UiOpacity("TitleFlash",t<slam+0.1f?0.75f:t<slam+0.2f?0.4f:0.15f);
   // 끝: 로고 금빛·Tap 금빛 켜기 (둘 다 스스로 반복)
-  if(t>=done&&titleBeat<=kTitleLetters+1){titleBeat=kTitleLetters+2;UiVisible("TitleShine",true);UiVisible("TitleTapShade",true);}
+  if(t>=done&&titleBeat<=kTitleLetters+1){titleBeat=kTitleLetters+2;UiVisible("TitleShine",true);UiVisible("TitleTapShade",true);
+    static const int keyCounts[]={4,1,1,1,1,1,1,1};  // 조작 안내 (회사 로고 화면에서 숨긴 것을 연출이 끝나면 보임)
+    for(int g=0;g<8;++g){UiVisible("TitleKeyName"+std::to_string(g),true);for(int k=0;k<keyCounts[g];++k)UiVisible("TitleKey"+std::to_string(g)+"_"+std::to_string(k),true);}}
 }
 
 void TopDownShooter::Splash(){

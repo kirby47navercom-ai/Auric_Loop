@@ -1,4 +1,11 @@
 {
+ "Sprites/Enemies/Eyeball/eyeball_attack.png": "1af42c97c3c2b6e0",
+ "Sprites/Enemies/Eyeball/eyeball_idle.png": "72c71b53f8d82087",
+ "Sprites/Enemies/Eyeball/eyeball_move.png": "bc27300ecec0d32e",
+ "Sprites/Enemies/Eyeball/eyeball_transition.png": "030c561371e1b896",
+ "Sprites/Enemies/Eyeball/laser_body.png": "fcc4cde2747b6d87",
+ "Sprites/Enemies/Eyeball/laser_end.png": "561ba02dc0fbecde",
+ "Sprites/Enemies/Eyeball/laser_start.png": "245435a1798b8fbd",
  "Sprites/Enemies/Skeleton/Skeleton_Attack_0.png": "234efcb3e7ae3ce6",
  "Sprites/Enemies/Skeleton/Skeleton_Attack_1.png": "ed13ac6b21861fc2",
  "Sprites/Enemies/Skeleton/Skeleton_Attack_2.png": "22d3da3a408b79d8",

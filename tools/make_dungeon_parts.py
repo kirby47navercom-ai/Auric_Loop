@@ -57,10 +57,31 @@ props = ROOT / "Sprites/Props"
 for out, src in (("Pillar", "pillar"), ("Crates2", "crate"), ("CrateStack", "crate_stack"), ("Barrel2", "barrel"), ("Rubble", "rock_pile"),
                  ("SmallRock", "small_rock"), ("Bucket", "bucket"), ("TorchWall", "torch"), ("Archway", "doorway")):
     png(src).save(props / f"Prop_{out}.png")
-for out, src in (("ArchW", "doorway_left"), ("ArchE", "doorway_right"), ("ArchS", "doorway_down")):
-    im = svg(src)
-    im.save(props / f"Prop_{out}.png")
-    print(out, im.size)
+# 위 문 테: 아치 안쪽 어둠·문턱을 지워 복도 바닥이 보이게 (기둥·아치만 남김). 서·동·남 문은 테 없이 벽 틈 그대로
+#   (위에서 본 1m 벽 윗면에 옆모습 문 그림을 세우면 바닥에 누운 것처럼 보였음)
+import numpy as np  # noqa: E402
+door = np.array(png("doorway"))
+lum = door[..., :3].mean(2)
+for x in range(19, 77):  # 기둥 사이: 위에서부터 처음 어두운 칸 아래는 모두 안쪽
+    ys = [y for y in range(8, 84) if door[y, x, 3] > 0 and lum[y, x] < 30]
+    if ys:
+        door[ys[0]:, x, 3] = 0
+Image.fromarray(door).save(props / "Prop_ArchNorth.png")
+# 던전에서 거점으로 올라가는 계단: 같은 아치 안에 위로 올라가며 어두워지는 돌계단 (아치 안쪽 칸만 칠함)
+stairs = Image.fromarray(door.copy()).copy()
+sp = stairs.load()
+for x in range(19, 77):
+    for y in range(8, 84):
+        if door[y, x, 3] == 0:
+            k, j = (83 - y) // 8, (83 - y) % 8  # 아래에서 8px마다 한 칸: 디딤판(위 5px, 밝게) + 챌판(아래 3px, 어둡게)
+            fade = max(0.18, 1 - k * 0.11)  # 위로 갈수록 어둠 속으로
+            tread = j >= 3
+            joint = (x + k * 7) % 14 == 0  # 돌 이음매 (칸마다 엇갈림)
+            r, g, b = (70, 92, 98) if tread else (38, 52, 58)
+            if j == 7 or joint:
+                r, g, b = r - 18, g - 20, b - 20
+            sp[x, y] = (int(r * fade), int(g * fade), int(b * fade), 255)
+stairs.save(props / "Prop_StairsUp.png")
 for out, src in (("Prop_Ore", "gold_ore"), ("Prop_OreSilver", "silver_ore"), ("Prop_OreCopper", "copper_ore")):
     png(src).save(ROOT / f"Sprites/{out}.png")
 print("던전 부품 완료")

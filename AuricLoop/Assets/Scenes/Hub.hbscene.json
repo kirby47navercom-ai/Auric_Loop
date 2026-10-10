@@ -512,6 +512,66 @@
       ]
     },
     {
+      "id": "UI_Map",
+      "name": "UI_Map",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        0,
+        -900,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "tags": [
+        "UI.Map"
+      ],
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "ui-map",
+          "name": "UIWidget Map",
+          "type": "UIWidget",
+          "properties": {
+            "enabled": true,
+            "asset": "Assets/UI/W_Map.hbwidget.json",
+            "instance": "Map",
+            "showOnStart": true
+          }
+        }
+      ]
+    },
+    {
       "id": "Camera",
       "name": "Camera",
       "kind": "camera",
@@ -7010,7 +7070,7 @@
       "name": "Mountain",
       "kind": "sprite",
       "position": [
-        0,
+        -0.421875,
         24.15625,
         0.05
       ],

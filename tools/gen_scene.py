@@ -167,7 +167,7 @@ def base_objects(director_bp="BP_TopDownShooter", at=(0, 0)):
     # 액터가 움직일 때마다 그 액터의 위젯 전체를 글자로 다시 만들어 넘긴다 (플레이어에 붙이면 매 프레임 → 쓰레기 수집으로 끊김)
     player["components"] = [c for c in player["components"] if c.get("type") != "UIWidget"]
     ui_hosts = []
-    for asset, inst in (("W_TopDown", "HUD"), ("W_Front", "Front"), ("W_Fast", "Fast")):
+    for asset, inst in (("W_TopDown", "HUD"), ("W_Front", "Front"), ("W_Fast", "Fast"), ("W_Map", "Map")):
         ui_hosts.append({"id": "UI_" + inst, "name": "UI_" + inst, "kind": "empty", "group": "WORLD", "position": [0, -900, 0], "rotation": [0, 0, 0],
                          "scale": [1, 1, 1], "visible": True, "tags": ["UI." + inst],
                          "components": [transform(), {"id": "ui-" + inst.lower(), "name": "UIWidget " + inst, "type": "UIWidget",
@@ -361,12 +361,16 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
     parked(objects, "Dungeon.Background", 1, lambda i: background(i, 0, 0, 4, 4))
     parked(objects, "Dungeon.Floor", 18, lambda i: tiled(i, T + "T_DungeonFloor.png", -12, False))
     parked(objects, "Dungeon.Cap", 64, lambda i: tiled(i, T + "T_DungeonCap.png", -9, True))
+    # 서·동·남 문 위 지붕: 벽 두께(1m)만큼 문 위를 덮어 지나가는 동안 캐릭터가 벽 밑으로 들어간 것처럼 가려짐 (캐릭터보다 위 순서, 충돌 없음)
+    def lintel(i):
+        o = tiled(i, T + "T_DungeonCap.png", 3, False)
+        comp(o, "SpriteRenderer")["properties"]["color"] = [0.36, 0.38, 0.44, 1]  # 어둡게: 벽이 아니라 벽 속으로 뚫린 굴 입구로 보이게
+        return o
+    parked(objects, "Dungeon.Lintel", 24, lintel)
     parked(objects, "Dungeon.Face", 22, lambda i: tiled(i, T + "T_DungeonFace.png", -10, True))
-    # 출입구 테 (아트팀 던전 부품 v2): 위 문 4x3.5m, 서·동 문 2.625x3.5m, 아래 문 4x2.7m (원래 그림의 1.33배, 문 폭 4m에 맞춤)
-    parked(objects, "Dungeon.Arch", 8, lambda i: sprite_obj(i, PROP + "Archway.png", 0, 0, order=-8, width=4, height=3.5))
-    parked(objects, "Dungeon.ArchW", 8, lambda i: sprite_obj(i, PROP + "ArchW.png", 0, 0, order=-8, width=2.625, height=3.5))
-    parked(objects, "Dungeon.ArchE", 8, lambda i: sprite_obj(i, PROP + "ArchE.png", 0, 0, order=-8, width=2.625, height=3.5))
-    parked(objects, "Dungeon.ArchS", 8, lambda i: sprite_obj(i, PROP + "ArchS.png", 0, 0, order=-8, width=4, height=2.71))
+    # 위 문 테 (아트팀 던전 부품 v2, 안쪽을 지운 아치): 4m 높이(벽면 3m + 윗면), 안쪽 폭 2.67m = 복도 폭. 아랫변으로 앞뒤를 정해
+    # 문 안(복도)에 들어선 캐릭터는 아치 뒤로 지나감
+    parked(objects, "Dungeon.Arch", 8, lambda i: sprite_obj(i, PROP + "ArchNorth.png", 0, 0, order=0, width=96 / 21, height=4))
     parked(objects, "Dungeon.Gate", 4, lambda i: sprite_obj(i, PROP + "Portcullis.png", 0, 0, order=-7, collider=(2, 0.5, -1.0), width=4, height=3))
     parked(objects, "Dungeon.GateSide", 4, lambda i: sprite_obj(i, PROP + "GateSide.png", 0, 0, order=0, collider=(0.5, 2, 0)))
     parked(objects, "Dungeon.Torch", 18, lambda i: torch(i, 0, 0)[0])
@@ -389,7 +393,7 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
         o = sprite_obj("Sign" + n, "Assets/Sprites/Props/Sign_" + n + ".png", 0, -230, order=0, collider=(0.15, 0.12, -1.2))  # 기둥만 막음
         o["tags"] = ["Dungeon.Sign"]
         objects.append(o)
-    parked(objects, "Dungeon.Stairs", 1, lambda i: sprite_obj(i, "Assets/Sprites/Prop_DungeonEntrance.png", 0, 0, order=-2))
+    parked(objects, "Dungeon.Stairs", 1, lambda i: sprite_obj(i, PROP + "StairsUp.png", 0, 0, order=0, width=96 / 21, height=4))  # 시작 방 북쪽 벽에 박힌 올라가는 계단
     # 채집방·상점 상호작용 대상: C++가 그 방으로 옮김
     for k, (oid, texture, kind, price) in enumerate([("Ore", "Assets/Sprites/Prop_Ore.png", "Ore", 0), ("Herb", "Assets/Sprites/Prop_Herb.png", "Herb", 0),
                                                      ("Blacksmith", "Assets/Sprites/NPC_Blacksmith.png", "Smith", 20), ("Stall", "Assets/Sprites/Prop_Stall.png", "Stall", 15)]):
@@ -508,7 +512,7 @@ hub += [start("StairTop", 0, EXIT_Y - 1.2), start("HomeDoor", -24, -0.6)]
 
 # 북쪽: 높은 계단 → 황금 산의 마몬의 입 (입 안쪽 y > EXIT_Y이면 던전). 입에서 금빛이 숨 쉬듯 번지고 금가루가 피어오름
 mw, mh = size_of(TOWN + "Mountain.png")
-hub += [sprite_obj("Mountain", TOWN + "Mountain.png", 0, 19 + mh / 2, order=-6),
+hub += [sprite_obj("Mountain", TOWN + "Mountain.png", -13.5 / 32, 19 + mh / 2, order=-6),  # 그림 속 입이 가운데보다 13.5px 오른쪽 → 계단(x 0)에 맞춤
         sprite_obj("Stairs", TOWN + "Stairs.png", 0, 17 + size_of(TOWN + "Stairs.png")[1] / 2 - 0.4, order=-7),
         block("MountainL", -mw / 2, 19.5, -2.1, 32), block("MountainR", 2.1, 19.5, mw / 2, 32), block("MouthTop", -2.1, EXIT_Y + 2.5, 2.1, 32),
         block("StairL", -3, 15.5, -2.2, 19.5), block("StairR", 2.2, 15.5, 3, 19.5)]

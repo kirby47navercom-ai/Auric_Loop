@@ -512,6 +512,66 @@
       ]
     },
     {
+      "id": "UI_Map",
+      "name": "UI_Map",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        0,
+        -900,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "tags": [
+        "UI.Map"
+      ],
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "ui-map",
+          "name": "UIWidget Map",
+          "type": "UIWidget",
+          "properties": {
+            "enabled": true,
+            "asset": "Assets/UI/W_Map.hbwidget.json",
+            "instance": "Map",
+            "showOnStart": true
+          }
+        }
+      ]
+    },
+    {
       "id": "Camera",
       "name": "Camera",
       "kind": "camera",
@@ -10015,6 +10075,1902 @@
       "parent": "Group_1"
     },
     {
+      "id": "Lintel0",
+      "name": "Lintel0",
+      "kind": "sprite",
+      "position": [
+        -60,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel1",
+      "name": "Lintel1",
+      "kind": "sprite",
+      "position": [
+        -56,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel2",
+      "name": "Lintel2",
+      "kind": "sprite",
+      "position": [
+        -52,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel3",
+      "name": "Lintel3",
+      "kind": "sprite",
+      "position": [
+        -48,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel4",
+      "name": "Lintel4",
+      "kind": "sprite",
+      "position": [
+        -44,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel5",
+      "name": "Lintel5",
+      "kind": "sprite",
+      "position": [
+        -40,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel6",
+      "name": "Lintel6",
+      "kind": "sprite",
+      "position": [
+        -36,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel7",
+      "name": "Lintel7",
+      "kind": "sprite",
+      "position": [
+        -32,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel8",
+      "name": "Lintel8",
+      "kind": "sprite",
+      "position": [
+        -28,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel9",
+      "name": "Lintel9",
+      "kind": "sprite",
+      "position": [
+        -24,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel10",
+      "name": "Lintel10",
+      "kind": "sprite",
+      "position": [
+        -20,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel11",
+      "name": "Lintel11",
+      "kind": "sprite",
+      "position": [
+        -16,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel12",
+      "name": "Lintel12",
+      "kind": "sprite",
+      "position": [
+        -12,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel13",
+      "name": "Lintel13",
+      "kind": "sprite",
+      "position": [
+        -8,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel14",
+      "name": "Lintel14",
+      "kind": "sprite",
+      "position": [
+        -4,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel15",
+      "name": "Lintel15",
+      "kind": "sprite",
+      "position": [
+        0,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel16",
+      "name": "Lintel16",
+      "kind": "sprite",
+      "position": [
+        4,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel17",
+      "name": "Lintel17",
+      "kind": "sprite",
+      "position": [
+        8,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel18",
+      "name": "Lintel18",
+      "kind": "sprite",
+      "position": [
+        12,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel19",
+      "name": "Lintel19",
+      "kind": "sprite",
+      "position": [
+        16,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel20",
+      "name": "Lintel20",
+      "kind": "sprite",
+      "position": [
+        20,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel21",
+      "name": "Lintel21",
+      "kind": "sprite",
+      "position": [
+        24,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel22",
+      "name": "Lintel22",
+      "kind": "sprite",
+      "position": [
+        28,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
+      "id": "Lintel23",
+      "name": "Lintel23",
+      "kind": "sprite",
+      "position": [
+        32,
+        -200,
+        0.05
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "component_1",
+          "name": "SpriteRenderer",
+          "type": "SpriteRenderer",
+          "properties": {
+            "enabled": true,
+            "sprite": "",
+            "drawMode": "tiled",
+            "texture": "Assets/Tiles/T_DungeonCap.png",
+            "color": [
+              0.36,
+              0.38,
+              0.44,
+              1
+            ],
+            "width": 4,
+            "height": 4,
+            "pixelsPerUnit": 32,
+            "flipX": false,
+            "flipY": false,
+            "sortingOrder": 3,
+            "billboard": false,
+            "visible": true,
+            "useCustomSize": true,
+            "sortingLayer": "default",
+            "maskInteraction": "none",
+            "shading": "unlit",
+            "sortPoint": "feet"
+          }
+        }
+      ],
+      "tags": [
+        "Dungeon.Lintel"
+      ],
+      "parent": "Group_2"
+    },
+    {
       "id": "Face0",
       "name": "Face0",
       "kind": "sprite",
@@ -12441,19 +14397,19 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Archway.png",
+            "texture": "Assets/Sprites/Props/Prop_ArchNorth.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 4,
-            "height": 3.5,
+            "width": 4.571428571428571,
+            "height": 4,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -8,
+            "sortingOrder": 0,
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
@@ -12520,19 +14476,19 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Archway.png",
+            "texture": "Assets/Sprites/Props/Prop_ArchNorth.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 4,
-            "height": 3.5,
+            "width": 4.571428571428571,
+            "height": 4,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -8,
+            "sortingOrder": 0,
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
@@ -12599,19 +14555,19 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Archway.png",
+            "texture": "Assets/Sprites/Props/Prop_ArchNorth.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 4,
-            "height": 3.5,
+            "width": 4.571428571428571,
+            "height": 4,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -8,
+            "sortingOrder": 0,
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
@@ -12678,19 +14634,19 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Archway.png",
+            "texture": "Assets/Sprites/Props/Prop_ArchNorth.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 4,
-            "height": 3.5,
+            "width": 4.571428571428571,
+            "height": 4,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -8,
+            "sortingOrder": 0,
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
@@ -12757,19 +14713,19 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Archway.png",
+            "texture": "Assets/Sprites/Props/Prop_ArchNorth.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 4,
-            "height": 3.5,
+            "width": 4.571428571428571,
+            "height": 4,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -8,
+            "sortingOrder": 0,
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
@@ -12836,19 +14792,19 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Archway.png",
+            "texture": "Assets/Sprites/Props/Prop_ArchNorth.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 4,
-            "height": 3.5,
+            "width": 4.571428571428571,
+            "height": 4,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -8,
+            "sortingOrder": 0,
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
@@ -12915,19 +14871,19 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Archway.png",
+            "texture": "Assets/Sprites/Props/Prop_ArchNorth.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 4,
-            "height": 3.5,
+            "width": 4.571428571428571,
+            "height": 4,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -8,
+            "sortingOrder": 0,
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
@@ -12994,19 +14950,19 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_Archway.png",
+            "texture": "Assets/Sprites/Props/Prop_ArchNorth.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 4,
-            "height": 3.5,
+            "width": 4.571428571428571,
+            "height": 4,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -8,
+            "sortingOrder": 0,
             "billboard": false,
             "visible": true,
             "useCustomSize": true,
@@ -13021,1902 +14977,6 @@
         "Dungeon.Arch"
       ],
       "parent": "Group_1"
-    },
-    {
-      "id": "ArchW0",
-      "name": "ArchW0",
-      "kind": "sprite",
-      "position": [
-        -60,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchW"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchW1",
-      "name": "ArchW1",
-      "kind": "sprite",
-      "position": [
-        -56,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchW"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchW2",
-      "name": "ArchW2",
-      "kind": "sprite",
-      "position": [
-        -52,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchW"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchW3",
-      "name": "ArchW3",
-      "kind": "sprite",
-      "position": [
-        -48,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchW"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchW4",
-      "name": "ArchW4",
-      "kind": "sprite",
-      "position": [
-        -44,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchW"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchW5",
-      "name": "ArchW5",
-      "kind": "sprite",
-      "position": [
-        -40,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchW"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchW6",
-      "name": "ArchW6",
-      "kind": "sprite",
-      "position": [
-        -36,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchW"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchW7",
-      "name": "ArchW7",
-      "kind": "sprite",
-      "position": [
-        -32,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchW.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchW"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchE0",
-      "name": "ArchE0",
-      "kind": "sprite",
-      "position": [
-        -60,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchE"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchE1",
-      "name": "ArchE1",
-      "kind": "sprite",
-      "position": [
-        -56,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchE"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchE2",
-      "name": "ArchE2",
-      "kind": "sprite",
-      "position": [
-        -52,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchE"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchE3",
-      "name": "ArchE3",
-      "kind": "sprite",
-      "position": [
-        -48,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchE"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchE4",
-      "name": "ArchE4",
-      "kind": "sprite",
-      "position": [
-        -44,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchE"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchE5",
-      "name": "ArchE5",
-      "kind": "sprite",
-      "position": [
-        -40,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchE"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchE6",
-      "name": "ArchE6",
-      "kind": "sprite",
-      "position": [
-        -36,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchE"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchE7",
-      "name": "ArchE7",
-      "kind": "sprite",
-      "position": [
-        -32,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchE.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 2.625,
-            "height": 3.5,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchE"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchS0",
-      "name": "ArchS0",
-      "kind": "sprite",
-      "position": [
-        -60,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 4,
-            "height": 2.71,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchS"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchS1",
-      "name": "ArchS1",
-      "kind": "sprite",
-      "position": [
-        -56,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 4,
-            "height": 2.71,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchS"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchS2",
-      "name": "ArchS2",
-      "kind": "sprite",
-      "position": [
-        -52,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 4,
-            "height": 2.71,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchS"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchS3",
-      "name": "ArchS3",
-      "kind": "sprite",
-      "position": [
-        -48,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 4,
-            "height": 2.71,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchS"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchS4",
-      "name": "ArchS4",
-      "kind": "sprite",
-      "position": [
-        -44,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 4,
-            "height": 2.71,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchS"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchS5",
-      "name": "ArchS5",
-      "kind": "sprite",
-      "position": [
-        -40,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 4,
-            "height": 2.71,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchS"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchS6",
-      "name": "ArchS6",
-      "kind": "sprite",
-      "position": [
-        -36,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 4,
-            "height": 2.71,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchS"
-      ],
-      "parent": "Group_2"
-    },
-    {
-      "id": "ArchS7",
-      "name": "ArchS7",
-      "kind": "sprite",
-      "position": [
-        -32,
-        -200,
-        0.05
-      ],
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ],
-      "visible": true,
-      "components": [
-        {
-          "id": "component_0",
-          "name": "Transform",
-          "type": "Transform",
-          "properties": {
-            "position": [
-              0,
-              0,
-              0
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "id": "component_1",
-          "name": "SpriteRenderer",
-          "type": "SpriteRenderer",
-          "properties": {
-            "enabled": true,
-            "sprite": "",
-            "drawMode": "simple",
-            "texture": "Assets/Sprites/Props/Prop_ArchS.png",
-            "color": [
-              1,
-              1,
-              1,
-              1
-            ],
-            "width": 4,
-            "height": 2.71,
-            "pixelsPerUnit": 32,
-            "flipX": false,
-            "flipY": false,
-            "sortingOrder": -8,
-            "billboard": false,
-            "visible": true,
-            "useCustomSize": true,
-            "sortingLayer": "default",
-            "maskInteraction": "none",
-            "shading": "unlit",
-            "sortPoint": "feet"
-          }
-        }
-      ],
-      "tags": [
-        "Dungeon.ArchS"
-      ],
-      "parent": "Group_2"
     },
     {
       "id": "Gate0",
@@ -31216,22 +31276,22 @@
             "enabled": true,
             "sprite": "",
             "drawMode": "simple",
-            "texture": "Assets/Sprites/Prop_DungeonEntrance.png",
+            "texture": "Assets/Sprites/Props/Prop_StairsUp.png",
             "color": [
               1,
               1,
               1,
               1
             ],
-            "width": 4.03125,
-            "height": 5.0,
+            "width": 4.571428571428571,
+            "height": 4,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
-            "sortingOrder": -2,
+            "sortingOrder": 0,
             "billboard": false,
             "visible": true,
-            "useCustomSize": false,
+            "useCustomSize": true,
             "sortingLayer": "default",
             "maskInteraction": "none",
             "shading": "unlit",
@@ -35934,7 +35994,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -36014,7 +36074,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -36094,7 +36154,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -36174,7 +36234,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -36254,7 +36314,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -36334,7 +36394,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -36414,7 +36474,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -36494,7 +36554,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -36574,7 +36634,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -36654,7 +36714,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -36734,7 +36794,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -36814,7 +36874,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -36894,7 +36954,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -36974,7 +37034,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -37054,7 +37114,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -37134,7 +37194,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -37214,7 +37274,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
@@ -37294,7 +37354,7 @@
               1
             ],
             "width": 8.0,
-            "height": 2.0,
+            "height": 2.5,
             "pixelsPerUnit": 32,
             "flipX": false,
             "flipY": false,
