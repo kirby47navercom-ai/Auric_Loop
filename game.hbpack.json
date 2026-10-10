@@ -8510,8 +8510,8 @@
     },
     {
       "path": "main/prototype/web-player.js",
-      "bytes": 2823,
-      "sha256": "8ef540dda69d64142c275c3e4f4f8132202f9bb1daa8d295ffd8d4623722c430"
+      "bytes": 4803,
+      "sha256": "d43cbfec67841b7d960124b550c806a18be2f7531f18b5d1d83f073f15ffdc1c"
     },
     {
       "path": "main/prototype/mobile-player.js",
@@ -8859,9 +8859,14 @@
       "sha256": "bdf133fb4a1e05e6c247ca908adc68a3b29a4b63ea7b1aad38864890ea03d9c3"
     },
     {
+      "path": "main/game.resources.bin",
+      "bytes": 3499160,
+      "sha256": "485d76ab7a2cc4910b31a7ebbfc39212c96c58869163bfe1967019c097386b3b"
+    },
+    {
       "path": "main/game.hbpack.json",
-      "bytes": 686014,
-      "sha256": "c8299774271283a6118e69ebea3446360a151d27c9db9117be9abc657f3cd24c"
+      "bytes": 949857,
+      "sha256": "7e4d7f83e748cb3b2ca0927a69a972fe945048e06f995ac052b99082fb090792"
     },
     {
       "path": "weapon-socket/Content/Source/AuricSession.cpp",
@@ -25470,8 +25475,8 @@
     },
     {
       "path": "weapon-socket/prototype/web-player.js",
-      "bytes": 2823,
-      "sha256": "8ef540dda69d64142c275c3e4f4f8132202f9bb1daa8d295ffd8d4623722c430"
+      "bytes": 4803,
+      "sha256": "d43cbfec67841b7d960124b550c806a18be2f7531f18b5d1d83f073f15ffdc1c"
     },
     {
       "path": "weapon-socket/prototype/mobile-player.js",
@@ -26124,9 +26129,14 @@
       "sha256": "bdf133fb4a1e05e6c247ca908adc68a3b29a4b63ea7b1aad38864890ea03d9c3"
     },
     {
+      "path": "weapon-socket/game.resources.bin",
+      "bytes": 4189062,
+      "sha256": "89276928c47f20eb16b93187f97b0b0a0ee5cbb52d7f4d8b982e67653351bada"
+    },
+    {
       "path": "weapon-socket/game.hbpack.json",
-      "bytes": 1298333,
-      "sha256": "b20733e775463245d5fad642286d9476d0b93665db47c7d90fc253ea614c143e"
+      "bytes": 1866394,
+      "sha256": "5e229036c1b682e594033609c98229c79b710f1de583891221800756a2f02856"
     },
     {
       "path": ".nojekyll",
