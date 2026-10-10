@@ -218,40 +218,22 @@ def full(name, kind, z, **props):
 
 full("TitleBack", "Panel", 90, background="#05090aff")
 full("TitleScreen", "Image", 91, texture=KIT + "title_plate.png")  # 로고를 지운 바탕 (tools/make_title_fx.py). 로고는 아래 조각들이 차례로 나타나 만듦
-# 시작 연출 조각 (tools/make_title_fx.py title_layout.json): 글자 하나씩 → 땅(흰 번쩍) → 동전 튀어나옴 → 고리·별 → Tap To Start
+# 시작 연출 (tools/make_title_fx.py): 글자 조각만 C++가 하나씩 띄우고, 나머지는 스스로 움직이는 WebP라 C++ 호출이 없음
+# (엔진이 위젯 값을 하나 바꿀 때마다 위젯 전체를 복사해 넘겨서, 매 프레임 여러 노드를 움직이면 크게 끊김)
 LAYOUT = json.loads((PROJECT / KIT / "title_layout.json").read_text(encoding="utf-8"))
-def piece(name, it, z):
-    n = node(name, "Image", "tl", it["x"], it["y"], it["w"], it["h"], z, texture=KIT + it["name"] + ".png", opacity=0)
-    n["slot"]["alignment"] = [0.5, 0.5]
-piece("TitleRing", LAYOUT["ring"], 92)
-for k, it in enumerate(LAYOUT["coins"]):
-    piece(f"TitleCoin{k}", it, 93)
-for k, it in enumerate(LAYOUT["letters"]):
-    piece(f"TitleLetter{k}", it, 94)
-piece("TitleTap", LAYOUT["tap"], 94)
-full("TitleFlash", "Panel", 98, background="#fff6dcff", opacity=0)
-# 타이틀 그림 위에 살아 있는 층: 횃불 빛(깜빡임), 별 반짝임, 떠오르는 금가루. 위치는 title_v2.png(1273x718)를 1280x720에 깐 좌표
-TITLE_FX = [("TitleTorchL", "fx_torch_glow.png", 42, 205, 92), ("TitleTorchR", "fx_torch_glow.png", 1222, 205, 92)] + [
-    (f"TitleStar{k}", "fx_star.png", x, y, 93) for k, (x, y) in enumerate([(572, 102), (388, 192), (757, 208), (903, 255), (712, 492), (452, 560), (858, 120)])] + [
-    (f"TitleDust{k}", "fx_dust.png", 0, 0, 93) for k in range(8)]
-# 분위기 층 (tools/make_title_fx.py, C++ TitleFx가 움직임): 아치 빛줄기, 로고를 훑는 금빛, 바닥 안개 두 겹(이어 붙인 두 장씩), 횃불 불티, 처음 검은 화면
-n = node("TitleRays", "Image", "tl", 640, 0, 720, 600, 92, texture=KIT + "fx_rays.png", opacity=0)
+n = node("TitleRays", "Image", "tl", 640, 0, 720, 600, 92, texture=KIT + "fx_rays.png", opacity=0)  # 아치 빛줄기 (처음에 밝아짐)
 n["slot"]["alignment"] = [0.5, 0]
-node("TitleShine", "Image", "tl", 340, 150, 590, 380, 92, texture=KIT + "title_shine_0.png", visible=False)
-for k in range(2):
-    node(f"TitleFogA{k}", "Image", "tl", 1280 * k, 480, 1280, 240, 92, texture=KIT + "fx_fog_a.png", opacity=0.8)
-    node(f"TitleFogB{k}", "Image", "tl", 1280 * k, 530, 1280, 240, 94, texture=KIT + "fx_fog_b.png", opacity=0.55)
-for k in range(10):
-    n = node(f"TitleEmber{k}", "Image", "tl", 0, 0, 6, 6, 93, texture=KIT + "fx_ember.png", opacity=0)
-    n["slot"]["alignment"] = [0.5, 0.5]
-full("TitleFade", "Panel", 99, background="#05090aff")
-# "Tap To Start" 뒤에서 숨 쉬는 금빛 (C++ TitleFx가 움직임)
-n = node("TitleTapShade", "Image", "tl", 643, 608, 520, 110, 90, texture="Assets/Sprites/FX/FX_Glow.png", opacity=0)  # 글씨 뒤 금빛 (깜빡이듯 번짐)
+node("TitleAmbient", "Image", "tl", 0, 0, 1280, 720, 92, texture=KIT + "title_ambient.webp")  # 횃불 깜빡임·불티·금가루·별 (6초 반복)
+n = node("TitleTapShade", "Image", "tl", 643, 608, 600, 130, 92, texture=KIT + "title_tapglow.webp", visible=False)  # Tap To Start 뒤 금빛
 n["slot"]["alignment"] = [0.5, 0.5]
-for name, file, x, y, z in TITLE_FX:
-    iw, ih = Image.open(PROJECT / KIT / file).size
-    n = node(name, "Image", "tl", x, y, iw, ih, z, texture=KIT + file)
+node("TitleBurst", "Image", "tl", 320, 60, 640, 580, 93, texture="", visible=False)  # 땅 순간 텍스처를 넣으면 동전이 튀어나감 (한 번)
+for k, it in enumerate(LAYOUT["letters"]):
+    n = node(f"TitleLetter{k}", "Image", "tl", it["x"], it["y"], it["w"], it["h"], 94, texture=KIT + it["name"] + ".png", opacity=0)
     n["slot"]["alignment"] = [0.5, 0.5]
+node("TitleShine", "Image", "tl", 340, 150, 590, 380, 95, texture=KIT + "title_shine.webp", visible=False)  # 로고를 훑는 금빛 (반복)
+node("TitleFog", "Image", "tl", 0, 480, 1280, 240, 96, texture=KIT + "title_fog.webp")  # 바닥 안개 두 겹
+full("TitleFlash", "Panel", 98, background="#fff6dcff", visible=False)
+full("TitleFade", "Panel", 99, background="#05090aff")
 # 조작 안내 (타이틀 아래): 키 모양 상자 + 짧은 이름. 방향키가 아니라 WASD
 KEYS = [(["W", "A", "S", "D"], "이동"), (["좌클릭"], "공격"), (["Space"], "대시"), (["E"], "상호작용"), (["Tab"], "가방"), (["Q"], "제작"), (["M"], "지도"), (["Esc"], "메뉴")]
 def keycap(name, label, x, y, w_):

@@ -1,9 +1,10 @@
-"""타이틀 화면을 살아 있게 하는 작은 그림 (C++ TitleFx가 깜빡이고 움직임).
+"""타이틀 시작 연출·분위기 그림 (Kit 폴더, 공개 저장소에 올리지 않음).
 
-실행: python tools/make_title_fx.py
-  fx_torch_glow.png  횃불 빛 번짐 (가운데 밝은 주황 → 투명, 도트처럼 6단계 고리)
-  fx_star.png        네 갈래 반짝임 (로고 둘레 별 자리에 겹침)
-  fx_dust.png        떠오르는 금가루 한 알
+실행: python tools/make_title_fx.py → python tools/gen_hud.py
+  title_v2.png를 층으로 나눔: title_plate.png(로고를 지운 바탕), title_letter_N.png(글자 조각), 동전·고리·Tap 조각, TitleLayout.inl
+  스스로 움직이는 WebP: title_ambient(횃불·불티·금가루·별), title_fog, title_shine, title_tapglow, title_burst(땅 순간 동전)
+  mastiff_logo.png: 회사 로고 화면 (mastiff_logo_src.png에서)
+엔진이 위젯 값 하나를 바꿀 때마다 위젯 전체를 복사해 넘기므로(docs/엔진_요청_UI값동기화.md) 계속 움직이는 것은 WebP로 굽는다.
 """
 from pathlib import Path
 
@@ -52,9 +53,6 @@ def dust():
     return im.resize((6, 6), Image.NEAREST)
 
 
-for name, im in (("fx_torch_glow", glow()), ("fx_star", star()), ("fx_dust", dust())):
-    im.save(KIT / f"{name}.png")
-    print(name, im.size)
 
 
 # ---- 분위기 층 (2026-10-10): 로고 빛 훑기, 바닥 안개, 아치 빛줄기, 횃불 불티 ------------------------------
@@ -106,17 +104,6 @@ def noise(w, h, cells, seed):
     return top + (bot - top) * yf[:, None]
 
 
-def fog(seed):
-    """바닥 안개 1280x240 (4배 도트). 아래로 갈수록 짙고 가로로 끝없이 이어짐"""
-    w, h = 320, 60
-    n = noise(w, h, (8, 3), seed) * 0.6 + noise(w, h, (20, 6), seed + 1) * 0.4
-    fade = np.linspace(0, 1, h)[:, None] ** 1.3
-    a = np.clip((n - 0.3) * 1.6, 0, 1) * fade
-    a = np.floor(a * 5) / 5 * 170
-    rgba = np.dstack([np.full((h, w), 190), np.full((h, w), 206), np.full((h, w), 212), a]).astype("uint8")
-    return Image.fromarray(rgba, "RGBA").resize((w * 4, h * 4), Image.NEAREST)
-
-
 def rays():
     """아치 위에서 비스듬히 내려오는 빛줄기 셋 (아래로 갈수록 흐려짐), 720x600"""
     w, h = 180, 150
@@ -137,11 +124,7 @@ def ember():
     return im.resize((6, 6), Image.NEAREST)
 
 
-for i, im in enumerate(logo_shine()):
-    im.save(KIT / f"title_shine_{i}.png")
-for name, im in (("fx_fog_a", fog(3)), ("fx_fog_b", fog(11)), ("fx_rays", rays()), ("fx_ember", ember())):
-    im.save(KIT / f"{name}.png")
-    print(name, im.size)
+rays().save(KIT / "fx_rays.png")  # 아치 빛줄기 (멈춘 그림, C++가 처음에 밝힘)
 
 
 # ---- 시작 연출 (2026-10-10): 회사 로고 → 글자가 하나씩 → 땅 + 동전이 튀어나옴 ------------------------------
@@ -240,3 +223,140 @@ def mastiff():
 
 title_layers()
 mastiff()
+
+
+# ---- 스스로 움직이는 그림 (2026-10-10) ------------------------------------------------------------------
+# 엔진은 위젯 값 하나를 바꿀 때마다 위젯 전체를 복사해 C++로 넘겨서(약 7ms) 매 프레임 여러 노드를 움직이면 타이틀이 초당 3장으로 끊김.
+# 계속 움직이는 층은 모두 움직이는 WebP로 구워 브라우저가 알아서 돌리게 함 (C++ 호출 0번):
+#   title_ambient.webp  1280x720 6초 반복: 횃불 빛 깜빡임, 불티, 떠오르는 금가루, 로고 둘레 별 반짝임
+#   title_fog.webp      1280x240 13.3초 반복: 안개 두 겹이 서로 반대로 흐름
+#   title_shine.webp    로고 글자 자리: 금빛이 훑고 3.7초 쉼
+#   title_tapglow.webp  Tap To Start 뒤 금빛이 숨 쉼
+#   title_burst.webp    땅 순간 동전이 가운데에서 튀어나가 제자리 → 고리·Tap이 나타나고 마지막 장을 몇 시간 유지 (한 번만 보임)
+FPS = 12
+BURST_BOX = (320, 60, 960, 640)  # 동전·고리·Tap 자리를 다 덮는 칸
+TORCHES = [(42, 205), (1238, 205)]
+STARS = [(572, 102), (388, 192), (757, 208), (903, 255), (712, 492), (452, 560), (858, 120)]
+
+
+def stamp(canvas, im, cx, cy, alpha=1.0, scale=1.0):
+    if alpha <= 0.02 or scale <= 0.05:
+        return
+    if scale != 1:
+        im = im.resize((max(1, round(im.width * scale)), max(1, round(im.height * scale))), Image.NEAREST)
+    if alpha < 1:
+        a = np.array(im)
+        a[..., 3] = (a[..., 3] * alpha).astype("uint8")
+        im = Image.fromarray(a, "RGBA")
+    canvas.alpha_composite(im, (round(cx - im.width / 2), round(cy - im.height / 2)))
+
+
+def save_anim(name, frames, durations):
+    frames[0].save(KIT / name, save_all=True, append_images=frames[1:], duration=durations, loop=0, lossless=True, quality=100, method=4)
+    print(name, len(frames), "장", (KIT / name).stat().st_size // 1024, "KB")
+
+
+def ambient():
+    n, rng = 6 * FPS, np.random.default_rng(5)
+    flick = [np.convolve(np.tile(rng.random(n), 3), np.ones(3) / 3, "same")[n:2 * n] for _ in TORCHES]  # 이어지는 깜빡임
+    glow_im, star_im, dust_im, ember_im = glow(), star(), dust(), ember()
+    frames = []
+    for f in range(n):
+        t = f / FPS
+        c = Image.new("RGBA", (1280, 720))
+        for (x, y), fl in zip(TORCHES, flick):
+            stamp(c, glow_im, x, y, 0.55 + 0.4 * fl[f], 0.92 + 0.12 * fl[f])
+        for i in range(10):  # 불티: 불꽃에서 튀어 올라 흔들리며 식음 (수명 1.5·2·3초 → 6초에 딱 맞음)
+            life = (1.5, 2.0, 3.0)[i % 3]
+            p = ((t + i * 0.53) % life) / life
+            x0 = TORCHES[0][0] if i < 5 else TORCHES[1][0]
+            stamp(c, ember_im, x0 + np.sin(t * 2 * np.pi / 3 + i * 1.7) * (6 + 14 * p) + (4 if i % 2 else -4) * p * 10, 190 - p * 150,
+                  p / 0.15 if p < 0.15 else 1 - (p - 0.15) / 0.85, 1 - 0.6 * p)
+        for i in range(8):  # 금가루: 바닥에서 천천히 떠올라 흐려짐 (수명 6·3초)
+            life = 6.0 if i % 2 else 3.0
+            p = ((t + i * 1.37) % life) / life
+            stamp(c, dust_im, 120 + (i * 331) % 1040 + np.sin(t * 2 * np.pi / 6 + i) * 14, 690 - p * 420, np.sin(p * np.pi) * 0.9)
+        for i, (x, y) in enumerate(STARS):  # 별: 2초마다 서로 다른 박자로 반짝
+            p = (t / 2 + i * 0.37) % 1
+            s = np.sin(p / 0.35 * np.pi) if p < 0.35 else 0
+            stamp(c, star_im, x, y, s, 0.2 + 0.9 * s)
+        frames.append(c)
+    save_anim("title_ambient.webp", frames, [round(1000 / FPS)] * n)
+
+
+def fog_tile(seed):
+    """가로 320px마다 이어지는 안개 (4배 도트)"""
+    w, h = 80, 60
+    nz = noise(w, h, (2, 3), seed) * 0.6 + noise(w, h, (5, 6), seed + 1) * 0.4
+    a = np.clip((nz - 0.3) * 1.6, 0, 1) * (np.linspace(0, 1, h)[:, None] ** 1.3)
+    a = np.floor(a * 5) / 5 * 170
+    rgba = np.dstack([np.full((h, w), 190), np.full((h, w), 206), np.full((h, w), 212), a]).astype("uint8")
+    return np.array(Image.fromarray(rgba, "RGBA").resize((w * 4, h * 4), Image.NEAREST))
+
+
+def fog_anim():
+    a, b = np.tile(fog_tile(3), (1, 5, 1)), np.tile(fog_tile(11), (1, 5, 1))  # 1600 폭 (밀어도 빈 곳 없게)
+    n = 160  # 13.3초에 한 칸(320px)씩: 앞 겹은 오른쪽으로 24px/s, 뒤 겹은 왼쪽으로
+    frames = []
+    for f in range(n):
+        s = round(320 * f / n)
+        c = Image.new("RGBA", (1280, 240))
+        back = Image.fromarray(np.ascontiguousarray(a[:, 320 - s:1600 - s]), "RGBA")
+        front = Image.fromarray(np.ascontiguousarray(b[:, s:1280 + s]), "RGBA")
+        stamp(c, back, 640, 120, 0.8)
+        c.alpha_composite(Image.fromarray((np.array(front) * [1, 1, 1, 0.55]).astype("uint8"), "RGBA").crop((0, 0, 1280, 190)), (0, 50))
+        frames.append(c)
+    save_anim("title_fog.webp", frames, [round(1000 / FPS)] * n)
+
+
+def shine_anim():
+    frames = logo_shine()
+    empty = Image.new("RGBA", frames[0].size)
+    save_anim("title_shine.webp", frames + [empty], [55] * len(frames) + [3700])
+
+
+def tapglow():
+    g = Image.open(KIT.parent.parent / "Sprites/FX/FX_Glow.png").convert("RGBA").resize((520, 110), Image.BILINEAR)
+    n, frames = 24, []
+    for f in range(n):  # 1.96초 반복
+        b = 0.5 + 0.5 * np.sin(f / n * 2 * np.pi)
+        c = Image.new("RGBA", (600, 130))
+        stamp(c, g, 300, 65, 0.15 + 0.6 * b * b, 0.9 + 0.15 * b)
+        frames.append(c)
+    save_anim("title_tapglow.webp", frames, [round(1960 / n)] * n)
+
+
+def burst():
+    layout = json.loads((KIT / "title_layout.json").read_text(encoding="utf-8"))
+    x0, y0, x1, y1 = BURST_BOX
+    cx, cy = 640 - x0, 330 - y0
+    coins = [(Image.open(KIT / f"{it['name']}.png").convert("RGBA"), it["x"] - x0, it["y"] - y0) for it in layout["coins"]]
+    ring = (Image.open(KIT / "title_ring.png").convert("RGBA"), layout["ring"]["x"] - x0, layout["ring"]["y"] - y0)
+    tap = (Image.open(KIT / "title_tap.png").convert("RGBA"), layout["tap"]["x"] - x0, layout["tap"]["y"] - y0)
+
+    def back(p):  # 살짝 넘쳤다 돌아옴 (C++ EaseBack과 같은 곡선)
+        p = min(max(p, 0), 1)
+        q = p - 1
+        return 1 + 2.9 * q * q * q + 1.9 * q * q
+
+    frames, fps = [], 30
+    for f in range(int(1.0 * fps) + 1):
+        t = f / fps
+        c = Image.new("RGBA", (x1 - x0, y1 - y0))
+        stamp(c, ring[0], ring[1], ring[2], min(max((t - 0.15) / 0.45, 0), 1))
+        for k, (im, x, y) in enumerate(coins):
+            p = (t - 0.02 * k) / 0.5
+            if p <= 0:
+                continue
+            e = back(p)
+            stamp(c, im, cx + (x - cx) * e, cy + (y - cy) * e, min(1, p * 4), 0.3 + 0.7 * min(1, e))
+        stamp(c, tap[0], tap[1], tap[2], min(max((t - 0.6) / 0.3, 0), 1))
+        frames.append(c)
+    save_anim("title_burst.webp", frames, [round(1000 / fps)] * (len(frames) - 1) + [16000000])  # 마지막 장을 4시간 넘게
+
+
+ambient()
+fog_anim()
+shine_anim()
+tapglow()
+burst()

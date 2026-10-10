@@ -648,11 +648,12 @@ private:
   void UiText(const std::string& n,const std::string& v){if(UiChanged("t"+n,v))hb::UI::SetText(player,UiInstance(n),n,v);}
   void UiTexture(const std::string& n,const std::string& v){if(UiChanged("x"+n,v))hb::UI::SetTexture(player,UiInstance(n),n,v);}
   void UiValue(const std::string& n,float v){if(UiChanged("f"+n,std::to_string(v)))hb::UI::SetValue(player,UiInstance(n),n,v);}
-  void UiPosition(const std::string& n,const hb::Vec2& v){if(UiChanged("p"+n,UiNum(v.x,v.y)))hb::UI::SetPosition(player,UiInstance(n),n,v);}
+  // 위치는 1px, 투명도는 1/40, 배율은 1/100 단위로 반올림: 같은 값이면 캐시가 걸러 엔진 명령을 줄임 (매 프레임 움직이는 화면 연출이 많으면 끊김)
+  void UiPosition(const std::string& n,hb::Vec2 v){v={std::round(v.x),std::round(v.y)};if(UiChanged("p"+n,UiNum(v.x,v.y)))hb::UI::SetPosition(player,UiInstance(n),n,v);}
   void UiSize(const std::string& n,const hb::Vec2& v){if(UiChanged("s"+n,UiNum(v.x,v.y)))hb::UI::SetSize(player,UiInstance(n),n,v);}
-  void UiOpacity(const std::string& n,float v){if(UiChanged("o"+n,std::to_string(v)))hb::UI::SetOpacity(player,UiInstance(n),n,v);}
+  void UiOpacity(const std::string& n,float v){v=std::round(v*40)/40;if(UiChanged("o"+n,std::to_string(v)))hb::UI::SetOpacity(player,UiInstance(n),n,v);}
   void UiColor(const std::string& n,const hb::Color& c){if(UiChanged("c"+n,UiNum(c.r,c.g)+UiNum(c.b,c.a)))hb::UI::SetColor(player,UiInstance(n),n,c);}
-  void UiScale(const std::string& n,float v){if(UiChanged("k"+n,std::to_string(v)))hb::UI::SetScale(player,UiInstance(n),n,hb::Vec2{v,v});}
+  void UiScale(const std::string& n,float v){v=std::round(v*100)/100;if(UiChanged("k"+n,std::to_string(v)))hb::UI::SetScale(player,UiInstance(n),n,hb::Vec2{v,v});}
   hb::Vec3 playerAt{0,0,0},facing{1,0,0},cameraAt{0,0,0};
   bool playerFlipped=false,blinkShown=false;
   hb::Vec3 knock{0,0,0};
@@ -699,9 +700,8 @@ private:
   float walkDist=0,stillTime=0,fidgetTime=0;int fidget=0,lastFidget=0;bool slashB=false;hb::Vec3 animPos{0,0,0};  // 새 시트 애니메이션 상태
   Interactable* promptTarget=nullptr;std::string promptText;float hintTime=0,areaBannerTime=0;bool bannerPending=false,mapHeld=false;  // 상호작용 말풍선·알림·지역 이름
   float hitStopLeft=0,shakePower=1,cutZoom=1;  // 맞는 순간 아주 잠깐 느려짐(남은 실제 시간), 흔들림 세기 배율
-  int titleBeat=0;  // 시작 연출에서 소리를 낸 단계 (글자 수 + 땅 + 끝)
+  int titleBeat=0;  // 시작 연출에서 지난 단계 (글자 수 + 땅 + 끝)
   void Splash();  // 회사 로고 화면 (Screen.inl)
-  hb::Vec2 titleTilt{0,0};  // 타이틀 앞 층이 마우스 쪽으로 기우는 정도 (-1~1)
   float tipTime=0,titleTime=0;bool pauseHeld=false,bagOpen=false;int menuPick=0,menuHeld=0;
   std::map<hb::Actor*,hb::Vec3> frozenVelocity;   // 일시정지 동안 멈춘 탄의 속도
   // 정산 화면: 줄이 하나씩 나타나고 남은 빚이 줄어드는 숫자 연출
