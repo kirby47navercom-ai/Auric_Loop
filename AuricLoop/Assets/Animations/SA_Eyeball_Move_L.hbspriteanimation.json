@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "name": "SA_Eyeball_Move_L",
+  "loop": true,
+  "playRate": 1,
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Enemies/Eyeball/S_Eyeball_move_L_0.hbsprite.json",
+      "duration": 0.09
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/Eyeball/S_Eyeball_move_L_1.hbsprite.json",
+      "duration": 0.09
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/Eyeball/S_Eyeball_move_L_2.hbsprite.json",
+      "duration": 0.09
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/Eyeball/S_Eyeball_move_L_3.hbsprite.json",
+      "duration": 0.09
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/Eyeball/S_Eyeball_move_L_4.hbsprite.json",
+      "duration": 0.09
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/Eyeball/S_Eyeball_move_L_5.hbsprite.json",
+      "duration": 0.09
+    }
+  ]
+}

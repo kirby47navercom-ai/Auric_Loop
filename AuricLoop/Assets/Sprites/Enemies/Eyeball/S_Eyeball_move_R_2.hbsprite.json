@@ -1,0 +1,1 @@
+{"version": 1, "name": "S_Eyeball_move_R_2", "texture": "Assets/Sprites/Enemies/Eyeball/eyeball_move.png", "pixelsPerUnit": 32, "rect": [160, 168, 80, 56], "pivot": [0.5, 0.42857], "filter": "nearest", "border": [0, 0, 0, 0]}

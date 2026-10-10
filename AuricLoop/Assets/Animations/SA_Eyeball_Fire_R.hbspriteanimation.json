@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "name": "SA_Eyeball_Fire_R",
+  "loop": false,
+  "playRate": 1,
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Enemies/Eyeball/S_Eyeball_attack_R_4.hbsprite.json",
+      "duration": 0.05
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/Eyeball/S_Eyeball_attack_R_5.hbsprite.json",
+      "duration": 0.07
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/Eyeball/S_Eyeball_attack_R_6.hbsprite.json",
+      "duration": 0.4
+    }
+  ]
+}

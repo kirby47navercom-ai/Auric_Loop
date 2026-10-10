@@ -1,0 +1,1 @@
+{"version": 1, "name": "S_Eyeball_idle_F_2", "texture": "Assets/Sprites/Enemies/Eyeball/eyeball_idle.png", "pixelsPerUnit": 32, "rect": [160, 0, 80, 56], "pivot": [0.5, 0.42857], "filter": "nearest", "border": [0, 0, 0, 0]}

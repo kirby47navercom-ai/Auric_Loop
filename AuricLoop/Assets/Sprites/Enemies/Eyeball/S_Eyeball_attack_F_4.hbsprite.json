@@ -1,0 +1,1 @@
+{"version": 1, "name": "S_Eyeball_attack_F_4", "texture": "Assets/Sprites/Enemies/Eyeball/eyeball_attack.png", "pixelsPerUnit": 32, "rect": [320, 0, 80, 56], "pivot": [0.5, 0.42857], "filter": "nearest", "border": [0, 0, 0, 0]}

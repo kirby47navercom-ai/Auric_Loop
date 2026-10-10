@@ -28,7 +28,7 @@ Enemy* TopDownShooter::SpawnEnemy(const std::string& blueprint,const hb::Vec3& a
 
 void TopDownShooter::ParkEnemy(Enemy* e){
   e->CancelAttack();
-  const bool pooled=hb::Tags::Has(e,"Enemy.S",true)||hb::Tags::Has(e,"Enemy.M",true)||hb::Tags::Has(e,"Enemy.C",true);
+  const bool pooled=hb::Tags::Has(e,"Enemy.S",true)||hb::Tags::Has(e,"Enemy.M",true)||hb::Tags::Has(e,"Enemy.C",true)||hb::Tags::Has(e,"Enemy.E",true);
   if(!pooled){hb::Scene::Destroy(e);return;}
   if(e->brainRunning){hb::States::Stop(e);e->brainRunning=false;}
   hb::Physics::SetVelocity(e,hb::Vec3{0,0,0});e->Parked=true;e->burnLeft=0;
@@ -115,6 +115,37 @@ void TopDownShooter::Effect(const std::string& name,const hb::Vec3& at,float ang
   PlayFx("Assets/Animations/SA_"+name+".hbspriteanimation.json",it!=length.end()?it->second:0.3f,at,angle,glow,flip);
 }
 
+float TopDownShooter::LaserLength(const hb::Vec3& from,const hb::Vec3& dir,float max) const{
+  // 벽·물체(층 0)까지. 맞는 것이 없으면 max
+  const auto h=hb::Physics::Raycast(from,from+dir*max,2,1<<0,false,nullptr);
+  return h.hit?std::max(0.5f,Length(h.position-from)):max;
+}
+
+void TopDownShooter::FireLaser(const hb::Vec3& from,const hb::Vec3& dir,float seconds,float width){
+  // 시작·몸통·끝 그림을 풀에서 꺼내 깔고, 0.08초마다 4장을 돌려 깜빡임. 맞는 판정은 UpdateBeams
+  if(laserBodyPool.empty()||laserCapPool.size()<2)return;
+  Beam b{};b.from=from;b.dir=dir;b.length=LaserLength(from,dir);b.width=width;b.left=seconds;b.flick=0;b.frame=0;b.hit=false;
+  b.parts[1]=laserBodyPool.back();laserBodyPool.pop_back();b.parts[0]=laserCapPool.back();laserCapPool.pop_back();b.parts[2]=laserCapPool.back();laserCapPool.pop_back();
+  const float ang=Angle(dir);
+  hb::Transform t;t.position=from;t.position.z=0.35f;t.rotation=hb::Vec3{0,0,ang};
+  hb::Scene::SetTransform(b.parts[1],t);hb::Sprites::SetSize(b.parts[1],hb::Vec2{b.length,width});
+  hb::Scene::SetTransform(b.parts[0],t);t.position=from+dir*b.length;t.position.z=0.35f;hb::Scene::SetTransform(b.parts[2],t);
+  beams.push_back(b);Shake(0.12f,0.8f);Sfx("Impact",1.4f);
+}
+
+void TopDownShooter::UpdateBeams(float delta){
+  static const char* parts[]={"Start","Body","End"};
+  for(auto it=beams.begin();it!=beams.end();){
+    auto& b=*it;
+    if((b.left-=delta)<=0){Give(laserCapPool,b.parts[0]);Give(laserBodyPool,b.parts[1]);Give(laserCapPool,b.parts[2]);it=beams.erase(it);continue;}
+    if((b.flick-=delta)<=0){b.flick=0.08f;b.frame=(b.frame+1)%4;
+      for(int k=0;k<3;++k)hb::Sprites::SetSprite(b.parts[k],std::string("Assets/Sprites/Enemies/Eyeball/S_Laser_")+parts[k]+"_"+std::to_string(b.frame)+".hbsprite.json");}
+    // 선 위에 있으면 맞음 (몸통 원 반지름 0.42 + 레이저 반폭). 한 줄기에 한 번만
+    if(!b.hit){const auto p=playerAt+hb::Vec3{0,-0.15f,0}-b.from;const float along=std::clamp(hb::VectorMath::DotProduct(p,b.dir),0.f,b.length);
+      if(Length(p-b.dir*along)<b.width*0.5f+0.42f){b.hit=DamagePlayer(1,b.from);}}
+    ++it;}
+}
+
 void TopDownShooter::Warn(const hb::Vec3& from,const hb::Vec3& dir,float length,float seconds,float width){
   // 돌진 예고선: 장면에 놓아 둔 붉은 띠(Pool.Warn)를 돌진 방향으로 돌려 길이만큼 깔았다가 치움
   if(warnPool.empty())return;auto* a=warnPool.back();warnPool.pop_back();
@@ -146,6 +177,7 @@ void TopDownShooter::BossEnraged(Enemy* e){
 }
 
 void TopDownShooter::UpdateFx(float delta){
+  UpdateBeams(delta);
   for(auto it=warns.begin();it!=warns.end();){
     if((it->left-=delta)<=0){
       hb::Scene::SetPosition(it->actor,hb::Vec3{0,-200,0});(it->circle?circlePool:warnPool).push_back(it->actor);
@@ -177,7 +209,8 @@ void TopDownShooter::Prewarm(){
   coinPool=hb::Scene::GetActorsWithTag("Pool.Coin");
   fxPool=hb::Scene::GetActorsWithTag("Pool.Fx");warnPool=hb::Scene::GetActorsWithTag("Pool.Warn");
   warnFillPool=hb::Scene::GetActorsWithTag("Pool.WarnFill");circlePool=hb::Scene::GetActorsWithTag("Pool.WarnCircle");circleFillPool=hb::Scene::GetActorsWithTag("Pool.WarnCircleFill");
-  for(auto* tag:{"Enemy.S","Enemy.M","Enemy.C"})for(auto* a:hb::Scene::GetActorsWithTag(tag))if(auto* e=dynamic_cast<Enemy*>(a))ParkEnemy(e);
+  laserBodyPool=hb::Scene::GetActorsWithTag("Pool.LaserBody");laserCapPool=hb::Scene::GetActorsWithTag("Pool.LaserCap");beams.clear();
+  for(auto* tag:{"Enemy.S","Enemy.M","Enemy.C","Enemy.E"})for(auto* a:hb::Scene::GetActorsWithTag(tag))if(auto* e=dynamic_cast<Enemy*>(a))ParkEnemy(e);
 }
 
 void TopDownShooter::KillEnemy(Enemy* e){
@@ -189,7 +222,7 @@ void TopDownShooter::KillEnemy(Enemy* e){
   PlayFx(e->DeathClip,0.9f,at,0,0,e->Flipped());  // 쓰러지는 그림은 이펙트로 (적은 바로 화면 밖 대기로). 맞은 방향으로 밀려나며 쓰러짐
   if(!fxs.empty()&&fxs.back().left==0.9f){auto& f=fxs.back();f.moving=true;f.ground=at;f.vel=dir*(e->Boss?2.f:7.f);f.vh=e->Boss?0.f:3.f;}
   Effect("BoneBurst",hb::Vec3{at.x,at.y+0.2f,0.3f});Shake(rules->ShakeTime*2,1.6f);
-  Debris(at,dir,e->Boss?"Boss":e->KeepDistance>0?"Mage":"Skeleton");
+  Debris(at,dir,e->Boss?"Boss":e->Laser?"Eye":e->KeepDistance>0?"Mage":"Skeleton");
   Sfx("Crack",0.9f+float(std::rand()%20)/100);punch=1;kick=kick+dir*0.35f;
   if(e->Boss)HitStop(0.7f,0.15f);else HitStop(0.14f,0.22f);  // 처치 순간 잠깐 느려짐 (마지막 일격을 크게)
   ParkEnemy(e);
@@ -198,6 +231,7 @@ void TopDownShooter::KillEnemy(Enemy* e){
 void TopDownShooter::Debris(const hb::Vec3& at,const hb::Vec3& dir,const std::string& who){
   // 처치 파편: 맞은 방향 쪽으로 튀어 오르고 바닥에 몇 번 튕긴 뒤 굴러 멈춰 잠시 남음 (UpdateFx)
   const std::vector<const char*> parts=who=="Boss"?std::vector<const char*>{"Skull","Gold","Gold","Gold","Gold","Bone","Bone","Shard","Gold"}
+    :who=="Eye"?std::vector<const char*>{"Shard","Shard","Shard","Shard"}
     :who=="Mage"?std::vector<const char*>{"Skull","Cloth","Cloth","Cloth","Shard","Bone"}:std::vector<const char*>{"Skull","Bone","Bone","Rib","Rib","Shard","Shard"};
   const hb::Vec3 side{-dir.y,dir.x,0};
   for(const char* p:parts){

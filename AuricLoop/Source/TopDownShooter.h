@@ -39,6 +39,8 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   float KeepDistance = 0;         // 0이면 근거리. 원거리는 이 거리를 유지하며 쏜다
   HB_PROPERTY(BlueprintReadWrite)
+  bool Laser = false;             // 눈알: 탄 대신 모았다가 레이저 (4방향 그림, 뒤집지 않음)
+  HB_PROPERTY(BlueprintReadWrite)
   float ShotInterval = 2.0f;
   HB_PROPERTY(BlueprintReadWrite)
   int ShotCount = 3;
@@ -157,6 +159,12 @@ public:
   void Quake();
   HB_FUNCTION(BlueprintCallable, DisplayName="보스: 금화 비", Category="적")
   void GoldRain();
+  HB_FUNCTION(BlueprintCallable, DisplayName="눈알: 레이저 모으기", Category="적")
+  void LaserWindup();
+  HB_FUNCTION(BlueprintCallable, DisplayName="눈알: 레이저 발사", Category="적")
+  void LaserFire();
+  HB_FUNCTION(BlueprintCallable, DisplayName="눈알: 회복", Category="적")
+  void LaserRecover();
 
   // 게임 규칙(TopDownShooter)이 직접 부른다 (같은 C++ 빌드라 실제 객체). Tick은 게임 규칙의 한 프레임 호출 안에서 모든 적을 한 번에 움직인다
   void Tick(float delta);
@@ -190,6 +198,7 @@ private:
   float detour=0;hb::Vec3 detourDir{0,0,0};  // 엄폐물에 막히면 잠깐 옆으로 돌아감
   int ring=0,pattern=0;
   hb::Vec3 dashDir{0,-1,0};
+  std::string eyeAnim="Idle",eyeShown;hb::Vec3 laserDir{0,-1,0};  // 눈알: 지금 동작 (Idle·Move·Charge·Fire·Recover), 레이저 방향
   // 근접 공격 진행: atk 0 없음 1 베기 2 돌진 찌르기 3 도약, atkPhase 0 예고 1 공격 2 빈틈
   int atk=0,atkPhase=0;float atkTime=0,atkCool=0.6f,lungeTime=0;bool atkHit=false;
   hb::Vec3 atkDir{1,0,0},atkTarget{0,0,0};
@@ -537,6 +546,11 @@ public:
   void ClearBullets(){pendingShots.clear();hb::Projectiles::Clear();}
   // 보스 연출 (Enemy가 부름)
   void Warn(const hb::Vec3& from,const hb::Vec3& dir,float length,float seconds,float width=1.4f);
+  // 눈알 레이저 (Combat.cpp): 벽까지의 길이, 발사(시작·몸통·끝 그림이 깜빡이며 그동안 선 위에 있으면 맞음)
+  float LaserLength(const hb::Vec3& from,const hb::Vec3& dir,float max=18) const;
+  void FireLaser(const hb::Vec3& from,const hb::Vec3& dir,float seconds,float width);
+  struct Beam{hb::Actor* parts[3];hb::Vec3 from,dir;float length,width,left,flick;int frame;bool hit;};std::vector<Beam> beams;
+  std::vector<hb::Actor*> laserBodyPool,laserCapPool;void UpdateBeams(float delta);
   void WarnCircle(const hb::Vec3& at,float radius,float seconds);  // 원형 공격 범위 예고 (at은 바닥 높이)   // 공격 예고 붉은 띠 (풀 3개, 다 쓰면 생략)
   void BossSlam(const hb::Vec3& at,int bullets,float speed,const std::string& clip); // 내려찍기 충격파·탄·흔들림
   void BossEnraged(Enemy* e);                                                        // 2페이즈 포효

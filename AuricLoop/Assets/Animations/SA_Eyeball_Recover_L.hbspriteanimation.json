@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "SA_Eyeball_Recover_L",
+  "loop": false,
+  "playRate": 1,
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Enemies/Eyeball/S_Eyeball_attack_L_7.hbsprite.json",
+      "duration": 0.07
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/Eyeball/S_Eyeball_attack_L_8.hbsprite.json",
+      "duration": 0.09
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/Eyeball/S_Eyeball_attack_L_9.hbsprite.json",
+      "duration": 0.11
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/Eyeball/S_Eyeball_attack_L_10.hbsprite.json",
+      "duration": 0.14
+    }
+  ]
+}

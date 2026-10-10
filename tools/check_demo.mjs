@@ -316,3 +316,16 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   assert.ok(!paused, '컷신 동안 메뉴 안 열림');
   console.log('보스 등장 컷신 조작 막힘 검사 통과');
 }
+
+// 눈알 (아트팀 눈알 적 v5): 전투방 웨이브에 나와 4방향 그림으로 움직이고, 모았다가 레이저를 쏨 (레이저 조각이 화면 안으로 나옴)
+{
+  const inputs = [5, 200, 400, 600].flatMap(f => [{frame: f, key: 'F9', value: 1}, {frame: f + 2, key: 'F9', value: 0}]);
+  let eyes = 0, laser = 0;const anims = new Set();
+  await runProject(project, {scene: scene('Test_Valen'), frames: 1100, delta: 1 / 60, inputs, onFrame: (f, vm) => {
+    const e = vm.objects.filter(o => /^Eyeball/.test(o.id) && o.position[1] > -150);eyes = Math.max(eyes, e.length);
+    for (const o of e) anims.add((o.currentSprite || '').replace(/^.*S_Eyeball_|_\d+\.hbsprite\.json$/g, ''));
+    if (vm.objects.some(o => /^LaserBody/.test(o.id) && o.position[1] > -150)) laser++; }});
+  assert.ok(eyes >= 1, '전투방에 눈알이 나옴');
+  assert.ok(laser > 0 && [...anims].some(a => /^attack_/.test(a)), `눈알이 모았다가 레이저를 쏨 (${laser}프레임, ${[...anims].join(' ')})`);
+  console.log('눈알 레이저 검사 통과', 'eyes', eyes, 'laser frames', laser);
+}

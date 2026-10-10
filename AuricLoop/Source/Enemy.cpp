@@ -12,10 +12,11 @@
 // 상태 머신 파라미터: Distance(플레이어까지 거리), Stunned(경직), Ready(원거리 장전 끝), Next(보스 다음 패턴)
 // =====================================================================================
 
+static int EyeRow(const hb::Vec3& d);
 void Enemy::Awake(){
   // 풀에서 다시 꺼낼 때도 불린다. 생성한 쪽이 먼저 정한 무적·경직(귀환 해골)은 지우지 않는다
   Hp=MaxHp;flash=0;burnLeft=0;ring=0;pattern=0;shotTimer=ShotInterval*0.5f;mode=Mode::Halt;burnedOut=false;
-  sentStunned=sentReady=sentNear=flipped=false;dashCount=0;phase2=false;sentVelocity={9e9f,0,0};
+  sentStunned=sentReady=sentNear=flipped=false;eyeAnim="Idle";eyeShown.clear();dashCount=0;phase2=false;sentVelocity={9e9f,0,0};
   tint=-1;Tint(false);
   if(Parked)return;  // 화면 밖 대기 중이면 상태 머신을 켜지 않음 (꺼낼 때 다시 Awake)
   hb::States::Start(this,Brain);brainRunning=true;
@@ -40,7 +41,11 @@ void Enemy::Tick(float delta){
   if(ready!=sentReady){sentReady=ready;hb::States::SetBool(this,"Ready",ready);}
   if(near!=sentNear){sentNear=near;hb::States::SetBool(this,"Near",near);}  // 근거리 해골의 휘두르기 그림
   if(stunned!=sentStunned){sentStunned=stunned;hb::States::SetBool(this,"Stunned",stunned);}
-  if(flip!=flipped){flipped=flip;hb::Sprites::SetFlip(this,flip,false);}
+  if(Laser){  // 눈알: 방향마다 따로 그린 그림 (모으기·발사·회복 중엔 레이저 방향 고정)
+    const bool aiming=eyeAnim=="Charge"||eyeAnim=="Fire"||eyeAnim=="Recover";
+    const std::string want="Assets/Animations/SA_Eyeball_"+eyeAnim+"_"+"FBLR"[EyeRow(aiming?laserDir:dir)]+".hbspriteanimation.json";
+    if(want!=eyeShown){eyeShown=want;hb::Sprites::PlayAnimation(this,want,eyeAnim=="Idle"||eyeAnim=="Move");}}
+  else if(flip!=flipped){flipped=flip;hb::Sprites::SetFlip(this,flip,false);}
   const bool frozen=!game||game->Frozen();
   // 닿기만 해서는 맞지 않는다. 보스 돌진(붉은 띠로 예고)에 부딪힐 때만 피해, 근접 공격은 UpdateMelee
   if(!frozen&&Boss&&mode==Mode::Dash&&distance<Radius+0.35f)game->DamagePlayer(ContactDamage,hb::Scene::GetPosition(this));
@@ -74,9 +79,9 @@ void Enemy::Tick(float delta){
 }
 
 // 대기 중(화면 밖, 상태 머신 멈춤)이면 늦게 들어온 상태 이벤트는 무시
-void Enemy::Halt(){if(Parked)return;mode=Mode::Halt;sentVelocity={0,0,0};hb::Physics::SetVelocity(this,hb::Vec3{0,0,0});}
+void Enemy::Halt(){if(Parked)return;mode=Mode::Halt;eyeAnim="Idle";sentVelocity={0,0,0};hb::Physics::SetVelocity(this,hb::Vec3{0,0,0});}
 void Enemy::Chase(){if(Parked)return;mode=Mode::Chase;Tint(false);}
-void Enemy::Range(){if(Parked)return;mode=Mode::Range;}
+void Enemy::Range(){if(Parked)return;mode=Mode::Range;eyeAnim="Move";}
 void Enemy::Stagger(){if(Parked)return;mode=Mode::Stagger;}
 
 void Enemy::Windup(){if(Parked)return;
@@ -85,6 +90,26 @@ void Enemy::Windup(){if(Parked)return;
   Glint(Boss?GlintDash:GlintCast,dashDir.x<0);  // 붉게 물들이지 않고 눈·무기 끝 반짝임
   if(Boss)if(auto* game=TopDownShooter::Current){game->Sfx("BossCharge");game->Warn(hb::Scene::GetPosition(this),dashDir,DashSpeed*0.45f+1,phase2?0.5f:0.8f);}
 }
+
+#include "EyeballLayout.inl"
+static int EyeRow(const hb::Vec3& d){return std::fabs(d.x)>std::fabs(d.y)?(d.x>0?3:2):(d.y<0?0:1);}  // 정면·후면·왼쪽·오른쪽
+
+void Enemy::LaserWindup(){if(Parked)return;
+  // 눈알: 멈추고 0.48초 동안 눈동자에 빛을 모으며 레이저가 지나갈 줄에 붉은 띠 (벽까지)
+  Halt();float distance;laserDir=ToPlayer(distance);eyeAnim="Charge";
+  auto* game=TopDownShooter::Current;if(!game)return;const int r=EyeRow(laserDir);
+  const auto from=hb::Scene::GetPosition(this)+hb::Vec3{kEyeEmit[r][0],kEyeEmit[r][1],0};
+  game->Warn(from,laserDir,game->LaserLength(from,laserDir),0.48f,kEyeLaserWidth*1.6f);
+  game->Effect("GlintEye",from+hb::Vec3{0,0,0.45f},0,2.f);game->Sfx("BossCharge",1.6f);
+}
+
+void Enemy::LaserFire(){if(Parked)return;
+  Halt();eyeAnim="Fire";shotTimer=ShotInterval;
+  auto* game=TopDownShooter::Current;if(!game||game->Frozen())return;const int r=EyeRow(laserDir);
+  game->FireLaser(hb::Scene::GetPosition(this)+hb::Vec3{kEyeEmit[r][0],kEyeEmit[r][1],0},laserDir,0.52f,kEyeLaserWidth);
+}
+
+void Enemy::LaserRecover(){if(Parked)return;Halt();eyeAnim="Recover";}
 
 void Enemy::NextPattern(int next){pattern=next;hb::States::SetFloat(this,"Next",float(pattern));}
 

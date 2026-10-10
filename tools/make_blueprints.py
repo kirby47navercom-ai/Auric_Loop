@@ -92,7 +92,7 @@ write(BP / "BP_TopDownShooter.hbblueprint.json", gm)
 
 # ---- 적 ----
 ENEMY_EVENTS = ["Halt", "Chase", "Range", "Stagger", "Windup", "Fire", "Dash", "Ring", "Summon", "Prowl", "JumpWindup", "Jump", "Slam",
-                "SpinWindup", "Spin", "QuakeWindup", "Quake", "GoldRain"]  # 상태에 들어갈 때만 (매 프레임 이동은 C++ 게임 규칙이 한 번에)
+                "SpinWindup", "Spin", "QuakeWindup", "Quake", "GoldRain", "LaserWindup", "LaserFire", "LaserRecover"]  # 상태에 들어갈 때만 (매 프레임 이동은 C++ 게임 규칙이 한 번에)
 nodes = [node("begin", "beginPlay", 60, 40), node("awake", "nativeCall", 360, 40, nativeId="Enemy.Awake")]
 edges = [edge("begin", "then", "awake", "exec")]
 for i, ev in enumerate(ENEMY_EVENTS):
@@ -140,6 +140,10 @@ ENEMIES = {
                                  "Enemy.GlintLeap": glint("Skeleton", "LeapCrouch")}),
     "BP_SkeletonMage": ("SkeletonMage", {"Enemy.DisplayName": "해골 마법사", "Enemy.Brain": "Assets/AI/FSM_SkeletonMage.hbstatemachine.json",
                                                    "Enemy.KeepDistance": 6, "Enemy.GoldMin": 2, "Enemy.GoldMax": 3, "Enemy.GlintCast": glint("SkeletonMage", "CastReady")}),
+    # 눈알 (아트팀 눈알 적 v5, tools/make_eyeball.py): 거리를 두고 떠다니다 눈동자에 빛을 모아 레이저. 4방향 그림이라 뒤집지 않음 (C++ Enemy Laser)
+    "BP_Eyeball": ("Eyeball", {"Enemy.DisplayName": "눈알", "Enemy.Brain": "Assets/AI/FSM_Eyeball.hbstatemachine.json", "Enemy.Laser": True,
+                               "Enemy.KeepDistance": 6.5, "Enemy.ShotInterval": 2.6, "Enemy.Speed": 3.2, "Enemy.MaxHp": 2.5,
+                               "Enemy.GoldMin": 2, "Enemy.GoldMax": 3}),
     "BP_SkeletonCaptain": ("SkeletonCaptain", {"Enemy.DisplayName": "해골 대장", "Enemy.ShotClip": "Assets/Animations/SA_BossOrb.hbspriteanimation.json", "Enemy.Brain": "Assets/AI/FSM_SkeletonCaptain.hbstatemachine.json",
                                                         "Enemy.Boss": True, "Enemy.MaxHp": 40, "Enemy.Speed": 3.6, "Enemy.Radius": 1.4,
                                                         "Enemy.GoldMin": 30, "Enemy.GoldMax": 30,
@@ -156,7 +160,9 @@ ENEMIES = {
 from PIL import Image  # noqa: E402
 for name, (who, defaults) in ENEMIES.items():
     defaults["Enemy.DeathClip"] = f"Assets/Animations/SA_{who}_Death.hbspriteanimation.json"
-    over = {"sprite": {"sprite": ENEMY_SPRITE.format(who, "Walk_0"), "texture": ""}}
+    over = {"sprite": {"sprite": ENEMY_SPRITE.format(who, "idle_F_0" if who == "Eyeball" else "Walk_0"), "texture": ""}}
+    if name == "BP_Eyeball":
+        over["collider"] = {"extent": [0.4, 0.3, 0.1], "center": [0, -0.25, 0]}  # 떠 있는 눈의 아래쪽 (벽·다른 적과 부딪힘)
     if name == "BP_SkeletonCaptain":
         over["collider"] = {"extent": [1.0, 0.8, 0.1], "center": [0, -0.6, 0]}
     write(BP / f"Enemies/{name}.hbblueprint.json", blueprint(name, "Assets/Blueprints/Enemies/BP_Enemy.hbblueprint.json", defaults=defaults, overrides=over))
@@ -176,7 +182,7 @@ rules = blueprint("BP_AuricRules", "AuricRules", [transform()], native_from=True
     "AuricRules.CharacterSprites": ["Assets/Sprites/Valen/S_Valen_", "Assets/Sprites/Sherry/S_Sherry_", "Assets/Sprites/Alea/S_Alea_"],
     "AuricRules.Sounds": SOUNDS,
     "AuricRules.SofaSprites": [f"Assets/Sprites/Town/S_Sofa_{k}.hbsprite.json" for k in range(4)],
-    "AuricRules.Enemies": [f"{k}=Assets/Blueprints/Enemies/BP_{v}.hbblueprint.json" for k, v in (("S", "Skeleton"), ("M", "SkeletonMage"), ("C", "SkeletonCaptain"))]})
+    "AuricRules.Enemies": [f"{k}=Assets/Blueprints/Enemies/BP_{v}.hbblueprint.json" for k, v in (("S", "Skeleton"), ("M", "SkeletonMage"), ("C", "SkeletonCaptain"), ("E", "Eyeball"))]})
 rules["settings"].update(tickEnabled=False, overlapEnabled=False)
 write(BP / "BP_AuricRules.hbblueprint.json", rules)
 (BP / "BP_SpawnPoint.hbblueprint.json").unlink(missing_ok=True)  # 적 자리는 이제 웨이브가 방 안에서 무작위로 고름
@@ -187,7 +193,7 @@ for name, who, room in (("BP_Test_Valen", 0, ""), ("BP_Test_Sherry", 1, ""), ("B
                                                                "TopDownShooter.MaxHp": 30, "TopDownShooter.StartRoom": room}))  # Test_Boss: 성능 측정용, 보스방에서 시작
 
 # ---- 던전 데이터 (편집기 데이터 표에서 고침, 다시 빌드할 필요 없음) ----
-# 웨이브: | 로 웨이브를 나누고 , 로 적을 나눔. 기호는 BP_AuricRules.Enemies (S 해골, M 해골 마법사, C 해골 대장)
+# 웨이브: | 로 웨이브를 나누고 , 로 적을 나눔. 기호는 BP_AuricRules.Enemies (S 해골, M 해골 마법사, C 해골 대장, E 눈알)
 write(PROJECT / "Assets/Data/DA_Floor.hbdata.json", {"version": 1, "name": "DA_Floor", "fields": [
     {"name": "rooms", "type": "float", "value": 11},    # 방 수 (시작·보스·상점·채집 + 나머지 전투방). 시작에서 가지를 뻗어 나무 모양으로 이음
     {"name": "loops", "type": "float", "value": 1},     # 나무에 더 이어 붙이는 고리 수 (돌아가는 길)
@@ -196,8 +202,8 @@ ROOM_COLUMNS = [("minHalf", "float"), ("maxHalf", "float"), ("square", "bool"), 
 ROOM_ROWS = {
     "Start": (8, 8, True, "", False),  # 튜토리얼 표지판 7개가 들어가게
     "Combat1": (6, 9, False, "S,S|S,S,S", False),          # 시작 바로 옆: 작은 방도 나옴
-    "Combat2": (7, 11, False, "S,S,M|S,M,M", True),        # 마지막 해골이 마물 소재를 확정으로 떨굼 (인챈트 체험)
-    "Combat3": (8, 12, False, "S,S,S,M|S,S,M,M|S,M,M", False),  # 깊은 방: 큰 방, 웨이브 3번
+    "Combat2": (7, 11, False, "S,S,E|S,M,E", True),        # 마지막 해골이 마물 소재를 확정으로 떨굼 (인챈트 체험)
+    "Combat3": (8, 12, False, "S,S,E,M|S,E,M,M|E,M,E", False),  # 깊은 방: 큰 방, 웨이브 3번
     "Gather": (7, 7, True, "", False),
     "Shop": (9, 9, True, "", False),
     "Boss": (14, 14, True, "C", False),
@@ -278,6 +284,18 @@ fsm("FSM_Skeleton", "appear", PARAMS, [
     state("stun", "경직", 360, 320, enter="Stagger", clip=S + "Hurt", loop=False),
 ], [go("appear_chase", "appear", "chase", exit_time=1), go("chase_swing", "chase", "swing", conditions=[("Near", "equal", True)]),
     go("swing_chase", "swing", "chase", exit_time=1), *stunned, go("stun_chase", "stun", "chase", conditions=[("Stunned", "equal", False)])])
+
+# 눈알: 등장 → 거리 유지(떠다님) → 레이저 모으기(0.48초, 붉은 띠) → 발사(0.52초) → 회복(0.41초) → 거리 유지. 그림은 C++가 방향에 맞게 틂
+fsm("FSM_Eyeball", "appear", PARAMS, [
+    state("appear", "등장", 120, 150, 0.6, enter="Halt"),
+    state("move", "거리 유지", 360, 150, enter="Range"),
+    state("windup", "레이저 모으기", 600, 80, 0.48, enter="LaserWindup"),
+    state("fire", "레이저", 840, 80, 0.52, enter="LaserFire"),
+    state("recover", "회복", 840, 240, 0.41, enter="LaserRecover"),
+    state("stun", "경직", 360, 320, enter="Stagger"),
+], [go("appear_move", "appear", "move", exit_time=1), go("move_windup", "move", "windup", conditions=[("Ready", "equal", True)]),
+    go("windup_fire", "windup", "fire", exit_time=1), go("fire_recover", "fire", "recover", exit_time=1), go("recover_move", "recover", "move", exit_time=1),
+    *stunned, go("stun_move", "stun", "move", conditions=[("Stunned", "equal", False)])])
 
 fsm("FSM_SkeletonMage", "appear", PARAMS, [
     state("appear", "등장", 120, 150, 0.6, enter="Halt", clip=M + "Walk"),

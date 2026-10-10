@@ -1,0 +1,1 @@
+{"version": 1, "name": "S_Eyeball_transition_F_1", "texture": "Assets/Sprites/Enemies/Eyeball/eyeball_transition.png", "pixelsPerUnit": 32, "rect": [80, 0, 80, 56], "pivot": [0.5, 0.42857], "filter": "nearest", "border": [0, 0, 0, 0]}

@@ -414,10 +414,18 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
     parked(objects, "Pool.WarnCircle", 8, lambda i: warn(i, "FX_WarnCircle.png", 3, 3, 30))
     parked(objects, "Pool.WarnCircleFill", 8, lambda i: warn(i, "FX_WarnCircleFill.png", 1, 1, 31))
     # 적 풀: 웨이브·소환·귀환 때 C++가 꺼내 씀 (태그 Enemy.기호 = BP_AuricRules.Enemies). 엔진 풀(PooledActor)은 꺼 둔 채 시작하므로 켜서 놓음
-    for code, name, count in (("S", "Skeleton", 10), ("M", "SkeletonMage", 6), ("C", "SkeletonCaptain", 1)):
+    for code, name, count in (("S", "Skeleton", 10), ("M", "SkeletonMage", 6), ("C", "SkeletonCaptain", 1), ("E", "Eyeball", 6)):
         for k in range(count):
             objects.append(bp_obj(f"{name}{k}", f"Enemies/BP_{name}", -60 + k * 4 + (40 if code != "S" else 0), -300 - (k % 2) * 4,
                                   components={"pool": {"initiallyActive": True}}, tags=["Enemy." + code]))
+    # 눈알 레이저 조각 (TopDownShooter::FireLaser): 몸통(길이만큼 늘림)과 시작·끝을 따로 (늘린 크기가 다른 이펙트에 남지 않게)
+    eye = "Assets/Sprites/Enemies/Eyeball/"
+    for tag, count, spr in (("Pool.LaserBody", 6, "S_Laser_Body_0"), ("Pool.LaserCap", 12, "S_Laser_Start_0")):
+        for k in range(count):
+            o = sprite_obj(f"{tag.split('.')[1]}{k}", eye + "laser_body.png", -60 + k * 3, -260, order=6)
+            comp(o, "SpriteRenderer")["properties"].update(texture="", sprite=eye + spr + ".hbsprite.json", useCustomSize=False, blendMode="additive")
+            o["tags"] = [tag]
+            objects.append(o)
     # 탄·골드·이펙트 풀 (TopDownShooter::Prewarm)
     for tag, prefab, count in (("Pool.EnemyShot", "PF_EnemyShot", 32), ("Pool.PlayerShot", "PF_PlayerShot", 16), ("Pool.Coin", "PF_Coin", 16), ("Pool.Fx", "PF_Fx", 64)):
         base = json.loads((ASSETS / f"Prefabs/{prefab}.hbprefab.json").read_text(encoding="utf-8"))["objects"][0]

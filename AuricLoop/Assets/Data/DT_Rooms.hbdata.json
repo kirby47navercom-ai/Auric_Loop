@@ -42,14 +42,14 @@
       "minHalf": 7,
       "maxHalf": 11,
       "square": false,
-      "waves": "S,S,M|S,M,M",
+      "waves": "S,S,E|S,M,E",
       "monsterDrop": true
     },
     "Combat3": {
       "minHalf": 8,
       "maxHalf": 12,
       "square": false,
-      "waves": "S,S,S,M|S,S,M,M|S,M,M",
+      "waves": "S,S,E,M|S,E,M,M|E,M,E",
       "monsterDrop": false
     },
     "Gather": {
