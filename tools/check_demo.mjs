@@ -20,6 +20,8 @@ const touchBursts = (from, to, hold = 70, gap = 4) => {
   return out;
 };
 const touchHold = (from, to) => [{frame: from, key: 'LeftMouseButton', value: 1, device: 'touch', source: 'ui'}, {frame: to, key: 'LeftMouseButton', value: 0, device: 'touch', source: 'ui'}];
+// 발렌은 누를 때마다 한 번만 벰 (꾹 눌러 연속 베기 없음): 0.38초마다(검 쉬는 시간 0.35초보다 조금 길게) 톡 눌렀다 뗌
+const taps = (from, to, device) => { const out = []; for (let f = from; f + 4 < to; f += 23) out.push({frame: f, key: 'LeftMouseButton', value: 1, ...(device ? {device, source: 'ui'} : {})}, {frame: f + 4, key: 'LeftMouseButton', value: 0, ...(device ? {device, source: 'ui'} : {})}); return out; };
 const gatesLocked = vm => vm.objects.filter(o => (o.tags || []).some(t => t === 'Dungeon.Gate' || t === 'Dungeon.GateSide') && o.position[1] > -150).length;
 const startIn = room => ({Director: {StartRoom: room}});
 
@@ -46,7 +48,7 @@ const rooms = layout.filter(r => r.kind !== 'Shortage');
 // 경로 첫 전투방: F9로 들어가면 문이 잠기고 웨이브(해골 2+3)가 마법진 예고 뒤 나옴. 모바일 공격(터치)은 가까운 해골 자동 조준
 {
   let maxGates = 0;
-  const r = await runProject(project, {scene: scene('Test_Valen'), frames: 1500, delta: 1 / 60, inputs: [...warps(5, 1), ...touchHold(20, 1490)],
+  const r = await runProject(project, {scene: scene('Test_Valen'), frames: 1500, delta: 1 / 60, inputs: [...warps(5, 1), ...taps(20, 1490, 'touch')],
     onFrame: (frame, vm) => { maxGates = Math.max(maxGates, gatesLocked(vm)); }});
   const s = director(r);
   assert.ok(s.Swings >= 8, '검 공격 간격 0.35초');
@@ -82,9 +84,9 @@ const rooms = layout.filter(r => r.kind !== 'Shortage');
   let returnGates = 0;
   const r = await runProject(project, {scene: scene('Test_Valen'), frames: 4200, delta: 1 / 60, nativeDefaults: startIn('Boss'), inputs: [
     ...press(80, 'e'), ...press(90, 'e'),  // 해골 대장 대사
-    ...touchHold(100, 3000), ...press(3005, 'tab'), ...press(3010, 'enter'), ...press(3020, 'e'), ...press(3030, 'e'),  // 가방(Tab) 열고 Enter로 [귀환]
+    ...taps(100, 3000, 'touch'), ...press(3005, 'tab'), ...press(3010, 'enter'), ...press(3020, 'e'), ...press(3030, 'e'),  // 가방(Tab) 열고 Enter로 [귀환]
     ...press(3040, 'F9'), {frame: 3060, key, value: 1}, {frame: 3060 + walk, key, value: 0},
-    {frame: 3065 + walk, key: 'LeftMouseButton', value: 1}, {frame: 3500 + walk, key: 'LeftMouseButton', value: 0},
+    ...taps(3065 + walk, 3500 + walk),
     {frame: 3510 + walk, key, value: 1}, {frame: 3510 + walk + Math.ceil((36 - walk / 10) / 6 * 60), key, value: 0},  // 복도를 지나 앞 방 가운데쯤까지
   ], onFrame: (frame, vm) => { if (frame === 3055) returnGates = gatesLocked(vm); }});
   const s = director(r);
@@ -281,6 +283,14 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   assert.ok(snap[320].paused && snap[480].paused && Math.abs(snap[480].t - snap[320].t) < 0.01 && snap[480].e === snap[320].e, `멈춘 동안 시간·적 그대로 (${JSON.stringify(snap)})`);
   assert.ok(!snap[540].paused && snap[540].t > snap[480].t + 0.3, '다시 Esc면 시간이 흐름');
   console.log('Esc 시간 정지 검사 통과');
+}
+
+// 발렌: 꾹 누르고 있어도 한 번만 벰
+{
+  const held = director(await runProject(project, {scene: scene('Test_Valen'), frames: 120, delta: 1 / 60,
+    inputs: [{frame: 10, key: 'LeftMouseButton', value: 1}, {frame: 110, key: 'LeftMouseButton', value: 0}]})).Swings;
+  assert.equal(held, 1, `꾹 눌러도 한 번 (${held})`);
+  console.log('발렌 클릭 베기 검사 통과');
 }
 
 // 셰리 활: 당긴 만큼 세짐. 0.3초만 당겨도 쏘고(약하고 느린 화살), 0.05초 톡 치면 취소. 덜 당겨 쏘면 쉬는 시간(연타 방지)

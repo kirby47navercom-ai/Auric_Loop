@@ -211,7 +211,8 @@ void TopDownShooter::Update(float delta){
         attackCooldown=0.15f+(power<1?rules->ArrowPartialCooldown*(1-power*0.5f):0.f);}  // 다 당기지 않았으면 쉬는 시간 (연타 방지)
       charge=0;}}
   else if(Character==2&&attackDown&&attackCooldown<=0){attackCooldown=rules->BoltInterval;attackAnim=0.2f;Shoot(position);}
-  else if(Character==0&&attackDown&&attackCooldown<=0)Slash(position,enemies);
+  else if(Character==0&&attackDown&&!swordHeld&&attackCooldown<=0){swordHeld=true;Slash(position,enemies);}  // 발렌: 누를 때마다 한 번 (꾹 눌러 연속 베기 없음)
+  if(!attackDown)swordHeld=false;
   {const bool rmb=hb::Input::IsKeyDown("RightMouseButton");  // 섬광탄: 우클릭으로 마우스 쪽에 던짐 (최대 6m)
    if(rmb&&!throwHeld&&Flashbangs>0&&inDungeon){const hb::Vec3 d=hasAim&&!touchMode?aim-position:facing*4;const float l=std::min(6.f,Length(d));
      ThrowFlash(position+hb::Vec3{0,0.2f,0},position+Normal(d,facing)*l+hb::Vec3{0,-0.6f,0});}
