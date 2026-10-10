@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "SA_BossOrb",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_BossOrb_0.hbsprite.json",
+      "duration": 0.1
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_BossOrb_1.hbsprite.json",
+      "duration": 0.1
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_BossOrb_2.hbsprite.json",
+      "duration": 0.1
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_BossOrb_3.hbsprite.json",
+      "duration": 0.1
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

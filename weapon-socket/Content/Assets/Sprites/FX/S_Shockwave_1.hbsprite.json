@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_Shockwave_1",
+  "texture": "Assets/Sprites/FX/Shockwave_1.png",
+  "pixelsPerUnit": 32,
+  "rect": [
+    0,
+    0,
+    156,
+    70
+  ],
+  "pivot": [
+    0.5,
+    0.5
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,212 @@
+{
+  "version": 1,
+  "name": "FSM_Eyeball",
+  "initial": "appear",
+  "parameters": [
+    {
+      "name": "Distance",
+      "type": "float",
+      "value": 99
+    },
+    {
+      "name": "Stunned",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "name": "Ready",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "name": "Next",
+      "type": "float",
+      "value": 0
+    },
+    {
+      "name": "Near",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "name": "Again",
+      "type": "bool",
+      "value": false
+    }
+  ],
+  "states": [
+    {
+      "id": "appear",
+      "name": "등장",
+      "x": 120,
+      "y": 150,
+      "clip": "",
+      "loop": true,
+      "duration": 0.6,
+      "onEnter": "Halt",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "move",
+      "name": "거리 유지",
+      "x": 360,
+      "y": 150,
+      "clip": "",
+      "loop": true,
+      "duration": 1.0,
+      "onEnter": "Range",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "windup",
+      "name": "레이저 모으기",
+      "x": 600,
+      "y": 80,
+      "clip": "",
+      "loop": true,
+      "duration": 0.48,
+      "onEnter": "LaserWindup",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "fire",
+      "name": "레이저",
+      "x": 840,
+      "y": 80,
+      "clip": "",
+      "loop": true,
+      "duration": 0.52,
+      "onEnter": "LaserFire",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "recover",
+      "name": "회복",
+      "x": 840,
+      "y": 240,
+      "clip": "",
+      "loop": true,
+      "duration": 0.41,
+      "onEnter": "LaserRecover",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "stun",
+      "name": "경직",
+      "x": 360,
+      "y": 320,
+      "clip": "",
+      "loop": true,
+      "duration": 1.0,
+      "onEnter": "Stagger",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    }
+  ],
+  "transitions": [
+    {
+      "id": "appear_move",
+      "from": "appear",
+      "to": "move",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "move_windup",
+      "from": "move",
+      "to": "windup",
+      "exitTime": 1,
+      "hasExitTime": false,
+      "event": "",
+      "conditions": [
+        {
+          "key": "Ready",
+          "operator": "equal",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "windup_fire",
+      "from": "windup",
+      "to": "fire",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "fire_recover",
+      "from": "fire",
+      "to": "recover",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "recover_move",
+      "from": "recover",
+      "to": "move",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "toStun",
+      "from": "any",
+      "to": "stun",
+      "exitTime": 1,
+      "hasExitTime": false,
+      "event": "",
+      "conditions": [
+        {
+          "key": "Stunned",
+          "operator": "equal",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "stun_move",
+      "from": "stun",
+      "to": "move",
+      "exitTime": 1,
+      "hasExitTime": false,
+      "event": "",
+      "conditions": [
+        {
+          "key": "Stunned",
+          "operator": "equal",
+          "value": false
+        }
+      ]
+    }
+  ]
+}

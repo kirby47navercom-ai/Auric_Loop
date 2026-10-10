@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_Sherry_SE_Idle_1",
+  "texture": "Assets/Sprites/Sherry/Sherry_SE_Idle_1.png",
+  "pixelsPerUnit": 41,
+  "rect": [
+    0,
+    0,
+    60,
+    69
+  ],
+  "pivot": [
+    0.5,
+    0.56451
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

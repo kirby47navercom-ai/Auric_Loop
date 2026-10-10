@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "name": "DA_Floor",
+  "fields": [
+    {
+      "name": "rooms",
+      "type": "float",
+      "value": 11
+    },
+    {
+      "name": "loops",
+      "type": "float",
+      "value": 1
+    },
+    {
+      "name": "spacing",
+      "type": "float",
+      "value": 36
+    }
+  ]
+}

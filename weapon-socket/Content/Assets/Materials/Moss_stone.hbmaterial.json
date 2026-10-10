@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "surface": {
+    "color": "#889878",
+    "roughness": 0.72,
+    "metalness": 0.08,
+    "light": 3.2
+  }
+}

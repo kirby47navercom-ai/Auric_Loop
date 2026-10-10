@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_ButterflyY_0",
+  "texture": "Assets/Sprites/Ambient/ButterflyY_0.png",
+  "pixelsPerUnit": 32,
+  "rect": [
+    0,
+    0,
+    10,
+    8
+  ],
+  "pivot": [
+    0.5,
+    0.5
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

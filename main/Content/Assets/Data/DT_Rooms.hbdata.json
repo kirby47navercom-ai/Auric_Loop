@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "name": "DT_Rooms",
+  "columns": [
+    {
+      "name": "minHalf",
+      "type": "float"
+    },
+    {
+      "name": "maxHalf",
+      "type": "float"
+    },
+    {
+      "name": "square",
+      "type": "bool"
+    },
+    {
+      "name": "waves",
+      "type": "string"
+    },
+    {
+      "name": "monsterDrop",
+      "type": "bool"
+    }
+  ],
+  "rows": {
+    "Start": {
+      "minHalf": 8,
+      "maxHalf": 8,
+      "square": true,
+      "waves": "",
+      "monsterDrop": false
+    },
+    "Combat1": {
+      "minHalf": 6,
+      "maxHalf": 9,
+      "square": false,
+      "waves": "S,S|S,S,S",
+      "monsterDrop": false
+    },
+    "Combat2": {
+      "minHalf": 7,
+      "maxHalf": 11,
+      "square": false,
+      "waves": "S,S,M|S,M,M",
+      "monsterDrop": true
+    },
+    "Combat3": {
+      "minHalf": 8,
+      "maxHalf": 12,
+      "square": false,
+      "waves": "S,S,S,M|S,S,M,M|S,M,M",
+      "monsterDrop": false
+    },
+    "Gather": {
+      "minHalf": 7,
+      "maxHalf": 7,
+      "square": true,
+      "waves": "",
+      "monsterDrop": false
+    },
+    "Shop": {
+      "minHalf": 9,
+      "maxHalf": 9,
+      "square": true,
+      "waves": "",
+      "monsterDrop": false
+    },
+    "Boss": {
+      "minHalf": 14,
+      "maxHalf": 14,
+      "square": true,
+      "waves": "C",
+      "monsterDrop": false
+    },
+    "Return": {
+      "minHalf": 0,
+      "maxHalf": 0,
+      "square": true,
+      "waves": "S,S,M,M,M",
+      "monsterDrop": false
+    }
+  }
+}

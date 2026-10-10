@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "SA_Card",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_Card_0.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Card_1.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Card_2.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Card_3.hbsprite.json",
+      "duration": 0.06
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

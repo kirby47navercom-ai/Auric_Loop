@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "name": "SA_SkeletonMage_Cast",
+  "loop": false,
+  "playRate": 1,
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_CastReady.hbsprite.json",
+      "duration": 0.25
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Cast.hbsprite.json",
+      "duration": 0.2
+    }
+  ]
+}

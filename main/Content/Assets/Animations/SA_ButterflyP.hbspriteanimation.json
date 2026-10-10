@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "name": "SA_ButterflyP",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Ambient/S_ButterflyP_0.hbsprite.json",
+      "duration": 0.11
+    },
+    {
+      "sprite": "Assets/Sprites/Ambient/S_ButterflyP_1.hbsprite.json",
+      "duration": 0.11
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

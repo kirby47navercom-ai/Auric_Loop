@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "name": "S_Craft",
+  "clip": "Assets/Audio/Craft.wav",
+  "volume": 0.42,
+  "pitch": 1,
+  "loop": false,
+  "spatial": false,
+  "autoplay": false,
+  "refDistance": 1,
+  "maxDistance": 100,
+  "rolloff": 1,
+  "mixer": "",
+  "bus": "master"
+}

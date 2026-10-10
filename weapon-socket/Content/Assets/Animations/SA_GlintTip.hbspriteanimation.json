@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "name": "SA_GlintTip",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_GlintTip_0.hbsprite.json",
+      "duration": 0.04
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_GlintTip_1.hbsprite.json",
+      "duration": 0.05
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_GlintTip_2.hbsprite.json",
+      "duration": 0.12
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_GlintTip_3.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_GlintTip_4.hbsprite.json",
+      "duration": 0.05
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

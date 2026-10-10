@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "name": "SA_DebrisGold",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_DebrisGold_0.hbsprite.json",
+      "duration": 1.0
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

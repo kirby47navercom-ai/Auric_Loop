@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "SA_Torch",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Props/S_Torch_0.hbsprite.json",
+      "duration": 0.12
+    },
+    {
+      "sprite": "Assets/Sprites/Props/S_Torch_1.hbsprite.json",
+      "duration": 0.12
+    },
+    {
+      "sprite": "Assets/Sprites/Props/S_Torch_2.hbsprite.json",
+      "duration": 0.12
+    },
+    {
+      "sprite": "Assets/Sprites/Props/S_Torch_3.hbsprite.json",
+      "duration": 0.12
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "name": "SA_DebrisRib",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_DebrisRib_0.hbsprite.json",
+      "duration": 1.0
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

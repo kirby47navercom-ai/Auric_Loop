@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "name": "SA_PottedPlant",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Town/S_PottedPlant_0.hbsprite.json",
+      "duration": 0.375
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_PottedPlant_1.hbsprite.json",
+      "duration": 0.375
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_PottedPlant_2.hbsprite.json",
+      "duration": 0.375
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_PottedPlant_3.hbsprite.json",
+      "duration": 0.375
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_PottedPlant_4.hbsprite.json",
+      "duration": 0.375
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_PottedPlant_5.hbsprite.json",
+      "duration": 0.375
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_PottedPlant_6.hbsprite.json",
+      "duration": 0.375
+    },
+    {
+      "sprite": "Assets/Sprites/Town/S_PottedPlant_7.hbsprite.json",
+      "duration": 0.375
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

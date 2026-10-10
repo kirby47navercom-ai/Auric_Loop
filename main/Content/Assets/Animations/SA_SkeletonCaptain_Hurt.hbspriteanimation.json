@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "name": "SA_SkeletonCaptain_Hurt",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Hurt_0.hbsprite.json",
+      "duration": 0.2
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

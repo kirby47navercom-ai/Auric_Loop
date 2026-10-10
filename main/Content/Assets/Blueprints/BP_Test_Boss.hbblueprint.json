@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "name": "BP_Test_Boss",
+  "components": [],
+  "variables": [],
+  "nodes": [],
+  "edges": [],
+  "functions": [],
+  "macros": [],
+  "comments": [],
+  "dispatchers": [],
+  "interfaces": [],
+  "settings": {
+    "parentClass": "Assets/Blueprints/BP_TopDownShooter.hbblueprint.json",
+    "tickEnabled": true,
+    "tickInterval": 0,
+    "overlapEnabled": true,
+    "nativeDefaults": {
+      "TopDownShooter.Character": 0,
+      "TopDownShooter.Seed": 7,
+      "TopDownShooter.ShowFps": true,
+      "TopDownShooter.MaxHp": 30,
+      "TopDownShooter.StartRoom": "Boss"
+    }
+  }
+}

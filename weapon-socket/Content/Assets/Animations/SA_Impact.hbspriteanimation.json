@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "SA_Impact",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_Impact_0.hbsprite.json",
+      "duration": 0.03
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Impact_1.hbsprite.json",
+      "duration": 0.04
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Impact_2.hbsprite.json",
+      "duration": 0.05
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_Impact_3.hbsprite.json",
+      "duration": 0.05
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

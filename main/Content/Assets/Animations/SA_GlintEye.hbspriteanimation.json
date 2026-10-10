@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "name": "SA_GlintEye",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_GlintEye_0.hbsprite.json",
+      "duration": 0.04
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_GlintEye_1.hbsprite.json",
+      "duration": 0.05
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_GlintEye_2.hbsprite.json",
+      "duration": 0.12
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_GlintEye_3.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_GlintEye_4.hbsprite.json",
+      "duration": 0.05
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

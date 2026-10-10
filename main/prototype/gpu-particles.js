@@ -1,0 +1,82 @@
+import {WebGPURenderer,PMREMGenerator,BoxGeometry,MeshBasicMaterial,BackSide,StorageInstancedBufferAttribute,IndirectStorageBufferAttribute,InstancedBufferGeometry,PlaneGeometry,Mesh,SpriteNodeMaterial,Vector4,Vector3,Matrix4,AdditiveBlending,NormalBlending} from 'three/webgpu';
+import {Fn,If,storage,uniform,instanceIndex,uint,vec4,vec2,float,min,max,exp,atomicAdd,atomicStore,mix,texture,uv,smoothstep,modelViewMatrix,cameraProjectionMatrix} from 'three/tsl';
+import {ParticleSimulation} from './scene-systems.js';
+
+// CPU prepares births/timing only; living positions, ages and draw counts stay GPU-resident.
+export class GPUParticleSimulation extends ParticleSimulation {
+  constructor(renderer,group,p,map=null){
+    super(p);this.renderer=renderer;this.group=group;this.capacity=p.maxParticles;this.submissions=0;this.readbacks=0;this.birthUploads=0;this.birthUploadBytes=0;this.disposed=false;
+    if(!Number.isInteger(this.capacity)||this.capacity<1||this.capacity*16>renderer.backend.device.limits.maxStorageBufferBindingSize)throw Error('GPU 파티클 용량이 장치 버퍼 한계를 넘어섰어요.');
+    this.positionAge=new StorageInstancedBufferAttribute(this.capacity,4);this.velocityLife=new StorageInstancedBufferAttribute(this.capacity,4);
+    this.sorting=p.sortMode&&p.sortMode!=='none';this.aliveCapacity=this.sorting?2**Math.ceil(Math.log2(this.capacity)):this.capacity;this.sortSubmissions=0;this.sortNodes=[];
+    this.alive=new StorageInstancedBufferAttribute(this.aliveCapacity,1,Uint32Array);this.args=new IndirectStorageBufferAttribute(new Uint32Array([6,0,0,0,0]),1);
+    this.birthPosition=new StorageInstancedBufferAttribute(this.capacity,4);this.birthVelocity=new StorageInstancedBufferAttribute(this.capacity,4);
+    const positions=storage(this.positionAge,'vec4',this.capacity),velocities=storage(this.velocityLife,'vec4',this.capacity),indices=storage(this.alive,'uint',this.aliveCapacity),args=storage(this.args,'uint',5).toAtomic(),births=storage(this.birthPosition,'vec4',this.capacity),speeds=storage(this.birthVelocity,'vec4',this.capacity);
+    this.delta=uniform(0);this.force=uniform(new Vector3());this.drag=uniform(0);this.requestCount=uniform(0,'uint');
+    this.resetArgs=Fn(()=>{If(instanceIndex.equal(0),()=>{atomicStore(args.element(0),uint(6));atomicStore(args.element(1),uint(0));atomicStore(args.element(2),uint(0));atomicStore(args.element(3),uint(0));atomicStore(args.element(4),uint(0));});})().compute(1);
+    this.clearNode=Fn(()=>{If(instanceIndex.lessThan(this.capacity),()=>{positions.element(instanceIndex).w.assign(velocities.element(instanceIndex).w);});})().compute(this.capacity);
+    this.updateNode=Fn(()=>{If(instanceIndex.lessThan(this.capacity),()=>{
+      const position=positions.element(instanceIndex).toVar(),velocity=velocities.element(instanceIndex).toVar();
+      If(position.w.lessThan(velocity.w),()=>{const dt=min(this.delta,velocity.w.sub(position.w)),half=dt.mul(dt).mul(.5);position.xyz.addAssign(velocity.xyz.mul(dt).add(this.force.mul(half)));velocity.xyz.assign(velocity.xyz.add(this.force.mul(dt)).mul(exp(this.drag.mul(dt).negate())));position.w.addAssign(this.delta);});
+      If(position.w.greaterThanEqual(velocity.w),()=>{const birth=atomicAdd(args.element(4),uint(1)).toVar();If(birth.lessThan(this.requestCount),()=>{position.assign(births.element(birth));velocity.assign(speeds.element(birth));});});
+      positions.element(instanceIndex).assign(position);velocities.element(instanceIndex).assign(velocity);
+      If(position.w.lessThan(velocity.w),()=>{const index=atomicAdd(args.element(1),uint(1));indices.element(index).assign(instanceIndex);});
+    });})().compute(this.capacity);
+    if(this.sorting){
+      if(this.aliveCapacity*4>renderer.backend.device.limits.maxStorageBufferBindingSize)throw Error('GPU 입자 정렬 버퍼가 장치 한계를 넘어섰어요.');
+      this.sortKeys=new StorageInstancedBufferAttribute(this.aliveCapacity,1);const keys=storage(this.sortKeys,'float',this.aliveCapacity);this.sortWorld=uniform(new Matrix4());this.sortView=uniform(new Matrix4());this.sortCamera=uniform(new Vector3());this.sortDepth=uniform(false,'bool');
+      const age=p.sortMode==='oldest'||p.sortMode==='youngest',sign=p.sortMode==='oldest'||p.sortMode.endsWith('Reverse')?1:-1;
+      this.sortNodes.push(Fn(()=>{If(instanceIndex.lessThan(this.aliveCapacity),()=>{indices.element(instanceIndex).assign(instanceIndex);keys.element(instanceIndex).assign(1e30);If(instanceIndex.lessThan(this.capacity),()=>{const point=positions.element(instanceIndex),life=velocities.element(instanceIndex).w;If(point.w.lessThan(life),()=>{const world=p.simulationSpace==='world'?point.xyz:this.sortWorld.mul(vec4(point.xyz,1)).xyz,score=age?point.w:this.sortDepth.select(this.sortView.mul(vec4(world,1)).z.negate(),world.sub(this.sortCamera).lengthSq());keys.element(instanceIndex).assign(score.mul(sign));});});});})().compute(this.aliveCapacity));
+      // ponytail: optional bitonic sort is O(N log² N); reuse shader/pipelines and buffers across frames, use radix stages if measured sorting cost requires it.
+      for(let stage=2;stage<=this.aliveCapacity;stage*=2)for(let stride=stage/2;stride>=1;stride/=2){const span=uniform(stage,'uint'),step=uniform(stride,'uint');this.sortNodes.push(Fn(()=>{const i=instanceIndex,j=i.bitXor(step);If(i.lessThan(j).and(j.lessThan(this.aliveCapacity)),()=>{const a=indices.element(i).toVar(),b=indices.element(j).toVar(),ka=keys.element(a),kb=keys.element(b),ascending=i.bitAnd(span).equal(0),greater=ka.greaterThan(kb).or(ka.equal(kb).and(a.greaterThan(b))),less=ka.lessThan(kb).or(ka.equal(kb).and(a.lessThan(b)));If(ascending.select(greater,less),()=>{indices.element(i).assign(b);indices.element(j).assign(a);});});})().compute(this.aliveCapacity));}
+    }
+    const geometry=new InstancedBufferGeometry().copy(new PlaneGeometry(1,1).toNonIndexed());geometry.instanceCount=this.capacity;geometry.setIndirect(this.args);
+    for(const [name,attribute] of Object.entries({gpuPositionAge:this.positionAge,gpuVelocityLife:this.velocityLife,gpuAlive:this.alive,gpuBirthPosition:this.birthPosition,gpuBirthVelocity:this.birthVelocity}))geometry.setAttribute(name,attribute);
+    const particle=positions.element(indices.element(instanceIndex)),life=velocities.element(indices.element(instanceIndex)).w,age=particle.w.div(max(life,.000001));
+    this.inverseWorld=uniform(new Matrix4());this.scale=uniform(new Vector3(1,1,1));this.startColor=uniform(new Vector4(...p.color));this.endColor=uniform(new Vector4(...p.endColor));this.size=uniform(p.size);this.endSize=uniform(p.endSize);this.minSize=uniform(p.minParticleSize);this.maxSize=uniform(p.maxParticleSize);this.perspective=uniform(false,'bool');
+    const local=p.simulationSpace==='world'?this.inverseWorld.mul(vec4(particle.xyz,1)).xyz:particle.xyz,depth=modelViewMatrix.mul(vec4(local,1)).z.negate(),projection=cameraProjectionMatrix.element(1).y;
+    const distance=this.perspective.select(max(.001,depth),float(1)),worldPerHeight=distance.mul(2).div(projection),worldSize=min(max(this.size.mul(mix(1,this.endSize,age)),this.minSize.mul(worldPerHeight)),this.maxSize.mul(worldPerHeight));
+    const color=mix(this.startColor,this.endColor,age),sample=map?texture(map,uv()):vec4(1,1,1,float(1).sub(smoothstep(.35,.5,uv().sub(.5).length())));
+    const material=new SpriteNodeMaterial({transparent:true,depthWrite:false,alphaTest:.001,blending:p.blend==='additive'?AdditiveBlending:NormalBlending});material.positionNode=local;material.scaleNode=vec2(worldSize).div(this.scale.xy);material.colorNode=color.rgb.mul(sample.rgb);material.opacityNode=color.a.mul(sample.a);if(p.maskInteraction!=='none')renderer.hbSpriteMask(material);
+    renderer.hbParticleResources??={effects:0,buffers:0,storageBytes:0};++renderer.hbParticleResources.effects;this.resourceBuffers=this.sorting?7:6;this.resourceBytes=this.capacity*64+this.aliveCapacity*(this.sorting?8:4)+20;renderer.hbParticleResources.buffers+=this.resourceBuffers;renderer.hbParticleResources.storageBytes+=this.resourceBytes;this.mesh=new Mesh(geometry,material);this.mesh.frustumCulled=false;this.mesh.userData.objectId=group.userData.objectId;this.mesh.renderOrder=p.sortingOrder;
+    this.mesh.userData.particleRenderer=true;this.mesh.userData.draw2dId='particles';this.mesh.userData.draw2d={sortingLayer:p.sortingLayer||'default',sortingOrder:p.sortingOrder||0,maskInteraction:p.maskInteraction||'none'};
+    this.mesh.onBeforeRender=(_r,_scene,camera)=>{group.updateWorldMatrix(true,false);this.inverseWorld.value.copy(group.matrixWorld).invert();group.getWorldScale(this.scale.value);this.scale.value.x=Math.max(.000001,Math.abs(this.scale.value.x));this.scale.value.y=Math.max(.000001,Math.abs(this.scale.value.y));this.perspective.value=camera.isPerspectiveCamera===true;this.startColor.value.fromArray(this.p.color);this.endColor.value.fromArray(this.p.endColor);this.size.value=this.p.size;this.endSize.value=this.p.endSize;this.minSize.value=this.p.minParticleSize;this.maxSize.value=this.p.maxParticleSize;};
+    group.add(this.mesh);this.playing=p.playOnStart;this.submit(0,0);
+  }
+  reset(){super.reset();this.remainingLifetime=0;this.emptySkips=0;if(this.renderer){this.renderer.compute(this.clearNode);this.submit(0,0);}}
+  clear(){if(this.disposed)throw Error('GPU 파티클이 해제됐어요.');this.remainingLifetime=0;this.renderer.compute(this.clearNode);this.submit(0,0);}
+  submit(delta,count){if(this.disposed)throw Error('GPU 파티클이 해제됐어요.');this.delta.value=delta;this.force.value.set(this.p.force[0],this.p.force[1]-9.81*this.p.gravity,this.p.force[2]);this.drag.value=this.p.drag;this.requestCount.value=count;if(count)this.remainingLifetime=Math.max(this.remainingLifetime,this.p.lifetime,this.p.lifetimeMax);this.renderer.compute([this.resetArgs,this.updateNode]);++this.submissions;this.lastCount=null;}
+  births(count,matrix){if(!Number.isSafeInteger(count)||count<0||count>100000)throw Error('파티클 방출 수 오류');const total=Math.min(count,this.capacity);for(let i=0;i<total;i++){const p=this.birth(matrix),at=i*4;this.birthPosition.array.set([...p.position,0],at);this.birthVelocity.array.set([...p.velocity,p.lifetime],at);}if(total)for(const buffer of [this.birthPosition,this.birthVelocity]){buffer.clearUpdateRanges();buffer.addUpdateRange(0,total*4);buffer.needsUpdate=true;}if(total){++this.birthUploads;this.birthUploadBytes+=total*32;}return total;}
+  emit(count,matrix){this.submit(0,this.births(count,matrix));}
+  // A conservative maximum lifetime tracks only births; no living positions/counts are read back.
+  advance(delta,matrix){const count=this.emission(delta,matrix);if(this.paused)return;const previous=this.remainingLifetime;this.remainingLifetime=Math.max(0,previous-delta);if(!count){if(!previous){++this.emptySkips;return;}if(!this.remainingLifetime){this.clear();return;}}this.submit(delta,this.births(count,matrix));}
+  sort(camera){if(!this.sorting||this.disposed||!this.remainingLifetime)return;this.group.updateWorldMatrix(true,false);camera.updateWorldMatrix(true,false);const depth=!!camera.isOrthographicCamera||this.p.sortMode.startsWith('depth');if(this.sortedSubmission===this.submissions&&this.sortDepth.value===depth&&this.sortWorld.value.equals(this.group.matrixWorld)&&this.sortView.value.equals(camera.matrixWorldInverse))return;this.sortedSubmission=this.submissions;this.sortWorld.value.copy(this.group.matrixWorld);this.sortView.value.copy(camera.matrixWorldInverse);camera.getWorldPosition(this.sortCamera.value);this.sortDepth.value=depth;this.renderer.compute(this.sortNodes);++this.sortSubmissions;}
+  async countAsync(){if(this.disposed)throw Error('GPU 파티클이 해제됐어요.');++this.readbacks;const bytes=await this.renderer.getArrayBufferAsync(this.args);if(this.disposed)throw Error('GPU 파티클이 해제됐어요.');return this.lastCount=new Uint32Array(bytes)[1];}
+  async diagnostics(){if(this.disposed)throw Error('GPU 파티클이 해제됐어요.');this.diagnosticReadbacks=(this.diagnosticReadbacks||0)+1;const [order,points,lives,args]=await Promise.all([this.alive,this.positionAge,this.velocityLife,this.args].map(buffer=>this.renderer.getArrayBufferAsync(buffer)));if(this.disposed)throw Error('GPU 파티클이 해제됐어요.');return {order:[...new Uint32Array(order)].slice(0,new Uint32Array(args)[1]),points:[...new Float32Array(points)],lives:[...new Float32Array(lives)],world:this.group.matrixWorld.toArray(),view:this.sortView?.value.toArray(),camera:this.sortCamera?.value.toArray()};}
+  debugState(){return {count:this.lastCount??null,playing:this.playing,paused:this.paused,backend:'WebGPU compute',capacity:this.capacity,cpuSimulationParticles:0,positionReadbacks:this.diagnosticReadbacks||0,automaticPositionReadbacks:0,submissions:this.submissions,explicitCountReadbacks:this.readbacks,birthUploads:this.birthUploads,birthUploadBytes:this.birthUploadBytes,diagnosticReadbacks:this.diagnosticReadbacks||0,remainingLifetime:this.remainingLifetime,emptySkips:this.emptySkips,sortMode:this.p.sortMode,sortSubmissions:this.sortSubmissions,sortPasses:this.sortNodes.length,sortCapacity:this.aliveCapacity};}
+  dispose(){if(this.disposed)return;this.disposed=true;for(const node of [this.resetArgs,this.updateNode,this.clearNode,...this.sortNodes])node.dispose();this.mesh.geometry.dispose();this.mesh.material.dispose();this.mesh.removeFromParent();
+    // Three r180 has no public storage-attribute dispose; release compute-only and indirect buffers through its owner.
+    for(const buffer of [this.positionAge,this.velocityLife,this.alive,this.args,this.birthPosition,this.birthVelocity,...(this.sortKeys?[this.sortKeys]:[])])this.renderer._attributes.delete(buffer);
+    --this.renderer.hbParticleResources.effects;this.renderer.hbParticleResources.buffers-=this.resourceBuffers;this.renderer.hbParticleResources.storageBytes-=this.resourceBytes;}
+}
+
+export async function createGPURenderer(canvas){
+  const renderer=new WebGPURenderer({canvas,antialias:true});
+  try{await renderer.init();if(!renderer.backend.isWebGPUBackend)throw Error('WebGPU 장치가 필요해요.');}catch(error){renderer.dispose();throw error;}
+  renderer.hbBackend='webgpu';renderer.hbPMREM=()=>{
+    const generator=new PMREMGenerator(renderer);
+    // r180 creates an unowned background box in fromScene; assign its owner so dispose releases it.
+    generator._backgroundBox=new Mesh(new BoxGeometry(),new MeshBasicMaterial({name:'PMREM.Background',side:BackSide,depthWrite:false,depthTest:false}));
+    return generator;
+  };renderer.hbParticles=(group,p,map)=>new GPUParticleSimulation(renderer,group,p,map);
+  const {createGPUMaterial}=await import('./gpu-materials.js');renderer.hbMaterial=createGPUMaterial;
+  const {createGPUSkyMaterial,applyGPUFog,GPUBloomRendering}=await import('./gpu-environment.js');renderer.hbSkyMaterial=createGPUSkyMaterial;renderer.hbFog=applyGPUFog;renderer.hbBloom=()=>new GPUBloomRendering();
+  const {createGPUSpriteMaterial,createGPUMaskMaterial,createGPUProjectileMaterial,createGPUViewportMaterial,gpuSpriteMask,gpuMaskTarget}=await import('./gpu-2d-rendering.js');const lightingTextures=new Map();renderer.hbSprite=(map,p,normal)=>createGPUSpriteMaterial(map,p,normal,lightingTextures);renderer.hbLight2DVolume=()=>{const m=renderer.hbSprite(null,{shading:'lit2d',blendMode:'additive'},null);m.depthTest=false;return m;};renderer.hbProjectile=createGPUProjectileMaterial;renderer.hbViewportMaterial=createGPUViewportMaterial;renderer.hbMaskMaterial=createGPUMaskMaterial;renderer.hbSpriteMask=gpuSpriteMask;renderer.hbMaskTarget=gpuMaskTarget;
+  const {gpuShadowMaterials}=await import('./gpu-2d-lighting.js');renderer.hbShadowMaterials=gpuShadowMaterials;renderer.hbShadowTarget=gpuMaskTarget;
+  const framebuffers=new Set(),copyFramebuffer=renderer.copyFramebufferToTexture.bind(renderer);
+  // r180 transmission uses globally cached ViewportTextureNodes. Their copies need a scene owner.
+  renderer.copyFramebufferToTexture=(texture,...args)=>{if(texture.isFramebufferTexture)framebuffers.add(texture);return copyFramebuffer(texture,...args);};
+  renderer.hbReleaseScene=()=>{for(const texture of framebuffers)texture.dispose();framebuffers.clear();for(const t of lightingTextures.values())t.dispose();lightingTextures.clear();};renderer.hbFramebufferTextures=framebuffers;
+  renderer.hbGPUErrors=[];renderer.backend.device.addEventListener('uncapturederror',event=>{renderer.hbGPUErrors.push(event.error.message);console.error(event.error);renderer.hbOnError?.(Error(event.error.message));});
+  return renderer;
+}

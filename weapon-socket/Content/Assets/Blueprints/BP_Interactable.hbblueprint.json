@@ -1,0 +1,1799 @@
+{
+  "version": 1,
+  "name": "BP_Interactable",
+  "components": [
+    {
+      "id": "transform",
+      "name": "Transform",
+      "type": "Transform",
+      "properties": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "id": "sprite",
+      "name": "SpriteRenderer",
+      "type": "SpriteRenderer",
+      "properties": {
+        "enabled": true,
+        "sprite": "",
+        "drawMode": "simple",
+        "texture": "Assets/Sprites/Prop_DebtBoard.png",
+        "color": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "width": 2,
+        "height": 2,
+        "pixelsPerUnit": 32,
+        "flipX": false,
+        "flipY": false,
+        "sortingOrder": 0,
+        "billboard": false,
+        "visible": true,
+        "useCustomSize": false,
+        "sortingLayer": "default",
+        "maskInteraction": "none",
+        "shading": "unlit",
+        "sortPoint": "feet"
+      }
+    },
+    {
+      "id": "collider",
+      "name": "BoxCollider2D",
+      "type": "BoxCollider2D",
+      "properties": {
+        "enabled": true,
+        "center": [
+          0,
+          -0.6,
+          0
+        ],
+        "collisionMode": "both",
+        "trigger": false,
+        "layer": 0,
+        "mask": 4294967295,
+        "physicalMaterial": "",
+        "friction": 0.5,
+        "frictionCombine": "average",
+        "restitution": 0,
+        "restitutionCombine": "average",
+        "density": 1,
+        "extent": [
+          0.8,
+          0.4,
+          0.5
+        ]
+      }
+    }
+  ],
+  "variables": [],
+  "nodes": [],
+  "edges": [],
+  "functions": [],
+  "macros": [],
+  "comments": [],
+  "dispatchers": [],
+  "interfaces": [],
+  "settings": {
+    "parentClass": "Interactable",
+    "tickEnabled": true,
+    "tickInterval": 0,
+    "overlapEnabled": true
+  },
+  "native": {
+    "headerPath": "Source/TopDownShooter.h",
+    "sourcePath": "Source/TopDownShooter.cpp",
+    "version": 1,
+    "classes": [
+      {
+        "name": "Enemy",
+        "base": "Actor",
+        "blueprintable": true,
+        "properties": [
+          {
+            "name": "MaxHp",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 3.5
+          },
+          {
+            "name": "Speed",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 4.8
+          },
+          {
+            "name": "ContactDamage",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 1
+          },
+          {
+            "name": "Radius",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.4
+          },
+          {
+            "name": "KeepDistance",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Laser",
+            "type": "bool",
+            "array": false,
+            "readOnly": false,
+            "value": false
+          },
+          {
+            "name": "ShotInterval",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 2
+          },
+          {
+            "name": "ShotCount",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 3
+          },
+          {
+            "name": "ShotSpread",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 15
+          },
+          {
+            "name": "ShotSpeed",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 7
+          },
+          {
+            "name": "GoldMin",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 1
+          },
+          {
+            "name": "GoldMax",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 3
+          },
+          {
+            "name": "Boss",
+            "type": "bool",
+            "array": false,
+            "readOnly": false,
+            "value": false
+          },
+          {
+            "name": "DisplayName",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": ""
+          },
+          {
+            "name": "Brain",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/AI/FSM_Skeleton.hbstatemachine.json"
+          },
+          {
+            "name": "DashSpeed",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 14
+          },
+          {
+            "name": "RingCount",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 12
+          },
+          {
+            "name": "SummonCount",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 2
+          },
+          {
+            "name": "SummonBlueprint",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Blueprints/Enemies/BP_Skeleton.hbblueprint.json"
+          },
+          {
+            "name": "Hp",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Invulnerable",
+            "type": "bool",
+            "array": false,
+            "readOnly": false,
+            "value": false
+          },
+          {
+            "name": "DeathClip",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Animations/SA_Skeleton_Death.hbspriteanimation.json"
+          },
+          {
+            "name": "ShotClip",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": ""
+          },
+          {
+            "name": "MeleeWindup",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.5
+          },
+          {
+            "name": "AttackCooldown",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 1.1
+          },
+          {
+            "name": "SlashRange",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 1.3
+          },
+          {
+            "name": "LungeRange",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 5
+          },
+          {
+            "name": "LungeSpeed",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 11
+          },
+          {
+            "name": "LeapRange",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 6.5
+          },
+          {
+            "name": "AttackClip",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Animations/SA_Skeleton_Attack.hbspriteanimation.json"
+          },
+          {
+            "name": "WalkClip",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Animations/SA_Skeleton_Walk.hbspriteanimation.json"
+          },
+          {
+            "name": "WindupSprite",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Attack_0.hbsprite.json"
+          },
+          {
+            "name": "LungeReadySprite",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_LungeReady.hbsprite.json"
+          },
+          {
+            "name": "LungeSprite",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Lunge.hbsprite.json"
+          },
+          {
+            "name": "LeapCrouchSprite",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_LeapCrouch.hbsprite.json"
+          },
+          {
+            "name": "LeapAirSprite",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_LeapAir.hbsprite.json"
+          },
+          {
+            "name": "LeapLandSprite",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_LeapLand.hbsprite.json"
+          },
+          {
+            "name": "RoarClip",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": ""
+          },
+          {
+            "name": "GlintSlash",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": ""
+          },
+          {
+            "name": "GlintLunge",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": ""
+          },
+          {
+            "name": "GlintLeap",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": ""
+          },
+          {
+            "name": "GlintCast",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": ""
+          },
+          {
+            "name": "GlintDash",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": ""
+          }
+        ],
+        "functions": [
+          {
+            "name": "Awake",
+            "label": "생성",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "Halt",
+            "label": "등장·멈춤",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "Chase",
+            "label": "추격",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "Range",
+            "label": "거리 유지",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "Stagger",
+            "label": "경직",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "Windup",
+            "label": "공격 예고",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "Fire",
+            "label": "탄 발사",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "Dash",
+            "label": "돌진",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "Ring",
+            "label": "원형 탄막",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "Summon",
+            "label": "졸개 소환",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "Prowl",
+            "label": "보스: 맴돌기",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "JumpWindup",
+            "label": "보스: 점프 준비",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "Jump",
+            "label": "보스: 점프",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "Slam",
+            "label": "보스: 내려찍기",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "SpinWindup",
+            "label": "보스: 회전 베기 준비",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "Spin",
+            "label": "보스: 회전 베기",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "QuakeWindup",
+            "label": "보스: 충격파 준비",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "Quake",
+            "label": "보스: 충격파",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "GoldRain",
+            "label": "보스: 금화 비",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "LaserWindup",
+            "label": "눈알: 레이저 모으기",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "LaserFire",
+            "label": "눈알: 레이저 발사",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          },
+          {
+            "name": "LaserRecover",
+            "label": "눈알: 회복",
+            "category": "적",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "Interactable",
+        "base": "Actor",
+        "blueprintable": true,
+        "properties": [
+          {
+            "name": "Kind",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Note"
+          },
+          {
+            "name": "Text",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": ""
+          },
+          {
+            "name": "Price",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Range",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 2.2
+          }
+        ],
+        "functions": []
+      },
+      {
+        "name": "RoomInfo",
+        "base": "Actor",
+        "blueprintable": true,
+        "properties": [
+          {
+            "name": "Index",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": -1
+          },
+          {
+            "name": "Kind",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Hub"
+          },
+          {
+            "name": "ExitY",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 21
+          },
+          {
+            "name": "CamMinX",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "CamMinY",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "CamMaxX",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "CamMaxY",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          }
+        ],
+        "functions": []
+      },
+      {
+        "name": "AuricRules",
+        "base": "Actor",
+        "blueprintable": true,
+        "properties": [
+          {
+            "name": "InvulnerableTime",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 1.2
+          },
+          {
+            "name": "HurtKnockback",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 9
+          },
+          {
+            "name": "DodgeTime",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.15
+          },
+          {
+            "name": "DashDistance",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 3.5
+          },
+          {
+            "name": "DodgeSpeed",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 30
+          },
+          {
+            "name": "DodgeCooldown",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 2
+          },
+          {
+            "name": "SwordDamage",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 1
+          },
+          {
+            "name": "SwordInterval",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.35
+          },
+          {
+            "name": "SwordRange",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 2.6
+          },
+          {
+            "name": "SwordHalfAngle",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 80
+          },
+          {
+            "name": "HitStun",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.18
+          },
+          {
+            "name": "Knockback",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 7
+          },
+          {
+            "name": "CritChance",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 1
+          },
+          {
+            "name": "CritDamage",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 2
+          },
+          {
+            "name": "TiredAttack",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.9
+          },
+          {
+            "name": "MoveSpeed",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 6
+          },
+          {
+            "name": "ShakeTime",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.1
+          },
+          {
+            "name": "ShakeAmount",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.08
+          },
+          {
+            "name": "ArrowCharge",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 1
+          },
+          {
+            "name": "ArrowDamage",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 3.5
+          },
+          {
+            "name": "ArrowSpeed",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 20
+          },
+          {
+            "name": "BoltInterval",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.15
+          },
+          {
+            "name": "BoltDamage",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.5
+          },
+          {
+            "name": "BoltSpeed",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 13
+          },
+          {
+            "name": "BoomRadius",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 1.4
+          },
+          {
+            "name": "BoomDamage",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.5
+          },
+          {
+            "name": "EnemyShotLife",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 3
+          },
+          {
+            "name": "EnemyShotHit",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.45
+          },
+          {
+            "name": "EnemyShotRadius",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.12
+          },
+          {
+            "name": "PlayerShotLife",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 1.6
+          },
+          {
+            "name": "PlayerShotHit",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.7
+          },
+          {
+            "name": "UpgradeBonus",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.15
+          },
+          {
+            "name": "EnchantPower",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.3
+          },
+          {
+            "name": "BurnTime",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 3
+          },
+          {
+            "name": "BurnRate",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.1
+          },
+          {
+            "name": "SlashExtend",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 1.5
+          },
+          {
+            "name": "EnterDepth",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 1.5
+          },
+          {
+            "name": "SpawnWarn",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.9
+          },
+          {
+            "name": "RespawnDelay",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 3
+          },
+          {
+            "name": "SofaMax",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 3
+          },
+          {
+            "name": "HomeFatigueBonus",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 5
+          },
+          {
+            "name": "RepayRate",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.5
+          },
+          {
+            "name": "OrePrice",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 40
+          },
+          {
+            "name": "HerbPrice",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 5
+          },
+          {
+            "name": "MonsterPrice",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 30
+          },
+          {
+            "name": "WeightLimit",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 100
+          },
+          {
+            "name": "SlowRate",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.75
+          },
+          {
+            "name": "AttackMoveRate",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 1
+          },
+          {
+            "name": "ChargeMoveRate",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.7
+          },
+          {
+            "name": "ArrowMinCharge",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.12
+          },
+          {
+            "name": "ArrowMinPower",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.3
+          },
+          {
+            "name": "ArrowMinSpeed",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 10
+          },
+          {
+            "name": "ArrowPartialCooldown",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.6
+          },
+          {
+            "name": "AnimSets",
+            "type": "int",
+            "array": true,
+            "readOnly": false,
+            "value": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "Stride",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.5
+          },
+          {
+            "name": "IdleFrames",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 4
+          },
+          {
+            "name": "SlashStep",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.45
+          },
+          {
+            "name": "BackpedalRate",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.5
+          },
+          {
+            "name": "FidgetDelay",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 6
+          },
+          {
+            "name": "Fidgets",
+            "type": "string",
+            "array": true,
+            "readOnly": false,
+            "value": [
+              "10,12,8",
+              "12,10,6",
+              "12,10,8"
+            ]
+          },
+          {
+            "name": "Muzzles",
+            "type": "string",
+            "array": true,
+            "readOnly": false
+          },
+          {
+            "name": "FlashPrice",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 10
+          },
+          {
+            "name": "FlashStun",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 1
+          },
+          {
+            "name": "DoorHitsToOpen",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 10
+          },
+          {
+            "name": "ArrowDoorHits",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 3
+          },
+          {
+            "name": "DoorStun",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 1
+          },
+          {
+            "name": "DoorReach",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 2.5
+          },
+          {
+            "name": "CoinMagnet",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 3
+          },
+          {
+            "name": "CoinPickup",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.7
+          },
+          {
+            "name": "LoadingTime",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 2.8
+          },
+          {
+            "name": "TypeSpeed",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 30
+          },
+          {
+            "name": "CameraLead",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0.25
+          },
+          {
+            "name": "CameraLeadMax",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 3
+          },
+          {
+            "name": "CameraFollow",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 8
+          },
+          {
+            "name": "CameraSize",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 7.5
+          },
+          {
+            "name": "CameraRoomPad",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 1.5
+          },
+          {
+            "name": "AutoAimRange",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 12
+          },
+          {
+            "name": "IdleReset",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 60
+          },
+          {
+            "name": "RunNotice",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 600
+          },
+          {
+            "name": "Debts",
+            "type": "int",
+            "array": true,
+            "readOnly": false
+          },
+          {
+            "name": "CharacterSprites",
+            "type": "string",
+            "array": true,
+            "readOnly": false
+          },
+          {
+            "name": "Sounds",
+            "type": "string",
+            "array": true,
+            "readOnly": false
+          },
+          {
+            "name": "ArrowClip",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Animations/SA_Arrow.hbspriteanimation.json"
+          },
+          {
+            "name": "CardClip",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Animations/SA_Card.hbspriteanimation.json"
+          },
+          {
+            "name": "BoomClip",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Animations/SA_Boom.hbspriteanimation.json"
+          },
+          {
+            "name": "EnemyShotClip",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Animations/SA_EnemyOrb.hbspriteanimation.json"
+          },
+          {
+            "name": "CoinClip",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Animations/SA_Coin.hbspriteanimation.json"
+          },
+          {
+            "name": "EnemyShotPrefab",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Prefabs/PF_EnemyShot.hbprefab.json"
+          },
+          {
+            "name": "PlayerShotPrefab",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Prefabs/PF_PlayerShot.hbprefab.json"
+          },
+          {
+            "name": "CoinPrefab",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Prefabs/PF_Coin.hbprefab.json"
+          },
+          {
+            "name": "FxPrefab",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Prefabs/PF_Fx.hbprefab.json"
+          },
+          {
+            "name": "SlashClip",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Animations/SA_Slash.hbspriteanimation.json"
+          },
+          {
+            "name": "HitClip",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Animations/SA_Hit.hbspriteanimation.json"
+          },
+          {
+            "name": "HubScene",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Scenes/Hub.hbscene.json"
+          },
+          {
+            "name": "HomeScene",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Scenes/Home_#.hbscene.json"
+          },
+          {
+            "name": "SofaSprites",
+            "type": "string",
+            "array": true,
+            "readOnly": false
+          },
+          {
+            "name": "DungeonScene",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Scenes/Dungeon.hbscene.json"
+          },
+          {
+            "name": "FloorData",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Data/DA_Floor.hbdata.json"
+          },
+          {
+            "name": "RoomTable",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Data/DT_Rooms.hbdata.json"
+          },
+          {
+            "name": "SpawnClip",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Animations/SA_Spawn.hbspriteanimation.json"
+          },
+          {
+            "name": "DialogueTable",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": "Assets/Data/DT_Dialogue.hbdata.json"
+          },
+          {
+            "name": "Enemies",
+            "type": "string",
+            "array": true,
+            "readOnly": false
+          }
+        ],
+        "functions": []
+      },
+      {
+        "name": "TopDownShooter",
+        "base": "Actor",
+        "blueprintable": true,
+        "properties": [
+          {
+            "name": "FatigueMax",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 20
+          },
+          {
+            "name": "Fatigue",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Hp",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "MaxHp",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 3
+          },
+          {
+            "name": "Kills",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "RoomClears",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Swings",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Hits",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Shots",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "RoomIndex",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Seed",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Layout",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": ""
+          },
+          {
+            "name": "StartRoom",
+            "type": "string",
+            "array": false,
+            "readOnly": false,
+            "value": ""
+          },
+          {
+            "name": "ShowFps",
+            "type": "bool",
+            "array": false,
+            "readOnly": false,
+            "value": false
+          },
+          {
+            "name": "TipsShown",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Paused",
+            "type": "bool",
+            "array": false,
+            "readOnly": false,
+            "value": false
+          },
+          {
+            "name": "KnockedOut",
+            "type": "bool",
+            "array": false,
+            "readOnly": false,
+            "value": false
+          },
+          {
+            "name": "BossHp",
+            "type": "float",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "HasReturnItem",
+            "type": "bool",
+            "array": false,
+            "readOnly": false,
+            "value": false
+          },
+          {
+            "name": "Returning",
+            "type": "bool",
+            "array": false,
+            "readOnly": false,
+            "value": false
+          },
+          {
+            "name": "ReturnSuccess",
+            "type": "bool",
+            "array": false,
+            "readOnly": false,
+            "value": false
+          },
+          {
+            "name": "DoorHits",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Flashbangs",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Gold",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Ore",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Herb",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Monster",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Bottle",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 1
+          },
+          {
+            "name": "WeaponLevel",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Debt",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 9800
+          },
+          {
+            "name": "LastRepaid",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Enchant",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Crafted",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "SofaLevel",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "HomeLevel",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 1
+          },
+          {
+            "name": "Phase",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "Character",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          },
+          {
+            "name": "KeepProgress",
+            "type": "bool",
+            "array": false,
+            "readOnly": false,
+            "value": false
+          }
+        ],
+        "functions": [
+          {
+            "name": "Update",
+            "label": "Update",
+            "category": "탑다운 슈터",
+            "pure": false,
+            "static": false,
+            "event": "none",
+            "inputs": [
+              {
+                "id": "delta",
+                "label": "delta",
+                "type": "float",
+                "array": false
+              }
+            ],
+            "outputs": [],
+            "returnType": "void",
+            "parameters": [
+              {
+                "name": "delta",
+                "cppType": "float",
+                "out": false
+              }
+            ],
+            "ko": "게임 규칙 한 프레임"
+          }
+        ]
+      }
+    ]
+  }
+}

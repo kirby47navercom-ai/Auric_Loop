@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "SA_Tuft0",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Ambient/S_Tuft0_0.hbsprite.json",
+      "duration": 0.5
+    },
+    {
+      "sprite": "Assets/Sprites/Ambient/S_Tuft0_1.hbsprite.json",
+      "duration": 0.4
+    },
+    {
+      "sprite": "Assets/Sprites/Ambient/S_Tuft0_2.hbsprite.json",
+      "duration": 0.5
+    },
+    {
+      "sprite": "Assets/Sprites/Ambient/S_Tuft0_3.hbsprite.json",
+      "duration": 0.4
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

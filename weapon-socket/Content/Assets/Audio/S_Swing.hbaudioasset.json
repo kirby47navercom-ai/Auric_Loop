@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "name": "S_Swing",
+  "clip": "Assets/Audio/Swing.wav",
+  "volume": 0.4,
+  "pitch": 1,
+  "loop": false,
+  "spatial": false,
+  "autoplay": false,
+  "refDistance": 1,
+  "maxDistance": 100,
+  "rolloff": 1,
+  "mixer": "",
+  "bus": "master"
+}

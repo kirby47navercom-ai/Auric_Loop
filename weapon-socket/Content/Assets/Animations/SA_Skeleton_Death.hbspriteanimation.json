@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "SA_Skeleton_Death",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Death_0.hbsprite.json",
+      "duration": 0.12
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Death_1.hbsprite.json",
+      "duration": 0.12
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Death_2.hbsprite.json",
+      "duration": 0.12
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/Skeleton/S_Skeleton_Death_3.hbsprite.json",
+      "duration": 0.12
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

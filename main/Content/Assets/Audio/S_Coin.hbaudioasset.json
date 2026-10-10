@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "name": "S_Coin",
+  "clip": "Assets/Audio/Coin.wav",
+  "volume": 0.5,
+  "pitch": 1,
+  "loop": false,
+  "spatial": false,
+  "autoplay": false,
+  "refDistance": 1,
+  "maxDistance": 100,
+  "rolloff": 1,
+  "mixer": "",
+  "bus": "master"
+}

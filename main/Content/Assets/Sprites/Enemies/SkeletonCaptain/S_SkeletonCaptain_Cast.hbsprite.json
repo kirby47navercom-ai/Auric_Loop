@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_SkeletonCaptain_Cast",
+  "texture": "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Cast.png",
+  "pixelsPerUnit": 32,
+  "rect": [
+    0,
+    0,
+    175,
+    147
+  ],
+  "pivot": [
+    0.5,
+    0.43191564625850337
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

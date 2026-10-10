@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "name": "FSM_Skeleton",
+  "initial": "appear",
+  "parameters": [
+    {
+      "name": "Distance",
+      "type": "float",
+      "value": 99
+    },
+    {
+      "name": "Stunned",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "name": "Ready",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "name": "Next",
+      "type": "float",
+      "value": 0
+    },
+    {
+      "name": "Near",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "name": "Again",
+      "type": "bool",
+      "value": false
+    }
+  ],
+  "states": [
+    {
+      "id": "appear",
+      "name": "등장",
+      "x": 120,
+      "y": 150,
+      "clip": "Assets/Animations/SA_Skeleton_Walk.hbspriteanimation.json",
+      "loop": true,
+      "duration": 0.6,
+      "onEnter": "Halt",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "chase",
+      "name": "추격",
+      "x": 360,
+      "y": 150,
+      "clip": "Assets/Animations/SA_Skeleton_Walk.hbspriteanimation.json",
+      "loop": true,
+      "duration": 1.0,
+      "onEnter": "Chase",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "swing",
+      "name": "휘두르기",
+      "x": 600,
+      "y": 150,
+      "clip": "Assets/Animations/SA_Skeleton_WalkAttack.hbspriteanimation.json",
+      "loop": false,
+      "duration": 0.4,
+      "onEnter": "Chase",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    },
+    {
+      "id": "stun",
+      "name": "경직",
+      "x": 360,
+      "y": 320,
+      "clip": "Assets/Animations/SA_Skeleton_Hurt.hbspriteanimation.json",
+      "loop": false,
+      "duration": 1.0,
+      "onEnter": "Stagger",
+      "onExit": "",
+      "onUpdate": "",
+      "parent": "",
+      "initialChild": "",
+      "enterConditions": []
+    }
+  ],
+  "transitions": [
+    {
+      "id": "appear_chase",
+      "from": "appear",
+      "to": "chase",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "chase_swing",
+      "from": "chase",
+      "to": "swing",
+      "exitTime": 1,
+      "hasExitTime": false,
+      "event": "",
+      "conditions": [
+        {
+          "key": "Near",
+          "operator": "equal",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "swing_chase",
+      "from": "swing",
+      "to": "chase",
+      "exitTime": 1,
+      "hasExitTime": true,
+      "event": "",
+      "conditions": []
+    },
+    {
+      "id": "toStun",
+      "from": "any",
+      "to": "stun",
+      "exitTime": 1,
+      "hasExitTime": false,
+      "event": "",
+      "conditions": [
+        {
+          "key": "Stunned",
+          "operator": "equal",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "stun_chase",
+      "from": "stun",
+      "to": "chase",
+      "exitTime": 1,
+      "hasExitTime": false,
+      "event": "",
+      "conditions": [
+        {
+          "key": "Stunned",
+          "operator": "equal",
+          "value": false
+        }
+      ]
+    }
+  ]
+}

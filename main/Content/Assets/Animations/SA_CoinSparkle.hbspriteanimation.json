@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "name": "SA_CoinSparkle",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_CoinSparkle_0.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_CoinSparkle_1.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_CoinSparkle_2.hbsprite.json",
+      "duration": 0.06
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

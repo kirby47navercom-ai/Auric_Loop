@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_NpcInterior_1",
+  "texture": "Assets/Sprites/Ambient/NpcInterior_1.png",
+  "pixelsPerUnit": 37.5,
+  "rect": [
+    0,
+    0,
+    38,
+    93
+  ],
+  "pivot": [
+    0.5,
+    0.5
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "name": "BP_Eyeball",
+  "components": [],
+  "variables": [],
+  "nodes": [],
+  "edges": [],
+  "functions": [],
+  "macros": [],
+  "comments": [],
+  "dispatchers": [],
+  "interfaces": [],
+  "settings": {
+    "parentClass": "Assets/Blueprints/Enemies/BP_Enemy.hbblueprint.json",
+    "tickEnabled": true,
+    "tickInterval": 0,
+    "overlapEnabled": true,
+    "nativeDefaults": {
+      "Enemy.DisplayName": "눈알",
+      "Enemy.Brain": "Assets/AI/FSM_Eyeball.hbstatemachine.json",
+      "Enemy.Laser": true,
+      "Enemy.KeepDistance": 6.5,
+      "Enemy.ShotInterval": 2.6,
+      "Enemy.Speed": 3.2,
+      "Enemy.MaxHp": 2.5,
+      "Enemy.GoldMin": 2,
+      "Enemy.GoldMax": 3,
+      "Enemy.DeathClip": "Assets/Animations/SA_Eyeball_Death.hbspriteanimation.json"
+    },
+    "componentOverrides": {
+      "sprite": {
+        "sprite": "Assets/Sprites/Enemies/Eyeball/S_Eyeball_idle_F_0.hbsprite.json",
+        "texture": ""
+      },
+      "collider": {
+        "extent": [
+          0.4,
+          0.3,
+          0.1
+        ],
+        "center": [
+          0,
+          -0.25,
+          0
+        ]
+      }
+    }
+  }
+}

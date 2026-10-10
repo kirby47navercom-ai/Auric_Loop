@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "SA_SkeletonMage_Death",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Death_0.hbsprite.json",
+      "duration": 0.12
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Death_1.hbsprite.json",
+      "duration": 0.12
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Death_2.hbsprite.json",
+      "duration": 0.12
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Death_3.hbsprite.json",
+      "duration": 0.12
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

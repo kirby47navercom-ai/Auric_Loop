@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "name": "BP_AuricSession",
+  "components": [],
+  "variables": [],
+  "nodes": [
+    {
+      "id": "beginPlay",
+      "key": "beginPlay",
+      "position": {
+        "x": 70,
+        "y": 55
+      },
+      "splitPins": []
+    },
+    {
+      "id": "tick",
+      "key": "tick",
+      "position": {
+        "x": 70,
+        "y": 220
+      },
+      "splitPins": []
+    },
+    {
+      "id": "endPlay",
+      "key": "endPlay",
+      "position": {
+        "x": 70,
+        "y": 385
+      },
+      "splitPins": []
+    }
+  ],
+  "edges": [],
+  "functions": [],
+  "macros": [],
+  "comments": [],
+  "construction": {
+    "nodes": [
+      {
+        "id": "construction",
+        "key": "construction",
+        "position": {
+          "x": 28,
+          "y": 50
+        },
+        "splitPins": []
+      }
+    ],
+    "edges": [],
+    "comments": []
+  },
+  "dispatchers": [],
+  "interfaces": [],
+  "settings": {
+    "parentClass": "AuricSession",
+    "tickEnabled": true,
+    "tickInterval": 0,
+    "overlapEnabled": true
+  },
+  "native": {
+    "version": 1,
+    "classes": [
+      {
+        "name": "AuricSession",
+        "base": "GameInstance",
+        "blueprintable": true,
+        "properties": [
+          {
+            "name": "Starts",
+            "type": "int",
+            "array": false,
+            "readOnly": false,
+            "value": 0
+          }
+        ],
+        "functions": []
+      }
+    ],
+    "headerPath": "Source/AuricSession.h",
+    "sourcePath": "Source/AuricSession.cpp"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_SkeletonCaptain_JumpAir",
+  "texture": "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_JumpAir.png",
+  "pixelsPerUnit": 32,
+  "rect": [
+    0,
+    0,
+    175,
+    136
+  ],
+  "pivot": [
+    0.5,
+    0.46691176470588236
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

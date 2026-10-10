@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_Alea_N_WalkAttack_2_3",
+  "texture": "Assets/Sprites/Alea/Alea_N_WalkAttack_2_3.png",
+  "pixelsPerUnit": 32,
+  "rect": [
+    0,
+    0,
+    66,
+    73
+  ],
+  "pivot": [
+    0.5,
+    0.4164
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

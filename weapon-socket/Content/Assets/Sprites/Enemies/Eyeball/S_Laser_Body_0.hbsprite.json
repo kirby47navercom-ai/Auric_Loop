@@ -1,0 +1,1 @@
+{"version": 1, "name": "S_Laser_Body_0", "texture": "Assets/Sprites/Enemies/Eyeball/laser_body.png", "pixelsPerUnit": 32, "rect": [0, 0, 256, 16], "pivot": [0, 0.5], "filter": "nearest", "border": [0, 0, 0, 0]}

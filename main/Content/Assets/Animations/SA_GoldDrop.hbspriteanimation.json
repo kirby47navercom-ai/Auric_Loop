@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "name": "SA_GoldDrop",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_GoldDrop_0.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_GoldDrop_1.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_GoldDrop_2.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_GoldDrop_3.hbsprite.json",
+      "duration": 0.06
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_GoldDrop_4.hbsprite.json",
+      "duration": 0.12
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

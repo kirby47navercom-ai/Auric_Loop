@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "name": "BP_SkeletonMage",
+  "components": [],
+  "variables": [],
+  "nodes": [],
+  "edges": [],
+  "functions": [],
+  "macros": [],
+  "comments": [],
+  "dispatchers": [],
+  "interfaces": [],
+  "settings": {
+    "parentClass": "Assets/Blueprints/Enemies/BP_Enemy.hbblueprint.json",
+    "tickEnabled": true,
+    "tickInterval": 0,
+    "overlapEnabled": true,
+    "nativeDefaults": {
+      "Enemy.DisplayName": "해골 마법사",
+      "Enemy.Brain": "Assets/AI/FSM_SkeletonMage.hbstatemachine.json",
+      "Enemy.KeepDistance": 6,
+      "Enemy.GoldMin": 2,
+      "Enemy.GoldMax": 3,
+      "Enemy.GlintCast": "0.39,0.51;0.62,0.83",
+      "Enemy.DeathClip": "Assets/Animations/SA_SkeletonMage_Death.hbspriteanimation.json"
+    },
+    "componentOverrides": {
+      "sprite": {
+        "sprite": "Assets/Sprites/Enemies/SkeletonMage/S_SkeletonMage_Walk_0.hbsprite.json",
+        "texture": ""
+      }
+    }
+  }
+}
