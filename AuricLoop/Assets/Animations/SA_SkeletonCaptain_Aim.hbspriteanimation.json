@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "name": "SA_SkeletonCaptain_Aim",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Spin_0.hbsprite.json",
+      "duration": 0.3
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

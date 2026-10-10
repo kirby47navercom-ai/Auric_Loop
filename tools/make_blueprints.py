@@ -316,8 +316,9 @@ fsm("FSM_SkeletonCaptain", "intro", PARAMS, [
     state("intro", "등장", 120, 60, 3.4, enter="Halt", clip=C + "Walk"),
     state("rest", "맴돌며 쉬기", 120, 260, 2.6, enter="Prowl", clip=C + "Walk"),  # 맴도는 동안 대검 베기 예고 (Enemy.cpp)
     state("charge", "연속 돌진", 420, 40, initial="windup"),
-    state("windup", "돌진 예고", 420, 120, 0.8, enter="Windup", parent="charge", clip=C + "Dash"),
-    state("dash", "돌진", 640, 120, 0.45, enter="Dash", parent="charge", clip=C + "Dash"),
+    # 돌진: 예고는 대검 끝을 플레이어에게 겨누고(회전 첫 자세), 돌진은 칼을 앞세운 찌르기 (등 뒤로 끄는 돌진 그림은 반대로 공격하는 것처럼 보였음)
+    state("windup", "돌진 예고", 420, 120, 0.8, enter="Windup", parent="charge", clip=C + "Aim", loop=False),
+    state("dash", "돌진", 640, 120, 0.45, enter="Dash", parent="charge", clip=C + "Slash", loop=False),
     state("ring", "나선 탄막", 420, 240, initial="burst1"),
     state("burst1", "탄막 1", 420, 320, 0.4, enter="Ring", parent="ring", clip=C + "Cast", loop=False),
     state("burst2", "탄막 2", 600, 320, 0.4, enter="Ring", parent="ring", clip=C + "Cast", loop=False),

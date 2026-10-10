@@ -149,6 +149,14 @@ void TopDownShooter::Ghost(const hb::Vec3& at,float life){
   Fx f{a,life};f.ghost=true;fxs.push_back(f);
 }
 
+void TopDownShooter::BossGhost(Enemy* e){
+  // 보스 돌진 잔상: 돌진 자세를 붉은 반투명으로 0.25초 남김 (몸 뒤)
+  hb::Transform t;t.position=hb::Scene::GetPosition(e);auto* a=Take(fxPool,rules->FxPrefab,t);if(!a)return;
+  hb::Sprites::SetSorting(a,"default",-1);hb::Sprites::SetSprite(a,"Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_SlashHit.hbsprite.json");
+  hb::Sprites::SetFlip(a,e->Facing()<0,false);hb::Sprites::SetColor(a,hb::Color{1,0.35f,0.2f,0.45f});
+  Fx f{a,0.25f};f.ghost=true;f.tinted=true;fxs.push_back(f);
+}
+
 void TopDownShooter::Blink(const hb::Vec3& position){
   // 대시: 바라보는(걷는) 쪽으로 DashDistance만큼 그 자리에서 바로 옮김. 벽·물체(층 0)가 있으면 그 앞에서 멈춤 (발 둘레로 잼)
   const hb::Vec3 dir=facing,feet=position+hb::Vec3{0,-0.72f,0};
@@ -217,13 +225,15 @@ void TopDownShooter::WarnCircle(const hb::Vec3& at,float radius,float seconds){
 void TopDownShooter::BossSlam(const hb::Vec3& at,int count,float speed,const std::string& clip){
   // 내려찍기: 충격파·흙먼지, 원형 탄, 크게 흔들림. 가까이 있으면 맞음
   Effect("Shockwave",hb::Vec3{at.x,at.y-0.8f,0.03f},0,0.4f);Effect("Dust",hb::Vec3{at.x-1,at.y-1,0.03f});Effect("Dust",hb::Vec3{at.x+1,at.y-1,0.03f},0,0,true);
-  shake=0.45f;Sfx("Boom");
+  shake=0.45f;Sfx("Boom");BossImpact(0.12f);
   FireRing(at,count,0,speed,clip);
   if(Length(playerAt-at)<3.0f)DamagePlayer(1,at);
 }
 
 void TopDownShooter::BossEnraged(Enemy* e){
-  // 2페이즈: 포효(흔들림·붉은 번쩍), 자막
+  // 2페이즈: 짧은 컷신 (조작·적 멈춤, 카메라가 보스를 당겨 잡고 화면 위아래 검은 띠, 탄막 지움) + 포효·붉은 번쩍·자막
+  cutscene=1.6f;cutsceneAt=hb::Scene::GetPosition(e);roared=true;ClearBullets();for(auto* n:{"CineTop","CineBottom"})UiVisible(n,true);
+  UiText("BossName",e->DisplayName);UiVisible("BossName",true);
   shake=0.6f;hb::Camera::Flash(hb::Color{0.8f,0.1f,0.05f,0.45f},0.5f);Sfx("BossCharge");
   UiText("BossSub",e->DisplayName+"이(가) 분노했다!");UiVisible("BossSub",true);bannerTime=1.8f;
 }
@@ -242,6 +252,7 @@ void TopDownShooter::UpdateFx(float delta){
     ++it;}
   for(auto it=fxs.begin();it!=fxs.end();){
     if((it->left-=delta)<=0){hb::Scene::SetScale(it->actor,hb::Vec3{1,1,1});if(it->ghost)hb::Sprites::SetSorting(it->actor,"default",4);
+      if(it->tinted){hb::Sprites::SetColor(it->actor,hb::Color{1,1,1,1});hb::Sprites::SetFlip(it->actor,false,false);}
       Give(fxPool,it->actor);it=fxs.erase(it);continue;}
     if(it->moving&&!it->settled){  // 튀는 조각: 바닥을 미끄러지며(마찰) 높이로 튕기고 돎. 멈추면 더 옮기지 않음 (명령 줄임)
       auto& f=*it;f.ground=f.ground+f.vel*delta;f.vel=f.vel*std::max(0.f,1-delta*(f.h>0?1.2f:5.f));
@@ -277,7 +288,7 @@ void TopDownShooter::KillEnemy(Enemy* e){
   Effect("BoneBurst",hb::Vec3{at.x,at.y+0.2f,0.3f});Shake(rules->ShakeTime*2,1.6f);
   Debris(at,dir,e->Boss?"Boss":e->Laser?"Eye":e->KeepDistance>0?"Mage":"Skeleton");
   Sfx("Crack",0.9f+float(std::rand()%20)/100);punch=1;kick=kick+dir*0.35f;
-  if(e->Boss)HitStop(0.7f,0.15f);else HitStop(0.14f,0.22f);  // 처치 순간 잠깐 느려짐 (마지막 일격을 크게)
+  if(e->Boss){HitStop(0.9f,0.15f);shake=0.8f;punch=1;hb::Camera::Flash(hb::Color{1,0.95f,0.8f,0.5f},0.4f);Sfx("Boom");}else HitStop(0.14f,0.22f);  // 보스 마지막 일격: 길게 느려지고 하얗게 번쩍  // 처치 순간 잠깐 느려짐 (마지막 일격을 크게)
   ParkEnemy(e);
 }
 

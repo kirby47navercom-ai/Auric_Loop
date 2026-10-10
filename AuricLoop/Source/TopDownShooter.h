@@ -141,6 +141,7 @@ public:
   void Ring();
   HB_FUNCTION(BlueprintCallable, DisplayName="졸개 소환", Category="적")
   void Summon();
+  float Facing() const{return flipped?-1.f:1.f;}  // 그림이 보는 쪽 (오른쪽 1, 왼쪽 -1)
   HB_FUNCTION(BlueprintCallable, DisplayName="보스: 맴돌기", Category="적")
   void Prowl();
   HB_FUNCTION(BlueprintCallable, DisplayName="보스: 점프 준비", Category="적")
@@ -182,7 +183,7 @@ public:
 private:
   hb::Vec3 ToPlayer(float& distance) const;
   enum class Mode{Halt,Chase,Range,Stagger,Dash,Prowl,Jump,Spin};
-  float spinTick=0,rainTime=0,roarTime=0;std::vector<hb::Vec3> rainSpots;hb::Vec3 quakeDir{0,-1,0};  // 보스 회전 베기·금화 비·포효
+  float spinTick=0,rainTime=0,roarTime=0,ghostTick=0,spinAngle=0;std::vector<hb::Vec3> rainSpots;hb::Vec3 quakeDir{0,-1,0};  // 보스 회전 베기·금화 비·포효
   int NextAfter(int current) const;  // 보스 패턴 순서
   void Glint(const std::string& spec,bool left);  // 공격 직전 눈·무기 끝 반짝임 (몸을 붉게 물들이는 대신)
   int dashCount=0;bool phase2=false;     // 보스: 연속 돌진 횟수, 체력 절반 아래 분노
@@ -557,6 +558,8 @@ public:
   void BossSlam(const hb::Vec3& at,int bullets,float speed,const std::string& clip); // 내려찍기 충격파·탄·흔들림
   void BossEnraged(Enemy* e);                                                        // 2페이즈 포효
   void Effect(const std::string& name,const hb::Vec3& at,float angle=0,float glow=0,bool flip=false);  // Assets/Animations/SA_<name> 한 번 재생
+  void BossGhost(Enemy* e);       // 보스 돌진 잔상 (Combat.cpp)
+  void BossImpact(float slow){HitStop(slow,0.2f);punch=1;hb::Camera::Flash(hb::Color{1,0.9f,0.6f,0.18f},0.15f);}  // 보스 큰 공격이 땅에 닿는 순간: 잠깐 느려지고 화면이 살짝 당겨지고 번쩍
   void Shake(float seconds,float power){shake=std::max(shake,seconds);shakePower=std::max(shakePower,power);}  // 화면 흔들림 (seconds 동안, power 세기 배율)
   std::string Sound(const std::string& name) const;  // Sounds에서 이름으로 찾은 경로 (없으면 "")
   static inline int SfxLevel=8;  // 메뉴의 효과음 크기 0~10 (처음으로 돌아가도 유지: 모듈 정적 변수)
@@ -643,7 +646,7 @@ private:
   std::vector<hb::Actor*> bulletPool,shotPool,coinPool,fxPool;
   // 이펙트: 풀에서 꺼낸 그림 오브젝트에 프레임을 차례로 바꿔 끼운다 (베기·타격 불꽃·적 쓰러짐)
   // 이펙트 하나. moving이면 바닥(ground) 위를 미끄러지고 높이(h)로 튀며 돈다 (처치 파편·쓰러지는 몸)
-  struct Fx{hb::Actor* actor;float left;bool moving=false;hb::Vec3 ground{0,0,0},vel{0,0,0};float h=0,vh=0,spin=0,angle=0;bool settled=false,ghost=false;};
+  struct Fx{hb::Actor* actor;float left;bool moving=false;hb::Vec3 ground{0,0,0},vel{0,0,0};float h=0,vh=0,spin=0,angle=0;bool settled=false,ghost=false,tinted=false;};
   void Ghost(const hb::Vec3& at,float life);float ghostTime=0;int vsRow=0,vsPhase=1,vsLegs=0;  // 대시 잔상 (발렌 몸 그림의 지금 방향·위상)
   void Blink(const hb::Vec3& position);  // 대시: 순간이동 + 지나온 길에 잔상
   float slashPending=-1;void SlashHit(const hb::Vec3& position,const std::vector<Enemy*>& enemies);  // 베기 판정은 검기가 나오는 순간(0.095초 뒤)
@@ -733,7 +736,7 @@ private:
   std::map<hb::Actor*,bool> shotBoom;
   std::map<hb::Actor*,float> shotPower;  // 화살마다 당긴 정도 (피해 배율)
   std::map<hb::Actor*,int> coins;
-  Enemy* boss=nullptr;
+  Enemy* boss=nullptr;hb::Vec3 bossAt{0,0,0};bool bossSeen=false;  // 카메라가 보스전에서 보스 쪽도 잡게 (포인터는 프레임을 넘겨 들지 않음)
   std::vector<Line> dialog;
   size_t dialogIndex=0,shownChars=0;
   float fpsTime=0,fpsWorst=0;int fpsFrames=0;bool fpsHeld=false;

@@ -34,7 +34,7 @@ ENEMIES = {
         "SlashWindup": "boss_slash_windup.png", "SlashHit": "boss_slash_hit.png", "Dash": "boss_dash.png", "Cast": "boss_cast.png",
         "JumpCrouch": "boss_jump_crouch.png", "JumpAir": "boss_jump_air.png", "Slam": "boss_slam.png", "Summon": "boss_summon.png",
         "Spin_0": "boss_spin_1.png", "Spin_1": "boss_spin_2.png", "Spin_2": "boss_spin_3.png", "Roar": "boss_roar.png"}, {
-        "Slash": ([("SlashHit", 0.3)], False), "Dash": ([("Dash", 0.3)], True), "Cast": ([("Cast", 0.3)], False),
+        "Slash": ([("SlashHit", 0.3)], False), "Aim": ([("Spin_0", 0.3)], False), "Dash": ([("Dash", 0.3)], True), "Cast": ([("Cast", 0.3)], False),
         "JumpCrouch": ([("JumpCrouch", 0.3)], False), "JumpAir": ([("JumpAir", 0.3)], True), "Slam": ([("Slam", 0.3)], False),
         "Summon": ([("Summon", 0.3)], False), "Spin": ([("Spin_0", 0.07), ("Spin_1", 0.07), ("Spin_2", 0.07)], True),
         "SlashWindup": ([("SlashWindup", 0.3)], False), "Roar": ([("Roar", 0.3)], False)}),

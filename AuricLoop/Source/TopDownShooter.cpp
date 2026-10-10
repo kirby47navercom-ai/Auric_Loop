@@ -15,6 +15,7 @@ void TopDownShooter::MoveCamera(const hb::Vec3& position,const hb::Vec3& aim,boo
   if(!camera)return;
   hb::Vec3 target=position;
   if(hasAim)target=target+hb::VectorMath::ClampVectorLength((aim-position)*rules->CameraLead,rules->CameraLeadMax);
+  if(bossSeen&&inDungeon&&cutscene<=0)target=target+hb::VectorMath::ClampVectorLength((bossAt-position)*0.45f,5.f);  // 보스전: 플레이어와 보스 사이를 잡아 보스가 화면 밖에 있지 않게
   // 던전 방 안에서는 방 기준: 방이 화면에 다 들어가면 방 가운데에 고정, 크면 벽 밖이 보이지 않게 가둠. 복도에서는 플레이어를 따라감
   if(inDungeon&&cutscene<=0){const int r=map.RoomAt(position);
     if(r>=0){const auto& room=map.rooms[r];const float vh=rules->CameraSize,vw=vh*16.f/9.f,pad=rules->CameraRoomPad;
@@ -23,6 +24,8 @@ void TopDownShooter::MoveCamera(const hb::Vec3& position,const hb::Vec3& aim,boo
   else if(!inDungeon&&camMax.x>camMin.x){const float vh=rules->CameraSize,vw=vh*16.f/9.f;  // 거점·원룸: 맵 바깥이 안 보이게
     auto fit=[](float t,float lo,float hi,float view){return hi-lo<=2*view?(lo+hi)/2:std::clamp(t,lo+view,hi-view);};
     target.x=fit(target.x,camMin.x,camMax.x,vw);target.y=fit(target.y,camMin.y,camMax.y,vh);}
+  if(cutscene<=0){const float vh=rules->CameraSize*cutZoom,vw=vh*16.f/9.f;  // 방에 가둔 뒤에도 플레이어는 늘 화면 안쪽에 (가장자리·아래 UI에 가려지지 않게)
+    target.x=std::clamp(target.x,position.x-(vw-3.f),position.x+(vw-3.f));target.y=std::clamp(target.y,position.y-(vh-3.f),position.y+(vh-4.5f));}
   target.z=hb::Scene::GetPosition(camera).z;
   if(!cameraReady){cameraAt=target;cameraReady=true;}else cameraAt=hb::VectorMath::VInterpTo(cameraAt,target,delta,cutscene>0?14.f:rules->CameraFollow);  // 컷신은 빠르게 보스를 잡음
   auto at=cameraAt;
@@ -133,7 +136,8 @@ void TopDownShooter::Update(float delta){
   for(auto* e:all){e->Tick(delta);KeepInside(e);  // 적 이동은 여기서 한 번에 (상태 머신은 상태가 바뀔 때만 C++를 부름)
     if(e->burnedOut){e->burnedOut=false;KillEnemy(e);}else enemies.push_back(e);}  // 화상으로 쓰러짐
   }
-  boss=nullptr;for(auto* e:enemies)if(e->Boss)boss=e;  // 적 포인터는 프레임을 넘겨 들고 있지 않는다 (엔진이 다시 만들 수 있음)
+  boss=nullptr;for(auto* e:enemies)if(e->Boss)boss=e;
+  bossSeen=boss!=nullptr;if(boss)bossAt=hb::Scene::GetPosition(boss);  // 적 포인터는 프레임을 넘겨 들고 있지 않는다 (엔진이 다시 만들 수 있음)
   UpdateBullets(delta,position);
   UpdateFx(delta);
   if(inDungeon)UpdateWaves(delta);
