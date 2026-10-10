@@ -240,9 +240,9 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   float HurtKnockback = 9.0f;      // 맞으면 밀려나는 속도 (0.12초)
   HB_PROPERTY(BlueprintReadWrite)
-  float DodgeTime = 1.0f;
+  float DodgeTime = 0.18f;       // 대시: 거의 순간이동처럼 0.18초에 5.4m (DodgeSpeed x DodgeTime), 그동안 무적
   HB_PROPERTY(BlueprintReadWrite)
-  float DodgeSpeed = 12.0f;
+  float DodgeSpeed = 30.0f;
   HB_PROPERTY(BlueprintReadWrite)
   float DodgeCooldown = 2.0f;
   HB_PROPERTY(BlueprintReadWrite)
@@ -640,20 +640,25 @@ private:
     if(uiOwner!=player){uiOwner=player;uiSent.clear();}
     auto it=uiSent.find(key);if(it!=uiSent.end()&&it->second==value)return false;uiSent[key]=value;return true;}
   static std::string UiNum(float a,float b){return std::to_string(a)+","+std::to_string(b);}
-  static const char* UiInstance(const std::string& n){  // 앞 화면(타이틀·로딩·선택·엔딩·메뉴)은 W_Front, 나머지는 W_TopDown (tools/gen_hud.py FRONT)
+  // 위젯 나눔 (tools/gen_hud.py): 앞 화면(타이틀·로딩·선택·엔딩·메뉴)은 W_Front, 자주 움직이는 상호작용 말풍선·지역 이름은 W_Fast, 나머지는 W_TopDown.
+  // 엔진은 값 하나를 바꿀 때마다 그 액터에 붙은 위젯 전체를 복사하므로 위젯마다 따로 움직이지 않는 빈 액터에 붙임
+  static const char* UiInstance(const std::string& n){
     if(n=="Title")return "HUD";  // HUD의 지역 이름
     for(auto* p:{"Title","Loading","Select","Ending","Menu"})if(n.rfind(p,0)==0)return "Front";
+    for(auto* p:{"Prompt","AreaBanner"})if(n.rfind(p,0)==0)return "Fast";
     return "HUD";}
-  void UiVisible(const std::string& n,bool v){if(UiChanged("v"+n,v?"1":"0"))hb::UI::SetVisible(player,UiInstance(n),n,v);}
-  void UiText(const std::string& n,const std::string& v){if(UiChanged("t"+n,v))hb::UI::SetText(player,UiInstance(n),n,v);}
-  void UiTexture(const std::string& n,const std::string& v){if(UiChanged("x"+n,v))hb::UI::SetTexture(player,UiInstance(n),n,v);}
-  void UiValue(const std::string& n,float v){if(UiChanged("f"+n,std::to_string(v)))hb::UI::SetValue(player,UiInstance(n),n,v);}
+  hb::Actor* uiHosts[3]={nullptr,nullptr,nullptr};  // HUD·Front·Fast 위젯을 붙인 빈 액터 (gen_scene.py UI_*, Begin에서 찾음)
+  hb::Actor* UiOwnerOf(const std::string& n){const char* i=UiInstance(n);hb::Actor* a=uiHosts[i[0]=='H'?0:i[1]=='r'?1:2];return a?a:player;}
+  void UiVisible(const std::string& n,bool v){if(UiChanged("v"+n,v?"1":"0"))hb::UI::SetVisible(UiOwnerOf(n),UiInstance(n),n,v);}
+  void UiText(const std::string& n,const std::string& v){if(UiChanged("t"+n,v))hb::UI::SetText(UiOwnerOf(n),UiInstance(n),n,v);}
+  void UiTexture(const std::string& n,const std::string& v){if(UiChanged("x"+n,v))hb::UI::SetTexture(UiOwnerOf(n),UiInstance(n),n,v);}
+  void UiValue(const std::string& n,float v){if(UiChanged("f"+n,std::to_string(v)))hb::UI::SetValue(UiOwnerOf(n),UiInstance(n),n,v);}
   // 위치는 1px, 투명도는 1/40, 배율은 1/100 단위로 반올림: 같은 값이면 캐시가 걸러 엔진 명령을 줄임 (매 프레임 움직이는 화면 연출이 많으면 끊김)
-  void UiPosition(const std::string& n,hb::Vec2 v){v={std::round(v.x),std::round(v.y)};if(UiChanged("p"+n,UiNum(v.x,v.y)))hb::UI::SetPosition(player,UiInstance(n),n,v);}
-  void UiSize(const std::string& n,const hb::Vec2& v){if(UiChanged("s"+n,UiNum(v.x,v.y)))hb::UI::SetSize(player,UiInstance(n),n,v);}
-  void UiOpacity(const std::string& n,float v){v=std::round(v*40)/40;if(UiChanged("o"+n,std::to_string(v)))hb::UI::SetOpacity(player,UiInstance(n),n,v);}
-  void UiColor(const std::string& n,const hb::Color& c){if(UiChanged("c"+n,UiNum(c.r,c.g)+UiNum(c.b,c.a)))hb::UI::SetColor(player,UiInstance(n),n,c);}
-  void UiScale(const std::string& n,float v){v=std::round(v*100)/100;if(UiChanged("k"+n,std::to_string(v)))hb::UI::SetScale(player,UiInstance(n),n,hb::Vec2{v,v});}
+  void UiPosition(const std::string& n,hb::Vec2 v){v={std::round(v.x),std::round(v.y)};if(UiChanged("p"+n,UiNum(v.x,v.y)))hb::UI::SetPosition(UiOwnerOf(n),UiInstance(n),n,v);}
+  void UiSize(const std::string& n,const hb::Vec2& v){if(UiChanged("s"+n,UiNum(v.x,v.y)))hb::UI::SetSize(UiOwnerOf(n),UiInstance(n),n,v);}
+  void UiOpacity(const std::string& n,float v){v=std::round(v*40)/40;if(UiChanged("o"+n,std::to_string(v)))hb::UI::SetOpacity(UiOwnerOf(n),UiInstance(n),n,v);}
+  void UiColor(const std::string& n,const hb::Color& c){if(UiChanged("c"+n,UiNum(c.r,c.g)+UiNum(c.b,c.a)))hb::UI::SetColor(UiOwnerOf(n),UiInstance(n),n,c);}
+  void UiScale(const std::string& n,float v){v=std::round(v*100)/100;if(UiChanged("k"+n,std::to_string(v)))hb::UI::SetScale(UiOwnerOf(n),UiInstance(n),n,hb::Vec2{v,v});}
   hb::Vec3 playerAt{0,0,0},facing{1,0,0},cameraAt{0,0,0};
   bool playerFlipped=false,blinkShown=false;
   hb::Vec3 knock{0,0,0};

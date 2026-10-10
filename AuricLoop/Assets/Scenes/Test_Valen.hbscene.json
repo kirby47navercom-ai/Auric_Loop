@@ -150,28 +150,6 @@
           }
         },
         {
-          "id": "4da105e9-ce02-4274-8f58-e7bb455ecea3",
-          "name": "UIWidget",
-          "type": "UIWidget",
-          "properties": {
-            "enabled": true,
-            "asset": "Assets/UI/W_TopDown.hbwidget.json",
-            "instance": "HUD",
-            "showOnStart": true
-          }
-        },
-        {
-          "id": "ui-front",
-          "name": "UIWidget Front",
-          "type": "UIWidget",
-          "properties": {
-            "enabled": true,
-            "asset": "Assets/UI/W_Front.hbwidget.json",
-            "instance": "Front",
-            "showOnStart": true
-          }
-        },
-        {
           "id": "hitbox",
           "name": "CircleCollider2D",
           "type": "CircleCollider2D",
@@ -351,6 +329,186 @@
       ],
       "tags": [
         "PlayerGrip"
+      ]
+    },
+    {
+      "id": "UI_HUD",
+      "name": "UI_HUD",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        0,
+        -900,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "tags": [
+        "UI.HUD"
+      ],
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "ui-hud",
+          "name": "UIWidget HUD",
+          "type": "UIWidget",
+          "properties": {
+            "enabled": true,
+            "asset": "Assets/UI/W_TopDown.hbwidget.json",
+            "instance": "HUD",
+            "showOnStart": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "UI_Front",
+      "name": "UI_Front",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        0,
+        -900,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "tags": [
+        "UI.Front"
+      ],
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "ui-front",
+          "name": "UIWidget Front",
+          "type": "UIWidget",
+          "properties": {
+            "enabled": true,
+            "asset": "Assets/UI/W_Front.hbwidget.json",
+            "instance": "Front",
+            "showOnStart": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "UI_Fast",
+      "name": "UI_Fast",
+      "kind": "empty",
+      "group": "WORLD",
+      "position": [
+        0,
+        -900,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visible": true,
+      "tags": [
+        "UI.Fast"
+      ],
+      "components": [
+        {
+          "id": "component_0",
+          "name": "Transform",
+          "type": "Transform",
+          "properties": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "ui-fast",
+          "name": "UIWidget Fast",
+          "type": "UIWidget",
+          "properties": {
+            "enabled": true,
+            "asset": "Assets/UI/W_Fast.hbwidget.json",
+            "instance": "Fast",
+            "showOnStart": true
+          }
+        }
       ]
     },
     {

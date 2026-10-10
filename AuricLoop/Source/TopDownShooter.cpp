@@ -61,7 +61,7 @@ void TopDownShooter::Update(float delta){
    if(hb::Input::IsKeyDown("F12")||(ending&&(anyPressed||AnyPressed(true)))){ResetToTitle();return;}
    if(ending)return;
    if(Phase>=2&&!Returning&&!ReturnSuccess&&area>=0&&roomKind!="Boss"){runTime+=delta;
-     if(runTime>=rules->RunNotice){if(hint.empty())Notify("10분이 지났어요 - F10을 누르면 보스방 앞으로");hintTime=1e9f;
+     if(runTime>=rules->RunNotice){  // 10분이 지나면 운영자가 F10으로 보스방 앞으로 (화면 안내는 없음)
        if(hb::Input::IsKeyDown("F10")&&inDungeon){runTime=0;hint="";Warp(map.PathRoom(map.rooms[map.boss].path-1));}}}
    // 부스 운영자: F9로 주 경로 다음 방으로 (귀환 중이면 시작 방 쪽으로)
    const bool warp=hb::Input::IsKeyDown("F9");
@@ -168,11 +168,11 @@ void TopDownShooter::Update(float delta){
 
   // 회피: Space를 누른 순간 바라보는 방향으로 대시, 대시 중 무적
   const bool dodgeDown=hb::Input::IsKeyDown("space")||hb::Input::IsKeyDown(" ");
-  if(dodgeDown&&!dodgeHeld&&dodgeCooldownLeft<=0&&dodgeTimer<=0){dodgeTimer=rules->DodgeTime;dodgeCooldownLeft=rules->DodgeCooldown;Sfx("Dodge");
+  if(dodgeDown&&!dodgeHeld&&dodgeCooldownLeft<=0&&dodgeTimer<=0){dodgeTimer=rules->DodgeTime;dodgeCooldownLeft=rules->DodgeCooldown;ghostTime=0;Sfx("Dodge");
     Effect("Dust",hb::Vec3{position.x,position.y-0.8f,0.03f},0,0,facing.x>0);}
   dodgeHeld=dodgeDown;
   if(dodgeTimer>0){dodgeTimer-=delta;hb::Physics::SetVelocity(player,facing*rules->DodgeSpeed);
-    if((ghostTime-=delta)<=0){ghostTime=0.08f;Ghost(position);}  // 0.08초마다 잔상 (1m쯤 간격)
+    if((ghostTime-=delta)<=0){ghostTime=0.03f;Ghost(position);}  // 0.03초마다 잔상 (거의 순간이동이라 지나간 자리에 0.9m 간격으로 남김)
     if(dodgeTimer<=0)Effect("Dust",hb::Vec3{position.x,position.y-0.8f,0.03f},0,0,facing.x<0);}  // 멈추며 흙먼지
   else if(NewSheet()&&Character==0&&attackAnim>0.12f&&attackAnim<=0.22f)hb::Physics::SetVelocity(player,facing*(rules->SlashStep/0.1f));  // 베기 프레임 동안 한 발 내딛음
   else if(knockTimer>0){knockTimer-=delta;hb::Physics::SetVelocity(player,knock);}

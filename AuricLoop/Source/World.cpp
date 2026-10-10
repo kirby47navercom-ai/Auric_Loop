@@ -51,6 +51,7 @@ void TopDownShooter::Leave(int to,const std::string& spawn){
 }
 
 void TopDownShooter::Begin(){
+  {int k=0;for(auto* tag:{"UI.HUD","UI.Front","UI.Fast"}){const auto a=hb::Scene::GetActorsWithTag(tag);uiHosts[k++]=a.empty()?nullptr:a.front();}uiSent.clear();}
   // 장면 첫 프레임: 이 장면의 구역(RoomInfo), 상호작용 대상, 카메라를 찾고 진행을 이어받는다
   started=true;Hp=MaxHp;bannerPending=true;  // 도착한 곳 이름을 가운데에
   rules=&fallbackRules;for(auto* a:hb::Scene::GetAllActorsOfClass("AuricRules"))if(auto* r=dynamic_cast<AuricRules*>(a))rules=r;
@@ -284,6 +285,7 @@ void TopDownShooter::ResetToTitle(){
 }
 
 void TopDownShooter::Tip(int id){
+  return;  // 갑자기 뜨는 안내 말풍선은 쓰지 않음 (조작은 시작 방 그림 표지판으로). 다시 쓰려면 이 줄을 지움
   if(TipsShown&(1<<id)||!player||frame<2)return;TipsShown|=1<<id;
   std::string text;
   for(const auto& row:{std::string(touchMode?"TipTouch":"Tip")+std::to_string(id),"Tip"+std::to_string(id)}){

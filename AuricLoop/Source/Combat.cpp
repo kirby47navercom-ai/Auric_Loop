@@ -104,7 +104,7 @@ void TopDownShooter::Ghost(const hb::Vec3& at){
   const auto i=currentSprite.find("S_VS_run_");if(i==std::string::npos)return;
   hb::Transform t;t.position=at;auto* a=Take(fxPool,rules->FxPrefab,t);if(!a)return;
   hb::Sprites::SetSorting(a,"default",-1);hb::Sprites::SetSprite(a,std::string(currentSprite).replace(i,9,"S_VS_Ghost_"));
-  Fx f{a,0.2f};f.ghost=true;fxs.push_back(f);
+  Fx f{a,0.3f};f.ghost=true;fxs.push_back(f);
 }
 
 void TopDownShooter::Effect(const std::string& name,const hb::Vec3& at,float angle,float glow,bool flip){

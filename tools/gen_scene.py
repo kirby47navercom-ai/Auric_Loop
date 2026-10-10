@@ -163,6 +163,15 @@ def base_objects(director_bp="BP_TopDownShooter", at=(0, 0)):
     comp(cam, "Camera")["properties"].update(orthographicSize=5.625, followTarget="", followOffset=[0, 0, 12])
     director = {"id": "Director", "name": "Director", "kind": "empty", "group": "WORLD", "position": [0, 0, 0], "rotation": [0, 0, 0],
                 "scale": [1, 1, 1], "visible": True, "components": [transform()], "blueprintAsset": BP + director_bp + ".hbblueprint.json"}
+    # 위젯은 움직이지 않는 빈 액터에 하나씩 (C++ TopDownShooter::UiOwnerOf). 엔진은 위젯 값 하나를 바꿀 때 그 액터의 위젯 전체를 복사하고,
+    # 액터가 움직일 때마다 그 액터의 위젯 전체를 글자로 다시 만들어 넘긴다 (플레이어에 붙이면 매 프레임 → 쓰레기 수집으로 끊김)
+    player["components"] = [c for c in player["components"] if c.get("type") != "UIWidget"]
+    ui_hosts = []
+    for asset, inst in (("W_TopDown", "HUD"), ("W_Front", "Front"), ("W_Fast", "Fast")):
+        ui_hosts.append({"id": "UI_" + inst, "name": "UI_" + inst, "kind": "empty", "group": "WORLD", "position": [0, -900, 0], "rotation": [0, 0, 0],
+                         "scale": [1, 1, 1], "visible": True, "tags": ["UI." + inst],
+                         "components": [transform(), {"id": "ui-" + inst.lower(), "name": "UIWidget " + inst, "type": "UIWidget",
+                                                      "properties": {"enabled": True, "asset": f"Assets/UI/{asset}.hbwidget.json", "instance": inst, "showOnStart": True}}]})
     shadow = sprite_obj("PlayerShadow", "Assets/Sprites/FX/FX_Shadow.png", 0, -0.95, order=5)  # 발밑 그림자: 플레이어 자식이라 같이 움직임
     shadow["parent"] = "Player"
     comp(shadow, "SpriteRenderer")["properties"]["sortingLayer"] = "overlay"
@@ -174,7 +183,7 @@ def base_objects(director_bp="BP_TopDownShooter", at=(0, 0)):
     grip = copy.deepcopy(weapon)  # 검 손잡이 위 손가락 (앞·뒤·오른쪽을 볼 때)
     grip.update(id="PlayerGrip", name="PlayerGrip", tags=["PlayerGrip"])
     comp(grip, "SpriteRenderer")["properties"]["sprite"] = "Assets/Sprites/ValenSocket/S_VS_Grip_walk_0_1.hbsprite.json"
-    return [player, shadow, weapon, grip, cam, director, bp_obj("Rules", "BP_AuricRules", 0, 0), start("PlayerStart", *at)]
+    return [player, shadow, weapon, grip, *ui_hosts, cam, director, bp_obj("Rules", "BP_AuricRules", 0, 0), start("PlayerStart", *at)]
 
 
 # ---- 타일맵 ------------------------------------------------------------------------------

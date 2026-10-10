@@ -165,12 +165,12 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   console.log('일시정지·표지판 검사 통과', 'signs', signs);
 }
 
-// 회피(Space): 바라보는 방향으로 대시(이동속도 2배·무적). 발렌 v14는 구르지 않고 달리기 그림 그대로 (아트팀: 구르기 없는 빠른 이동)
+// 회피(Space): 바라보는 방향으로 거의 순간이동하는 대시(0.18초에 5.4m·무적). 발렌 v14는 구르지 않고 달리기 그림 그대로
 {
   let rolling = '';
   const r = await runProject(project, {scene: scene('Test_Valen'), frames: 90, delta: 1 / 60, inputs: [
     {frame: 5, key: 'd', value: 1}, {frame: 8, key: 'd', value: 0}, ...press(10, 'space')],
-    onFrame: (frame, vm) => { if (frame === 25) rolling = vm.objects.find(o => o.id === 'Player').components.find(c => c.type === 'SpriteRenderer').properties.sprite; }});
+    onFrame: (frame, vm) => { if (frame === 15) rolling = vm.objects.find(o => o.id === 'Player').components.find(c => c.type === 'SpriteRenderer').properties.sprite; }});
   const x = r.objects.find(o => o.id === 'Player').position[0];
   assert.ok(/S_VS_run_/.test(rolling), `대시 동안 달리기 그림 (${rolling})`);
   assert.ok(x > 3, '오른쪽으로 굴러 나감');

@@ -17,7 +17,7 @@ void TopDownShooter::Interact(const hb::Vec3& position,bool pressed){
   const std::string text=best?best->Text:"";
   if(kind=="Ore"||kind=="Herb"){
     const bool ore=kind=="Ore";next=text.empty()?(ore?"E: 광물 채집 (30kg)":"E: 약초 채집 (3개)"):text;
-    if(pressed){if(ore&&!gatherTold){gatherTold=true;Talk("GatherTip");}
+    if(pressed){if(ore&&!gatherTold){gatherTold=true;}  // 첫 채집 안내 대사는 뺌
       if(ore)Ore++;else Herb+=3;Fatigue++;Sfx("Gather");taken.insert(std::to_string(area)+":"+kind);
       interactables.erase(std::find(interactables.begin(),interactables.end(),best));hb::Scene::Destroy(best);next="";}
   }else if(kind=="Smith"){
