@@ -22,7 +22,7 @@ export function renderWidgetTree(host,data,{preview=false,fileUrl=p=>p,event=()=
   const build=node=>{
     const p={...widgetDefaults,...node.properties},tag={Button:'button',TouchButton:'button',Image:'div',Slider:'input',TextInput:'input',CheckBox:'label'}[node.type]||'div',element=document.createElement(tag);
     element.className='hb-ui-element hb-ui-'+node.type;element.dataset.widgetId=node.id;element.dataset.widgetName=node.name;element.title=p.tooltip;
-    element.style.pointerEvents=preview||virtualTypes.has(node.type)||['Button','Slider','TextInput','CheckBox','ScrollBox'].includes(node.type)?'auto':'none';
+    element.style.pointerEvents=preview||node.events?.click||virtualTypes.has(node.type)||['Button','Slider','TextInput','CheckBox','ScrollBox'].includes(node.type)?'auto':'none';
     if(node.type==='Slider'){element.type='range';element.setAttribute('aria-label',node.name);}
     if(node.type==='TextInput'){element.type='text';element.setAttribute('aria-label',node.name);element.placeholder=p.placeholder;element.maxLength=p.maxLength;}
     if(node.type==='Image'){const img=document.createElement('img');img.alt=p.text;img.draggable=false;Object.assign(img.style,{width:'100%',height:'100%'});element.append(img);images.set(node.id,{img,node});}
