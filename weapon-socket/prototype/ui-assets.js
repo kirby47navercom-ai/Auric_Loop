@@ -26,6 +26,10 @@ export function validWidgetAsset(data){
   return data.nodes.every(n=>{
     if(!text(n?.id)||!n.id||!text(n.name)||!n.name||!Object.hasOwn(widgetTypes,n.type)||!text(n.parent))return false;
     let at=n;const seen=new Set();while(at.parent){if(seen.has(at.id)||seen.size>32)return false;seen.add(at.id);at=nodes.get(at.parent);if(!at||!widgetContainers.has(at.type))return false;}
+    return validWidgetProperties(n)&&n.events&&typeof n.events==='object'&&!Array.isArray(n.events)&&Object.entries(n.events).every(([k,v])=>widgetEvents.includes(k)&&text(v,80))&&n.bindings&&typeof n.bindings==='object'&&!Array.isArray(n.bindings)&&Object.entries(n.bindings).every(([k,v])=>['text','value','visible','enabled','checked'].includes(k)&&text(v,80));
+  });
+}
+export function validWidgetProperties(n){
     const s=n.slot,p=n.properties;
     if(!s||!vector(s.anchors,4,0,1)||s.anchors[0]>s.anchors[2]||s.anchors[1]>s.anchors[3]||!vector(s.offset,4,-16384,16384)||!vector(s.alignment,2,0,1)||!Number.isInteger(s.zIndex)||!finite(s.zIndex,-1000,1000)||!finite(s.fill,0,100))return false;
     if(!p||!text(p.text,10000)||!text(p.tooltip,1000)||!text(p.placeholder,1000)||!validAssetPath(p.texture)||!['left','center','right'].includes(p.align))return false;
@@ -36,8 +40,7 @@ export function validWidgetAsset(data){
     if(!finite(p.min,-1e6,1e6)||!finite(p.max,-1e6,1e6)||p.min>=p.max||!finite(p.value,p.min,p.max)||!finite(p.step,.000001,1e6))return false;
     for(const key of ['inputKey','axisX','axisY','keyUp','keyDown','keyLeft','keyRight'])if(p[key]!==undefined&&(!text(p[key],80)||!p[key]))return false;
     if(p.inputMode!==undefined&&!['keys','axes'].includes(p.inputMode)||p.deadZone!==undefined&&!finite(p.deadZone,0,.95)||p.floating!==undefined&&typeof p.floating!=='boolean'||p.deviceVisibility!==undefined&&!['all','touch','mouse'].includes(p.deviceVisibility))return false;
-    return n.events&&typeof n.events==='object'&&!Array.isArray(n.events)&&Object.entries(n.events).every(([k,v])=>widgetEvents.includes(k)&&text(v,80))&&n.bindings&&typeof n.bindings==='object'&&!Array.isArray(n.bindings)&&Object.entries(n.bindings).every(([k,v])=>['text','value','visible','enabled','checked'].includes(k)&&text(v,80));
-  });
+    return true;
 }
 export function widgetDescendants(data,id){const result=new Set([id]);let size;do{size=result.size;for(const n of data.nodes)if(result.has(n.parent))result.add(n.id);}while(size!==result.size);return result;}
 export function reparentWidget(data,id,parent){const n=data.nodes.find(n=>n.id===id),p=data.nodes.find(n=>n.id===parent);if(!n?.parent||!p||!widgetContainers.has(p.type)||widgetDescendants(data,id).has(parent))throw Error('위젯 계층을 순환시키거나 루트를 이동할 수 없어요.');n.parent=parent;}

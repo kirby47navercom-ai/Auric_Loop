@@ -45,7 +45,7 @@ export function commitNativeWorld(world,result){
 // UI fields from C++; ordinary mutable actor data is serialized on every call.
 const immutableJSON=new WeakMap();
 export function immutableNativeSnapshot(value){
-  const snapshot=structuredClone(value),freeze=value=>{if(value&&typeof value==='object'){for(const child of Object.values(value))freeze(child);Object.freeze(value);}return value;};freeze(snapshot);const text=JSON.stringify(snapshot);immutableJSON.set(snapshot,{text,value:freeze(JSON.parse(text))});return snapshot;
+  const text=JSON.stringify(value),snapshot=JSON.parse(text),freeze=value=>{if(value&&typeof value==='object'){for(const child of Object.values(value))freeze(child);Object.freeze(value);}return value;};freeze(snapshot);immutableJSON.set(snapshot,{text,value:snapshot});return snapshot;
 }
 function withJSONField(object,key,value){const text=JSON.stringify({...object,[key]:undefined});return text.slice(0,-1)+(text.length>2?',':'')+JSON.stringify(key)+':'+value+'}';}
 function nativeRowJSON(object){

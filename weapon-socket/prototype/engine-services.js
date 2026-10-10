@@ -126,6 +126,11 @@ export function engineOperations(hooks){
       }
       for(let i=0;i<operations.length;){
         const op=operations[i];let end=i+1;
+        // Flush UI before any other operation can call C++ or inspect the world.
+        if(op.key.startsWith('uiSet')&&op.key!=='uiSetFont'){
+          while(end<operations.length&&operations[end].key.startsWith('uiSet')&&operations[end].key!=='uiSetFont')end++;
+          await ui.writeBatch(async()=>{for(;i<end;i++){const op=operations[i];await operation(op.key,op.args,vm.bindings.find(owner=>owner.self===op.self)||b,vm);}},vm);continue;
+        }
         if(physicsWrites.has(op.key))while(end<operations.length&&physicsWrites.has(operations[end].key))end++;
         if(end>i+1){const system=ensurePhysics(vm);await system.ready?.();if(system.writeBatch){system.writeBatch(()=>{for(;i<end;i++){const op=operations[i],binding=vm.bindings.find(owner=>owner.self===op.self)||b;writePhysics(system,op.key,target(op.args,binding,vm),op.args);}});continue;}}
         await operation(op.key,op.args,vm.bindings.find(owner=>owner.self===op.self)||b,vm);i++;

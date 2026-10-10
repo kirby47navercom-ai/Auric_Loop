@@ -1,6 +1,6 @@
 import {immutableNativeSnapshot} from './native-transport.js';
 import {bindVirtualControl,drawVirtualControl,virtualTypes,virtualDefaults} from './virtual-controls.js';
-import {validWidgetAsset,widgetContainers,widgetDefaults,widgetScale,widgetImageSource} from './ui-assets.js';
+import {validWidgetAsset,validWidgetProperties,widgetContainers,widgetDefaults,widgetScale,widgetImageSource} from './ui-assets.js';
 
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 export function renderWidgetTree(host,data,{preview=false,fileUrl=p=>p,event=()=>{},select=()=>{},input=()=>{},acceptInput=()=>true,inputSignal}={}){
@@ -56,11 +56,13 @@ export function renderWidgetTree(host,data,{preview=false,fileUrl=p=>p,event=()=
 }
 
 export class WidgetSystem {
-  constructor(hooks={}){this.hooks=hooks;this.instances=new Map();this.events=[];this.disposed=false;this.animations=new Map();}
+  constructor(hooks={}){this.hooks=hooks;this.instances=new Map();this.events=[];this.disposed=false;this.animations=new Map();this.batchDepth=0;this.dirty=new Set();}
   key(owner,instance){return JSON.stringify([owner,instance]);}
   state(owner,instance){const state=this.instances.get(this.key(owner,instance));if(!state)throw Error('위젯 인스턴스를 찾을 수 없어요: '+instance);return state;}
   node(state,name){const node=state.data.nodes.find(n=>n.id===name||n.name===name);if(!node)throw Error('위젯 요소가 없어요: '+name);return node;}
   sync(state,vm){const owner=vm.object(state.owner);if(!owner)return;owner.gameplayDebug??={};owner.gameplayDebug.ui??={};owner.gameplayDebug.ui=immutableNativeSnapshot({...owner.gameplayDebug.ui,[state.instance]:Object.fromEntries(state.data.nodes.map(n=>[n.name,{type:n.type,...n.properties,slot:structuredClone(n.slot),value:n.type==='CheckBox'?Number(n.properties.checked):n.properties.value}]))});}
+  refresh(state,vm){if(this.batchDepth){this.dirty.add(state);return;}state.view?.update();this.sync(state,vm);}
+  async writeBatch(callback,vm){this.batchDepth++;try{return await callback();}finally{if(--this.batchDepth===0){const changed=[...this.dirty];this.dirty.clear();for(const state of changed)if(this.instances.get(this.key(state.owner,state.instance))===state)this.refresh(state,vm);}}}
   async operation(key,a,b,vm){
     if(!key.startsWith('ui'))return undefined;
     const owner=!a.target||a.target==='self'?b.self:a.target;if(!vm.object(owner))throw Error('위젯 소유 오브젝트가 없어요.');
@@ -81,13 +83,13 @@ export class WidgetSystem {
     else if(key==='uiFocus'){const el=state.view?.elements.get(node.id);(el?.querySelector('input')||el)?.focus();}
     else if(key==='uiAnimate'){if(!['opacity','rotation','x','y','blink'].includes(a.property)||!Number.isFinite(a.to)||Math.abs(a.to)>10000||a.property==='opacity'&&(a.to<0||a.to>1)||!Number.isFinite(a.duration)||a.duration<=0||a.duration>3600)throw Error('위젯 애니메이션 값을 확인하세요.');const from=a.property==='x'?node.slot.offset[0]:a.property==='y'?node.slot.offset[1]:a.property==='blink'?p.opacity:p[a.property]??0;this.animations.set(JSON.stringify([owner,a.instance,node.id,a.property]),{state,node,property:a.property,from,to:a.to,duration:a.duration,elapsed:0});return {};}
     else if(key.startsWith('uiSet')){
-      const next=structuredClone(state.data),n=next.nodes.find(n=>n.id===node.id),value={uiSetTexture:['texture',a.texture],uiSetRotation:['rotation',a.rotation],uiSetScale:['scale',a.scale],uiSetColor:['color',Array.isArray(a.color)&&a.color.length===4?a.color.map(v=>Math.round(clamp(v,0,1)*255).toString(16).padStart(2,'0')).join(''):a.color],uiSetOpacity:['opacity',a.opacity],uiSetFont:['font',a.font],uiSetFontSize:['fontSize',a.fontSize],uiSetFillDirection:['fillDirection',a.direction]}[key];
+      const n={...node,slot:structuredClone(node.slot),properties:structuredClone(p)},value={uiSetTexture:['texture',a.texture],uiSetRotation:['rotation',a.rotation],uiSetScale:['scale',a.scale],uiSetColor:['color',Array.isArray(a.color)&&a.color.length===4?a.color.map(v=>Math.round(clamp(v,0,1)*255).toString(16).padStart(2,'0')).join(''):a.color],uiSetOpacity:['opacity',a.opacity],uiSetFont:['font',a.font],uiSetFontSize:['fontSize',a.fontSize],uiSetFillDirection:['fillDirection',a.direction]}[key];
       if(key==='uiSetPosition'||key==='uiSetSize'){const v=key==='uiSetPosition'?a.position:a.size;if(!Array.isArray(v)||v.length!==2||!v.every(Number.isFinite))throw Error('위젯 위치·크기를 확인하세요.');n.slot.offset.splice(key==='uiSetPosition'?0:2,2,...v);}
       else if(value)n.properties[value[0]]=value[0]==='color'&&typeof value[1]==='string'&&!value[1].startsWith('#')?'#'+value[1]:value[1];else throw Error('위젯 함수가 없어요: '+key);
-      if(key==='uiSetTexture'&&node.properties.texture!==a.texture)n.properties.vectorTexture='';if(!validWidgetAsset(next))throw Error('위젯 속성 범위를 확인하세요.');Object.assign(node,n);
+      if(key==='uiSetTexture'&&node.properties.texture!==a.texture)n.properties.vectorTexture='';if(!validWidgetProperties(n))throw Error('위젯 속성 범위를 확인하세요.');if(JSON.stringify([node.slot,p])===JSON.stringify([n.slot,n.properties]))return {};Object.assign(node,n);
     }
     else throw Error('위젯 함수가 없어요: '+key);
-    state.view?.update();if(key==='uiSetFont')await state.view?.fontsReady();this.sync(state,vm);return {};
+    this.refresh(state,vm);if(key==='uiSetFont')await state.view?.fontsReady();return {};
   }
   remove(owner,instance,vm){const key=this.key(owner,instance),state=this.instances.get(key);if(!state)return;state.view?.dispose();state.host?.remove();this.instances.delete(key);for(const [id,animation] of this.animations)if(animation.state===state)this.animations.delete(id);this.events=this.events.filter(e=>e.state!==state);const ui=vm.object(owner)?.gameplayDebug?.ui;if(ui){const {[instance]:removed,...rest}=ui;vm.object(owner).gameplayDebug.ui=immutableNativeSnapshot(rest);}}
   removeOwner(owner,vm){for(const state of [...this.instances.values()])if(state.owner===owner)this.remove(owner,state.instance,vm);}

@@ -8205,8 +8205,8 @@
     },
     {
       "path": "main/prototype/ui-assets.js",
-      "bytes": 11205,
-      "sha256": "0b0c271072854e17f7902c43168d5c57270d58a447d9d52a633c4d60857d8509"
+      "bytes": 11292,
+      "sha256": "12077af7e95a7fbd9a46d726318c325f040071a093111c367500d9efa687985f"
     },
     {
       "path": "main/prototype/virtual-controls.js",
@@ -8275,8 +8275,8 @@
     },
     {
       "path": "main/prototype/native-transport.js",
-      "bytes": 15212,
-      "sha256": "ce2d690eb549f717642641e9ab7a049da398bc9ea30f4fc7c7f16dec50f70546"
+      "bytes": 15181,
+      "sha256": "265229165f9887bd6dc9bba3355c14b4b522e4c84645cf6a2c077367dda77f91"
     },
     {
       "path": "main/prototype/frame-profiler.js",
@@ -8345,8 +8345,8 @@
     },
     {
       "path": "main/prototype/engine-services.js",
-      "bytes": 79288,
-      "sha256": "f5c021332171094371a7ceed87f4a515dfafe61302df68319f03899a982af5a3"
+      "bytes": 79743,
+      "sha256": "f86dbdad4e49de47b48ae74f43acac5c1320b2d447986ad694e549d39487e2d5"
     },
     {
       "path": "main/prototype/animation-retarget.js",
@@ -8435,8 +8435,8 @@
     },
     {
       "path": "main/prototype/ui-runtime.js",
-      "bytes": 21528,
-      "sha256": "c1c04af1913a71689673368aa8bb3bfb512d90c0be54a01415e8b7c7082a860d"
+      "bytes": 22057,
+      "sha256": "b854404666ea40401a291face5a91bada62149ea2202cf963cc5035e9fc53c2a"
     },
     {
       "path": "main/prototype/animation-graph-runtime.js",
@@ -8585,53 +8585,53 @@
     },
     {
       "path": "main/Content/Assets/UI/Web/btn_attack_alea.svg",
-      "bytes": 302,
-      "sha256": "3687807b4fbec948bdf795731b4d104d7598ba65f07ab6dd4f2513471b6f35b3"
+      "bytes": 442,
+      "sha256": "0a7a013a6f295ac2613262c7115a23a0f2c9039381f3c7c2a45004ea35adfb4e"
     },
     {
       "path": "main/Content/Assets/UI/Web/btn_attack_sherry.svg",
-      "bytes": 302,
-      "sha256": "3687807b4fbec948bdf795731b4d104d7598ba65f07ab6dd4f2513471b6f35b3"
+      "bytes": 445,
+      "sha256": "0ee91a332e2a7a9bf454a21579d329601a9978a5e35a43b81924059698572450"
     },
     {
       "path": "main/Content/Assets/UI/Web/btn_attack_valen.svg",
-      "bytes": 302,
-      "sha256": "3687807b4fbec948bdf795731b4d104d7598ba65f07ab6dd4f2513471b6f35b3"
+      "bytes": 439,
+      "sha256": "2e3c7839507da23dc6c7fc21e9c06eb491732399c04730f98d7cece2d0f0b8ac"
     },
     {
       "path": "main/Content/Assets/UI/Web/btn_craft.svg",
-      "bytes": 302,
-      "sha256": "6bbfb13796bbf241ac1539e3e6135da7b94e2dbd42b5c7b38a7f9c3497bacb5c"
+      "bytes": 427,
+      "sha256": "7c64e90a54b43801a9f1d0fca188a32ebe27fbeced95b0a29fbfac29b9834f3d"
     },
     {
       "path": "main/Content/Assets/UI/Web/btn_dodge.svg",
-      "bytes": 305,
-      "sha256": "c87f08ff1a115e5c5c0145504756ec1d1f6b37211378dc482bfd658642069f2b"
+      "bytes": 436,
+      "sha256": "72926fdac32ee3e41e9a05a31280352e0cb49a60a2109acc3b4930aab8b71db1"
     },
     {
       "path": "main/Content/Assets/UI/Web/btn_flash.svg",
-      "bytes": 302,
-      "sha256": "ad4b017c56073fd1475c045a4cd10cb8a1429a0228c0c75904f9a4f23f943007"
+      "bytes": 422,
+      "sha256": "4ea4c36d2127851372b788f745a2a294b5f5dea35da9c250e8cdae89d90e2fce"
     },
     {
       "path": "main/Content/Assets/UI/Web/btn_gather.svg",
-      "bytes": 302,
-      "sha256": "b5cbc20b5bd7f837be34508f84a0339fb46faf8b3a65592a3ffc24a3ce3387a1"
+      "bytes": 460,
+      "sha256": "3c1bcc388fdad8014ca4675351ec79dd81f1034f2fde12e38ee91b785a0eb461"
     },
     {
       "path": "main/Content/Assets/UI/Web/btn_interact.svg",
-      "bytes": 302,
-      "sha256": "b9b2a3ce0eab852628d59370c87a4e15fb832ceb84a10ce76bf95858f0129c13"
+      "bytes": 419,
+      "sha256": "e7ee6f6bb7da152e608b30060e36163f50c797f142b9e73e35595690cebfa75c"
     },
     {
       "path": "main/Content/Assets/UI/Web/btn_inventory.svg",
-      "bytes": 302,
-      "sha256": "fc6fa1ccd6a0ad0b4c149cc3bd811feadce097c527f1e9fbc30cd9871acde3b6"
+      "bytes": 431,
+      "sha256": "dffdf8cc01139ee12368a78f4c50653bc900f0f5cda5f78e5465e99ce1ab3e8a"
     },
     {
       "path": "main/Content/Assets/UI/Web/btn_pause.svg",
-      "bytes": 302,
-      "sha256": "6611b970ef14b31f9afb7d1452cd319b5300a052df43ac2d9005a4412e599d2c"
+      "bytes": 409,
+      "sha256": "03f5b90a26062a28ea6ee4571202c4527dad1271c99db05342808b289b3c41e4"
     },
     {
       "path": "main/Content/Assets/UI/Web/craft_detail_potion.svg",
@@ -8740,8 +8740,8 @@
     },
     {
       "path": "main/Content/Assets/UI/Web/fx_dust.svg",
-      "bytes": 138,
-      "sha256": "304544f620e086818650cac3221af9995035ee32c621275e265946f605f0b14d"
+      "bytes": 297,
+      "sha256": "167b2a153b21e82df3ae0c2a070b9ccdefea9e4bd10cfc44f8e1b2e1faddcab1"
     },
     {
       "path": "main/Content/Assets/UI/Web/fx_star.svg",
@@ -8750,8 +8750,8 @@
     },
     {
       "path": "main/Content/Assets/UI/Web/fx_torch_glow.svg",
-      "bytes": 138,
-      "sha256": "304544f620e086818650cac3221af9995035ee32c621275e265946f605f0b14d"
+      "bytes": 297,
+      "sha256": "167b2a153b21e82df3ae0c2a070b9ccdefea9e4bd10cfc44f8e1b2e1faddcab1"
     },
     {
       "path": "main/Content/Assets/UI/Web/hp_back.svg",
@@ -8775,8 +8775,8 @@
     },
     {
       "path": "main/Content/Assets/UI/Web/icon_bag.svg",
-      "bytes": 302,
-      "sha256": "fc6fa1ccd6a0ad0b4c149cc3bd811feadce097c527f1e9fbc30cd9871acde3b6"
+      "bytes": 431,
+      "sha256": "dffdf8cc01139ee12368a78f4c50653bc900f0f5cda5f78e5465e99ce1ab3e8a"
     },
     {
       "path": "main/Content/Assets/UI/Web/joystick.svg",
@@ -8795,28 +8795,28 @@
     },
     {
       "path": "main/Content/Assets/UI/Web/rot_attack_alea.svg",
-      "bytes": 302,
-      "sha256": "3687807b4fbec948bdf795731b4d104d7598ba65f07ab6dd4f2513471b6f35b3"
+      "bytes": 442,
+      "sha256": "0a7a013a6f295ac2613262c7115a23a0f2c9039381f3c7c2a45004ea35adfb4e"
     },
     {
       "path": "main/Content/Assets/UI/Web/rot_attack_sherry.svg",
-      "bytes": 302,
-      "sha256": "3687807b4fbec948bdf795731b4d104d7598ba65f07ab6dd4f2513471b6f35b3"
+      "bytes": 445,
+      "sha256": "0ee91a332e2a7a9bf454a21579d329601a9978a5e35a43b81924059698572450"
     },
     {
       "path": "main/Content/Assets/UI/Web/rot_attack_valen.svg",
-      "bytes": 302,
-      "sha256": "3687807b4fbec948bdf795731b4d104d7598ba65f07ab6dd4f2513471b6f35b3"
+      "bytes": 439,
+      "sha256": "2e3c7839507da23dc6c7fc21e9c06eb491732399c04730f98d7cece2d0f0b8ac"
     },
     {
       "path": "main/Content/Assets/UI/Web/rot_craft.svg",
-      "bytes": 302,
-      "sha256": "6bbfb13796bbf241ac1539e3e6135da7b94e2dbd42b5c7b38a7f9c3497bacb5c"
+      "bytes": 427,
+      "sha256": "7c64e90a54b43801a9f1d0fca188a32ebe27fbeced95b0a29fbfac29b9834f3d"
     },
     {
       "path": "main/Content/Assets/UI/Web/rot_dodge.svg",
-      "bytes": 305,
-      "sha256": "c87f08ff1a115e5c5c0145504756ec1d1f6b37211378dc482bfd658642069f2b"
+      "bytes": 436,
+      "sha256": "72926fdac32ee3e41e9a05a31280352e0cb49a60a2109acc3b4930aab8b71db1"
     },
     {
       "path": "main/Content/Assets/UI/Web/rot_hp_1.svg",
@@ -8835,33 +8835,33 @@
     },
     {
       "path": "main/Content/Assets/UI/Web/rot_interact.svg",
-      "bytes": 302,
-      "sha256": "b9b2a3ce0eab852628d59370c87a4e15fb832ceb84a10ce76bf95858f0129c13"
+      "bytes": 419,
+      "sha256": "e7ee6f6bb7da152e608b30060e36163f50c797f142b9e73e35595690cebfa75c"
     },
     {
       "path": "main/Content/Assets/UI/Web/rot_inventory.svg",
-      "bytes": 302,
-      "sha256": "fc6fa1ccd6a0ad0b4c149cc3bd811feadce097c527f1e9fbc30cd9871acde3b6"
+      "bytes": 431,
+      "sha256": "dffdf8cc01139ee12368a78f4c50653bc900f0f5cda5f78e5465e99ce1ab3e8a"
     },
     {
       "path": "main/Content/Assets/UI/Web/rot_minimap.svg",
-      "bytes": 302,
-      "sha256": "2910a794b9924759d551b9fe51a889ae570b2d6f8c9a585938598a72ded8bd40"
+      "bytes": 455,
+      "sha256": "9ef5c9acff45028d94b7439c1c8de4508b47b30b4825c6832fb715783290ca3d"
     },
     {
       "path": "main/Content/Assets/UI/Web/rot_pause.svg",
-      "bytes": 302,
-      "sha256": "6611b970ef14b31f9afb7d1452cd319b5300a052df43ac2d9005a4412e599d2c"
+      "bytes": 409,
+      "sha256": "03f5b90a26062a28ea6ee4571202c4527dad1271c99db05342808b289b3c41e4"
     },
     {
       "path": "main/Content/Assets/UI/Web/title_v2.svg",
-      "bytes": 472,
-      "sha256": "6526534fb310c75c0e467ddba10fa59984b7920b16d58a1d717fd45379df2ec4"
+      "bytes": 2874,
+      "sha256": "bdf133fb4a1e05e6c247ca908adc68a3b29a4b63ea7b1aad38864890ea03d9c3"
     },
     {
       "path": "main/game.hbpack.json",
-      "bytes": 686013,
-      "sha256": "cbe9da9dfa7e3fb903f8570168f7403e5662bf486000c6cb1a270fe61f9bdf5e"
+      "bytes": 686014,
+      "sha256": "c8299774271283a6118e69ebea3446360a151d27c9db9117be9abc657f3cd24c"
     },
     {
       "path": "weapon-socket/Content/Source/AuricSession.cpp",
@@ -24865,8 +24865,8 @@
     },
     {
       "path": "weapon-socket/Content/Assets/UI/W_Front.hbwidget.json",
-      "bytes": 151093,
-      "sha256": "d009cfa170a89a386173aafe0742978f777a3672be9bc23c830e0ca177261586"
+      "bytes": 144455,
+      "sha256": "a7ab21a5445a07ec002eae871adafa915c85f8149d8792a2a28c4e042dd7103a"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/W_Map.hbwidget.json",
@@ -25165,8 +25165,8 @@
     },
     {
       "path": "weapon-socket/prototype/ui-assets.js",
-      "bytes": 11205,
-      "sha256": "0b0c271072854e17f7902c43168d5c57270d58a447d9d52a633c4d60857d8509"
+      "bytes": 11292,
+      "sha256": "12077af7e95a7fbd9a46d726318c325f040071a093111c367500d9efa687985f"
     },
     {
       "path": "weapon-socket/prototype/virtual-controls.js",
@@ -25235,8 +25235,8 @@
     },
     {
       "path": "weapon-socket/prototype/native-transport.js",
-      "bytes": 15212,
-      "sha256": "ce2d690eb549f717642641e9ab7a049da398bc9ea30f4fc7c7f16dec50f70546"
+      "bytes": 15181,
+      "sha256": "265229165f9887bd6dc9bba3355c14b4b522e4c84645cf6a2c077367dda77f91"
     },
     {
       "path": "weapon-socket/prototype/frame-profiler.js",
@@ -25305,8 +25305,8 @@
     },
     {
       "path": "weapon-socket/prototype/engine-services.js",
-      "bytes": 79288,
-      "sha256": "f5c021332171094371a7ceed87f4a515dfafe61302df68319f03899a982af5a3"
+      "bytes": 79743,
+      "sha256": "f86dbdad4e49de47b48ae74f43acac5c1320b2d447986ad694e549d39487e2d5"
     },
     {
       "path": "weapon-socket/prototype/animation-retarget.js",
@@ -25395,8 +25395,8 @@
     },
     {
       "path": "weapon-socket/prototype/ui-runtime.js",
-      "bytes": 21528,
-      "sha256": "c1c04af1913a71689673368aa8bb3bfb512d90c0be54a01415e8b7c7082a860d"
+      "bytes": 22057,
+      "sha256": "b854404666ea40401a291face5a91bada62149ea2202cf963cc5035e9fc53c2a"
     },
     {
       "path": "weapon-socket/prototype/animation-graph-runtime.js",
@@ -25545,53 +25545,53 @@
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/btn_attack_alea.svg",
-      "bytes": 302,
-      "sha256": "3687807b4fbec948bdf795731b4d104d7598ba65f07ab6dd4f2513471b6f35b3"
+      "bytes": 442,
+      "sha256": "0a7a013a6f295ac2613262c7115a23a0f2c9039381f3c7c2a45004ea35adfb4e"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/btn_attack_sherry.svg",
-      "bytes": 302,
-      "sha256": "3687807b4fbec948bdf795731b4d104d7598ba65f07ab6dd4f2513471b6f35b3"
+      "bytes": 445,
+      "sha256": "0ee91a332e2a7a9bf454a21579d329601a9978a5e35a43b81924059698572450"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/btn_attack_valen.svg",
-      "bytes": 302,
-      "sha256": "3687807b4fbec948bdf795731b4d104d7598ba65f07ab6dd4f2513471b6f35b3"
+      "bytes": 439,
+      "sha256": "2e3c7839507da23dc6c7fc21e9c06eb491732399c04730f98d7cece2d0f0b8ac"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/btn_craft.svg",
-      "bytes": 302,
-      "sha256": "6bbfb13796bbf241ac1539e3e6135da7b94e2dbd42b5c7b38a7f9c3497bacb5c"
+      "bytes": 427,
+      "sha256": "7c64e90a54b43801a9f1d0fca188a32ebe27fbeced95b0a29fbfac29b9834f3d"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/btn_dodge.svg",
-      "bytes": 305,
-      "sha256": "c87f08ff1a115e5c5c0145504756ec1d1f6b37211378dc482bfd658642069f2b"
+      "bytes": 436,
+      "sha256": "72926fdac32ee3e41e9a05a31280352e0cb49a60a2109acc3b4930aab8b71db1"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/btn_flash.svg",
-      "bytes": 302,
-      "sha256": "ad4b017c56073fd1475c045a4cd10cb8a1429a0228c0c75904f9a4f23f943007"
+      "bytes": 422,
+      "sha256": "4ea4c36d2127851372b788f745a2a294b5f5dea35da9c250e8cdae89d90e2fce"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/btn_gather.svg",
-      "bytes": 302,
-      "sha256": "b5cbc20b5bd7f837be34508f84a0339fb46faf8b3a65592a3ffc24a3ce3387a1"
+      "bytes": 460,
+      "sha256": "3c1bcc388fdad8014ca4675351ec79dd81f1034f2fde12e38ee91b785a0eb461"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/btn_interact.svg",
-      "bytes": 302,
-      "sha256": "b9b2a3ce0eab852628d59370c87a4e15fb832ceb84a10ce76bf95858f0129c13"
+      "bytes": 419,
+      "sha256": "e7ee6f6bb7da152e608b30060e36163f50c797f142b9e73e35595690cebfa75c"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/btn_inventory.svg",
-      "bytes": 302,
-      "sha256": "fc6fa1ccd6a0ad0b4c149cc3bd811feadce097c527f1e9fbc30cd9871acde3b6"
+      "bytes": 431,
+      "sha256": "dffdf8cc01139ee12368a78f4c50653bc900f0f5cda5f78e5465e99ce1ab3e8a"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/btn_pause.svg",
-      "bytes": 302,
-      "sha256": "6611b970ef14b31f9afb7d1452cd319b5300a052df43ac2d9005a4412e599d2c"
+      "bytes": 409,
+      "sha256": "03f5b90a26062a28ea6ee4571202c4527dad1271c99db05342808b289b3c41e4"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/craft_detail_potion.svg",
@@ -25700,28 +25700,28 @@
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/fx_dust.svg",
-      "bytes": 138,
-      "sha256": "304544f620e086818650cac3221af9995035ee32c621275e265946f605f0b14d"
+      "bytes": 297,
+      "sha256": "167b2a153b21e82df3ae0c2a070b9ccdefea9e4bd10cfc44f8e1b2e1faddcab1"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/fx_ember.svg",
-      "bytes": 138,
-      "sha256": "304544f620e086818650cac3221af9995035ee32c621275e265946f605f0b14d"
+      "bytes": 297,
+      "sha256": "167b2a153b21e82df3ae0c2a070b9ccdefea9e4bd10cfc44f8e1b2e1faddcab1"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/fx_fog_a.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 394,
+      "sha256": "d7db805224bcf0fbded6ca3b47cc76794eab06ec7f5e1d0a515f56b973e98661"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/fx_fog_b.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 394,
+      "sha256": "d7db805224bcf0fbded6ca3b47cc76794eab06ec7f5e1d0a515f56b973e98661"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/fx_rays.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 184,
+      "sha256": "14385bd5b073e5e7c07d37625ce0004d60f2d09f07d27a89e0e02fd003f1124f"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/fx_star.svg",
@@ -25730,8 +25730,8 @@
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/fx_torch_glow.svg",
-      "bytes": 138,
-      "sha256": "304544f620e086818650cac3221af9995035ee32c621275e265946f605f0b14d"
+      "bytes": 297,
+      "sha256": "167b2a153b21e82df3ae0c2a070b9ccdefea9e4bd10cfc44f8e1b2e1faddcab1"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/hp_back.svg",
@@ -25755,8 +25755,8 @@
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/icon_bag.svg",
-      "bytes": 302,
-      "sha256": "fc6fa1ccd6a0ad0b4c149cc3bd811feadce097c527f1e9fbc30cd9871acde3b6"
+      "bytes": 431,
+      "sha256": "dffdf8cc01139ee12368a78f4c50653bc900f0f5cda5f78e5465e99ce1ab3e8a"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/joystick.svg",
@@ -25770,13 +25770,13 @@
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/mastiff_logo.svg",
-      "bytes": 472,
-      "sha256": "6526534fb310c75c0e467ddba10fa59984b7920b16d58a1d717fd45379df2ec4"
+      "bytes": 435,
+      "sha256": "c2ec306df67cefe8d2ef4479e7a99856e72bd1cc61feb04bf671a0257f70d4ca"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/mastiff_logo_src.svg",
-      "bytes": 472,
-      "sha256": "6526534fb310c75c0e467ddba10fa59984b7920b16d58a1d717fd45379df2ec4"
+      "bytes": 435,
+      "sha256": "c2ec306df67cefe8d2ef4479e7a99856e72bd1cc61feb04bf671a0257f70d4ca"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/minimap.svg",
@@ -25785,28 +25785,28 @@
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/rot_attack_alea.svg",
-      "bytes": 302,
-      "sha256": "3687807b4fbec948bdf795731b4d104d7598ba65f07ab6dd4f2513471b6f35b3"
+      "bytes": 442,
+      "sha256": "0a7a013a6f295ac2613262c7115a23a0f2c9039381f3c7c2a45004ea35adfb4e"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/rot_attack_sherry.svg",
-      "bytes": 302,
-      "sha256": "3687807b4fbec948bdf795731b4d104d7598ba65f07ab6dd4f2513471b6f35b3"
+      "bytes": 445,
+      "sha256": "0ee91a332e2a7a9bf454a21579d329601a9978a5e35a43b81924059698572450"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/rot_attack_valen.svg",
-      "bytes": 302,
-      "sha256": "3687807b4fbec948bdf795731b4d104d7598ba65f07ab6dd4f2513471b6f35b3"
+      "bytes": 439,
+      "sha256": "2e3c7839507da23dc6c7fc21e9c06eb491732399c04730f98d7cece2d0f0b8ac"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/rot_craft.svg",
-      "bytes": 302,
-      "sha256": "6bbfb13796bbf241ac1539e3e6135da7b94e2dbd42b5c7b38a7f9c3497bacb5c"
+      "bytes": 427,
+      "sha256": "7c64e90a54b43801a9f1d0fca188a32ebe27fbeced95b0a29fbfac29b9834f3d"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/rot_dodge.svg",
-      "bytes": 305,
-      "sha256": "c87f08ff1a115e5c5c0145504756ec1d1f6b37211378dc482bfd658642069f2b"
+      "bytes": 436,
+      "sha256": "72926fdac32ee3e41e9a05a31280352e0cb49a60a2109acc3b4930aab8b71db1"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/rot_hp_1.svg",
@@ -25825,33 +25825,33 @@
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/rot_interact.svg",
-      "bytes": 302,
-      "sha256": "b9b2a3ce0eab852628d59370c87a4e15fb832ceb84a10ce76bf95858f0129c13"
+      "bytes": 419,
+      "sha256": "e7ee6f6bb7da152e608b30060e36163f50c797f142b9e73e35595690cebfa75c"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/rot_inventory.svg",
-      "bytes": 302,
-      "sha256": "fc6fa1ccd6a0ad0b4c149cc3bd811feadce097c527f1e9fbc30cd9871acde3b6"
+      "bytes": 431,
+      "sha256": "dffdf8cc01139ee12368a78f4c50653bc900f0f5cda5f78e5465e99ce1ab3e8a"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/rot_minimap.svg",
-      "bytes": 302,
-      "sha256": "2910a794b9924759d551b9fe51a889ae570b2d6f8c9a585938598a72ded8bd40"
+      "bytes": 455,
+      "sha256": "9ef5c9acff45028d94b7439c1c8de4508b47b30b4825c6832fb715783290ca3d"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/rot_pause.svg",
-      "bytes": 302,
-      "sha256": "6611b970ef14b31f9afb7d1452cd319b5300a052df43ac2d9005a4412e599d2c"
+      "bytes": 409,
+      "sha256": "03f5b90a26062a28ea6ee4571202c4527dad1271c99db05342808b289b3c41e4"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_ambient.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 4091,
+      "sha256": "c60db430c64c5d3b4e4e6f24346ddcc67d75c0c3d0f8d73a7b194a042d15ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_burst.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 609,
+      "sha256": "bb8e784a731d285c00a3ddb18a9ec5e27dc736034e40b508ee5a3da49b81f430"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_coin_0.svg",
@@ -25975,58 +25975,58 @@
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_fog.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 394,
+      "sha256": "d7db805224bcf0fbded6ca3b47cc76794eab06ec7f5e1d0a515f56b973e98661"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_letter_0.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 435,
+      "sha256": "426d714beab7b0f50f7faed6b63271e3a486f9f2571881630d9ee71e2e510460"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_letter_1.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 435,
+      "sha256": "00f03bae6624cdbeb012605527736071b03e1f0b030bacdc96cfc0e2629d88be"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_letter_2.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 435,
+      "sha256": "f30209037137f0dfbcea84dc9227a60ca5c8d93e1cc34e084134659f4fef57ab"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_letter_3.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 435,
+      "sha256": "9faee4493a66ac22bc26b64f801115285b620c19cdd9db445f734bdc30334dd2"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_letter_4.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 435,
+      "sha256": "903cb2f834ad8b1fcf9a9cc54f12c5580c98bff61dc35669184df185fb95dd6d"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_letter_5.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 435,
+      "sha256": "a90111098284d646b0a4004037dbdb26f3736d9089d1d075a8d684dd89df2165"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_letter_6.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 435,
+      "sha256": "ecadc950f521bf14a0a2ddde531c1c50eb1d66cb46f315d713b9f23bcfecc5e9"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_letter_7.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 435,
+      "sha256": "ecadc950f521bf14a0a2ddde531c1c50eb1d66cb46f315d713b9f23bcfecc5e9"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_letter_8.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 435,
+      "sha256": "a0257ec5dcc6031010334a1218eadef016bc7fb6e152d61ebfc256b9ee03b2c8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_plate.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 2526,
+      "sha256": "239c7a0630618eb935b3ef7b52718fe74128f2620a8c9a94901bc6478bba8b57"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_ring.svg",
@@ -26035,78 +26035,78 @@
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_shine.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_shine_0.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_shine_1.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_shine_10.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_shine_11.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_shine_12.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_shine_13.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_shine_2.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_shine_3.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_shine_4.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_shine_5.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_shine_6.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_shine_7.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_shine_8.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_shine_9.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_tap.svg",
@@ -26115,18 +26115,18 @@
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_tapglow.svg",
-      "bytes": 89,
-      "sha256": "b9ef956c82795541f6d2dd580dc1185d6033f7e09bc7ed4475fc971bd20ae339"
+      "bytes": 314,
+      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/Web/title_v2.svg",
-      "bytes": 472,
-      "sha256": "6526534fb310c75c0e467ddba10fa59984b7920b16d58a1d717fd45379df2ec4"
+      "bytes": 2874,
+      "sha256": "bdf133fb4a1e05e6c247ca908adc68a3b29a4b63ea7b1aad38864890ea03d9c3"
     },
     {
       "path": "weapon-socket/game.hbpack.json",
-      "bytes": 1298298,
-      "sha256": "0d04e2b27541d7409bba60680596c7805823e3c5fb75372d4dc0589f9c865da0"
+      "bytes": 1298333,
+      "sha256": "b20733e775463245d5fad642286d9476d0b93665db47c7d90fc253ea614c143e"
     },
     {
       "path": ".nojekyll",

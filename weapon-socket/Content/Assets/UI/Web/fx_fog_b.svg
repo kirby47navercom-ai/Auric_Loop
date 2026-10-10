@@ -1,1 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="41" height="37" viewBox="0 0 41 37"></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="240" viewBox="0 0 1280 240"><defs><linearGradient id="fog" x2="0" y2="1"><stop stop-color="#c5d6b7" stop-opacity="0"/><stop offset=".7" stop-color="#c5d6b7" stop-opacity=".13"/><stop offset="1" stop-color="#c5d6b7" stop-opacity="0"/></linearGradient></defs><path d="M0 80Q180 12 350 94T720 80T1280 55V235H0Z" fill="url(#fog)"/></svg>
