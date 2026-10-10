@@ -7914,278 +7914,278 @@
       "kind": "widget"
     },
     {
-      "path": "Assets/UI/Web/btn_attack_alea.svg",
-      "name": "btn_attack_alea.svg",
+      "path": "Assets/UI/Kit/btn_attack_alea.png",
+      "name": "btn_attack_alea.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/btn_attack_sherry.svg",
-      "name": "btn_attack_sherry.svg",
+      "path": "Assets/UI/Kit/btn_attack_sherry.png",
+      "name": "btn_attack_sherry.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/btn_attack_valen.svg",
-      "name": "btn_attack_valen.svg",
+      "path": "Assets/UI/Kit/btn_attack_valen.png",
+      "name": "btn_attack_valen.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/btn_craft.svg",
-      "name": "btn_craft.svg",
+      "path": "Assets/UI/Kit/btn_craft.png",
+      "name": "btn_craft.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/btn_dodge.svg",
-      "name": "btn_dodge.svg",
+      "path": "Assets/UI/Kit/btn_dodge.png",
+      "name": "btn_dodge.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/btn_flash.svg",
-      "name": "btn_flash.svg",
+      "path": "Assets/UI/Kit/btn_flash.png",
+      "name": "btn_flash.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/btn_gather.svg",
-      "name": "btn_gather.svg",
+      "path": "Assets/UI/Kit/btn_gather.png",
+      "name": "btn_gather.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/btn_interact.svg",
-      "name": "btn_interact.svg",
+      "path": "Assets/UI/Kit/btn_interact.png",
+      "name": "btn_interact.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/btn_inventory.svg",
-      "name": "btn_inventory.svg",
+      "path": "Assets/UI/Kit/btn_inventory.png",
+      "name": "btn_inventory.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/btn_pause.svg",
-      "name": "btn_pause.svg",
+      "path": "Assets/UI/Kit/btn_pause.png",
+      "name": "btn_pause.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/craft_detail_potion.svg",
-      "name": "craft_detail_potion.svg",
+      "path": "Assets/UI/Kit/craft_detail_potion.png",
+      "name": "craft_detail_potion.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/craft_item_crystal.svg",
-      "name": "craft_item_crystal.svg",
+      "path": "Assets/UI/Kit/craft_item_crystal.png",
+      "name": "craft_item_crystal.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/craft_item_flash.svg",
-      "name": "craft_item_flash.svg",
+      "path": "Assets/UI/Kit/craft_item_flash.png",
+      "name": "craft_item_flash.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/craft_item_potion.svg",
-      "name": "craft_item_potion.svg",
+      "path": "Assets/UI/Kit/craft_item_potion.png",
+      "name": "craft_item_potion.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/craft_panel.svg",
-      "name": "craft_panel.svg",
+      "path": "Assets/UI/Kit/craft_panel.png",
+      "name": "craft_panel.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/craft_select.svg",
-      "name": "craft_select.svg",
+      "path": "Assets/UI/Kit/craft_select.png",
+      "name": "craft_select.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/dialog_box.svg",
-      "name": "dialog_box.svg",
+      "path": "Assets/UI/Kit/dialog_box.png",
+      "name": "dialog_box.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/dialog_portrait_frame.svg",
-      "name": "dialog_portrait_frame.svg",
+      "path": "Assets/UI/Kit/dialog_portrait_frame.png",
+      "name": "dialog_portrait_frame.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fatigue_000.svg",
-      "name": "fatigue_000.svg",
+      "path": "Assets/UI/Kit/fatigue_000.png",
+      "name": "fatigue_000.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fatigue_010.svg",
-      "name": "fatigue_010.svg",
+      "path": "Assets/UI/Kit/fatigue_010.png",
+      "name": "fatigue_010.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fatigue_020.svg",
-      "name": "fatigue_020.svg",
+      "path": "Assets/UI/Kit/fatigue_020.png",
+      "name": "fatigue_020.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fatigue_030.svg",
-      "name": "fatigue_030.svg",
+      "path": "Assets/UI/Kit/fatigue_030.png",
+      "name": "fatigue_030.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fatigue_040.svg",
-      "name": "fatigue_040.svg",
+      "path": "Assets/UI/Kit/fatigue_040.png",
+      "name": "fatigue_040.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fatigue_050.svg",
-      "name": "fatigue_050.svg",
+      "path": "Assets/UI/Kit/fatigue_050.png",
+      "name": "fatigue_050.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fatigue_060.svg",
-      "name": "fatigue_060.svg",
+      "path": "Assets/UI/Kit/fatigue_060.png",
+      "name": "fatigue_060.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fatigue_070.svg",
-      "name": "fatigue_070.svg",
+      "path": "Assets/UI/Kit/fatigue_070.png",
+      "name": "fatigue_070.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fatigue_080.svg",
-      "name": "fatigue_080.svg",
+      "path": "Assets/UI/Kit/fatigue_080.png",
+      "name": "fatigue_080.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fatigue_090.svg",
-      "name": "fatigue_090.svg",
+      "path": "Assets/UI/Kit/fatigue_090.png",
+      "name": "fatigue_090.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fatigue_100.svg",
-      "name": "fatigue_100.svg",
+      "path": "Assets/UI/Kit/fatigue_100.png",
+      "name": "fatigue_100.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fatigue_back.svg",
-      "name": "fatigue_back.svg",
+      "path": "Assets/UI/Kit/fatigue_back.png",
+      "name": "fatigue_back.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fatigue_ticks.svg",
-      "name": "fatigue_ticks.svg",
+      "path": "Assets/UI/Kit/fatigue_ticks.png",
+      "name": "fatigue_ticks.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fx_dust.svg",
-      "name": "fx_dust.svg",
+      "path": "Assets/UI/Kit/fx_dust.png",
+      "name": "fx_dust.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fx_star.svg",
-      "name": "fx_star.svg",
+      "path": "Assets/UI/Kit/fx_star.png",
+      "name": "fx_star.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/fx_torch_glow.svg",
-      "name": "fx_torch_glow.svg",
+      "path": "Assets/UI/Kit/fx_torch_glow.png",
+      "name": "fx_torch_glow.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/hp_back.svg",
-      "name": "hp_back.svg",
+      "path": "Assets/UI/Kit/hp_back.png",
+      "name": "hp_back.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/hp_fill_1.svg",
-      "name": "hp_fill_1.svg",
+      "path": "Assets/UI/Kit/hp_fill_1.png",
+      "name": "hp_fill_1.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/hp_fill_2.svg",
-      "name": "hp_fill_2.svg",
+      "path": "Assets/UI/Kit/hp_fill_2.png",
+      "name": "hp_fill_2.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/hp_fill_3.svg",
-      "name": "hp_fill_3.svg",
+      "path": "Assets/UI/Kit/hp_fill_3.png",
+      "name": "hp_fill_3.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/icon_bag.svg",
-      "name": "icon_bag.svg",
+      "path": "Assets/UI/Kit/icon_bag.png",
+      "name": "icon_bag.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/joystick.svg",
-      "name": "joystick.svg",
+      "path": "Assets/UI/Kit/joystick.png",
+      "name": "joystick.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/loading_coin.svg",
-      "name": "loading_coin.svg",
+      "path": "Assets/UI/Kit/loading_coin.gif",
+      "name": "loading_coin.gif",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/minimap.svg",
-      "name": "minimap.svg",
+      "path": "Assets/UI/Kit/minimap.png",
+      "name": "minimap.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/rot_attack_alea.svg",
-      "name": "rot_attack_alea.svg",
+      "path": "Assets/UI/Kit/rot_attack_alea.png",
+      "name": "rot_attack_alea.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/rot_attack_sherry.svg",
-      "name": "rot_attack_sherry.svg",
+      "path": "Assets/UI/Kit/rot_attack_sherry.png",
+      "name": "rot_attack_sherry.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/rot_attack_valen.svg",
-      "name": "rot_attack_valen.svg",
+      "path": "Assets/UI/Kit/rot_attack_valen.png",
+      "name": "rot_attack_valen.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/rot_craft.svg",
-      "name": "rot_craft.svg",
+      "path": "Assets/UI/Kit/rot_craft.png",
+      "name": "rot_craft.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/rot_dodge.svg",
-      "name": "rot_dodge.svg",
+      "path": "Assets/UI/Kit/rot_dodge.png",
+      "name": "rot_dodge.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/rot_hp_1.svg",
-      "name": "rot_hp_1.svg",
+      "path": "Assets/UI/Kit/rot_hp_1.png",
+      "name": "rot_hp_1.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/rot_hp_2.svg",
-      "name": "rot_hp_2.svg",
+      "path": "Assets/UI/Kit/rot_hp_2.png",
+      "name": "rot_hp_2.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/rot_hp_3.svg",
-      "name": "rot_hp_3.svg",
+      "path": "Assets/UI/Kit/rot_hp_3.png",
+      "name": "rot_hp_3.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/rot_interact.svg",
-      "name": "rot_interact.svg",
+      "path": "Assets/UI/Kit/rot_interact.png",
+      "name": "rot_interact.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/rot_inventory.svg",
-      "name": "rot_inventory.svg",
+      "path": "Assets/UI/Kit/rot_inventory.png",
+      "name": "rot_inventory.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/rot_minimap.svg",
-      "name": "rot_minimap.svg",
+      "path": "Assets/UI/Kit/rot_minimap.png",
+      "name": "rot_minimap.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/rot_pause.svg",
-      "name": "rot_pause.svg",
+      "path": "Assets/UI/Kit/rot_pause.png",
+      "name": "rot_pause.png",
       "kind": "texture"
     },
     {
-      "path": "Assets/UI/Web/title_v2.svg",
-      "name": "title_v2.svg",
+      "path": "Assets/UI/Kit/title_v2.png",
+      "name": "title_v2.png",
       "kind": "texture"
     }
   ],
@@ -9892,63 +9892,7 @@
       "source": "#include \"Common.h\"\n#include <algorithm>\n#include <map>\n#include <random>\n#include <set>\n#include <sstream>\n#include <string>\n\n// 수치 근거: docs/데모_기획서.md 4·5·6장. 값은 BP 기본값(편집기 속성)에서 고친다.\n\nTopDownShooter* TopDownShooter::Current=nullptr;\n\nvoid TopDownShooter::MoveCamera(const hb::Vec3& position,const hb::Vec3& aim,bool hasAim,float delta){\n  // 엔터 더 건전·소울 나이트처럼 조준 쪽으로 끌려가며 부드럽게 따라간다\n  if(!camera)return;\n  hb::Vec3 target=position;\n  if(hasAim)target=target+hb::VectorMath::ClampVectorLength((aim-position)*rules->CameraLead,rules->CameraLeadMax);\n  // 던전 방 안에서는 방 기준: 방이 화면에 다 들어가면 방 가운데에 고정, 크면 벽 밖이 보이지 않게 가둠. 복도에서는 플레이어를 따라감\n  if(inDungeon&&cutscene<=0){const int r=map.RoomAt(position);\n    if(r>=0){const auto& room=map.rooms[r];const float vh=rules->CameraSize,vw=vh*16.f/9.f,pad=rules->CameraRoomPad;\n      auto fit=[](float t,float c,float half,float view){return half<=view?c:std::clamp(t,c-half+view,c+half-view);};\n      target.x=fit(target.x,room.cx,room.hw+pad,vw);target.y=fit(target.y,room.cy,room.hh+pad,vh);}}\n  else if(!inDungeon&&camMax.x>camMin.x){const float vh=rules->CameraSize,vw=vh*16.f/9.f;  // 거점·원룸: 맵 바깥이 안 보이게\n    auto fit=[](float t,float lo,float hi,float view){return hi-lo<=2*view?(lo+hi)/2:std::clamp(t,lo+view,hi-view);};\n    target.x=fit(target.x,camMin.x,camMax.x,vw);target.y=fit(target.y,camMin.y,camMax.y,vh);}\n  target.z=hb::Scene::GetPosition(camera).z;\n  if(!cameraReady){cameraAt=target;cameraReady=true;}else cameraAt=hb::VectorMath::VInterpTo(cameraAt,target,delta,cutscene>0?14.f:rules->CameraFollow);  // 컷신은 빠르게 보스를 잡음\n  auto at=cameraAt;\n  at=at+kick;kick=kick*std::exp(-delta*14);  // 때린 방향으로 밀렸다 빠르게 돌아옴\n  if(shake>0){shake-=delta;const float a=rules->ShakeAmount*shakePower;if(shake<=0)shakePower=1;at.x+=a*(std::rand()%201-100)/100;at.y+=a*(std::rand()%201-100)/100;}  // 때렸을 때 흔들림\n  hb::Scene::SetPosition(camera,at);\n  if(inDungeon)map.FollowBackdrop(at);\n}\n\n// ---- 한 프레임 ------------------------------------------------------------------------\n\nvoid TopDownShooter::Update(float delta){\n  Current=this;\n  if(hitStopLeft>0){hitStopLeft-=delta/std::max(0.0001f,hb::Clock::TimeScale());  // 히트스톱은 실제 시간으로 셈 (게임 시간은 느려져 있으므로)\n    if(hitStopLeft<=0&&!Paused)hb::Clock::SetTimeScale(1.f);}\n  player=hb::Gameplay::GetPlayerPawn();if(!player)return;\n  frame++;if(hudDirty)Hud();\n  {// 성능 확인: F3으로 왼쪽 위에 초당 게임 프레임과 0.5초 동안 가장 긴 프레임\n   const bool f3=hb::Input::IsKeyDown(\"F3\");if(f3&&!fpsHeld){ShowFps=!ShowFps;if(player&&frame>=2)UiVisible(\"Fps\",ShowFps);}fpsHeld=f3;\n   fpsTime+=delta;fpsFrames++;fpsWorst=std::max(fpsWorst,delta);\n   if(fpsTime>=0.5f){if(ShowFps&&player&&frame>=2){UiVisible(\"Fps\",true);\n       UiText(\"Fps\",std::to_string(int(fpsFrames/fpsTime+0.5f))+\" FPS\");}\n     fpsTime=0;fpsFrames=0;fpsWorst=0;}}\n  if(minimapDirty&&frame>=2){minimapDirty=false;UpdateMinimap();}  // 위젯은 첫 프레임 뒤에 생김\n  if(!started)Begin();\n  if(leaving)return;\n  playerAt=hb::Scene::GetPosition(player);\n  const auto position=playerAt;\n  {// 배경음: 거점·던전·보스방·귀환\n   const std::string music=Sound(Returning?\"Return\":area<0?\"Hub\":roomKind==\"Boss\"?\"Boss\":\"Dungeon\");\n   if((Phase>=2||selecting)&&music!=currentMusic){hb::Audio::PlayMusic(music,0.5f);currentMusic=music;}}  // 첫 입력 전이면 엔진이 기다렸다 틂\n  {// 부스 운영 (기획서 10장): F12 바로 처음으로, 엔딩 카드에서 아무 키나 누르면 처음으로 (무입력 자동 복귀는 테스트에 불편해서 뺌)\n   bool any=hb::VectorMath::Vector2Length(hb::Input::GetMouseDelta())>0;\n   for(auto* k:{\"w\",\"a\",\"s\",\"d\",\"e\",\"q\",\"space\",\"enter\",\"tab\",\"LeftMouseButton\",\"1\",\"2\",\"3\",\"4\",\"5\"})any=any||hb::Input::IsKeyDown(k);\n   const bool anyPressed=any&&!anyHeld;anyHeld=any;idleTime=any?0:idleTime+delta;\n   if(hb::Input::IsKeyDown(\"F12\")||(ending&&(anyPressed||AnyPressed(true)))){ResetToTitle();return;}\n   if(ending)return;\n   if(Phase>=2&&!Returning&&!ReturnSuccess&&area>=0&&roomKind!=\"Boss\"){runTime+=delta;\n     if(runTime>=rules->RunNotice){if(hint.empty())Notify(\"10분이 지났어요 - F10을 누르면 보스방 앞으로\");hintTime=1e9f;\n       if(hb::Input::IsKeyDown(\"F10\")&&inDungeon){runTime=0;hint=\"\";Warp(map.PathRoom(map.rooms[map.boss].path-1));}}}\n   // 부스 운영자: F9로 주 경로 다음 방으로 (귀환 중이면 시작 방 쪽으로)\n   const bool warp=hb::Input::IsKeyDown(\"F9\");\n   if(warp&&!warpHeld&&inDungeon&&area>=0){const int order=map.rooms[area].path+(Returning?-1:1);Warp(map.PathRoom(std::max(0,order)));}\n   warpHeld=warp;}\n  hb::Vec3 aim;const bool hasAim=hb::Input::GetMouseWorldPosition(hb::Vec3{0,0,1},position,aim);\n  // 모바일 공격 버튼은 K. 터치 위치는 조준이 아니라서 자동 조준·바라보는 방향으로 카메라를 끈다\n  touchMode=hb::Input::GetLastDevice()==\"touch\";  // 모바일 공격 버튼도 LeftMouseButton. 마지막 입력 장치로 자동 조준을 정함\n  if(cutscene>0){  // 보스 등장 컷신: 카메라가 보스(나타나기 전엔 나올 자리)를 빠르게 잡고 살짝 확대\n    hb::Vec3 at=cutsceneAt;for(auto* e:Enemies())if(e->Boss){at=hb::Scene::GetPosition(e);at.y+=0.6f;}\n    MoveCamera(at,at,false,delta);cutZoom=std::max(0.72f,cutZoom-delta*0.8f);}\n  else if(cutZoom<1)cutZoom=std::min(1.f,cutZoom+delta*1.5f);  // 끝나면 원래 크기로\n  {punch=std::max(0.f,punch-delta*4);const float ortho=rules->CameraSize*cutZoom*(1-0.05f*punch);  // 처치·크리티컬 순간 살짝 확대\n   if(camera&&std::abs(ortho-lastOrtho)>0.001f){lastOrtho=ortho;hb::Components::SetFloat(camera,\"Camera\",\"orthographicSize\",ortho);}}\n  if(chainTime>0)chainTime-=delta;\n  else MoveCamera(position,touchMode?position+facing*(rules->CameraLeadMax/rules->CameraLead*0.5f):aim,(hasAim||touchMode)&&Phase>=2,delta);\n  if(!Paused)UpdateAmbient(delta,position,Phase>=2&&hb::Input::IsKeyDown(\"LeftMouseButton\"));\n  {const bool adv=hb::Input::IsKeyDown(\"e\")||hb::Input::IsKeyDown(\"LeftMouseButton\")||hb::Input::IsKeyDown(\"enter\")||hb::Input::IsKeyDown(\"space\");\n   const bool pressed=adv&&!advanceHeld;advanceHeld=adv;\n   if(frame>=2&&UpdateIntro(delta,pressed||AnyPressed(true)))return;\n   {const bool p=hb::Input::IsKeyDown(\"escape\")||hb::Input::IsKeyDown(\"p\");  // 일시정지 (Esc·P)\n    if(p&&!pauseHeld&&Phase>=2&&settleTime<0&&!ending&&cutscene<=0)SetPaused(!Paused);pauseHeld=p;  // 보스 등장 중엔 메뉴도 안 열림\n    if(Paused){if(!leaving)UpdateMenu();return;}}\n   if(tipTime>0&&(tipTime-=delta)<=0){UiVisible(\"TipBack\",false);UiVisible(\"Tip\",false);}\n   if(cutscene>0){  // 보스 등장: 1초 마법진 → 보스 → 1.3초 포효(흔들림)·이름 자막 → 끝나면 대사\n     cutscene-=delta;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});\n     if(sentSpeed!=0){sentSpeed=0;hb::Movement2D::SetSpeed(player,0);}  // 이동 컴포넌트가 키로 움직이지 않게 (컷신 동안 모든 조작 막음)\n     UpdateFx(delta);  // 등장 마법진 등 이펙트도 제때 사라지게 (안 그러면 컷신 내내 보스 몸 위에서 빛남)\n     if(!roared&&cutscene<1.9f){roared=true;Shake(0.7f,1.8f);Sfx(\"BossCharge\");hb::Camera::Flash(hb::Color{1,0.85f,0.4f,0.12f},0.2f);  // 번쩍임은 약하게 (보스가 묻히지 않게)\n       for(auto* e:Enemies())if(e->Boss){UiText(\"BossName\",e->DisplayName);UiText(\"BossSub\",\"황금에 잠식된 1층의 문지기\");e->Roar(1.6f);}\n       for(auto* n:{\"BossName\",\"BossSub\"})UiVisible(n,true);}\n     if(cutscene<=0){for(auto* n:{\"CineTop\",\"CineBottom\",\"BossName\",\"BossSub\"})UiVisible(n,false);\n       sentSpeed=-1;dodgeHeld=flashHeld=true;attackCooldown=0.3f;advanceHeld=true;}  // 끝: 이동 속도 되돌림, 컷신 중 누르고 있던 키가 바로 동작하지 않게\n     return;}\n   if(bannerTime>0&&(bannerTime-=delta)<=0)UiVisible(\"BossSub\",false);\n   if(hintTime>0&&(hintTime-=delta)<=0){hint=\"\";Hud();}\n   {const bool m=hb::Input::IsKeyDown(\"m\");const bool arrive=bannerPending&&frame>=2&&dialogIndex>=dialog.size()&&settleTime<0;  // 대화가 끝난 뒤에\n    AreaBanner(delta,(m&&!mapHeld)||arrive);mapHeld=m;if(arrive)bannerPending=false;}  // 도착하면 한 번, 그 뒤엔 M·미니맵\n   if(UpdateSettle(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}\n   if(UpdateDialog(delta,pressed||AnyPressed(false))){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}}  // 대화 중엔 행동·이동 막음\n  if(!inDungeon&&!inHome&&Phase>=2&&settleTime<0)Tip(0);  // 거점: 북쪽 계단으로 (오프닝 대화가 끝난 뒤)\n  if(inHome){if(position.y<exitY){Leave(-1,\"HomeDoor\");return;}}  // 원룸 문 → 거점 집 앞\n  else if(!inDungeon){  // 거점 계단 끝 → 던전 (들어갈 때마다 새 층). 계단에 막 도착했으면 한 번 내려와야 다시 들어감 (W를 누른 채 왔다 갔다 방지)\n    if(position.y<exitY-2)exitArmed=true;\n    if(exitArmed&&position.y>exitY){Leave(0,\"\");return;}}\n  else{\n    // 시작 방 계단에 닿으면 거점으로 (귀환 중이면 귀환 성공)\n    if(map.stairs&&fightingRoom<0&&Length(hb::Scene::GetPosition(map.stairs)-position)<1.0f){Leave(-1,\"StairTop\");return;}\n    const int at=map.RoomAt(position);\n    if(at>=0&&at!=area){area=at;RoomIndex=at;roomKind=map.rooms[at].kind;\n      map.Show(at);Layout=map.Describe().dump();  // 내 주변 방만 깔기\n      auto& r=map.rooms[at];r.visited=r.seen=true;for(int d=0;d<4;++d)if(r.link[d]>=0)map.rooms[r.link[d]].seen=true;\n      UpdateMinimap();Hud();}\n    if(at>=0&&map.rooms[at].Inside(position,rules->EnterDepth)){\n      if(Returning)StartReturnRoom(at);else if(!ReturnSuccess)EnterRoom(at);}\n  }\n\n  std::vector<Enemy*> enemies;\n  {const auto all=Enemies();Separate(all,position);  // 겹침은 속도로 벌린다 (위치를 직접 옮기면 매 프레임 엔진 명령이 늘어 느려짐)\n  for(auto* e:all){e->Tick(delta);KeepInside(e);  // 적 이동은 여기서 한 번에 (상태 머신은 상태가 바뀔 때만 C++를 부름)\n    if(e->burnedOut){e->burnedOut=false;KillEnemy(e);}else enemies.push_back(e);}  // 화상으로 쓰러짐\n  }\n  boss=nullptr;for(auto* e:enemies)if(e->Boss)boss=e;  // 적 포인터는 프레임을 넘겨 들고 있지 않는다 (엔진이 다시 만들 수 있음)\n  UpdateBullets(delta,position);\n  UpdateFx(delta);\n  if(inDungeon)UpdateWaves(delta);\n  if(Hp<=0){  // 쓰러짐 (기획서 2장): \"빈손으로 끌려 나왔다\" → 소재를 잃고 거점에서 정산\n    hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});\n    ClearBullets();\n    if(gameOver==rules->RespawnDelay){\n      UiText(\"KoTitle\",Fatigue>=FatigueMax?\"지쳐 쓰러졌다\":\"쓰러졌다\");\n      UiText(\"KoSub\",\"빈손으로 끌려 나왔다 - 들고 있던 소재를 잃었다\");\n      for(auto* n:{\"KoBack\",\"KoTitle\",\"KoSub\"})UiVisible(n,true);\n      hb::Camera::Flash(hb::Color{0.6f,0,0,0.6f},0.6f);}\n    if((gameOver-=delta)<=0){\n      for(auto* n:{\"KoBack\",\"KoTitle\",\"KoSub\"})UiVisible(n,false);\n      Ore=Herb=Monster=0;KnockedOut=true;Returning=false;HasReturnItem=false;Hp=MaxHp;Leave(-1,\"StairTop\");}\n    return;\n  }\n\n  // 바라보는 방향: 걸을 땐 걷는 쪽(뒷걸음질 없음), 공격하는 동안(+0.4초)은 마우스 쪽, 모바일은 가까운 적이 있으면 그쪽\n  const hb::Vec3 move{hb::Input::GetAxis(\"d\")-hb::Input::GetAxis(\"a\"),hb::Input::GetAxis(\"w\")-hb::Input::GetAxis(\"s\"),0};\n  const bool moving=hb::VectorMath::VectorLengthSquared(move)>.01f;\n  const bool attackDown=hb::Input::IsKeyDown(\"LeftMouseButton\");\n  aimHold=attackDown?0.4f:aimHold-delta;\n  Enemy* target=nullptr;\n  if(touchMode){float best=rules->AutoAimRange;\n    for(auto* e:enemies){const float len=Length(hb::Scene::GetPosition(e)-position);if(len<best){best=len;target=e;}}}\n  if(target)facing=Normal(hb::Scene::GetPosition(target)-position,facing);\n  else if(aimHold>0&&hasAim&&!touchMode)facing=Normal(aim-position,facing);\n  else if(moving)facing=hb::VectorMath::NormalizeVector(move);\n  Animate(delta,moving);\n  // 적재량 초과·피로도 75% 이상이면 이동속도 -25% (기획서 4-1)\n  // 공격·활 당기기 중 이동속도 배율 (그림은 걸으며 공격하는 합성 그림이라 멈출 필요는 없음)\n  // 새 시트: 발렌은 베는 동안 이동 키를 받지 않고 그림의 내딛기만큼만 나감, 겨눈 채 뒷걸음질은 더 느리게\n  const bool backpedal=moving&&hb::VectorMath::DotProduct(move,facing)<-0.3f;\n  {const float act=NewSheet()&&Character==0&&attackAnim>0?0.f\n     :Character==0&&attackAnim>0?rules->AttackMoveRate\n     :Character==1&&charge>0?(NewSheet()&&backpedal?rules->BackpedalRate:rules->ChargeMoveRate)\n     :NewSheet()&&Character==2&&attackDown&&backpedal?rules->ChargeMoveRate:1.f;\n   const float speed=act*rules->MoveSpeed*((Weight()>rules->WeightLimit||Fatigue*4>=FatigueMax*3)?rules->SlowRate:1.f);\n   if(speed!=sentSpeed){sentSpeed=speed;hb::Movement2D::SetSpeed(player,speed);}}\n  attackCooldown-=delta;dodgeCooldownLeft-=delta;invulnerable-=delta;\n\n  // 회피: Space를 누른 순간 바라보는 방향으로 대시, 대시 중 무적\n  const bool dodgeDown=hb::Input::IsKeyDown(\"space\")||hb::Input::IsKeyDown(\" \");\n  if(dodgeDown&&!dodgeHeld&&dodgeCooldownLeft<=0&&dodgeTimer<=0){dodgeTimer=rules->DodgeTime;dodgeCooldownLeft=rules->DodgeCooldown;Sfx(\"Dodge\");\n    Effect(\"Dust\",hb::Vec3{position.x,position.y-0.8f,0.03f},0,0,facing.x>0);}\n  dodgeHeld=dodgeDown;\n  if(dodgeTimer>0){dodgeTimer-=delta;hb::Physics::SetVelocity(player,facing*rules->DodgeSpeed);}\n  else if(NewSheet()&&Character==0&&attackAnim>0.12f&&attackAnim<=0.22f)hb::Physics::SetVelocity(player,facing*(rules->SlashStep/0.1f));  // 베기 프레임 동안 한 발 내딛음\n  else if(knockTimer>0){knockTimer-=delta;hb::Physics::SetVelocity(player,knock);}\n  {const bool blink=invulnerable>0&&int(invulnerable*12)%2==0;  // 무적 시간 깜빡임\n   if(blink!=blinkShown){blinkShown=blink;const float v=blink?0.4f:1.f;hb::Sprites::SetColor(player,hb::Color{v,v,v,1});}}  // 투명도를 바꾸면 렌더 재질을 다시 만들어 끊김\n\n  // 가방 (Tab): 열고 닫기, 열린 채 Enter면 [귀환] 사용. 귀환 중 섬광탄 (E): 제작한 것 먼저, 없으면 골드\n  const bool tab=hb::Input::IsKeyDown(\"tab\");\n  {const bool enter=hb::Input::IsKeyDown(\"enter\");Bag(tab&&!returnHeld,enter&&!confirmHeld&&bagOpen);}\n  returnHeld=tab;\n  const bool flash=hb::Input::IsKeyDown(\"e\");\n  if(!Returning)Interact(position,flash&&!flashHeld);\n  else{promptTarget=nullptr;\n    if(flash&&!flashHeld&&(Flashbangs>0||Gold>=rules->FlashPrice)){if(Flashbangs>0)Flashbangs--;else Gold-=rules->FlashPrice;StunAll(rules->FlashStun);Sfx(\"Flash\");\n      ClearBullets();Hud();}}\n  UpdatePrompt(delta);\n  flashHeld=flash;\n  {const bool q=hb::Input::IsKeyDown(\"q\"),enter=hb::Input::IsKeyDown(\"enter\");int which=0;\n   for(int i=1;i<=5;++i)if(hb::Input::IsKeyDown(std::to_string(i)))which=i;\n   Craft(q&&!craftKeyHeld,which,enter&&!confirmHeld);craftKeyHeld=q;confirmHeld=enter;}\n\n  // 공격: 발렌 검 베기, 셰리 당겼다 떼서 쏘는 활, 알레아 마탄 연사\n  if(Character==1){  // 누르는 동안 당기고(1초면 다 당김, 그 뒤로는 유지) 떼는 순간 발사. 덜 당기고 떼면 취소\n    if(attackDown&&attackCooldown<=0){const bool full=charge>=rules->ArrowCharge;charge=std::min(charge+delta,rules->ArrowCharge);\n      if(!full&&charge>=rules->ArrowCharge){hb::Sprites::Flash(player,0.08f,0.5f);Sfx(\"Select\");}}\n    else if(!attackDown&&charge>0){  // 떼는 순간 발사: 당긴 정도(0~1)에 따라 피해·속도·문 타격이 커짐. 너무 짧게 떼면 취소\n      if(charge>=rules->ArrowMinCharge){const float power=std::min(1.f,charge/rules->ArrowCharge);Shoot(position,power);attackAnim=0.1f;\n        attackCooldown=0.15f+(power<1?rules->ArrowPartialCooldown*(1-power*0.5f):0.f);}  // 다 당기지 않았으면 쉬는 시간 (연타 방지)\n      charge=0;}}\n  else if(Character==2&&attackDown&&attackCooldown<=0){attackCooldown=rules->BoltInterval;attackAnim=0.2f;Shoot(position);}\n  else if(Character==0&&attackDown&&attackCooldown<=0)Slash(position,enemies);\n  UpdateShots(delta,enemies);\n\n  // 골드: 가까이 가면 끌려와서 주워짐\n  for(auto it=coins.begin();it!=coins.end();){auto* c=it->first;const auto d=position-hb::Scene::GetPosition(c);const float len=Length(d);\n    if(len<rules->CoinPickup){Gold+=it->second;Sfx(\"Coin\");Effect(\"CoinSparkle\",hb::Scene::GetPosition(c)+hb::Vec3{0,0.3f,0.3f},0,1.f);Give(coinPool,c);it=coins.erase(it);Hud();continue;}\n    if(len<rules->CoinMagnet)hb::Scene::SetPosition(c,hb::Scene::GetPosition(c)+d*(std::min(1.f,delta*8)));\n    ++it;}\n  if(boss)BossHp=boss->Hp;\n  {// 보스 체력 막대 (화면 위)\n   const float ratio=boss&&boss->MaxHp>0?std::max(0.f,boss->Hp/boss->MaxHp):-1.f;\n   if(ratio!=bossBarShown){if((ratio<0)!=(bossBarShown<0))for(auto* n:{\"BossBarBack\",\"BossBar\",\"BossBarName\"})UiVisible(n,ratio>=0);\n     if(ratio>=0){UiValue(\"BossBar\",ratio);if(bossBarShown<0)UiText(\"BossBarName\",boss->DisplayName);}\n     bossBarShown=ratio;}}\n}\n\n"
     }
   ],
-  "redirects": {
-    "Assets/UI/Kit/btn_attack_alea.png": "Assets/UI/Web/btn_attack_alea.svg",
-    "Assets/UI/Kit/btn_attack_sherry.png": "Assets/UI/Web/btn_attack_sherry.svg",
-    "Assets/UI/Kit/btn_attack_valen.png": "Assets/UI/Web/btn_attack_valen.svg",
-    "Assets/UI/Kit/btn_craft.png": "Assets/UI/Web/btn_craft.svg",
-    "Assets/UI/Kit/btn_dodge.png": "Assets/UI/Web/btn_dodge.svg",
-    "Assets/UI/Kit/btn_flash.png": "Assets/UI/Web/btn_flash.svg",
-    "Assets/UI/Kit/btn_gather.png": "Assets/UI/Web/btn_gather.svg",
-    "Assets/UI/Kit/btn_interact.png": "Assets/UI/Web/btn_interact.svg",
-    "Assets/UI/Kit/btn_inventory.png": "Assets/UI/Web/btn_inventory.svg",
-    "Assets/UI/Kit/btn_pause.png": "Assets/UI/Web/btn_pause.svg",
-    "Assets/UI/Kit/craft_detail_potion.png": "Assets/UI/Web/craft_detail_potion.svg",
-    "Assets/UI/Kit/craft_item_crystal.png": "Assets/UI/Web/craft_item_crystal.svg",
-    "Assets/UI/Kit/craft_item_flash.png": "Assets/UI/Web/craft_item_flash.svg",
-    "Assets/UI/Kit/craft_item_potion.png": "Assets/UI/Web/craft_item_potion.svg",
-    "Assets/UI/Kit/craft_panel.png": "Assets/UI/Web/craft_panel.svg",
-    "Assets/UI/Kit/craft_select.png": "Assets/UI/Web/craft_select.svg",
-    "Assets/UI/Kit/dialog_box.png": "Assets/UI/Web/dialog_box.svg",
-    "Assets/UI/Kit/dialog_portrait_frame.png": "Assets/UI/Web/dialog_portrait_frame.svg",
-    "Assets/UI/Kit/fatigue_000.png": "Assets/UI/Web/fatigue_000.svg",
-    "Assets/UI/Kit/fatigue_010.png": "Assets/UI/Web/fatigue_010.svg",
-    "Assets/UI/Kit/fatigue_020.png": "Assets/UI/Web/fatigue_020.svg",
-    "Assets/UI/Kit/fatigue_030.png": "Assets/UI/Web/fatigue_030.svg",
-    "Assets/UI/Kit/fatigue_040.png": "Assets/UI/Web/fatigue_040.svg",
-    "Assets/UI/Kit/fatigue_050.png": "Assets/UI/Web/fatigue_050.svg",
-    "Assets/UI/Kit/fatigue_060.png": "Assets/UI/Web/fatigue_060.svg",
-    "Assets/UI/Kit/fatigue_070.png": "Assets/UI/Web/fatigue_070.svg",
-    "Assets/UI/Kit/fatigue_080.png": "Assets/UI/Web/fatigue_080.svg",
-    "Assets/UI/Kit/fatigue_090.png": "Assets/UI/Web/fatigue_090.svg",
-    "Assets/UI/Kit/fatigue_100.png": "Assets/UI/Web/fatigue_100.svg",
-    "Assets/UI/Kit/fatigue_back.png": "Assets/UI/Web/fatigue_back.svg",
-    "Assets/UI/Kit/fatigue_ticks.png": "Assets/UI/Web/fatigue_ticks.svg",
-    "Assets/UI/Kit/fx_dust.png": "Assets/UI/Web/fx_dust.svg",
-    "Assets/UI/Kit/fx_star.png": "Assets/UI/Web/fx_star.svg",
-    "Assets/UI/Kit/fx_torch_glow.png": "Assets/UI/Web/fx_torch_glow.svg",
-    "Assets/UI/Kit/hp_back.png": "Assets/UI/Web/hp_back.svg",
-    "Assets/UI/Kit/hp_fill_1.png": "Assets/UI/Web/hp_fill_1.svg",
-    "Assets/UI/Kit/hp_fill_2.png": "Assets/UI/Web/hp_fill_2.svg",
-    "Assets/UI/Kit/hp_fill_3.png": "Assets/UI/Web/hp_fill_3.svg",
-    "Assets/UI/Kit/icon_bag.png": "Assets/UI/Web/icon_bag.svg",
-    "Assets/UI/Kit/joystick.png": "Assets/UI/Web/joystick.svg",
-    "Assets/UI/Kit/loading_coin.gif": "Assets/UI/Web/loading_coin.svg",
-    "Assets/UI/Kit/minimap.png": "Assets/UI/Web/minimap.svg",
-    "Assets/UI/Kit/rot_attack_alea.png": "Assets/UI/Web/rot_attack_alea.svg",
-    "Assets/UI/Kit/rot_attack_sherry.png": "Assets/UI/Web/rot_attack_sherry.svg",
-    "Assets/UI/Kit/rot_attack_valen.png": "Assets/UI/Web/rot_attack_valen.svg",
-    "Assets/UI/Kit/rot_craft.png": "Assets/UI/Web/rot_craft.svg",
-    "Assets/UI/Kit/rot_dodge.png": "Assets/UI/Web/rot_dodge.svg",
-    "Assets/UI/Kit/rot_hp_1.png": "Assets/UI/Web/rot_hp_1.svg",
-    "Assets/UI/Kit/rot_hp_2.png": "Assets/UI/Web/rot_hp_2.svg",
-    "Assets/UI/Kit/rot_hp_3.png": "Assets/UI/Web/rot_hp_3.svg",
-    "Assets/UI/Kit/rot_interact.png": "Assets/UI/Web/rot_interact.svg",
-    "Assets/UI/Kit/rot_inventory.png": "Assets/UI/Web/rot_inventory.svg",
-    "Assets/UI/Kit/rot_minimap.png": "Assets/UI/Web/rot_minimap.svg",
-    "Assets/UI/Kit/rot_pause.png": "Assets/UI/Web/rot_pause.svg",
-    "Assets/UI/Kit/title_v2.png": "Assets/UI/Web/title_v2.svg"
-  },
+  "redirects": {},
   "files": [
     {
       "path": "Content/Source/AuricSession.cpp",
@@ -18516,514 +18460,570 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "path": "Content/Assets/UI/Web/btn_attack_alea.svg",
-      "bytes": 442,
-      "sha256": "0a7a013a6f295ac2613262c7115a23a0f2c9039381f3c7c2a45004ea35adfb4e"
+      "path": "Content/Assets/UI/Kit/btn_attack_alea.png",
+      "bytes": 1202,
+      "sha256": "248b7335072753b56cc060031eb2f5a365f1f911b25e50b0c5a8800a89824df8"
     },
     {
-      "path": "Content/Assets/UI/Web/btn_attack_sherry.svg",
-      "bytes": 445,
-      "sha256": "0ee91a332e2a7a9bf454a21579d329601a9978a5e35a43b81924059698572450"
+      "path": "Content/Assets/UI/Kit/btn_attack_sherry.png",
+      "bytes": 1224,
+      "sha256": "f0c1fa8b620fe4c8ddbfab0cbb9d97ed3cda5372226fbb5d77173a365b20900e"
     },
     {
-      "path": "Content/Assets/UI/Web/btn_attack_valen.svg",
-      "bytes": 439,
-      "sha256": "2e3c7839507da23dc6c7fc21e9c06eb491732399c04730f98d7cece2d0f0b8ac"
+      "path": "Content/Assets/UI/Kit/btn_attack_valen.png",
+      "bytes": 1129,
+      "sha256": "7f893c549ca062d63d6add150b6002ee4729ac7c2de8377d7021eff6c49e5516"
     },
     {
-      "path": "Content/Assets/UI/Web/btn_craft.svg",
-      "bytes": 427,
-      "sha256": "7c64e90a54b43801a9f1d0fca188a32ebe27fbeced95b0a29fbfac29b9834f3d"
+      "path": "Content/Assets/UI/Kit/btn_craft.png",
+      "bytes": 977,
+      "sha256": "15890187504d3bf9cd9f2a5c29bb35ee0cb12df338826cfb67f2ef9ed692b5bf"
     },
     {
-      "path": "Content/Assets/UI/Web/btn_dodge.svg",
-      "bytes": 436,
-      "sha256": "72926fdac32ee3e41e9a05a31280352e0cb49a60a2109acc3b4930aab8b71db1"
+      "path": "Content/Assets/UI/Kit/btn_dodge.png",
+      "bytes": 956,
+      "sha256": "6034003888c9f2bb0b31e9115314a22a629accec420712e239cdab5ec95d2e4a"
     },
     {
-      "path": "Content/Assets/UI/Web/btn_flash.svg",
-      "bytes": 422,
-      "sha256": "4ea4c36d2127851372b788f745a2a294b5f5dea35da9c250e8cdae89d90e2fce"
+      "path": "Content/Assets/UI/Kit/btn_flash.png",
+      "bytes": 817,
+      "sha256": "745467bc885e94ad9efa32a8bb9a731011be92e2d2f8b4adde1d0815046cb38f"
     },
     {
-      "path": "Content/Assets/UI/Web/btn_gather.svg",
-      "bytes": 460,
-      "sha256": "3c1bcc388fdad8014ca4675351ec79dd81f1034f2fde12e38ee91b785a0eb461"
+      "path": "Content/Assets/UI/Kit/btn_gather.png",
+      "bytes": 1040,
+      "sha256": "fc7a1f315dfb8659da786ae2210e7fc9d4474f1ed9fbe4f61e37f1c9ce9be913"
     },
     {
-      "path": "Content/Assets/UI/Web/btn_interact.svg",
+      "path": "Content/Assets/UI/Kit/btn_interact.png",
+      "bytes": 805,
+      "sha256": "ecff79dd6a3ca44d710911e948ead1e65c5a47a57fc8efbb9a4d9fb8c1b63a06"
+    },
+    {
+      "path": "Content/Assets/UI/Kit/btn_inventory.png",
+      "bytes": 559,
+      "sha256": "0039a27795bbfa6932c0b3486ebfee2b74085f94f3e4228acb95a40a600cf477"
+    },
+    {
+      "path": "Content/Assets/UI/Kit/btn_pause.png",
+      "bytes": 574,
+      "sha256": "aca93a8b5884cd7f94659c2e8ac1644f479100fb6d3290fbef1369f163111195"
+    },
+    {
+      "path": "Content/Assets/UI/Kit/craft_detail_potion.png",
+      "bytes": 194,
+      "sha256": "00e452dfa16434678e71c04df53422b848be7847dc9df175a051587b8a078970"
+    },
+    {
+      "path": "Content/Assets/UI/Kit/craft_item_crystal.png",
+      "bytes": 196,
+      "sha256": "b231b46977e535a4b34195569d802e619d95633eb2f1784e755ae9f928e661c6"
+    },
+    {
+      "path": "Content/Assets/UI/Kit/craft_item_flash.png",
+      "bytes": 241,
+      "sha256": "3d1c41512f0dc7a73ce38c61b6b942a6457c2b21039d60fc1a7a2c6d644f4f14"
+    },
+    {
+      "path": "Content/Assets/UI/Kit/craft_item_potion.png",
+      "bytes": 172,
+      "sha256": "73ac31a321b7e204252e5174cb1a087af80bd9613e8883fbd807c4e37f2be3fd"
+    },
+    {
+      "path": "Content/Assets/UI/Kit/craft_panel.png",
+      "bytes": 5729,
+      "sha256": "32a8e2d950295fe2b68fbae22f320ab9bbcf785ba5a0b89c3a091497d5ae29a9"
+    },
+    {
+      "path": "Content/Assets/UI/Kit/craft_select.png",
+      "bytes": 351,
+      "sha256": "d4ec5aef11866ad515f0c4cbfe92c506ba3ddb709cfb898164fa2e176eb6e268"
+    },
+    {
+      "path": "Content/Assets/UI/Kit/dialog_box.png",
+      "bytes": 1236,
+      "sha256": "6edea0b0591bd7fe260e00ae71e7d062186aad6b6f6761e085057737c49aec8f"
+    },
+    {
+      "path": "Content/Assets/UI/Kit/dialog_portrait_frame.png",
       "bytes": 419,
-      "sha256": "e7ee6f6bb7da152e608b30060e36163f50c797f142b9e73e35595690cebfa75c"
+      "sha256": "5a552d78e60a57f26e5613c52e60402829f33e66d3951c55671f2ff80d390a5b"
     },
     {
-      "path": "Content/Assets/UI/Web/btn_inventory.svg",
-      "bytes": 431,
-      "sha256": "dffdf8cc01139ee12368a78f4c50653bc900f0f5cda5f78e5465e99ce1ab3e8a"
+      "path": "Content/Assets/UI/Kit/fatigue_000.png",
+      "bytes": 94,
+      "sha256": "3f61274b800879982dfb25a0884863160266b0cc602d46d6ddee76fcdda57df0"
     },
     {
-      "path": "Content/Assets/UI/Web/btn_pause.svg",
-      "bytes": 409,
-      "sha256": "03f5b90a26062a28ea6ee4571202c4527dad1271c99db05342808b289b3c41e4"
+      "path": "Content/Assets/UI/Kit/fatigue_010.png",
+      "bytes": 119,
+      "sha256": "a6e30bbaa7ef03fdd09a2376468a77277d934377f22e4f29f5f38a7eb7cca1be"
     },
     {
-      "path": "Content/Assets/UI/Web/craft_detail_potion.svg",
-      "bytes": 302,
-      "sha256": "99843f8c978e8805e2cc3b6a1ffcbc2a8d0b4aa26615a4f3d2706a0a70cd6a5b"
+      "path": "Content/Assets/UI/Kit/fatigue_020.png",
+      "bytes": 131,
+      "sha256": "2ca6e3cb9c49cee8c2932158178760aaad0d0af19e4ec7505031363a9232ff5b"
     },
     {
-      "path": "Content/Assets/UI/Web/craft_item_crystal.svg",
-      "bytes": 302,
-      "sha256": "0251dbd7ff795a0c850ec8801039d8e8015a5633fc065b6b661dddb92ef4bc93"
+      "path": "Content/Assets/UI/Kit/fatigue_030.png",
+      "bytes": 142,
+      "sha256": "181d46989d5939904a32929688276e519dd25bca5c9a724abd0c29b64f9a78cb"
     },
     {
-      "path": "Content/Assets/UI/Web/craft_item_flash.svg",
-      "bytes": 302,
-      "sha256": "ad4b017c56073fd1475c045a4cd10cb8a1429a0228c0c75904f9a4f23f943007"
+      "path": "Content/Assets/UI/Kit/fatigue_040.png",
+      "bytes": 150,
+      "sha256": "3e3de4d9842d320d8e5d645eaa5514570b2a54f89cd17f19fa2d432db08da9d3"
     },
     {
-      "path": "Content/Assets/UI/Web/craft_item_potion.svg",
-      "bytes": 302,
-      "sha256": "99843f8c978e8805e2cc3b6a1ffcbc2a8d0b4aa26615a4f3d2706a0a70cd6a5b"
+      "path": "Content/Assets/UI/Kit/fatigue_050.png",
+      "bytes": 162,
+      "sha256": "5cd3de1ac44a02ce0fe3c28ad40a2989b891a47b10d66ebb4f078e40bfbb91e2"
     },
     {
-      "path": "Content/Assets/UI/Web/craft_panel.svg",
-      "bytes": 195,
-      "sha256": "d797319fc35d4140df960f21cb30462958a21c3cb64d242d4ef6c3b10add65d5"
+      "path": "Content/Assets/UI/Kit/fatigue_060.png",
+      "bytes": 165,
+      "sha256": "4803fd4693495d644865cf32bab5417d857904e9d63143345bb9a04adf4be6bd"
     },
     {
-      "path": "Content/Assets/UI/Web/craft_select.svg",
-      "bytes": 296,
-      "sha256": "722e270498c268bd747697d9e9f395afae87fd7c0856eb54ba8f46f0d8756386"
+      "path": "Content/Assets/UI/Kit/fatigue_070.png",
+      "bytes": 177,
+      "sha256": "db3d0707de091235b349f5bf4936e6af35d88a1993318c9375c41b9c48625a31"
     },
     {
-      "path": "Content/Assets/UI/Web/dialog_box.svg",
-      "bytes": 195,
-      "sha256": "d797319fc35d4140df960f21cb30462958a21c3cb64d242d4ef6c3b10add65d5"
+      "path": "Content/Assets/UI/Kit/fatigue_080.png",
+      "bytes": 184,
+      "sha256": "3bbf51f52fc7333d0c7ac1794c5a9b2b543fef980bdbcf2d6187f1c9728b2ee8"
     },
     {
-      "path": "Content/Assets/UI/Web/dialog_portrait_frame.svg",
-      "bytes": 296,
-      "sha256": "722e270498c268bd747697d9e9f395afae87fd7c0856eb54ba8f46f0d8756386"
+      "path": "Content/Assets/UI/Kit/fatigue_090.png",
+      "bytes": 192,
+      "sha256": "e6dea1eaa920e1504c3b2aae838c5dfbc3ebd4bbdc31994dc05bb593a1aaf774"
     },
     {
-      "path": "Content/Assets/UI/Web/fatigue_000.svg",
-      "bytes": 219,
-      "sha256": "2c3d33f1bbc341812581a7093864327245ac87c1682054801c4d5cd300140a7d"
+      "path": "Content/Assets/UI/Kit/fatigue_100.png",
+      "bytes": 201,
+      "sha256": "5c8445d0723776243274fb9a882f840a4db490a0feea320ae0c969d05215a1df"
     },
     {
-      "path": "Content/Assets/UI/Web/fatigue_010.svg",
-      "bytes": 222,
-      "sha256": "53b422e73070d6d73fd3a1fc7ce576f9b288d7cca3679e952a2ffe61dd3c7616"
+      "path": "Content/Assets/UI/Kit/fatigue_back.png",
+      "bytes": 388,
+      "sha256": "0f1fcb50fa7cb556c20dced15e808f90b206b4fd1e4626c64915e5449f0f3281"
     },
     {
-      "path": "Content/Assets/UI/Web/fatigue_020.svg",
-      "bytes": 222,
-      "sha256": "949aab18e87e8ab918f6db61f4161e0944e9cbe3a047ceb8027750ea15309c68"
+      "path": "Content/Assets/UI/Kit/fatigue_ticks.png",
+      "bytes": 175,
+      "sha256": "9d99b6f7701fc742dc9144f145c01c17e39ff16cfea6e6020fb756a8420d803a"
     },
     {
-      "path": "Content/Assets/UI/Web/fatigue_030.svg",
-      "bytes": 222,
-      "sha256": "cdcc6a2a0d045656987a670756895a6493619eae7c12bc1e4ac00e9959e30086"
+      "path": "Content/Assets/UI/Kit/fx_dust.png",
+      "bytes": 91,
+      "sha256": "757e0292712ace0f6589d78a8a5092182fe7b2101e4634666e5d98e091bce04f"
     },
     {
-      "path": "Content/Assets/UI/Web/fatigue_040.svg",
-      "bytes": 222,
-      "sha256": "e8985acf5a51912009ee6b4602e149ac5620fdf12353088d7cccbeb9648240a0"
+      "path": "Content/Assets/UI/Kit/fx_star.png",
+      "bytes": 230,
+      "sha256": "654b72efbe235b2ff579bd4651bd55907b56e081bcc5f1437f5c0ac71087248c"
     },
     {
-      "path": "Content/Assets/UI/Web/fatigue_050.svg",
-      "bytes": 221,
-      "sha256": "8ddf3cb5a75400b23506cef0e809e964d038d981771e43b83b0b2fe8682ac46a"
+      "path": "Content/Assets/UI/Kit/fx_torch_glow.png",
+      "bytes": 1278,
+      "sha256": "0844c8cc414958494235537fbe404af80ff128e59714c233d98d61567eadc8eb"
     },
     {
-      "path": "Content/Assets/UI/Web/fatigue_060.svg",
-      "bytes": 223,
-      "sha256": "4c1bee641af25e5140ea5a25e8fdae536310a2f734d0fc8187c0caea13658f59"
+      "path": "Content/Assets/UI/Kit/hp_back.png",
+      "bytes": 527,
+      "sha256": "1c17eb3f4ba86b75c0b0b95194b37ccc110bd2d02ef275910c12c9ac18a8672f"
     },
     {
-      "path": "Content/Assets/UI/Web/fatigue_070.svg",
-      "bytes": 223,
-      "sha256": "06bd690e5ceef0d2d59777e63e3b46336ce157e4172f235d8f8d25ccd715bab8"
+      "path": "Content/Assets/UI/Kit/hp_fill_1.png",
+      "bytes": 187,
+      "sha256": "6cc3543b77a47cff0dfee11ddb5f0be2dca528c0b963ff6bfd0ae4b39260043e"
     },
     {
-      "path": "Content/Assets/UI/Web/fatigue_080.svg",
-      "bytes": 223,
-      "sha256": "75108c04ebdbce563464a1703732880f8d7cce5746cd01790a545dd389226e8f"
+      "path": "Content/Assets/UI/Kit/hp_fill_2.png",
+      "bytes": 202,
+      "sha256": "8fb84e82eeabeb9795f484b01226bb6daf4171b96cb9096517202c15eb76c59a"
     },
     {
-      "path": "Content/Assets/UI/Web/fatigue_090.svg",
-      "bytes": 223,
-      "sha256": "2e70bc3b52167f1fe61d90af658acea9c54af2db62a3229bedd1d31ee9ca31b6"
+      "path": "Content/Assets/UI/Kit/hp_fill_3.png",
+      "bytes": 228,
+      "sha256": "1fb5f67141462f9186ae53a38d0ccd9c51fd5b651e5ff06b189407b8b9aadf35"
     },
     {
-      "path": "Content/Assets/UI/Web/fatigue_100.svg",
-      "bytes": 221,
-      "sha256": "bb63c134125a162435dfe4db55681d7830e0078b155b1cf58193530db312fc86"
+      "path": "Content/Assets/UI/Kit/icon_bag.png",
+      "bytes": 160,
+      "sha256": "81d12ca02490b059cdf14655b128697533c156f90522affe182c13b512209650"
     },
     {
-      "path": "Content/Assets/UI/Web/fatigue_back.svg",
-      "bytes": 173,
-      "sha256": "b417a13e8e5fb22ce86ca3f7067ddf40183761ff0fa733f7f343a4339ba7182f"
+      "path": "Content/Assets/UI/Kit/joystick.png",
+      "bytes": 1168,
+      "sha256": "6a5ed1d778cfe3d38dcde1ef7bf88d7c9837439c11e1ae089b175f90d374d593"
     },
     {
-      "path": "Content/Assets/UI/Web/fatigue_ticks.svg",
-      "bytes": 173,
-      "sha256": "b417a13e8e5fb22ce86ca3f7067ddf40183761ff0fa733f7f343a4339ba7182f"
+      "path": "Content/Assets/UI/Kit/loading_coin.gif",
+      "bytes": 70555,
+      "sha256": "923226d088bb7db233cfc8d735b86bf93a765e0d1d52dda8327944ee33a64ba9"
     },
     {
-      "path": "Content/Assets/UI/Web/fx_dust.svg",
-      "bytes": 297,
-      "sha256": "167b2a153b21e82df3ae0c2a070b9ccdefea9e4bd10cfc44f8e1b2e1faddcab1"
+      "path": "Content/Assets/UI/Kit/minimap.png",
+      "bytes": 559,
+      "sha256": "b0422d6249c41b9f4c50dbf50776157ec36f0e55f223aaaabeb4985d9a6f3ac8"
     },
     {
-      "path": "Content/Assets/UI/Web/fx_star.svg",
-      "bytes": 163,
-      "sha256": "bb1428bdcd6786aacf7373c35233feb031832ff8280780cae868890597acc16d"
+      "path": "Content/Assets/UI/Kit/rot_attack_alea.png",
+      "bytes": 1489,
+      "sha256": "292dc2ba0e9b3e842aba98549c80657f373ca12a271b65b552afe89cc194470a"
     },
     {
-      "path": "Content/Assets/UI/Web/fx_torch_glow.svg",
-      "bytes": 297,
-      "sha256": "167b2a153b21e82df3ae0c2a070b9ccdefea9e4bd10cfc44f8e1b2e1faddcab1"
+      "path": "Content/Assets/UI/Kit/rot_attack_sherry.png",
+      "bytes": 1493,
+      "sha256": "99391f1b1f71a0f6d3190fa5e714edd761f1756d14fd440a522f5f1c46af9a79"
     },
     {
-      "path": "Content/Assets/UI/Web/hp_back.svg",
-      "bytes": 190,
-      "sha256": "6f3e794c6acb97f33d26d474bce99176380095039e2eb16e4956850d87fefbe7"
+      "path": "Content/Assets/UI/Kit/rot_attack_valen.png",
+      "bytes": 1417,
+      "sha256": "2ad8a499b7b30fd2a5ca5ec462aa1f823aac10d576b9b1f1362c894794c4d1a8"
     },
     {
-      "path": "Content/Assets/UI/Web/hp_fill_1.svg",
-      "bytes": 254,
-      "sha256": "284868074df41c42ec8f7da68c520b5e8ff876fcc198be895b8275459bdf7be7"
+      "path": "Content/Assets/UI/Kit/rot_craft.png",
+      "bytes": 1158,
+      "sha256": "b1c35d70ee200f49c4a569279cf22a4ac44961a9c15fb977324fbe8b1be1c48e"
     },
     {
-      "path": "Content/Assets/UI/Web/hp_fill_2.svg",
-      "bytes": 319,
-      "sha256": "3366e51ca57ce5d671ddb752f198b431e97a01fbacf0f54e5861f963d2453a4a"
+      "path": "Content/Assets/UI/Kit/rot_dodge.png",
+      "bytes": 1126,
+      "sha256": "12c841f591c12f147e62cb3a0d777d1c5eed7b7315c2fdb27f73b6e5111151d8"
     },
     {
-      "path": "Content/Assets/UI/Web/hp_fill_3.svg",
-      "bytes": 385,
-      "sha256": "cd8df52b420eb911e92b521ded5920c2ca2fc43cf6c50139acd8da3e9568bd66"
+      "path": "Content/Assets/UI/Kit/rot_hp_1.png",
+      "bytes": 1453,
+      "sha256": "7faceb28feb0f2f51804716c78b8d4cbec7741f9f9eb7ff5ac0abf282cd3fd7c"
     },
     {
-      "path": "Content/Assets/UI/Web/icon_bag.svg",
-      "bytes": 431,
-      "sha256": "dffdf8cc01139ee12368a78f4c50653bc900f0f5cda5f78e5465e99ce1ab3e8a"
+      "path": "Content/Assets/UI/Kit/rot_hp_2.png",
+      "bytes": 1562,
+      "sha256": "34b05fd90b158a4997408e0820be152c4aedbe5ebc2b343ce6156c0fa7d9b840"
     },
     {
-      "path": "Content/Assets/UI/Web/joystick.svg",
-      "bytes": 256,
-      "sha256": "bd0687d85b1e013d88678c6228fe851363a6deb42c069ecaddcfabe21c668893"
+      "path": "Content/Assets/UI/Kit/rot_hp_3.png",
+      "bytes": 1616,
+      "sha256": "b3b79e32fa0c7fdaf2a925980b072d816c4c9681ca96833d54f2703fb4ad868f"
     },
     {
-      "path": "Content/Assets/UI/Web/loading_coin.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "Content/Assets/UI/Kit/rot_interact.png",
+      "bytes": 1017,
+      "sha256": "e29a224a27ea04a1503a5a4dec827621d52f66231f8153199108b0cd2239bc7c"
     },
     {
-      "path": "Content/Assets/UI/Web/minimap.svg",
-      "bytes": 302,
-      "sha256": "2910a794b9924759d551b9fe51a889ae570b2d6f8c9a585938598a72ded8bd40"
+      "path": "Content/Assets/UI/Kit/rot_inventory.png",
+      "bytes": 741,
+      "sha256": "b7d8d48a81e6c190329fc90a16c41efb723479cb5b81ac99e4958120dcb96524"
     },
     {
-      "path": "Content/Assets/UI/Web/rot_attack_alea.svg",
-      "bytes": 442,
-      "sha256": "0a7a013a6f295ac2613262c7115a23a0f2c9039381f3c7c2a45004ea35adfb4e"
+      "path": "Content/Assets/UI/Kit/rot_minimap.png",
+      "bytes": 571,
+      "sha256": "60f50ef1267e11b0d5b65d4879a30d1a7ae9f62d041131e367f51ab84f552254"
     },
     {
-      "path": "Content/Assets/UI/Web/rot_attack_sherry.svg",
-      "bytes": 445,
-      "sha256": "0ee91a332e2a7a9bf454a21579d329601a9978a5e35a43b81924059698572450"
+      "path": "Content/Assets/UI/Kit/rot_pause.png",
+      "bytes": 750,
+      "sha256": "3236da8783027c3fa7a11c8fe26b7d7560c5a27d5a06bd451441f3d211de72a1"
     },
     {
-      "path": "Content/Assets/UI/Web/rot_attack_valen.svg",
-      "bytes": 439,
-      "sha256": "2e3c7839507da23dc6c7fc21e9c06eb491732399c04730f98d7cece2d0f0b8ac"
-    },
-    {
-      "path": "Content/Assets/UI/Web/rot_craft.svg",
-      "bytes": 427,
-      "sha256": "7c64e90a54b43801a9f1d0fca188a32ebe27fbeced95b0a29fbfac29b9834f3d"
-    },
-    {
-      "path": "Content/Assets/UI/Web/rot_dodge.svg",
-      "bytes": 436,
-      "sha256": "72926fdac32ee3e41e9a05a31280352e0cb49a60a2109acc3b4930aab8b71db1"
-    },
-    {
-      "path": "Content/Assets/UI/Web/rot_hp_1.svg",
-      "bytes": 254,
-      "sha256": "284868074df41c42ec8f7da68c520b5e8ff876fcc198be895b8275459bdf7be7"
-    },
-    {
-      "path": "Content/Assets/UI/Web/rot_hp_2.svg",
-      "bytes": 319,
-      "sha256": "3366e51ca57ce5d671ddb752f198b431e97a01fbacf0f54e5861f963d2453a4a"
-    },
-    {
-      "path": "Content/Assets/UI/Web/rot_hp_3.svg",
-      "bytes": 385,
-      "sha256": "cd8df52b420eb911e92b521ded5920c2ca2fc43cf6c50139acd8da3e9568bd66"
-    },
-    {
-      "path": "Content/Assets/UI/Web/rot_interact.svg",
-      "bytes": 419,
-      "sha256": "e7ee6f6bb7da152e608b30060e36163f50c797f142b9e73e35595690cebfa75c"
-    },
-    {
-      "path": "Content/Assets/UI/Web/rot_inventory.svg",
-      "bytes": 431,
-      "sha256": "dffdf8cc01139ee12368a78f4c50653bc900f0f5cda5f78e5465e99ce1ab3e8a"
-    },
-    {
-      "path": "Content/Assets/UI/Web/rot_minimap.svg",
-      "bytes": 455,
-      "sha256": "9ef5c9acff45028d94b7439c1c8de4508b47b30b4825c6832fb715783290ca3d"
-    },
-    {
-      "path": "Content/Assets/UI/Web/rot_pause.svg",
-      "bytes": 409,
-      "sha256": "03f5b90a26062a28ea6ee4571202c4527dad1271c99db05342808b289b3c41e4"
-    },
-    {
-      "path": "Content/Assets/UI/Web/title_v2.svg",
-      "bytes": 2874,
-      "sha256": "bdf133fb4a1e05e6c247ca908adc68a3b29a4b63ea7b1aad38864890ea03d9c3"
+      "path": "Content/Assets/UI/Kit/title_v2.png",
+      "bytes": 1588211,
+      "sha256": "b7578bc1a65235025501d78f321fb2677d0901a05af8bb81c87e506bd6b75b15"
     },
     {
       "path": "game.resources.bin",
-      "bytes": 3499160,
-      "sha256": "485d76ab7a2cc4910b31a7ebbfc39212c96c58869163bfe1967019c097386b3b"
+      "bytes": 3588634,
+      "sha256": "8f664e18dc3bd8ca0fa6d3986e6cebb23c2c49b9e1f0e1d2352a44919bd817b9"
     }
   ],
   "publicAssetPolicy": {
-    "excludedOriginals": [
+    "mode": "original",
+    "files": [
       {
-        "excluded": "Assets/UI/Kit/btn_attack_alea.png",
-        "replacement": "Assets/UI/Web/btn_attack_alea.svg"
+        "path": "Content/Assets/UI/Kit/btn_attack_alea.png",
+        "bytes": 1202,
+        "sha256": "248b7335072753b56cc060031eb2f5a365f1f911b25e50b0c5a8800a89824df8"
       },
       {
-        "excluded": "Assets/UI/Kit/btn_attack_sherry.png",
-        "replacement": "Assets/UI/Web/btn_attack_sherry.svg"
+        "path": "Content/Assets/UI/Kit/btn_attack_sherry.png",
+        "bytes": 1224,
+        "sha256": "f0c1fa8b620fe4c8ddbfab0cbb9d97ed3cda5372226fbb5d77173a365b20900e"
       },
       {
-        "excluded": "Assets/UI/Kit/btn_attack_valen.png",
-        "replacement": "Assets/UI/Web/btn_attack_valen.svg"
+        "path": "Content/Assets/UI/Kit/btn_attack_valen.png",
+        "bytes": 1129,
+        "sha256": "7f893c549ca062d63d6add150b6002ee4729ac7c2de8377d7021eff6c49e5516"
       },
       {
-        "excluded": "Assets/UI/Kit/btn_craft.png",
-        "replacement": "Assets/UI/Web/btn_craft.svg"
+        "path": "Content/Assets/UI/Kit/btn_craft.png",
+        "bytes": 977,
+        "sha256": "15890187504d3bf9cd9f2a5c29bb35ee0cb12df338826cfb67f2ef9ed692b5bf"
       },
       {
-        "excluded": "Assets/UI/Kit/btn_dodge.png",
-        "replacement": "Assets/UI/Web/btn_dodge.svg"
+        "path": "Content/Assets/UI/Kit/btn_dodge.png",
+        "bytes": 956,
+        "sha256": "6034003888c9f2bb0b31e9115314a22a629accec420712e239cdab5ec95d2e4a"
       },
       {
-        "excluded": "Assets/UI/Kit/btn_flash.png",
-        "replacement": "Assets/UI/Web/btn_flash.svg"
+        "path": "Content/Assets/UI/Kit/btn_flash.png",
+        "bytes": 817,
+        "sha256": "745467bc885e94ad9efa32a8bb9a731011be92e2d2f8b4adde1d0815046cb38f"
       },
       {
-        "excluded": "Assets/UI/Kit/btn_gather.png",
-        "replacement": "Assets/UI/Web/btn_gather.svg"
+        "path": "Content/Assets/UI/Kit/btn_gather.png",
+        "bytes": 1040,
+        "sha256": "fc7a1f315dfb8659da786ae2210e7fc9d4474f1ed9fbe4f61e37f1c9ce9be913"
       },
       {
-        "excluded": "Assets/UI/Kit/btn_interact.png",
-        "replacement": "Assets/UI/Web/btn_interact.svg"
+        "path": "Content/Assets/UI/Kit/btn_interact.png",
+        "bytes": 805,
+        "sha256": "ecff79dd6a3ca44d710911e948ead1e65c5a47a57fc8efbb9a4d9fb8c1b63a06"
       },
       {
-        "excluded": "Assets/UI/Kit/btn_inventory.png",
-        "replacement": "Assets/UI/Web/btn_inventory.svg"
+        "path": "Content/Assets/UI/Kit/btn_inventory.png",
+        "bytes": 559,
+        "sha256": "0039a27795bbfa6932c0b3486ebfee2b74085f94f3e4228acb95a40a600cf477"
       },
       {
-        "excluded": "Assets/UI/Kit/btn_pause.png",
-        "replacement": "Assets/UI/Web/btn_pause.svg"
+        "path": "Content/Assets/UI/Kit/btn_pause.png",
+        "bytes": 574,
+        "sha256": "aca93a8b5884cd7f94659c2e8ac1644f479100fb6d3290fbef1369f163111195"
       },
       {
-        "excluded": "Assets/UI/Kit/craft_detail_potion.png",
-        "replacement": "Assets/UI/Web/craft_detail_potion.svg"
+        "path": "Content/Assets/UI/Kit/craft_detail_potion.png",
+        "bytes": 194,
+        "sha256": "00e452dfa16434678e71c04df53422b848be7847dc9df175a051587b8a078970"
       },
       {
-        "excluded": "Assets/UI/Kit/craft_item_crystal.png",
-        "replacement": "Assets/UI/Web/craft_item_crystal.svg"
+        "path": "Content/Assets/UI/Kit/craft_item_crystal.png",
+        "bytes": 196,
+        "sha256": "b231b46977e535a4b34195569d802e619d95633eb2f1784e755ae9f928e661c6"
       },
       {
-        "excluded": "Assets/UI/Kit/craft_item_flash.png",
-        "replacement": "Assets/UI/Web/craft_item_flash.svg"
+        "path": "Content/Assets/UI/Kit/craft_item_flash.png",
+        "bytes": 241,
+        "sha256": "3d1c41512f0dc7a73ce38c61b6b942a6457c2b21039d60fc1a7a2c6d644f4f14"
       },
       {
-        "excluded": "Assets/UI/Kit/craft_item_potion.png",
-        "replacement": "Assets/UI/Web/craft_item_potion.svg"
+        "path": "Content/Assets/UI/Kit/craft_item_potion.png",
+        "bytes": 172,
+        "sha256": "73ac31a321b7e204252e5174cb1a087af80bd9613e8883fbd807c4e37f2be3fd"
       },
       {
-        "excluded": "Assets/UI/Kit/craft_panel.png",
-        "replacement": "Assets/UI/Web/craft_panel.svg"
+        "path": "Content/Assets/UI/Kit/craft_panel.png",
+        "bytes": 5729,
+        "sha256": "32a8e2d950295fe2b68fbae22f320ab9bbcf785ba5a0b89c3a091497d5ae29a9"
       },
       {
-        "excluded": "Assets/UI/Kit/craft_select.png",
-        "replacement": "Assets/UI/Web/craft_select.svg"
+        "path": "Content/Assets/UI/Kit/craft_select.png",
+        "bytes": 351,
+        "sha256": "d4ec5aef11866ad515f0c4cbfe92c506ba3ddb709cfb898164fa2e176eb6e268"
       },
       {
-        "excluded": "Assets/UI/Kit/dialog_box.png",
-        "replacement": "Assets/UI/Web/dialog_box.svg"
+        "path": "Content/Assets/UI/Kit/dialog_box.png",
+        "bytes": 1236,
+        "sha256": "6edea0b0591bd7fe260e00ae71e7d062186aad6b6f6761e085057737c49aec8f"
       },
       {
-        "excluded": "Assets/UI/Kit/dialog_portrait_frame.png",
-        "replacement": "Assets/UI/Web/dialog_portrait_frame.svg"
+        "path": "Content/Assets/UI/Kit/dialog_portrait_frame.png",
+        "bytes": 419,
+        "sha256": "5a552d78e60a57f26e5613c52e60402829f33e66d3951c55671f2ff80d390a5b"
       },
       {
-        "excluded": "Assets/UI/Kit/fatigue_000.png",
-        "replacement": "Assets/UI/Web/fatigue_000.svg"
+        "path": "Content/Assets/UI/Kit/fatigue_000.png",
+        "bytes": 94,
+        "sha256": "3f61274b800879982dfb25a0884863160266b0cc602d46d6ddee76fcdda57df0"
       },
       {
-        "excluded": "Assets/UI/Kit/fatigue_010.png",
-        "replacement": "Assets/UI/Web/fatigue_010.svg"
+        "path": "Content/Assets/UI/Kit/fatigue_010.png",
+        "bytes": 119,
+        "sha256": "a6e30bbaa7ef03fdd09a2376468a77277d934377f22e4f29f5f38a7eb7cca1be"
       },
       {
-        "excluded": "Assets/UI/Kit/fatigue_020.png",
-        "replacement": "Assets/UI/Web/fatigue_020.svg"
+        "path": "Content/Assets/UI/Kit/fatigue_020.png",
+        "bytes": 131,
+        "sha256": "2ca6e3cb9c49cee8c2932158178760aaad0d0af19e4ec7505031363a9232ff5b"
       },
       {
-        "excluded": "Assets/UI/Kit/fatigue_030.png",
-        "replacement": "Assets/UI/Web/fatigue_030.svg"
+        "path": "Content/Assets/UI/Kit/fatigue_030.png",
+        "bytes": 142,
+        "sha256": "181d46989d5939904a32929688276e519dd25bca5c9a724abd0c29b64f9a78cb"
       },
       {
-        "excluded": "Assets/UI/Kit/fatigue_040.png",
-        "replacement": "Assets/UI/Web/fatigue_040.svg"
+        "path": "Content/Assets/UI/Kit/fatigue_040.png",
+        "bytes": 150,
+        "sha256": "3e3de4d9842d320d8e5d645eaa5514570b2a54f89cd17f19fa2d432db08da9d3"
       },
       {
-        "excluded": "Assets/UI/Kit/fatigue_050.png",
-        "replacement": "Assets/UI/Web/fatigue_050.svg"
+        "path": "Content/Assets/UI/Kit/fatigue_050.png",
+        "bytes": 162,
+        "sha256": "5cd3de1ac44a02ce0fe3c28ad40a2989b891a47b10d66ebb4f078e40bfbb91e2"
       },
       {
-        "excluded": "Assets/UI/Kit/fatigue_060.png",
-        "replacement": "Assets/UI/Web/fatigue_060.svg"
+        "path": "Content/Assets/UI/Kit/fatigue_060.png",
+        "bytes": 165,
+        "sha256": "4803fd4693495d644865cf32bab5417d857904e9d63143345bb9a04adf4be6bd"
       },
       {
-        "excluded": "Assets/UI/Kit/fatigue_070.png",
-        "replacement": "Assets/UI/Web/fatigue_070.svg"
+        "path": "Content/Assets/UI/Kit/fatigue_070.png",
+        "bytes": 177,
+        "sha256": "db3d0707de091235b349f5bf4936e6af35d88a1993318c9375c41b9c48625a31"
       },
       {
-        "excluded": "Assets/UI/Kit/fatigue_080.png",
-        "replacement": "Assets/UI/Web/fatigue_080.svg"
+        "path": "Content/Assets/UI/Kit/fatigue_080.png",
+        "bytes": 184,
+        "sha256": "3bbf51f52fc7333d0c7ac1794c5a9b2b543fef980bdbcf2d6187f1c9728b2ee8"
       },
       {
-        "excluded": "Assets/UI/Kit/fatigue_090.png",
-        "replacement": "Assets/UI/Web/fatigue_090.svg"
+        "path": "Content/Assets/UI/Kit/fatigue_090.png",
+        "bytes": 192,
+        "sha256": "e6dea1eaa920e1504c3b2aae838c5dfbc3ebd4bbdc31994dc05bb593a1aaf774"
       },
       {
-        "excluded": "Assets/UI/Kit/fatigue_100.png",
-        "replacement": "Assets/UI/Web/fatigue_100.svg"
+        "path": "Content/Assets/UI/Kit/fatigue_100.png",
+        "bytes": 201,
+        "sha256": "5c8445d0723776243274fb9a882f840a4db490a0feea320ae0c969d05215a1df"
       },
       {
-        "excluded": "Assets/UI/Kit/fatigue_back.png",
-        "replacement": "Assets/UI/Web/fatigue_back.svg"
+        "path": "Content/Assets/UI/Kit/fatigue_back.png",
+        "bytes": 388,
+        "sha256": "0f1fcb50fa7cb556c20dced15e808f90b206b4fd1e4626c64915e5449f0f3281"
       },
       {
-        "excluded": "Assets/UI/Kit/fatigue_ticks.png",
-        "replacement": "Assets/UI/Web/fatigue_ticks.svg"
+        "path": "Content/Assets/UI/Kit/fatigue_ticks.png",
+        "bytes": 175,
+        "sha256": "9d99b6f7701fc742dc9144f145c01c17e39ff16cfea6e6020fb756a8420d803a"
       },
       {
-        "excluded": "Assets/UI/Kit/fx_dust.png",
-        "replacement": "Assets/UI/Web/fx_dust.svg"
+        "path": "Content/Assets/UI/Kit/fx_dust.png",
+        "bytes": 91,
+        "sha256": "757e0292712ace0f6589d78a8a5092182fe7b2101e4634666e5d98e091bce04f"
       },
       {
-        "excluded": "Assets/UI/Kit/fx_star.png",
-        "replacement": "Assets/UI/Web/fx_star.svg"
+        "path": "Content/Assets/UI/Kit/fx_star.png",
+        "bytes": 230,
+        "sha256": "654b72efbe235b2ff579bd4651bd55907b56e081bcc5f1437f5c0ac71087248c"
       },
       {
-        "excluded": "Assets/UI/Kit/fx_torch_glow.png",
-        "replacement": "Assets/UI/Web/fx_torch_glow.svg"
+        "path": "Content/Assets/UI/Kit/fx_torch_glow.png",
+        "bytes": 1278,
+        "sha256": "0844c8cc414958494235537fbe404af80ff128e59714c233d98d61567eadc8eb"
       },
       {
-        "excluded": "Assets/UI/Kit/hp_back.png",
-        "replacement": "Assets/UI/Web/hp_back.svg"
+        "path": "Content/Assets/UI/Kit/hp_back.png",
+        "bytes": 527,
+        "sha256": "1c17eb3f4ba86b75c0b0b95194b37ccc110bd2d02ef275910c12c9ac18a8672f"
       },
       {
-        "excluded": "Assets/UI/Kit/hp_fill_1.png",
-        "replacement": "Assets/UI/Web/hp_fill_1.svg"
+        "path": "Content/Assets/UI/Kit/hp_fill_1.png",
+        "bytes": 187,
+        "sha256": "6cc3543b77a47cff0dfee11ddb5f0be2dca528c0b963ff6bfd0ae4b39260043e"
       },
       {
-        "excluded": "Assets/UI/Kit/hp_fill_2.png",
-        "replacement": "Assets/UI/Web/hp_fill_2.svg"
+        "path": "Content/Assets/UI/Kit/hp_fill_2.png",
+        "bytes": 202,
+        "sha256": "8fb84e82eeabeb9795f484b01226bb6daf4171b96cb9096517202c15eb76c59a"
       },
       {
-        "excluded": "Assets/UI/Kit/hp_fill_3.png",
-        "replacement": "Assets/UI/Web/hp_fill_3.svg"
+        "path": "Content/Assets/UI/Kit/hp_fill_3.png",
+        "bytes": 228,
+        "sha256": "1fb5f67141462f9186ae53a38d0ccd9c51fd5b651e5ff06b189407b8b9aadf35"
       },
       {
-        "excluded": "Assets/UI/Kit/icon_bag.png",
-        "replacement": "Assets/UI/Web/icon_bag.svg"
+        "path": "Content/Assets/UI/Kit/icon_bag.png",
+        "bytes": 160,
+        "sha256": "81d12ca02490b059cdf14655b128697533c156f90522affe182c13b512209650"
       },
       {
-        "excluded": "Assets/UI/Kit/joystick.png",
-        "replacement": "Assets/UI/Web/joystick.svg"
+        "path": "Content/Assets/UI/Kit/joystick.png",
+        "bytes": 1168,
+        "sha256": "6a5ed1d778cfe3d38dcde1ef7bf88d7c9837439c11e1ae089b175f90d374d593"
       },
       {
-        "excluded": "Assets/UI/Kit/loading_coin.gif",
-        "replacement": "Assets/UI/Web/loading_coin.svg"
+        "path": "Content/Assets/UI/Kit/loading_coin.gif",
+        "bytes": 70555,
+        "sha256": "923226d088bb7db233cfc8d735b86bf93a765e0d1d52dda8327944ee33a64ba9"
       },
       {
-        "excluded": "Assets/UI/Kit/minimap.png",
-        "replacement": "Assets/UI/Web/minimap.svg"
+        "path": "Content/Assets/UI/Kit/minimap.png",
+        "bytes": 559,
+        "sha256": "b0422d6249c41b9f4c50dbf50776157ec36f0e55f223aaaabeb4985d9a6f3ac8"
       },
       {
-        "excluded": "Assets/UI/Kit/rot_attack_alea.png",
-        "replacement": "Assets/UI/Web/rot_attack_alea.svg"
+        "path": "Content/Assets/UI/Kit/rot_attack_alea.png",
+        "bytes": 1489,
+        "sha256": "292dc2ba0e9b3e842aba98549c80657f373ca12a271b65b552afe89cc194470a"
       },
       {
-        "excluded": "Assets/UI/Kit/rot_attack_sherry.png",
-        "replacement": "Assets/UI/Web/rot_attack_sherry.svg"
+        "path": "Content/Assets/UI/Kit/rot_attack_sherry.png",
+        "bytes": 1493,
+        "sha256": "99391f1b1f71a0f6d3190fa5e714edd761f1756d14fd440a522f5f1c46af9a79"
       },
       {
-        "excluded": "Assets/UI/Kit/rot_attack_valen.png",
-        "replacement": "Assets/UI/Web/rot_attack_valen.svg"
+        "path": "Content/Assets/UI/Kit/rot_attack_valen.png",
+        "bytes": 1417,
+        "sha256": "2ad8a499b7b30fd2a5ca5ec462aa1f823aac10d576b9b1f1362c894794c4d1a8"
       },
       {
-        "excluded": "Assets/UI/Kit/rot_craft.png",
-        "replacement": "Assets/UI/Web/rot_craft.svg"
+        "path": "Content/Assets/UI/Kit/rot_craft.png",
+        "bytes": 1158,
+        "sha256": "b1c35d70ee200f49c4a569279cf22a4ac44961a9c15fb977324fbe8b1be1c48e"
       },
       {
-        "excluded": "Assets/UI/Kit/rot_dodge.png",
-        "replacement": "Assets/UI/Web/rot_dodge.svg"
+        "path": "Content/Assets/UI/Kit/rot_dodge.png",
+        "bytes": 1126,
+        "sha256": "12c841f591c12f147e62cb3a0d777d1c5eed7b7315c2fdb27f73b6e5111151d8"
       },
       {
-        "excluded": "Assets/UI/Kit/rot_hp_1.png",
-        "replacement": "Assets/UI/Web/rot_hp_1.svg"
+        "path": "Content/Assets/UI/Kit/rot_hp_1.png",
+        "bytes": 1453,
+        "sha256": "7faceb28feb0f2f51804716c78b8d4cbec7741f9f9eb7ff5ac0abf282cd3fd7c"
       },
       {
-        "excluded": "Assets/UI/Kit/rot_hp_2.png",
-        "replacement": "Assets/UI/Web/rot_hp_2.svg"
+        "path": "Content/Assets/UI/Kit/rot_hp_2.png",
+        "bytes": 1562,
+        "sha256": "34b05fd90b158a4997408e0820be152c4aedbe5ebc2b343ce6156c0fa7d9b840"
       },
       {
-        "excluded": "Assets/UI/Kit/rot_hp_3.png",
-        "replacement": "Assets/UI/Web/rot_hp_3.svg"
+        "path": "Content/Assets/UI/Kit/rot_hp_3.png",
+        "bytes": 1616,
+        "sha256": "b3b79e32fa0c7fdaf2a925980b072d816c4c9681ca96833d54f2703fb4ad868f"
       },
       {
-        "excluded": "Assets/UI/Kit/rot_interact.png",
-        "replacement": "Assets/UI/Web/rot_interact.svg"
+        "path": "Content/Assets/UI/Kit/rot_interact.png",
+        "bytes": 1017,
+        "sha256": "e29a224a27ea04a1503a5a4dec827621d52f66231f8153199108b0cd2239bc7c"
       },
       {
-        "excluded": "Assets/UI/Kit/rot_inventory.png",
-        "replacement": "Assets/UI/Web/rot_inventory.svg"
+        "path": "Content/Assets/UI/Kit/rot_inventory.png",
+        "bytes": 741,
+        "sha256": "b7d8d48a81e6c190329fc90a16c41efb723479cb5b81ac99e4958120dcb96524"
       },
       {
-        "excluded": "Assets/UI/Kit/rot_minimap.png",
-        "replacement": "Assets/UI/Web/rot_minimap.svg"
+        "path": "Content/Assets/UI/Kit/rot_minimap.png",
+        "bytes": 571,
+        "sha256": "60f50ef1267e11b0d5b65d4879a30d1a7ae9f62d041131e367f51ab84f552254"
       },
       {
-        "excluded": "Assets/UI/Kit/rot_pause.png",
-        "replacement": "Assets/UI/Web/rot_pause.svg"
+        "path": "Content/Assets/UI/Kit/rot_pause.png",
+        "bytes": 750,
+        "sha256": "3236da8783027c3fa7a11c8fe26b7d7560c5a27d5a06bd451441f3d211de72a1"
       },
       {
-        "excluded": "Assets/UI/Kit/title_v2.png",
-        "replacement": "Assets/UI/Web/title_v2.svg"
+        "path": "Content/Assets/UI/Kit/title_v2.png",
+        "bytes": 1588211,
+        "sha256": "b7578bc1a65235025501d78f321fb2677d0901a05af8bb81c87e506bd6b75b15"
       }
     ],
-    "generated": "Original SVG primitives/text; no private pixels or embedded images"
+    "generatedReplacements": 0
   },
   "webResources": {
     "path": "game.resources.bin",
-    "bytes": 3499160,
+    "bytes": 3588634,
     "files": [
       {
         "path": "Content/Assets/Animations/SA_Alert.hbspriteanimation.json",
@@ -27930,334 +27930,328 @@
         "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/btn_attack_alea.svg",
+        "path": "Content/Assets/UI/Kit/btn_attack_alea.png",
         "offset": 3478955,
-        "bytes": 442,
-        "type": "image/svg+xml"
+        "bytes": 1202,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/btn_attack_sherry.svg",
-        "offset": 3479397,
-        "bytes": 445,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/btn_attack_sherry.png",
+        "offset": 3480157,
+        "bytes": 1224,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/btn_attack_valen.svg",
-        "offset": 3479842,
-        "bytes": 439,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/btn_attack_valen.png",
+        "offset": 3481381,
+        "bytes": 1129,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/btn_craft.svg",
-        "offset": 3480281,
-        "bytes": 427,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/btn_craft.png",
+        "offset": 3482510,
+        "bytes": 977,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/btn_dodge.svg",
-        "offset": 3480708,
-        "bytes": 436,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/btn_dodge.png",
+        "offset": 3483487,
+        "bytes": 956,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/btn_flash.svg",
-        "offset": 3481144,
-        "bytes": 422,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/btn_flash.png",
+        "offset": 3484443,
+        "bytes": 817,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/btn_gather.svg",
-        "offset": 3481566,
-        "bytes": 460,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/btn_gather.png",
+        "offset": 3485260,
+        "bytes": 1040,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/btn_interact.svg",
-        "offset": 3482026,
+        "path": "Content/Assets/UI/Kit/btn_interact.png",
+        "offset": 3486300,
+        "bytes": 805,
+        "type": "image/png"
+      },
+      {
+        "path": "Content/Assets/UI/Kit/btn_inventory.png",
+        "offset": 3487105,
+        "bytes": 559,
+        "type": "image/png"
+      },
+      {
+        "path": "Content/Assets/UI/Kit/btn_pause.png",
+        "offset": 3487664,
+        "bytes": 574,
+        "type": "image/png"
+      },
+      {
+        "path": "Content/Assets/UI/Kit/craft_detail_potion.png",
+        "offset": 3488238,
+        "bytes": 194,
+        "type": "image/png"
+      },
+      {
+        "path": "Content/Assets/UI/Kit/craft_item_crystal.png",
+        "offset": 3488432,
+        "bytes": 196,
+        "type": "image/png"
+      },
+      {
+        "path": "Content/Assets/UI/Kit/craft_item_flash.png",
+        "offset": 3488628,
+        "bytes": 241,
+        "type": "image/png"
+      },
+      {
+        "path": "Content/Assets/UI/Kit/craft_item_potion.png",
+        "offset": 3488869,
+        "bytes": 172,
+        "type": "image/png"
+      },
+      {
+        "path": "Content/Assets/UI/Kit/craft_panel.png",
+        "offset": 3489041,
+        "bytes": 5729,
+        "type": "image/png"
+      },
+      {
+        "path": "Content/Assets/UI/Kit/craft_select.png",
+        "offset": 3494770,
+        "bytes": 351,
+        "type": "image/png"
+      },
+      {
+        "path": "Content/Assets/UI/Kit/dialog_box.png",
+        "offset": 3495121,
+        "bytes": 1236,
+        "type": "image/png"
+      },
+      {
+        "path": "Content/Assets/UI/Kit/dialog_portrait_frame.png",
+        "offset": 3496357,
         "bytes": 419,
-        "type": "image/svg+xml"
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/btn_inventory.svg",
-        "offset": 3482445,
-        "bytes": 431,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fatigue_000.png",
+        "offset": 3496776,
+        "bytes": 94,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/btn_pause.svg",
-        "offset": 3482876,
-        "bytes": 409,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fatigue_010.png",
+        "offset": 3496870,
+        "bytes": 119,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/craft_detail_potion.svg",
-        "offset": 3483285,
-        "bytes": 302,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fatigue_020.png",
+        "offset": 3496989,
+        "bytes": 131,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/craft_item_crystal.svg",
-        "offset": 3483587,
-        "bytes": 302,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fatigue_030.png",
+        "offset": 3497120,
+        "bytes": 142,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/craft_item_flash.svg",
-        "offset": 3483889,
-        "bytes": 302,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fatigue_040.png",
+        "offset": 3497262,
+        "bytes": 150,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/craft_item_potion.svg",
-        "offset": 3484191,
-        "bytes": 302,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fatigue_050.png",
+        "offset": 3497412,
+        "bytes": 162,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/craft_panel.svg",
-        "offset": 3484493,
-        "bytes": 195,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fatigue_060.png",
+        "offset": 3497574,
+        "bytes": 165,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/craft_select.svg",
-        "offset": 3484688,
-        "bytes": 296,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fatigue_070.png",
+        "offset": 3497739,
+        "bytes": 177,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/dialog_box.svg",
-        "offset": 3484984,
-        "bytes": 195,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fatigue_080.png",
+        "offset": 3497916,
+        "bytes": 184,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/dialog_portrait_frame.svg",
-        "offset": 3485179,
-        "bytes": 296,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fatigue_090.png",
+        "offset": 3498100,
+        "bytes": 192,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/fatigue_000.svg",
-        "offset": 3485475,
-        "bytes": 219,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fatigue_100.png",
+        "offset": 3498292,
+        "bytes": 201,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/fatigue_010.svg",
-        "offset": 3485694,
-        "bytes": 222,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fatigue_back.png",
+        "offset": 3498493,
+        "bytes": 388,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/fatigue_020.svg",
-        "offset": 3485916,
-        "bytes": 222,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fatigue_ticks.png",
+        "offset": 3498881,
+        "bytes": 175,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/fatigue_030.svg",
-        "offset": 3486138,
-        "bytes": 222,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fx_dust.png",
+        "offset": 3499056,
+        "bytes": 91,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/fatigue_040.svg",
-        "offset": 3486360,
-        "bytes": 222,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fx_star.png",
+        "offset": 3499147,
+        "bytes": 230,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/fatigue_050.svg",
-        "offset": 3486582,
-        "bytes": 221,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/fx_torch_glow.png",
+        "offset": 3499377,
+        "bytes": 1278,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/fatigue_060.svg",
-        "offset": 3486803,
-        "bytes": 223,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/hp_back.png",
+        "offset": 3500655,
+        "bytes": 527,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/fatigue_070.svg",
-        "offset": 3487026,
-        "bytes": 223,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/hp_fill_1.png",
+        "offset": 3501182,
+        "bytes": 187,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/fatigue_080.svg",
-        "offset": 3487249,
-        "bytes": 223,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/hp_fill_2.png",
+        "offset": 3501369,
+        "bytes": 202,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/fatigue_090.svg",
-        "offset": 3487472,
-        "bytes": 223,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/hp_fill_3.png",
+        "offset": 3501571,
+        "bytes": 228,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/fatigue_100.svg",
-        "offset": 3487695,
-        "bytes": 221,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/icon_bag.png",
+        "offset": 3501799,
+        "bytes": 160,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/fatigue_back.svg",
-        "offset": 3487916,
-        "bytes": 173,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/joystick.png",
+        "offset": 3501959,
+        "bytes": 1168,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/fatigue_ticks.svg",
-        "offset": 3488089,
-        "bytes": 173,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/loading_coin.gif",
+        "offset": 3503127,
+        "bytes": 70555,
+        "type": "image/gif"
       },
       {
-        "path": "Content/Assets/UI/Web/fx_dust.svg",
-        "offset": 3488262,
-        "bytes": 297,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/minimap.png",
+        "offset": 3573682,
+        "bytes": 559,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/fx_star.svg",
-        "offset": 3488559,
-        "bytes": 163,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/rot_attack_alea.png",
+        "offset": 3574241,
+        "bytes": 1489,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/fx_torch_glow.svg",
-        "offset": 3488722,
-        "bytes": 297,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/rot_attack_sherry.png",
+        "offset": 3575730,
+        "bytes": 1493,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/hp_back.svg",
-        "offset": 3489019,
-        "bytes": 190,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/rot_attack_valen.png",
+        "offset": 3577223,
+        "bytes": 1417,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/hp_fill_1.svg",
-        "offset": 3489209,
-        "bytes": 254,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/rot_craft.png",
+        "offset": 3578640,
+        "bytes": 1158,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/hp_fill_2.svg",
-        "offset": 3489463,
-        "bytes": 319,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/rot_dodge.png",
+        "offset": 3579798,
+        "bytes": 1126,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/hp_fill_3.svg",
-        "offset": 3489782,
-        "bytes": 385,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/rot_hp_1.png",
+        "offset": 3580924,
+        "bytes": 1453,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/icon_bag.svg",
-        "offset": 3490167,
-        "bytes": 431,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/rot_hp_2.png",
+        "offset": 3582377,
+        "bytes": 1562,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/joystick.svg",
-        "offset": 3490598,
-        "bytes": 256,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/rot_hp_3.png",
+        "offset": 3583939,
+        "bytes": 1616,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/loading_coin.svg",
-        "offset": 3490854,
-        "bytes": 269,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/rot_interact.png",
+        "offset": 3585555,
+        "bytes": 1017,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/minimap.svg",
-        "offset": 3491123,
-        "bytes": 302,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/rot_inventory.png",
+        "offset": 3586572,
+        "bytes": 741,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/rot_attack_alea.svg",
-        "offset": 3491425,
-        "bytes": 442,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/rot_minimap.png",
+        "offset": 3587313,
+        "bytes": 571,
+        "type": "image/png"
       },
       {
-        "path": "Content/Assets/UI/Web/rot_attack_sherry.svg",
-        "offset": 3491867,
-        "bytes": 445,
-        "type": "image/svg+xml"
-      },
-      {
-        "path": "Content/Assets/UI/Web/rot_attack_valen.svg",
-        "offset": 3492312,
-        "bytes": 439,
-        "type": "image/svg+xml"
-      },
-      {
-        "path": "Content/Assets/UI/Web/rot_craft.svg",
-        "offset": 3492751,
-        "bytes": 427,
-        "type": "image/svg+xml"
-      },
-      {
-        "path": "Content/Assets/UI/Web/rot_dodge.svg",
-        "offset": 3493178,
-        "bytes": 436,
-        "type": "image/svg+xml"
-      },
-      {
-        "path": "Content/Assets/UI/Web/rot_hp_1.svg",
-        "offset": 3493614,
-        "bytes": 254,
-        "type": "image/svg+xml"
-      },
-      {
-        "path": "Content/Assets/UI/Web/rot_hp_2.svg",
-        "offset": 3493868,
-        "bytes": 319,
-        "type": "image/svg+xml"
-      },
-      {
-        "path": "Content/Assets/UI/Web/rot_hp_3.svg",
-        "offset": 3494187,
-        "bytes": 385,
-        "type": "image/svg+xml"
-      },
-      {
-        "path": "Content/Assets/UI/Web/rot_interact.svg",
-        "offset": 3494572,
-        "bytes": 419,
-        "type": "image/svg+xml"
-      },
-      {
-        "path": "Content/Assets/UI/Web/rot_inventory.svg",
-        "offset": 3494991,
-        "bytes": 431,
-        "type": "image/svg+xml"
-      },
-      {
-        "path": "Content/Assets/UI/Web/rot_minimap.svg",
-        "offset": 3495422,
-        "bytes": 455,
-        "type": "image/svg+xml"
-      },
-      {
-        "path": "Content/Assets/UI/Web/rot_pause.svg",
-        "offset": 3495877,
-        "bytes": 409,
-        "type": "image/svg+xml"
-      },
-      {
-        "path": "Content/Assets/UI/Web/title_v2.svg",
-        "offset": 3496286,
-        "bytes": 2874,
-        "type": "image/svg+xml"
+        "path": "Content/Assets/UI/Kit/rot_pause.png",
+        "offset": 3587884,
+        "bytes": 750,
+        "type": "image/png"
       }
     ]
   }

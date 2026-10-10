@@ -8584,289 +8584,289 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "path": "main/Content/Assets/UI/Web/btn_attack_alea.svg",
-      "bytes": 442,
-      "sha256": "0a7a013a6f295ac2613262c7115a23a0f2c9039381f3c7c2a45004ea35adfb4e"
+      "path": "main/Content/Assets/UI/Kit/btn_attack_alea.png",
+      "bytes": 1202,
+      "sha256": "248b7335072753b56cc060031eb2f5a365f1f911b25e50b0c5a8800a89824df8"
     },
     {
-      "path": "main/Content/Assets/UI/Web/btn_attack_sherry.svg",
-      "bytes": 445,
-      "sha256": "0ee91a332e2a7a9bf454a21579d329601a9978a5e35a43b81924059698572450"
+      "path": "main/Content/Assets/UI/Kit/btn_attack_sherry.png",
+      "bytes": 1224,
+      "sha256": "f0c1fa8b620fe4c8ddbfab0cbb9d97ed3cda5372226fbb5d77173a365b20900e"
     },
     {
-      "path": "main/Content/Assets/UI/Web/btn_attack_valen.svg",
-      "bytes": 439,
-      "sha256": "2e3c7839507da23dc6c7fc21e9c06eb491732399c04730f98d7cece2d0f0b8ac"
+      "path": "main/Content/Assets/UI/Kit/btn_attack_valen.png",
+      "bytes": 1129,
+      "sha256": "7f893c549ca062d63d6add150b6002ee4729ac7c2de8377d7021eff6c49e5516"
     },
     {
-      "path": "main/Content/Assets/UI/Web/btn_craft.svg",
-      "bytes": 427,
-      "sha256": "7c64e90a54b43801a9f1d0fca188a32ebe27fbeced95b0a29fbfac29b9834f3d"
+      "path": "main/Content/Assets/UI/Kit/btn_craft.png",
+      "bytes": 977,
+      "sha256": "15890187504d3bf9cd9f2a5c29bb35ee0cb12df338826cfb67f2ef9ed692b5bf"
     },
     {
-      "path": "main/Content/Assets/UI/Web/btn_dodge.svg",
-      "bytes": 436,
-      "sha256": "72926fdac32ee3e41e9a05a31280352e0cb49a60a2109acc3b4930aab8b71db1"
+      "path": "main/Content/Assets/UI/Kit/btn_dodge.png",
+      "bytes": 956,
+      "sha256": "6034003888c9f2bb0b31e9115314a22a629accec420712e239cdab5ec95d2e4a"
     },
     {
-      "path": "main/Content/Assets/UI/Web/btn_flash.svg",
-      "bytes": 422,
-      "sha256": "4ea4c36d2127851372b788f745a2a294b5f5dea35da9c250e8cdae89d90e2fce"
+      "path": "main/Content/Assets/UI/Kit/btn_flash.png",
+      "bytes": 817,
+      "sha256": "745467bc885e94ad9efa32a8bb9a731011be92e2d2f8b4adde1d0815046cb38f"
     },
     {
-      "path": "main/Content/Assets/UI/Web/btn_gather.svg",
-      "bytes": 460,
-      "sha256": "3c1bcc388fdad8014ca4675351ec79dd81f1034f2fde12e38ee91b785a0eb461"
+      "path": "main/Content/Assets/UI/Kit/btn_gather.png",
+      "bytes": 1040,
+      "sha256": "fc7a1f315dfb8659da786ae2210e7fc9d4474f1ed9fbe4f61e37f1c9ce9be913"
     },
     {
-      "path": "main/Content/Assets/UI/Web/btn_interact.svg",
+      "path": "main/Content/Assets/UI/Kit/btn_interact.png",
+      "bytes": 805,
+      "sha256": "ecff79dd6a3ca44d710911e948ead1e65c5a47a57fc8efbb9a4d9fb8c1b63a06"
+    },
+    {
+      "path": "main/Content/Assets/UI/Kit/btn_inventory.png",
+      "bytes": 559,
+      "sha256": "0039a27795bbfa6932c0b3486ebfee2b74085f94f3e4228acb95a40a600cf477"
+    },
+    {
+      "path": "main/Content/Assets/UI/Kit/btn_pause.png",
+      "bytes": 574,
+      "sha256": "aca93a8b5884cd7f94659c2e8ac1644f479100fb6d3290fbef1369f163111195"
+    },
+    {
+      "path": "main/Content/Assets/UI/Kit/craft_detail_potion.png",
+      "bytes": 194,
+      "sha256": "00e452dfa16434678e71c04df53422b848be7847dc9df175a051587b8a078970"
+    },
+    {
+      "path": "main/Content/Assets/UI/Kit/craft_item_crystal.png",
+      "bytes": 196,
+      "sha256": "b231b46977e535a4b34195569d802e619d95633eb2f1784e755ae9f928e661c6"
+    },
+    {
+      "path": "main/Content/Assets/UI/Kit/craft_item_flash.png",
+      "bytes": 241,
+      "sha256": "3d1c41512f0dc7a73ce38c61b6b942a6457c2b21039d60fc1a7a2c6d644f4f14"
+    },
+    {
+      "path": "main/Content/Assets/UI/Kit/craft_item_potion.png",
+      "bytes": 172,
+      "sha256": "73ac31a321b7e204252e5174cb1a087af80bd9613e8883fbd807c4e37f2be3fd"
+    },
+    {
+      "path": "main/Content/Assets/UI/Kit/craft_panel.png",
+      "bytes": 5729,
+      "sha256": "32a8e2d950295fe2b68fbae22f320ab9bbcf785ba5a0b89c3a091497d5ae29a9"
+    },
+    {
+      "path": "main/Content/Assets/UI/Kit/craft_select.png",
+      "bytes": 351,
+      "sha256": "d4ec5aef11866ad515f0c4cbfe92c506ba3ddb709cfb898164fa2e176eb6e268"
+    },
+    {
+      "path": "main/Content/Assets/UI/Kit/dialog_box.png",
+      "bytes": 1236,
+      "sha256": "6edea0b0591bd7fe260e00ae71e7d062186aad6b6f6761e085057737c49aec8f"
+    },
+    {
+      "path": "main/Content/Assets/UI/Kit/dialog_portrait_frame.png",
       "bytes": 419,
-      "sha256": "e7ee6f6bb7da152e608b30060e36163f50c797f142b9e73e35595690cebfa75c"
+      "sha256": "5a552d78e60a57f26e5613c52e60402829f33e66d3951c55671f2ff80d390a5b"
     },
     {
-      "path": "main/Content/Assets/UI/Web/btn_inventory.svg",
-      "bytes": 431,
-      "sha256": "dffdf8cc01139ee12368a78f4c50653bc900f0f5cda5f78e5465e99ce1ab3e8a"
+      "path": "main/Content/Assets/UI/Kit/fatigue_000.png",
+      "bytes": 94,
+      "sha256": "3f61274b800879982dfb25a0884863160266b0cc602d46d6ddee76fcdda57df0"
     },
     {
-      "path": "main/Content/Assets/UI/Web/btn_pause.svg",
-      "bytes": 409,
-      "sha256": "03f5b90a26062a28ea6ee4571202c4527dad1271c99db05342808b289b3c41e4"
+      "path": "main/Content/Assets/UI/Kit/fatigue_010.png",
+      "bytes": 119,
+      "sha256": "a6e30bbaa7ef03fdd09a2376468a77277d934377f22e4f29f5f38a7eb7cca1be"
     },
     {
-      "path": "main/Content/Assets/UI/Web/craft_detail_potion.svg",
-      "bytes": 302,
-      "sha256": "99843f8c978e8805e2cc3b6a1ffcbc2a8d0b4aa26615a4f3d2706a0a70cd6a5b"
+      "path": "main/Content/Assets/UI/Kit/fatigue_020.png",
+      "bytes": 131,
+      "sha256": "2ca6e3cb9c49cee8c2932158178760aaad0d0af19e4ec7505031363a9232ff5b"
     },
     {
-      "path": "main/Content/Assets/UI/Web/craft_item_crystal.svg",
-      "bytes": 302,
-      "sha256": "0251dbd7ff795a0c850ec8801039d8e8015a5633fc065b6b661dddb92ef4bc93"
+      "path": "main/Content/Assets/UI/Kit/fatigue_030.png",
+      "bytes": 142,
+      "sha256": "181d46989d5939904a32929688276e519dd25bca5c9a724abd0c29b64f9a78cb"
     },
     {
-      "path": "main/Content/Assets/UI/Web/craft_item_flash.svg",
-      "bytes": 302,
-      "sha256": "ad4b017c56073fd1475c045a4cd10cb8a1429a0228c0c75904f9a4f23f943007"
+      "path": "main/Content/Assets/UI/Kit/fatigue_040.png",
+      "bytes": 150,
+      "sha256": "3e3de4d9842d320d8e5d645eaa5514570b2a54f89cd17f19fa2d432db08da9d3"
     },
     {
-      "path": "main/Content/Assets/UI/Web/craft_item_potion.svg",
-      "bytes": 302,
-      "sha256": "99843f8c978e8805e2cc3b6a1ffcbc2a8d0b4aa26615a4f3d2706a0a70cd6a5b"
+      "path": "main/Content/Assets/UI/Kit/fatigue_050.png",
+      "bytes": 162,
+      "sha256": "5cd3de1ac44a02ce0fe3c28ad40a2989b891a47b10d66ebb4f078e40bfbb91e2"
     },
     {
-      "path": "main/Content/Assets/UI/Web/craft_panel.svg",
-      "bytes": 195,
-      "sha256": "d797319fc35d4140df960f21cb30462958a21c3cb64d242d4ef6c3b10add65d5"
+      "path": "main/Content/Assets/UI/Kit/fatigue_060.png",
+      "bytes": 165,
+      "sha256": "4803fd4693495d644865cf32bab5417d857904e9d63143345bb9a04adf4be6bd"
     },
     {
-      "path": "main/Content/Assets/UI/Web/craft_select.svg",
-      "bytes": 296,
-      "sha256": "722e270498c268bd747697d9e9f395afae87fd7c0856eb54ba8f46f0d8756386"
+      "path": "main/Content/Assets/UI/Kit/fatigue_070.png",
+      "bytes": 177,
+      "sha256": "db3d0707de091235b349f5bf4936e6af35d88a1993318c9375c41b9c48625a31"
     },
     {
-      "path": "main/Content/Assets/UI/Web/dialog_box.svg",
-      "bytes": 195,
-      "sha256": "d797319fc35d4140df960f21cb30462958a21c3cb64d242d4ef6c3b10add65d5"
+      "path": "main/Content/Assets/UI/Kit/fatigue_080.png",
+      "bytes": 184,
+      "sha256": "3bbf51f52fc7333d0c7ac1794c5a9b2b543fef980bdbcf2d6187f1c9728b2ee8"
     },
     {
-      "path": "main/Content/Assets/UI/Web/dialog_portrait_frame.svg",
-      "bytes": 296,
-      "sha256": "722e270498c268bd747697d9e9f395afae87fd7c0856eb54ba8f46f0d8756386"
+      "path": "main/Content/Assets/UI/Kit/fatigue_090.png",
+      "bytes": 192,
+      "sha256": "e6dea1eaa920e1504c3b2aae838c5dfbc3ebd4bbdc31994dc05bb593a1aaf774"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fatigue_000.svg",
-      "bytes": 219,
-      "sha256": "2c3d33f1bbc341812581a7093864327245ac87c1682054801c4d5cd300140a7d"
+      "path": "main/Content/Assets/UI/Kit/fatigue_100.png",
+      "bytes": 201,
+      "sha256": "5c8445d0723776243274fb9a882f840a4db490a0feea320ae0c969d05215a1df"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fatigue_010.svg",
-      "bytes": 222,
-      "sha256": "53b422e73070d6d73fd3a1fc7ce576f9b288d7cca3679e952a2ffe61dd3c7616"
+      "path": "main/Content/Assets/UI/Kit/fatigue_back.png",
+      "bytes": 388,
+      "sha256": "0f1fcb50fa7cb556c20dced15e808f90b206b4fd1e4626c64915e5449f0f3281"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fatigue_020.svg",
-      "bytes": 222,
-      "sha256": "949aab18e87e8ab918f6db61f4161e0944e9cbe3a047ceb8027750ea15309c68"
+      "path": "main/Content/Assets/UI/Kit/fatigue_ticks.png",
+      "bytes": 175,
+      "sha256": "9d99b6f7701fc742dc9144f145c01c17e39ff16cfea6e6020fb756a8420d803a"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fatigue_030.svg",
-      "bytes": 222,
-      "sha256": "cdcc6a2a0d045656987a670756895a6493619eae7c12bc1e4ac00e9959e30086"
+      "path": "main/Content/Assets/UI/Kit/fx_dust.png",
+      "bytes": 91,
+      "sha256": "757e0292712ace0f6589d78a8a5092182fe7b2101e4634666e5d98e091bce04f"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fatigue_040.svg",
-      "bytes": 222,
-      "sha256": "e8985acf5a51912009ee6b4602e149ac5620fdf12353088d7cccbeb9648240a0"
+      "path": "main/Content/Assets/UI/Kit/fx_star.png",
+      "bytes": 230,
+      "sha256": "654b72efbe235b2ff579bd4651bd55907b56e081bcc5f1437f5c0ac71087248c"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fatigue_050.svg",
-      "bytes": 221,
-      "sha256": "8ddf3cb5a75400b23506cef0e809e964d038d981771e43b83b0b2fe8682ac46a"
+      "path": "main/Content/Assets/UI/Kit/fx_torch_glow.png",
+      "bytes": 1278,
+      "sha256": "0844c8cc414958494235537fbe404af80ff128e59714c233d98d61567eadc8eb"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fatigue_060.svg",
-      "bytes": 223,
-      "sha256": "4c1bee641af25e5140ea5a25e8fdae536310a2f734d0fc8187c0caea13658f59"
+      "path": "main/Content/Assets/UI/Kit/hp_back.png",
+      "bytes": 527,
+      "sha256": "1c17eb3f4ba86b75c0b0b95194b37ccc110bd2d02ef275910c12c9ac18a8672f"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fatigue_070.svg",
-      "bytes": 223,
-      "sha256": "06bd690e5ceef0d2d59777e63e3b46336ce157e4172f235d8f8d25ccd715bab8"
+      "path": "main/Content/Assets/UI/Kit/hp_fill_1.png",
+      "bytes": 187,
+      "sha256": "6cc3543b77a47cff0dfee11ddb5f0be2dca528c0b963ff6bfd0ae4b39260043e"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fatigue_080.svg",
-      "bytes": 223,
-      "sha256": "75108c04ebdbce563464a1703732880f8d7cce5746cd01790a545dd389226e8f"
+      "path": "main/Content/Assets/UI/Kit/hp_fill_2.png",
+      "bytes": 202,
+      "sha256": "8fb84e82eeabeb9795f484b01226bb6daf4171b96cb9096517202c15eb76c59a"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fatigue_090.svg",
-      "bytes": 223,
-      "sha256": "2e70bc3b52167f1fe61d90af658acea9c54af2db62a3229bedd1d31ee9ca31b6"
+      "path": "main/Content/Assets/UI/Kit/hp_fill_3.png",
+      "bytes": 228,
+      "sha256": "1fb5f67141462f9186ae53a38d0ccd9c51fd5b651e5ff06b189407b8b9aadf35"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fatigue_100.svg",
-      "bytes": 221,
-      "sha256": "bb63c134125a162435dfe4db55681d7830e0078b155b1cf58193530db312fc86"
+      "path": "main/Content/Assets/UI/Kit/icon_bag.png",
+      "bytes": 160,
+      "sha256": "81d12ca02490b059cdf14655b128697533c156f90522affe182c13b512209650"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fatigue_back.svg",
-      "bytes": 173,
-      "sha256": "b417a13e8e5fb22ce86ca3f7067ddf40183761ff0fa733f7f343a4339ba7182f"
+      "path": "main/Content/Assets/UI/Kit/joystick.png",
+      "bytes": 1168,
+      "sha256": "6a5ed1d778cfe3d38dcde1ef7bf88d7c9837439c11e1ae089b175f90d374d593"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fatigue_ticks.svg",
-      "bytes": 173,
-      "sha256": "b417a13e8e5fb22ce86ca3f7067ddf40183761ff0fa733f7f343a4339ba7182f"
+      "path": "main/Content/Assets/UI/Kit/loading_coin.gif",
+      "bytes": 70555,
+      "sha256": "923226d088bb7db233cfc8d735b86bf93a765e0d1d52dda8327944ee33a64ba9"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fx_dust.svg",
-      "bytes": 297,
-      "sha256": "167b2a153b21e82df3ae0c2a070b9ccdefea9e4bd10cfc44f8e1b2e1faddcab1"
+      "path": "main/Content/Assets/UI/Kit/minimap.png",
+      "bytes": 559,
+      "sha256": "b0422d6249c41b9f4c50dbf50776157ec36f0e55f223aaaabeb4985d9a6f3ac8"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fx_star.svg",
-      "bytes": 163,
-      "sha256": "bb1428bdcd6786aacf7373c35233feb031832ff8280780cae868890597acc16d"
+      "path": "main/Content/Assets/UI/Kit/rot_attack_alea.png",
+      "bytes": 1489,
+      "sha256": "292dc2ba0e9b3e842aba98549c80657f373ca12a271b65b552afe89cc194470a"
     },
     {
-      "path": "main/Content/Assets/UI/Web/fx_torch_glow.svg",
-      "bytes": 297,
-      "sha256": "167b2a153b21e82df3ae0c2a070b9ccdefea9e4bd10cfc44f8e1b2e1faddcab1"
+      "path": "main/Content/Assets/UI/Kit/rot_attack_sherry.png",
+      "bytes": 1493,
+      "sha256": "99391f1b1f71a0f6d3190fa5e714edd761f1756d14fd440a522f5f1c46af9a79"
     },
     {
-      "path": "main/Content/Assets/UI/Web/hp_back.svg",
-      "bytes": 190,
-      "sha256": "6f3e794c6acb97f33d26d474bce99176380095039e2eb16e4956850d87fefbe7"
+      "path": "main/Content/Assets/UI/Kit/rot_attack_valen.png",
+      "bytes": 1417,
+      "sha256": "2ad8a499b7b30fd2a5ca5ec462aa1f823aac10d576b9b1f1362c894794c4d1a8"
     },
     {
-      "path": "main/Content/Assets/UI/Web/hp_fill_1.svg",
-      "bytes": 254,
-      "sha256": "284868074df41c42ec8f7da68c520b5e8ff876fcc198be895b8275459bdf7be7"
+      "path": "main/Content/Assets/UI/Kit/rot_craft.png",
+      "bytes": 1158,
+      "sha256": "b1c35d70ee200f49c4a569279cf22a4ac44961a9c15fb977324fbe8b1be1c48e"
     },
     {
-      "path": "main/Content/Assets/UI/Web/hp_fill_2.svg",
-      "bytes": 319,
-      "sha256": "3366e51ca57ce5d671ddb752f198b431e97a01fbacf0f54e5861f963d2453a4a"
+      "path": "main/Content/Assets/UI/Kit/rot_dodge.png",
+      "bytes": 1126,
+      "sha256": "12c841f591c12f147e62cb3a0d777d1c5eed7b7315c2fdb27f73b6e5111151d8"
     },
     {
-      "path": "main/Content/Assets/UI/Web/hp_fill_3.svg",
-      "bytes": 385,
-      "sha256": "cd8df52b420eb911e92b521ded5920c2ca2fc43cf6c50139acd8da3e9568bd66"
+      "path": "main/Content/Assets/UI/Kit/rot_hp_1.png",
+      "bytes": 1453,
+      "sha256": "7faceb28feb0f2f51804716c78b8d4cbec7741f9f9eb7ff5ac0abf282cd3fd7c"
     },
     {
-      "path": "main/Content/Assets/UI/Web/icon_bag.svg",
-      "bytes": 431,
-      "sha256": "dffdf8cc01139ee12368a78f4c50653bc900f0f5cda5f78e5465e99ce1ab3e8a"
+      "path": "main/Content/Assets/UI/Kit/rot_hp_2.png",
+      "bytes": 1562,
+      "sha256": "34b05fd90b158a4997408e0820be152c4aedbe5ebc2b343ce6156c0fa7d9b840"
     },
     {
-      "path": "main/Content/Assets/UI/Web/joystick.svg",
-      "bytes": 256,
-      "sha256": "bd0687d85b1e013d88678c6228fe851363a6deb42c069ecaddcfabe21c668893"
+      "path": "main/Content/Assets/UI/Kit/rot_hp_3.png",
+      "bytes": 1616,
+      "sha256": "b3b79e32fa0c7fdaf2a925980b072d816c4c9681ca96833d54f2703fb4ad868f"
     },
     {
-      "path": "main/Content/Assets/UI/Web/loading_coin.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "main/Content/Assets/UI/Kit/rot_interact.png",
+      "bytes": 1017,
+      "sha256": "e29a224a27ea04a1503a5a4dec827621d52f66231f8153199108b0cd2239bc7c"
     },
     {
-      "path": "main/Content/Assets/UI/Web/minimap.svg",
-      "bytes": 302,
-      "sha256": "2910a794b9924759d551b9fe51a889ae570b2d6f8c9a585938598a72ded8bd40"
+      "path": "main/Content/Assets/UI/Kit/rot_inventory.png",
+      "bytes": 741,
+      "sha256": "b7d8d48a81e6c190329fc90a16c41efb723479cb5b81ac99e4958120dcb96524"
     },
     {
-      "path": "main/Content/Assets/UI/Web/rot_attack_alea.svg",
-      "bytes": 442,
-      "sha256": "0a7a013a6f295ac2613262c7115a23a0f2c9039381f3c7c2a45004ea35adfb4e"
+      "path": "main/Content/Assets/UI/Kit/rot_minimap.png",
+      "bytes": 571,
+      "sha256": "60f50ef1267e11b0d5b65d4879a30d1a7ae9f62d041131e367f51ab84f552254"
     },
     {
-      "path": "main/Content/Assets/UI/Web/rot_attack_sherry.svg",
-      "bytes": 445,
-      "sha256": "0ee91a332e2a7a9bf454a21579d329601a9978a5e35a43b81924059698572450"
+      "path": "main/Content/Assets/UI/Kit/rot_pause.png",
+      "bytes": 750,
+      "sha256": "3236da8783027c3fa7a11c8fe26b7d7560c5a27d5a06bd451441f3d211de72a1"
     },
     {
-      "path": "main/Content/Assets/UI/Web/rot_attack_valen.svg",
-      "bytes": 439,
-      "sha256": "2e3c7839507da23dc6c7fc21e9c06eb491732399c04730f98d7cece2d0f0b8ac"
-    },
-    {
-      "path": "main/Content/Assets/UI/Web/rot_craft.svg",
-      "bytes": 427,
-      "sha256": "7c64e90a54b43801a9f1d0fca188a32ebe27fbeced95b0a29fbfac29b9834f3d"
-    },
-    {
-      "path": "main/Content/Assets/UI/Web/rot_dodge.svg",
-      "bytes": 436,
-      "sha256": "72926fdac32ee3e41e9a05a31280352e0cb49a60a2109acc3b4930aab8b71db1"
-    },
-    {
-      "path": "main/Content/Assets/UI/Web/rot_hp_1.svg",
-      "bytes": 254,
-      "sha256": "284868074df41c42ec8f7da68c520b5e8ff876fcc198be895b8275459bdf7be7"
-    },
-    {
-      "path": "main/Content/Assets/UI/Web/rot_hp_2.svg",
-      "bytes": 319,
-      "sha256": "3366e51ca57ce5d671ddb752f198b431e97a01fbacf0f54e5861f963d2453a4a"
-    },
-    {
-      "path": "main/Content/Assets/UI/Web/rot_hp_3.svg",
-      "bytes": 385,
-      "sha256": "cd8df52b420eb911e92b521ded5920c2ca2fc43cf6c50139acd8da3e9568bd66"
-    },
-    {
-      "path": "main/Content/Assets/UI/Web/rot_interact.svg",
-      "bytes": 419,
-      "sha256": "e7ee6f6bb7da152e608b30060e36163f50c797f142b9e73e35595690cebfa75c"
-    },
-    {
-      "path": "main/Content/Assets/UI/Web/rot_inventory.svg",
-      "bytes": 431,
-      "sha256": "dffdf8cc01139ee12368a78f4c50653bc900f0f5cda5f78e5465e99ce1ab3e8a"
-    },
-    {
-      "path": "main/Content/Assets/UI/Web/rot_minimap.svg",
-      "bytes": 455,
-      "sha256": "9ef5c9acff45028d94b7439c1c8de4508b47b30b4825c6832fb715783290ca3d"
-    },
-    {
-      "path": "main/Content/Assets/UI/Web/rot_pause.svg",
-      "bytes": 409,
-      "sha256": "03f5b90a26062a28ea6ee4571202c4527dad1271c99db05342808b289b3c41e4"
-    },
-    {
-      "path": "main/Content/Assets/UI/Web/title_v2.svg",
-      "bytes": 2874,
-      "sha256": "bdf133fb4a1e05e6c247ca908adc68a3b29a4b63ea7b1aad38864890ea03d9c3"
+      "path": "main/Content/Assets/UI/Kit/title_v2.png",
+      "bytes": 1588211,
+      "sha256": "b7578bc1a65235025501d78f321fb2677d0901a05af8bb81c87e506bd6b75b15"
     },
     {
       "path": "main/game.resources.bin",
-      "bytes": 3499160,
-      "sha256": "485d76ab7a2cc4910b31a7ebbfc39212c96c58869163bfe1967019c097386b3b"
+      "bytes": 3588634,
+      "sha256": "8f664e18dc3bd8ca0fa6d3986e6cebb23c2c49b9e1f0e1d2352a44919bd817b9"
     },
     {
       "path": "main/game.hbpack.json",
-      "bytes": 949857,
-      "sha256": "7e4d7f83e748cb3b2ca0927a69a972fe945048e06f995ac052b99082fb090792"
+      "bytes": 948662,
+      "sha256": "c8189a249a56fdb93bc9d8e2056ad732e877c8bed906e01e2d876957441b3e20"
     },
     {
       "path": "weapon-socket/Content/Source/AuricSession.cpp",
@@ -24870,8 +24870,8 @@
     },
     {
       "path": "weapon-socket/Content/Assets/UI/W_Front.hbwidget.json",
-      "bytes": 144455,
-      "sha256": "a7ab21a5445a07ec002eae871adafa915c85f8149d8792a2a28c4e042dd7103a"
+      "bytes": 144470,
+      "sha256": "ab574311fec49c929801259d9a289f430de6f99bdb7c7fc9c4dd7144f510428a"
     },
     {
       "path": "weapon-socket/Content/Assets/UI/W_Map.hbwidget.json",
@@ -25549,594 +25549,594 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/btn_attack_alea.svg",
-      "bytes": 442,
-      "sha256": "0a7a013a6f295ac2613262c7115a23a0f2c9039381f3c7c2a45004ea35adfb4e"
+      "path": "weapon-socket/Content/Assets/UI/Kit/btn_attack_alea.png",
+      "bytes": 1202,
+      "sha256": "248b7335072753b56cc060031eb2f5a365f1f911b25e50b0c5a8800a89824df8"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/btn_attack_sherry.svg",
-      "bytes": 445,
-      "sha256": "0ee91a332e2a7a9bf454a21579d329601a9978a5e35a43b81924059698572450"
+      "path": "weapon-socket/Content/Assets/UI/Kit/btn_attack_sherry.png",
+      "bytes": 1224,
+      "sha256": "f0c1fa8b620fe4c8ddbfab0cbb9d97ed3cda5372226fbb5d77173a365b20900e"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/btn_attack_valen.svg",
-      "bytes": 439,
-      "sha256": "2e3c7839507da23dc6c7fc21e9c06eb491732399c04730f98d7cece2d0f0b8ac"
+      "path": "weapon-socket/Content/Assets/UI/Kit/btn_attack_valen.png",
+      "bytes": 1129,
+      "sha256": "7f893c549ca062d63d6add150b6002ee4729ac7c2de8377d7021eff6c49e5516"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/btn_craft.svg",
-      "bytes": 427,
-      "sha256": "7c64e90a54b43801a9f1d0fca188a32ebe27fbeced95b0a29fbfac29b9834f3d"
+      "path": "weapon-socket/Content/Assets/UI/Kit/btn_craft.png",
+      "bytes": 977,
+      "sha256": "15890187504d3bf9cd9f2a5c29bb35ee0cb12df338826cfb67f2ef9ed692b5bf"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/btn_dodge.svg",
-      "bytes": 436,
-      "sha256": "72926fdac32ee3e41e9a05a31280352e0cb49a60a2109acc3b4930aab8b71db1"
+      "path": "weapon-socket/Content/Assets/UI/Kit/btn_dodge.png",
+      "bytes": 956,
+      "sha256": "6034003888c9f2bb0b31e9115314a22a629accec420712e239cdab5ec95d2e4a"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/btn_flash.svg",
-      "bytes": 422,
-      "sha256": "4ea4c36d2127851372b788f745a2a294b5f5dea35da9c250e8cdae89d90e2fce"
+      "path": "weapon-socket/Content/Assets/UI/Kit/btn_flash.png",
+      "bytes": 817,
+      "sha256": "745467bc885e94ad9efa32a8bb9a731011be92e2d2f8b4adde1d0815046cb38f"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/btn_gather.svg",
-      "bytes": 460,
-      "sha256": "3c1bcc388fdad8014ca4675351ec79dd81f1034f2fde12e38ee91b785a0eb461"
+      "path": "weapon-socket/Content/Assets/UI/Kit/btn_gather.png",
+      "bytes": 1040,
+      "sha256": "fc7a1f315dfb8659da786ae2210e7fc9d4474f1ed9fbe4f61e37f1c9ce9be913"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/btn_interact.svg",
+      "path": "weapon-socket/Content/Assets/UI/Kit/btn_interact.png",
+      "bytes": 805,
+      "sha256": "ecff79dd6a3ca44d710911e948ead1e65c5a47a57fc8efbb9a4d9fb8c1b63a06"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/btn_inventory.png",
+      "bytes": 559,
+      "sha256": "0039a27795bbfa6932c0b3486ebfee2b74085f94f3e4228acb95a40a600cf477"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/btn_pause.png",
+      "bytes": 574,
+      "sha256": "aca93a8b5884cd7f94659c2e8ac1644f479100fb6d3290fbef1369f163111195"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/craft_detail_potion.png",
+      "bytes": 194,
+      "sha256": "00e452dfa16434678e71c04df53422b848be7847dc9df175a051587b8a078970"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/craft_item_crystal.png",
+      "bytes": 196,
+      "sha256": "b231b46977e535a4b34195569d802e619d95633eb2f1784e755ae9f928e661c6"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/craft_item_flash.png",
+      "bytes": 241,
+      "sha256": "3d1c41512f0dc7a73ce38c61b6b942a6457c2b21039d60fc1a7a2c6d644f4f14"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/craft_item_potion.png",
+      "bytes": 172,
+      "sha256": "73ac31a321b7e204252e5174cb1a087af80bd9613e8883fbd807c4e37f2be3fd"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/craft_panel.png",
+      "bytes": 5729,
+      "sha256": "32a8e2d950295fe2b68fbae22f320ab9bbcf785ba5a0b89c3a091497d5ae29a9"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/craft_select.png",
+      "bytes": 351,
+      "sha256": "d4ec5aef11866ad515f0c4cbfe92c506ba3ddb709cfb898164fa2e176eb6e268"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/dialog_box.png",
+      "bytes": 1236,
+      "sha256": "6edea0b0591bd7fe260e00ae71e7d062186aad6b6f6761e085057737c49aec8f"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/dialog_portrait_frame.png",
       "bytes": 419,
-      "sha256": "e7ee6f6bb7da152e608b30060e36163f50c797f142b9e73e35595690cebfa75c"
+      "sha256": "5a552d78e60a57f26e5613c52e60402829f33e66d3951c55671f2ff80d390a5b"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/btn_inventory.svg",
-      "bytes": 431,
-      "sha256": "dffdf8cc01139ee12368a78f4c50653bc900f0f5cda5f78e5465e99ce1ab3e8a"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fatigue_000.png",
+      "bytes": 94,
+      "sha256": "3f61274b800879982dfb25a0884863160266b0cc602d46d6ddee76fcdda57df0"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/btn_pause.svg",
-      "bytes": 409,
-      "sha256": "03f5b90a26062a28ea6ee4571202c4527dad1271c99db05342808b289b3c41e4"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fatigue_010.png",
+      "bytes": 119,
+      "sha256": "a6e30bbaa7ef03fdd09a2376468a77277d934377f22e4f29f5f38a7eb7cca1be"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/craft_detail_potion.svg",
-      "bytes": 302,
-      "sha256": "99843f8c978e8805e2cc3b6a1ffcbc2a8d0b4aa26615a4f3d2706a0a70cd6a5b"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fatigue_020.png",
+      "bytes": 131,
+      "sha256": "2ca6e3cb9c49cee8c2932158178760aaad0d0af19e4ec7505031363a9232ff5b"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/craft_item_crystal.svg",
-      "bytes": 302,
-      "sha256": "0251dbd7ff795a0c850ec8801039d8e8015a5633fc065b6b661dddb92ef4bc93"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fatigue_030.png",
+      "bytes": 142,
+      "sha256": "181d46989d5939904a32929688276e519dd25bca5c9a724abd0c29b64f9a78cb"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/craft_item_flash.svg",
-      "bytes": 302,
-      "sha256": "ad4b017c56073fd1475c045a4cd10cb8a1429a0228c0c75904f9a4f23f943007"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fatigue_040.png",
+      "bytes": 150,
+      "sha256": "3e3de4d9842d320d8e5d645eaa5514570b2a54f89cd17f19fa2d432db08da9d3"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/craft_item_potion.svg",
-      "bytes": 302,
-      "sha256": "99843f8c978e8805e2cc3b6a1ffcbc2a8d0b4aa26615a4f3d2706a0a70cd6a5b"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fatigue_050.png",
+      "bytes": 162,
+      "sha256": "5cd3de1ac44a02ce0fe3c28ad40a2989b891a47b10d66ebb4f078e40bfbb91e2"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/craft_panel.svg",
-      "bytes": 195,
-      "sha256": "d797319fc35d4140df960f21cb30462958a21c3cb64d242d4ef6c3b10add65d5"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fatigue_060.png",
+      "bytes": 165,
+      "sha256": "4803fd4693495d644865cf32bab5417d857904e9d63143345bb9a04adf4be6bd"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/craft_select.svg",
-      "bytes": 296,
-      "sha256": "722e270498c268bd747697d9e9f395afae87fd7c0856eb54ba8f46f0d8756386"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fatigue_070.png",
+      "bytes": 177,
+      "sha256": "db3d0707de091235b349f5bf4936e6af35d88a1993318c9375c41b9c48625a31"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/dialog_box.svg",
-      "bytes": 195,
-      "sha256": "d797319fc35d4140df960f21cb30462958a21c3cb64d242d4ef6c3b10add65d5"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/dialog_portrait_frame.svg",
-      "bytes": 296,
-      "sha256": "722e270498c268bd747697d9e9f395afae87fd7c0856eb54ba8f46f0d8756386"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fatigue_000.svg",
-      "bytes": 219,
-      "sha256": "2c3d33f1bbc341812581a7093864327245ac87c1682054801c4d5cd300140a7d"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fatigue_010.svg",
-      "bytes": 222,
-      "sha256": "53b422e73070d6d73fd3a1fc7ce576f9b288d7cca3679e952a2ffe61dd3c7616"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fatigue_020.svg",
-      "bytes": 222,
-      "sha256": "949aab18e87e8ab918f6db61f4161e0944e9cbe3a047ceb8027750ea15309c68"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fatigue_030.svg",
-      "bytes": 222,
-      "sha256": "cdcc6a2a0d045656987a670756895a6493619eae7c12bc1e4ac00e9959e30086"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fatigue_040.svg",
-      "bytes": 222,
-      "sha256": "e8985acf5a51912009ee6b4602e149ac5620fdf12353088d7cccbeb9648240a0"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fatigue_050.svg",
-      "bytes": 221,
-      "sha256": "8ddf3cb5a75400b23506cef0e809e964d038d981771e43b83b0b2fe8682ac46a"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fatigue_060.svg",
-      "bytes": 223,
-      "sha256": "4c1bee641af25e5140ea5a25e8fdae536310a2f734d0fc8187c0caea13658f59"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fatigue_070.svg",
-      "bytes": 223,
-      "sha256": "06bd690e5ceef0d2d59777e63e3b46336ce157e4172f235d8f8d25ccd715bab8"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fatigue_080.svg",
-      "bytes": 223,
-      "sha256": "75108c04ebdbce563464a1703732880f8d7cce5746cd01790a545dd389226e8f"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fatigue_090.svg",
-      "bytes": 223,
-      "sha256": "2e70bc3b52167f1fe61d90af658acea9c54af2db62a3229bedd1d31ee9ca31b6"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fatigue_100.svg",
-      "bytes": 221,
-      "sha256": "bb63c134125a162435dfe4db55681d7830e0078b155b1cf58193530db312fc86"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fatigue_back.svg",
-      "bytes": 173,
-      "sha256": "b417a13e8e5fb22ce86ca3f7067ddf40183761ff0fa733f7f343a4339ba7182f"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fatigue_ticks.svg",
-      "bytes": 173,
-      "sha256": "b417a13e8e5fb22ce86ca3f7067ddf40183761ff0fa733f7f343a4339ba7182f"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fx_dust.svg",
-      "bytes": 297,
-      "sha256": "167b2a153b21e82df3ae0c2a070b9ccdefea9e4bd10cfc44f8e1b2e1faddcab1"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fx_ember.svg",
-      "bytes": 297,
-      "sha256": "167b2a153b21e82df3ae0c2a070b9ccdefea9e4bd10cfc44f8e1b2e1faddcab1"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fx_fog_a.svg",
-      "bytes": 394,
-      "sha256": "d7db805224bcf0fbded6ca3b47cc76794eab06ec7f5e1d0a515f56b973e98661"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fx_fog_b.svg",
-      "bytes": 394,
-      "sha256": "d7db805224bcf0fbded6ca3b47cc76794eab06ec7f5e1d0a515f56b973e98661"
-    },
-    {
-      "path": "weapon-socket/Content/Assets/UI/Web/fx_rays.svg",
+      "path": "weapon-socket/Content/Assets/UI/Kit/fatigue_080.png",
       "bytes": 184,
-      "sha256": "14385bd5b073e5e7c07d37625ce0004d60f2d09f07d27a89e0e02fd003f1124f"
+      "sha256": "3bbf51f52fc7333d0c7ac1794c5a9b2b543fef980bdbcf2d6187f1c9728b2ee8"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/fx_star.svg",
-      "bytes": 163,
-      "sha256": "bb1428bdcd6786aacf7373c35233feb031832ff8280780cae868890597acc16d"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fatigue_090.png",
+      "bytes": 192,
+      "sha256": "e6dea1eaa920e1504c3b2aae838c5dfbc3ebd4bbdc31994dc05bb593a1aaf774"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/fx_torch_glow.svg",
-      "bytes": 297,
-      "sha256": "167b2a153b21e82df3ae0c2a070b9ccdefea9e4bd10cfc44f8e1b2e1faddcab1"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fatigue_100.png",
+      "bytes": 201,
+      "sha256": "5c8445d0723776243274fb9a882f840a4db490a0feea320ae0c969d05215a1df"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/hp_back.svg",
-      "bytes": 190,
-      "sha256": "6f3e794c6acb97f33d26d474bce99176380095039e2eb16e4956850d87fefbe7"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fatigue_back.png",
+      "bytes": 388,
+      "sha256": "0f1fcb50fa7cb556c20dced15e808f90b206b4fd1e4626c64915e5449f0f3281"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/hp_fill_1.svg",
-      "bytes": 254,
-      "sha256": "284868074df41c42ec8f7da68c520b5e8ff876fcc198be895b8275459bdf7be7"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fatigue_ticks.png",
+      "bytes": 175,
+      "sha256": "9d99b6f7701fc742dc9144f145c01c17e39ff16cfea6e6020fb756a8420d803a"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/hp_fill_2.svg",
-      "bytes": 319,
-      "sha256": "3366e51ca57ce5d671ddb752f198b431e97a01fbacf0f54e5861f963d2453a4a"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fx_dust.png",
+      "bytes": 91,
+      "sha256": "757e0292712ace0f6589d78a8a5092182fe7b2101e4634666e5d98e091bce04f"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/hp_fill_3.svg",
-      "bytes": 385,
-      "sha256": "cd8df52b420eb911e92b521ded5920c2ca2fc43cf6c50139acd8da3e9568bd66"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fx_ember.png",
+      "bytes": 94,
+      "sha256": "7857c39ff07725c421014ce6712eab5fb612bea90fbf59fc2f6cbe0ceacce8ff"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/icon_bag.svg",
-      "bytes": 431,
-      "sha256": "dffdf8cc01139ee12368a78f4c50653bc900f0f5cda5f78e5465e99ce1ab3e8a"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fx_fog_a.png",
+      "bytes": 2936,
+      "sha256": "ad850e31c4760c84d59259b2a80a3ea30bd0a3eb219c7ebbc016256543b40824"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/joystick.svg",
-      "bytes": 256,
-      "sha256": "bd0687d85b1e013d88678c6228fe851363a6deb42c069ecaddcfabe21c668893"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fx_fog_b.png",
+      "bytes": 2934,
+      "sha256": "25127e19dca9a9ba3823dfe0b8f6b8dbba47e4e8ce2469d0179a4a127b752f94"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/loading_coin.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fx_rays.png",
+      "bytes": 4394,
+      "sha256": "acfbfcf8aec3a5bdf1c13aa9d172afa172cf8063b660d8d85bee21cfe3b46dea"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/mastiff_logo.svg",
-      "bytes": 435,
-      "sha256": "c2ec306df67cefe8d2ef4479e7a99856e72bd1cc61feb04bf671a0257f70d4ca"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fx_star.png",
+      "bytes": 230,
+      "sha256": "654b72efbe235b2ff579bd4651bd55907b56e081bcc5f1437f5c0ac71087248c"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/mastiff_logo_src.svg",
-      "bytes": 435,
-      "sha256": "c2ec306df67cefe8d2ef4479e7a99856e72bd1cc61feb04bf671a0257f70d4ca"
+      "path": "weapon-socket/Content/Assets/UI/Kit/fx_torch_glow.png",
+      "bytes": 1278,
+      "sha256": "0844c8cc414958494235537fbe404af80ff128e59714c233d98d61567eadc8eb"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/minimap.svg",
-      "bytes": 302,
-      "sha256": "2910a794b9924759d551b9fe51a889ae570b2d6f8c9a585938598a72ded8bd40"
+      "path": "weapon-socket/Content/Assets/UI/Kit/hp_back.png",
+      "bytes": 527,
+      "sha256": "1c17eb3f4ba86b75c0b0b95194b37ccc110bd2d02ef275910c12c9ac18a8672f"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/rot_attack_alea.svg",
-      "bytes": 442,
-      "sha256": "0a7a013a6f295ac2613262c7115a23a0f2c9039381f3c7c2a45004ea35adfb4e"
+      "path": "weapon-socket/Content/Assets/UI/Kit/hp_fill_1.png",
+      "bytes": 187,
+      "sha256": "6cc3543b77a47cff0dfee11ddb5f0be2dca528c0b963ff6bfd0ae4b39260043e"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/rot_attack_sherry.svg",
-      "bytes": 445,
-      "sha256": "0ee91a332e2a7a9bf454a21579d329601a9978a5e35a43b81924059698572450"
+      "path": "weapon-socket/Content/Assets/UI/Kit/hp_fill_2.png",
+      "bytes": 202,
+      "sha256": "8fb84e82eeabeb9795f484b01226bb6daf4171b96cb9096517202c15eb76c59a"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/rot_attack_valen.svg",
-      "bytes": 439,
-      "sha256": "2e3c7839507da23dc6c7fc21e9c06eb491732399c04730f98d7cece2d0f0b8ac"
+      "path": "weapon-socket/Content/Assets/UI/Kit/hp_fill_3.png",
+      "bytes": 228,
+      "sha256": "1fb5f67141462f9186ae53a38d0ccd9c51fd5b651e5ff06b189407b8b9aadf35"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/rot_craft.svg",
-      "bytes": 427,
-      "sha256": "7c64e90a54b43801a9f1d0fca188a32ebe27fbeced95b0a29fbfac29b9834f3d"
+      "path": "weapon-socket/Content/Assets/UI/Kit/icon_bag.png",
+      "bytes": 160,
+      "sha256": "81d12ca02490b059cdf14655b128697533c156f90522affe182c13b512209650"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/rot_dodge.svg",
-      "bytes": 436,
-      "sha256": "72926fdac32ee3e41e9a05a31280352e0cb49a60a2109acc3b4930aab8b71db1"
+      "path": "weapon-socket/Content/Assets/UI/Kit/joystick.png",
+      "bytes": 1168,
+      "sha256": "6a5ed1d778cfe3d38dcde1ef7bf88d7c9837439c11e1ae089b175f90d374d593"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/rot_hp_1.svg",
-      "bytes": 254,
-      "sha256": "284868074df41c42ec8f7da68c520b5e8ff876fcc198be895b8275459bdf7be7"
+      "path": "weapon-socket/Content/Assets/UI/Kit/loading_coin.gif",
+      "bytes": 70555,
+      "sha256": "923226d088bb7db233cfc8d735b86bf93a765e0d1d52dda8327944ee33a64ba9"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/rot_hp_2.svg",
-      "bytes": 319,
-      "sha256": "3366e51ca57ce5d671ddb752f198b431e97a01fbacf0f54e5861f963d2453a4a"
+      "path": "weapon-socket/Content/Assets/UI/Kit/mastiff_logo.png",
+      "bytes": 137249,
+      "sha256": "4b296535a007294db42806f4919be18e58d6e1fecafddfa2a469bbae0697cc77"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/rot_hp_3.svg",
-      "bytes": 385,
-      "sha256": "cd8df52b420eb911e92b521ded5920c2ca2fc43cf6c50139acd8da3e9568bd66"
+      "path": "weapon-socket/Content/Assets/UI/Kit/mastiff_logo_src.png",
+      "bytes": 306688,
+      "sha256": "465abff051c0f99a0fad54a25716b2871fe1bc88cf4688fc6f7665f655b882a0"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/rot_interact.svg",
-      "bytes": 419,
-      "sha256": "e7ee6f6bb7da152e608b30060e36163f50c797f142b9e73e35595690cebfa75c"
+      "path": "weapon-socket/Content/Assets/UI/Kit/minimap.png",
+      "bytes": 559,
+      "sha256": "b0422d6249c41b9f4c50dbf50776157ec36f0e55f223aaaabeb4985d9a6f3ac8"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/rot_inventory.svg",
-      "bytes": 431,
-      "sha256": "dffdf8cc01139ee12368a78f4c50653bc900f0f5cda5f78e5465e99ce1ab3e8a"
+      "path": "weapon-socket/Content/Assets/UI/Kit/rot_attack_alea.png",
+      "bytes": 1489,
+      "sha256": "292dc2ba0e9b3e842aba98549c80657f373ca12a271b65b552afe89cc194470a"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/rot_minimap.svg",
-      "bytes": 455,
-      "sha256": "9ef5c9acff45028d94b7439c1c8de4508b47b30b4825c6832fb715783290ca3d"
+      "path": "weapon-socket/Content/Assets/UI/Kit/rot_attack_sherry.png",
+      "bytes": 1493,
+      "sha256": "99391f1b1f71a0f6d3190fa5e714edd761f1756d14fd440a522f5f1c46af9a79"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/rot_pause.svg",
-      "bytes": 409,
-      "sha256": "03f5b90a26062a28ea6ee4571202c4527dad1271c99db05342808b289b3c41e4"
+      "path": "weapon-socket/Content/Assets/UI/Kit/rot_attack_valen.png",
+      "bytes": 1417,
+      "sha256": "2ad8a499b7b30fd2a5ca5ec462aa1f823aac10d576b9b1f1362c894794c4d1a8"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_ambient.svg",
-      "bytes": 4091,
-      "sha256": "c60db430c64c5d3b4e4e6f24346ddcc67d75c0c3d0f8d73a7b194a042d15ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/rot_craft.png",
+      "bytes": 1158,
+      "sha256": "b1c35d70ee200f49c4a569279cf22a4ac44961a9c15fb977324fbe8b1be1c48e"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_burst.svg",
-      "bytes": 609,
-      "sha256": "bb8e784a731d285c00a3ddb18a9ec5e27dc736034e40b508ee5a3da49b81f430"
+      "path": "weapon-socket/Content/Assets/UI/Kit/rot_dodge.png",
+      "bytes": 1126,
+      "sha256": "12c841f591c12f147e62cb3a0d777d1c5eed7b7315c2fdb27f73b6e5111151d8"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_0.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/rot_hp_1.png",
+      "bytes": 1453,
+      "sha256": "7faceb28feb0f2f51804716c78b8d4cbec7741f9f9eb7ff5ac0abf282cd3fd7c"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_1.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/rot_hp_2.png",
+      "bytes": 1562,
+      "sha256": "34b05fd90b158a4997408e0820be152c4aedbe5ebc2b343ce6156c0fa7d9b840"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_10.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/rot_hp_3.png",
+      "bytes": 1616,
+      "sha256": "b3b79e32fa0c7fdaf2a925980b072d816c4c9681ca96833d54f2703fb4ad868f"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_11.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/rot_interact.png",
+      "bytes": 1017,
+      "sha256": "e29a224a27ea04a1503a5a4dec827621d52f66231f8153199108b0cd2239bc7c"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_12.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/rot_inventory.png",
+      "bytes": 741,
+      "sha256": "b7d8d48a81e6c190329fc90a16c41efb723479cb5b81ac99e4958120dcb96524"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_13.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/rot_minimap.png",
+      "bytes": 571,
+      "sha256": "60f50ef1267e11b0d5b65d4879a30d1a7ae9f62d041131e367f51ab84f552254"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_14.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/rot_pause.png",
+      "bytes": 750,
+      "sha256": "3236da8783027c3fa7a11c8fe26b7d7560c5a27d5a06bd451441f3d211de72a1"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_15.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_ambient.webp",
+      "bytes": 89924,
+      "sha256": "bdd4cf49f0d3d7c49f81046e453fb3d1757289054cf9055707a0c441410561df"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_16.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_burst.webp",
+      "bytes": 1477740,
+      "sha256": "239043ab94f12b6552e75693a73d560d11c5ac9401c2c40f07d29c983fa712f8"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_17.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_0.png",
+      "bytes": 1647,
+      "sha256": "54a6c8a389aee82aad86e585228ea6515a0c277e7c6c8d816f47fb1940c88a2d"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_18.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_1.png",
+      "bytes": 2323,
+      "sha256": "328d98e587f4a83f10a7aa2b2a2a7474cf592aaf6714f9b1012fe5ebc01ea453"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_19.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_10.png",
+      "bytes": 4118,
+      "sha256": "a05da0ad5b98512a0bb3ee7e2165fae0012ddea12d694a6f0b8c9235928b8a9f"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_2.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_11.png",
+      "bytes": 9141,
+      "sha256": "97d5ba4b97d79a165b6d14b4e2be79bdbd10241327e5679e012edffa0dc11916"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_20.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_12.png",
+      "bytes": 1067,
+      "sha256": "34ac0f74dc6967025cf11d1664dab5293d7376c1d9a8f98ece014c7df6669b1c"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_21.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_13.png",
+      "bytes": 6312,
+      "sha256": "af8a7189f6e1eb99261036007a1b5d9f5b11eb3d6088ad946abee0b304351a04"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_22.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_14.png",
+      "bytes": 6789,
+      "sha256": "63aa459f438c55a5b91571efb18306b62dac5106beacc72da71da082f2b7a499"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_23.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_15.png",
+      "bytes": 2815,
+      "sha256": "2e035a9bbd6e380acc72ab9e8c5b0906d68247744b7ce8273c63d3febccc2d5f"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_3.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_16.png",
+      "bytes": 2474,
+      "sha256": "5cb44b7f503291177522f066f914a920653462921383087b4728b2d2ad23683a"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_4.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_17.png",
+      "bytes": 11349,
+      "sha256": "275226920fd2aa7303ef68ff11909e71811937092b79d6e4933b9e7a8da117e2"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_5.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_18.png",
+      "bytes": 3964,
+      "sha256": "4f5f830ed388566787ae3b42db585902719792160af980f6ec550349cdb0f51b"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_6.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_19.png",
+      "bytes": 7357,
+      "sha256": "50b81d973bbf6e610711bcdf81e8c558576da8dfda2de11cbd185053f92017af"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_7.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_2.png",
+      "bytes": 24618,
+      "sha256": "9eb08b84ab58578f29e4e36d978514243716c5348ad368260b93aeff44f3670d"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_8.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_20.png",
+      "bytes": 17624,
+      "sha256": "d752fe7f12f03feb0832b75d2f2f5627cd01d4d1e18498714729d51802e0616e"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_coin_9.svg",
-      "bytes": 269,
-      "sha256": "a73e1a96e5b63d3950c337812886073948f939912f8138268ce25981a2408802"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_21.png",
+      "bytes": 4978,
+      "sha256": "4e433ae1dd34df3b0f6462c5aad9dbc4b0a994dc2c92361288aa8159a9030e04"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_fog.svg",
-      "bytes": 394,
-      "sha256": "d7db805224bcf0fbded6ca3b47cc76794eab06ec7f5e1d0a515f56b973e98661"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_22.png",
+      "bytes": 1499,
+      "sha256": "f1dea5cf209fe47cfc08fc4a537fa44d61e15c801b7b06471e17311f6afcb7d6"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_letter_0.svg",
-      "bytes": 435,
-      "sha256": "426d714beab7b0f50f7faed6b63271e3a486f9f2571881630d9ee71e2e510460"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_23.png",
+      "bytes": 3091,
+      "sha256": "dbfae8c5485a8f7d7a8378c1044db1806af588fc3a5feb42b51bc16f3d916ab9"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_letter_1.svg",
-      "bytes": 435,
-      "sha256": "00f03bae6624cdbeb012605527736071b03e1f0b030bacdc96cfc0e2629d88be"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_3.png",
+      "bytes": 5771,
+      "sha256": "53e31a1d72f216f4ebe0bad5d1e27ab504103ff601653d8ac7968bb497c1a0ab"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_letter_2.svg",
-      "bytes": 435,
-      "sha256": "f30209037137f0dfbcea84dc9227a60ca5c8d93e1cc34e084134659f4fef57ab"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_4.png",
+      "bytes": 25554,
+      "sha256": "8893b2061b05fe97bf602b7abaa0ebd3b70103e62d47e430e707abb6bd8ecf0c"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_letter_3.svg",
-      "bytes": 435,
-      "sha256": "9faee4493a66ac22bc26b64f801115285b620c19cdd9db445f734bdc30334dd2"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_5.png",
+      "bytes": 5373,
+      "sha256": "2685f869558602ef5963143f2575d111dcd2a4cdf7ccf786ba63ca31ad216afc"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_letter_4.svg",
-      "bytes": 435,
-      "sha256": "903cb2f834ad8b1fcf9a9cc54f12c5580c98bff61dc35669184df185fb95dd6d"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_6.png",
+      "bytes": 4355,
+      "sha256": "49afd7c00585111bfdc0a4e1370c8c62a1beadcde77d3b9d3bb5f9c445e5d4d1"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_letter_5.svg",
-      "bytes": 435,
-      "sha256": "a90111098284d646b0a4004037dbdb26f3736d9089d1d075a8d684dd89df2165"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_7.png",
+      "bytes": 3584,
+      "sha256": "8814c37c0bc0d2969f91c25a90ccaec84834375694a482a1caa516b7339e2a95"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_letter_6.svg",
-      "bytes": 435,
-      "sha256": "ecadc950f521bf14a0a2ddde531c1c50eb1d66cb46f315d713b9f23bcfecc5e9"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_8.png",
+      "bytes": 1905,
+      "sha256": "c90fa0a0773a1bd92efc4b9c7c86d1ec05196348046d7cf31845483dba7cd6dd"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_letter_7.svg",
-      "bytes": 435,
-      "sha256": "ecadc950f521bf14a0a2ddde531c1c50eb1d66cb46f315d713b9f23bcfecc5e9"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_coin_9.png",
+      "bytes": 12846,
+      "sha256": "2ef19b8cc97c58551c1bfcf8fa001af952a30f1263c2f8fd92de8af099a80ec8"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_letter_8.svg",
-      "bytes": 435,
-      "sha256": "a0257ec5dcc6031010334a1218eadef016bc7fb6e152d61ebfc256b9ee03b2c8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_fog.webp",
+      "bytes": 81446,
+      "sha256": "20bf7a7228f22b6070a212acd9135b38f19f0ad8e478c121caa89deb35776dbd"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_plate.svg",
-      "bytes": 2526,
-      "sha256": "239c7a0630618eb935b3ef7b52718fe74128f2620a8c9a94901bc6478bba8b57"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_letter_0.png",
+      "bytes": 96668,
+      "sha256": "1a3f2b51978b0538b87e0849951972fac1fa23f75ef09b8ee979a19fe54992be"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_ring.svg",
-      "bytes": 174,
-      "sha256": "dd6b9879b0b1e866862a731bbd651c2b9ffae28711b4709f4e48c825a45bf59a"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_letter_1.png",
+      "bytes": 12279,
+      "sha256": "fc55895d266d60e8db8600a3852ea93854d5e6ca7f54199138ee95b65d8057b2"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_shine.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_letter_2.png",
+      "bytes": 11434,
+      "sha256": "3f6f860c98719661f3171b4762af52cf64ea5e2c73ce0c2ba9d0d6148193bff7"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_shine_0.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_letter_3.png",
+      "bytes": 8860,
+      "sha256": "ba39b603df41b681b0c57dd2105ed6be515e0313c4b2c5d2366ee8f9fb26e9a2"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_shine_1.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_letter_4.png",
+      "bytes": 18643,
+      "sha256": "3e6c25b91069273dbcc8236e33489f0b841ea181f29be1e0434b6a9d80aba083"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_shine_10.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_letter_5.png",
+      "bytes": 19909,
+      "sha256": "63e94f7a79cbd17e3c07f68fb780395c27cb5647f1ea56b786a45318a5091bd5"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_shine_11.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_letter_6.png",
+      "bytes": 37277,
+      "sha256": "5a71f359e8dc6a08bf54f47a5ba95194ee51a9b80cb7010565c145a4c1074e9d"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_shine_12.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_letter_7.png",
+      "bytes": 41652,
+      "sha256": "c46dbf35268f8ac425e9e55bdad9fd7b127de5681a3b819e0f1db775265eb2f0"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_shine_13.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_letter_8.png",
+      "bytes": 6165,
+      "sha256": "1ed85476a4cb2438ee5f604b6f6b32d276bb9bcd472a5ef4bc0d62d5e01c1ddb"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_shine_2.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_plate.png",
+      "bytes": 898610,
+      "sha256": "4a79f7e924f364380734e8a1e7d0705b0db78322ee3c78f7124f411ea3af7bc7"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_shine_3.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_ring.png",
+      "bytes": 417329,
+      "sha256": "ad94dacf79d62347d085e12200912dd054923fa660bccb6b62bb25d2bf0c55a7"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_shine_4.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_shine.webp",
+      "bytes": 14054,
+      "sha256": "c77aa0bf3f47bb759c83babfe47835c6de3c61779a5628af3b4762828d3b086f"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_shine_5.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_shine_0.png",
+      "bytes": 6766,
+      "sha256": "2167eb20fc0856cca3b92d2c9228798a662c97da0d950127d45b782a727554b4"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_shine_6.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_shine_1.png",
+      "bytes": 6766,
+      "sha256": "2167eb20fc0856cca3b92d2c9228798a662c97da0d950127d45b782a727554b4"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_shine_7.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_shine_10.png",
+      "bytes": 7893,
+      "sha256": "4144bf97a91756f961b3a0a21874417d6677dab29c0312f4049008740e8aebc2"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_shine_8.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_shine_11.png",
+      "bytes": 7041,
+      "sha256": "7f26859c1cf9cfe654dd935df7198181247dcad670f04b36dd884076e182542b"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_shine_9.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_shine_12.png",
+      "bytes": 6766,
+      "sha256": "2167eb20fc0856cca3b92d2c9228798a662c97da0d950127d45b782a727554b4"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_tap.svg",
-      "bytes": 302,
-      "sha256": "57e9b7fdb9b61f139837d7389c8a67d985707b727d2adf4167935cf6f435f48e"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_shine_13.png",
+      "bytes": 6766,
+      "sha256": "2167eb20fc0856cca3b92d2c9228798a662c97da0d950127d45b782a727554b4"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_tapglow.svg",
-      "bytes": 314,
-      "sha256": "1c09e2498151149aab01f8bd61a2ad61c423a16646b9a0eacfb87fe31359ccc8"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_shine_2.png",
+      "bytes": 6980,
+      "sha256": "3c1ea33338e44c6430f15d38a56b21f2ae3ec2e9a57b60b25ad327df2077ff2c"
     },
     {
-      "path": "weapon-socket/Content/Assets/UI/Web/title_v2.svg",
-      "bytes": 2874,
-      "sha256": "bdf133fb4a1e05e6c247ca908adc68a3b29a4b63ea7b1aad38864890ea03d9c3"
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_shine_3.png",
+      "bytes": 8100,
+      "sha256": "31eca8d2616699e08f28b49f19b462dceaba5667c05e59b021d29645659ec073"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_shine_4.png",
+      "bytes": 9312,
+      "sha256": "51cc915980464a3a6e6788075517ee9f5082c7e05c07e2bd04cb21e2bc0fb1d0"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_shine_5.png",
+      "bytes": 9639,
+      "sha256": "ee3de83ebea47f3dce419a5cae8fd99ac8374df553973dd7ec201290c2c65d6b"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_shine_6.png",
+      "bytes": 9757,
+      "sha256": "a5bfe5e18bd2bf389a97ceed169acc892700f5bc59b9dc6c1c0b9145374a8890"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_shine_7.png",
+      "bytes": 10042,
+      "sha256": "1a9db7498601016d98b2113e3d4ea07a84c5360307a2d01451ff94810ed71d2d"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_shine_8.png",
+      "bytes": 9505,
+      "sha256": "f76b4047620015324ec9f8262d2e8ac5df1de5983a5242d936cc184f3c0cedcf"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_shine_9.png",
+      "bytes": 9499,
+      "sha256": "b24f6ad6fab74e5bde65a23960ef49d35da5c46df6aafbf4e822fd6c9b62fdf5"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_tap.png",
+      "bytes": 16299,
+      "sha256": "39000fb12ff55091a11751ee6ddb8841552513fd4761019aac2c2eccde063254"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_tapglow.webp",
+      "bytes": 64406,
+      "sha256": "35aa08f6c7d8a94f6c113d4c0df7ba126019a96e2033ded2fafdfaf8f75b2ec1"
+    },
+    {
+      "path": "weapon-socket/Content/Assets/UI/Kit/title_v2.png",
+      "bytes": 1588211,
+      "sha256": "b7578bc1a65235025501d78f321fb2677d0901a05af8bb81c87e506bd6b75b15"
     },
     {
       "path": "weapon-socket/game.resources.bin",
-      "bytes": 4189062,
-      "sha256": "89276928c47f20eb16b93187f97b0b0a0ee5cbb52d7f4d8b982e67653351bada"
+      "bytes": 5928932,
+      "sha256": "48793c8326b636d9b05605ff5a2ba1ba6607820896ef1ed7f29c238d2c15f4e5"
     },
     {
       "path": "weapon-socket/game.hbpack.json",
-      "bytes": 1866394,
-      "sha256": "5e229036c1b682e594033609c98229c79b710f1de583891221800756a2f02856"
+      "bytes": 1863803,
+      "sha256": "8eaeae37afcc9961cb840aafa9260ef26828ad94c870578e3154556ad2d0669a"
     },
     {
       "path": ".nojekyll",
