@@ -187,7 +187,7 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   const names = [...seen];
   assert.ok(names.every(n => /^S_VS_(A_)?run_/.test(n)) && names.some(n => /^S_VS_A_run_/.test(n)), `걸으며 베기 그림 (${names.join(', ')})`);
   assert.ok(new Set(names.filter(n => /^S_VS_A_run_/.test(n)).map(n => n.split('_')[6])).size >= 2, `베는 동안 하체 위상이 이어짐 (${names.join(', ')})`);
-  assert.ok([...swords].some(n => /^S_VS_AW_\d+_[FR]\./.test(n)) && swords.size >= 6, `베기 검 자세 그림 (${[...swords].join(', ')})`);
+  assert.ok([...swords].every(n => /^S_VS_Sword_[FR]_\d+\./.test(n)) && swords.size >= 6, `베기: 돌린 칼이 마우스 쪽 반원을 쓸고 지나감 (${[...swords].join(', ')})`);
   console.log('걸으며 공격 검사 통과', '검 각도', swords.size, '종류');
 }
 

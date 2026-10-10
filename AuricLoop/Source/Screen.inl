@@ -144,8 +144,11 @@ void TopDownShooter::AnimateSocket(float delta,bool moving){
   const hb::Vec3 to=lead+hb::Vec3{(hand[0]+0.5f-32)/kVsPPU,(kVsOriginTop-hand[1]-0.5f)/kVsPPU,0};  // 손 픽셀 가운데
   if(Length(to-weaponAt)>0.001f){weaponAt=to;hb::Scene::SetPosition(weapon,to);}
   const std::string side=rear?"R":"F";
-  const std::string key=frame>=0?"S_VS_AW_"+std::to_string(kVsAttackWeapon[gait][row][aimIdx][phase][frame])+"_"+side
-    :"S_VS_Sword_"+side+"_"+std::to_string((((int)std::lround(aim/5.625f))%64+64)%64);
+  // 베는 동안 칼: 아트팀 칼 그림은 준비 자세에서 마우스 반대쪽을 가리켜 반대로 휘두르는 것처럼 보였음 →
+  // 돌린 칼 그림으로 마우스 쪽 +75도(준비) → 검기가 나오는 동안 -75도까지 쓸고 → 그대로 (늘 마우스 쪽 반원 안)
+  float swing=0;
+  if(frame>=0){const float ms=swingT*1000;swing=ms<95?75.f:ms<210?75.f-150.f*(ms-95)/115:-75.f;}
+  const std::string key="S_VS_Sword_"+side+"_"+std::to_string((((int)std::lround((aim+swing)/5.625f))%64+64)%64);
   if(key!=weaponShown){weaponShown=key;hb::Sprites::SetSprite(weapon,dir+key+".hbsprite.json");}
 }
 
