@@ -128,7 +128,8 @@ def glint(who, pose, tip="top"):
         tx = max(x for x, _ in band)
         ys = [y for x, y in band if x == tx]
         ty = sum(ys) / len(ys)
-    to_m = lambda x, y: ((x - w / 2) / PPU, ((h - y) - sp["pivot"][1] * h) / PPU)  # noqa: E731
+    ppu = sp["pixelsPerUnit"]  # 해골 대장 생성 자세는 1.25배 (tools/fix_boss_scale.py)
+    to_m = lambda x, y: ((x - w / 2) / ppu, ((h - y) - sp["pivot"][1] * h) / ppu)  # noqa: E731
     (a, b), (c, d) = to_m(ex, ey), to_m(tx, ty)
     return f"{a:.2f},{b:.2f};{c:.2f},{d:.2f}"
 

@@ -116,7 +116,7 @@ for name in ["Skeleton", "SkeletonMage", "SkeletonCaptain"]:
 
 # 적 걷기 들썩임: 생성된 걷기 4장이 거의 같아 미끄러져 보인다. 1·3번째 장을 발끝 기준 BOB픽셀 띄움 (0·2번째는 바닥에 붙임).
 # 위치를 절대값으로 정하므로 여러 번 돌려도 쌓이지 않는다
-for name, bob in [("Skeleton", 1), ("SkeletonMage", 1), ("SkeletonCaptain", 2)]:
+for name, bob in [("Skeleton", 1), ("SkeletonMage", 1)]:  # 해골 대장 걷기는 tools/make_boss_walk.py (다리를 흔드는 6장)
     folder = ASSETS / f"Sprites/Enemies/{name}"
     for i in range(4):
         path = folder / f"{name}_Walk_{i}.png"

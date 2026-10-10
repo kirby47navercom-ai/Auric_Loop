@@ -317,13 +317,14 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
 
 // 보스 등장 컷신: 그동안 이동·메뉴 키가 먹지 않음 (등장 후 대사는 코드에서 뺐음)
 {
-  let start, during, paused = false;
+  let start, during, bossDuring = 0, paused = false;
   await runProject(project, {scene: scene('Test_Boss'), frames: 330, delta: 1 / 60,
     inputs: [{frame: 40, key: 'd', value: 1}, {frame: 150, key: 'd', value: 0}, ...press(80, 'escape')],
     onFrame: (f, vm) => { const p = vm.objects.find(o => o.id === 'Player').position, d = director(vm);
-      if (f === 39) start = p[0]; if (f === 149) during = p[0]; paused = paused || d.Paused; }});
+      if (f === 39) start = p[0]; if (f === 149) { during = p[0]; bossDuring = d.BossHp; } paused = paused || d.Paused; }});
   assert.ok(Math.abs(during - start) < 0.05, `컷신 동안 이동 안 됨 (${start} → ${during})`);
   assert.ok(!paused, '컷신 동안 메뉴 안 열림');
+  assert.ok(bossDuring > 0, '컷신 동안 보스가 나와 있음 (전엔 컷신이 끝나야 나와 빈 방만 비춤)');
   console.log('보스 등장 컷신 조작 막힘 검사 통과');
 }
 
