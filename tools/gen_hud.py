@@ -202,7 +202,7 @@ dialog("DialogPortraitFrame", "Image", 20, 19, 132, 132, 51, texture=KIT + "dial
 iw, ih = Image.open(PROJECT / KIT / "portrait_collector.png").size  # 말하는 사람 초상화 하나: C++가 그림·크기·위치를 바꿈
 dialog("DialogPortrait", "Image", 26 + (120 - iw) // 2, 25 + (120 - ih) // 2, iw, ih, 52, texture=KIT + "portrait_collector.png")
 dialog("DialogNameTag", "Image", 150, -26, 220, 52, 53, texture=ART + "ribbon.png")  # 불투명 (뒤 대화창 테두리가 비치지 않게)
-dialog("DialogName", "Text", 150, -18, 220, 30, 54, text="수금원", fontSize=19, color="#fff3e5", align="center")  # 리본 띠(그림 위 54/68) 가운데에 글자 가운데
+dialog("DialogName", "Text", 150, -16, 220, 30, 54, text="수금원", fontSize=19, color="#fff3e5", align="center")  # 리본 띠(그림 위 54/68) 가운데에 글자 가운데
 dialog("DialogText", "Text", 176, 34, 780, 110, 52, text="", fontSize=18, color=INK, wrap=True, align="left")
 dialog("DialogNext", "Text", DW - 56, DH - 46, 40, 30, 52, text="▼", fontSize=18, color=GOLD)
 dialog("DialogTouch", "TouchButton", 0, 0, DW, DH, 53, inputKey="e", inputMode="keys",

@@ -47,8 +47,9 @@ hb::Vec3 TopDownShooter::Muzzle(const hb::Vec3& from) const{
   const std::string key=std::string(names[std::clamp(Character,0,2)])+"_"+kDirs8[Sector(facing)]+"=";
   for(const auto& m:rules->Muzzles)if(m.rfind(key,0)==0){const auto comma=m.find(',',key.size());if(comma==std::string::npos)break;
     const float px=std::stof(m.substr(key.size(),comma-key.size())),py=std::stof(m.substr(comma+1));
-    return from+hb::Vec3{(px-96)/32,(96-py-38.4f)/32,0.25f};}
-  return from+facing*1.0f+hb::Vec3{0,0.3f,0.25f};
+    static const float kHeroPPU[]={32,41,42};const float u=kHeroPPU[std::clamp(Character,0,2)];  // tools/scale_heroes.py (발끝은 그림 88번째 줄)
+    return from+hb::Vec3{(px-96)/u,(88-0.95f*u-py)/u,0.25f};}
+  return from+facing*0.8f+hb::Vec3{0,0.2f,0.25f};  // 몸이 1.6m로 작아져 손 앞 0.8m
 }
 
 void TopDownShooter::AnimateSheet(float delta,bool moving,const char* dir){
@@ -88,15 +89,13 @@ void TopDownShooter::AnimateSheet(float delta,bool moving,const char* dir){
   if(next!=currentSprite){currentSprite=next;if(Character<(int)rules->CharacterSprites.size())hb::Sprites::SetSprite(player,rules->CharacterSprites[Character]+next+".hbsprite.json");}
 }
 
-// 손 위치 (아트팀 v14 메타데이터 hand_anchors, 64px 칸의 픽셀). [걷기·달리기][앞·왼·뒤·오른][위상]
-static const int kHands[2][4][4][2]={
-  {{{23,46},{23,47},{23,46},{23,45}},{{23,43},{24,44},{25,45},{24,44}},{{38,44},{38,43},{38,42},{38,43}},{{33,44},{32,45},{31,45},{32,45}}},
-  {{{22,46},{23,47},{24,46},{23,47}},{{23,42},{24,44},{26,46},{24,44}},{{38,45},{38,43},{38,41},{38,43}},{{34,43},{32,45},{30,46},{32,45}}}};
+#include "ValenSocket.inl"
 
 void TopDownShooter::AnimateSocket(float delta,bool moving){
-  // 몸: 조준 쪽 4방향(반전 없음), 달리기 위상은 움직인 거리로 (뒷걸음질이면 거꾸로). 대시도 같은 달리기 그림
-  // 다리 (v14 메타데이터): 조준과 45~135도 어긋나게 걸으면 옆걸음, 135도 넘으면 앞걸음 다리. 90도 넘게 등지면 위상을 거꾸로
-  // 검: 손 위치에 붙어 조준 각도로 돎 (64방향). 베면 조준 둘레를 0.14초에 200도 휘두르고 0.12초에 돌아옴, 번갈아 반대쪽에서
+  // 발렌 (아트팀 이동 v14-1·공격 v5-1, tools/make_weapon_socket.py). 몸은 바라보는 쪽 4방향(반전 없음), 걸음 위상은 움직인 거리로 (뒷걸음질이면 거꾸로)
+  // 다리: 바라보는 쪽과 45~135도 어긋나게 걸으면 옆걸음, 135도 넘으면 앞걸음 다리. 대시도 같은 달리기 그림
+  // 검·손가락은 따로 그린 그림을 손 위치에 붙임: 평소엔 바라보는 쪽으로 돌린 검(64방향), 베는 0.32초 동안은 아트팀이 그린 8프레임 자세(조준 16방향)
+  // 베는 동안 하체는 걷기 위상을 그대로 이어가고, 3~5번째 프레임에 검기가 몸 뒤에 나옴
   if(playerFlipped){playerFlipped=false;hb::Sprites::SetFlip(player,false,false);}
   const auto at=hb::Scene::GetPosition(player);auto step=at-animPos;step.z=0;animPos=at;
   const float moved=Length(step)<1.f?Length(step):0.f;
@@ -106,29 +105,47 @@ void TopDownShooter::AnimateSocket(float delta,bool moving){
   const bool go=moving||dodgeTimer>0;const int gait=go?1:0;
   const float aim=Angle(facing);  // 반시계, 0 = 오른쪽
   const int row=aim>=-45&&aim<45?3:aim>=45&&aim<135?2:aim>=-135&&aim<-45?0:1;
-  const int phase=go?((int)std::floor(walkDist/0.48f)%4+4)%4:row==2?0:1;  // 달리기 한 걸음 0.48m (80ms x 6m/s), 서 있으면 1 (뒤는 0)
+  const int phase=go?((int)std::floor(walkDist/0.48f)%4+4)%4:row==2?0:1;  // 달리기 한 걸음 0.48m, 서 있으면 1 (뒤는 0)
   int legs=0;  // 0 앞으로, 1 옆걸음 ccw, 2 옆걸음 cw (화면 시계 방향 기준: 조준 - 이동 > 0 이면 cw)
   if(go&&moved>0){const float d=std::fmod(aim-Angle(step)+540.f,360.f)-180;if(std::abs(d)>=45&&std::abs(d)<135)legs=d>0?2:1;}
-  const std::string g=std::string(go?"run_":"walk_"),rp=std::to_string(row)+"_"+std::to_string(phase);
-  const std::string body="Assets/Sprites/ValenSocket/S_VS_"+g+std::to_string(legs)+"_"+rp+".hbsprite.json";
+  // 베기 프레임 (아트팀 55·40·30·40·45·40·35·35ms)
+  int frame=-1;
+  if(swingT>=0){swingT+=delta;float ms=swingT*1000;frame=0;while(frame<7&&ms>=kVsAttackMs[frame]){ms-=kVsAttackMs[frame];frame++;}
+    if(swingT>=0.32f){swingT=-1;frame=-1;}}
+  const int aimIdx=((int)std::floor((std::fmod(360.f-aim,360.f)+11.25f)/22.5f))%16;  // 화면 시계 방향 0=오른쪽, 22.5도씩
+  const std::string dir="Assets/Sprites/ValenSocket/",g=go?"run_":"walk_",rp=std::to_string(row)+"_"+std::to_string(phase);
+  const std::string body=frame<0?dir+"S_VS_"+g+std::to_string(legs)+"_"+rp+".hbsprite.json"
+    :go?dir+"S_VS_A_run_"+std::to_string(legs)+"_"+rp+"_"+std::to_string(frame)+".hbsprite.json"
+    :dir+"S_VS_A_walk_"+std::to_string(row)+"_"+std::to_string(frame)+".hbsprite.json";
   if(body!=currentSprite){currentSprite=body;hb::Sprites::SetSprite(player,body);}
+  const hb::Vec3 lead=at+hb::Physics::GetVelocity(player)*delta;  // 이번 프레임 물리 이동만큼 앞질러 놓아 몸을 늦게 따라가지 않게
   if(grip){  // 손가락 덮개: 왼쪽을 보면 몸에 합쳐져 있으므로 치움
-    const std::string gs=row==1?"":"S_VS_Grip_"+g+rp;const hb::Vec3 to=row==1?hb::Vec3{0,-500,0}:at+hb::Physics::GetVelocity(player)*delta;
-    if(gs!=gripShown){gripShown=gs;if(!gs.empty())hb::Sprites::SetSprite(grip,"Assets/Sprites/ValenSocket/"+gs+".hbsprite.json");}
+    const int ag=frame>=0?kVsAttackGrip[gait][row][phase][frame]:0;
+    const std::string gs=row==1||ag<0?"":frame>=0?"S_VS_AG_"+std::to_string(ag):"S_VS_Grip_"+g+rp;
+    const hb::Vec3 to=gs.empty()?hb::Vec3{0,-500,0}:lead;
+    if(gs!=gripShown){gripShown=gs;if(!gs.empty())hb::Sprites::SetSprite(grip,dir+gs+".hbsprite.json");}
     if(Length(to-gripAt)>0.001f){gripAt=to;hb::Scene::SetPosition(grip,to);}}
+  // 처음 한 번: 베기 그림 텍스처를 미리 읽어 둠 (검기는 0.115초만 보여서 처음 쓸 때 읽으면 첫 베기에 안 보임)
+  if(!vsPreloaded&&frame<0){vsPreloaded=true;hb::Transform t;t.position=hb::Vec3{0,-800,0};
+    for(auto* s:{"S_VS_Slash_0_3","S_VS_AW_0_F","S_VS_AG_0","S_VS_A_walk_0_0"})if(auto* a=Take(fxPool,rules->FxPrefab,t)){hb::Sprites::SetSprite(a,dir+s+".hbsprite.json");Give(fxPool,a);}}
+  // 검기: 몸 뒤(순서 -1)에 발끝 12px 위를 가운데로, 1.8배 (호가 칼끝 바로 너머 약 2m, 판정 SwordRange 2.6m)
+  {const bool show=frame>=2&&frame<=4;
+   if(show&&!slashFx){hb::Transform t;t.position=at;slashFx=Take(fxPool,rules->FxPrefab,t);
+     if(slashFx){hb::Sprites::SetSorting(slashFx,"default",-1);hb::Scene::SetScale(slashFx,hb::Vec3{1.8f,1.8f,1});}}
+   if(slashFx){
+     if(show){const std::string ss="S_VS_Slash_"+std::to_string(aimIdx)+"_"+std::to_string(frame);
+       if(ss!=slashShown){slashShown=ss;hb::Sprites::SetSprite(slashFx,dir+ss+".hbsprite.json");}
+       hb::Scene::SetPosition(slashFx,lead+hb::Vec3{0,-0.95f+12/kVsPPU,0.2f});}
+     else{hb::Scene::SetScale(slashFx,hb::Vec3{1,1,1});hb::Sprites::SetSorting(slashFx,"default",4);Give(fxPool,slashFx);slashFx=nullptr;slashShown.clear();}}}
   if(!weapon)return;
-  float angle=aim;
-  if(swingT>=0){swingT+=delta;const float t=swingT/0.14f;
-    angle+=swingSide*(t<1?-100+200*(1-(1-t)*(1-t)):100*std::max(0.f,1-(swingT-0.14f)/0.12f));
-    if(swingT>0.26f)swingT=-1;}
   const bool rear=row==1||(aim>=45&&aim<=135);  // 왼쪽을 보면 검 든 손이 먼 쪽, 위를 겨누면 등 뒤
-  const int index=(((int)std::lround(angle/5.625f))%64+64)%64;
-  const auto* hand=kHands[gait][row][phase];
-  // 손 = 몸 원점(발끝 0.95m·15.2px 위) + 손 픽셀 가운데. 이번 프레임 물리 이동만큼 앞질러 놓아 몸을 늦게 따라가지 않게
-  const hb::Vec3 to=at+hb::Physics::GetVelocity(player)*delta+hb::Vec3{(hand[0]+0.5f-32)/16,(40.8f-hand[1]-0.5f)/16,0};
+  const int* hand=frame>=0?kVsAttackHands[gait][row][phase][frame]:kVsHands[gait][row][phase];
+  const hb::Vec3 to=lead+hb::Vec3{(hand[0]+0.5f-32)/kVsPPU,(kVsOriginTop-hand[1]-0.5f)/kVsPPU,0};  // 손 픽셀 가운데
   if(Length(to-weaponAt)>0.001f){weaponAt=to;hb::Scene::SetPosition(weapon,to);}
-  const std::string key=std::string(rear?"R_":"F_")+std::to_string(index);
-  if(key!=weaponShown){weaponShown=key;hb::Sprites::SetSprite(weapon,"Assets/Sprites/ValenSocket/S_VS_Sword_"+key+".hbsprite.json");}
+  const std::string side=rear?"R":"F";
+  const std::string key=frame>=0?"S_VS_AW_"+std::to_string(kVsAttackWeapon[gait][row][aimIdx][phase][frame])+"_"+side
+    :"S_VS_Sword_"+side+"_"+std::to_string((((int)std::lround(aim/5.625f))%64+64)%64);
+  if(key!=weaponShown){weaponShown=key;hb::Sprites::SetSprite(weapon,dir+key+".hbsprite.json");}
 }
 
 void TopDownShooter::Animate(float delta,bool moving){

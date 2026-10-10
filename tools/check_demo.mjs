@@ -177,7 +177,7 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   console.log('대시 검사 통과', rolling.split('/').at(-1), 'x', x.toFixed(1));
 }
 
-// 걸으며 공격 (손 소켓): 몸은 계속 달리기 그림, 손에 단 검만 조준 둘레로 휘둘러짐 (여러 각도 그림을 지나감)
+// 걸으며 공격 (아트팀 공격 v5-1): 몸은 베기 8프레임(S_VS_A_run_)이고 하체는 걷기 위상을 이어감, 손에 단 검은 베기 자세 그림(S_VS_AW_)
 {
   const seen = new Set(), swords = new Set();
   await runProject(project, {scene: scene('Test_Valen'), frames: 60, delta: 1 / 60, inputs: [
@@ -185,8 +185,9 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
     onFrame: (frame, vm) => { if (frame > 12 && frame < 50) for (const [id, set] of [['Player', seen], ['PlayerWeapon', swords]])
       set.add(vm.objects.find(o => o.id === id).components.find(c => c.type === 'SpriteRenderer').properties.sprite.split('/').at(-1)); }});
   const names = [...seen];
-  assert.ok(names.every(n => /^S_VS_run_/.test(n)), `베는 동안에도 몸은 달리기 그림 (${names.join(', ')})`);
-  assert.ok(swords.size >= 8 && [...swords].every(n => /^S_VS_Sword_[FR]_\d+\./.test(n)), `검이 여러 각도로 휘둘러짐 (${[...swords].join(', ')})`);
+  assert.ok(names.every(n => /^S_VS_(A_)?run_/.test(n)) && names.some(n => /^S_VS_A_run_/.test(n)), `걸으며 베기 그림 (${names.join(', ')})`);
+  assert.ok(new Set(names.filter(n => /^S_VS_A_run_/.test(n)).map(n => n.split('_')[6])).size >= 2, `베는 동안 하체 위상이 이어짐 (${names.join(', ')})`);
+  assert.ok([...swords].some(n => /^S_VS_AW_\d+_[FR]\./.test(n)) && swords.size >= 6, `베기 검 자세 그림 (${[...swords].join(', ')})`);
   console.log('걸으며 공격 검사 통과', '검 각도', swords.size, '종류');
 }
 

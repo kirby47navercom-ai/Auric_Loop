@@ -234,11 +234,9 @@ void TopDownShooter::Slash(const hb::Vec3& position,const std::vector<Enemy*>& e
   // 검 부채꼴 베기: 적에게 피해, 범위 안의 적 탄은 지움 (기획: 투사체 삭제)
   attackCooldown=rules->SwordInterval;Swings++;attackAnim=0.3f;Sfx("Slash",0.95f+float(std::rand()%10)/100);
   if(!NewSheet()&&knockTimer<=0){knock=facing*3.5f;knockTimer=0.07f;}  // 휘두르며 반 걸음 내딛음 (새 시트는 그림 속 내딛기로)
-  swingT=0;swingSide=-swingSide;  // 손에 단 검을 휘두름: 번갈아 반대쪽에서 (Screen.inl AnimateSocket)
+  swingT=0;  // 베기 8프레임·검기는 Screen.inl AnimateSocket
   if(NewSheet())slashB=(((int)std::floor(walkDist/rules->Stride)%4+4)%4)>=2;  // 왼발이 앞이면 오른발로(B), 아니면 왼발로(A). 서서 연달아 베면 A·B가 번갈아 나옴
-  // 베기 그림: 검 끝 쪽(1.6m 앞)에 1.6배로. 판정 반경(SwordRange 3.2m)과 같은 크기
-  {const size_t before=fxs.size();PlayFx(rules->SlashClip,0.2f,position+facing*1.6f+hb::Vec3{0,0.2f,0.2f},Angle(facing),0.5f,false,(Swings&1)!=0);
-   if(fxs.size()>before)hb::Scene::SetScale(fxs.back().actor,hb::Vec3{1.6f,1.6f,1});}  // 번갈아 위·아래로 벰  // 캐릭터 그림과 따로, 공격 방향으로 돌린 베기
+  // 번갈아 위·아래로 벰  // 캐릭터 그림과 따로, 공격 방향으로 돌린 베기
   const float minDot=std::cos(rules->SwordHalfAngle*3.14159265f/180),reach=rules->SwordRange+(Enchant==3?rules->SlashExtend:0);
   auto inFan=[&](const hb::Vec3& at,float radius){const auto d=at-position;const float len=Length(d);
     return len<=reach+radius&&(len<=radius+0.75f||hb::VectorMath::DotProduct(d*(1/len),facing)>=minDot);};  // 바로 붙은 적은 방향과 관계없이 맞음

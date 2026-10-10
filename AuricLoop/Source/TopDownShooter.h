@@ -250,9 +250,9 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   float SwordInterval = 0.35f;
   HB_PROPERTY(BlueprintReadWrite)
-  float SwordRange = 3.2f;
+  float SwordRange = 2.6f;       // 검기 그림 호(약 2m) + 적 몸
   HB_PROPERTY(BlueprintReadWrite)
-  float SwordHalfAngle = 50.0f;
+  float SwordHalfAngle = 80.0f;   // 아트팀 공격 v5 검기는 반원(180도)
   HB_PROPERTY(BlueprintReadWrite)
   float HitStun = 0.18f;          // 맞으면 잠깐 멈추고 맞는 그림 (보스 제외)
   HB_PROPERTY(BlueprintReadWrite)
@@ -582,7 +582,7 @@ private:
   void AnimateSheet(float delta,bool moving,const char* dir);  // 새 시트 (Screen.inl)
   void AnimateSocket(float delta,bool moving);  // 발렌 손 소켓 무기: v14 몸 + 손에 단 검이 조준 쪽으로 돎 (Screen.inl)
   hb::Actor* grip=nullptr;std::string gripShown;hb::Vec3 gripAt{0,0,0};  // 검 손잡이 위 손가락 (PlayerGrip)
-  hb::Actor* weapon=nullptr;std::string weaponShown;hb::Vec3 weaponAt{0,0,0};float swingT=-1;int swingSide=1;  // 손에 단 검 (PlayerWeapon, 매 프레임 손 위치로), 휘두르기 시간·방향
+  hb::Actor* weapon=nullptr;std::string weaponShown;hb::Vec3 weaponAt{0,0,0};float swingT=-1;hb::Actor* slashFx=nullptr;std::string slashShown;bool vsPreloaded=false;  // 손에 단 검 (PlayerWeapon, 매 프레임 손 위치로), 휘두르기 시간·방향
   hb::Vec3 Muzzle(const hb::Vec3& from) const;  // 화살·카드가 나가는 자리  // 타이틀: 횃불 빛 깜빡임, 별 반짝임, 떠오르는 금가루
   void Bag(bool toggle,bool use);  // 가방 (Tab): 소재·아이템, [귀환]은 가방에서 Enter로 사용
   bool UpdateSettle(float delta,bool advance);  // 정산 화면이 떠 있으면 true (이동·행동 막음)
