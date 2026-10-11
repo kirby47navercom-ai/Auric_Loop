@@ -110,6 +110,8 @@ touch("MapTouch", "m", "tr", 24, 108, 152, devices="all")  # 미니맵을 누르
 # 오른쪽 아래: 공격, 회피, 상호작용, 제작 (UI 키트 시안 배치)
 image("AttackButton", "btn_attack_valen.png", "br", 40, 40, deviceVisibility="touch")  # 캐릭터·귀환 테마에 맞는 그림은 C++ UI::SetTexture
 image("DodgeButton", "btn_dodge.png", "br", 40 + 140 + 16, 24, deviceVisibility="touch")
+# 대시 쿨타임: 버튼 위를 덮은 어두운 판이 위에서부터 걷히며 차오름 (C++가 크기·자리를 바꿈)
+node("DodgeCool", "Panel", "br", 40 + 140 + 16, 24, 96, 96, 25, deviceVisibility="touch", background="#05090ab4", radius=40, visible=False)
 image("InteractButton", "btn_interact.png", "br", 40 + 140 + 4, 40 + 96 + 8, deviceVisibility="touch")
 image("CraftButton", "btn_craft.png", "br", 40 + 24, 40 + 140 + 16, deviceVisibility="touch")  # PC에선 키보드·마우스라 숨김
 touch("AttackTouch", "LeftMouseButton", "br", 40, 40, 140)  # 터치로 누르면 C++가 마지막 입력 장치(touch)를 보고 자동 조준

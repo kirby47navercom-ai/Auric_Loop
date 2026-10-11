@@ -188,6 +188,8 @@ void TopDownShooter::Update(float delta){
    const float speed=moveLock?0.f:act*rules->MoveSpeed*((Weight()>rules->WeightLimit||Fatigue*4>=FatigueMax*3)?rules->SlowRate:1.f);
    if(speed!=sentSpeed){sentSpeed=speed;hb::Movement2D::SetSpeed(player,speed);}}
   attackCooldown-=delta;dodgeCooldownLeft-=delta;invulnerable-=delta;
+  {const float cd=rules->DodgeCooldown,left=std::max(0.f,dodgeCooldownLeft);const bool cooling=left>0&&cd>0;UiVisible("DodgeCool",cooling);  // 대시 버튼 쿨타임 (tools/gen_hud.py DodgeCool, 96px 버튼)
+   if(cooling){const float h=std::ceil(96*left/cd/4)*4;UiSize("DodgeCool",hb::Vec2{96,h});UiPosition("DodgeCool",hb::Vec2{-196,-(120-h)});}}  // 위 가장자리를 고정하고 높이를 줄임 = 아래부터 밝아짐
 
   // 회피: Space를 누른 순간 바라보는 방향으로 대시, 대시 중 무적
   const bool dodgeDown=hb::Input::IsKeyDown("space")||hb::Input::IsKeyDown(" ");
