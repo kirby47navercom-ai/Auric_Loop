@@ -2,8 +2,8 @@ import * as THREE from 'three';
 
 export async function createGameRenderer(canvas,backend='webgl2',onError){
   if(!['webgl2','webgpu'].includes(backend))throw Error('실행 렌더러 설정 오류');
-  const renderer=backend==='webgpu'?await(await import('./gpu-particles.js')).createGPURenderer(canvas):new THREE.WebGLRenderer({canvas,antialias:true});
-  renderer.hbBackend=backend;renderer.hbOnError=onError;renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  const renderer=backend==='webgpu'?await(await import('./gpu-particles.js')).createGPURenderer(canvas):new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:"high-performance"});
+  renderer.hbBackend=backend;renderer.hbOnError=onError;renderer.setPixelRatio(1);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;
   // The game/editor owns its frame loop; Three's separate RAF must not erase
   // counters between a completed frame and the profiler reading them.
   renderer.info.autoReset=false;

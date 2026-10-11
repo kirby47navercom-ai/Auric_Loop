@@ -15914,6 +15914,36 @@
       "kind": "texture"
     },
     {
+      "path": "Assets/UI/Kit/app_icon_144.png",
+      "name": "app_icon_144.png",
+      "kind": "texture"
+    },
+    {
+      "path": "Assets/UI/Kit/app_icon_192.png",
+      "name": "app_icon_192.png",
+      "kind": "texture"
+    },
+    {
+      "path": "Assets/UI/Kit/app_icon_48.png",
+      "name": "app_icon_48.png",
+      "kind": "texture"
+    },
+    {
+      "path": "Assets/UI/Kit/app_icon_72.png",
+      "name": "app_icon_72.png",
+      "kind": "texture"
+    },
+    {
+      "path": "Assets/UI/Kit/app_icon_96.png",
+      "name": "app_icon_96.png",
+      "kind": "texture"
+    },
+    {
+      "path": "Assets/UI/Kit/app_icon.ico",
+      "name": "app_icon.ico",
+      "kind": "file"
+    },
+    {
       "path": "Assets/UI/Kit/app_icon.png",
       "name": "app_icon.png",
       "kind": "texture"
@@ -34315,9 +34345,39 @@
       "sha256": "133162970857e692c4274d7ddd62e8199da0ceb7e5e2491d8b6166369b64a138"
     },
     {
+      "path": "Content/Assets/UI/Kit/app_icon_144.png",
+      "bytes": 45240,
+      "sha256": "239a89189aa2938e2456d0bbe5637faae0193ab8f298afc6d8d000cf58776d71"
+    },
+    {
+      "path": "Content/Assets/UI/Kit/app_icon_192.png",
+      "bytes": 73599,
+      "sha256": "f3af7554099a4369e928b1c3ff6f5dcf6b9f06645cd1d422a73fc06fcb6d6d06"
+    },
+    {
+      "path": "Content/Assets/UI/Kit/app_icon_48.png",
+      "bytes": 6719,
+      "sha256": "b08ab72f8dd432e96437b4ff6f4ac869a8bfcbe9bf7eb1fa794ded1114cb1599"
+    },
+    {
+      "path": "Content/Assets/UI/Kit/app_icon_72.png",
+      "bytes": 13746,
+      "sha256": "7cc04c28082d5bd4375a7a3cf5792b368e7b90d3267ebe316226b0b0cc06e7fb"
+    },
+    {
+      "path": "Content/Assets/UI/Kit/app_icon_96.png",
+      "bytes": 22544,
+      "sha256": "8c3b8c8a9b4e9c31d46d7e17377a4656800f890a43a108c20902e8de024ec6f7"
+    },
+    {
+      "path": "Content/Assets/UI/Kit/app_icon.ico",
+      "bytes": 181450,
+      "sha256": "914622854be180ca2dadeb9d37c950f76ac862439e40c88ccbdc5ea68d1d5a98"
+    },
+    {
       "path": "Content/Assets/UI/Kit/app_icon.png",
-      "bytes": 340995,
-      "sha256": "e83692c9b0f69cf55ff31f8c920abcbd6f71940d871e0887b7b07c74ca1f8a8b"
+      "bytes": 393623,
+      "sha256": "14c77d9d26898b9210fd3fe46257e9dc9328b61b3102a2c5fa56235de077e91e"
     },
     {
       "path": "Content/Assets/UI/Kit/btn_attack_alea.png",
@@ -35046,8 +35106,8 @@
     },
     {
       "path": "Content/Assets/UI/W_Front.hbwidget.json",
-      "bytes": 151093,
-      "sha256": "d009cfa170a89a386173aafe0742978f777a3672be9bc23c830e0ca177261586"
+      "bytes": 151094,
+      "sha256": "9b271b6809cd71bc0288099e2690bb642a3f6d89eb2eaf0e7dd3132c00456f23"
     },
     {
       "path": "Content/Assets/UI/W_Map.hbwidget.json",
@@ -35066,8 +35126,8 @@
     },
     {
       "path": "prototype/game-renderer.js",
-      "bytes": 2109,
-      "sha256": "eede6316cacd68449430c6b0a547111d224c4d8f59b2048038b14f03b8cfc0cc"
+      "bytes": 2118,
+      "sha256": "6b61dc83fc5eda2c8bd0b3a3253985d77c5f4d0c92338157210d124c50ab6637"
     },
     {
       "path": "node_modules/three/package.json",
@@ -35712,7 +35772,7 @@
     {
       "path": "Binaries/game.wasm",
       "bytes": 3395818,
-      "sha256": "b0a727868d3947932d978414e5b110a93b85b94307fac73651592fa2a374878c"
+      "sha256": "efe44314b84fb2725c3c9aeb92e8446481f8469e56844f0649b98f2b2b71ea40"
     },
     {
       "path": "index.html",
