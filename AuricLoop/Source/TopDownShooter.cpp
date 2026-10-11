@@ -206,7 +206,7 @@ void TopDownShooter::Update(float delta){
   {const bool enter=hb::Input::IsKeyDown("enter");Bag(tab&&!returnHeld,enter&&!confirmHeld&&bagOpen);}
   returnHeld=tab;
   const bool flash=hb::Input::IsKeyDown("e");
-  if(!Returning)Interact(position,flash&&!flashHeld);
+  if(!Returning){const bool use=flash&&!flashHeld;Interact(position,use);if(use)hudDirty=true;}  // 수금원 상환·회복·원룸 공사로 골드·빚·HP가 바뀌어도 위 HUD가 그대로였음
   else{promptTarget=nullptr;
     if(flash&&!flashHeld&&(Flashbangs>0||Gold>=rules->FlashPrice)){if(Flashbangs>0)Flashbangs--;else Gold-=rules->FlashPrice;StunAll(rules->FlashStun);Sfx("Flash");
       ClearBullets();Hud();}}
