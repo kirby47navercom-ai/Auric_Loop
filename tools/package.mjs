@@ -29,9 +29,9 @@ const build = await buildGame(record, profile, {onProgress: s => console.log(s)}
 const packFile = path.join(build.output, 'game.hbpack.json'), pack = JSON.parse(await fs.readFile(packFile, 'utf8'));
 const patches = await playerPatches(path.dirname(project));
 for (const name of Object.keys(patches)) {
-  const file = path.join(build.output, name), bytes = Buffer.from(applyPatches(name, await fs.readFile(file, 'utf8'), patches));
   const entry = pack.files.find(f => f.path === name);
-  if (!entry) throw Error(`패키지 목록에 없음: ${name}`);
+  if (!entry) { if (name === 'prototype/game-renderer.js') continue; throw Error(`패키지 목록에 없음: ${name}`); }  // 렌더러 파일은 엔진 dcc7dfb부터 있음
+  const file = path.join(build.output, name), bytes = Buffer.from(applyPatches(name, await fs.readFile(file, 'utf8'), patches));
   await fs.writeFile(file, bytes);
   Object.assign(entry, {bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')});
 }

@@ -408,6 +408,7 @@ w["nodes"] = [n for n in nodes if not is_front(n) and not is_fast(n)]
 WIDGET.write_text(json.dumps(w, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 f = copy.deepcopy(w)
 f.update(name="W_Front", nodes=[copy.deepcopy(root)] + front)
+f["safeArea"] = False  # 로딩·타이틀 배경은 휴대폰 노치 쪽까지 덮어야 함 (안전 영역을 빼면 옆에 게임 화면이 보였음)
 (PROJECT / "Assets/UI/W_Front.hbwidget.json").write_text(json.dumps(f, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 f3 = copy.deepcopy(w)
 f3.update(name="W_Map", nodes=[copy.deepcopy(root)] + mapn)

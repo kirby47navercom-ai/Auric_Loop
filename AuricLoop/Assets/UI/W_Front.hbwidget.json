@@ -6594,6 +6594,6 @@
       "bindings": {}
     }
   ],
-  "safeArea": true,
+  "safeArea": false,
   "adaptiveOrientation": true
 }

@@ -30,13 +30,20 @@ export async function playerPatches(projectDir) {
       // 6) 엔진 기본 일시정지 버튼 숨김 (터치 기기에선 CSS display:grid가 hidden을 덮어써 ui-runtime.css에서도 숨김). 운영자 메뉴(Ctrl+Alt+Shift+Q)는 그대로
       ["if(kiosk.enabled){$('#quit').hidden=true;$('#fullscreen').hidden=true;$('#pause-toggle').hidden=true;}",
         "$('#pause-toggle').hidden=true;if(kiosk.enabled){$('#quit').hidden=true;$('#fullscreen').hidden=true;}"],
+      // 7) 그래픽카드 없는 기기에서 버벅임: 도트 게임이라 화면 배율(휴대폰 2배)·안티에일리어싱 없이 그림 → 그릴 픽셀 1/4. 엔진 88db6de는 여기서 렌더러를 만듦
+      [RENDERER, RENDERER_LIGHT, 'optional'],
     ],
+    // 7) 엔진 dcc7dfb부터는 렌더러를 이 파일에서 만듦 (웹·APK)
+    'prototype/game-renderer.js': [['new THREE.WebGLRenderer({canvas,antialias:true})', 'new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:"high-performance"})'],
+      ['renderer.setPixelRatio(Math.min(devicePixelRatio,2));', 'renderer.setPixelRatio(1);']],
   };
 }
+const RENDERER = 'new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));';
+const RENDERER_LIGHT = 'new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:"high-performance"});renderer.setPixelRatio(1);';
 
 export function applyPatches(name, text, patches) {
-  for (const [from, to] of patches[name] || []) {
-    if (!text.includes(from)) throw Error(`엔진이 바뀌어 패치 위치를 못 찾음: ${name} — docs/엔진_요청_UI입력.md 확인`);
+  for (const [from, to, optional] of patches[name] || []) {
+    if (!text.includes(from)) { if (optional) continue; throw Error(`엔진이 바뀌어 패치 위치를 못 찾음: ${name} — docs/엔진_요청_UI입력.md 확인`); }
     text = text.replace(from, to);
   }
   return text;
