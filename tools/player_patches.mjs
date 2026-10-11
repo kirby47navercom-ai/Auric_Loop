@@ -1,0 +1,43 @@
+// 엔진 플레이어(prototype/*) 수정 목록: Windows 패키지·안드로이드 APK·웹 빌드가 같은 수정을 쓴다 (엔진 설치본은 건드리지 않음, docs/엔진_요청_UI입력.md)
+//   1) 그림·글자(Image·Text) 위젯이 클릭을 받아 게임 화면(canvas)까지 안 감 → 타이틀 그림을 눌러도 시작 안 됨
+//   2) 클릭으로 포커스를 가진 위젯이 모든 키를 삼킴 (keydown stopPropagation) → 그 뒤로 키보드가 안 먹음
+//   3) Esc를 플레이어 기본 일시정지 창이 가로챔 → 게임 메뉴로 넘김
+//   4·5) 키가 눌린 채로 남아 혼자 걸어가던 문제, 장면을 넘을 때 눌린 입력(키·조이스틱)을 넘기던 문제
+//   6) 엔진 기본 일시정지 버튼(화면 오른쪽 위 동그라미)은 게임 메뉴와 겹치므로 숨김. 인트로부터 계속 떠 있었음
+import fs from 'node:fs/promises';
+import path from 'node:path';
+
+export async function playerPatches(projectDir) {
+  // 마우스 포인터를 게임 조준점으로 (tools/make_cursor.py, 가운데 16,16이 찍는 곳)
+  const cursor = (await fs.readFile(path.join(projectDir, 'Assets/UI/cursor_crosshair.png'))).toString('base64');
+  return {
+    'prototype/ui-runtime.css': [['.hb-ui-Spacer{pointer-events:none}', '.hb-ui-Spacer,.hb-ui-Image,.hb-ui-Text{pointer-events:none}#pause-toggle{display:none!important}'
+      + `@media (pointer:fine){html,body,*{cursor:url(data:image/png;base64,${cursor}) 16 16,crosshair!important}}.hb-ui-Text{display:flex;align-items:center}.hb-ui-Text[style*="text-align: center"]{justify-content:center}.hb-ui-Text[style*="text-align: right"]{justify-content:flex-end}.hb-ui-Text[data-widget-name="DialogText"]{align-items:flex-start}.hb-ui-element:focus,.hb-ui-element:focus-visible{outline:none!important}.hb-ui-TouchButton,.hb-ui-Button{box-shadow:none!important}.hb-ui-Image>img{display:block}`]],
+    'prototype/ui-runtime.js': [[
+      "control.addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Enter'&&node.type==='TextInput')signal('submit');});",
+      "control.addEventListener('keydown',e=>{if(node.type!=='TextInput')return;e.stopPropagation();if(e.key==='Enter')signal('submit');});"]],
+    'prototype/player.js': [
+      ["if(e.key==='Escape'&&kiosk.enabled&&!operatorMenu){e.preventDefault();return;}if(e.key==='Escape'){e.preventDefault();releaseKeys();if(menu.open)menu.close();else{menu.showModal();services?.pauseAudio(true)?.catch(fail);}return;}",
+        "if(e.key==='Escape'&&menu.open){e.preventDefault();menu.close();return;}"],
+      // 4) 누를 때·뗄 때 e.key로 짝을 맞춤 → Shift·한글 입력 상태면 이름이 달라져 뗀 키가 남음. 물리 키(e.code)로 짝을 맞춘다
+      ["held=new Set()", "held=new Set(),heldName=new Map()"],
+      ["if(!e.repeat&&!held.has(e.key)){held.add(e.key);vm?.input(e.key,1).catch(fail);}",
+        "{const k=/^Key[A-Z]$/.test(e.code)?e.code.slice(3).toLowerCase():/^Digit[0-9]$/.test(e.code)?e.code.slice(5):e.code==='Space'?' ':(e.key&&e.key!=='Unidentified'?e.key:e.code),c=e.code||e.key;if(!k||!c)return;if(!e.repeat&&!held.has(c)){held.add(c);heldName.set(c,k);vm?.input(k,1).catch(fail);}}"],
+      ["document.addEventListener('keyup',e=>{if(held.delete(e.key)){e.preventDefault();vm?.input(e.key,0).catch(fail);}});",
+        "document.addEventListener('keyup',e=>{const c=e.code||e.key;if(held.delete(c)){e.preventDefault();vm?.input(heldName.get(c)??e.key,0).catch(fail);heldName.delete(c);}});"],
+      // 5) 장면을 넘을 때 눌린 입력을 그대로 넘김 → 로딩 중에 뗀 키·조이스틱은 해제가 사라져 새 장면에서 혼자 걷거나 벽에 붙음
+      ["const carriedInput=vm?.active?vm.inputState:undefined;", "const carriedInput=undefined;held.clear();heldName.clear();"],
+      // 6) 엔진 기본 일시정지 버튼 숨김 (터치 기기에선 CSS display:grid가 hidden을 덮어써 ui-runtime.css에서도 숨김). 운영자 메뉴(Ctrl+Alt+Shift+Q)는 그대로
+      ["if(kiosk.enabled){$('#quit').hidden=true;$('#fullscreen').hidden=true;$('#pause-toggle').hidden=true;}",
+        "$('#pause-toggle').hidden=true;if(kiosk.enabled){$('#quit').hidden=true;$('#fullscreen').hidden=true;}"],
+    ],
+  };
+}
+
+export function applyPatches(name, text, patches) {
+  for (const [from, to] of patches[name] || []) {
+    if (!text.includes(from)) throw Error(`엔진이 바뀌어 패치 위치를 못 찾음: ${name} — docs/엔진_요청_UI입력.md 확인`);
+    text = text.replace(from, to);
+  }
+  return text;
+}

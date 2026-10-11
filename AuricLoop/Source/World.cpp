@@ -65,6 +65,14 @@ void TopDownShooter::Begin(){
   const bool carried=LoadRun();
   if(!carried&&KeepProgress){const auto p=hb::Save::Read("Auric.progress");
     if(p.is_object()){Debt=p.value("debt",Debt);SofaLevel=p.value("sofa",SofaLevel);HomeLevel=p.value("home",HomeLevel);MaxHp=3+SofaLevel;Hp=MaxHp;}}
+  // 도착 지점(장면 인자 spawn): 엔진이 장면을 열 때 플레이어를 그 PlayerStart에 세워 두므로 첫 프레임 위치를 기억해 잠깐 붙잡아 둔다.
+  // 웹·모바일에서 이전 장면의 플레이어 위치가 늦게 덮어써져 집·던전에서 나오면 거점 엉뚱한 곳(벽·나무 속)에 서던 문제
+  spawnHold=0;moveLock=false;
+  if(!inDungeon&&player){const auto args=hb::Game::GetArguments();
+    if(args.is_object()&&!args.value("spawn",std::string{}).empty()){
+      if(auto* start=hb::Scene::FindActorById(args.value("spawn",std::string{})))spawnAt=hb::Scene::GetPosition(start);else spawnAt=hb::Scene::GetPosition(player);
+      spawnAt.z=hb::Scene::GetPosition(player).z;hb::Scene::SetPosition(player,spawnAt);hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
+      spawnHold=0.6f;moveLock=true;moveLockTime=0;sentSpeed=-1;}}
   if(carried||area>=0)Phase=std::max(Phase,2);  // 장면을 넘어왔거나 던전에서 바로 시작하면 로딩·타이틀 생략
   RoomIndex=area;
   {const auto w=hb::Scene::GetActorsWithTag("PlayerWeapon");weapon=w.empty()?nullptr:w.front();weaponShown.clear();slashFx=nullptr;slashShown.clear();swingT=-1;vsPreloaded=false;  // 손에 단 검·손가락 (모든 장면)
@@ -493,3 +501,4 @@ void TopDownShooter::UpdateAmbient(float delta,const hb::Vec3& at,bool attacking
 // 같은 컴파일 단위로 묶는 역할별 파일 (엔진 C++ 빌드는 .cpp마다 엔진 헤더를 다시 읽어 60초 한도에 걸림, docs/엔진_요청_C++빌드시간.md)
 #include "Interact.inl"   // 상호작용(E)·제작(Q)
 #include "Screen.inl"     // HUD·캐릭터 그림·대화창·인트로·타이틀
+
