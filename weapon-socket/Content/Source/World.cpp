@@ -68,7 +68,8 @@ void TopDownShooter::Begin(){
   // 도착 지점(장면 인자 spawn): 엔진이 장면을 열 때 플레이어를 그 PlayerStart에 세워 두므로 첫 프레임 위치를 기억해 잠깐 붙잡아 둔다.
   // 웹·모바일에서 이전 장면의 플레이어 위치가 늦게 덮어써져 집·던전에서 나오면 거점 엉뚱한 곳(벽·나무 속)에 서던 문제
   spawnHold=0;moveLock=false;
-  if(!inDungeon&&player){const auto args=hb::Game::GetArguments();
+  if(inDungeon&&player&&carried){spawnAt=hb::Scene::GetPosition(player);spawnHold=0.6f;moveLock=true;moveLockTime=0;sentSpeed=-1;}  // 던전도 시작 방 계단 아래에 붙잡음 (이전 장면 위치로 방 밖 벽에 붙던 문제)
+  else if(player){const auto args=hb::Game::GetArguments();
     if(args.is_object()&&!args.value("spawn",std::string{}).empty()){
       if(auto* start=hb::Scene::FindActorById(args.value("spawn",std::string{})))spawnAt=hb::Scene::GetPosition(start);else spawnAt=hb::Scene::GetPosition(player);
       spawnAt.z=hb::Scene::GetPosition(player).z;hb::Scene::SetPosition(player,spawnAt);hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
