@@ -4,6 +4,7 @@
 //
 // 엔진 플레이어 수정(UI 입력·Esc·눌린 키·기본 정지 버튼)은 빌드 결과에만 넣는다: tools/player_patches.mjs
 import {createHash} from 'node:crypto';
+import {execFileSync} from 'node:child_process';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -34,6 +35,12 @@ for (const name of Object.keys(patches)) {
   await fs.writeFile(file, bytes);
   Object.assign(entry, {bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')});
 }
+
+// 실행 파일 아이콘: 엔진 플레이어엔 게임 아이콘을 넣는 기능이 없어 리소스를 직접 바꾼다 (tools/make_app_icon.py → Kit/app_icon.ico)
+{const exe = path.join(build.output, 'Game.exe');
+ execFileSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(path.dirname(fileURLToPath(import.meta.url)), 'set_exe_icon.ps1'), exe, path.join(path.dirname(project), 'Assets/UI/Kit/app_icon.ico')], {stdio: 'inherit'});
+ const bytes = await fs.readFile(exe), entry = pack.files.find(f => f.path === 'Game.exe');
+ if (entry) Object.assign(entry, {bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')});}
 
 await fs.writeFile(packFile, JSON.stringify(pack, null, 2) + '\n');
 await fs.rm(dest, {recursive: true, force: true});  // 이전 패키지 교체 (게임이 켜져 있으면 여기서 실패)

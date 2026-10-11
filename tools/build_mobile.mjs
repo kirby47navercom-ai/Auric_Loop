@@ -1,7 +1,7 @@
 // 안드로이드 APK·웹 빌드. Windows 패키지와 같은 플레이어 수정(tools/player_patches.mjs)을 빌드가 엔진 파일을 읽는 순간에 끼워 넣는다
 // (APK는 묶인 뒤라 결과물을 고칠 수 없고, 웹은 파일 목록 sha256을 빌드가 계산하므로 읽을 때 고쳐야 맞음. 엔진 설치본은 그대로)
 // 실행: <HBEngine 사용자용 폴더>/runtime/node.exe tools/build_mobile.mjs android|web
-//   android: 앱 아이콘(Assets/UI/Kit/app_icon.png), 전체 화면(상태·내비게이션 바 숨김)도 넣음
+//   android: 앱 아이콘(Assets/UI/Kit/app_icon_*.png), 전체 화면(상태·내비게이션 바 숨김)도 넣음
 //   web: 터치 기기에서 첫 터치에 전체 화면 + 가로 고정
 // 웹 빌드(build-web)는 엔진 dcc7dfb부터 있어 둘 다 그 엔진으로 만든다
 import fs from 'node:fs/promises';
@@ -41,13 +41,15 @@ fs.readFile = async (file, ...rest) => {
 const copy = fs.copyFile.bind(fs);
 fs.copyFile = async (from, to, ...rest) => key(from) ? write(to, await fs.readFile(from)) : copy(from, to, ...rest);
 if (target === 'android') {
-  const icon = await read(path.join(projectDir, 'Assets/UI/Kit/app_icon.png'));
   fs.writeFile = async (file, data, ...rest) => {
     const name = String(file).split(path.sep).join('/');
-    if (name.endsWith('/Android/AndroidManifest.xml')) { data = String(data).replace('<application android:label="@string/app_name"', '<application android:label="@string/app_name" android:icon="@mipmap/ic_launcher"'); hit.add('icon'); }
+    if (name.endsWith('/Android/AndroidManifest.xml')) { data = String(data).replace('<application android:label="@string/app_name"', '<application android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher"'); hit.add('icon'); }
     if (name.endsWith('/Android/res/values/strings.xml')) {
-      const dir = path.join(path.dirname(path.dirname(String(file))), 'mipmap-xxxhdpi');
-      await fs.mkdir(dir, {recursive: true});await write(path.join(dir, 'ic_launcher.png'), icon);
+      // 밀도별 런처 아이콘 (tools/make_app_icon.py)
+      for (const [density, size] of [['mdpi', 48], ['hdpi', 72], ['xhdpi', 96], ['xxhdpi', 144], ['xxxhdpi', 192]]) {
+        const dir = path.join(path.dirname(path.dirname(String(file))), 'mipmap-' + density);
+        await fs.mkdir(dir, {recursive: true});await write(path.join(dir, 'ic_launcher.png'), await read(path.join(projectDir, `Assets/UI/Kit/app_icon_${size}.png`)));
+      }
     }
     return write(file, data, ...rest);
   };
@@ -60,7 +62,7 @@ const record = await readProjectManifest(path.join(projectDir, 'AuricLoop.hbproj
 const base = (await readBuildProfiles(record)).profiles.find(p => p.id === 'windows');
 const profile = target === 'android'
   ? {...base, id: 'android', name: 'android', target: 'android', configuration: 'development', productName: 'Auric Loop',
-     mobile: {applicationId: 'com.mastiff.auricloop', versionCode: 2, versionName: '1.1', orientation: 'landscape', minSdk: 26, abis: ['arm64-v8a'], format: 'apk'}}
+     mobile: {applicationId: 'com.mastiff.auricloop', versionCode: 3, versionName: '1.2', orientation: 'landscape', minSdk: 26, abis: ['arm64-v8a'], format: 'apk'}}
   : {...base, id: 'web', name: 'web', target: 'web', configuration: 'development', productName: 'Auric Loop'};
 const result = await buildGame(record, profile, {onProgress: m => console.error(new Date().toISOString().slice(11, 19), m)});
 const want = [...Object.keys(patches).filter(n => target === 'android' ? n !== 'prototype/player.html' : !n.startsWith('native/')), ...(target === 'android' ? ['icon'] : [])];
