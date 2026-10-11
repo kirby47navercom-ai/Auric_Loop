@@ -117,8 +117,8 @@ void TopDownShooter::Update(float delta){
     if(toggle&&inDungeon){mapOpen=!mapOpen;DrawMap(mapOpen);Sfx("Select");}  // 던전: M·미니맵을 누르면 큰 지도 + 지역 이름 (다시 누르면 닫힘)
     AreaBanner(delta,(toggle&&!inDungeon)||arrive);if(arrive)bannerPending=false;  // 도착하면 한 번 (거점엔 지도가 없어 M이면 이름만)
     UpdateMapLayer();}
-   if(UpdateSettle(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}
-   if(UpdateDialog(delta,pressed||AnyPressed(false))){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});return;}}  // 대화 중엔 행동·이동 막음
+   if(UpdateSettle(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});if(sentSpeed!=0){sentSpeed=0;hb::Movement2D::SetSpeed(player,0);}return;}
+   if(UpdateDialog(delta,pressed||AnyPressed(false))){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});if(sentSpeed!=0){sentSpeed=0;hb::Movement2D::SetSpeed(player,0);}return;}}  // 대화 중엔 행동·이동 막음
   if(!inDungeon&&!inHome&&Phase>=2&&settleTime<0)Tip(0);  // 거점: 북쪽 계단으로 (오프닝 대화가 끝난 뒤)
   if(inHome){if(position.y<exitY){Leave(-1,"HomeDoor");return;}}  // 원룸 문 → 거점 집 앞
   else if(!inDungeon){  // 거점 계단 끝 → 던전 (들어갈 때마다 새 층). 계단에 막 도착했으면 한 번 내려와야 다시 들어감 (W를 누른 채 왔다 갔다 방지)
