@@ -4,19 +4,27 @@
   "frames": [
     {
       "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Walk_0.hbsprite.json",
-      "duration": 0.14
+      "duration": 0.1
     },
     {
       "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Walk_1.hbsprite.json",
-      "duration": 0.14
+      "duration": 0.1
     },
     {
       "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Walk_2.hbsprite.json",
-      "duration": 0.14
+      "duration": 0.1
     },
     {
       "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Walk_3.hbsprite.json",
-      "duration": 0.14
+      "duration": 0.1
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Walk_4.hbsprite.json",
+      "duration": 0.1
+    },
+    {
+      "sprite": "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Walk_5.hbsprite.json",
+      "duration": 0.1
     }
   ],
   "loop": true,

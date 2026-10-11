@@ -15,6 +15,7 @@ void TopDownShooter::MoveCamera(const hb::Vec3& position,const hb::Vec3& aim,boo
   if(!camera)return;
   hb::Vec3 target=position;
   if(hasAim)target=target+hb::VectorMath::ClampVectorLength((aim-position)*rules->CameraLead,rules->CameraLeadMax);
+  if(bossSeen&&inDungeon&&cutscene<=0)target=target+hb::VectorMath::ClampVectorLength((bossAt-position)*0.45f,5.f);  // 보스전: 플레이어와 보스 사이를 잡아 보스가 화면 밖에 있지 않게
   // 던전 방 안에서는 방 기준: 방이 화면에 다 들어가면 방 가운데에 고정, 크면 벽 밖이 보이지 않게 가둠. 복도에서는 플레이어를 따라감
   if(inDungeon&&cutscene<=0){const int r=map.RoomAt(position);
     if(r>=0){const auto& room=map.rooms[r];const float vh=rules->CameraSize,vw=vh*16.f/9.f,pad=rules->CameraRoomPad;
@@ -23,6 +24,8 @@ void TopDownShooter::MoveCamera(const hb::Vec3& position,const hb::Vec3& aim,boo
   else if(!inDungeon&&camMax.x>camMin.x){const float vh=rules->CameraSize,vw=vh*16.f/9.f;  // 거점·원룸: 맵 바깥이 안 보이게
     auto fit=[](float t,float lo,float hi,float view){return hi-lo<=2*view?(lo+hi)/2:std::clamp(t,lo+view,hi-view);};
     target.x=fit(target.x,camMin.x,camMax.x,vw);target.y=fit(target.y,camMin.y,camMax.y,vh);}
+  if(cutscene<=0){const float vh=rules->CameraSize*cutZoom,vw=vh*16.f/9.f;  // 방에 가둔 뒤에도 플레이어는 늘 화면 안쪽에 (가장자리·아래 UI에 가려지지 않게)
+    target.x=std::clamp(target.x,position.x-(vw-3.f),position.x+(vw-3.f));target.y=std::clamp(target.y,position.y-(vh-3.f),position.y+(vh-4.5f));}
   target.z=hb::Scene::GetPosition(camera).z;
   if(!cameraReady){cameraAt=target;cameraReady=true;}else cameraAt=hb::VectorMath::VInterpTo(cameraAt,target,delta,cutscene>0?14.f:rules->CameraFollow);  // 컷신은 빠르게 보스를 잡음
   auto at=cameraAt;
@@ -50,6 +53,12 @@ void TopDownShooter::Update(float delta){
   if(!started)Begin();
   if(leaving)return;
   playerAt=hb::Scene::GetPosition(player);
+  if(spawnHold>0){spawnHold-=delta;  // 도착 직후 이전 장면 위치로 튀었으면 도착 지점으로 되돌림 (걸어서는 0.6초에 3m를 못 감)
+    if(std::hypot(playerAt.x-spawnAt.x,playerAt.y-spawnAt.y)>3.f){hb::Scene::SetPosition(player,spawnAt);hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});playerAt=spawnAt;}}
+  if(moveLock){  // 문·계단으로 막 넘어왔으면 0.5초 서 있고, 그때까지 누르고 있던 방향은 한 번 손을 뗄 때까지 무시 (누른 채로 산 벽에 붙거나 던전에 되돌아가던 문제)
+    moveLockTime+=delta;const bool held=std::fabs(hb::Input::GetAxis("d")-hb::Input::GetAxis("a"))+std::fabs(hb::Input::GetAxis("w")-hb::Input::GetAxis("s"))>.1f;
+    if(!held&&moveLockTime>0.5f){moveLock=false;sentSpeed=-1;}  // 이동 코드가 속도를 되돌림
+    else if(sentSpeed!=0){sentSpeed=0;hb::Movement2D::SetSpeed(player,0);}}  // 이동은 엔진 이동 컴포넌트가 입력으로 직접 함 (대화 등으로 아래 이동 코드에 안 닿아도 막히게 여기서)
   const auto position=playerAt;
   {// 배경음: 거점·던전·보스방·귀환
    const std::string music=BgmName();
@@ -77,7 +86,7 @@ void TopDownShooter::Update(float delta){
   {punch=std::max(0.f,punch-delta*4);const float ortho=rules->CameraSize*cutZoom*(1-0.05f*punch);  // 처치·크리티컬 순간 살짝 확대
    if(camera&&std::abs(ortho-lastOrtho)>0.001f){lastOrtho=ortho;hb::Components::SetFloat(camera,"Camera","orthographicSize",ortho);}}
   if(chainTime>0)chainTime-=delta;
-  else MoveCamera(position,touchMode?position+facing*(rules->CameraLeadMax/rules->CameraLead*0.5f):aim,(hasAim||touchMode)&&Phase>=2,delta);
+  else if(cutscene<=0)MoveCamera(position,touchMode?position+facing*(rules->CameraLeadMax/rules->CameraLead*0.5f):aim,(hasAim||touchMode)&&Phase>=2,delta);  // 컷신 중엔 위에서 보스를 비춘 카메라를 다시 플레이어 쪽으로 끌지 않게 (둘 사이 빈 바닥만 보였음)
   if(!Paused)UpdateAmbient(delta,position,Phase>=2&&hb::Input::IsKeyDown("LeftMouseButton"));
   {const bool adv=hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("space");
    const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
@@ -94,6 +103,7 @@ void TopDownShooter::Update(float delta){
      cutscene-=delta;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
      if(sentSpeed!=0){sentSpeed=0;hb::Movement2D::SetSpeed(player,0);}  // 이동 컴포넌트가 키로 움직이지 않게 (컷신 동안 모든 조작 막음)
      UpdateFx(delta);  // 등장 마법진 등 이펙트도 제때 사라지게 (안 그러면 컷신 내내 보스 몸 위에서 빛남)
+     if(inDungeon)UpdateWaves(delta);  // 보스는 컷신 0.5초 만에 나와야 함 (아래 return 때문에 컷신이 끝나야 나와서 빈 방만 비췄음)
      if(!roared&&cutscene<1.9f){roared=true;Shake(0.7f,1.8f);Sfx("BossCharge");hb::Camera::Flash(hb::Color{1,0.85f,0.4f,0.12f},0.2f);  // 번쩍임은 약하게 (보스가 묻히지 않게)
        for(auto* e:Enemies())if(e->Boss){UiText("BossName",e->DisplayName);UiText("BossSub","황금에 잠식된 1층의 문지기");e->Roar(1.6f);}
        for(auto* n:{"BossName","BossSub"})UiVisible(n,true);}
@@ -132,7 +142,8 @@ void TopDownShooter::Update(float delta){
   for(auto* e:all){e->Tick(delta);KeepInside(e);  // 적 이동은 여기서 한 번에 (상태 머신은 상태가 바뀔 때만 C++를 부름)
     if(e->burnedOut){e->burnedOut=false;KillEnemy(e);}else enemies.push_back(e);}  // 화상으로 쓰러짐
   }
-  boss=nullptr;for(auto* e:enemies)if(e->Boss)boss=e;  // 적 포인터는 프레임을 넘겨 들고 있지 않는다 (엔진이 다시 만들 수 있음)
+  boss=nullptr;for(auto* e:enemies)if(e->Boss)boss=e;
+  bossSeen=boss!=nullptr;if(boss)bossAt=hb::Scene::GetPosition(boss);  // 적 포인터는 프레임을 넘겨 들고 있지 않는다 (엔진이 다시 만들 수 있음)
   UpdateBullets(delta,position);
   UpdateFx(delta);
   if(inDungeon)UpdateWaves(delta);
@@ -151,7 +162,8 @@ void TopDownShooter::Update(float delta){
   }
 
   // 바라보는 방향: 걸을 땐 걷는 쪽(뒷걸음질 없음), 공격하는 동안(+0.4초)은 마우스 쪽, 모바일은 가까운 적이 있으면 그쪽
-  const hb::Vec3 move{hb::Input::GetAxis("d")-hb::Input::GetAxis("a"),hb::Input::GetAxis("w")-hb::Input::GetAxis("s"),0};
+  hb::Vec3 move{hb::Input::GetAxis("d")-hb::Input::GetAxis("a"),hb::Input::GetAxis("w")-hb::Input::GetAxis("s"),0};
+  if(moveLock)move=hb::Vec3{0,0,0};
   const bool moving=hb::VectorMath::VectorLengthSquared(move)>.01f;
   const bool attackDown=hb::Input::IsKeyDown("LeftMouseButton");
   aimHold=attackDown?0.4f:aimHold-delta;
@@ -171,7 +183,7 @@ void TopDownShooter::Update(float delta){
      :Character==0&&attackAnim>0?rules->AttackMoveRate
      :Character==1&&charge>0?(NewSheet()&&backpedal?rules->BackpedalRate:rules->ChargeMoveRate)
      :NewSheet()&&Character==2&&attackDown&&backpedal?rules->ChargeMoveRate:1.f;
-   const float speed=act*rules->MoveSpeed*((Weight()>rules->WeightLimit||Fatigue*4>=FatigueMax*3)?rules->SlowRate:1.f);
+   const float speed=moveLock?0.f:act*rules->MoveSpeed*((Weight()>rules->WeightLimit||Fatigue*4>=FatigueMax*3)?rules->SlowRate:1.f);
    if(speed!=sentSpeed){sentSpeed=speed;hb::Movement2D::SetSpeed(player,speed);}}
   attackCooldown-=delta;dodgeCooldownLeft-=delta;invulnerable-=delta;
 

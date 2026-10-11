@@ -2,7 +2,7 @@
   "version": 1,
   "name": "S_SkeletonCaptain_Spin_2",
   "texture": "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Spin_2.png",
-  "pixelsPerUnit": 32,
+  "pixelsPerUnit": 25.6,
   "rect": [
     0,
     0,
@@ -11,7 +11,7 @@
   ],
   "pivot": [
     0.5,
-    0.4810181818181818
+    0.39694
   ],
   "filter": "nearest",
   "border": [
