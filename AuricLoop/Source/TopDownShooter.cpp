@@ -42,7 +42,9 @@ void TopDownShooter::Update(float delta){
   if(hitStopLeft>0){hitStopLeft-=delta/std::max(0.0001f,hb::Clock::TimeScale());  // 히트스톱은 실제 시간으로 셈 (게임 시간은 느려져 있으므로)
     if(hitStopLeft<=0&&!Paused)hb::Clock::SetTimeScale(1.f);}
   player=hb::Gameplay::GetPlayerPawn();if(!player)return;
-  frame++;if(hudDirty)Hud();
+  frame++;
+  if(frame==15||frame==45){uiSent.clear();hudDirty=true;}  // 웹·모바일은 위젯이 늦게 생겨 장면 첫 HUD 값이 사라짐 (정산 뒤 골드·빚이 이전 값으로 남던 문제): 한 번 더 보냄
+  if(hudDirty)Hud();
   {// 성능 확인: F3으로 왼쪽 위에 초당 게임 프레임과 0.5초 동안 가장 긴 프레임
    const bool f3=hb::Input::IsKeyDown("F3");if(f3&&!fpsHeld){ShowFps=!ShowFps;if(player&&frame>=2)UiVisible("Fps",ShowFps);}fpsHeld=f3;
    fpsTime+=delta;fpsFrames++;fpsWorst=std::max(fpsWorst,delta);
