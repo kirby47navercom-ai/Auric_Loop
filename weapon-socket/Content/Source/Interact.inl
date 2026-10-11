@@ -81,7 +81,7 @@ void TopDownShooter::Craft(bool toggle,int which,bool confirm){
   if(craftPick==1&&Herb>=3&&Bottle>=1&&Hp<MaxHp){Herb-=3;Bottle--;Hp++;done=true;}
   else if(craftPick==2&&Ore>=1){Ore--;Flashbangs++;done=true;}
   else if(craftPick>=3&&Monster>=1){Monster--;Enchant=craftPick-2;done=true;}
-  if(done){Crafted++;Sfx("Craft");Notify(std::string("제작 완료: ")+(craftPick==1?"회복 물약":craftPick==2?"섬광탄":"각인 결정"));}
+  if(done){Crafted++;hudDirty=true;Sfx("Craft");Notify(std::string("제작 완료: ")+(craftPick==1?"회복 물약":craftPick==2?"섬광탄":"각인 결정"));}
   else Notify("소재가 모자라요");
   CraftDetail();
 }
