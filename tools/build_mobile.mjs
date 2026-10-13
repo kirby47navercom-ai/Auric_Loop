@@ -8,8 +8,9 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
 import {playerPatches, applyPatches} from './player_patches.mjs';
+import {retainBuilds} from './build-retention.mjs';
+import {ENGINE} from './engine.mjs';
 
-const ENGINE = process.env.HB_MOBILE_ENGINE || 'C:/Users/kirby/HBEngine/Versions/dcc7dfb86fcb2208';
 const target = process.argv[2];
 if (!['android', 'web'].includes(target)) throw Error('대상: android | web');
 const projectDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '../AuricLoop');
@@ -29,9 +30,21 @@ const hit = new Set(), key = file => {
   const rel = path.relative(ENGINE, String(file)).split(path.sep).join('/');
   return patches[rel] ? rel : null;
 };
+// 안드로이드: 휴대폰 CPU·GPU에 맞춘 장면 설정 (PC·웹은 그대로). CPU를 4배 느리게 한 측정에서 물리 단계가 프레임의 3할, 블룸이 렌더의 1할
+//   - 물리 30Hz·한 프레임 최대 2단계: 엔진은 물리 단계마다 장면 전체(500여 개)를 동기화하고, 느린 기기일수록 단계가 늘어 더 느려지는 악순환
+//   - 후처리(블룸 빛 번짐) 끔: 화면 전체를 여러 번 다시 그림
+const mobileScene = text => {
+  const scene = JSON.parse(text);
+  Object.assign(scene.runtime ??= {}, {fixedDeltaTime: 1 / 30, maxSubsteps: 2});
+  for (const o of scene.objects || []) for (const c of o.components || []) if (c.type === 'PostProcessVolume') c.properties.enabled = false;  // 볼륨이 켜져 있으면 블룸이 없어도 화면을 여러 번 다시 그림 (반정밀 렌더 타깃→후처리→출력→AA)
+  hit.add('mobile-scene');
+  return JSON.stringify(scene);
+};
+const sceneFile = file => target === 'android' && String(file).endsWith('.hbscene.json') && path.resolve(String(file)).startsWith(path.resolve(projectDir));
 const read = fs.readFile.bind(fs), write = fs.writeFile.bind(fs);
 fs.readFile = async (file, ...rest) => {
   const result = await read(file, ...rest), name = key(file);
+  if (sceneFile(file)) { const text = mobileScene(Buffer.isBuffer(result) ? result.toString('utf8') : result); return Buffer.isBuffer(result) ? Buffer.from(text) : text; }
   if (!name) return result;
   hit.add(name);
   const text = applyPatches(name, Buffer.isBuffer(result) ? result.toString('utf8') : result, patches);
@@ -65,7 +78,8 @@ const profile = target === 'android'
      mobile: {applicationId: 'com.mastiff.auricloop', versionCode: 3, versionName: '1.2', orientation: 'landscape', minSdk: 26, abis: ['arm64-v8a'], format: 'apk'}}
   : {...base, id: 'web', name: 'web', target: 'web', configuration: 'development', productName: 'Auric Loop'};
 const result = await buildGame(record, profile, {onProgress: m => console.error(new Date().toISOString().slice(11, 19), m)});
-const want = [...Object.keys(patches).filter(n => target === 'android' ? n !== 'prototype/player.html' : !n.startsWith('native/')), ...(target === 'android' ? ['icon'] : [])];
+const want = [...Object.keys(patches).filter(n => target === 'android' ? n !== 'prototype/player.html' : !n.startsWith('native/')), ...(target === 'android' ? ['icon', 'mobile-scene'] : [])];
 const missed = want.filter(n => !hit.has(n));
 if (missed.length) throw Error('수정이 안 들어감: ' + missed.join(', '));
+await retainBuilds(record.root, result.output).catch(error => console.warn('빌드 보관 정리 실패:', error.message));
 console.log(JSON.stringify({output: result.output, artifact: result.artifact}));

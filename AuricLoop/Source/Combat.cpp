@@ -29,9 +29,9 @@ Enemy* TopDownShooter::SpawnEnemy(const std::string& blueprint,const hb::Vec3& a
 void TopDownShooter::ParkEnemy(Enemy* e){
   e->CancelAttack();
   const bool pooled=hb::Tags::Has(e,"Enemy.S",true)||hb::Tags::Has(e,"Enemy.M",true)||hb::Tags::Has(e,"Enemy.C",true)||hb::Tags::Has(e,"Enemy.E",true);
-  if(!pooled){hb::Scene::Destroy(e);return;}
+  if(!pooled){PhysicsQueue::Drop(e);hb::Scene::Destroy(e);return;}
   if(e->brainRunning){hb::States::Stop(e);e->brainRunning=false;}
-  hb::Physics::SetVelocity(e,hb::Vec3{0,0,0});e->Parked=true;e->burnLeft=0;
+  PhysicsQueue::Velocity(e,hb::Vec3{0,0,0});e->Parked=true;e->burnLeft=0;
   e->squash=0;hb::Scene::SetScale(e,hb::Vec3{1,1,1});  // 찌그러진 채로 풀에 들어가지 않게
   hb::Scene::SetPosition(e,hb::Vec3{-60.f+float(std::rand()%120),-300.f-float(std::rand()%20),0});
 }
@@ -129,7 +129,7 @@ hb::Actor* TopDownShooter::Take(std::vector<hb::Actor*>& pool,const std::string&
 }
 
 void TopDownShooter::Give(std::vector<hb::Actor*>& pool,hb::Actor* actor){
-  if(&pool==&bulletPool||&pool==&shotPool)hb::Physics::SetVelocity(actor,hb::Vec3{0,0,0});  // 골드·이펙트는 물리 몸체가 없다
+  if(&pool==&bulletPool||&pool==&shotPool)PhysicsQueue::Velocity(actor,hb::Vec3{0,0,0});  // 골드·이펙트는 물리 몸체가 없다
   hb::Scene::SetPosition(actor,parked);pool.push_back(actor);
 }
 
@@ -356,7 +356,7 @@ void TopDownShooter::Shoot(const hb::Vec3& from,float power){
   hb::Sprites::PlayAnimation(s,Character==1?rules->ArrowClip:rules->CardClip,true);
   Effect(Character==1?"Muzzle":"CardCast",Muzzle(from),Angle(facing),1.f);Sfx(Character==1?"Arrow":"Bolt");
   const float speed=Character==1?rules->ArrowMinSpeed+(rules->ArrowSpeed-rules->ArrowMinSpeed)*power:rules->BoltSpeed;
-  hb::Physics::SetVelocity(s,facing*speed);
+  PhysicsQueue::Velocity(s,facing*speed);
   shots[s]=rules->PlayerShotLife;shotBoom[s]=false;Swings++;
   shotPower[s]=Character==1?rules->ArrowMinPower+(1-rules->ArrowMinPower)*power*power:1.f;  // 끝까지 당길수록 많이 세짐 (제곱)
 }
@@ -375,7 +375,7 @@ void TopDownShooter::UpdateShots(float delta,const std::vector<Enemy*>& enemies)
     if(!wall&&!(hit&&Enchant!=3)&&life>0)continue;  // 각인 관통(3)이면 적을 뚫고 벽·문·보스에서 멈춤
     if(Character!=2){done.push_back(s);continue;}
     // 알레아 마탄: 작은 폭발로 주변 적에게 피해
-    hb::Physics::SetVelocity(s,hb::Vec3{0,0,0});hb::Sprites::PlayAnimation(s,rules->BoomClip,false);Sfx("Boom");shotBoom[s]=true;life=0.25f;
+    PhysicsQueue::Velocity(s,hb::Vec3{0,0,0});hb::Sprites::PlayAnimation(s,rules->BoomClip,false);Sfx("Boom");shotBoom[s]=true;life=0.25f;
     for(auto* e:Enemies()){const auto d=hb::Scene::GetPosition(e)-p;const float len=Length(d);
       if(len<rules->BoomRadius&&len>0.05f)HitEnemy(e,d*(1/len),rules->BoomDamage*WeaponDamage()/rules->BoltDamage);}
   }

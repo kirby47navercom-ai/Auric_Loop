@@ -309,7 +309,7 @@ void TopDownShooter::Splash(){
 bool TopDownShooter::UpdateIntro(float delta,bool anyKey){
   // 회사 로고 → 타이틀(글자 연출, 아무 키) → 캐릭터 선택 → 오프닝 대화 (기획서 2장)
   if(Phase>=2)return false;
-  phaseTime+=delta;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
+  phaseTime+=delta;PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});
   if(Phase==0){if(anyKey&&phaseTime>0.2f)phaseTime=std::max(phaseTime,rules->LoadingTime-0.5f);Splash();}  // 키를 누르면 바로 검게 넘어감
   if(Phase==0&&phaseTime>=rules->LoadingTime){Phase=1;phaseTime=0;
     for(auto* n:{"LoadingBack","LoadingLogo","LoadingFade"})UiVisible(n,false);}

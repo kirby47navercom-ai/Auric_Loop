@@ -11562,6 +11562,6 @@
       0
     ],
     "fixedDeltaTime": 0.016666666666666666,
-    "maxSubsteps": 8
+    "maxSubsteps": 3
   }
 }

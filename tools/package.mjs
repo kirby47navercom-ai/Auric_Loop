@@ -10,8 +10,9 @@ import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
 import {playerPatches, applyPatches} from './player_patches.mjs';
+import {retainBuilds} from './build-retention.mjs';
+import {ENGINE} from './engine.mjs';
 
-const ENGINE = process.env.HB_ENGINE || 'C:/Users/kirby/HBEngine/Versions/88db6de5ffe7c1bf';
 const tool = name => import(pathToFileURL(path.join(ENGINE, 'tools', name)).href);
 const {readProjectManifest} = await tool('project-manifest.mjs');
 const {readBuildProfiles, buildGame} = await tool('build-game.mjs');
@@ -37,12 +38,15 @@ for (const name of Object.keys(patches)) {
 }
 
 // 실행 파일 아이콘: 엔진 플레이어엔 게임 아이콘을 넣는 기능이 없어 리소스를 직접 바꾼다 (tools/make_app_icon.py → Kit/app_icon.ico)
-{const exe = path.join(build.output, 'Game.exe');
+// 실행 파일 이름: 엔진 fc0a71a부터 HBGame_<프로젝트 UUID>.exe (게임별 윈도우 볼륨 믹서 항목), 그 전엔 Game.exe
+const exeName = (await fs.readdir(build.output)).find(n => /^(HBGame_.+|Game)\.exe$/i.test(n));
+{const exe = path.join(build.output, exeName);
  execFileSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(path.dirname(fileURLToPath(import.meta.url)), 'set_exe_icon.ps1'), exe, path.join(path.dirname(project), 'Assets/UI/Kit/app_icon.ico')], {stdio: 'inherit'});
- const bytes = await fs.readFile(exe), entry = pack.files.find(f => f.path === 'Game.exe');
+ const bytes = await fs.readFile(exe), entry = pack.files.find(f => f.path === exeName);
  if (entry) Object.assign(entry, {bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')});}
 
 await fs.writeFile(packFile, JSON.stringify(pack, null, 2) + '\n');
 await fs.rm(dest, {recursive: true, force: true});  // 이전 패키지 교체 (게임이 켜져 있으면 여기서 실패)
 await fs.cp(build.output, dest, {recursive: true});
-console.log('패키지:', path.join(dest, 'Game.exe'));
+await retainBuilds(record.root, build.output).catch(error => console.warn('빌드 보관 정리 실패:', error.message));
+console.log('패키지:', path.join(dest, exeName));

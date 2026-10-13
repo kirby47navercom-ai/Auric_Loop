@@ -25,6 +25,15 @@ class TopDownShooter;
 
 #include "Dungeon.h"
 
+// 물리 속도 쓰기를 프레임 끝에 한 번에 보냄: 엔진은 연속된 물리 쓰기만 묶고, 쓰기·조회마다 장면 전체(500여 개)를 물리와 다시 맞춘다.
+// 그림·위치 명령 사이사이에 속도를 쓰면 그때마다 전체 동기화가 일어나 휴대폰에서 프레임의 3할을 먹었음. 같은 액터는 마지막 값만
+namespace PhysicsQueue {
+inline std::vector<std::pair<hb::Actor*,hb::Vec3>> writes;
+inline void Velocity(hb::Actor* a,const hb::Vec3& v){for(auto& w:writes)if(w.first==a){w.second=v;return;}writes.push_back({a,v});}
+inline void Drop(hb::Actor* a){for(size_t i=writes.size();i-->0;)if(writes[i].first==a)writes.erase(writes.begin()+i);}  // 지우기 전에 (지운 액터에 쓰면 오류)
+inline void Flush(){if(writes.empty())return;auto list=std::move(writes);writes.clear();for(auto& [a,v]:list)hb::Physics::SetVelocity(a,v);}
+}
+
 HB_CLASS(Blueprintable)
 class Enemy : public hb::Actor {
 public:
@@ -205,7 +214,7 @@ private:
   hb::Vec3 atkDir{1,0,0},atkTarget{0,0,0};
   bool UpdateMelee(float delta,const hb::Vec3& dir,float distance,bool frozen);
   void EndAttack();
-  void Move(hb::Vec3 v){v=v+sep;if(Length3(v-sentVelocity)<0.05f)return;sentVelocity=v;velocityAge=0;hb::Physics::SetVelocity(this,v);}
+  void Move(hb::Vec3 v){v=v+sep;if(Length3(v-sentVelocity)<0.05f)return;sentVelocity=v;velocityAge=0;PhysicsQueue::Velocity(this,v);}
   static float Length3(const hb::Vec3& v){return std::sqrt(v.x*v.x+v.y*v.y+v.z*v.z);}
 };
 

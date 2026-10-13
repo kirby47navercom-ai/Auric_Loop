@@ -73,7 +73,7 @@ void Enemy::Tick(float delta){
     else if(mode==Mode::Range){const float side=distance>KeepDistance+1?1.f:distance<KeepDistance-1?-1.f:0.f;v=dir*(Speed*side);}
   }
   v=v+sep;
-  if(Length(v-sentVelocity)>0.05f||++velocityAge>=10){sentVelocity=v;velocityAge=0;hb::Physics::SetVelocity(this,v);}  // 벽에 막혀 줄어든 속도도 가끔 다시 맞춘다
+  if(Length(v-sentVelocity)>0.05f||++velocityAge>=10){sentVelocity=v;velocityAge=0;PhysicsQueue::Velocity(this,v);}  // 벽에 막혀 줄어든 속도도 가끔 다시 맞춘다
   // 막힘 확인 (0.2초마다): 가려는데 거의 못 움직였으면 0.7초 동안 왼쪽이나 오른쪽으로 비켜 돈다
   if(detour>0)detour-=delta;
   if(++stuckAge>=12){stuckAge=0;
@@ -81,7 +81,7 @@ void Enemy::Tick(float delta){
 }
 
 // 대기 중(화면 밖, 상태 머신 멈춤)이면 늦게 들어온 상태 이벤트는 무시
-void Enemy::Halt(){if(Parked)return;mode=Mode::Halt;eyeAnim="Idle";sentVelocity={0,0,0};hb::Physics::SetVelocity(this,hb::Vec3{0,0,0});}
+void Enemy::Halt(){if(Parked)return;mode=Mode::Halt;eyeAnim="Idle";sentVelocity={0,0,0};PhysicsQueue::Velocity(this,hb::Vec3{0,0,0});}
 void Enemy::Chase(){if(Parked)return;mode=Mode::Chase;Tint(false);}
 void Enemy::Range(){if(Parked)return;mode=Mode::Range;eyeAnim="Move";}
 void Enemy::Stagger(){if(Parked)return;mode=Mode::Stagger;}
@@ -177,7 +177,7 @@ void Enemy::JumpWindup(){if(Parked)return;
 void Enemy::Jump(){if(Parked)return;if(TopDownShooter::Current&&TopDownShooter::Current->Frozen()){Halt();return;}
   // 뛰어오름: 흙먼지, 0.6초에 착지 자리로 (공중에선 몸통 박치기 없음)
   mode=Mode::Jump;if(auto* game=TopDownShooter::Current)game->Effect("Dust",hb::Scene::GetPosition(this)+hb::Vec3{0,-1.2f,0});
-  sentVelocity=(jumpTarget-hb::Scene::GetPosition(this))*(1/0.6f);sentVelocity.z=0;hb::Physics::SetVelocity(this,sentVelocity);
+  sentVelocity=(jumpTarget-hb::Scene::GetPosition(this))*(1/0.6f);sentVelocity.z=0;PhysicsQueue::Velocity(this,sentVelocity);
 }
 
 void Enemy::Slam(){if(Parked)return;
@@ -196,7 +196,7 @@ void Enemy::Fire(){if(Parked)return;
 
 void Enemy::Dash(){if(Parked)return;if(TopDownShooter::Current&&TopDownShooter::Current->Frozen()){Halt();return;}
   mode=Mode::Dash;Tint(false);
-  sentVelocity=dashDir*DashSpeed;hb::Physics::SetVelocity(this,sentVelocity);
+  sentVelocity=dashDir*DashSpeed;PhysicsQueue::Velocity(this,sentVelocity);
   // 보스는 연속 돌진 (2번, 분노하면 3번) 뒤 다음 패턴
   const bool again=Boss&&++dashCount<(phase2?3:2);hb::States::SetBool(this,"Again",again);
   if(!again){dashCount=0;NextPattern(NextAfter(0));}
@@ -284,14 +284,14 @@ void Enemy::EndAttack(){
   hb::Sprites::PlayAnimation(this,WalkClip,true);
 }
 
-void Enemy::Stun(float seconds){stun=std::max(stun,seconds);sentVelocity={0,0,0};hb::Physics::SetVelocity(this,hb::Vec3{0,0,0});}
+void Enemy::Stun(float seconds){stun=std::max(stun,seconds);sentVelocity={0,0,0};PhysicsQueue::Velocity(this,hb::Vec3{0,0,0});}
 
 bool Enemy::TakeHit(float damage,const hb::Vec3& push,float stunSeconds,float burnSeconds){
   if(!Invulnerable){Hp-=damage;if(burnSeconds>0){burnLeft=burnSeconds;}}
   lastPush=push;squash=Boss?0.09f:0.14f;  // 맞으면 몸이 납작해졌다가 튀어 돌아옴 (Tick)
   // 맞은 순간 하얗게 번쩍, 보스가 아니면 밀려나며 잠깐 경직(상태 머신이 맞는 그림)
   if(flash<=0){hb::Sprites::Flash(this,0.08f,Boss?0.12f:0.65f);flash=Boss?0.2f:0.1f;}  // 연타 중엔 번쩍임을 띄엄띄엄 (계속 하얗게 덮이지 않게)
-  if(!Boss){stun=std::max(stun,stunSeconds);sentVelocity=push;hb::Physics::SetVelocity(this,sentVelocity);}
+  if(!Boss){stun=std::max(stun,stunSeconds);sentVelocity=push;PhysicsQueue::Velocity(this,sentVelocity);}
   else if(!phase2&&Hp<=MaxHp*0.5f&&Hp>0.001f){  // 보스 2페이즈: 체력 절반 아래면 분노 (빨라지고 탄이 늘어남)
     phase2=true;Speed*=1.25f;DashSpeed*=1.15f;RingCount+=4;if(auto* game=TopDownShooter::Current)game->BossEnraged(this);
     Roar(1.0f);}  // 분노: 잠깐 포효 자세

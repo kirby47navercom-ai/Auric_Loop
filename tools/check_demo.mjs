@@ -5,8 +5,8 @@
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
+import {ENGINE} from './engine.mjs';
 
-const ENGINE = process.env.HB_ENGINE || 'C:/Users/kirby/HBEngine/Versions/88db6de5ffe7c1bf';
 const {runProject} = await import(pathToFileURL(path.join(ENGINE, 'tools/run-project.mjs')).href);
 const project = path.join(path.dirname(fileURLToPath(import.meta.url)), '../AuricLoop/AuricLoop.hbproject');
 const scene = name => `Assets/Scenes/${name}.hbscene.json`;

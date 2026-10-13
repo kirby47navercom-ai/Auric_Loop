@@ -431,7 +431,8 @@ def dungeon_scene(director_bp="BP_TopDownShooter"):
             o["tags"] = [tag]
             objects.append(o)
     # 탄·골드·이펙트 풀 (TopDownShooter::Prewarm)
-    for tag, prefab, count in (("Pool.EnemyShot", "PF_EnemyShot", 32), ("Pool.PlayerShot", "PF_PlayerShot", 16), ("Pool.Coin", "PF_Coin", 16), ("Pool.Fx", "PF_Fx", 64)):
+    for tag, prefab, count in (("Pool.PlayerShot", "PF_PlayerShot", 16),  # 적 탄은 엔진 탄막 시스템(hb::Projectiles)이라 액터 풀이 필요 없음 (쓰지 않는 물리 몸체 32개가 매 물리 단계 비용)
+                               ("Pool.Coin", "PF_Coin", 16), ("Pool.Fx", "PF_Fx", 64)):
         base = json.loads((ASSETS / f"Prefabs/{prefab}.hbprefab.json").read_text(encoding="utf-8"))["objects"][0]
         for k in range(count):
             o = copy.deepcopy(base)

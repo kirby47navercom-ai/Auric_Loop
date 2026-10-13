@@ -4,8 +4,8 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
+import {ENGINE} from './engine.mjs';
 
-const ENGINE = process.env.HB_ENGINE || 'C:/Users/kirby/HBEngine/Versions/88db6de5ffe7c1bf';
 const {parseNativeHeader} = await import(pathToFileURL(path.join(ENGINE, 'prototype/native-model.js')).href);
 const project = path.join(path.dirname(fileURLToPath(import.meta.url)), '../AuricLoop');
 

@@ -35,16 +35,16 @@ export async function playerPatches(projectDir) {
     ],
     // 7) 엔진 dcc7dfb부터는 렌더러를 이 파일에서 만듦 (웹·APK)
     'prototype/game-renderer.js': [['new THREE.WebGLRenderer({canvas,antialias:true})', 'new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:"high-performance"})'],
-      ['renderer.setPixelRatio(Math.min(devicePixelRatio,2));', 'renderer.setPixelRatio(1);']],
+      ['renderer.setPixelRatio(Math.min(devicePixelRatio,2));', 'renderer.setPixelRatio(1);', 'all']],  // 엔진 fc0a71a부터 d3d11·WebGL 두 경로 → 둘 다 (휴대폰은 WebGL)
   };
 }
 const RENDERER = 'new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));';
 const RENDERER_LIGHT = 'new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:"high-performance"});renderer.setPixelRatio(1);';
 
 export function applyPatches(name, text, patches) {
-  for (const [from, to, optional] of patches[name] || []) {
-    if (!text.includes(from)) { if (optional) continue; throw Error(`엔진이 바뀌어 패치 위치를 못 찾음: ${name} — docs/엔진_요청_UI입력.md 확인`); }
-    text = text.replace(from, to);
+  for (const [from, to, mode] of patches[name] || []) {
+    if (!text.includes(from)) { if (mode === 'optional') continue; throw Error(`엔진이 바뀌어 패치 위치를 못 찾음: ${name} — docs/엔진_요청_UI입력.md 확인`); }
+    text = mode === 'all' ? text.split(from).join(to) : text.replace(from, to);  // all: 같은 코드가 여러 곳이면 모두
   }
   return text;
 }
