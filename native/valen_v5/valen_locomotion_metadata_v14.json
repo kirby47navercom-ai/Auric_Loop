@@ -1,0 +1,567 @@
+{
+  "version": 14,
+  "character_scale": 1,
+  "source_cell": [
+    32,
+    48
+  ],
+  "layer_cell": [
+    64,
+    64
+  ],
+  "source_offset": [
+    16,
+    14
+  ],
+  "source_pivot_pixel_top_left": [
+    16,
+    42
+  ],
+  "layer_pivot_pixel_top_left": [
+    32,
+    56
+  ],
+  "unity_pivot": [
+    0.5,
+    0.125
+  ],
+  "pixels_per_unit": 16,
+  "rows": [
+    "front",
+    "facing_left",
+    "back",
+    "facing_right"
+  ],
+  "columns": "locomotion phases 0..3",
+  "source_compatible_layout": {
+    "files": [
+      "valen_walk_4frames",
+      "valen_run_4frames"
+    ],
+    "size": [
+      128,
+      192
+    ],
+    "directions": "columns",
+    "phases": "rows"
+  },
+  "phase_duration_ms": {
+    "walk": 120,
+    "run": 80
+  },
+  "locomotion_variants": [
+    "forward",
+    "backward",
+    "strafe_ccw",
+    "strafe_cw"
+  ],
+  "head_pixels_fixed": true,
+  "torso_horizontal_sway_px": 0,
+  "facing": "quantize only body row to closest cardinal live aim; 5deg hysteresis suggested",
+  "movement": "continuous normalized input, independent of aim; preserve analog magnitude",
+  "rear_weapon_angle_screen_deg": {
+    "global": [
+      225,
+      315
+    ],
+    "additional_far_right_hand_facing_left": [
+      135,
+      225
+    ]
+  },
+  "reverse_when": "dot(normalize(move),normalize(aim)) < -0.0001",
+  "whole_pose_backward_source_phase": [
+    0,
+    3,
+    2,
+    1
+  ],
+  "draw_order_rule": "Facing-left row: weapon and grip behind upper body. Other rows: weapon behind when aim225..315; grip above upper.",
+  "variant_screen_clockwise": "delta=wrap(move_deg-aim_deg); forward if abs(delta)<45; backward if abs(delta)>=135; strafe_cw if delta>0 else strafe_ccw",
+  "zero_input": "movement zero: idle; aim zero: preserve last valid aim",
+  "draw_order_front_and_right": [
+    "lower",
+    "fixed_accessories",
+    "upper",
+    "weapon",
+    "grip_overlay"
+  ],
+  "draw_order_facing_left": [
+    "weapon",
+    "lower",
+    "accessories",
+    "far_right_grip",
+    "upper_with_near_empty_left_arm"
+  ],
+  "handedness": {
+    "front": "right hand on screen left",
+    "back": "right hand on screen right",
+    "facing_right": "right weapon arm near, free left arm far",
+    "facing_left": "right weapon arm far, free left arm near"
+  },
+  "draw_order_back": [
+    "weapon",
+    "lower",
+    "fixed_accessories",
+    "upper",
+    "grip_overlay"
+  ],
+  "weapon": {
+    "file": "valen_sword.png",
+    "size": [
+      32,
+      12
+    ],
+    "pivot_pixel_top_left": [
+      5,
+      6
+    ],
+    "unity_pivot": [
+      0.171875,
+      0.45833333333333337
+    ],
+    "rotation_screen_deg": "renderer rotation stays zero; choose nearest 16-direction sprite from live aim",
+    "rotation_unity_ccw_deg": 0,
+    "visual_snap_degrees": 22.5,
+    "visual_atlas": "valen_sword_16dir.png",
+    "visual_cells": [
+      64,
+      64
+    ],
+    "visual_pivot_edge_top_left": [
+      32.5,
+      32.5
+    ],
+    "visual_unity_pivot": [
+      0.5078125,
+      0.4921875
+    ],
+    "weapon_hand": "right",
+    "empty_hand": "left",
+    "gripping_pose_fixed_across_phases": false,
+    "grip_motion_tracks_locomotion_phase": true,
+    "single_weapon_instance": true,
+    "angle_changes_only_with_live_aim": true,
+    "hand_anchors": {
+      "walk": {
+        "front": [
+          [
+            23,
+            46
+          ],
+          [
+            23,
+            47
+          ],
+          [
+            23,
+            46
+          ],
+          [
+            23,
+            45
+          ]
+        ],
+        "facing_left": [
+          [
+            23,
+            43
+          ],
+          [
+            24,
+            44
+          ],
+          [
+            25,
+            45
+          ],
+          [
+            24,
+            44
+          ]
+        ],
+        "back": [
+          [
+            38,
+            44
+          ],
+          [
+            38,
+            43
+          ],
+          [
+            38,
+            42
+          ],
+          [
+            38,
+            43
+          ]
+        ],
+        "facing_right": [
+          [
+            33,
+            44
+          ],
+          [
+            32,
+            45
+          ],
+          [
+            31,
+            45
+          ],
+          [
+            32,
+            45
+          ]
+        ]
+      },
+      "run": {
+        "front": [
+          [
+            22,
+            46
+          ],
+          [
+            23,
+            47
+          ],
+          [
+            24,
+            46
+          ],
+          [
+            23,
+            47
+          ]
+        ],
+        "facing_left": [
+          [
+            23,
+            42
+          ],
+          [
+            24,
+            44
+          ],
+          [
+            26,
+            46
+          ],
+          [
+            24,
+            44
+          ]
+        ],
+        "back": [
+          [
+            38,
+            45
+          ],
+          [
+            38,
+            43
+          ],
+          [
+            38,
+            41
+          ],
+          [
+            38,
+            43
+          ]
+        ],
+        "facing_right": [
+          [
+            34,
+            43
+          ],
+          [
+            32,
+            45
+          ],
+          [
+            30,
+            46
+          ],
+          [
+            32,
+            45
+          ]
+        ]
+      }
+    },
+    "hand_unity_local": "((x+0.5-32)/16,(56-y-0.5)/16)",
+    "anchor_coordinates": "integer pixel indices; renderer attaches at pixel centre (+0.5,+0.5)",
+    "canonical_grip_centre_edge_top_left": [
+      5.5,
+      6.5
+    ],
+    "hand_shape": "left-facing far right closed grip, near left relaxed empty hand; right-facing near right grip, hidden far left hand"
+  },
+  "attack_v4_compatibility": {
+    "same_body_scale_and_pivot": true,
+    "legacy_attack_not_updated": true,
+    "requires_v14_hand_and_layer_rules": true
+  },
+  "evasion": "fast directional movement and invulnerability during movement, no rolling; not included",
+  "engine_integration_required": true,
+  "runtime_component": "ValenLocomotionVisualsV8.cs",
+  "torso_clean_plate_row_spans": {
+    "front": {
+      "24": [
+        11,
+        18
+      ],
+      "25": [
+        10,
+        19
+      ],
+      "26": [
+        9,
+        20
+      ],
+      "27": [
+        9,
+        20
+      ],
+      "28": [
+        9,
+        20
+      ],
+      "29": [
+        9,
+        20
+      ],
+      "30": [
+        9,
+        20
+      ],
+      "31": [
+        9,
+        20
+      ],
+      "32": [
+        9,
+        20
+      ],
+      "33": [
+        9,
+        20
+      ]
+    },
+    "facing_left": {
+      "24": [
+        12,
+        16
+      ],
+      "25": [
+        11,
+        17
+      ],
+      "26": [
+        11,
+        18
+      ],
+      "27": [
+        11,
+        18
+      ],
+      "28": [
+        11,
+        18
+      ],
+      "29": [
+        11,
+        19
+      ],
+      "30": [
+        11,
+        19
+      ],
+      "31": [
+        11,
+        19
+      ],
+      "32": [
+        11,
+        19
+      ],
+      "33": [
+        12,
+        19
+      ]
+    },
+    "back": {
+      "25": [
+        7,
+        21
+      ],
+      "26": [
+        7,
+        22
+      ],
+      "27": [
+        7,
+        22
+      ],
+      "28": [
+        7,
+        22
+      ],
+      "29": [
+        7,
+        22
+      ],
+      "30": [
+        7,
+        22
+      ],
+      "31": [
+        7,
+        22
+      ],
+      "32": [
+        7,
+        22
+      ],
+      "33": [
+        7,
+        22
+      ]
+    },
+    "facing_right": {
+      "24": [
+        11,
+        15
+      ],
+      "25": [
+        10,
+        15
+      ],
+      "26": [
+        10,
+        16
+      ],
+      "27": [
+        10,
+        16
+      ],
+      "28": [
+        10,
+        16
+      ],
+      "29": [
+        10,
+        16
+      ],
+      "30": [
+        10,
+        16
+      ],
+      "31": [
+        10,
+        17
+      ],
+      "32": [
+        10,
+        17
+      ],
+      "33": [
+        10,
+        17
+      ]
+    }
+  },
+  "body_base_weapon": "none: no worn sword, handle or scabbard",
+  "left_facing_layer_exception": "weapon and grip behind upper body; empty left arm is near and drawn over torso",
+  "side_weapon_hand_motion": {
+    "axis": "shoulder-pivot arc",
+    "walk_angles_clockwise_deg": [
+      -8,
+      0,
+      8,
+      0
+    ],
+    "run_angles_clockwise_deg": [
+      -18,
+      0,
+      18,
+      0
+    ],
+    "left_sign_reversed": true,
+    "elbows_rotate_with_same_shoulder": true,
+    "weapon_tilt_matches_arm": true
+  },
+  "weapon_sway": {
+    "files": [
+      "walk_weapon_sway_16dir_4frames.png",
+      "run_weapon_sway_16dir_4frames.png"
+    ],
+    "cell": [
+      64,
+      64
+    ],
+    "sheet_size": [
+      256,
+      2048
+    ],
+    "rows": "right-facing 16 aim rows, then left-facing 16 aim rows",
+    "columns": "4 shared arm/hand/weapon phases",
+    "sprite_index": "(aimIndex+(facingLeft?16:0))*4+phase",
+    "runtime_fields": [
+      "walkWeaponSway",
+      "runWeaponSway"
+    ],
+    "renderer_rotation": 0
+  },
+  "front_low_ready": {
+    "hand": "right at screen-left hip",
+    "base_angle_screen_deg": 135,
+    "walk_tilt_deg": [
+      -3,
+      0,
+      3,
+      0
+    ],
+    "run_tilt_deg": [
+      -6,
+      0,
+      6,
+      0
+    ],
+    "idle_phase": 1,
+    "files": [
+      "walk_front_low_ready_weapon_4frames.png",
+      "run_front_low_ready_weapon_4frames.png"
+    ],
+    "cell": [
+      64,
+      64
+    ],
+    "sheet": [
+      256,
+      64
+    ],
+    "runtime_arrays": [
+      "walkFrontWeapon",
+      "runFrontWeapon"
+    ],
+    "aim_and_hitbox_unchanged": true
+  },
+  "runtime_component_updated": true,
+  "outline": {
+    "color": "#000000",
+    "native_width_px": 1,
+    "body": "separate external silhouette union contour",
+    "weapon": "baked per pose, original pixels unchanged",
+    "body_array_order": [
+      "forward",
+      "strafe_ccw",
+      "strafe_cw"
+    ],
+    "body_array_index": "variant*16+row*4+phase",
+    "same_cell_pivot_and_hand_offsets": true
+  }
+}
