@@ -43,8 +43,9 @@ export async function retainBuilds(projectRoot, currentOutput, {dryRun = false} 
       }
     }
     successes.sort().reverse(); failures.sort().reverse();
-    const latest = successes.includes(current) ? [current, ...successes.filter(dir => dir !== current).slice(0, 1)] : successes.slice(0, 2);
-    const keep = new Set([...latest, ...failures.slice(0, 1), current]);
+    // 디스크가 넉넉하지 않음: 플랫폼마다 가장 최근 성공 빌드 하나만 (실패 기록은 남기지 않음)
+    const latest = successes.includes(current) ? [current, successes[0]] : successes.slice(0, 1);  // 시계가 어긋나 현재 빌드 이름이 옛날이어도 가장 새 이름은 남김
+    const keep = new Set([...latest, current]);
     for (const dir of [...successes, ...failures]) {
       if (keep.has(dir)) continue;
       // Recheck immediately before removal. Node removes nested links, not their targets.

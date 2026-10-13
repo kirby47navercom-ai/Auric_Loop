@@ -39,21 +39,21 @@ try {
   await fs.symlink(outside, path.join(project, 'Builds/windows/2026-10-11T10-00-00-000Z-1234abcd'), process.platform === 'win32' ? 'junction' : 'dir');
   await fs.symlink(outside, path.join(project, 'Builds/linked-profile'), process.platform === 'win32' ? 'junction' : 'dir');
   const plan = await retainBuilds(project, good[4], {dryRun: true});
-  assert.equal(plan.removed.length, 6);
+  assert.equal(plan.removed.length, 9);  // 플랫폼마다 최근 성공 빌드 하나만 (windows 4 + 실패 3 + android 2)
   const clockSkew = await retainBuilds(project, good[0], {dryRun: true});
-  assert.equal(clockSkew.removed.length, 6);
+  assert.equal(clockSkew.removed.length, 8);
   assert.ok(!clockSkew.removed.includes(good[0]) && !clockSkew.removed.includes(good[4]));
   await fs.access(good[0]);
   const result = await retainBuilds(project, good[4]);
   assert.deepEqual(result.removed, plan.removed); assert.deepEqual(result.skipped, []);
-  for (const file of [...good.slice(0, 3), ...failures.slice(0, 2), android[0]]) await assert.rejects(fs.access(file), {code: 'ENOENT'});
-  for (const file of [...good.slice(3), failures[2], ...android.slice(1), active, foreign, unknown, path.join(outside, 'sentinel.txt')]) await fs.access(file);
+  for (const file of [...good.slice(0, 4), ...failures, ...android.slice(0, 2)]) await assert.rejects(fs.access(file), {code: 'ENOENT'});
+  for (const file of [good[4], android[2], active, foreign, unknown, path.join(outside, 'sentinel.txt')]) await fs.access(file);
   assert.equal((await retainBuilds(project, good[4])).removed.length, 0);
   await assert.rejects(retainBuilds(project, outside), /경로 오류/);
   await assert.rejects(retainBuilds(project, foreign), /프로젝트 불일치/);
   await write('AuricLoop.hbproject', {id: 'wrong-project'});
   await assert.rejects(retainBuilds(project, good[4]), /프로젝트 불일치/);
-  console.log('PASS: 성공 2개·실패 1개, 플랫폼 분리, 미완료·수동·외부 에셋·연결 폴더 보존, 경로 차단, 시계 오차, dry-run, 재실행');
+  console.log('PASS: 플랫폼마다 최근 성공 1개(시계 오차 땐 가장 새 것도), 플랫폼 분리, 미완료·수동·외부 에셋·연결 폴더 보존, 경로 차단, 시계 오차, dry-run, 재실행');
 } finally {
   await fs.rm(temp, {recursive: true, force: true});
 }

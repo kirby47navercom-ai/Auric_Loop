@@ -46,7 +46,8 @@ const exeName = (await fs.readdir(build.output)).find(n => /^(HBGame_.+|Game)\.e
  if (entry) Object.assign(entry, {bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')});}
 
 await fs.writeFile(packFile, JSON.stringify(pack, null, 2) + '\n');
-await fs.rm(dest, {recursive: true, force: true});  // 이전 패키지 교체 (게임이 켜져 있으면 여기서 실패)
-await fs.cp(build.output, dest, {recursive: true});
 await retainBuilds(record.root, build.output).catch(error => console.warn('빌드 보관 정리 실패:', error.message));
+await fs.rm(dest, {recursive: true, force: true});  // 이전 패키지 교체 (게임이 켜져 있으면 여기서 실패)
+// 복사하지 않고 옮김: 빌드 폴더와 패키지가 같은 내용을 두 벌 차지하지 않게 (디스크 절약). 다른 드라이브면 복사 후 지움
+await fs.rename(build.output, dest).catch(async () => { await fs.cp(build.output, dest, {recursive: true}); await fs.rm(build.output, {recursive: true, force: true}); });
 console.log('패키지:', path.join(dest, exeName));
