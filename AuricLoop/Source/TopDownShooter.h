@@ -709,7 +709,7 @@ private:
   void UiColor(const std::string& n,const hb::Color& c){if(UiChanged("c"+n,UiNum(c.r,c.g)+UiNum(c.b,c.a)))hb::UI::SetColor(UiOwnerOf(n),UiInstance(n),n,c);}
   void UiScale(const std::string& n,float v){v=std::round(v*100)/100;if(UiChanged("k"+n,std::to_string(v)))hb::UI::SetScale(UiOwnerOf(n),UiInstance(n),n,hb::Vec2{v,v});}
   hb::Vec3 playerAt{0,0,0},facing{1,0,0},cameraAt{0,0,0};
-  hb::Vec3 spawnAt{0,0,0};float spawnHold=0;bool moveLock=false;float moveLockTime=0;  // 도착 지점(장면 인자 spawn)에 잠깐 붙잡아 둠: 웹·모바일에서 이전 장면 위치가 늦게 덮어쓰는 경우
+  hb::Vec3 spawnAt{0,0,0};float spawnHold=0;bool moveLock=false;float moveLockTime=0;int moveLockKeys=0;  // 도착 지점(장면 인자 spawn)에 잠깐 붙잡아 둠: 웹·모바일에서 이전 장면 위치가 늦게 덮어쓰는 경우
   bool playerFlipped=false,blinkShown=false;
   hb::Vec3 knock{0,0,0};
   bool cameraReady=false,started=false,leaving=false,hudDirty=true,introHidden=false;

@@ -17,7 +17,10 @@ std::vector<Enemy*> TopDownShooter::Enemies() const{
 }
 
 // 적도 탄처럼 장면(Dungeon)에 화면 밖으로 세워 둔 것을 꺼내 쓴다 (태그 Enemy.S·M·C). Scene::Spawn은 한 마리에 수십 ms라 웨이브마다 끊김
-Enemy* TopDownShooter::SpawnEnemy(const std::string& blueprint,const hb::Vec3& at,bool invulnerable){
+Enemy* TopDownShooter::SpawnEnemy(const std::string& blueprint,const hb::Vec3& where,bool invulnerable){
+  hb::Vec3 at=where;  // 싸우는 방 안으로 (보스가 벽 가까이에서 졸개를 부르면 좌우 2.5m 자리가 벽 속이었음)
+  if(inDungeon&&fightingRoom>=0&&fightingRoom<int(map.rooms.size())){const auto& r=map.rooms[fightingRoom];const float m=1.f;
+    at.x=std::clamp(at.x,r.cx-r.hw+m,r.cx+r.hw-m);at.y=std::clamp(at.y,r.cy-r.hh+m,r.cy+r.hh-m);}
   std::string code;for(const auto& entry:rules->Enemies){const auto eq=entry.find('=');if(eq!=std::string::npos&&entry.substr(eq+1)==blueprint)code=entry.substr(0,eq);}
   Enemy* e=nullptr;
   if(!code.empty())for(auto* a:hb::Scene::GetActorsWithTag("Enemy."+code))if(auto* p=dynamic_cast<Enemy*>(a))if(p->Parked){e=p;break;}

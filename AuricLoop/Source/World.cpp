@@ -303,7 +303,7 @@ bool TopDownShooter::UpdateSettle(float delta,bool advance){
   // 상환: 동전에서 빠져나가 명패로 (0.5초), 그다음 빚이 1초 동안 줄어듦
   const float rt=(settleTime-last-0.3f)/0.5f;
   if(LastRepaid>0&&rt>0){UiVisible("SettleRepay",rt<1.4f);UiText("SettleRepay","빚 상환  -"+std::to_string(LastRepaid)+" G");
-    UiPosition("SettleRepay",hb::Vec2{0,40.f+std::min(rt,1.f)*150});
+    UiPosition("SettleRepay",hb::Vec2{0,40.f+std::min(rt,1.f)*110});  // 남은 빚 판 바로 위에서 멈춤 (겹치면 글자가 안 읽힘)
     if(settleTotal>0)SettleFill(coinT*(1-std::min(rt,1.f)*float(LastRepaid)/settleTotal));}  // 상환한 만큼 동전이 다시 줄어듦
   const float t=std::clamp((settleTime-last-0.8f)/1.0f,0.f,1.f);
   const int debt=debtFrom+int((debtTo-debtFrom)*t);

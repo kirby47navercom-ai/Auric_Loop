@@ -58,9 +58,12 @@ void TopDownShooter::Update(float delta){
   playerAt=hb::Scene::GetPosition(player);
   if(spawnHold>0){spawnHold-=delta;  // 도착 직후 이전 장면 위치로 튀었으면 도착 지점으로 되돌림 (걸어서는 0.6초에 3m를 못 감)
     if(std::hypot(playerAt.x-spawnAt.x,playerAt.y-spawnAt.y)>3.f){hb::Scene::SetPosition(player,spawnAt);PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});playerAt=spawnAt;}}
-  if(moveLock){  // 문·계단으로 막 넘어왔으면 0.5초 서 있고, 그때까지 누르고 있던 방향은 한 번 손을 뗄 때까지 무시 (누른 채로 산 벽에 붙거나 던전에 되돌아가던 문제)
-    moveLockTime+=delta;const bool held=std::fabs(hb::Input::GetAxis("d")-hb::Input::GetAxis("a"))+std::fabs(hb::Input::GetAxis("w")-hb::Input::GetAxis("s"))>.1f;
-    if(!held&&moveLockTime>0.5f){moveLock=false;sentSpeed=-1;}  // 이동 코드가 속도를 되돌림
+  if(moveLock){  // 문·계단으로 막 넘어왔으면 잠깐 서 있고, 넘어올 때 누르고 있던 방향은 손을 뗄 때까지 무시 (누른 채로 산 벽에 붙거나 던전에 되돌아가던 문제)
+    // 새로 누른 방향은 0.3초 뒤 바로 움직임: 예전엔 키를 전부 뗐다 눌러야 풀려서, W를 누른 채 A로 바꾸는 식이면 계속 못 움직였음
+    moveLockTime+=delta;const float ax=hb::Input::GetAxis("d")-hb::Input::GetAxis("a"),ay=hb::Input::GetAxis("w")-hb::Input::GetAxis("s");
+    const int mask=(ay>.1f?1:0)|(ay<-.1f?2:0)|(ax>.1f?4:0)|(ax<-.1f?8:0);
+    moveLockKeys=moveLockTime<=delta?mask:moveLockKeys&mask;  // 넘어올 때 누르던 방향 (뗀 방향은 빠짐)
+    if(moveLockTime>0.3f&&(mask&~moveLockKeys||(!mask&&moveLockTime>0.5f))){moveLock=false;sentSpeed=-1;}  // 이동 코드가 속도를 되돌림
     else if(sentSpeed!=0){sentSpeed=0;hb::Movement2D::SetSpeed(player,0);}}  // 이동은 엔진 이동 컴포넌트가 입력으로 직접 함 (대화 등으로 아래 이동 코드에 안 닿아도 막히게 여기서)
   const auto position=playerAt;
   {// 배경음: 거점·던전·보스방·귀환
