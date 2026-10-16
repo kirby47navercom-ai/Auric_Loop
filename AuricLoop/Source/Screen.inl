@@ -268,7 +268,7 @@ void TopDownShooter::TitleFx(float delta,bool visible){
   // 땅: 따뜻한 흰빛이 번쩍(3단계)하고 동전이 튀어나가는 그림을 그때 넣어 처음부터 재생
   if(t>=slam&&titleBeat<=kTitleLetters){titleBeat=kTitleLetters+1;Sfx("Boom");Sfx("Coin",1.1f);
     UiTexture("TitleBurst","Assets/UI/Kit/title_burst.webp");UiVisible("TitleBurst",true);}
-  UiVisible("TitleFlash",t>=slam&&t<slam+0.3f);if(t>=slam&&t<slam+0.3f)UiOpacity("TitleFlash",t<slam+0.1f?0.75f:t<slam+0.2f?0.4f:0.15f);
+  UiVisible("TitleFlash",t>=slam&&t<slam+0.3f);if(t>=slam&&t<slam+0.3f)UiOpacity("TitleFlash",t<slam+0.1f?0.3f:t<slam+0.2f?0.15f:0.06f);  // 화면이 하얗게 번쩍이지 않게 약하게
   // 끝: 로고 금빛·Tap 금빛 켜기 (둘 다 스스로 반복)
   if(t>=done&&titleBeat<=kTitleLetters+1){titleBeat=kTitleLetters+2;UiVisible("TitleShine",true);UiVisible("TitleTapShade",true);
     static const int keyCounts[]={4,1,1,1,1,1,1,1,1};  // 조작 안내 (회사 로고 화면에서 숨긴 것을 연출이 끝나면 보임)
@@ -276,7 +276,7 @@ void TopDownShooter::TitleFx(float delta,bool visible){
 }
 
 void TopDownShooter::Splash(){
-  // 회사 로고 (Phase 0, LoadingTime 동안): 검정 → 밝은 바탕에 로고가 살짝 커지며 떠오름 → 잠시 → 다시 검게
+  // 회사 로고 (Phase 0, LoadingTime 동안): 검정 → 어두운 바탕에 로고가 살짝 커지며 떠오름 → 잠시 → 다시 검게
   const float t=phaseTime,end=rules->LoadingTime;
   UiOpacity("LoadingFade",t<0.4f?1-t/0.4f:t>end-0.5f?std::min(1.f,(t-(end-0.5f))/0.45f):0.f);
   UiOpacity("LoadingLogo",std::clamp((t-0.3f)/0.6f,0.f,1.f));UiScale("LoadingLogo",0.94f+0.06f*EaseBack((t-0.3f)/0.9f));

@@ -274,9 +274,9 @@ for g, ((keys, label), gw) in enumerate(zip(KEYS, widths)):
 for n in nodes:  # "b" 기준 x는 가운데에서의 거리
     if n["id"].startswith("TitleKey"):
         n["slot"]["alignment"] = [0.5, 1]
-# 회사 로고 화면 (Phase 0): 밝은 바탕에 Mastiff 로고가 떠올랐다가 검게 사라짐. 로고 그림은 공개 저장소에 올리지 않는 Kit 폴더에만
-full("LoadingBack", "Panel", 95, background="#f3f0eaff")
-n = node("LoadingLogo", "Image", "c", 0, 0, 380, 328, 96, texture=KIT + "mastiff_logo.png", opacity=0, imageRendering="auto")
+# 회사 로고 화면 (Phase 0): 어두운 바탕에 Mastiff 로고(검정 부분을 옅은 금색으로 뒤집은 그림)가 떠올랐다가 검게 사라짐. 로고 그림은 공개 저장소에 올리지 않는 Kit 폴더에만
+full("LoadingBack", "Panel", 95, background="#0b0e12ff")  # 하얀 바탕이 번쩍여 보인다는 의견으로 어둡게 (2026-10-16)
+n = node("LoadingLogo", "Image", "c", 0, 0, 380, 328, 96, texture=KIT + "mastiff_logo_dark.png", opacity=0, imageRendering="auto")
 n["slot"]["alignment"] = [0.5, 0.5]
 full("LoadingFade", "Panel", 97, background="#05090aff")
 

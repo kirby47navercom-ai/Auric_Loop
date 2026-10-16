@@ -218,7 +218,16 @@ def mastiff():
         return
     im = Image.open(src).convert("RGBA")
     im = im.crop(im.getbbox())
-    im.resize((720, round(720 * im.height / im.width)), Image.LANCZOS).save(KIT / "mastiff_logo.png")
+    im = im.resize((720, round(720 * im.height / im.width)), Image.LANCZOS)
+    im.save(KIT / "mastiff_logo.png")
+    # 어두운 바탕용 (로고 화면이 하얗게 번쩍인다는 의견, 2026-10-16): 검정·회색(채도 낮은 곳)만 밝기를 뒤집어 옅은 금색으로, 파란 글자는 그대로
+    a = np.asarray(im).astype(np.float32)
+    rgb, mx, mn = a[..., :3], a[..., :3].max(-1), a[..., :3].min(-1)
+    gray = ((mx - mn) < 40)[..., None]
+    lum = rgb.mean(-1, keepdims=True) / 255
+    cream = np.array([214, 196, 156], np.float32) * (1 - lum) + 40 * lum
+    a[..., :3] = np.where(gray, cream, rgb)
+    Image.fromarray(a.clip(0, 255).astype(np.uint8)).save(KIT / "mastiff_logo_dark.png")
 
 
 title_layers()
