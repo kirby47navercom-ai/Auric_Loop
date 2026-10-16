@@ -1,6 +1,7 @@
 // 안드로이드 APK·웹 빌드. Windows 패키지와 같은 플레이어 수정(tools/player_patches.mjs)을 빌드가 엔진 파일을 읽는 순간에 끼워 넣는다
 // (APK는 묶인 뒤라 결과물을 고칠 수 없고, 웹은 파일 목록 sha256을 빌드가 계산하므로 읽을 때 고쳐야 맞음. 엔진 설치본은 그대로)
-// 실행: <HBEngine 사용자용 폴더>/runtime/node.exe tools/build_mobile.mjs android|web
+// 실행: <HBEngine 사용자용 폴더>/runtime/node.exe tools/build_mobile.mjs android|web [phone]
+//   web phone: 안드로이드와 같은 장면 설정 + 검사 장면까지 넣은 웹 빌드 (PC 크롬에서 휴대폰 성능을 재 보는 용도, 배포하지 않음)
 //   android: 앱 아이콘(Assets/UI/Kit/app_icon_*.png), 전체 화면(상태·내비게이션 바 숨김)도 넣음
 //   web: 터치 기기에서 첫 터치에 전체 화면 + 가로 고정
 // 웹 빌드(build-web)는 엔진 dcc7dfb부터 있어 둘 다 그 엔진으로 만든다
@@ -11,7 +12,7 @@ import {playerPatches, applyPatches} from './player_patches.mjs';
 import {retainBuilds} from './build-retention.mjs';
 import {ENGINE} from './engine.mjs';
 
-const target = process.argv[2];
+const target = process.argv[2], phone = target === 'android' || process.argv[3] === 'phone';
 if (!['android', 'web'].includes(target)) throw Error('대상: android | web');
 const projectDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '../AuricLoop');
 const patches = await playerPatches(projectDir);
@@ -37,10 +38,12 @@ const mobileScene = text => {
   const scene = JSON.parse(text);
   Object.assign(scene.runtime ??= {}, {fixedDeltaTime: 1 / 30, maxSubsteps: 2});
   for (const o of scene.objects || []) for (const c of o.components || []) if (c.type === 'PostProcessVolume') c.properties.enabled = false;  // 볼륨이 켜져 있으면 블룸이 없어도 화면을 여러 번 다시 그림 (반정밀 렌더 타깃→후처리→출력→AA)
+  // 거점 풀·덤불·가장자리 나무 흔들림(Animator 300여 개)은 멈춘 그림으로: 그림이 바뀔 때마다 엔진이 물체마다 애니메이션 계산·그림 교체·C++ 전송을 함
+  for (const o of scene.objects || []) if (/^(Decor|Edge|EdgeBush)\d/.test(o.id)) for (const c of o.components || []) if (c.type === 'Animator') c.properties.enabled = false;
   hit.add('mobile-scene');
   return JSON.stringify(scene);
 };
-const sceneFile = file => target === 'android' && String(file).endsWith('.hbscene.json') && path.resolve(String(file)).startsWith(path.resolve(projectDir));
+const sceneFile = file => phone && String(file).endsWith('.hbscene.json') && path.resolve(String(file)).startsWith(path.resolve(projectDir));
 const read = fs.readFile.bind(fs), write = fs.writeFile.bind(fs);
 fs.readFile = async (file, ...rest) => {
   const result = await read(file, ...rest), name = key(file);
@@ -77,8 +80,9 @@ const profile = target === 'android'
   ? {...base, id: 'android', name: 'android', target: 'android', configuration: 'development', productName: 'Auric Loop',
      mobile: {applicationId: 'com.mastiff.auricloop', versionCode: 3, versionName: '1.2', orientation: 'landscape', minSdk: 26, abis: ['arm64-v8a'], format: 'apk'}}
   : {...base, id: 'web', name: 'web', target: 'web', configuration: 'development', productName: 'Auric Loop'};
+if (target === 'web' && phone) profile.scenes = [...base.scenes, ...['Valen', 'Sherry', 'Alea', 'Boss'].map(w => ({path: `Assets/Scenes/Test_${w}.hbscene.json`, enabled: true}))];  // 측정용: 검사 장면도 넣음
 const result = await buildGame(record, profile, {onProgress: m => console.error(new Date().toISOString().slice(11, 19), m)});
-const want = [...Object.keys(patches).filter(n => target === 'android' ? n !== 'prototype/player.html' : !n.startsWith('native/')), ...(target === 'android' ? ['icon', 'mobile-scene'] : [])];
+const want = [...Object.keys(patches).filter(n => target === 'android' ? n !== 'prototype/player.html' : !n.startsWith('native/')), ...(target === 'android' ? ['icon'] : []), ...(phone ? ['mobile-scene'] : [])];
 const missed = want.filter(n => !hit.has(n));
 if (missed.length) throw Error('수정이 안 들어감: ' + missed.join(', '));
 await retainBuilds(record.root, result.output).catch(error => console.warn('빌드 보관 정리 실패:', error.message));

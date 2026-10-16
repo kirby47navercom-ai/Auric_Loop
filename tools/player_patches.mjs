@@ -36,6 +36,17 @@ export async function playerPatches(projectDir) {
     // 7) 엔진 dcc7dfb부터는 렌더러를 이 파일에서 만듦 (웹·APK)
     'prototype/game-renderer.js': [['new THREE.WebGLRenderer({canvas,antialias:true})', 'new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:"high-performance"})'],
       ['renderer.setPixelRatio(Math.min(devicePixelRatio,2));', 'renderer.setPixelRatio(1);', 'all']],  // 엔진 fc0a71a부터 d3d11·WebGL 두 경로 → 둘 다 (휴대폰은 WebGL)
+    // 8) 그림(스프라이트)이 바뀔 때마다 그림 파일 전체를 그래픽카드로 다시 올림 (휴대폰 측정에서 CPU의 7~8%, 1280x512 모음은 한 번에 2.6MB)
+    //    엔진은 그림을 바꿀 때 원본 텍스처를 복제하는데, three.js 복제(copy)와 needsUpdate가 원본 이미지 버전을 올려 다시 올리게 함 → 복제가 올린 버전을 되돌림
+    //    그리고 바로 앞 복제를 한 장 더 붙잡아 둬 그래픽카드 쪽 텍스처가 0번 쓰임이 되어 지워졌다 다시 올라가지 않게 함 (물체가 사라질 때 같이 지움)
+    // 9) 스프라이트 애니메이션·타일맵 자료를 매 물리 단계마다 처음부터 다시 검사 (휴대폰 측정 4~5%). 같은 자료 객체는 한 번 통과하면 기억
+    'prototype/two-d-assets.js': [['export function valid2DAsset(kind,data){',
+      'const hbValidAssets=new WeakMap();export function valid2DAsset(kind,data){if(!data||typeof data!=="object")return hbValid2DAsset(kind,data);if(hbValidAssets.get(data)===kind)return true;const ok=hbValid2DAsset(kind,data);if(ok)hbValidAssets.set(data,kind);return ok;}function hbValid2DAsset(kind,data){']],
+    'prototype/scene-rendering.js': [
+      ['const map=base.clone();map.needsUpdate=true;', 'const map=base.clone();map.source.version--;map.userData.hbSpriteClone=true;'],
+      ['function release(group,resource){if(group.userData.resources?.delete(resource))resource.dispose();}',
+        'function release(group,resource){if(resource?.userData?.hbSpriteClone&&group.userData.resources?.has(resource)){const kept=group.userData.hbKeptClone;group.userData.hbKeptClone=resource;if(kept&&kept!==resource&&group.userData.resources.delete(kept))kept.dispose();return;}if(group.userData.resources?.delete(resource))resource.dispose();}'],
+    ],
   };
 }
 const RENDERER = 'new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));';
