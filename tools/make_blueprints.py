@@ -181,7 +181,7 @@ SOUNDS = [_sfx(k) for k in ["Slash", "Arrow", "Bolt", "Boom", "Hit", "Kill", "Hu
 SOUNDS += [f"{k}=Assets/Audio/S_BGM_{k}.hbaudioasset.json" for k in ["Hub", "Dungeon", "Boss", "Return"]]
 rules = blueprint("BP_AuricRules", "AuricRules", [transform()], native_from=True, defaults={
     "AuricRules.Debts": [9800, 14500, 31700],  # 기획서 6-4
-    "AuricRules.CharacterSprites": ["Assets/Sprites/Valen/S_Valen_", "Assets/Sprites/Sherry/S_Sherry_", "Assets/Sprites/Alea/S_Alea_"],
+    "AuricRules.CharacterSprites": ["Assets/Sprites/Valen/S_Valen_", "", ""],
     "AuricRules.Sounds": SOUNDS,
     "AuricRules.SofaSprites": [f"Assets/Sprites/Town/S_Sofa_{k}.hbsprite.json" for k in range(4)],
     "AuricRules.Enemies": [f"{k}=Assets/Blueprints/Enemies/BP_{v}.hbblueprint.json" for k, v in (("S", "Skeleton"), ("M", "SkeletonMage"), ("C", "SkeletonCaptain"), ("E", "Eyeball"))]})
@@ -241,7 +241,7 @@ comp(data["objects"][0], "SpriteRenderer")["properties"].update(sprite="Assets/S
 write(shot, data)
 prefab("PF_PlayerShot", "Bullet0", keep_pool=24, order=4)
 data = json.loads((PROJECT / "Assets/Prefabs/PF_PlayerShot.hbprefab.json").read_text(encoding="utf-8"))
-comp(data["objects"][0], "SpriteRenderer")["properties"].update(sprite="Assets/Sprites/FX/S_Arrow_0.hbsprite.json", texture="", color=[1, 1, 1, 1], useCustomSize=False,
+comp(data["objects"][0], "SpriteRenderer")["properties"].update(sprite="Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json", texture="", color=[1, 1, 1, 1], useCustomSize=False,
                                                                 emissiveIntensity=0.5)  # 블룸으로 살짝 번짐 (세면 사각 후광이 보임)
 comp(data["objects"][0], "BoxCollider2D")["properties"]["mask"] = 0
 write(PROJECT / "Assets/Prefabs/PF_PlayerShot.hbprefab.json", data)

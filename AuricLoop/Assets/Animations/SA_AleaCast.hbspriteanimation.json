@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "SA_AleaCast",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/AleaMotion/S_AleaCast_0.hbsprite.json",
+      "duration": 0.03
+    },
+    {
+      "sprite": "Assets/Sprites/AleaMotion/S_AleaCast_1.hbsprite.json",
+      "duration": 0.04
+    },
+    {
+      "sprite": "Assets/Sprites/AleaMotion/S_AleaCast_2.hbsprite.json",
+      "duration": 0.05
+    },
+    {
+      "sprite": "Assets/Sprites/AleaMotion/S_AleaCast_3.hbsprite.json",
+      "duration": 0.06
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

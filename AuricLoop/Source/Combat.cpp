@@ -172,7 +172,7 @@ void TopDownShooter::Blink(const hb::Vec3& position){
 }
 
 void TopDownShooter::Effect(const std::string& name,const hb::Vec3& at,float angle,float glow,bool flip){
-  static const std::map<std::string,float> length={{"Dust",0.24f},{"BoneBurst",0.24f},{"Shockwave",0.26f},{"Muzzle",0.12f},{"CardCast",0.15f},
+  static const std::map<std::string,float> length={{"Dust",0.24f},{"BoneBurst",0.24f},{"Shockwave",0.26f},{"SherryRelease",0.12f},{"AleaCast",0.18f},
     {"HurtClaw",0.15f},{"CoinSparkle",0.18f},{"Spawn",0.9f},{"Hit",0.16f},{"Alert",0.6f},{"EnemySlash",0.16f},{"BossSlash",0.2f},
     {"Impact",0.17f},{"ImpactRed",0.17f},{"GoldDrop",0.36f},{"GlintEye",0.32f},{"GlintTip",0.32f}};
   const auto it=length.find(name);
@@ -354,10 +354,12 @@ void TopDownShooter::SlashHit(const hb::Vec3& position,const std::vector<Enemy*>
 }
 
 void TopDownShooter::Shoot(const hb::Vec3& from,float power){
-  hb::Transform t;t.position=from+facing*0.8f;t.position.z=0.2f;t.rotation=hb::Vec3{0,0,Angle(facing)};
+  // 화살 받침·지팡이 보석에서 나감 (tools/make_hero_motion.py). 다 당긴 화살은 따뜻한 심이 있는 그림
+  const hb::Vec3 muzzle=Muzzle(from);
+  hb::Transform t;t.position=muzzle;t.position.z=0.2f;t.rotation=hb::Vec3{0,0,Angle(facing)};
   auto* s=Take(shotPool,rules->PlayerShotPrefab,t);if(!s)return;
-  hb::Sprites::PlayAnimation(s,Character==1?rules->ArrowClip:rules->CardClip,true);
-  Effect(Character==1?"Muzzle":"CardCast",Muzzle(from),Angle(facing),1.f);Sfx(Character==1?"Arrow":"Bolt");
+  hb::Sprites::PlayAnimation(s,Character!=1?rules->CardClip:power>=1?"Assets/Animations/SA_SherryArrowFull.hbspriteanimation.json":rules->ArrowClip,true);
+  Effect(Character==1?"SherryRelease":"AleaCast",muzzle,Angle(facing),1.f);Sfx(Character==1?"Arrow":"Bolt");
   const float speed=Character==1?rules->ArrowMinSpeed+(rules->ArrowSpeed-rules->ArrowMinSpeed)*power:rules->BoltSpeed;
   PhysicsQueue::Velocity(s,facing*speed);
   shots[s]=rules->PlayerShotLife;shotBoom[s]=false;Swings++;

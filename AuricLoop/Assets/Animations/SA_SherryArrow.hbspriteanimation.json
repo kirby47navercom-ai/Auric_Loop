@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "name": "SA_SherryArrow",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
+      "duration": 0.1
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}

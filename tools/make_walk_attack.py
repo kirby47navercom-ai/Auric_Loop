@@ -13,7 +13,7 @@ from pathlib import Path
 from PIL import Image
 
 ASSETS = Path(__file__).resolve().parent.parent / "AuricLoop/Assets"
-CHARACTERS = {"Valen": 62, "Sherry": 66, "Alea": 72}  # make_anims.py와 같은 서 있는 키 (px)
+CHARACTERS = {"Valen": 62}  # make_anims.py와 같은 서 있는 키 (px). 셰리·알레아는 tools/make_hero_motion.py
 DIRS = ["S", "SE", "E", "NE", "N"]
 LEGS = 0.24  # 발끝에서 이 비율(키 대비) 아래가 다리. 위는 공격 그림, 아래는 걷기 그림
 

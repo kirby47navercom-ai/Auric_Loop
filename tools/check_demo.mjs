@@ -225,40 +225,24 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   console.log('근접 예고 공격·방 카메라 검사 통과', 'hp', s.Hp, 'room', `${room.hw * 2}x${room.hh * 2}`, 'cam', cam.map(v => v.toFixed(1)).join(','));
 }
 
-// 새 캐릭터 시트 (docs/캐릭터_시트_요청.md, AnimSets=1): 그림이 아직 없으므로 임시 스프라이트 에셋을 만들어 이름 순서만 본다
-//   셰리: 걸으면서 당기면 겨누고 걷기(다리 위상 유지) → 다 당김 → 놓기 / 알레아: 겨누고 걷다가 던질 때마다 튕김
+// 셰리·알레아 모션 팩 (tools/make_hero_motion.py): 쓰는 그림이 다 있고, 걸으며 공격하면 윗몸은 공격·다리는 걷기 위상 (_W)
+//   셰리: 준비 → 당기기 → 당긴 채 유지 → 다 당김 → 놓기·복귀 / 알레아: 지팡이를 내밀고 걷다가 쏠 때마다 발사·반동
 {
   const fs = await import('node:fs');
-  const dir = path.join(path.dirname(project), 'Assets/_animtest');
-  const D = ['S', 'SE', 'E', 'NE', 'N', 'NW', 'W', 'SW'], poses = {Valen: [], Sherry: ['AimHalf', 'AimFull', 'Loose'], Alea: ['Hold', 'Throw']};
-  fs.mkdirSync(dir, {recursive: true});
-  try {
-    for (const [who, sets] of Object.entries(poses)) {
-      const names = [];
-      for (const d of D) {
-        for (let i = 0; i < 5; i++) names.push(`${d}_Idle_${i}`, `${d}_Walk_${i}`, `${d}_Roll_${i}`);
-        for (const s of sets) { names.push(`${d}_${s}_S`); for (let i = 0; i < 4; i++) names.push(`${d}_${s}_W${i}`); }
-        if (who === 'Valen') for (const s of ['SlashA', 'SlashB']) for (let i = 0; i < 3; i++) names.push(`${d}_${s}_${i}`);
-      }
-      for (let f = 1; f <= 3; f++) for (let i = 0; i < 12; i++) names.push(`S_Fidget${f}_${i}`);
-      for (const n of names) fs.writeFileSync(path.join(dir, `S_${who}_${n}.hbsprite.json`), JSON.stringify({version: 1, name: `S_${who}_${n}`,
-        texture: `Assets/Sprites/${who}/${who}_S_Idle_0.png`, pixelsPerUnit: 32, rect: [0, 0, 192, 96], pivot: [0.5, 0.4], filter: 'nearest', border: [0, 0, 0, 0]}));
-    }
-    const nativeDefaults = {Rules: {AnimSets: [1, 1, 1], FidgetDelay: 2, CharacterSprites: ['Valen', 'Sherry', 'Alea'].map(w => `Assets/_animtest/S_${w}_`)}};
-    const run = async (name, frames, inputs) => {
-      const seq = [];
-      await runProject(project, {scene: scene(name), frames, delta: 1 / 60, inputs, nativeDefaults, onFrame: (f, vm) => {
-        const s = vm.objects.find(o => o.id === 'Player').components.find(c => c.type === 'SpriteRenderer').properties.sprite.split('/').at(-1).replace(/^S_\w+?_|\.hbsprite\.json$/g, '');
-        if (seq.at(-1) !== s) seq.push(s); }});
-      return seq.join(' > ');
-    };
-    // 발렌은 손 소켓 무기(AnimateSocket)라 이 시트의 베기 A/B·대기 행동을 쓰지 않음 (위 '걸으며 공격' 검사)
-    const sherry = await run('Test_Sherry', 200, [{frame: 5, key: 'a', value: 1}, {frame: 20, key: 'LeftMouseButton', value: 1}, {frame: 110, key: 'LeftMouseButton', value: 0}, {frame: 130, key: 'a', value: 0}]);
-    assert.match(sherry, /AimHalf_W\d > .*AimFull_W\d > .*Loose_W\d/, `걸으며 시위 걸기 → 다 당김 → 놓기 (${sherry})`);
-    const alea = await run('Test_Alea', 120, [{frame: 5, key: 'w', value: 1}, {frame: 20, key: 'LeftMouseButton', value: 1}, {frame: 60, key: 'LeftMouseButton', value: 0}, {frame: 70, key: 'w', value: 0}]);
-    assert.match(alea, /Hold_W\d > N_Throw_W\d > N_Hold_W\d/, `걸으며 겨눔·튕김 (${alea})`);
-    console.log('새 시트 애니메이션 검사 통과');
-  } finally { fs.rmSync(dir, {recursive: true, force: true}); }
+  const run = async (name, frames, inputs) => {
+    const seq = [];
+    await runProject(project, {scene: scene(name), frames, delta: 1 / 60, inputs, onFrame: (f, vm) => {
+      const s = vm.objects.find(o => o.id === 'Player').components.find(c => c.type === 'SpriteRenderer').properties.sprite;
+      assert.ok(fs.existsSync(path.join(path.dirname(project), s)), `그림 없음 ${s}`);
+      const n = s.split('/').at(-1).replace(/^S_[SA]M_|\.hbsprite\.json$/g, '');
+      if (seq.at(-1) !== n) seq.push(n); }});
+    return seq.join(' > ');
+  };
+  const sherry = await run('Test_Sherry', 200, [{frame: 5, key: 'a', value: 1}, {frame: 20, key: 'LeftMouseButton', value: 1}, {frame: 110, key: 'LeftMouseButton', value: 0}, {frame: 130, key: 'a', value: 0}]);
+  assert.match(sherry, /Charge_1_0_W\d > .*Charge_1_1_W\d > .*Hold_1_\d_W\d > .*Ready_1_\d_W\d > .*Charge_1_3_W\d > .*Charge_1_5/, `걸으며 당기기 → 다 당김 → 놓기 (${sherry})`);
+  const alea = await run('Test_Alea', 120, [{frame: 5, key: 'w', value: 1}, {frame: 20, key: 'LeftMouseButton', value: 1}, {frame: 60, key: 'LeftMouseButton', value: 0}, {frame: 70, key: 'w', value: 0}]);
+  assert.match(alea, /Attack_2_3_W\d > .*Attack_2_4_W\d > .*Attack_2_3_W\d/, `걸으며 연사 (${alea})`);
+  console.log('셰리·알레아 모션 검사 통과');
 }
 
 // 원룸은 처음엔 텅 빈 방: 소파 자리(바닥 표시)만 있고 골드로 들여놓으면 낡은 소파가 생김. 침대·냉장고·TV 없음

@@ -423,11 +423,11 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   std::vector<std::string> Sounds;           // "이름=오디오 에셋 경로". 효과음 Slash·Arrow·… / 배경음 Hub·Dungeon·Boss·Return
   HB_PROPERTY(BlueprintReadWrite)
-  std::string ArrowClip = "Assets/Animations/SA_Arrow.hbspriteanimation.json";      // 셰리 화살 (날아가는 동안 반복)
+  std::string ArrowClip = "Assets/Animations/SA_SherryArrow.hbspriteanimation.json";      // 셰리 화살 (날아가는 동안 반복)
   HB_PROPERTY(BlueprintReadWrite)
-  std::string CardClip = "Assets/Animations/SA_Card.hbspriteanimation.json";        // 알레아 마탄 카드
+  std::string CardClip = "Assets/Animations/SA_AleaBolt.hbspriteanimation.json";        // 알레아 마탄 카드
   HB_PROPERTY(BlueprintReadWrite)
-  std::string BoomClip = "Assets/Animations/SA_Boom.hbspriteanimation.json";        // 마탄 폭발
+  std::string BoomClip = "Assets/Animations/SA_AleaImpact.hbspriteanimation.json";        // 마탄 폭발
   HB_PROPERTY(BlueprintReadWrite)
   std::string EnemyShotClip = "Assets/Animations/SA_EnemyOrb.hbspriteanimation.json";  // 적 탄 (적마다 Enemy.ShotClip으로 바꿀 수 있음)
   HB_PROPERTY(BlueprintReadWrite)
@@ -619,7 +619,8 @@ private:
   void Notify(const std::string& text){hint=text;hintTime=2.5f;Hud();}
   void HitStop(float seconds,float scale=0.06f){if(Paused)return;hitStopLeft=std::max(hitStopLeft,seconds);hb::Clock::SetTimeScale(scale);}  // 타격감: 맞은 순간 멈칫 (scale>0.06이면 슬로모션)  // 물체와 상관없는 알림 (위 가운데, 잠깐)
   bool NewSheet() const{return Character<(int)rules->AnimSets.size()&&rules->AnimSets[Character]==1;}
-  void AnimateSheet(float delta,bool moving,const char* dir);  // 새 시트 (Screen.inl)
+  void AnimateMotion(float delta,bool moving);  // 셰리·알레아 모션 팩 4방향 (Screen.inl, tools/make_hero_motion.py)
+  int MotionRow() const;hb::Actor* chargeFx=nullptr;std::string chargeShown;  // 셰리 차징 빛 (이펙트 풀에서 빌림)
   void AnimateSocket(float delta,bool moving);  // 발렌 손 소켓 무기: v14 몸 + 손에 단 검이 조준 쪽으로 돎 (Screen.inl)
   hb::Actor* grip=nullptr;std::string gripShown;hb::Vec3 gripAt{0,0,0};  // 검 손잡이 위 손가락 (PlayerGrip)
   hb::Actor* weapon=nullptr;std::string weaponShown;hb::Vec3 weaponAt{0,0,0};float swingT=-1;hb::Actor* slashFx=nullptr;std::string slashShown;bool vsPreloaded=false;  // 손에 단 검 (PlayerWeapon, 매 프레임 손 위치로), 휘두르기 시간·방향
@@ -735,7 +736,7 @@ private:
   // 공격 범위 예고: 테두리 + 안쪽 채움 (시간에 따라 차오르고 다 차면 맞는 순간). 띠(돌진·베기)·원(도약·회전·금화 비)
   std::vector<hb::Actor*> warnPool,warnFillPool,circlePool,circleFillPool;
   struct WarnLine{hb::Actor* actor;hb::Actor* fill;float left,total;bool circle;hb::Vec3 from,dir;float length,width;};std::vector<WarnLine> warns;
-  float attackAnim=0,walkTime=0,breathTime=0,shake=0,aimHold=0,sentSpeed=0,knockTimer=0,idleTime=0,runTime=0,typeTime=0,phaseTime=0;
+  float motionTime=0,attackAnim=0,walkTime=0,breathTime=0,shake=0,aimHold=0,sentSpeed=0,knockTimer=0,idleTime=0,runTime=0,typeTime=0,phaseTime=0;
   std::string currentSprite,currentMusic,musicHandle,hint,shownWho;
   // 적 탄은 엔진 탄막 시스템(hb::Projectiles)이 오브젝트 없이 한꺼번에 움직이고 그린다.
   // 탄 주인은 발사한 액터라서 적 함수(적 맥락)에서 바로 쏘지 않고 모았다가 Director Tick에서 쏜다 (충돌 묶음을 Director가 받음)

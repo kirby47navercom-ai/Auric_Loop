@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "name": "SA_AleaImpact",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/AleaMotion/S_AleaImpact_0.hbsprite.json",
+      "duration": 0.015
+    },
+    {
+      "sprite": "Assets/Sprites/AleaMotion/S_AleaImpact_1.hbsprite.json",
+      "duration": 0.02
+    },
+    {
+      "sprite": "Assets/Sprites/AleaMotion/S_AleaImpact_2.hbsprite.json",
+      "duration": 0.025
+    },
+    {
+      "sprite": "Assets/Sprites/AleaMotion/S_AleaImpact_3.hbsprite.json",
+      "duration": 0.03
+    },
+    {
+      "sprite": "Assets/Sprites/AleaMotion/S_AleaImpact_4.hbsprite.json",
+      "duration": 0.035
+    },
+    {
+      "sprite": "Assets/Sprites/AleaMotion/S_AleaImpact_5.hbsprite.json",
+      "duration": 0.04
+    },
+    {
+      "sprite": "Assets/Sprites/AleaMotion/S_AleaImpact_6.hbsprite.json",
+      "duration": 0.045
+    },
+    {
+      "sprite": "Assets/Sprites/AleaMotion/S_AleaImpact_7.hbsprite.json",
+      "duration": 0.04
+    }
+  ],
+  "loop": false,
+  "playRate": 1
+}

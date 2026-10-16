@@ -29,7 +29,7 @@ PPU = 32
 FEET = 0.95  # 캐릭터 오브젝트 중심에서 발끝까지 (m), tools/make_sprites.py와 같음
 src = Path(sys.argv[1])
 
-CHARACTERS = {"Valen": 62, "Sherry": 66, "Alea": 72}  # 서 있는 키 (px)
+CHARACTERS = {"Valen": 62}  # 서 있는 키 (px). 셰리·알레아는 아트팀 모션 팩 (tools/make_hero_motion.py)
 ENEMIES = {"Skeleton": 44, "SkeletonMage": 51, "SkeletonCaptain": 111}
 DIRS = ["S", "SE", "E", "NE", "N"]
 
@@ -200,8 +200,7 @@ animation("SA_Spawn", save_strip(ASSETS / "Sprites/FX", "Spawn", spawn), 0.15, F
 
 # 탄·화살·카드·폭발·골드 (fx_*.png, 한 줄): 날아가는 동안 반복 재생, 폭발은 한 번
 for file, name, count, height, step, loop in (("fx_enemy_orb.png", "EnemyOrb", 4, 14, 0.1, True), ("fx_boss_orb.png", "BossOrb", 4, 20, 0.1, True),
-                                              ("fx_arrow.png", "Arrow", 2, 6, 0.08, True), ("fx_card.png", "Card", 4, 18, 0.06, True),
-                                              ("fx_boom.png", "Boom", 5, 44, 0.05, False), ("fx_coin.png", "Coin", 6, 14, 0.08, True)):
+                                              ("fx_coin.png", "Coin", 6, 14, 0.08, True)):  # 셰리 화살·알레아 마탄·폭발은 tools/make_hero_motion.py
     animation(f"SA_{name}", save_strip(ASSETS / "Sprites/FX", name, strip(file, count, height)), step, loop)
 
 
@@ -214,6 +213,8 @@ def strip_groups(file, groups):
     for name, count, height, step, loop in groups:
         part = cells[start:start + count]
         start += count
+        if not name:  # 안 쓰는 칸 건너뜀
+            continue
         boxes = [c.getbbox() for c in part if c.getbbox()]
         box = (min(b[0] for b in boxes), min(b[1] for b in boxes), max(b[2] for b in boxes), max(b[3] for b in boxes))
         part = [c.crop(box) for c in part]
@@ -223,7 +224,7 @@ def strip_groups(file, groups):
 
 
 strip_groups("fx_more.png", [("Dust", 4, 18, 0.06, False), ("BoneBurst", 4, 44, 0.06, False), ("Shockwave", 4, 70, 0.06, False)])
-strip_groups("fx_more2.png", [("Muzzle", 3, 16, 0.04, False), ("CardCast", 3, 22, 0.05, False), ("HurtClaw", 3, 44, 0.05, False), ("CoinSparkle", 3, 22, 0.06, False)])
+strip_groups("fx_more2.png", [(None, 6, 0, 0, False), ("HurtClaw", 3, 44, 0.05, False), ("CoinSparkle", 3, 22, 0.06, False)])
 
 # 보스 돌진 예고선: 반투명 붉은 띠 (C++가 돌진 방향으로 돌리고 길이를 맞춤)
 warn = Image.new("RGBA", (32, 32))

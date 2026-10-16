@@ -14,7 +14,7 @@ from pathlib import Path
 from PIL import Image
 
 ASSETS = Path(__file__).resolve().parent.parent / "AuricLoop/Assets"
-CHARACTERS = ["Valen", "Sherry", "Alea"]
+CHARACTERS = ["Valen"]  # 셰리·알레아는 tools/make_hero_motion.py
 DIRS = ["S", "SE", "E", "NE", "N"]
 PALETTE = 48
 

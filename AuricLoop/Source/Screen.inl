@@ -38,55 +38,15 @@ void TopDownShooter::Hud(){
   UiText("Title",status);UiVisible("Title",!status.empty());UiVisible("AreaBack",!status.empty());
 }
 
-static const char* kDirs8[]={"E","NE","N","NW","W","SW","S","SE"};
-static int Sector(const hb::Vec3& v){return ((int)std::lround(Angle(v)/45)%8+8)%8;}
+#include "HeroMotion.inl"
+
+int TopDownShooter::MotionRow() const{  // 0 아래 · 1 왼쪽 · 2 위 · 3 오른쪽 (발렌 소켓과 같은 나눔)
+  const float aim=Angle(facing);return aim>=-45&&aim<45?3:aim>=45&&aim<135?2:aim>=-135&&aim<-45?0:1;}
 
 hb::Vec3 TopDownShooter::Muzzle(const hb::Vec3& from) const{
-  // 새 시트는 방향마다 화살촉·카드 끝 픽셀을 기록해 둔다 (docs/캐릭터_시트_요청.md 9장). 192x96 그림, 원점은 발끝 0.95m 위
-  static const char* names[]={"Valen","Sherry","Alea"};
-  const std::string key=std::string(names[std::clamp(Character,0,2)])+"_"+kDirs8[Sector(facing)]+"=";
-  for(const auto& m:rules->Muzzles)if(m.rfind(key,0)==0){const auto comma=m.find(',',key.size());if(comma==std::string::npos)break;
-    const float px=std::stof(m.substr(key.size(),comma-key.size())),py=std::stof(m.substr(comma+1));
-    static const float kHeroPPU[]={32,41,42};const float u=kHeroPPU[std::clamp(Character,0,2)];  // tools/scale_heroes.py (발끝은 그림 88번째 줄)
-    return from+hb::Vec3{(px-96)/u,(88-0.95f*u-py)/u,0.25f};}
+  if(Character==1||Character==2){const int c=Character-1;const float* m=kHmMuzzle[c][MotionRow()];  // 셰리 화살 받침 · 알레아 지팡이 보석
+    return from+hb::Vec3{(m[0]+0.5f-40)/kHmPPU[c],(kHmOriginTop[c]-m[1]-0.5f)/kHmPPU[c],0.25f};}
   return from+facing*0.8f+hb::Vec3{0,0.2f,0.25f};  // 몸이 1.6m로 작아져 손 앞 0.8m
-}
-
-void TopDownShooter::AnimateSheet(float delta,bool moving,const char* dir){
-  // 새 시트: 8방향 그대로(반전 없음). 걷기 그림은 움직인 거리로 넘김 → 속도가 바뀌어도 발이 땅에 붙음
-  // 다리 위상(0 오른발 디딤, 1 지나감, 2 왼발 디딤, 3 지나감)은 걷기·겨누고 걷기가 같이 쓰므로 공격으로 바뀌어도 다리가 이어짐
-  if(playerFlipped){playerFlipped=false;hb::Sprites::SetFlip(player,false,false);}
-  const auto at=hb::Scene::GetPosition(player);auto step=at-animPos;step.z=0;animPos=at;
-  const float moved=Length(step)<1.f?Length(step):0.f;  // 순간이동(장면 전환·워프)은 걸음으로 안 셈
-  const bool backward=moving&&hb::VectorMath::DotProduct(step,facing)<0;
-  walkDist+=backward?-moved:moved;  // 뒷걸음질이면 위상을 거꾸로 (3→2→1→0)
-  const int phase=((int)std::floor(walkDist/rules->Stride)%4+4)%4;
-  const std::string d=std::string(dir)+"_";
-  if(attackAnim>0)attackAnim-=delta;
-  const bool busy=dodgeTimer>0||attackAnim>0||charge>0||moving||hb::Input::IsKeyDown("LeftMouseButton");
-  stillTime=busy?0:stillTime+delta;
-  std::string next;
-  if(dodgeTimer>0){  // 구르기 5장 (0.3초 안에)
-    const float t=rules->DodgeTime-dodgeTimer;next=d+"Roll_"+std::to_string(std::min(4,int(t/rules->DodgeTime*5)));fidget=0;}
-  else if(Character==0&&attackAnim>0){  // 발렌: 내딛으며 베기 A/B (준비 0.08 → 베기 0.1 → 마무리 0.12)
-    const float t=0.3f-attackAnim;next=d+(slashB?"SlashB_":"SlashA_")+std::to_string(t<0.08f?0:t<0.18f?1:2);fidget=0;
-    if(attackAnim<=delta)walkDist=(slashB?0.f:2.f)*rules->Stride;}  // 끝나면 마지막 디딤발에 맞는 위상으로 걷기 이어감
-  else if(Character==1&&(charge>0||attackAnim>0)){  // 셰리: 시위 걸기 → 다 당김 → 놓기, 걸으면 다리 위상 그대로
-    const char* pose=charge<=0?"Loose":charge<rules->ArrowCharge*0.5f?"AimHalf":"AimFull";
-    next=d+pose+(moving?"_W"+std::to_string(phase):std::string("_S"));fidget=0;}
-  else if(Character==2&&(attackAnim>0||hb::Input::IsKeyDown("LeftMouseButton"))){  // 알레아: 겨눔, 던질 때마다 0.06초 튕김
-    next=d+(attackAnim>0.14f?"Throw":"Hold")+(moving?"_W"+std::to_string(phase):std::string("_S"));fidget=0;}
-  else if(moving){next=d+"Walk_"+std::to_string(phase);fidget=0;}
-  else{
-    if(phase%2)walkDist+=rules->Stride;  // 지나감 자세에서 멈추면 다음 디딤 자세로
-    if(!fidget&&stillTime>=rules->FidgetDelay&&Character<(int)rules->Fidgets.size()){  // 대기 행동: 정면을 보고 셋 중 하나 (직전 것 빼고)
-      do fidget=1+std::rand()%3;while(fidget==lastFidget);lastFidget=fidget;fidgetTime=0;facing=hb::Vec3{0,-1,0};}
-    if(fidget){std::stringstream ss(rules->Fidgets[Character]);std::string n;int count=8;for(int i=0;i<fidget&&std::getline(ss,n,',');++i)count=std::stoi(n);
-      fidgetTime+=delta;const int f=int(fidgetTime/0.16f);
-      if(f<count)next="S_Fidget"+std::to_string(fidget)+"_"+std::to_string(f);
-      else{fidget=0;stillTime=rules->FidgetDelay-(8+std::rand()%5);}}  // 다음은 8~12초 뒤
-    if(next.empty()){breathTime+=delta;next=d+"Idle_"+std::to_string(int(breathTime*4)%std::max(1,rules->IdleFrames));}}
-  if(next!=currentSprite){currentSprite=next;if(Character<(int)rules->CharacterSprites.size())hb::Sprites::SetSprite(player,rules->CharacterSprites[Character]+next+".hbsprite.json");}
 }
 
 #include "ValenSocket.inl"
@@ -152,32 +112,48 @@ void TopDownShooter::AnimateSocket(float delta,bool moving){
   if(key!=weaponShown){weaponShown=key;hb::Sprites::SetSprite(weapon,dir+key+".hbsprite.json");}
 }
 
-void TopDownShooter::Animate(float delta,bool moving){
-  // 8방향: 그림은 남·남동·동·북동·북 5방향이고 서쪽 셋은 동쪽 그림을 뒤집는다
-  // 프레임: 공격 3장(0.1초씩) > 걷기 4장(초당 8장) > 서 있기
-  static const char* dirs[]={"E","NE","N","NE","E","SE","S","SE"};
-  if(Character==0){AnimateSocket(delta,moving);return;}
-  if(weapon&&!weaponShown.empty()){weaponShown.clear();hb::Scene::SetPosition(weapon,hb::Vec3{0,-500,0});}  // 다른 캐릭터는 검·손가락을 치움
+void TopDownShooter::AnimateMotion(float delta,bool moving){
+  // 셰리·알레아 (아트팀 모션 팩 셰리 v11·알레아 v3, tools/make_hero_motion.py). 4방향 반전 없음, 걸음 위상은 움직인 거리로 (뒷걸음질이면 거꾸로)
+  // 걸으며 공격하면 윗몸은 공격 자세, 다리는 걷기 위상 그대로 (_W위상 합성 그림). 대시는 뛰기 그림
+  if(weapon&&!weaponShown.empty()){weaponShown.clear();hb::Scene::SetPosition(weapon,hb::Vec3{0,-500,0});}  // 발렌 검·손가락 치움
   if(grip&&!gripShown.empty()){gripShown.clear();hb::Scene::SetPosition(grip,hb::Vec3{0,-500,0});}
-  const int sector=Sector(facing);
-  if(NewSheet()){AnimateSheet(delta,moving,kDirs8[sector]);return;}
-  const bool flip=sector>=3&&sector<=5;
-  if(flip!=playerFlipped){playerFlipped=flip;hb::Sprites::SetFlip(player,flip,false);}
-  std::string next=std::string(dirs[sector])+"_";
+  if(playerFlipped){playerFlipped=false;hb::Sprites::SetFlip(player,false,false);}
+  const auto at=hb::Scene::GetPosition(player);auto step=at-animPos;step.z=0;animPos=at;
+  const float moved=Length(step)<1.f?Length(step):0.f;
+  walkDist+=hb::VectorMath::DotProduct(step,facing)<0?-moved:moved;
   if(attackAnim>0)attackAnim-=delta;
-  if(dodgeTimer>0){  // 구르기: 웅크림 → 90·180·270도로 굴러 → 일어남 (서 있는 그림을 돌린 것, tools/unify_sprites.py). 그림은 아래·옆·위 셋
-    static const int spin[]={1,2,4};
-    const float t=rules->DodgeTime-dodgeTimer;const int f=t<0.08f?0:dodgeTimer<0.12f?3:spin[int((t-0.08f)/0.07f)%3];
-    const char* row=sector==2||sector==1||sector==3?"N":sector>=5&&sector<=7?"S":"E";
-    next=std::string(row)+"_Roll_"+std::to_string(f);}
-  else if(charge>0||attackAnim>0){  // 셰리 장전(시위 걸기 → 당기기) 또는 공격 3장
-    const int f=charge>0?(charge<rules->ArrowCharge*0.5f?0:1):attackAnim>0.2f?0:attackAnim>0.1f?1:2;
-    // 공격 그림은 서서 하는 자세라 움직이는 중엔 윗몸은 공격·다리는 걷기인 합성 그림 (tools/make_walk_attack.py)
-    if(moving){walkTime+=delta;next+="WalkAttack_"+std::to_string(f)+"_"+std::to_string(int(walkTime*10)%4);}
-    else next+="Attack_"+std::to_string(f);}
-  else if(moving){walkTime+=delta;next+="Walk_"+std::to_string(int(walkTime*10)%4);}
-  else{walkTime=0;breathTime+=delta;next+="Idle_"+std::to_string(int(breathTime*1.6f)%2);}  // 서 있으면 숨쉬기 두 장
-  if(next!=currentSprite){currentSprite=next;if(Character<(int)rules->CharacterSprites.size())hb::Sprites::SetSprite(player,rules->CharacterSprites[Character]+next+".hbsprite.json");}
+  const int row=MotionRow(),phase=((int)std::floor(walkDist/rules->Stride)%4+4)%4,c=Character-1;
+  const std::string r=std::to_string(row)+"_",w=moving?"_W"+std::to_string(phase):"";
+  std::string pose;
+  if(dodgeTimer>0)pose="Run_"+r+std::to_string(phase);
+  else if(Character==1&&charge>0){  // 셰리: 팩 2초 차징을 게임 장전 시간(ArrowCharge)에 맞춰 줄임. 준비 → 당기기 → 당긴 채 유지(4장) → 다 당김(4장)
+    const float k=charge/std::max(0.01f,rules->ArrowCharge);motionTime+=delta;const int loop=int(motionTime/0.16f)%4;
+    pose=k>=1?"Ready_"+r+std::to_string(loop):k<0.09f?"Charge_"+r+"0":k<0.25f?"Charge_"+r+"1":"Hold_"+r+std::to_string(loop);pose+=w;}
+  else if(Character==1&&attackAnim>0){const float t=0.44f-attackAnim;pose="Charge_"+r+(t<0.08f?"3":t<0.2f?"4":"5")+w;}  // 놓기 80 → 복귀 120 → 준비 240ms
+  else if(Character==2&&(attackAnim>0||hb::Input::IsKeyDown("LeftMouseButton"))){  // 알레아: 지팡이를 내민 채(2), 쏠 때마다 발사(3) → 반동(4)
+    pose="Attack_"+r+(attackAnim>0.14f?"3":attackAnim>0.07f?"4":"2")+w;}
+  else if(moving)pose="Walk_"+r+std::to_string(phase);
+  else{if(phase%2)walkDist+=rules->Stride;pose="Idle_"+r+"0";}  // 지나감 자세에서 멈추면 다음 디딤 자세로
+  if(!(Character==1&&charge>0))motionTime=0;
+  const std::string body=std::string(Character==1?"Assets/Sprites/SherryMotion/S_SM_":"Assets/Sprites/AleaMotion/S_AM_")+pose+".hbsprite.json";
+  if(body!=currentSprite){currentSprite=body;hb::Sprites::SetSprite(player,body);}
+  // 셰리 차징 빛: 장전 40%부터 활 쥔 손에 모여듦 (12장), 다 당기면 작은 빛 반짝임. 캐릭터 위에 그림
+  const float k=Character==1&&dodgeTimer<=0?charge/std::max(0.01f,rules->ArrowCharge):0.f;
+  std::string cs;
+  if(k>=1)cs="S_SherryReady_"+std::to_string(int(motionTime/0.16f)%4);
+  else if(k>=0.4f)cs="S_SherryCharge_"+std::to_string(std::min(11,int((k-0.4f)/0.6f*12)));
+  if(!cs.empty()&&!chargeFx){hb::Transform t;t.position=at;chargeFx=Take(fxPool,rules->FxPrefab,t);
+    if(chargeFx){hb::Components::SetFloat(chargeFx,"SpriteRenderer","emissiveIntensity",1.f);hb::Sprites::SetSorting(chargeFx,"default",6);}}
+  if(chargeFx){
+    if(cs.empty()){hb::Sprites::SetSorting(chargeFx,"default",4);Give(fxPool,chargeFx);chargeFx=nullptr;chargeShown.clear();}
+    else{if(cs!=chargeShown){chargeShown=cs;hb::Sprites::SetSprite(chargeFx,"Assets/Sprites/SherryMotion/"+cs+".hbsprite.json");}
+      const float* h=kSherryChargeFx[row];const float bob=moving&&phase%2==0?1.f:0.f;
+      const hb::Vec3 lead=at+hb::Physics::GetVelocity(player)*delta;
+      hb::Scene::SetPosition(chargeFx,lead+hb::Vec3{(h[0]+0.5f-40)/kHmPPU[c],(kHmOriginTop[c]-h[1]-bob-0.5f)/kHmPPU[c],0.3f});}}
+}
+
+void TopDownShooter::Animate(float delta,bool moving){
+  if(Character==0)AnimateSocket(delta,moving);else AnimateMotion(delta,moving);
 }
 
 static size_t Utf8Count(const std::string& s){size_t n=0;for(unsigned char ch:s)n+=(ch&0xC0)!=0x80;return n;}

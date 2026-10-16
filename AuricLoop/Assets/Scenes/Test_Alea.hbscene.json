@@ -37424,7 +37424,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -37568,7 +37568,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -37712,7 +37712,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -37856,7 +37856,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -38000,7 +38000,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -38144,7 +38144,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -38288,7 +38288,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -38432,7 +38432,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -38576,7 +38576,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -38720,7 +38720,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -38864,7 +38864,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -39008,7 +39008,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -39152,7 +39152,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -39296,7 +39296,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -39440,7 +39440,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
@@ -39584,7 +39584,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/FX/S_Arrow_0.hbsprite.json",
+            "sprite": "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [
