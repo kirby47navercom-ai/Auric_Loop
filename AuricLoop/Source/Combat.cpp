@@ -284,13 +284,15 @@ void TopDownShooter::Prewarm(){
   for(auto* tag:{"Enemy.S","Enemy.M","Enemy.C","Enemy.E"})for(auto* a:hb::Scene::GetActorsWithTag(tag))if(auto* e=dynamic_cast<Enemy*>(a))ParkEnemy(e);
 }
 
-void TopDownShooter::Whirl(const hb::Vec3& at){
-  // 보스 회전 베기 회오리: 처음 부를 때 이펙트 풀에서 하나 빌려 반복 재생, 매 프레임 보스 발밑을 따라감 (tools/make_impact_frame.py Whirl)
+void TopDownShooter::Whirl(const hb::Vec3& at,float radius){
+  // 보스 회전 베기: 맞는 범위 원(발밑, 반지름 radius) 둘레를 대검 궤적 두 줄기가 바닥에서 빙빙 돌며 쓸고 간 자리가 주황으로 남음 (tools/make_impact_frame.py SpinSlash)
+  // 처음 부를 때 이펙트 풀에서 하나 빌려 반복 재생, 매 프레임 보스 발밑을 따라감. 바닥 그림이라 몸 뒤(순서 -1)
   whirlSeen=true;
   if(!whirl){hb::Transform t;t.position=at;whirl=Take(fxPool,rules->FxPrefab,t);if(!whirl)return;
-    hb::Components::SetFloat(whirl,"SpriteRenderer","emissiveIntensity",0.45f);hb::Scene::SetScale(whirl,hb::Vec3{1.25f,1.2f,1});
-    hb::Sprites::PlayAnimation(whirl,"Assets/Animations/SA_Whirl.hbspriteanimation.json",true);}
-  hb::Scene::SetPosition(whirl,at+hb::Vec3{0,-1.25f,0.35f});
+    hb::Components::SetFloat(whirl,"SpriteRenderer","emissiveIntensity",0.6f);hb::Sprites::SetSorting(whirl,"default",-1);
+    hb::Scene::SetScale(whirl,hb::Vec3{radius/3,radius/3,1});  // 그림 원 반지름 3m
+    hb::Sprites::PlayAnimation(whirl,"Assets/Animations/SA_SpinSlash.hbspriteanimation.json",true);}
+  hb::Scene::SetPosition(whirl,at+hb::Vec3{0,-0.9f,0.02f});
 }
 
 void TopDownShooter::ImpactFrame(int stages){

@@ -56,10 +56,10 @@ void Enemy::Tick(float delta){
         if(Length(game->PlayerPosition()+hb::Vec3{0,-0.9f,0}-s)<1.2f)game->DamagePlayer(1,s);}
       game->Shake(0.35f,2.2f);game->Sfx("CoinRain");game->Sfx("Impact");rainSpots.clear();}
     if(roarTime>0&&(roarTime-=delta)<=0&&(mode==Mode::Prowl||mode==Mode::Halt))hb::Sprites::PlayAnimation(this,WalkClip,true);  // 포효 끝: 패턴 자세 중이면 그대로
-    if(mode==Mode::Spin){  // 회전 베기: 회오리에 감싸여 천천히 다가오며 0.25초마다 둘레를 벰
-      Move(dir*(Speed*0.7f));const auto at=hb::Scene::GetPosition(this);game->Whirl(at);  // 몸을 감싸고 도는 회오리 (매 프레임 따라감)
+    if(mode==Mode::Spin){  // 회전 베기: 대검을 뻗고 돌며 천천히 다가옴. 0.25초마다 둘레(반지름+1.5m)를 벰
+      Move(dir*(Speed*0.7f));const auto at=hb::Scene::GetPosition(this);game->Whirl(at,Radius+1.5f);  // 맞는 범위 원을 도는 대검 궤적 (매 프레임 따라감)
       if((spinTick-=delta)<=0){spinTick=0.25f;game->Sfx("BossSwing",0.9f+float(std::rand()%20)/100);
-        spinAngle+=95;game->Effect("Dust",at+Rotate(hb::Vec3{1.4f,0,0},spinAngle)+hb::Vec3{0,-1.1f,0.03f},0,0,spinAngle>180,1.4f);game->Shake(0.08f,1.f);  // 회오리가 쓸고 간 흙먼지
+        spinAngle+=95;game->Effect("Dust",at+Rotate(hb::Vec3{Radius+1.2f,0,0},spinAngle)+hb::Vec3{0,-0.9f,0.03f},0,0,spinAngle>180,1.4f);game->Shake(0.08f,1.f);  // 칼끝이 쓸고 간 바닥 흙먼지
         if(distance<Radius+1.5f)game->DamagePlayer(1,at);}
       return;}
   }

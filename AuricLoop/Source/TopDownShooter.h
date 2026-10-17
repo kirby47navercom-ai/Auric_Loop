@@ -569,7 +569,7 @@ public:
   void BossEnraged(Enemy* e);                                                        // 2페이즈 포효
   void Effect(const std::string& name,const hb::Vec3& at,float angle=0,float glow=0,bool flip=false,float scale=1);  // Assets/Animations/SA_<name> 한 번 재생
   void BossGhost(Enemy* e);       // 보스 돌진 잔상 (Combat.cpp)
-  void Whirl(const hb::Vec3& at);  // 보스 회전 베기 회오리 (이펙트 풀에서 빌려 보스를 따라감, 안 부른 프레임에 돌려줌)
+  void Whirl(const hb::Vec3& at,float radius);  // 보스 회전 베기: 맞는 범위 원을 도는 대검 궤적 (이펙트 풀에서 빌려 보스를 따라감, 안 부른 프레임에 돌려줌)
   void BossImpact(float slow){HitStop(slow,0.2f);punch=1;hb::Camera::Flash(hb::Color{1,0.9f,0.6f,0.18f},0.15f);}  // 보스 큰 공격이 땅에 닿는 순간: 잠깐 느려지고 화면이 살짝 당겨지고 번쩍
   void Shake(float seconds,float power){shake=std::max(shake,seconds);shakePower=std::max(shakePower,power);}  // 화면 흔들림 (seconds 동안, power 세기 배율)
   std::string Sound(const std::string& name) const;  // Sounds에서 이름으로 찾은 경로 (없으면 "")

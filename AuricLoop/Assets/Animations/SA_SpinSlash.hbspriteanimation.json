@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "name": "SA_SpinSlash",
+  "frames": [
+    {
+      "sprite": "Assets/Sprites/FX/S_SpinSlash_0.hbsprite.json",
+      "duration": 0.03
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_SpinSlash_1.hbsprite.json",
+      "duration": 0.03
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_SpinSlash_2.hbsprite.json",
+      "duration": 0.03
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_SpinSlash_3.hbsprite.json",
+      "duration": 0.03
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_SpinSlash_4.hbsprite.json",
+      "duration": 0.03
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_SpinSlash_5.hbsprite.json",
+      "duration": 0.03
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_SpinSlash_6.hbsprite.json",
+      "duration": 0.03
+    },
+    {
+      "sprite": "Assets/Sprites/FX/S_SpinSlash_7.hbsprite.json",
+      "duration": 0.03
+    }
+  ],
+  "loop": true,
+  "playRate": 1
+}
