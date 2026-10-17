@@ -52,7 +52,7 @@
           "type": "SpriteRenderer",
           "properties": {
             "enabled": true,
-            "sprite": "Assets/Sprites/Valen/S_Valen_S_Idle_0.hbsprite.json",
+            "sprite": "Assets/Sprites/ValenSocket/S_VS_walk_0_0_1.hbsprite.json",
             "drawMode": "simple",
             "texture": "",
             "color": [

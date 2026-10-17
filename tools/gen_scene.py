@@ -156,7 +156,7 @@ def base_objects(director_bp="BP_TopDownShooter", at=(0, 0)):
     hitbox["properties"].update(center=[0, -0.15, 0], radius=0.42, trigger=True, mask=0)
     player["components"].append(hitbox)
     comp(player, "Rigidbody2D")["properties"]["freezeRotation"] = [1, 1, 1]  # 부딪혀도 돌지 않게 (예전엔 z가 풀려 맞으면 캐릭터가 빙글 돌았음)
-    comp(player, "SpriteRenderer")["properties"].update(sprite="Assets/Sprites/Valen/S_Valen_S_Idle_0.hbsprite.json", texture="", color=[1, 1, 1, 1],
+    comp(player, "SpriteRenderer")["properties"].update(sprite="Assets/Sprites/ValenSocket/S_VS_walk_0_0_1.hbsprite.json", texture="", color=[1, 1, 1, 1],
                                                         useCustomSize=False, sortingOrder=0, sortPoint="feet")
     cam = copy.deepcopy(objs["Camera"])
     cam["tags"] = ["MainCamera"]

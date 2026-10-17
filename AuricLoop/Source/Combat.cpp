@@ -284,6 +284,15 @@ void TopDownShooter::Prewarm(){
   for(auto* tag:{"Enemy.S","Enemy.M","Enemy.C","Enemy.E"})for(auto* a:hb::Scene::GetActorsWithTag(tag))if(auto* e=dynamic_cast<Enemy*>(a))ParkEnemy(e);
 }
 
+void TopDownShooter::Whirl(const hb::Vec3& at){
+  // 보스 회전 베기 회오리: 처음 부를 때 이펙트 풀에서 하나 빌려 반복 재생, 매 프레임 보스 발밑을 따라감 (tools/make_impact_frame.py Whirl)
+  whirlSeen=true;
+  if(!whirl){hb::Transform t;t.position=at;whirl=Take(fxPool,rules->FxPrefab,t);if(!whirl)return;
+    hb::Components::SetFloat(whirl,"SpriteRenderer","emissiveIntensity",0.45f);hb::Scene::SetScale(whirl,hb::Vec3{1.25f,1.2f,1});
+    hb::Sprites::PlayAnimation(whirl,"Assets/Animations/SA_Whirl.hbspriteanimation.json",true);}
+  hb::Scene::SetPosition(whirl,at+hb::Vec3{0,-1.25f,0.35f});
+}
+
 void TopDownShooter::ImpactFrame(int stages){
   // 애니메이션의 임팩트 프레임: 맞는 순간 장면 전체가 몇 프레임 동안 강한 흑백(거의 검정·흰색 두 색)으로 바뀌었다 돌아옴. 그동안 게임은 거의 멈춤
   // 장면의 후처리 볼륨(PostFX) 색 보정으로: 채도 -100, 대비 +100, 명부 3배·암부 -0.9 → 밝은 곳은 흰색, 어두운 곳은 검정. 휴대폰은 평소 꺼 둔 볼륨을 이때만 켬
@@ -336,7 +345,7 @@ void TopDownShooter::KillEnemy(Enemy* e){
   // 연출 세기: 보스 > 방 마지막 적·3연속 처치 > 보통. 멈칫(거의 정지) 뒤 슬로모션, 화면 확대, 처치 자리에 큰 불꽃
   killChain=killChainTime>0?killChain+1:1;killChainTime=0.4f;
   const bool last=!e->Boss&&fightingRoom>=0&&pending.empty()&&wave+1>=waves.size()&&Enemies().size()<=1;
-  Effect("Impact",hb::Vec3{at.x,at.y+0.2f,0.35f},float(std::rand()%360),2.f,false,e->Boss?1.6f:1.5f);Effect("BurstRing",hb::Vec3{at.x,at.y+0.2f,0.36f},0,0.6f,false,e->Boss?1.4f:0.8f);if(e->Boss)Effect("GroundRing",hb::Vec3{at.x,at.y-0.6f,0.04f},0,0.5f,false,2.f);
+  Effect("Impact",hb::Vec3{at.x,at.y+0.2f,0.35f},float(std::rand()%360),e->Boss?1.f:2.f,false,1.5f);Effect("BurstRing",hb::Vec3{at.x,at.y+0.2f,0.36f},0,e->Boss?0.2f:0.6f,false,e->Boss?1.2f:0.8f);if(e->Boss)Effect("GroundRing",hb::Vec3{at.x,at.y-0.6f,0.04f},0,0.3f,false,1.8f);  // 보스는 슬로모션 동안 이펙트가 오래 남아 쓰러지는 몸을 가리지 않게 약하게
   if(e->Boss){ImpactFrame(3);SlowMo(3.4f,0.28f);deathCam=3.4f;deathAt=at;shake=0.9f;punch=2.2f;Sfx("Finisher");Sfx("Boom",0.7f);}  // 보스 마지막 일격: 흑백 세 번, 쓰러지는 그림(0.9초)이 끝날 때까지 슬로모션, 카메라가 보스를 잡고 당김
   else if(last||killChain>=3){ImpactFrame(2);SlowMo(0.6f,0.28f);punch=1.8f;Sfx("Finisher",1.25f);}  // 방 마지막 적·연속 처치: 흑백 두 번
   else{HitStop(0.08f,0.03f);SlowMo(0.24f,0.35f);punch=1.5f;}  // 보통: 멈칫 뒤 잠깐 느려짐

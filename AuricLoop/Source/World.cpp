@@ -77,7 +77,7 @@ void TopDownShooter::Begin(){
       spawnHold=0.6f;moveLock=true;moveLockTime=0;sentSpeed=-1;}}
   if(carried||area>=0)Phase=std::max(Phase,2);  // 장면을 넘어왔거나 던전에서 바로 시작하면 로딩·타이틀 생략
   RoomIndex=area;
-  {const auto w=hb::Scene::GetActorsWithTag("PlayerWeapon");weapon=w.empty()?nullptr:w.front();weaponShown.clear();slashFx=nullptr;slashShown.clear();chargeFx=nullptr;chargeShown.clear();impact=Impact{};postFx=nullptr;slowLeft=0;killChainTime=0;deathCam=0;swingT=-1;vsPreloaded=false;  // 손에 단 검·손가락 (모든 장면)
+  {const auto w=hb::Scene::GetActorsWithTag("PlayerWeapon");weapon=w.empty()?nullptr:w.front();weaponShown.clear();slashFx=nullptr;slashShown.clear();chargeFx=nullptr;chargeShown.clear();impact=Impact{};postFx=nullptr;whirl=nullptr;slowLeft=0;killChainTime=0;deathCam=0;swingT=-1;vsPreloaded=false;  // 손에 단 검·손가락 (모든 장면)
    const auto g=hb::Scene::GetActorsWithTag("PlayerGrip");grip=g.empty()?nullptr:g.front();gripShown.clear();}
   // 던전: 층 만들기(StartFloor)가 한 번 0.5초쯤 멈추므로 그동안 검은 화면에서 밝아지게 가림
   if(inDungeon){hb::Camera::Flash(hb::Color{0,0,0,1},0.8f);Prewarm();StartFloor();}

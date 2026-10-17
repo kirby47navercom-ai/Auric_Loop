@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "S_Whirl_0",
+  "texture": "Assets/Sprites/FX/Whirl_0.png",
+  "pixelsPerUnit": 16,
+  "rect": [
+    0,
+    0,
+    80,
+    100
+  ],
+  "pivot": [
+    0.5,
+    0.12
+  ],
+  "filter": "nearest",
+  "border": [
+    0,
+    0,
+    0,
+    0
+  ]
+}

@@ -56,13 +56,10 @@ void Enemy::Tick(float delta){
         if(Length(game->PlayerPosition()+hb::Vec3{0,-0.9f,0}-s)<1.2f)game->DamagePlayer(1,s);}
       game->Shake(0.35f,2.2f);game->Sfx("CoinRain");game->Sfx("Impact");rainSpots.clear();}
     if(roarTime>0&&(roarTime-=delta)<=0&&(mode==Mode::Prowl||mode==Mode::Halt))hb::Sprites::PlayAnimation(this,WalkClip,true);  // 포효 끝: 패턴 자세 중이면 그대로
-    if(mode==Mode::Spin){  // 회전 베기: 천천히 다가오며 0.25초마다 둘레를 벰
-      Move(dir*(Speed*0.7f));
-      if((spinTick-=delta)<=0){spinTick=0.25f;const auto at=hb::Scene::GetPosition(this);game->Sfx("BossSwing",0.9f+float(std::rand()%20)/100);
-        spinAngle+=95;  // 몸 둘레 맞은편 두 곳에 큰 베기 궤적 (돌며 사방을 벰), 발밑에 흙먼지
-        for(float k:{0.f,180.f}){const hb::Vec3 out=Rotate(hb::Vec3{1,0,0},spinAngle+k);
-          game->Effect("BossSlash",at+out*(Radius+0.7f)+hb::Vec3{0,-0.4f,0.35f},spinAngle+k+90,1.2f,false,1.5f);}
-        game->Effect("Dust",at+hb::Vec3{0,-1.1f,0.03f},0,0,spinAngle>180,1.4f);game->Shake(0.08f,1.f);
+    if(mode==Mode::Spin){  // 회전 베기: 회오리에 감싸여 천천히 다가오며 0.25초마다 둘레를 벰
+      Move(dir*(Speed*0.7f));const auto at=hb::Scene::GetPosition(this);game->Whirl(at);  // 몸을 감싸고 도는 회오리 (매 프레임 따라감)
+      if((spinTick-=delta)<=0){spinTick=0.25f;game->Sfx("BossSwing",0.9f+float(std::rand()%20)/100);
+        spinAngle+=95;game->Effect("Dust",at+Rotate(hb::Vec3{1.4f,0,0},spinAngle)+hb::Vec3{0,-1.1f,0.03f},0,0,spinAngle>180,1.4f);game->Shake(0.08f,1.f);  // 회오리가 쓸고 간 흙먼지
         if(distance<Radius+1.5f)game->DamagePlayer(1,at);}
       return;}
   }
@@ -268,7 +265,7 @@ bool Enemy::UpdateMelee(float delta,const hb::Vec3& dir,float distance,bool froz
     Move(atk!=3&&atkTime>full*0.5f?atkDir*-0.9f:hb::Vec3{0,0,0});if(atkTime>0)return true;
     atkPhase=1;game->Sfx("Swing");
     if(atk==1){atkTime=0.16f;hb::Sprites::PlayAnimation(this,AttackClip,false);
-      game->Effect(Boss?"BossSlash":"EnemySlash",Boss?at+atkDir*(reach*0.85f)+hb::Vec3{0,-0.5f,0.35f}:at+atkDir*(reach*0.5f)+hb::Vec3{0,0.3f,0.35f},Angle(atkDir),Boss?2.f:1.4f,atkDir.x<0,Boss?1.8f:1.f);
+      game->Effect(Boss?"BossSlash":"EnemySlash",Boss?at+atkDir*(reach*0.85f)+hb::Vec3{0,-0.5f,0.35f}:at+atkDir*(reach*0.5f)+hb::Vec3{0,0.3f,0.35f},atkDir.x<0?Angle(atkDir)-180:Angle(atkDir),Boss?2.f:1.4f,atkDir.x<0,Boss?1.8f:1.f);  // 궤적 그림은 오른쪽을 향함: 왼쪽은 좌우 반전만 (180도까지 돌리면 두 번 뒤집혀 보스 쪽으로 나갔음)
       if(Boss){game->Effect("Impact",at+atkDir*(reach*1.1f)+hb::Vec3{0,-0.4f,0.4f},Angle(atkDir),2.f,false,1.3f);game->Shake(0.2f,2.f);game->Sfx("BossSwing");}  // 붉은 베기 궤적 (보스는 몸이 커서 칼끝 쪽 허리 높이에)
       if(distance<reach+0.3f&&hb::VectorMath::DotProduct(dir,atkDir)>0.35f)game->DamagePlayer(1,at);}  // 예고한 방향 앞쪽만
     else if(atk==2){atkTime=lungeTime;Move(atkDir*LungeSpeed);game->Effect("Dust",at+hb::Vec3{0,-0.6f,0});

@@ -29,7 +29,7 @@ PPU = 32
 FEET = 0.95  # 캐릭터 오브젝트 중심에서 발끝까지 (m), tools/make_sprites.py와 같음
 src = Path(sys.argv[1])
 
-CHARACTERS = {"Valen": 62}  # 서 있는 키 (px). 셰리·알레아는 아트팀 모션 팩 (tools/make_hero_motion.py)
+CHARACTERS = {}  # 서 있는 키 (px). 셰리·알레아는 아트팀 모션 팩 (tools/make_hero_motion.py)
 ENEMIES = {"Skeleton": 44, "SkeletonMage": 51, "SkeletonCaptain": 111}
 DIRS = ["S", "SE", "E", "NE", "N"]
 

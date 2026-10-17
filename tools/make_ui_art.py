@@ -194,7 +194,7 @@ def key(d, x, y, label, w=None):
     return x + w
 
 
-HERO = Path(__file__).resolve().parent.parent / "AuricLoop/Assets/Sprites/Valen"
+HERO = Path(__file__).resolve().parent.parent / "native/valen_signs"  # 예전 발렌 그림 중 표지판에 쓰는 4장만 (게임 그림은 ValenSocket)
 
 
 def chalk_hero(im, pose, x, y, h=26, flip=False, fill=False):
