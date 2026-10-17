@@ -1,7 +1,7 @@
 {
   "version": 1,
   "name": "S_BGM_Boss",
-  "clip": "Assets/Audio/BGM_Boss.wav",
+  "clip": "Assets/Audio/BGM_Boss.ogg",
   "volume": 0.28,
   "pitch": 1,
   "loop": true,

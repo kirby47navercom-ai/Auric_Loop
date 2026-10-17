@@ -1,7 +1,7 @@
 {
   "version": 1,
   "name": "S_BGM_Hub",
-  "clip": "Assets/Audio/BGM_Hub.wav",
+  "clip": "Assets/Audio/BGM_Hub.ogg",
   "volume": 0.32,
   "pitch": 1,
   "loop": true,

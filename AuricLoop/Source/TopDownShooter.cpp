@@ -40,8 +40,11 @@ void TopDownShooter::MoveCamera(const hb::Vec3& position,const hb::Vec3& aim,boo
 void TopDownShooter::Update(float delta){
   Current=this;
   struct FlushAtEnd{~FlushAtEnd(){PhysicsQueue::Flush();}} flushAtEnd;  // 이 프레임의 물리 속도 쓰기를 끝에서 한 번에 (중간 return 포함)
-  if(hitStopLeft>0){hitStopLeft-=delta/std::max(0.0001f,hb::Clock::TimeScale());  // 히트스톱은 실제 시간으로 셈 (게임 시간은 느려져 있으므로)
-    if(hitStopLeft<=0&&!Paused)hb::Clock::SetTimeScale(1.f);}
+  const float realDelta=delta/std::max(0.0001f,hb::Clock::TimeScale());  // 히트스톱·슬로모션·임팩트 프레임은 실제 시간으로 셈 (게임 시간은 느려져 있으므로)
+  if(hitStopLeft>0){hitStopLeft-=realDelta;if(hitStopLeft<=0&&!Paused)hb::Clock::SetTimeScale(slowLeft>0?slowScale:1.f);}
+  else if(slowLeft>0){slowLeft-=realDelta;if(slowLeft<=0&&!Paused)hb::Clock::SetTimeScale(1.f);}
+  if(killChainTime>0)killChainTime-=realDelta;
+  UpdateImpact(realDelta);
   player=hb::Gameplay::GetPlayerPawn();if(!player)return;
   frame++;
   if(frame==15||frame==45){uiSent.clear();hudDirty=true;}  // 웹·모바일은 위젯이 늦게 생겨 장면 첫 HUD 값이 사라짐 (정산 뒤 골드·빚이 이전 값으로 남던 문제): 한 번 더 보냄
@@ -88,11 +91,12 @@ void TopDownShooter::Update(float delta){
   if(cutscene>0){  // 보스 등장 컷신: 카메라가 보스(나타나기 전엔 나올 자리)를 빠르게 잡고 살짝 확대
     hb::Vec3 at=cutsceneAt;for(auto* e:Enemies())if(e->Boss){at=hb::Scene::GetPosition(e);at.y+=0.6f;}
     MoveCamera(at,at,false,delta);cutZoom=std::max(0.72f,cutZoom-delta*0.8f);}
+  else if(deathCam>0){deathCam-=realDelta;MoveCamera(deathAt,deathAt,false,realDelta);cutZoom=std::max(0.7f,cutZoom-realDelta*0.5f);}  // 보스가 쓰러지는 동안: 보스를 잡고 천천히 당김 (실제 시간)
   else if(cutZoom<1)cutZoom=std::min(1.f,cutZoom+delta*1.5f);  // 끝나면 원래 크기로
-  {punch=std::max(0.f,punch-delta*4);const float ortho=rules->CameraSize*cutZoom*(1-0.05f*punch);  // 처치·크리티컬 순간 살짝 확대
+  {punch=std::max(0.f,punch-delta*4);const float ortho=rules->CameraSize*cutZoom*(1-0.05f*std::min(punch,2.2f));  // 처치·크리티컬 순간 살짝 확대
    if(camera&&std::abs(ortho-lastOrtho)>0.001f){lastOrtho=ortho;hb::Components::SetFloat(camera,"Camera","orthographicSize",ortho);}}
   if(chainTime>0)chainTime-=delta;
-  else if(cutscene<=0)MoveCamera(position,touchMode?position+facing*(rules->CameraLeadMax/rules->CameraLead*0.5f):aim,(hasAim||touchMode)&&Phase>=2,delta);  // 컷신 중엔 위에서 보스를 비춘 카메라를 다시 플레이어 쪽으로 끌지 않게 (둘 사이 빈 바닥만 보였음)
+  else if(cutscene<=0&&deathCam<=0)MoveCamera(position,touchMode?position+facing*(rules->CameraLeadMax/rules->CameraLead*0.5f):aim,(hasAim||touchMode)&&Phase>=2,delta);  // 컷신 중엔 위에서 보스를 비춘 카메라를 다시 플레이어 쪽으로 끌지 않게 (둘 사이 빈 바닥만 보였음)
   if(!Paused)UpdateAmbient(delta,position,Phase>=2&&hb::Input::IsKeyDown("LeftMouseButton"));
   {const bool adv=hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("space");
    const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
@@ -110,7 +114,7 @@ void TopDownShooter::Update(float delta){
      if(sentSpeed!=0){sentSpeed=0;hb::Movement2D::SetSpeed(player,0);}  // 이동 컴포넌트가 키로 움직이지 않게 (컷신 동안 모든 조작 막음)
      UpdateFx(delta);  // 등장 마법진 등 이펙트도 제때 사라지게 (안 그러면 컷신 내내 보스 몸 위에서 빛남)
      if(inDungeon)UpdateWaves(delta);  // 보스는 컷신 0.5초 만에 나와야 함 (아래 return 때문에 컷신이 끝나야 나와서 빈 방만 비췄음)
-     if(!roared&&cutscene<1.9f){roared=true;Shake(0.7f,1.8f);Sfx("BossCharge");hb::Camera::Flash(hb::Color{1,0.85f,0.4f,0.12f},0.2f);  // 번쩍임은 약하게 (보스가 묻히지 않게)
+     if(!roared&&cutscene<1.9f){roared=true;Shake(0.7f,1.8f);Sfx("BossRoar");hb::Camera::Flash(hb::Color{1,0.85f,0.4f,0.12f},0.2f);  // 번쩍임은 약하게 (보스가 묻히지 않게)
        for(auto* e:Enemies())if(e->Boss){UiText("BossName",e->DisplayName);UiText("BossSub","황금에 잠식된 1층의 문지기");e->Roar(1.6f);}
        for(auto* n:{"BossName","BossSub"})UiVisible(n,true);}
      if(cutscene<=0){for(auto* n:{"CineTop","CineBottom","BossName","BossSub"})UiVisible(n,false);

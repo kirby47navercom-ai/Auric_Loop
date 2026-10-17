@@ -25,6 +25,8 @@ objs = {o["id"]: o for o in TEMPLATE["objects"]}
 PPU = 32
 BP = "Assets/Blueprints/"
 
+IMPACT_GRADE = {"colorGradingEnabled": False, "postExposure": 0, "contrast": 0, "saturation": 0, "hueShift": 0, "colorFilter": [1, 1, 1, 1], "lift": [0, 0, 0], "gamma": [1, 1, 1], "gain": [1, 1, 1]}  # 처치 임팩트 프레임이 C++로 바꾸는 후처리 색 보정 값 (Combat.cpp ImpactFrame)
+
 def comp(obj, kind):
     return next(c for c in obj["components"] if c["type"] == kind)
 
@@ -294,9 +296,10 @@ def write(name, objects):
                         c["properties"]["blendMode"] = "opaque"  # 불투명: 깊이(z)로 앞뒤가 정해져 편집기·패키지 정렬 차이에 흔들리지 않음
             if o["id"] in HUB_Z:
                 o["position"][2] = HUB_Z[o["id"]]
+    # 처치 임팩트 프레임(Combat.cpp ImpactFrame)이 C++로 바꾸는 색 보정 값: 장면에 있어야 바꿀 수 있음 (평소엔 꺼 둠)
     post = {"id": "PostFX", "name": "PostFX", "kind": "empty", "group": "WORLD", "position": [0, 0, 0], "rotation": [0, 0, 0], "scale": [1, 1, 1],
             "visible": True, "components": [transform(), {"id": "post", "name": "PostProcessVolume", "type": "PostProcessVolume", "properties": {
-                "enabled": True, "priority": 0, "bloomEnabled": True, "bloomThreshold": 1, "bloomStrength": 0.45, "bloomRadius": 0.35, "bloomResolutionScale": 0.5}}]}
+                "enabled": True, "priority": 0, "bloomEnabled": True, "bloomThreshold": 1, "bloomStrength": 0.45, "bloomRadius": 0.35, "bloomResolutionScale": 0.5, **IMPACT_GRADE}}]}
     scene["objects"] = outline(objects + [post])
     (SCENES / f"{name}.hbscene.json").write_text(json.dumps(scene, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     return len(objects)

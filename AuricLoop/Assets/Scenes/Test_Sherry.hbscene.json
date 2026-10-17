@@ -45990,7 +45990,33 @@
             "bloomThreshold": 1,
             "bloomStrength": 0.45,
             "bloomRadius": 0.35,
-            "bloomResolutionScale": 0.5
+            "bloomResolutionScale": 0.5,
+            "colorGradingEnabled": false,
+            "postExposure": 0,
+            "contrast": 0,
+            "saturation": 0,
+            "hueShift": 0,
+            "colorFilter": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "lift": [
+              0,
+              0,
+              0
+            ],
+            "gamma": [
+              1,
+              1,
+              1
+            ],
+            "gain": [
+              1,
+              1,
+              1
+            ]
           }
         }
       ],
