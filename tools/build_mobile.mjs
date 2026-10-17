@@ -6,6 +6,8 @@
 //   web: 터치 기기에서 첫 터치에 전체 화면 + 가로 고정
 // 웹 빌드(build-web)는 엔진 dcc7dfb부터 있어 둘 다 그 엔진으로 만든다
 import fs from 'node:fs/promises';
+import fsSync from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
 import {playerPatches, applyPatches} from './player_patches.mjs';
@@ -40,6 +42,8 @@ const mobileScene = text => {
   for (const o of scene.objects || []) for (const c of o.components || []) if (c.type === 'PostProcessVolume') c.properties.enabled = false;  // 볼륨이 켜져 있으면 블룸이 없어도 화면을 여러 번 다시 그림 (반정밀 렌더 타깃→후처리→출력→AA)
   // 거점 풀·덤불·가장자리 나무 흔들림(Animator 300여 개)은 멈춘 그림으로: 그림이 바뀔 때마다 엔진이 물체마다 애니메이션 계산·그림 교체·C++ 전송을 함
   for (const o of scene.objects || []) if (/^(Decor|Edge|EdgeBush)\d/.test(o.id)) for (const c of o.components || []) if (c.type === 'Animator') c.properties.enabled = false;
+  // 거점 가장자리 숲(Edge숫자 93그루)의 충돌은 걸을 수 있는 범위 밖이라 마을 경계 벽(EdgeW·E·S·N)이 이미 막음 → 빼서 물리 동기화 대상을 줄임
+  for (const o of scene.objects || []) if (/^Edge\d/.test(o.id)) o.components = (o.components || []).filter(c => c.type !== 'BoxCollider2D');
   hit.add('mobile-scene');
   return JSON.stringify(scene);
 };
@@ -53,6 +57,19 @@ fs.readFile = async (file, ...rest) => {
   const text = applyPatches(name, Buffer.isBuffer(result) ? result.toString('utf8') : result, patches);
   return Buffer.isBuffer(result) ? Buffer.from(text) : text;
 };
+// 엔진 dcab5bc부터 빌드가 플레이어 파일을 readFile이 아니라 realpath → stat → open으로 조금씩 읽어 복사한다 →
+// 고칠 파일은 realpath가 고친 사본(임시 폴더)을 가리키게 함 (사본은 끝나면 지움)
+const realpath = fs.realpath.bind(fs), patchedDir = path.join(os.tmpdir(), `auric_patched_${process.pid}`), patchedFiles = new Map();
+fs.realpath = async (file, ...rest) => {
+  const real = await realpath(file, ...rest), name = key(real);
+  if (!name || real.startsWith(patchedDir)) return real;
+  if (!patchedFiles.has(name)) {
+    const out = path.join(patchedDir, name);await fs.mkdir(path.dirname(out), {recursive: true});
+    await write(out, applyPatches(name, (await read(real)).toString('utf8'), patches));patchedFiles.set(name, out);
+  }
+  hit.add(name);return patchedFiles.get(name);
+};
+process.on('exit', () => { try { fsSync.rmSync(patchedDir, {recursive: true, force: true}); } catch {} });
 // HBActivity.java는 읽지 않고 복사하므로 복사도 가로챈다
 const copy = fs.copyFile.bind(fs);
 fs.copyFile = async (from, to, ...rest) => key(from) ? write(to, await fs.readFile(from)) : copy(from, to, ...rest);
@@ -80,6 +97,8 @@ const profile = target === 'android'
   ? {...base, id: 'android', name: 'android', target: 'android', configuration: 'development', productName: 'Auric Loop',
      mobile: {applicationId: 'com.mastiff.auricloop', versionCode: 3, versionName: '1.2', orientation: 'landscape', minSdk: 26, abis: ['arm64-v8a'], format: 'apk'}}
   : {...base, id: 'web', name: 'web', target: 'web', configuration: 'development', productName: 'Auric Loop'};
+// 휴대폰은 초당 30프레임: 물리가 30Hz이고 엔진은 물리 사이를 보간하지 않아 60프레임이어도 움직임은 30번만 바뀜 → 같은 그림을 두 번 그리는 비용(C++ 호출·전송·그리기)을 없앰
+if (phone) Object.assign(profile, {targetFrameRate: 30, framePacing: 'display'});
 if (target === 'web' && phone) profile.scenes = [...base.scenes, ...['Valen', 'Sherry', 'Alea', 'Boss'].map(w => ({path: `Assets/Scenes/Test_${w}.hbscene.json`, enabled: true}))];  // 측정용: 검사 장면도 넣음
 const result = await buildGame(record, profile, {onProgress: m => console.error(new Date().toISOString().slice(11, 19), m)});
 const want = [...Object.keys(patches).filter(n => target === 'android' ? n !== 'prototype/player.html' : !n.startsWith('native/')), ...(target === 'android' ? ['icon'] : []), ...(phone ? ['mobile-scene'] : [])];
