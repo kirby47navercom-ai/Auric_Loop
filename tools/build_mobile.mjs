@@ -2,6 +2,7 @@
 // (APK는 묶인 뒤라 결과물을 고칠 수 없고, 웹은 파일 목록 sha256을 빌드가 계산하므로 읽을 때 고쳐야 맞음. 엔진 설치본은 그대로)
 // 실행: <HBEngine 사용자용 폴더>/runtime/node.exe tools/build_mobile.mjs android|web [phone]
 //   web phone: 안드로이드와 같은 장면 설정 + 검사 장면까지 넣은 웹 빌드 (PC 크롬에서 휴대폰 성능을 재 보는 용도, 배포하지 않음)
+//   web tests: PC와 같은 장면 설정 + 검사 장면 (소리까지 녹화하는 용도: PC 실행 파일은 소리를 화면 밖에서 내서 페이지에서 못 받음)
 //   android: 앱 아이콘(Assets/UI/Kit/app_icon_*.png), 전체 화면(상태·내비게이션 바 숨김)도 넣음
 //   web: 터치 기기에서 첫 터치에 전체 화면 + 가로 고정
 // 웹 빌드(build-web)는 엔진 dcc7dfb부터 있어 둘 다 그 엔진으로 만든다
@@ -39,7 +40,8 @@ const hit = new Set(), key = file => {
 const mobileScene = text => {
   const scene = JSON.parse(text);
   Object.assign(scene.runtime ??= {}, {fixedDeltaTime: 1 / 30, maxSubsteps: 2});
-  for (const o of scene.objects || []) for (const c of o.components || []) if (c.type === 'PostProcessVolume') c.properties.enabled = false;  // 볼륨이 켜져 있으면 블룸이 없어도 화면을 여러 번 다시 그림 (반정밀 렌더 타깃→후처리→출력→AA)
+  for (const o of scene.objects || []) for (const c of o.components || []) if (c.type === 'PostProcessVolume') Object.assign(c.properties, {enabled: false, bloomEnabled: false, bloomStrength: 0});  // 볼륨이 켜져 있으면 블룸이 없어도 화면을 여러 번 다시 그림 (반정밀 렌더 타깃→후처리→출력→AA)
+  // 블룸도 꺼 둠: 처치 임팩트 프레임(Combat.cpp ImpactGrade)이 잠깐 볼륨을 켤 때 흑백 보정만 하고 화면 전체를 여러 번 다시 그리는 블룸은 안 켜지게
   // 거점 풀·덤불·가장자리 나무 흔들림(Animator 300여 개)은 멈춘 그림으로: 그림이 바뀔 때마다 엔진이 물체마다 애니메이션 계산·그림 교체·C++ 전송을 함
   for (const o of scene.objects || []) if (/^(Decor|Edge|EdgeBush)\d/.test(o.id)) for (const c of o.components || []) if (c.type === 'Animator') c.properties.enabled = false;
   // 거점 가장자리 숲(Edge숫자 93그루)의 충돌은 걸을 수 있는 범위 밖이라 마을 경계 벽(EdgeW·E·S·N)이 이미 막음 → 빼서 물리 동기화 대상을 줄임
@@ -99,7 +101,7 @@ const profile = target === 'android'
   : {...base, id: 'web', name: 'web', target: 'web', configuration: 'development', productName: 'Auric Loop'};
 // 휴대폰은 초당 30프레임: 물리가 30Hz이고 엔진은 물리 사이를 보간하지 않아 60프레임이어도 움직임은 30번만 바뀜 → 같은 그림을 두 번 그리는 비용(C++ 호출·전송·그리기)을 없앰
 if (phone) Object.assign(profile, {targetFrameRate: 30, framePacing: 'display'});
-if (target === 'web' && phone) profile.scenes = [...base.scenes, ...['Valen', 'Sherry', 'Alea', 'Boss'].map(w => ({path: `Assets/Scenes/Test_${w}.hbscene.json`, enabled: true}))];  // 측정용: 검사 장면도 넣음
+if (target === 'web' && (phone || process.argv.includes('tests'))) profile.scenes = [...base.scenes, ...['Valen', 'Sherry', 'Alea', 'Boss'].map(w => ({path: `Assets/Scenes/Test_${w}.hbscene.json`, enabled: true}))];  // 측정용: 검사 장면도 넣음
 const result = await buildGame(record, profile, {onProgress: m => console.error(new Date().toISOString().slice(11, 19), m)});
 const want = [...Object.keys(patches).filter(n => target === 'android' ? n !== 'prototype/player.html' : !n.startsWith('native/')), ...(target === 'android' ? ['icon'] : []), ...(phone ? ['mobile-scene'] : [])];
 const missed = want.filter(n => !hit.has(n));

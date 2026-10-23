@@ -3,7 +3,8 @@
 1) HBmusic에서 아래 프롬프트로 생성해 WAV 저장 (효과음 모드 / BGM은 루프 켜고 60초). 파일 이름은 SOUNDS의 원본 이름
 2) python tools/import_hbmusic.py <WAV 폴더> [ffmpeg 경로]
   효과음: 앞 무음을 자르고, 꼬리가 -45dB 아래로 내려가면 80ms 페이드로 끊고, 모노 44.1kHz 16비트·최고 -3dB → <이름>.wav
-  배경음악: HBmusic이 이어 붙인 루프 그대로 스테레오 OGG(Vorbis q4) → BGM_<이름>.ogg (WAV면 곡당 10MB라 APK·폴더가 커짐)
+  배경음악: HBmusic이 이어 붙인 루프 그대로 모노 OGG(Vorbis q4) → BGM_<이름>.ogg (WAV면 곡당 10MB라 APK·폴더가 커짐.
+    휴대폰은 엔진이 소리를 전부 풀어 메모리에 들고 있어서(PCM 캐시 32MB) 스테레오 60초면 곡당 21MB → 모노로 절반)
 결과: AuricLoop/Assets/Audio/ + S_<이름>.hbaudioasset.json (볼륨은 기존 에셋 값 유지, 새 소리는 표의 값)
 BP_AuricRules.Sounds는 tools/make_blueprints.py가 에셋에서 읽음
 """
@@ -107,7 +108,7 @@ def main():
         print(name, f"{len(x) / RATE:.2f}s")
     for name, (raw, volume, _) in BGM.items():
         out = OUT / f"BGM_{name}.ogg"
-        subprocess.run([ffmpeg, "-v", "error", "-y", "-i", str(src / f"{raw}.wav"), "-c:a", "libvorbis", "-q:a", "4", str(out)], check=True)
+        subprocess.run([ffmpeg, "-v", "error", "-y", "-i", str(src / f"{raw}.wav"), "-ac", "1", "-c:a", "libvorbis", "-q:a", "4", str(out)], check=True)
         (OUT / f"BGM_{name}.wav").unlink(missing_ok=True)
         asset(f"BGM_{name}", f"Assets/Audio/BGM_{name}.ogg", volume, True)
         print("BGM", name, f"{out.stat().st_size // 1024}KB")

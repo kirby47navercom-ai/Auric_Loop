@@ -230,7 +230,8 @@ void TopDownShooter::UpdatePrompt(float delta){
   const auto at=hb::Scene::GetPosition(promptTarget);
   const float ppm=360.f/rules->CameraSize;
   float x=(at.x-cameraAt.x)*ppm,y=-(at.y+top+0.35f-cameraAt.y)*ppm-h/2;
-  x=std::clamp(x,-640+w/2+8,640-w/2-8);y=std::clamp(y,-360+h/2+90,360-h/2-8);  // 화면 밖으로 나가지 않게 (위쪽은 HUD 아래까지)
+  const bool status=Hp>0&&(ReturnSuccess||Returning||HasReturnItem);  // 위 가운데 진행 칸(AreaBack, 위에서 62~106px)이 떠 있으면 그 아래로
+  x=std::clamp(x,-640+w/2+8,640-w/2-8);y=std::clamp(y,-360+h/2+(status?116:90),360-h/2-8);  // 화면 밖으로 나가지 않게 (위쪽은 HUD 아래까지)
   UiSize("PromptBack",hb::Vec2{w,h});UiPosition("PromptBack",hb::Vec2{x,y});
   UiVisible("PromptKey",key);UiPosition("PromptKey",hb::Vec2{x-w/2+30,y});
   UiText("PromptText",label);UiPosition("PromptText",hb::Vec2{x-w/2+(key?54.f:24.f)+300,y});  // 왼쪽 정렬 600px 상자의 왼쪽 끝을 맞춤
