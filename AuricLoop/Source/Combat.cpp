@@ -284,14 +284,16 @@ void TopDownShooter::Prewarm(){
   for(auto* tag:{"Enemy.S","Enemy.M","Enemy.C","Enemy.E"})for(auto* a:hb::Scene::GetActorsWithTag(tag))if(auto* e=dynamic_cast<Enemy*>(a))ParkEnemy(e);
 }
 
-void TopDownShooter::Whirl(const hb::Vec3& at,float radius){
-  // 보스 회전 베기: 맞는 범위 원(발밑, 반지름 radius) 둘레를 대검 궤적 두 줄기가 바닥에서 빙빙 돌며 쓸고 간 자리가 주황으로 남음 (tools/make_impact_frame.py SpinSlash)
-  // 처음 부를 때 이펙트 풀에서 하나 빌려 반복 재생, 매 프레임 보스 발밑을 따라감. 바닥 그림이라 몸 뒤(순서 -1)
+void TopDownShooter::Whirl(const hb::Vec3& at,float radius,float turn){
+  // 보스 회전 베기: 맞는 범위 원(발밑, 반지름 radius) 둘레를 대검 한 자루가 보스 몸과 같이 돌며 칼끝 자국을 남김 (tools/make_impact_frame.py SpinSlash)
+  // 처음 부를 때 이펙트 풀에서 하나 빌림, 매 프레임 보스 발밑을 따라감. 바닥 그림이라 몸 뒤(순서 -1)
+  // 그림 12장(30도씩)은 애니메이션으로 틀지 않고 보스 몸이 돈 각도(turn)로 고름 → 칼 그림과 칼끝 궤적이 항상 같은 쪽
   whirlSeen=true;
   if(!whirl){hb::Transform t;t.position=at;whirl=Take(fxPool,rules->FxPrefab,t);if(!whirl)return;
-    hb::Components::SetFloat(whirl,"SpriteRenderer","emissiveIntensity",0.6f);hb::Sprites::SetSorting(whirl,"default",-1);
-    hb::Scene::SetScale(whirl,hb::Vec3{radius/3,radius/3,1});  // 그림 원 반지름 3m
-    hb::Sprites::PlayAnimation(whirl,"Assets/Animations/SA_SpinSlash.hbspriteanimation.json",true);}
+    hb::Components::SetFloat(whirl,"SpriteRenderer","emissiveIntensity",0.25f);hb::Sprites::SetSorting(whirl,"default",-1);
+    hb::Scene::SetScale(whirl,hb::Vec3{radius/3,radius/3,1});whirlFrame=-1;}  // 그림 원 반지름 3m
+  const int k=int(turn/30)%12;
+  if(k!=whirlFrame){whirlFrame=k;hb::Sprites::SetSprite(whirl,"Assets/Sprites/FX/S_SpinSlash_"+std::to_string(k)+".hbsprite.json");}
   hb::Scene::SetPosition(whirl,at+hb::Vec3{0,-0.9f,0.02f});
 }
 

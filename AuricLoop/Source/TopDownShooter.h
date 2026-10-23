@@ -192,7 +192,7 @@ public:
 private:
   hb::Vec3 ToPlayer(float& distance) const;
   enum class Mode{Halt,Chase,Range,Stagger,Dash,Prowl,Jump,Spin};
-  float spinTick=0,rainTime=0,roarTime=0,ghostTick=0,spinAngle=0;std::vector<hb::Vec3> rainSpots;hb::Vec3 quakeDir{0,-1,0};  // 보스 회전 베기·금화 비·포효
+  float spinTick=0,rainTime=0,roarTime=0,ghostTick=0,spinTurn=0;bool turning=false;std::vector<hb::Vec3> rainSpots;hb::Vec3 quakeDir{0,-1,0};  // 보스 회전 베기·금화 비·포효
   int NextAfter(int current) const;  // 보스 패턴 순서
   void Glint(const std::string& spec,bool left);
   hb::Vec3 TipOf(const std::string& spec,bool left) const;  // 같은 자리 정보의 무기 끝 (몸 원점에서)  // 공격 직전 눈·무기 끝 반짝임 (몸을 붉게 물들이는 대신)
@@ -569,7 +569,7 @@ public:
   void BossEnraged(Enemy* e);                                                        // 2페이즈 포효
   void Effect(const std::string& name,const hb::Vec3& at,float angle=0,float glow=0,bool flip=false,float scale=1);  // Assets/Animations/SA_<name> 한 번 재생
   void BossGhost(Enemy* e);       // 보스 돌진 잔상 (Combat.cpp)
-  void Whirl(const hb::Vec3& at,float radius);  // 보스 회전 베기: 맞는 범위 원을 도는 대검 궤적 (이펙트 풀에서 빌려 보스를 따라감, 안 부른 프레임에 돌려줌)
+  void Whirl(const hb::Vec3& at,float radius,float turn);  // 보스 회전 베기: 맞는 범위 원을 도는 대검 궤적 (turn: 보스 몸이 돈 각도. 이펙트 풀에서 빌려 보스를 따라감, 안 부른 프레임에 돌려줌)
   void BossImpact(float slow){HitStop(slow,0.2f);punch=1;hb::Camera::Flash(hb::Color{1,0.9f,0.6f,0.18f},0.15f);}  // 보스 큰 공격이 땅에 닿는 순간: 잠깐 느려지고 화면이 살짝 당겨지고 번쩍
   void Shake(float seconds,float power){shake=std::max(shake,seconds);shakePower=std::max(shakePower,power);}  // 화면 흔들림 (seconds 동안, power 세기 배율)
   std::string Sound(const std::string& name) const;  // Sounds에서 이름으로 찾은 경로 (없으면 "")
@@ -625,7 +625,7 @@ private:
   // 처치 임팩트 프레임 (애니 기법): 장면 전체가 순간 강한 흑백으로 바뀜 (후처리 색 보정: 채도 0·대비·명부/암부로 거의 두 색). stages 1~3번 깜빡임 (Combat.cpp)
   struct Impact{float t=-1,total=0;int stages=0,stage=-1;bool wasOn=true;} impact;hb::Actor* postFx=nullptr;
   void ImpactFrame(int stages);void UpdateImpact(float realDelta);void EndImpact();void ImpactGrade(int look);  // look 0 원래 색, 1 흑백, 2 더 어두운 흑백
-  hb::Actor* whirl=nullptr;bool whirlSeen=false;
+  hb::Actor* whirl=nullptr;bool whirlSeen=false;int whirlFrame=-1;
   float deathCam=0;hb::Vec3 deathAt{0,0,0};  // 보스 처치: 쓰러지는 동안 카메라가 보스를 잡고 당김
   float killChainTime=0;int killChain=0;  // 0.4초 안에 연달아 잡으면 연속 처치  // 타격감: 맞은 순간 멈칫 (scale>0.06이면 슬로모션)  // 물체와 상관없는 알림 (위 가운데, 잠깐)
   bool NewSheet() const{return Character<(int)rules->AnimSets.size()&&rules->AnimSets[Character]==1;}

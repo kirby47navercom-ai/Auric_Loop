@@ -2,12 +2,12 @@
   "version": 1,
   "name": "S_SpinSlash_5",
   "texture": "Assets/Sprites/FX/SpinSlash_5.png",
-  "pixelsPerUnit": 16,
+  "pixelsPerUnit": 25.6,
   "rect": [
     0,
     0,
-    96,
-    96
+    160,
+    160
   ],
   "pivot": [
     0.5,

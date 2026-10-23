@@ -4,7 +4,7 @@
 결과: Assets/Sprites/FX/GroundRing_0~7 (바닥에 퍼지는 납작한 충격파 고리, 흙 알갱이) · BurstRing_0~7 (공중에서 터지는 둥근 고리)
       + S_<이름>.hbsprite.json, Assets/Animations/SA_GroundRing·SA_BurstRing
   보스 내려찍기·충격파·나선 탄막·처치에 씀. 예전 Shockwave 그림은 작게 쓰는 갈래 모양이라 키우면 네모 덩어리처럼 보였음
-  SpinSlash_0~7: 보스 회전 베기 때 맞는 범위(반지름 3m 원) 둘레를 대검 궤적 두 줄기가 바닥에서 빙빙 도는 그림 (반복) + SA_SpinSlash
+  SpinSlash_0~11: 보스 회전 베기 때 맞는 범위(반지름 3m 원) 둘레를 대검 한 자루가 보스 몸과 같이 도는 그림 (30도씩, Combat.cpp Whirl이 보스가 돈 각도로 고름)
   (임팩트 프레임은 그림이 아니라 후처리 색 보정으로 장면 전체를 흑백으로 바꿈: Combat.cpp ImpactFrame)
 """
 import json
@@ -61,52 +61,53 @@ for name, (w, h, dots) in {"GroundRing": (64, 28, True), "BurstRing": (48, 48, F
     anim(name, 8, 0.04)
 
 
-def spin_slash(k, frames=8, size=96):
-    """보스 회전 베기: 맞는 범위 원(지름 6m = 96px, PPU 16) 둘레를 대검 궤적 두 줄기가 돎. 앞(머리) 쪽은 굵고 하얗게, 꼬리는 가늘고 붉게 사라짐.
-    범위가 보이도록 원 테두리에 옅은 선. 프레임마다 45도씩 (8장이면 한 바퀴)"""
+def spin_slash(k, frames=12, size=160):
+    """보스 회전 베기: 맞는 범위 원(반지름 3m, 보스 그림과 같은 PPU 25.6) 둘레를 대검 한 자루가 돎. 보스 몸 돌기(Enemy.cpp)와 같이
+    0번 칸에서 칼이 오른쪽, 칸마다 화면 시계 방향 30도 
+    칼날: 몸 가까이부터 칼끝까지 하얀 선 / 칼끝 자국: 테두리를 따라 굵고 밝게 시작해 가늘고 붉게 사라짐 / 쓸고 간 자리: 아주 옅은 주황"""
     im = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     px = im.load()
-    c, r = size / 2, size / 2 - 2
-    for y in range(size):  # 범위 테두리: 옅은 주황 원
+    c, r = size / 2, size / 2 - 3
+    head = math.radians(k * 360 / frames)
+    tail = math.radians(200)
+
+    def put(x, y, col, al):
+        if 0 <= x < size and 0 <= y < size and px[x, y][3] < al:
+            px[x, y] = (*col, al)
+
+    for y in range(size):
         for x in range(size):
-            d = math.hypot(x + 0.5 - c, y + 0.5 - c)
-            if r - 1.2 <= d <= r:
-                px[x, y] = (255, 150, 70, 70)
-    for blade in range(2):  # 칼이 쓸고 지나간 부채꼴: 머리 쪽일수록 진한 반투명 주황 (원 안쪽 35%~테두리)
-        head = math.radians(k * (360 / frames) + blade * 180)
-        for y in range(size):
-            for x in range(size):
-                dx, dy = x + 0.5 - c, y + 0.5 - c
-                d = math.hypot(dx, dy)
-                if not (r * 0.35 <= d <= r):
-                    continue
-                behind = (head - math.atan2(dy, dx)) % (2 * math.pi)
-                if behind <= math.radians(150):
-                    t = 1 - behind / math.radians(150)
-                    al = int(120 * t ** 1.4 * (0.4 + 0.6 * (d / r)))
-                    if px[x, y][3] < al:
-                        px[x, y] = (255, 190, 110, al)
-    for blade in range(2):
-        head = math.radians(k * (360 / frames) + blade * 180)
-        for step in range(220):
-            t = step / 220  # 0 꼬리 → 1 머리
-            a = head - math.radians((1 - t) * 160)
-            thick = 1 + 11 * t ** 1.5
-            col = (255, 252, 236) if t > 0.8 else (255, 220, 140) if t > 0.55 else (255, 150, 70) if t > 0.3 else (210, 70, 40)
-            al = int(255 * (0.25 + 0.75 * t))
-            for j in range(int(thick * 2) + 1):
-                rr = r - j * 0.5  # 바깥 테두리에서 안쪽으로 두께만큼
-                x, y = int(c + math.cos(a) * rr), int(c + math.sin(a) * rr)
-                if 0 <= x < size and 0 <= y < size and px[x, y][3] < al:
-                    px[x, y] = (*col, al)
+            dx, dy = x + 0.5 - c, y + 0.5 - c
+            d = math.hypot(dx, dy)
+            if r - 1 <= d <= r:  # 범위 테두리: 옅은 주황 원
+                put(x, y, (255, 150, 70), 80)
+            if not (r * 0.3 <= d <= r):
+                continue
+            behind = (head - math.atan2(dy, dx)) % (2 * math.pi)
+            if behind <= tail:
+                t = 1 - behind / tail  # 1 칼 바로 뒤 → 0 꼬리
+                edge = (d - r * 0.3) / (r * 0.7)  # 0 몸 쪽 → 1 칼끝 쪽
+                put(x, y, (255, 180, 100), int(70 * t ** 2 * edge))  # 쓸고 간 자리
+                band = 2 + 7 * t ** 1.5  # 칼끝 자국 두께 (px)
+                if d >= r - band:
+                    col = (255, 250, 230) if t > 0.85 else (255, 214, 130) if t > 0.6 else (255, 150, 70) if t > 0.3 else (205, 70, 40)
+                    put(x, y, col, int(255 * (0.2 + 0.8 * t) * (0.6 + 0.4 * (d - (r - band)) / band)))
+    for step in range(200):  # 칼날: 두께 2px 하얀 선, 칼끝 쪽이 조금 굵음
+        u = step / 199
+        d = r * (0.3 + 0.7 * u)
+        for w in (-1, 0, 1) if u > 0.4 else (0,):
+            x = int(c + math.cos(head) * d - math.sin(head) * w * 0.8)
+            y = int(c + math.sin(head) * d + math.cos(head) * w * 0.8)
+            put(x, y, (255, 255, 245), 255)
     return im
 
 
-for k in range(8):
+for old in FX.glob("SpinSlash_*.png"):
+    old.unlink()
+for old in FX.glob("S_SpinSlash_*.hbsprite.json"):
+    old.unlink()
+for k in range(12):
     spin_slash(k).save(FX / f"SpinSlash_{k}.png")
     (FX / f"S_SpinSlash_{k}.hbsprite.json").write_text(json.dumps({"version": 1, "name": f"S_SpinSlash_{k}", "texture": f"Assets/Sprites/FX/SpinSlash_{k}.png",
-        "pixelsPerUnit": 16, "rect": [0, 0, 96, 96], "pivot": [0.5, 0.5], "filter": "nearest", "border": [0, 0, 0, 0]}, indent=2), encoding="utf-8")
-anim("SpinSlash", 8, 0.03)
-p = FX.parent.parent / "Animations/SA_SpinSlash.hbspriteanimation.json"
-d = json.loads(p.read_text(encoding="utf-8")); d["loop"] = True; p.write_text(json.dumps(d, indent=2), encoding="utf-8")
+        "pixelsPerUnit": 25.6, "rect": [0, 0, 160, 160], "pivot": [0.5, 0.5], "filter": "nearest", "border": [0, 0, 0, 0]}, indent=2), encoding="utf-8")
 print("ok")
