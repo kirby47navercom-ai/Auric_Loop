@@ -285,7 +285,10 @@ void TopDownShooter::Splash(){
 
 bool TopDownShooter::UpdateIntro(float delta,bool anyKey){
   // 회사 로고 → 타이틀(글자 연출, 아무 키) → 캐릭터 선택 → 오프닝 대화 (기획서 2장)
-  if(Phase>=2)return false;
+  if(Phase>=2){  // 캐릭터를 고른 뒤 로딩 화면 (로고 카드)이 잠깐 덮었다가 흐려지며 게임이 드러남
+    if(loadLeft>0){loadLeft-=delta;const float a=std::clamp(loadLeft/0.35f,0.f,1.f);UiOpacity("LoadingBack",a);UiOpacity("LoadingLogo",a);
+      if(loadLeft<=0)for(auto* n:{"LoadingBack","LoadingLogo"})UiVisible(n,false);}
+    return false;}
   phaseTime+=delta;PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});
   if(Phase==0){if(anyKey&&phaseTime>0.2f)phaseTime=std::max(phaseTime,rules->LoadingTime-0.5f);Splash();}  // 키를 누르면 바로 검게 넘어감
   if(Phase==0&&phaseTime>=rules->LoadingTime){Phase=1;phaseTime=0;
@@ -308,6 +311,7 @@ bool TopDownShooter::UpdateIntro(float delta,bool anyKey){
     if(!fresh)return true;
     selecting=false;Phase=2;Character=pick;if(pick<(int)rules->Debts.size())Debt=rules->Debts[pick];currentSprite="";ShowSelect(false);advanceHeld=true;Animate(0,false);Hud();
     Talk("Opening1");Talk(std::string("Intro_")+faces[pick]);Talk("Opening2");  // 오프닝: 수금원 → 고른 캐릭터 한마디 → 수금원
+    loadLeft=0.9f;for(auto* n:{"LoadingBack","LoadingLogo"}){UiVisible(n,true);UiOpacity(n,1);}UiScale("LoadingLogo",1);
   }
   return Phase<2;
 }

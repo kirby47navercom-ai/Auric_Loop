@@ -58,6 +58,7 @@ SFX = {
     "Finisher": ("finisher", 3, 0.8, "Cinematic slow motion finishing blow, huge deep boom impact with reverse whoosh before it and long dark reverb tail"),
 }
 BGM = {  # HBmusic BGM 모드, 루프 켬, 60초
+    "Title": ("bgm_title", 0.3, "Majestic mysterious fantasy title screen theme, shimmering golden harp and celesta arpeggios, warm strings and soft choir, slow tempo, hopeful yet ominous, treasure dungeon adventure"),
     "Hub": ("bgm_hub", 0.32, "Cozy melancholic fantasy village theme, acoustic guitar, flute and light strings, gentle, medium tempo, warm"),
     "Dungeon": ("bgm_dungeon", 0.3, "Dark fantasy dungeon exploration music, tense low strings, pulsing percussion, mysterious, medium tempo"),
     "Boss": ("bgm_boss", 0.28, "Epic dark fantasy boss battle music, heavy drums, aggressive low brass and choir, fast tempo, intense"),

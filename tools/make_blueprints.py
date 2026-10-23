@@ -179,7 +179,7 @@ SOUNDS = [_sfx(k) for k in ["Slash", "Arrow", "Bolt", "Boom", "Hit", "Kill", "Hu
                             "Flash", "Craft", "Gather", "Select", "BossCharge",
                             "Step", "Shot", "Spawn", "Lock", "Clear", "Charge", "Open", "Pickup"]] + ["Type=Assets/Audio/Type.wav|0.25", "Swing=Assets/Audio/Swing.wav|0.45", "Impact=Assets/Audio/Impact.wav|0.6", "Crack=Assets/Audio/Crack.wav|0.55"]
 SOUNDS += [_sfx(k) for k in ["BossSlam", "BossSwing", "BossDash", "BossRoar", "BossQuake", "CoinRain", "KillImpact", "Finisher"]]  # HBmusic (tools/import_hbmusic.py)
-SOUNDS += [f"{k}=Assets/Audio/S_BGM_{k}.hbaudioasset.json" for k in ["Hub", "Dungeon", "Boss", "Return"]]
+SOUNDS += [f"{k}=Assets/Audio/S_BGM_{k}.hbaudioasset.json" for k in ["Title", "Hub", "Dungeon", "Boss", "Return"]]
 rules = blueprint("BP_AuricRules", "AuricRules", [transform()], native_from=True, defaults={
     "AuricRules.Debts": [9800, 14500, 31700],  # 기획서 6-4
     "AuricRules.CharacterSprites": ["", "", ""],  # 캐릭터 그림은 C++가 직접 (발렌 ValenSocket, 셰리·알레아 모션 팩)

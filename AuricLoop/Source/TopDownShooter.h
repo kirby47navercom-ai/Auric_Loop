@@ -545,6 +545,7 @@ public:
   int HomeLevel = 1;
   HB_PROPERTY(BlueprintReadWrite)
   int Phase = 0;                 // 0 로딩, 1 타이틀·캐릭터 선택, 2 게임
+  float loadLeft = 0;            // 캐릭터 선택 뒤 로딩 화면이 남은 시간
   HB_PROPERTY(BlueprintReadWrite)
   int Character = 0;             // 0 발렌(검), 1 셰리(활), 2 알레아(마탄)
   HB_PROPERTY(BlueprintReadWrite)
@@ -580,7 +581,7 @@ public:
   // 반복 오디오 에셋(loop)을 일반 소리로 틀고 핸들로 끄고 다시 틂 → 크기가 실제로 바뀌고 겹치지 않음
   void ShotSfx(){if(shotSfxFrame!=frame){shotSfxFrame=frame;Sfx("Shot",0.9f+float(std::rand()%20)/100);}}  // 적 탄: 한 프레임에 한 번 (보스 원형 탄막이 소리를 쌓지 않게)
   int shotSfxFrame=-1,spawnSfxFrame=-1;float stepTime=0;bool swordHeld=false;
-  std::string BgmName() const{return Sound(Returning?"Return":area<0?"Hub":roomKind=="Boss"?"Boss":"Dungeon");}
+  std::string BgmName() const{return Sound(Phase<2?"Title":Returning?"Return":area<0?"Hub":roomKind=="Boss"?"Boss":"Dungeon");}
   void PlayBgm(const std::string& m){if(!musicHandle.empty())hb::Audio::Stop(musicHandle);musicHandle.clear();currentMusic=m;if(MusicLevel>0&&!m.empty())musicHandle=hb::Audio::Play(m,MusicVolume(),1,"master");}
   void Sfx(const std::string& name,float pitch=1.f){  // Sounds 값은 "wav 경로|볼륨". 첫 입력 전 효과음은 엔진이 버림
     const auto s=Sound(name);if(s.empty()||SfxLevel<=0)return;const auto bar=s.find('|');const float v=SfxLevel/8.f;

@@ -69,9 +69,9 @@ void TopDownShooter::Update(float delta){
     if(moveLockTime>0.3f&&(mask&~moveLockKeys||(!mask&&moveLockTime>0.5f))){moveLock=false;sentSpeed=-1;}  // 이동 코드가 속도를 되돌림
     else if(sentSpeed!=0){sentSpeed=0;hb::Movement2D::SetSpeed(player,0);}}  // 이동은 엔진 이동 컴포넌트가 입력으로 직접 함 (대화 등으로 아래 이동 코드에 안 닿아도 막히게 여기서)
   const auto position=playerAt;
-  {// 배경음: 거점·던전·보스방·귀환
+  {// 배경음: 타이틀·캐릭터 선택·거점·던전·보스방·귀환
    const std::string music=BgmName();
-   if((Phase>=2||selecting)&&music!=currentMusic)PlayBgm(music);}  // 첫 입력 전이면 엔진이 기다렸다 틂
+   if(Phase>=1&&music!=currentMusic)PlayBgm(music);}  // 첫 입력 전이면 엔진이 기다렸다 틂
   {// 부스 운영 (기획서 10장): F12 바로 처음으로, 엔딩 카드에서 아무 키나 누르면 처음으로 (무입력 자동 복귀는 테스트에 불편해서 뺌)
    bool any=hb::VectorMath::Vector2Length(hb::Input::GetMouseDelta())>0;
    for(auto* k:{"w","a","s","d","e","q","space","enter","tab","LeftMouseButton","1","2","3","4","5"})any=any||hb::Input::IsKeyDown(k);
