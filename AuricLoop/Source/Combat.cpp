@@ -127,7 +127,9 @@ void TopDownShooter::StunAll(float seconds){for(auto* e:Enemies())e->Stun(second
 // 실행 중 생성(Scene::Spawn)과 엔진 풀(ActorPool)은 부를 때마다 컴포넌트를 다시 시작해 수 ms~수십 ms가 걸려 프레임이 끊긴다
 
 hb::Actor* TopDownShooter::Take(std::vector<hb::Actor*>& pool,const std::string& prefab,const hb::Transform& at){
-  if(!pool.empty()){auto* a=pool.back();pool.pop_back();hb::Scene::SetTransform(a,at);return a;}
+  if(!pool.empty()){auto* a=pool.back();pool.pop_back();hb::Scene::SetTransform(a,at);
+    if(&pool==&fxPool)hb::Sprites::SetFlip(a,false,false);  // 이펙트는 지난번 쓴 쪽의 좌우 반전이 남아 있음 (왼쪽 베기·흙먼지 뒤에 빌린 발렌 검기·회전 궤적이 거꾸로 나갔음). 반전이 필요하면 빌린 쪽이 다시 정함
+    return a;}
   (void)prefab;return nullptr;  // 다 쓰고 있으면 이번 것은 건너뛴다. 게임 중 새로 만들면(Spawn) 에디터에서 하나에 수백 ms씩 멈춤
 }
 
