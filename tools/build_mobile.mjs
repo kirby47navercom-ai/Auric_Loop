@@ -26,6 +26,16 @@ patches['native/mobile/android/HBActivity.java'] = [[
   'private void hbImmersive(){getWindow().getDecorView().setSystemUiVisibility(0x1706);if(android.os.Build.VERSION.SDK_INT>=28){android.view.WindowManager.LayoutParams p=getWindow().getAttributes();p.layoutInDisplayCutoutMode=1;getWindow().setAttributes(p);}}\n'
   + '    @Override public void onWindowFocusChanged(boolean focus){super.onWindowFocusChanged(focus);if(focus)hbImmersive();}\n'
   + '    @Override public void onCreate(Bundle state) {\n        super.onCreate(state);hbImmersive();']];
+// 안드로이드: 카메라 구멍·시스템 바 여백(inset)을 WebView 전체 안쪽 여백(padding)으로 주던 것을 빼고, 그 값을 CSS 변수(--hb-safe-*, CSS px)로
+// 페이지에 넘겨 HUD 위젯(safeArea)만 안쪽에 둠. 게임 화면은 휴대폰 끝까지 채움 (예전엔 20:9 휴대폰에서 위·좌우가 회색으로 비었음)
+//   onPageFinished에서도 다시 넣음: 여백 알림이 페이지보다 먼저 오면 그때 넣은 값이 사라짐
+patches['native/mobile/android/HBActivity.java'].push(
+  ['view.setPadding(left,top,right,bottom);return insets;', 'hbSafe();return insets;'],
+  ['@Override public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request)',
+   '@Override public void onPageFinished(WebView view,String url){hbSafe();}\n                @Override public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request)'],
+  ['private void hbImmersive(){',
+   'private void hbSafe(){if(web==null)return;float d=getResources().getDisplayMetrics().density;int[] s=safeInsets;String[] n={"left","top","right","bottom"};StringBuilder js=new StringBuilder("(function(r){");for(int i=0;i<4;i++)js.append("r.setProperty(\'--hb-safe-").append(n[i]).append("\',\'").append(s[i]/d).append("px\');");js.append("})(document.documentElement.style)");web.evaluateJavascript(js.toString(),null);}\n    private void hbImmersive(){']);
+patches['prototype/ui-runtime.js'] = [...(patches['prototype/ui-runtime.js'] || []), ['env(safe-area-inset-${side}, 0px)', 'var(--hb-safe-${side}, env(safe-area-inset-${side}, 0px))']];
 // 웹: 휴대폰 브라우저 주소창이 화면을 가리므로 첫 터치에 전체 화면 (브라우저는 사용자 동작 없이 전체 화면을 못 켬)
 patches['prototype/player.html'] = [['</body>',
   `<script>addEventListener('pointerdown',function f(e){if(e.pointerType!=='touch'||document.fullscreenElement||!document.documentElement.requestFullscreen)return;removeEventListener('pointerdown',f,true);document.documentElement.requestFullscreen({navigationUI:'hide'}).then(()=>screen.orientation?.lock?.('landscape')).catch(()=>{});},true);</script></body>`]];

@@ -130,7 +130,7 @@ for i in (1, 2, 3):
 # 지도 (W_Map, C++ DrawMap): 방을 실제 크기·자리 그대로, 복도도 실제 폭으로 이어 그림. 평소엔 오른쪽 위 틀 안, M·미니맵을 누르면 화면 가운데 크게 + 지역 이름
 MAP = "Assets/UI/Map/"
 n = node("MapBigBack", "Panel", "tl", 0, 0, 0, 0, 1, background="#05090ad0", visible=False)
-n["slot"].update(anchors=[0, 0, 1, 1], offset=[0, 0, 0, 0], alignment=[0, 0])  # 화면 전체 어둡게
+n["slot"].update(anchors=[0, 0, 1, 1], offset=[-240, -240, -240, -240], alignment=[0, 0])  # 화면 전체 어둡게 (안전 영역 밖까지, 아래 BLEED와 같음)
 node("MapBigFrame", "Image", "c", 0, 16, 820, 540, 2, visible=False, **FRAMED)
 node("MapBigTitle", "Text", "c", 0, -222, 700, 44, 3, text="", fontSize=30, color=GOLD, align="center", visible=False)
 node("MapBigSub", "Text", "c", 0, -186, 700, 26, 3, text="", fontSize=17, color=SAND, align="center", visible=False)
@@ -229,9 +229,12 @@ dialog("DialogTouch", "TouchButton", 0, 0, DW, DH, 53, inputKey="e", inputMode="
 
 
 # ---- 타이틀·로딩 (자료: 타이틀 시안 v2, 로딩 화면 초안 금화 GIF). 화면 전체를 덮는다 ----
+BLEED = [-240, -240, -240, -240]  # 늘어나는 축의 offset은 [왼쪽, 위, 오른쪽, 아래] 안쪽 여백이라 음수가 바깥으로. 어두운 바탕은 안전 영역(휴대폰 카메라 구멍·둥근 모서리 여백) 밖까지 덮음. 그림은 늘어나지 않게 그대로
+
+
 def full(name, kind, z, **props):
     n = node(name, kind, "tl", 0, 0, 0, 0, z, **props)
-    n["slot"].update(anchors=[0, 0, 1, 1], offset=[0, 0, 0, 0], alignment=[0, 0])
+    n["slot"].update(anchors=[0, 0, 1, 1], offset=BLEED if kind == "Panel" else [0, 0, 0, 0], alignment=[0, 0])
     return n
 
 
@@ -393,7 +396,7 @@ for k, (icon, label) in enumerate([("ore", "광물"), ("herb", "약초"), ("bone
     node(f"SettleCount{k}", "Text", "c", x, -134, 170, 24, 76, text="", fontSize=15, color=INK, align="center", visible=False)
 node("SettleRepay", "Text", "c", 0, 150, 300, 30, 77, text="", fontSize=22, color=RED, align="center", visible=False)
 node("SettlePlaque", "Image", "c", 0, 214, 360, 68, 73, texture=ART + "plaque.png", visible=False)
-node("SettleDebt", "Text", "c", 0, 205, 340, 34, 74, text="", fontSize=24, color="#ff8a7a", align="center", visible=False)
+node("SettleDebt", "Text", "c", 0, 212, 340, 34, 74, text="", fontSize=24, color="#ff8a7a", align="center", visible=False)
 node("SettleHint", "Text", "c", 0, 300, 600, 24, 74, text="E · 클릭 · Enter", fontSize=15, color=SKY, align="center", visible=False)
 
 FRONT = ("Title", "Loading", "Select", "Ending", "Menu")  # C++ TopDownShooter::UiInstance와 같은 접두어

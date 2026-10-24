@@ -165,6 +165,9 @@ bool TopDownShooter::UpdateDialog(float delta,bool advance){
   static const char* parts[]={"DialogBox","DialogNameTail","DialogNameTag","DialogPortraitFrame","DialogName","DialogText","DialogNext","DialogTouch"};
   // 초상화 하나를 말하는 사람 그림으로 바꿔 120px 틀 가운데에 (좌표: 대화창 1000x170 기준, tools/gen_hud.py)
   static const struct{const char* who;float w,h;}portraits[]={{"collector",108,108},{"valen",96,96},{"sherry",84,66},{"alea",90,72},{"boss",66,66}};
+  // 휴대폰: 대화 중엔 조이스틱·공격 버튼 그림을 감춤 (대화창이 버튼 위를 덮어 보였음. 대화 중엔 어차피 못 움직이고, 넘기기는 대화창을 누름). PC에선 원래 안 보이는 그림
+  {const bool talk=dialogIndex<dialog.size();
+   if(talk!=padHidden){padHidden=talk;for(auto* n:{"AttackButton","DodgeButton","DodgeCool","InteractButton","CraftButton","FlashButton","FlashIcon","JoystickArt","Move"})UiOpacity(n,talk?0.f:1.f);}}
   if(dialogIndex>=dialog.size()){
     if(!dialog.empty()){dialog.clear();dialogIndex=0;for(auto* n:parts)UiVisible(n,false);
       UiVisible("DialogPortrait",false);shownWho="";}

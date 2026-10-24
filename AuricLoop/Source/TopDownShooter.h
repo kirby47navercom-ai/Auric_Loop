@@ -196,7 +196,7 @@ private:
   int NextAfter(int current) const;  // 보스 패턴 순서
   void Glint(const std::string& spec,bool left);
   hb::Vec3 TipOf(const std::string& spec,bool left) const;  // 같은 자리 정보의 무기 끝 (몸 원점에서)  // 공격 직전 눈·무기 끝 반짝임 (몸을 붉게 물들이는 대신)
-  int dashCount=0;bool phase2=false;     // 보스: 연속 돌진 횟수, 체력 절반 아래 분노
+  int dashCount=0;bool phase2=false,enrageWait=false;float flipTick=0;     // 보스: 연속 돌진 횟수, 체력 절반 아래 분노
   hb::Vec3 jumpTarget{0,0,0};
   void NextPattern(int next);
   Mode mode=Mode::Halt;
@@ -546,6 +546,7 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   int Phase = 0;                 // 0 로딩, 1 타이틀·캐릭터 선택, 2 게임
   float loadLeft = 0;            // 캐릭터 선택 뒤 로딩 화면이 남은 시간
+  bool padHidden = false;        // 대화 중 휴대폰 조작 버튼 그림을 감춤 (UpdateDialog)
   HB_PROPERTY(BlueprintReadWrite)
   int Character = 0;             // 0 발렌(검), 1 셰리(활), 2 알레아(마탄)
   HB_PROPERTY(BlueprintReadWrite)
