@@ -16,7 +16,7 @@ static int EyeRow(const hb::Vec3& d);
 void Enemy::Awake(){
   // 풀에서 다시 꺼낼 때도 불린다. 생성한 쪽이 먼저 정한 무적·경직(귀환 해골)은 지우지 않는다
   Hp=MaxHp;flash=0;burnLeft=0;ring=0;pattern=0;shotTimer=ShotInterval*0.5f;mode=Mode::Halt;burnedOut=false;
-  sentStunned=sentReady=sentNear=flipped=false;hb::Sprites::SetFlip(this,false,false);eyeAnim="Idle";eyeShown.clear();dashCount=0;phase2=false;sentVelocity={9e9f,0,0};
+  sentStunned=sentReady=sentNear=flipped=false;hb::Sprites::SetFlip(this,false,false);eyeAnim="Idle";eyeShown.clear();dashCount=0;phase2=enrageWait=false;flipTick=0;sentVelocity={9e9f,0,0};
   tint=-1;Tint(false);  // 뒤집기도 실제로 풀어 둠: 풀에서 다시 꺼낸 적이 지난번 뒤집힌 채로 남으면 기억(flipped)과 달라 플레이어 반대쪽을 봄
   if(Parked)return;  // 화면 밖 대기 중이면 상태 머신을 켜지 않음 (꺼낼 때 다시 Awake)
   hb::States::Start(this,Brain);brainRunning=true;
@@ -45,10 +45,12 @@ void Enemy::Tick(float delta){
     const bool aiming=eyeAnim=="Charge"||eyeAnim=="Fire"||eyeAnim=="Recover";
     const std::string want="Assets/Animations/SA_Eyeball_"+eyeAnim+"_"+"FBLR"[EyeRow(aiming?laserDir:dir)]+".hbspriteanimation.json";
     if(want!=eyeShown){eyeShown=want;hb::Sprites::PlayAnimation(this,want,eyeAnim=="Idle"||eyeAnim=="Move");}}
-  else if(mode!=Mode::Spin&&flip!=flipped){flipped=flip;hb::Sprites::SetFlip(this,flip,false);}  // 회전 베기 중엔 8방향 그림이 직접 돎
+  else if(mode!=Mode::Spin&&(flip!=flipped||(flipTick-=delta)<=0)){flipped=flip;flipTick=Boss?0.05f:0.25f;hb::Sprites::SetFlip(this,flip,false);}  // 회전 베기 중엔 8방향 그림이 직접 돎
+  // 바뀔 때만 보내면, 상태 머신이 그림(클립)을 바꿀 때 엔진 쪽 반전이 풀린 채 기억(flipped)만 남아 플레이어 반대쪽을 볼 때가 있어 주기적으로 다시 보냄 (보스는 자주)
   const bool frozen=!game||game->Frozen();
   // 닿기만 해서는 맞지 않는다. 보스 돌진(붉은 띠로 예고)에 부딪힐 때만 피해, 근접 공격은 UpdateMelee
   if(!frozen&&Boss&&mode==Mode::Dash&&distance<Radius+0.35f)game->DamagePlayer(ContactDamage,hb::Scene::GetPosition(this));
+  if(enrageWait&&!frozen){enrageWait=false;hb::States::Start(this,Brain);brainRunning=true;}  // 분노 컷신이 끝나면 패턴을 처음부터 다시
   if(Boss&&game&&!frozen){
     if(mode==Mode::Dash&&(ghostTick-=delta)<=0){ghostTick=0.05f;game->BossGhost(this);}  // 돌진 잔상
     if(rainTime>0&&(rainTime-=delta)<=0){  // 금화 비 떨어짐: 자리마다 금화 줄기·불꽃, 그 자리에 서 있으면 맞음
@@ -313,6 +315,10 @@ bool Enemy::TakeHit(float damage,const hb::Vec3& push,float stunSeconds,float bu
   if(!Boss){stun=std::max(stun,stunSeconds);sentVelocity=push;PhysicsQueue::Velocity(this,sentVelocity);}
   else if(!phase2&&Hp<=MaxHp*0.5f&&Hp>0.001f){  // 보스 2페이즈: 체력 절반 아래면 분노 (빨라지고 탄이 늘어남)
     phase2=true;Speed*=1.25f;DashSpeed*=1.15f;RingCount+=4;if(auto* game=TopDownShooter::Current)game->BossEnraged(this);
-    Roar(1.0f);}  // 분노: 잠깐 포효 자세
+    // 분노: 하던 패턴(돌진·점프·회전·베기)을 끊고 제자리에 멈춰 컷신 동안 포효. 상태 머신도 멈췄다가 컷신이 끝나면 다시 (Tick)
+    // (예전엔 컷신 중에도 상태 머신·돌진 속도가 살아 있어 보스가 계속 돌아다녔음)
+    Halt();atk=0;turning=false;rainSpots.clear();rainTime=0;
+    if(brainRunning){hb::States::Stop(this);brainRunning=false;}enrageWait=true;
+    Roar(0.1f);}  // 포효 자세는 컷신 내내 유지 (roarTime은 멈춰 있지 않을 때만 줄어듦)
   return Hp<=0.001f;  // 소수 오차로 0에 못 닿는 경우
 }
