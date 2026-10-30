@@ -44,6 +44,8 @@ bool TopDownShooter::LoadRun(){
 void TopDownShooter::Leave(int to,const std::string& spawn){
   // 바닥에 남은 골드는 들고 간다. 전투 중엔 문이 잠겨 있어 적·탄 상태는 넘기지 않는다
   for(auto& [c,value]:coins){Gold+=value;Give(coinPool,c);}coins.clear();
+  // 던전에 새로 들어가면 지난 원정 상태를 비움: 귀환 성공(ReturnSuccess)이 남아 있으면 방에 들어가도 전투가 안 시작돼 몬스터가 안 나왔고, 피로도도 쌓인 채였음
+  if(to==0){ReturnSuccess=Returning=HasReturnItem=KnockedOut=false;Fatigue=0;DoorHits=0;}
   SaveRun();leaving=true;PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});
   if(to<0)taken.clear();  // 던전은 들어갈 때마다 새로 만들어짐
   std::string scene=to>=0?rules->DungeonScene:rules->HubScene;
