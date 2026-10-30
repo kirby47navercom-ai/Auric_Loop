@@ -12,6 +12,7 @@ import {fileURLToPath, pathToFileURL} from 'node:url';
 import {playerPatches, applyPatches} from './player_patches.mjs';
 import {retainBuilds} from './build-retention.mjs';
 import {ENGINE} from './engine.mjs';
+import {hookLightScenes} from './light_scene.mjs';
 
 const tool = name => import(pathToFileURL(path.join(ENGINE, 'tools', name)).href);
 const {readProjectManifest} = await tool('project-manifest.mjs');
@@ -24,7 +25,11 @@ const project = path.join(path.dirname(fileURLToPath(import.meta.url)), '../Auri
 const record = await readProjectManifest(project);
 const profile = (await readBuildProfiles(record)).profiles.find(p => p.id === id);
 if (!profile) throw Error(`빌드 프로필 없음: ${id}`);
+// 내장 그래픽(Intel UHD 620)·램 8GB 노트북에서도 돌게: 초당 60프레임(엔진 기본 120), 저사양 장면 설정(tools/light_scene.mjs, 물리는 60Hz 유지)
+const lightScenes = id === 'windows' ? hookLightScenes(path.dirname(project), 60) : null;
+if (id === 'windows') Object.assign(profile, {targetFrameRate: 60, framePacing: 'display'});
 const build = await buildGame(record, profile, {onProgress: s => console.log(s)});
+if (lightScenes && !lightScenes()) throw Error('저사양 장면 설정이 안 들어감 (엔진이 장면 읽는 방식이 바뀜)');
 
 // 플레이어는 시작할 때 game.hbpack.json의 크기·sha256으로 파일을 검사하므로 고친 파일의 값도 바꾼다
 const packFile = path.join(build.output, 'game.hbpack.json'), pack = JSON.parse(await fs.readFile(packFile, 'utf8'));
