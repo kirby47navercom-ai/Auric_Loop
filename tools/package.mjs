@@ -29,7 +29,9 @@ if (!profile) throw Error(`빌드 프로필 없음: ${id}`);
 const lightScenes = ['windows', 'perf'].includes(id) ? hookLightScenes(path.dirname(project), 60, {pc: true}) : null;
 // 엔진 467f512부터 Windows 기본 실행기는 WebView2 없는 네이티브(Win32·DirectX 11·Skia UI): 램·그래픽을 훨씬 덜 씀.
 // 네이티브는 화면 주사율 동기화(framePacing display)를 거절하므로 고정 60
-if (['windows', 'perf'].includes(id)) Object.assign(profile, {targetFrameRate: 60, framePacing: 'fixed'});  // perf(보스방 시작 측정용)도 배포와 같은 설정
+// AURIC_RUNTIME=webview: 네이티브가 아직 못 그리는 것(반복 타일 drawMode "tiled" 등)이 있을 때 WebView2 실행기로
+const webviewRuntime = process.env.AURIC_RUNTIME === 'webview';
+if (['windows', 'perf'].includes(id)) Object.assign(profile, {targetFrameRate: 60, framePacing: webviewRuntime ? 'display' : 'fixed'}, webviewRuntime ? {windowsRuntime: 'webview'} : {});  // perf(보스방 시작 측정용)도 배포와 같은 설정
 const build = await buildGame(record, profile, {onProgress: s => console.log(s)});
 if (lightScenes && !lightScenes()) throw Error('저사양 장면 설정이 안 들어감 (엔진이 장면 읽는 방식이 바뀜)');
 
