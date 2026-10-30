@@ -26,15 +26,19 @@ const record = await readProjectManifest(project);
 const profile = (await readBuildProfiles(record)).profiles.find(p => p.id === id);
 if (!profile) throw Error(`빌드 프로필 없음: ${id}`);
 // 내장 그래픽(Intel UHD 620)·램 8GB 노트북에서도 돌게: 초당 60프레임(엔진 기본 120), 저사양 장면 설정(tools/light_scene.mjs, 물리는 60Hz 유지)
-const lightScenes = id === 'windows' ? hookLightScenes(path.dirname(project), 60) : null;
-if (id === 'windows') Object.assign(profile, {targetFrameRate: 60, framePacing: 'display'});
+const lightScenes = id === 'windows' ? hookLightScenes(path.dirname(project), 60, {pc: true}) : null;
+// 엔진 467f512부터 Windows 기본 실행기는 WebView2 없는 네이티브(Win32·DirectX 11·Skia UI): 램·그래픽을 훨씬 덜 씀.
+// 네이티브는 화면 주사율 동기화(framePacing display)를 거절하므로 고정 60
+if (id === 'windows') Object.assign(profile, {targetFrameRate: 60, framePacing: 'fixed'});
 const build = await buildGame(record, profile, {onProgress: s => console.log(s)});
 if (lightScenes && !lightScenes()) throw Error('저사양 장면 설정이 안 들어감 (엔진이 장면 읽는 방식이 바뀜)');
 
 // 플레이어는 시작할 때 game.hbpack.json의 크기·sha256으로 파일을 검사하므로 고친 파일의 값도 바꾼다
 const packFile = path.join(build.output, 'game.hbpack.json'), pack = JSON.parse(await fs.readFile(packFile, 'utf8'));
 const patches = await playerPatches(path.dirname(project));
-for (const name of Object.keys(patches)) {
+// WebView 플레이어(prototype/player.js)가 없는 네이티브 패키지엔 플레이어 수정이 필요 없음
+const webview = pack.files.some(f => f.path === 'prototype/player.js');
+for (const name of webview ? Object.keys(patches) : []) {
   const entry = pack.files.find(f => f.path === name);
   if (!entry) { if (name === 'prototype/game-renderer.js') continue; throw Error(`패키지 목록에 없음: ${name}`); }  // 렌더러 파일은 엔진 dcc7dfb부터 있음
   const file = path.join(build.output, name), bytes = Buffer.from(applyPatches(name, await fs.readFile(file, 'utf8'), patches));

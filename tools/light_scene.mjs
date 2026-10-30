@@ -5,6 +5,7 @@
 //   - 거점 풀·덤불·가장자리 나무 흔들림(Animator 300여 개)은 멈춘 그림으로: 그림이 바뀔 때마다 물체마다 애니메이션 계산·그림 교체·C++ 전송
 //   - 거점 가장자리 숲(Edge숫자 93그루) 충돌은 걸을 수 있는 범위 밖이라 마을 경계 벽이 이미 막음 → 빼서 물리 동기화 대상을 줄임
 import fs from 'node:fs/promises';
+import fsSync from 'node:fs';
 import path from 'node:path';
 
 export function lightScene(text, physicsHz) {
@@ -17,12 +18,27 @@ export function lightScene(text, physicsHz) {
 }
 
 // fs.readFile을 가로채 프로젝트의 *.hbscene.json을 가볍게 바꿈. 바꾼 장면 수를 돌려주는 함수를 반환
-export function hookLightScenes(projectDir, physicsHz) {
+// PC 네이티브 실행기는 터치 전용(deviceVisibility "touch") 그림까지 그려 PC에 조이스틱·버튼 그림이 보였음 → PC 빌드에선 숨김
+// (지우지 않고 투명·숨김: C++가 이름으로 그림·표시를 바꾸므로)
+export function hideTouchWidgets(text, projectDir) {
+  const widget = JSON.parse(text);
+  const walk = n => { if (Array.isArray(n)) return n.forEach(walk); if (!n || typeof n !== 'object') return;
+    if (n.properties?.deviceVisibility === 'touch') Object.assign(n.properties, {visible: false, opacity: 0});
+    // 9분할 그림: 네이티브 UI가 9분할을 몰라 통째로 늘림 → 미리 늘린 그림(tools/bake_nine_slice.py)으로
+    const p = n.properties, size = n.slot?.offset, baked = p?.texture && size && p.nineSlice?.some(Boolean) && `Assets/UI/Baked9/${path.basename(p.texture, path.extname(p.texture))}_${size[2]}x${size[3]}.png`;
+    if (baked && fsSync.existsSync(path.join(projectDir, baked))) Object.assign(p, {texture: baked, nineSlice: [0, 0, 0, 0]});
+    Object.values(n).forEach(walk); };
+  walk(widget);return JSON.stringify(widget);
+}
+
+export function hookLightScenes(projectDir, physicsHz, {pc = false} = {}) {
   const read = fs.readFile.bind(fs), root = path.resolve(projectDir);let count = 0;
   fs.readFile = async (file, ...rest) => {
-    const result = await read(file, ...rest);
-    if (!String(file).endsWith('.hbscene.json') || !path.resolve(String(file)).startsWith(root)) return result;
-    count++;const text = lightScene(Buffer.isBuffer(result) ? result.toString('utf8') : result, physicsHz);
+    const result = await read(file, ...rest), name = String(file);
+    const scene = name.endsWith('.hbscene.json'), widget = pc && name.endsWith('.hbwidget.json');
+    if (!(scene || widget) || !path.resolve(name).startsWith(root)) return result;
+    if (scene) count++;
+    const source = Buffer.isBuffer(result) ? result.toString('utf8') : result, text = scene ? lightScene(source, physicsHz) : hideTouchWidgets(source, projectDir);
     return Buffer.isBuffer(result) ? Buffer.from(text) : text;
   };
   return () => count;
