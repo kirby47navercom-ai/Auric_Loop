@@ -1,5 +1,10 @@
+import {blueprintAccess,blueprintMemberOwner,blueprintOverrideAllowed} from './blueprint-access.js';
+import {createNativeTypeImportResolver} from './native-type-imports.js';
+import {nativeTypeReference} from './native-model.js';
+import {validNativeRecordPin} from './native-records.js';
+import {validNativeEnumPin} from './native-enums.js';
 import {validBlueprint,isBlueprintParent,allGraphContexts,basePins,catalog,validValue,legacyTemplateConstruction,makeNode,graphContext} from './blueprint-model.js';
-import {nativeMember,nativeSourceReference,validNativeReference,parseNativeHeader,canonicalNativeText} from './native-model.js';
+import {nativeMember,nativeSourceReference,validNativeReference,readNativeHeader,canonicalNativeText} from './native-model.js';
 import {componentDefaults,validComponentProperties} from './scene-components.js';
 import {inputKey} from './runtime-input.js';
 
@@ -18,23 +23,25 @@ function inheritedRoot(parent,parentPath){
   delete root.inheritance;return {root,origins};
 }
 function appendSymbols(root,child,key){const existing=root[key]||[],own=child[key]||[];for(const item of own)if(existing.some(p=>p.id===item.id||p.name===item.name))throw Error('상속된 '+key+' 이름/ID 중복: '+item.name);root[key]=[...existing,...copy(own)];}
-const signature=d=>JSON.stringify({pure:!!d.pure,inputs:d.inputs.map(p=>[p.id,p.type,p.array]),outputs:d.outputs.map(p=>[p.id,p.type,p.array])});
+const signature=d=>JSON.stringify({pure:!!d.pure,inputs:d.inputs.map(p=>[p.id,p.type,p.array,p.structName,p.enumName]),outputs:d.outputs.map(p=>[p.id,p.type,p.array,p.structName,p.enumName])});
 function classDefaults(root,child,parent){
   for(const [id,value] of Object.entries(child.settings?.variableDefaults||{})){const v=root.variables.find(v=>v.id===id);if(!parent.variables.some(v=>v.id===id)||!v||(v.container==='array'?!(Array.isArray(value)&&value.length<=128&&value.every(x=>validValue(v.type,x))):!validValue(v.type,value)))throw Error('상속 변수 기본값 자료형 오류: '+id);v.value=copy(value);}
   for(const [id,values] of Object.entries(child.settings?.componentOverrides||{})){const c=root.components.find(c=>c.id===id);if(!parent.components.some(c=>c.id===id)||!c||!values||Array.isArray(values)||typeof values!=='object')throw Error('상속 컴포넌트가 없어요: '+id);const next={...componentDefaults(c.type),...c.properties,...values};if(!validComponentProperties(c.type,next)||Object.keys(values).some(k=>!Object.hasOwn(componentDefaults(c.type),k)))throw Error('상속 컴포넌트 기본값 오류: '+id);c.properties=copy(next);}
 }
-export function createBlueprintResolver(read,readText){
-  const loaded=new Map();
+export function createBlueprintResolver(read,readText,{prepare}={}){
+  const loaded=new Map(),typeImports=createNativeTypeImportResolver(readText);
   async function resolve(path,stack=[]){
     // Readers enforce project paths; legacy in-memory readers use names such as A.
     if(typeof path!=='string'||!path||path.length>1000)throw Error('블루프린트 에셋 경로를 확인하세요: '+path);
     if(stack.includes(path))throw Error('블루프린트 순환 상속: '+[...stack,path].join(' → '));if(stack.length>=32)throw Error('블루프린트 상속 깊이 32 초과');
     if(loaded.has(path))return loaded.get(path);
-    const child=copy(await read(path));if(!validBlueprint(child))throw Error('블루프린트 검증 실패: '+path);
-    if(child.native&&readText){const n=child.native,header=canonicalNativeText(await readText(n.headerPath||'Source/DoorController.h')),source=canonicalNativeText(await readText(n.sourcePath||'Source/DoorController.cpp'));child.native={...parseNativeHeader(header),header,source,headerPath:n.headerPath,sourcePath:n.sourcePath};if(!validBlueprint(child))throw Error('C++ 원본과 블루프린트가 맞지 않아요: '+path);}else if(validNativeReference(child.native))throw Error('C++ 원본 읽기 경로가 필요해요: '+path);
+    let child=copy(await read(path));if(!validBlueprint(child))throw Error('블루프린트 검증 실패: '+path);
+    if(nativeTypeReference(child.native))child.native=await typeImports(child.native);else if(child.native&&readText){const n=child.native,header=canonicalNativeText(await readText(n.headerPath||'Source/DoorController.h')),source=canonicalNativeText(await readText(n.sourcePath||'Source/DoorController.cpp'));child.native={...await readNativeHeader(header,{sourcePath:n.headerPath||'Source/DoorController.h',readText}),header,source,headerPath:n.headerPath,sourcePath:n.sourcePath};}else if(validNativeReference(child.native))throw Error('C++ 원본 읽기 경로가 필요해요: '+path);
     const parentPath=child.settings?.parentClass;
-    if(!isBlueprintParent(parentPath)){loaded.set(path,child);return child;}
-    const parent=await resolve(parentPath,[...stack,path]);const root=composeBlueprint(child,parent,path);loaded.set(path,root);return root;
+    const parent=isBlueprintParent(parentPath)?await resolve(parentPath,[...stack,path]):null;
+    if(prepare)child=await prepare(child,{path,parent});
+    if(!validBlueprint(child))throw Error('C++ 원본·타입 라이브러리와 블루프린트가 맞지 않아요: '+path);
+    const root=parent?composeBlueprint(child,parent,path):child;loaded.set(path,root);return root;
   }
   return resolve;
 }
@@ -46,12 +53,13 @@ export function resolveCachedBlueprint(path,read,stack=[]){
 }
 function composeBlueprint(child,parent,path){
     const parentPath=child.settings.parentClass;if(child.native&&!same(child.native,parent.native))throw Error('BP 부모의 C++ 소스를 자식에 다시 정의할 수 없어요: '+path);
-    const {root,origins}=inheritedRoot(parent,parentPath),inherited={variables:root.variables.map(v=>v.id),components:root.components.map(c=>c.id),functions:(root.functions||[]).filter(d=>!d.parentImplementation).map(d=>d.id),macros:(root.macros||[]).map(d=>d.id),dispatchers:(root.dispatchers||[]).map(d=>d.id),interfaces:(root.interfaces||[]).map(d=>d.id),comments:views(root).flatMap(([,g])=>(g.comments||[]).map(c=>c.id)),nodes:Object.keys(origins)};
+    const {root,origins}=inheritedRoot(parent,parentPath),memberOrigins=Object.fromEntries(['functions','macros','variables'].map(kind=>[kind,Object.fromEntries((parent[kind]||[]).map(d=>[d.id,blueprintMemberOwner(parent,d,kind,parentPath)]))])),inherited={variables:root.variables.map(v=>v.id),components:root.components.map(c=>c.id),functions:(root.functions||[]).filter(d=>!d.parentImplementation).map(d=>d.id),macros:(root.macros||[]).map(d=>d.id),dispatchers:(root.dispatchers||[]).map(d=>d.id),interfaces:(root.interfaces||[]).map(d=>d.id),comments:views(root).flatMap(([,g])=>(g.comments||[]).map(c=>c.id)),nodes:Object.keys(origins)};
+    if(allGraphContexts(child).some(g=>g.nodes.some(n=>Object.hasOwn(origins,n.id))))throw Error('상속 노드 ID를 자식 그래프에 재사용할 수 없어요.');
     const defaultValues={settings:copy(parent.settings||{}),variables:Object.fromEntries(parent.variables.map(v=>[v.id,copy(v.value)])),components:Object.fromEntries(parent.components.map(c=>[c.id,{...componentDefaults(c.type),...copy(c.properties||{})}])),nativeDefaults:copy(parent.settings?.nativeDefaults||{})};
     for(const key of ['variables','components']){for(const own of child[key])if(root[key].some(p=>p.id===own.id||p.name===own.name))throw Error('상속된 '+key+' 이름/ID 중복: '+own.name);root[key].push(...copy(child[key]));}
     for(const key of ['macros','dispatchers','interfaces'])appendSymbols(root,child,key);
     const parentFunctions=new Map();root.functions??=[];
-    for(const own of child.functions||[]){const inheritedDefinition=root.functions.find(d=>!d.parentImplementation&&d.id===own.id);if(inheritedDefinition){if(inheritedDefinition.name!==own.name||signature(inheritedDefinition)!==signature(own))throw Error('상속 함수 시그니처 불일치: '+own.name);const oldId=inheritedDefinition.id,parentId=stableId(parentPath+'|function|'+oldId);inheritedDefinition.id=parentId;inheritedDefinition.name='Parent_'+parentId;inheritedDefinition.parentImplementation=true;for(const n of inheritedDefinition.graph.nodes)if(['functionInput','functionOutput'].includes(n.key)&&n.definitionId===oldId)n.definitionId=parentId;for(const w of root.watches||[])if(w.view===oldId)w.view=parentId;parentFunctions.set(oldId,parentId);inherited.functions=inherited.functions.filter(id=>id!==oldId);}else if(root.functions.some(d=>d.name===own.name))throw Error('상속 함수 이름 중복: '+own.name);root.functions.push(copy(own));}
+    for(const own of child.functions||[]){const inheritedDefinition=root.functions.find(d=>!d.parentImplementation&&d.id===own.id);if(inheritedDefinition){if(blueprintAccess(inheritedDefinition)==='private')throw Error('Private 함수는 재정의할 수 없어요: '+own.name);if((own.access??inheritedDefinition.access??'public')!==blueprintAccess(inheritedDefinition))throw Error('재정의 함수의 접근 범위는 부모와 같아야 해요: '+own.name);if(inheritedDefinition.name!==own.name||signature(inheritedDefinition)!==signature(own))throw Error('상속 함수 시그니처 불일치: '+own.name);const oldId=inheritedDefinition.id,parentId=stableId(parentPath+'|function|'+oldId);memberOrigins.functions[parentId]=memberOrigins.functions[oldId];inheritedDefinition.id=parentId;inheritedDefinition.name='Parent_'+parentId;inheritedDefinition.parentImplementation=true;for(const n of inheritedDefinition.graph.nodes)if(['functionInput','functionOutput'].includes(n.key)&&n.definitionId===oldId)n.definitionId=parentId;for(const w of root.watches||[])if(w.view===oldId)w.view=parentId;parentFunctions.set(oldId,parentId);inherited.functions=inherited.functions.filter(id=>id!==oldId);}else if(root.functions.some(d=>d.name===own.name))throw Error('상속 함수 이름 중복: '+own.name);const definition=copy(own);if(inheritedDefinition)definition.access=blueprintAccess(inheritedDefinition);root.functions.push(definition);}
     const parentEvents=new Map(root.nodes.filter(n=>events.has(n.key)).map(n=>[blueprintEventIdentity(n),n])),ownEvents=child.nodes.filter(n=>events.has(n.key));
     for(const n of ownEvents){const inheritedEvent=parentEvents.get(blueprintEventIdentity(n));if(inheritedEvent){inheritedEvent.parentKey=inheritedEvent.key;inheritedEvent.key='parentEntry';}}
     root.nodes.push(...copy(child.nodes));root.edges.push(...copy(child.edges));root.comments=[...(root.comments||[]),...copy(child.comments||[])];
@@ -59,7 +67,8 @@ function composeBlueprint(child,parent,path){
     if(legacyTemplateConstruction(parent.construction)&&root.construction){root.construction.nodes=root.construction.nodes.slice(0,1);root.construction.edges=[];}
     if(child.construction){for(const n of root.construction?.nodes||[])if(n.key==='construction'){n.parentKey=n.key;n.key='parentEntry';}root.construction={nodes:[...(root.construction?.nodes||[]),...copy(child.construction.nodes)],edges:[...(root.construction?.edges||[]),...copy(child.construction.edges)],comments:[...(root.construction?.comments||[]),...copy(child.construction.comments||[])]};}
     root.name=child.name;root.settings={...copy(parent.settings||{}),...copy(child.settings||{}),parentClass:parent.settings?.parentClass||'Actor',nativeDefaults:{...copy(parent.settings?.nativeDefaults||{}),...copy(child.settings?.nativeDefaults||{})}};delete root.settings.variableDefaults;delete root.settings.componentOverrides;classDefaults(root,child,parent);
-    root.inheritance={path,parentClass:parentPath,baseClass:root.settings.parentClass,ancestors:[parentPath,...(parent.inheritance?.ancestors||[])],inherited,nodeOrigins:origins,defaults:defaultValues,authored:child};
+    for(const kind of ['functions','macros','variables'])for(const d of root[kind]||[])Object.hasOwn(memberOrigins[kind],d.id)||(Object.defineProperty(memberOrigins[kind],d.id,{value:path,enumerable:true,writable:true,configurable:true}));
+    root.inheritance={memberOrigins,path,parentClass:parentPath,baseClass:root.settings.parentClass,ancestors:[parentPath,...(parent.inheritance?.ancestors||[])],inherited,nodeOrigins:origins,defaults:defaultValues,authored:child};
     for(const [,g] of views(root))for(const n of g.nodes){if(n.key!=='callParent'||inherited.nodes.includes(n.id))continue;delete n.parentEntryId;delete n.parentDefinitionId;if(n.parentFunctionId){const inheritedDefinition=parentFunctions.get(n.parentFunctionId);if(!inheritedDefinition)throw Error('재정의한 부모 함수가 없어요: '+n.parentFunctionId);n.parentDefinitionId=inheritedDefinition;}
       else if(n.parentEvent){const entry=n.parentEvent.key==='construction'?root.construction?.nodes.find(n=>n.key==='parentEntry'&&n.parentKey==='construction'):parentEvents.get(blueprintEventIdentity(n.parentEvent));if(!entry)throw Error('부모 이벤트가 없어요: '+n.parentEvent.key);n.parentEntryId=entry.id;const pins=basePins(entry,'out',root);n.parentPin??=pins.find(p=>p.type==='exec')?.id;if(!pins.some(p=>p.type==='exec'&&p.id===n.parentPin))throw Error('부모 이벤트 실행 핀을 확인하세요.');}
       else throw Error('부모 호출 대상을 선택하세요.');
@@ -93,9 +102,9 @@ export function editInheritedDefault(root,kind,id,value,key){
   else if(kind==='native'){settings.nativeDefaults??={};settings.nativeDefaults[id]=copy(value);}
 }
 export function setBlueprintDefault(root,kind,id,value,key){
-  if(kind==='variable'){const v=root.variables.find(v=>v.id===id);if(!v||(v.container==='array'?!(Array.isArray(value)&&value.length<=128&&value.every(x=>validValue(v.type,x))):!validValue(v.type,value)))throw Error('변수 기본값 자료형 오류');v.value=copy(value);}
+  if(kind==='variable'){const v=root.variables.find(v=>v.id===id);if(!v||!validNativeEnumPin(root.native,v,value)||!validNativeRecordPin(root.native,v,value)||(v.container==='array'?!(Array.isArray(value)&&value.length<=128&&value.every(x=>validValue(v.type,x))):!validValue(v.type,value)))throw Error('변수 기본값 자료형 오류');v.value=copy(value);}
   else if(kind==='component'){const c=root.components.find(c=>c.id===id),defaults=c&&componentDefaults(c.type),next={...defaults,...c?.properties,[key]:value};if(!c||!Object.hasOwn(defaults,key)||!validComponentProperties(c.type,next))throw Error('컴포넌트 기본값 오류');c.properties=copy(next);}
-  else if(kind==='native'){const {p}=nativeMember(root,{nativeId:id});if(!p||(p.array?!(Array.isArray(value)&&value.length<=128&&value.every(x=>validValue(p.type,x))):!validValue(p.type,value)))throw Error('C++ 속성 기본값 자료형 오류');root.settings??={};root.settings.nativeDefaults??={};root.settings.nativeDefaults[id]=copy(value);}
+  else if(kind==='native'){const {p}=nativeMember(root,{nativeId:id});if(!p||!validNativeEnumPin(root.native,p,value)||!validNativeRecordPin(root.native,p,value)||(p.array?!(Array.isArray(value)&&value.length<=128&&value.every(x=>validValue(p.type,x))):!validValue(p.type,value)))throw Error('C++ 속성 기본값 자료형 오류');root.settings??={};root.settings.nativeDefaults??={};root.settings.nativeDefaults[id]=copy(value);}
   else throw Error('기본값 종류 오류');editInheritedDefault(root,kind,id,value,key);
 }
 export function resetInheritedDefault(root,kind,id,key){
@@ -121,7 +130,7 @@ export function overrideBlueprintEvent(root,id,position={x:40,y:40}){
 
 export function overrideBlueprintFunction(root,id){
   const parent=root.functions?.find(d=>d.id===id&&!d.parentImplementation);
-  if(!parent||!root.inheritance?.inherited.functions.includes(id))throw Error('재정의할 부모 함수를 선택하세요.');
+  if(!blueprintOverrideAllowed(root,parent))throw Error('Public 또는 Protected 부모 함수를 선택하세요. Private 함수는 재정의할 수 없어요.');
   const data=serializeBlueprint(root),entry={...makeNode('functionInput',40,50),definitionId:id},exit={...makeNode('functionOutput',720,50),definitionId:id},call={...makeNode('callParent',360,50),parentFunctionId:id};
   const definition={...copy(parent),graph:{nodes:[entry,call,exit],edges:[...parent.inputs.map(p=>({from:{node:entry.id,pin:p.id},to:{node:call.id,pin:p.id}})),...parent.outputs.map(p=>({from:{node:call.id,pin:p.id},to:{node:exit.id,pin:p.id}}))],comments:[]}};
   delete definition.parentImplementation;data.functions??=[];data.functions.push(definition);return data;

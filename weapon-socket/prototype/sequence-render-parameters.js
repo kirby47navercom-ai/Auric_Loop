@@ -1,0 +1,20 @@
+import {materialParameters,materialFloatProperty,materialVectorProperty,materialVectorValue,materialDefaults,surfaceInputs} from './material-runtime.js';
+import {primaryLightComponent,primaryOwnedLight,ownedLight} from './light-parameter-state.js';
+const floatProperties=new Set([...surfaceInputs.filter(p=>p.type==='float').map(p=>p.key),'emissiveIntensity']);
+const vectorProperties=new Set(surfaceInputs.filter(p=>p.type==='vec3').map(p=>p.key));
+export function materialSequenceParameter(data,name,type='float'){
+ if(!data||!['float','vec3'].includes(type))return null;const parameter=materialParameters(data).find(p=>p.name===name),property=(type==='vec3'?materialVectorProperty:materialFloatProperty)(name),raw=parameter?parameter.value:data.surface?.[property]??materialDefaults[property];
+ if(parameter?parameter.type!==type:!(type==='vec3'?vectorProperties:floatProperties).has(property))return null;
+ let value;if(type==='vec3'){try{value=materialVectorValue(raw);}catch{return null;}}else{if(!Number.isFinite(raw))return null;value=raw;}
+ return {key:parameter?'parameter:'+parameter.name:'surface:'+property,parameter:parameter?parameter.name:property,value};
+}
+export const materialSequenceVectorParameter=(data,name)=>materialSequenceParameter(data,name,'vec3');
+export const sequenceLightComponentTrack=(track,component)=>({...track,type:'component',component:component.id,componentType:component.type,property:'intensity'});
+// Cached per active VM/actor/group/material identity. Alias spellings share one
+// token and field, while replacing a material cannot receive an old restoration.
+export class SequenceRenderParameters{
+ constructor(hooks){this.hooks=hooks;this.materials=new WeakMap();}
+ light(state,object,track){state.lightParameterBindings??=new WeakMap();let row=state.lightParameterBindings.get(track);if(row?.object===object&&row.track)return row.track;const component=primaryLightComponent(object,this.hooks.mesh?.(object.id)),bound=component?sequenceLightComponentTrack(track,component):null;state.lightParameterBindings.set(track,{object,track:bound});return bound;}
+ plainLight(object,vm){const group=this.hooks.mesh?.(object.id),node=primaryOwnedLight(group);if(!node)return null;return {target:node,key:'intensity',options:()=>({mix:'linear',read:()=>node.intensity,apply:value=>{node.intensity=Math.max(0,value);},valid:()=>vm.object(object.id)===object&&this.hooks.mesh(object.id)===group&&ownedLight(group,node)&&!group.userData.disposed})};}
+ material(object,name,vm,b,type='float'){const group=this.hooks.mesh?.(object.id),data=group?.userData.materialData;if(!data&&type==='vec3')throw Error('벡터 시퀀스에는 노드 머테리얼을 먼저 지정하세요.');if(!data)return {target:object,key:'material:'+name,options:()=>({mix:'linear',read:()=>this.hooks.captureParameter(object.id,'material',name),apply:value=>this.hooks.operation('materialFloat',{target:object.id,parameter:name,value},b,vm),valid:()=>vm.object(object.id)===object})};let actors=this.materials.get(vm);if(!actors){actors=new WeakMap();this.materials.set(vm,actors);}let groups=actors.get(object);if(!groups){groups=new WeakMap();actors.set(object,groups);}let sources=groups.get(group);if(!sources){sources=new WeakMap();groups.set(group,sources);}let record=sources.get(data);if(!record){record={target:{},names:new Map()};sources.set(data,record);}const cacheKey=type+':'+name;let descriptor=record.names.get(cacheKey);if(!descriptor){const parameter=materialSequenceParameter(data,name,type);if(!parameter)throw Error('시퀀스 머테리얼 '+type+' 파라미터를 확인하세요: '+name);descriptor={target:record.target,key:'material:'+parameter.key,options:()=>({mix:'linear',read:()=>materialSequenceParameter(data,name,type)?.value,apply:value=>this.hooks.operation(type==='vec3'?'materialVector':'materialFloat',{target:object.id,parameter:name,value},b,vm),valid:()=>vm.object(object.id)===object&&this.hooks.mesh(object.id)===group&&group.userData.materialData===data&&!group.userData.disposed})};record.names.set(cacheKey,descriptor);}return descriptor;}
+}

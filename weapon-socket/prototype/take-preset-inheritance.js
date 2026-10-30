@@ -1,0 +1,10 @@
+import {validTakePreset,takePresetPath,createTakePreset} from './take-preset-assets.js';
+export const takePresetGroups=[['fps','FPS'],['tolerance','키 오차'],['settings','녹화 설정'],['sources','녹화 소스'],['clock','녹화 시계']];
+export function validTakeInheritance(data){return data.parentPreset===undefined?data.overrides===undefined:takePresetPath(data.parentPreset)&&Array.isArray(data.overrides)&&new Set(data.overrides).size===data.overrides.length&&data.overrides.every(k=>takePresetGroups.some(([key])=>key===k));}
+export function flattenTakePreset(data,parent){if(!validTakePreset(data)||data.parentPreset&&!validTakePreset(parent)||parent?.parentPreset)throw Error('상속 프리셋을 확인하세요.');const own=new Set(data.overrides||takePresetGroups.map(([key])=>key)),field=key=>data.parentPreset&&!own.has(key)?parent[key]:data[key];return createTakePreset(data.name,{fps:field('fps'),tolerance:field('tolerance'),settings:field('settings'),sources:field('sources'),clock:field('clock'),description:data.description});}
+export async function resolveTakePresetTree(path,read,{root}={}){
+ const chain=[],seen=new Set();let leaf;
+ const visit=async current=>{if(!takePresetPath(current)||seen.has(current)||seen.size>=32)throw Error('프리셋 상속 경로·순환·깊이를 확인하세요: '+current);seen.add(current);const entry=current===path&&root?root:await read(current);if(!entry||!validTakePreset(entry.data))throw Error('상위 프리셋 파일을 확인하세요: '+current);const data=structuredClone(entry.data);if(current===path)leaf=entry;chain.push({path:current,revision:entry.revision??null});const parent=data.parentPreset?await visit(data.parentPreset):null;return flattenTakePreset(data,parent);};
+ const data=await visit(path);return {data,chain,revision:leaf.revision??null,path};
+}
+export function takePresetRevisionGuard(chain,expected){if(expected===undefined)return;if(!expected||typeof expected!=='object'||Array.isArray(expected)||Object.keys(expected).length!==chain.length||chain.some(row=>!Object.hasOwn(expected,row.path)||expected[row.path]!==row.revision))throw Error('프리셋 또는 상위 파일이 변경됐어요. 상속 목록을 다시 읽으세요.');}

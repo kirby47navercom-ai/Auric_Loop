@@ -1,6 +1,18 @@
+import {blueprintClassComponents} from './blueprint-class-defaults.js';
+import {createNativeTypeAsset,createNativeTypeDeclaration,validNativeTypeAsset} from './native-type-assets.js';
+import {nativeTypeAssetSuffix,isNativeTypeAssetKind} from './native-type-paths.js';
+import {createTakePreset,validTakePreset} from './take-preset-assets.js';
+import {lightmapSuffix,createLightmapAsset,validLightmapAsset} from './lightmap-assets.js';
+import {normalizeModelImport,validModelImport} from './model-import.js';
+import {validPrefabExtension,prefabDocumentRows} from './prefab-variants.js';
+import {abilityAssetTypes,abilityAssetSuffix,createAbilityAsset,validAbilityAsset} from './ability-assets.js';
+import {navigationAssetTypes,navigationAssetSuffix,createNavigationAsset,validNavigationAsset} from './navigation-mesh.js';
+import {presentationAssetTypes,presentationAssetSuffix,createPresentationAsset,validPresentationAsset} from './localization.js';
+import {worldAssetTypes,worldAssetSuffix,createWorldAsset,validWorldAsset} from './world-assets.js';
+import {createEditorTool,validEditorTool} from './editor-tool-assets.js';
 import {textureAssetTypes,textureAssetSuffix,createTextureAsset,validTextureAsset,materialTextureTypes} from './texture-assets.js';
 import {retargetAssetTypes,retargetAssetSuffix,createRetargetAsset,validRetargetAsset} from './animation-retarget-assets.js';
-import {nativeSourceReference} from './native-model.js';
+import {nativeSourceReference,nativeSourceMatches} from './native-model.js';
 import {validDataAsset} from './data-assets.js';
 import {defaultBlueprint,makeNode,componentDefaults,validBlueprint,defaultTimeline,validTimeline} from './blueprint-model.js';
 import {defaultSurface,validSurface,validScene,defaultEnvironment} from './model.js';
@@ -21,13 +33,20 @@ const copy=v=>structuredClone(v);
 export const assetSuffix={blueprint:'.hbblueprint.json',material:'.hbmaterial.json',materialfunction:'.hbmaterialfunction.json',materiallayer:'.hbmateriallayer.json',materialblend:'.hbmaterialblend.json',materialinstance:'.hbmaterialinstance.json',physicalmaterial:'.hbphysicalmaterial.json',prefab:'.hbprefab.json',gameconfig:'.hbgameconfig.json',audioasset:'.hbaudioasset.json',animation:'.hbanimation.json',scene:'.hbscene.json',inputaction:'.hbinputaction.json',inputmapping:'.hbinputmapping.json',curve:'.hbcurve.json',data:'.hbdata.json'};
 export const assetTypes={materiallayer:{label:'머테리얼 레이어',prefix:'ML_',group:'머테리얼'},materialblend:{label:'머테리얼 레이어 블렌드',prefix:'MLB_',group:'머테리얼'},materialfunction:{label:'머테리얼 함수',prefix:'MF_',group:'머테리얼'},blueprint:{label:'블루프린트 클래스',prefix:'BP_',group:'게임플레이'},code:{label:'C++ 클래스',prefix:'',group:'게임플레이'},inputaction:{label:'Input Action',prefix:'IA_',group:'입력'},inputmapping:{label:'Input Mapping Context',prefix:'IMC_',group:'입력'},material:{label:'머테리얼',prefix:'M_',group:'렌더링'},materialinstance:{label:'머테리얼 인스턴스',prefix:'MI_',group:'렌더링'},physicalmaterial:{label:'물리 머테리얼',prefix:'PM_',group:'물리'},prefab:{label:'프리팹',prefix:'PF_',group:'게임플레이'},gameconfig:{label:'게임 설정',prefix:'GS_',group:'프로젝트'},audioasset:{label:'오디오 에셋',prefix:'S_',group:'오디오'},animation:{label:'트랜스폼 애니메이션',prefix:'AN_',group:'애니메이션'},curve:{label:'커브',prefix:'Curve_',group:'애니메이션'},data:{label:'데이터 에셋',prefix:'DA_',group:'데이터'},scene:{label:'레벨',prefix:'L_',group:'월드'}};
 Object.assign(assetSuffix,textureAssetSuffix);Object.assign(assetTypes,textureAssetTypes);
+Object.assign(assetSuffix,nativeTypeAssetSuffix);Object.assign(assetTypes,{typelibrary:{label:'구조체·열거형 라이브러리',prefix:'Types_',group:'데이터'},enumasset:{label:'열거형',prefix:'E_',group:'데이터'},structasset:{label:'구조체',prefix:'F_',group:'데이터'}});
 Object.assign(assetSuffix,retargetAssetSuffix);Object.assign(assetTypes,retargetAssetTypes);
 Object.assign(assetSuffix,twoDSuffix);Object.assign(assetTypes,twoDTypes);
 Object.assign(assetSuffix,gameplaySuffix);Object.assign(assetTypes,gameplayTypes);
+Object.assign(assetSuffix,worldAssetSuffix);Object.assign(assetTypes,worldAssetTypes);
+Object.assign(assetTypes,abilityAssetTypes,navigationAssetTypes,presentationAssetTypes);Object.assign(assetSuffix,abilityAssetSuffix,navigationAssetSuffix,presentationAssetSuffix);
+assetSuffix.lightmap=lightmapSuffix;assetTypes.lightmap={label:'베이크 라이트맵',prefix:'LM_',group:'렌더링'};
+assetSuffix.modelimport='.import.json';assetTypes.modelimport={label:'모델 가져오기',prefix:'',group:'에셋',sourceOnly:true};
+assetSuffix.editortool='.hbeditortool.json';assetTypes.editortool={label:'편집기 도구',prefix:'ET_',group:'편집기'};
 assetSuffix.widget='.hbwidget.json';assetTypes.widget={label:'위젯 UI',prefix:'W_',group:'사용자 인터페이스'};
 assetSuffix.audiomixer='.hbaudiomixer.json';assetTypes.audiomixer={label:'오디오 믹서',prefix:'MX_',group:'오디오'};
 assetSuffix.animgraph='.hbanimgraph.json';assetTypes.animgraph={label:'애니메이션 그래프',prefix:'AG_',group:'애니메이션'};
 assetSuffix.spriterig='.hbspriterig.json';assetTypes.spriterig={label:'2D 스프라이트 리그',prefix:'SR_',group:'2D'};
+assetSuffix.takepreset='.hbtakepreset.json';assetTypes.takepreset={label:'Take 녹화 프리셋',prefix:'TP_',group:'애니메이션',editorOnly:true};
 export const assetTitle=path=>path.split('/').pop().replace(/\.hb[a-z]+\.json$/i,'');
 export async function loadSceneBindings(objects,read,readText){
   const loaded=new Map(),contexts=new Map(),actions=new Map(),bindings=[];
@@ -41,11 +60,21 @@ export async function loadSceneBindings(objects,read,readText){
 }
 export const defaultGameConfig={dimension:'3d',startupScene:'',startupBlueprint:'',defaultInputMapping:'',gameMode:'',gameState:'',gameInstance:'',defaultController:'',playerState:'',defaultPawn:'',spawnPosition:[0,1,0],autoSpawnPlayer:true,gravity:[0,-9.81,0],fixedDeltaTime:1/60,maxSubsteps:8,window:{width:1280,height:720,fullscreen:false,vsync:true}};
 export function createAsset(kind,name,parent='Actor'){
+  if(kind==='typelibrary')return createNativeTypeAsset(name);
+  if(kind==='enumasset'||kind==='structasset')return createNativeTypeDeclaration(name,kind);
+  if(kind==='modelimport')throw Error('원본 모델의 가져오기 설정을 여세요.');
   if(!name||name.length>80||/[<>:"/\\|?*\x00-\x1f]/.test(name))throw Error('에셋 이름을 확인하세요.');
+  if(kind==='takepreset')return createTakePreset(name);
+  if(kind==='lightmap')return createLightmapAsset(name);
+  if(kind in abilityAssetTypes)return createAbilityAsset(kind,name);
+  if(kind in navigationAssetTypes)return createNavigationAsset(kind,name);
+  if(kind in presentationAssetTypes)return createPresentationAsset(kind,name);
+  if(kind in worldAssetTypes)return createWorldAsset(kind,name);
   if(kind in textureAssetTypes)return createTextureAsset(kind,name);
   if(kind in twoDTypes)return create2DAsset(kind,name);
   if(kind in gameplayTypes)return createGameplayAsset(kind,name);
   if(kind in retargetAssetTypes)return createRetargetAsset(kind,name);
+  if(kind==='editortool')return createEditorTool(name);
   if(kind==='widget')return createWidgetAsset(name);
   if(kind==='audiomixer')return createAudioMixer(name);
   if(kind==='animgraph')return createAnimationGraph(name);
@@ -54,7 +83,7 @@ export function createAsset(kind,name,parent='Actor'){
     if(isBlueprintParent(parent))return {version:1,name,settings:{parentClass:parent},nodes:[],edges:[],variables:[],components:[],functions:[],macros:[],comments:[],dispatchers:[],interfaces:[]};
     const type=blueprintClasses[parent];if(!type)throw Error('지원하지 않는 부모 클래스예요.');
     const root=copy(defaultBlueprint);root.name=name;root.nodes=['beginPlay','tick','endPlay'].map((key,i)=>({...makeNode(key,70,55+i*165),id:key}));root.edges=[];root.variables=[];root.functions=[];root.macros=[];root.comments=[];root.dispatchers=[];root.interfaces=[];delete root.native;
-    root.components=type.components.map((type,i)=>({id:'component_'+i,name:type,type,properties:componentDefaults(type)}));root.settings={parentClass:parent,tickEnabled:true,tickInterval:0,overlapEnabled:true};return root;
+    root.components=blueprintClassComponents(parent);root.settings={parentClass:parent,tickEnabled:true,tickInterval:0,overlapEnabled:true};return root;
   }
   if(kind==='scene')return {version:1,sceneName:name,objects:[],surface:copy(defaultSurface),environment:copy(defaultEnvironment)};
   if(['materiallayer','materialblend'].includes(kind))return {version:1,name,domain:kind==='materialblend'?'blend':'layer',surface:copy(materialDefaults),description:'',category:'머테리얼 레이어',expose:false,graph:materialLayerGraph(kind==='materialblend')};
@@ -64,7 +93,7 @@ export function createAsset(kind,name,parent='Actor'){
   if(kind==='physicalmaterial')return {version:1,name,friction:.5,restitution:.1,density:1,frictionCombine:'average',restitutionCombine:'average'};
   if(kind==='prefab')return {version:1,name,root:'root',objects:[{id:'root',name,kind:'cube',group:'PREFAB',position:[0,0,0],rotation:[0,0,0],scale:[1,1,1],visible:true}]};
   if(kind==='gameconfig')return {version:1,name,...copy(defaultGameConfig)};
-  if(kind==='audioasset')return {version:1,name,clip:'',volume:1,pitch:1,loop:false,spatial:false,autoplay:false,refDistance:1,maxDistance:100,rolloff:1,mixer:'',bus:'master'};
+  if(kind==='audioasset')return {version:1,name,priority:128,virtualize:true,clip:'',volume:1,pitch:1,loop:false,spatial:false,autoplay:false,refDistance:1,maxDistance:100,rolloff:1,mixer:'',bus:'master'};
   if(kind==='inputaction')return {version:1,name,valueType:'bool',consumeInput:true,trigger:'pressed',deadZone:0};
   if(kind==='inputmapping')return {version:1,name,priority:0,mappings:[]};
   if(kind==='data')return {version:1,name,fields:[]};
@@ -74,9 +103,18 @@ export function createAsset(kind,name,parent='Actor'){
 }
 export function assetValidationError(kind,data){return kind in gameplayTypes?gameplayValidationError(kind,data):kind+" 에셋 검증 실패";}
 export function validAsset(kind,data){
+  if(isNativeTypeAssetKind(kind))return validNativeTypeAsset(data,kind);
+  if(kind==='takepreset')return validTakePreset(data);
+  if(kind==='lightmap')return validLightmapAsset(data);
+  if(kind==='modelimport')return validModelImport(data);
+  if(kind in abilityAssetTypes)return validAbilityAsset(kind,data);
+  if(kind in navigationAssetTypes)return validNavigationAsset(kind,data);
+  if(kind in presentationAssetTypes)return validPresentationAsset(kind,data);
+  if(kind in worldAssetTypes)return validWorldAsset(kind,data);
   if(kind in textureAssetTypes)return validTextureAsset(kind,data);
   if(kind in twoDTypes)return valid2DAsset(kind,data);
   if(kind in gameplayTypes)return validGameplayAsset(kind,data);
+  if(kind==='editortool')return validEditorTool(data);
   if(kind==='widget')return validWidgetAsset(data);
   if(kind==='audiomixer')return validAudioMixer(data);
   if(kind in retargetAssetTypes)return validRetargetAsset(kind,data);
@@ -96,9 +134,9 @@ export function validAsset(kind,data){
   if(kind==='material')return data?.version===1&&validMaterialSurface(data.surface)&&(!data.graph||data.graph.mode===undefined&&validMaterialGraph(data.graph));
   if(kind==='materialinstance')return validAssetPath(data.parent)&&validMaterialParameters(data.parameters)&&(data.layerStacks===undefined||data.layerStacks&&typeof data.layerStacks==='object'&&!Array.isArray(data.layerStacks)&&Object.entries(data.layerStacks).every(([id,layers])=>/^[A-Za-z0-9_-]{1,100}$/.test(id)&&validMaterialLayers(layers)))&&data.surfaceOverrides&&typeof data.surfaceOverrides==='object'&&!Array.isArray(data.surfaceOverrides)&&Object.keys(data.surfaceOverrides).every(key=>key in materialDefaults)&&validMaterialSurface({...materialDefaults,...data.surfaceOverrides});
   if(kind==='physicalmaterial')return Number.isFinite(data.friction)&&data.friction>=0&&data.friction<=10&&Number.isFinite(data.restitution)&&data.restitution>=0&&data.restitution<=1&&Number.isFinite(data.density)&&data.density>0&&data.density<=10000&&['frictionCombine','restitutionCombine'].every(key=>['average','min','max','multiply'].includes(data[key]));
-  if(kind==='prefab')return typeof data.root==='string'&&data.objects?.some(object=>object.id===data.root)&&validScene({version:1,objects:data.objects,surface:defaultSurface});
+  if(kind==='prefab')return validPrefabExtension(data)&&typeof data.root==='string'&&Array.isArray(data.objects)&&(data.parent||data.objects.some(o=>o.id===data.root))&&validScene({version:1,objects:prefabDocumentRows(data),surface:defaultSurface});
   if(kind==='gameconfig')return (data.dimension===undefined||['2d','3d'].includes(data.dimension))&&['startupScene','startupBlueprint','defaultInputMapping','gameMode','gameState','defaultController','playerState','defaultPawn'].every(key=>validAssetPath(data[key]))&&(data.gameInstance===undefined||validAssetPath(data.gameInstance))&&['gravity','spawnPosition'].every(key=>Array.isArray(data[key])&&data[key].length===3&&data[key].every(v=>Number.isFinite(v)&&Math.abs(v)<=10000))&&typeof data.autoSpawnPlayer==='boolean'&&Number.isFinite(data.fixedDeltaTime)&&data.fixedDeltaTime>=.001&&data.fixedDeltaTime<=1&&Number.isInteger(data.maxSubsteps)&&data.maxSubsteps>=1&&data.maxSubsteps<=64&&data.window&&['width','height'].every(key=>Number.isInteger(data.window[key])&&data.window[key]>=320&&data.window[key]<=16384)&&['fullscreen','vsync'].every(key=>typeof data.window[key]==='boolean');
-  if(kind==='audioasset')return (data.mixer===undefined||validAssetPath(data.mixer))&&(data.bus===undefined||typeof data.bus==='string'&&data.bus.length>0&&data.bus.length<=80)&&validAssetPath(data.clip)&&Number.isFinite(data.volume)&&data.volume>=0&&data.volume<=4&&Number.isFinite(data.pitch)&&data.pitch>=.1&&data.pitch<=4&&['loop','spatial','autoplay'].every(key=>typeof data[key]==='boolean')&&['refDistance','maxDistance','rolloff'].every(key=>Number.isFinite(data[key])&&data[key]>=0&&data[key]<=100000)&&data.refDistance>0&&data.maxDistance>=data.refDistance;
+  if(kind==='audioasset')return (data.priority===undefined||Number.isInteger(data.priority)&&data.priority>=0&&data.priority<=256)&&(data.virtualize===undefined||typeof data.virtualize==='boolean')&&(data.mixer===undefined||validAssetPath(data.mixer))&&(data.bus===undefined||typeof data.bus==='string'&&data.bus.length>0&&data.bus.length<=80)&&validAssetPath(data.clip)&&Number.isFinite(data.volume)&&data.volume>=0&&data.volume<=4&&Number.isFinite(data.pitch)&&data.pitch>=.1&&data.pitch<=4&&['loop','spatial','autoplay'].every(key=>typeof data[key]==='boolean')&&['refDistance','maxDistance','rolloff'].every(key=>Number.isFinite(data[key])&&data[key]>=0&&data[key]<=100000)&&data.refDistance>0&&data.maxDistance>=data.refDistance;
   return true;
 }
 export function instantiatePrefab(data,{position=[0,0,0],id=()=>crypto.randomUUID()}={}){
@@ -106,14 +144,15 @@ export function instantiatePrefab(data,{position=[0,0,0],id=()=>crypto.randomUUI
   const objects=copy(data.objects).map(object=>{const old=object.id,parent=object.parent||object.parentId;object.id=ids.get(old);if(parent&&ids.has(parent)){object.parent=ids.get(parent);if(object.parentId!==undefined)object.parentId=object.parent;}else{delete object.parent;delete object.parentId;object.position=object.position.map((value,index)=>value+position[index]);}object.prefabRoot=ids.get(data.root);return object;});
   if(!validScene({version:1,objects,surface:defaultSurface}))throw Error('프리팹 계층 검증 실패');return objects;
 }
-export function renameAssetReferences(value,from,to){const keys=new Set(['blueprintAsset','materialAsset','asset','inputMapping','headerPath','sourcePath','action','model','parent','parentClass','texture','normalTexture','vectorTexture','physicalMaterial','sourceMesh','prefabAsset','gameConfigAsset','startupScene','startupBlueprint','defaultInputMapping','gameMode','gameState','gameInstance','defaultController','playerState','defaultPawn','clip','sheet','blend','chordAction','context','sprite','rig','tileset','blackboard','mixer','widget']);const remap=path=>typeof path==='string'&&(path===from||path.startsWith(from+'/'))?to+path.slice(from.length):path;let changed=false;if(!value||typeof value!=='object')return false;for(const [key,item] of Object.entries(value)){if((keys.has(key)||key==='value'&&(materialTextureTypes[value.valueType]||materialTextureTypes[value.type])||key==='textureObject'||key==='preview'&&materialTextureTypes[value.valueType])&&typeof item==='string'){const next=remap(item);if(next!==item){value[key]=next;changed=true;}}else if(key==='images'&&Array.isArray(item)&&value.dimension in textureAssetTypes){for(let i=0;i<item.length;i++){const next=remap(item[i]);if(next!==item[i]){item[i]=next;changed=true;}}}else if(key==='inputValues'&&item&&typeof item==='object'&&(value.key==='functionInput'&&materialTextureTypes[value.valueType]||value.key==='functionCall')){for(const [id,v] of Object.entries(item)){if(value.key==='functionInput'||value.signature?.inputs.some(p=>p.id===id&&materialTextureTypes[p.type])){const next=remap(v);if(next!==v){item[id]=next;changed=true;}}}}else if(['parameters','blendParameters','nativeDefaults','nativeProperties','overrides'].includes(key)&&item&&typeof item==='object'){const walk=object=>{for(const [name,parameter] of Object.entries(object)){if(typeof parameter==='string'){const next=remap(parameter);if(next!==parameter){object[name]=next;changed=true;}}else if(parameter&&typeof parameter==='object')walk(parameter);}};walk(item);}else if(item&&typeof item==='object')changed=renameAssetReferences(item,from,to)||changed;}return changed;}
+export function renameAssetReferences(value,from,to){const keys=new Set(['widgetAsset','terrain','mesh','table','style','query','effect','ability','abilitySet','cubemap','colorLookup','blueprintAsset','materialAsset','asset','inputMapping','headerPath','sourcePath','action','model','parent','parentClass','texture','normalTexture','vectorTexture','physicalMaterial','sourceMesh','prefabAsset','gameConfigAsset','startupScene','startupBlueprint','defaultInputMapping','gameMode','gameState','gameInstance','defaultController','playerState','defaultPawn','clip','sheet','blend','chordAction','context','sprite','rig','tileset','blackboard','mixer','widget','rowWidget']);const remap=path=>typeof path==='string'&&(path===from||path.startsWith(from+'/'))?to+path.slice(from.length):path;let changed=false;if(!value||typeof value!=='object')return false;for(const [key,item] of Object.entries(value)){if(key==='parentSlots'&&item&&typeof item==='object'&&!Array.isArray(item)){for(const [name,asset]of Object.entries(item)){const next=remap(asset);if(next!==asset){item[name]=next;changed=true;}}}else if(key==='widgetSlots'&&typeof item==='string'){try{const slots=JSON.parse(item);let dirty=false;if(slots&&!Array.isArray(slots)&&typeof slots==='object')for(const [name,asset]of Object.entries(slots)){const next=remap(asset);if(next!==asset){slots[name]=next;dirty=true;}}if(dirty){value[key]=JSON.stringify(slots);changed=true;}}catch{}}else if((keys.has(key)||key==='value'&&(materialTextureTypes[value.valueType]||materialTextureTypes[value.type])||key==='textureObject'||key==='preview'&&materialTextureTypes[value.valueType])&&typeof item==='string'){const next=remap(item);if(next!==item){value[key]=next;changed=true;}}else if(Array.isArray(item)&&(['abilities','effects','typeLibraries','imports'].includes(key)||key==='images'&&value.dimension in textureAssetTypes)){for(let i=0;i<item.length;i++){const next=remap(item[i]);if(next!==item[i]){item[i]=next;changed=true;}}}else if(key==='inputValues'&&item&&typeof item==='object'&&(value.key==='functionInput'&&materialTextureTypes[value.valueType]||value.key==='functionCall')){for(const [id,v] of Object.entries(item)){if(value.key==='functionInput'||value.signature?.inputs.some(p=>p.id===id&&materialTextureTypes[p.type])){const next=remap(v);if(next!==v){item[id]=next;changed=true;}}}}else if(['parameters','blendParameters','nativeDefaults','nativeProperties','overrides'].includes(key)&&item&&typeof item==='object'){const walk=object=>{for(const [name,parameter] of Object.entries(object)){if(typeof parameter==='string'){const next=remap(parameter);if(next!==parameter){object[name]=next;changed=true;}}else if(parameter&&typeof parameter==='object')walk(parameter);}};walk(item);}else if(item&&typeof item==='object')changed=renameAssetReferences(item,from,to)||changed;}return changed;}
+export function assetDocumentSource(doc){const data=copy(doc.data);if(doc.kind==='blueprint'&&data.native){const metadata=doc.view?.nativeMetadata;data.native=nativeSourceReference(metadata&&nativeSourceMatches(metadata,data.native)?metadata:data.native);}return data;}
 // One data record per path. Switching a view must never replace another asset's edits.
 export class AssetDocuments {
   constructor(){this.items=new Map();this.active=null;}
-  open(path,kind,data){if(!this.items.has(path)){if(!validAsset(kind,data))throw Error(assetValidationError(kind,data)+': '+path);this.items.set(path,{path,kind,data:copy(data),saved:JSON.stringify(data),history:[],future:[],view:{},dirty:false});}return this.items.get(path);}
+  open(path,kind,data){if(kind==='modelimport')data=normalizeModelImport(data);if(!this.items.has(path)){if(!validAsset(kind,data))throw Error(assetValidationError(kind,data)+': '+path);this.items.set(path,{path,kind,data:copy(data),saved:JSON.stringify(data),history:[],future:[],view:{},dirty:false});}return this.items.get(path);}
   select(path){if(!this.items.has(path))throw Error('열린 문서가 없어요.');this.active=path;return this.current;}
   get current(){return this.items.get(this.active);}
-  async save(doc,write){const before=JSON.stringify(doc.data),data=copy(doc.data);if(doc.kind==='blueprint'&&data.native){const metadata=doc.view?.nativeMetadata;data.native=nativeSourceReference(metadata&&metadata.headerPath===data.native.headerPath&&metadata.sourcePath===data.native.sourcePath?metadata:data.native);}if(!validAsset(doc.kind,data))throw Error(assetValidationError(doc.kind,data)+': '+doc.path);const text=doc.kind==='text'?data:JSON.stringify(data,null,2);await write(doc.path,text,doc.saved);const savedData=doc.kind==='text'?text:JSON.parse(text);if(JSON.stringify(doc.data)===before)doc.data=savedData;doc.saved=JSON.stringify(savedData);doc.dirty=JSON.stringify(doc.data)!==doc.saved;}
+  async save(doc,write){const before=JSON.stringify(doc.data),data=assetDocumentSource(doc);if(!validAsset(doc.kind,data))throw Error(assetValidationError(doc.kind,data)+': '+doc.path);const text=doc.kind==='text'?data:JSON.stringify(data,null,2);await write(doc.path,text,doc.saved);const savedData=doc.kind==='text'?text:JSON.parse(text);if(JSON.stringify(doc.data)===before)doc.data=savedData;doc.saved=JSON.stringify(savedData);doc.dirty=JSON.stringify(doc.data)!==doc.saved;}
   close(path,discard=false){const doc=this.items.get(path);if(doc?.dirty&&!discard)return false;this.items.delete(path);if(this.active===path)this.active=[...this.items.keys()].at(-1)||null;return true;}
-  rename(from,to){for(const [path,doc] of [...this.items]){if(path===from||path.startsWith(from+'/')){const next=to+path.slice(from.length);this.items.delete(path);doc.path=next;this.items.set(next,doc);if(this.active===path)this.active=next;}if(renameAssetReferences(doc.data,from,to))doc.dirty=true;for(const snapshot of [...doc.history,...doc.future])renameAssetReferences(snapshot,from,to);}}
+  rename(from,to){for(const [path,doc] of [...this.items]){if(path===from||path.startsWith(from+'/')||/\.(gltf|glb|obj|fbx)$/i.test(from)&&path===from+'.import.json'){const next=to+path.slice(from.length);this.items.delete(path);doc.path=next;this.items.set(next,doc);if(this.active===path)this.active=next;}if(renameAssetReferences(doc.data,from,to))doc.dirty=true;for(const snapshot of [...doc.history,...doc.future])renameAssetReferences(snapshot,from,to);}}
 }

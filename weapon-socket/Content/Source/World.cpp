@@ -44,7 +44,7 @@ bool TopDownShooter::LoadRun(){
 void TopDownShooter::Leave(int to,const std::string& spawn){
   // 바닥에 남은 골드는 들고 간다. 전투 중엔 문이 잠겨 있어 적·탄 상태는 넘기지 않는다
   for(auto& [c,value]:coins){Gold+=value;Give(coinPool,c);}coins.clear();
-  SaveRun();leaving=true;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
+  SaveRun();leaving=true;PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});
   if(to<0)taken.clear();  // 던전은 들어갈 때마다 새로 만들어짐
   std::string scene=to>=0?rules->DungeonScene:rules->HubScene;
   if(to==-2){scene=rules->HomeScene;const auto at=scene.find('#');if(at!=std::string::npos)scene.replace(at,1,std::to_string(std::clamp(HomeLevel,1,2)));}
@@ -52,6 +52,7 @@ void TopDownShooter::Leave(int to,const std::string& spawn){
 }
 
 void TopDownShooter::Begin(){
+  PhysicsQueue::writes.clear();  // 이전 장면 액터를 가리키는 쓰기가 남지 않게
   {int k=0;for(auto* tag:{"UI.HUD","UI.Front","UI.Fast","UI.Map"}){const auto a=hb::Scene::GetActorsWithTag(tag);uiHosts[k++]=a.empty()?nullptr:a.front();}uiSent.clear();}
   // 장면 첫 프레임: 이 장면의 구역(RoomInfo), 상호작용 대상, 카메라를 찾고 진행을 이어받는다
   started=true;Hp=MaxHp;bannerPending=true;  // 도착한 곳 이름을 가운데에
@@ -72,11 +73,11 @@ void TopDownShooter::Begin(){
   else if(player){const auto args=hb::Game::GetArguments();
     if(args.is_object()&&!args.value("spawn",std::string{}).empty()){
       if(auto* start=hb::Scene::FindActorById(args.value("spawn",std::string{})))spawnAt=hb::Scene::GetPosition(start);else spawnAt=hb::Scene::GetPosition(player);
-      spawnAt.z=hb::Scene::GetPosition(player).z;hb::Scene::SetPosition(player,spawnAt);hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
+      spawnAt.z=hb::Scene::GetPosition(player).z;hb::Scene::SetPosition(player,spawnAt);PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});
       spawnHold=0.6f;moveLock=true;moveLockTime=0;sentSpeed=-1;}}
   if(carried||area>=0)Phase=std::max(Phase,2);  // 장면을 넘어왔거나 던전에서 바로 시작하면 로딩·타이틀 생략
   RoomIndex=area;
-  {const auto w=hb::Scene::GetActorsWithTag("PlayerWeapon");weapon=w.empty()?nullptr:w.front();weaponShown.clear();slashFx=nullptr;slashShown.clear();swingT=-1;vsPreloaded=false;  // 손에 단 검·손가락 (모든 장면)
+  {const auto w=hb::Scene::GetActorsWithTag("PlayerWeapon");weapon=w.empty()?nullptr:w.front();weaponShown.clear();slashFx=nullptr;slashShown.clear();chargeFx=nullptr;chargeShown.clear();impact=Impact{};postFx=nullptr;whirl=nullptr;slowLeft=0;killChainTime=0;deathCam=0;swingT=-1;vsPreloaded=false;  // 손에 단 검·손가락 (모든 장면)
    const auto g=hb::Scene::GetActorsWithTag("PlayerGrip");grip=g.empty()?nullptr:g.front();gripShown.clear();}
   // 던전: 층 만들기(StartFloor)가 한 번 0.5초쯤 멈추므로 그동안 검은 화면에서 밝아지게 가림
   if(inDungeon){hb::Camera::Flash(hb::Color{0,0,0,1},0.8f);Prewarm();StartFloor();}
@@ -302,7 +303,7 @@ bool TopDownShooter::UpdateSettle(float delta,bool advance){
   // 상환: 동전에서 빠져나가 명패로 (0.5초), 그다음 빚이 1초 동안 줄어듦
   const float rt=(settleTime-last-0.3f)/0.5f;
   if(LastRepaid>0&&rt>0){UiVisible("SettleRepay",rt<1.4f);UiText("SettleRepay","빚 상환  -"+std::to_string(LastRepaid)+" G");
-    UiPosition("SettleRepay",hb::Vec2{0,40.f+std::min(rt,1.f)*150});
+    UiPosition("SettleRepay",hb::Vec2{0,40.f+std::min(rt,1.f)*110});  // 남은 빚 판 바로 위에서 멈춤 (겹치면 글자가 안 읽힘)
     if(settleTotal>0)SettleFill(coinT*(1-std::min(rt,1.f)*float(LastRepaid)/settleTotal));}  // 상환한 만큼 동전이 다시 줄어듦
   const float t=std::clamp((settleTime-last-0.8f)/1.0f,0.f,1.f);
   const int debt=debtFrom+int((debtTo-debtFrom)*t);
@@ -316,7 +317,7 @@ bool TopDownShooter::UpdateSettle(float delta,bool advance){
 }
 
 void TopDownShooter::ShowEnding(){
-  ending=true;anyHeld=true;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
+  ending=true;anyHeld=true;PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});
   UiText("EndingText",std::string(koreanNames[Character])+"의 남은 빚 "+std::to_string(Debt)+" G   ·   오늘 갚은 돈 "+std::to_string(LastRepaid)+" G");
   for(auto* n:{"EndingBack","EndingArt","EndingShade","EndingTitle","EndingText","EndingHint"})UiVisible(n,true);
 }
@@ -346,10 +347,10 @@ void TopDownShooter::SetPaused(bool paused){
   if(paused)UpdateMenu();
   for(int k:{2,3})if(uiHosts[k])hb::UI::SetVisible(uiHosts[k],k==2?"Fast":"Map","Root",!paused);mapShown=!paused;  // 말풍선·지도는 따로 그려져 메뉴 위로 올라오므로 숨김
   hb::Movement2D::SetSpeed(player,paused?0.f:rules->MoveSpeed);sentSpeed=-1;  // 이동은 엔진 이동 컴포넌트가 입력으로 직접 하므로 속도를 0으로
-  if(paused){hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
-    for(auto* e:Enemies())hb::Physics::SetVelocity(e,hb::Vec3{0,0,0});
-    for(auto* m:{&shots})for(auto& [b,life]:*m){frozenVelocity[b]=hb::Physics::GetVelocity(b);hb::Physics::SetVelocity(b,hb::Vec3{0,0,0});}}
-  else{for(auto& [b,v]:frozenVelocity)if(shots.count(b))hb::Physics::SetVelocity(b,v);frozenVelocity.clear();}
+  if(paused){PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});
+    for(auto* e:Enemies())PhysicsQueue::Velocity(e,hb::Vec3{0,0,0});
+    for(auto* m:{&shots})for(auto& [b,life]:*m){frozenVelocity[b]=hb::Physics::GetVelocity(b);PhysicsQueue::Velocity(b,hb::Vec3{0,0,0});}}
+  else{for(auto& [b,v]:frozenVelocity)if(shots.count(b))PhysicsQueue::Velocity(b,v);frozenVelocity.clear();}
 }
 
 void TopDownShooter::UpdateMenu(){

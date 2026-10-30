@@ -1,0 +1,6 @@
+import * as T from 'three/tsl';import {gpuFn} from './gpu-function-scope.js';
+export function megaLightsNode(load,u,enabled=false){
+ if(!enabled)return {budget:()=>u.geometryLimits.w,select:slot=>T.vec2(slot,1)};
+ const budget=()=>u.pathOptions.w.greaterThan(0).select(T.min(u.geometryLimits.w,u.pathOptions.w),u.geometryLimits.w);
+ const select=gpuFn(([slot,seed])=>{const result=T.vec2(slot,1).toVar();T.If(u.pathOptions.w.greaterThan(0).and(u.geometryLimits.w.greaterThan(u.pathOptions.w)),()=>{const r=slot.add(seed.mul(12.9898).add(78.233).sin().mul(43758.5453).fract()).div(budget()),a=T.int(0).toVar(),b=T.int(u.geometryLimits.w).sub(1).toVar();T.Loop({start:0,end:24,type:'int',name:'lightSearch'},()=>{T.If(a.greaterThanEqual(b),()=>{T.Break();});const m=a.add(b).div(2).toInt().toVar(),upper=load(u.geometryLimits.z.add(u.geometryLimits.w.mul(4)).add(T.float(m))).x;T.If(r.lessThan(upper),()=>{b.assign(m);}).Else(()=>{a.assign(m.add(1));});});const row=load(u.geometryLimits.z.add(u.geometryLimits.w.mul(4)).add(T.float(a)));result.assign(T.vec2(T.float(a),T.float(1).div(row.y.mul(budget()))));});return result;}).setLayout({name:'hbSelectLight',type:'vec2',inputs:[{name:'slot',type:'float'},{name:'seed',type:'float'}]});return {budget,select};
+}

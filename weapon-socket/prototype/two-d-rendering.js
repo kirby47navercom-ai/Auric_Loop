@@ -5,7 +5,7 @@ import {TwoDLighting} from './two-d-lighting.js';
 const position=new THREE.Vector3(),cameraPosition=new THREE.Vector3(),direction=new THREE.Vector3();
 const visible=node=>{for(let p=node;p;p=p.parent)if(!p.visible)return false;return true;};
 const nearestGroup=node=>{for(let p=node;p;p=p.parent)if(p.userData.sortingGroup)return p;return null;};
-const compare=(a,b)=>a.layer-b.layer||a.order-b.order||a.depth-b.depth||(a.id<b.id?-1:a.id>b.id?1:0);
+const compare=(a,b)=>a.layer-b.layer||a.order-b.order||a.depth-b.depth||(a.owner===b.owner?a.tileOrder-b.tileOrder:0)||(a.id<b.id?-1:a.id>b.id?1:0);
 export function spriteEffectsUniforms(material){
   if(material.userData.hbSpriteEffectsOwner===material.uuid)return material.userData.hbSpriteEffects;
   const uniforms={hbPixelPPU:{value:0},hbSpriteFlash:{value:0},hbSpriteEmission:{value:0}},compile=material.onBeforeCompile,key=material.customProgramCacheKey.bind(material)();
@@ -32,17 +32,19 @@ export class TwoDRendering{
   constructor(){this.targets=new Map();this.maskScene=new THREE.Scene();this.size=new THREE.Vector2();this.clear=new THREE.Color();this.lighting=new TwoDLighting();}
   prepare(renderer,scene,camera,groups,layers,{lights=true}={}){
     layers??=defaultSortingLayers;
+    const displayCounts=scene.userData.hbDisplayColorCounts={display:0,sceneColors:0,transparent:false};
     if(!groups.some(g=>g.userData.sortingGroup||g.userData.maskMesh||g.userData.spriteMesh||g.userData.tilemapResources||g.children.some(n=>n.userData.draw2d))){this.dispose();return {renderers:0,maskPasses:0,maskTargets:0};}
     scene.updateMatrixWorld();camera.updateWorldMatrix(true,false);camera.getWorldPosition(cameraPosition);camera.getWorldDirection(direction);
     const roots=[],scopes=new Map(),entries=[],masks=[];
     const depth=(node,mode)=>{if(mode==='y'&&node.userData.sortPoint)position.fromArray(node.userData.sortPoint).applyMatrix4(node.matrixWorld);else position.setFromMatrixPosition(node.matrixWorld);return mode==='y'?-position.y:camera.isOrthographicCamera?-position.sub(cameraPosition).dot(direction):-position.distanceToSquared(cameraPosition);};
-    const item=(node,p,id)=>({node,layer:sortingLayerIndex(layers,p.sortingLayer),order:p.sortingOrder||0,depth:depth(node,p.sortMode||layers?.find(l=>l.id===p.sortingLayer)?.sortMode),id});
+    const item=(node,p,id)=>({node,layer:sortingLayerIndex(layers,p.sortingLayer),order:p.sortingOrder||0,depth:depth(node,p.sortMode||layers?.find(l=>l.id===p.sortingLayer)?.sortMode),id,owner:node.userData.objectId||id,tileOrder:node.userData.tileSortOrder||0});
     for(const group of groups){if(group.userData.disposed)continue;const p=group.userData.sortingGroup;if(p)scopes.set(group,{...item(group,p,group.userData.objectId||group.uuid),children:[]});}
     for(const [group,scope] of scopes){const parent=group.userData.sortingGroup.sortAtRoot?null:nearestGroup(group.parent);(scopes.get(parent)?.children||roots).push(scope);}
     for(const group of groups){if(group.userData.disposed)continue;
       const mask=group.userData.maskMesh;if(mask&&visible(group)){mask.updateWorldMatrix(true,false);masks.push({group,mesh:mask,scope:nearestGroup(group),properties:mask.userData.maskProperties});}
       const owned=[group];while(owned.length){const node=owned.pop();if(node.userData.objectId!==group.userData.objectId)continue;owned.push(...node.children);if(node.userData.spriteMask||node.userData.editorHelper)continue;
         const volume=node.userData.light2dVolume===true,p=group.userData.light2d;if(volume){const layer=layers.filter(l=>p.targetSortingLayers.includes(l.id)).at(-1);node.visible=!!layer&&lights&&p.enabled!==false&&p.volumeIntensity>0;Object.assign(node.userData.draw2d,{sortingLayer:layer?.id||'default',sortingOrder:2097153+(p.lightOrder||0)});}
+        if(node.material&&visible(node))for(const material of Array.isArray(node.material)?node.material:[node.material]){if(!material.visible)continue;if(material.toneMapped===false)++displayCounts.display;else ++displayCounts.sceneColors;displayCounts.transparent||=material.transparent;}
         const scope=volume?null:nearestGroup(node);if(!node.userData.draw2d&&!(scope&&(node.isMesh||node.isPoints)))continue;
         const entry=item(node,node.userData.draw2d||{},(group.userData.objectId||group.uuid)+':'+(node.userData.draw2dId||node.uuid));entry.scope=scope;entry.properties=node.userData.draw2d||{};entries.push(entry);if(node.userData.particleRenderer&&!camera.isOrthographicCamera&&!scope&&entry.layer===sortingLayerIndex(layers,'default')&&entry.order===0&&(!entry.properties.maskInteraction||entry.properties.maskInteraction==='none'))node.renderOrder=0;else (scopes.get(scope)?.children||roots).push(entry);
       }

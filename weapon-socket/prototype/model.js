@@ -1,3 +1,5 @@
+import {validActorScale} from './transform-scale.js';
+import {validPrefabLink} from './prefab-link.js';
 import {validFrameSettings} from './build-profile.js';
 import {storageKey} from './project-session.js';
 import { validBlueprint } from './blueprint-model.js';
@@ -33,8 +35,8 @@ export function validScene(value) {
     && value.objects.every(o => o && typeof o.id === 'string' && typeof o.name === 'string' && o.name.length <= 200
       && (o.kind!=='model'||typeof o.asset==='string'&&o.asset.length<=1000&&!o.asset.includes('..')) && (o.blueprint===undefined||typeof o.blueprint==='string'&&o.blueprint.length<=80) && ['blueprintAsset','materialAsset'].every(k=>o[k]===undefined||typeof o[k]==='string'&&o[k].length<=1000&&!o[k].includes('..')) && (o.materialSurface===undefined||validSurface(o.materialSurface)) && kinds.has(o.kind) && typeof o.visible === 'boolean'
       && ['position', 'rotation', 'scale'].every(key => Array.isArray(o[key]) && o[key].length === 3 && o[key].every(n => Number.isFinite(n) && Math.abs(n) <= (key==='position'?1000000:10000)))
-      && o.scale.every(n => n >= 0.01))
-    && value.objects.every(o=>validBlueprintOverrides(o.overrides)&&(o.components===undefined||validComponents(o.components))&&(o.parent===undefined||typeof o.parent==='string'&&validParent(value.objects,o.id,o.parent))&&(o.locked===undefined||typeof o.locked==='boolean')&&(o.tags===undefined||Array.isArray(o.tags)&&o.tags.length<=32&&o.tags.every(t=>typeof t==='string'&&t.length<=80))&&['spriteAsset','tilemapAsset','prefabAsset'].every(k=>o[k]===undefined||typeof o[k]==='string'&&o[k].length<=1000&&!o[k].includes('..')))
+      && validActorScale(o.scale))
+    && value.objects.every(o=>(o.prefabLink===undefined||validPrefabLink(o.prefabLink,rows=>validScene({version:1,objects:rows,surface:defaultSurface})))&&validBlueprintOverrides(o.overrides)&&(o.components===undefined||validComponents(o.components))&&(o.parent===undefined||typeof o.parent==='string'&&validParent(value.objects,o.id,o.parent))&&(o.locked===undefined||typeof o.locked==='boolean')&&(o.tags===undefined||Array.isArray(o.tags)&&o.tags.length<=32&&o.tags.every(t=>typeof t==='string'&&t.length<=80))&&['spriteAsset','tilemapAsset','prefabAsset'].every(k=>o[k]===undefined||typeof o[k]==='string'&&o[k].length<=1000&&!o[k].includes('..')))
     && (value.runtime===undefined||validRuntimeSettings(value.runtime))
     && validSurface(value.surface)
     && (value.sceneName === undefined || (typeof value.sceneName === 'string' && value.sceneName.length > 0 && value.sceneName.length <= 80))

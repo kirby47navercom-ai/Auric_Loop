@@ -1,0 +1,4 @@
+import * as T from 'three/tsl';import {gpuFn} from './gpu-function-scope.js';
+export function createEnvironmentAngleGPU(){return gpuFn(([y,x])=>{
+ const ax=x.abs(),ay=y.abs(),r=ax.min(ay).div(ax.max(ay).max(1e-30)).toVar(),fold=r.greaterThan(.4142135623730951),t=fold.select(r.sub(1).div(r.add(1)),r).toVar(),s=t.mul(t).toVar();let polynomial=T.float(-1/15);for(const coefficient of [1/13,-1/11,1/9,-1/7,1/5,-1/3,1])polynomial=polynomial.mul(s).add(coefficient);const a=t.mul(polynomial).toVar();T.If(fold,()=>{a.addAssign(Math.PI/4);});T.If(ay.greaterThan(ax),()=>{a.assign(T.float(Math.PI/2).sub(a));});T.If(x.lessThan(0),()=>{a.assign(T.float(Math.PI).sub(a));});T.If(y.lessThan(0),()=>{a.assign(a.negate());});return a;
+ }).setLayout({name:'hbEnvironmentAtan2',type:'float',inputs:[{name:'y',type:'float'},{name:'x',type:'float'}]});}

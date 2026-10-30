@@ -1,3 +1,4 @@
+import {clampScaleAxis} from './transform-scale.js';
 import {icon} from './icons.js';
 import {Vector3,Quaternion,Euler} from 'three';
 import {sceneWorldMatrix} from './scene-runtime.js';
@@ -12,7 +13,7 @@ export function validParent(objects,id,parent){
   if(!parent)return true;if(!objects.some(o=>o.id===parent))return false;
   const seen=new Set([id]);for(let next=parent;next;next=objects.find(o=>o.id===next)?.parent){if(seen.has(next))return false;seen.add(next);}return true;
 }
-export function setObjectMatrix(object,matrix){const position=new Vector3(),rotation=new Quaternion(),scale=new Vector3();matrix.decompose(position,rotation,scale);const angles=new Euler().setFromQuaternion(rotation);object.position=position.toArray();object.rotation=[angles.x,angles.y,angles.z].map(n=>n*180/Math.PI);object.scale=scale.toArray().map(n=>Math.max(.01,Math.min(10000,n)));}
+export function setObjectMatrix(object,matrix){const position=new Vector3(),rotation=new Quaternion(),scale=new Vector3();matrix.decompose(position,rotation,scale);const angles=new Euler().setFromQuaternion(rotation);object.position=position.toArray();object.rotation=[angles.x,angles.y,angles.z].map(n=>n*180/Math.PI);object.scale=scale.toArray().map(clampScaleAxis);}
 export function copySceneObjects(objects,ids){const result=copy(sceneDescendants(objects,ids)),included=new Set(result.map(o=>o.id));for(const object of result)if(object.parent&&!included.has(object.parent)){setObjectMatrix(object,sceneWorldMatrix(object,objects));delete object.parent;}return result;}
 export function selectionMatrices(objects,ids){const selected=new Set(ids);return objects.filter(object=>selected.has(object.id)&&!object.locked).filter(object=>{let parent=objects.find(o=>o.id===object.parent);while(parent){if(selected.has(parent.id)&&!parent.locked)return false;parent=objects.find(o=>o.id===parent.parent);}return true;}).map(object=>({id:object.id,matrix:sceneWorldMatrix(object,objects)}));}
 export function transformSceneSelection(objects,selection,delta){for(const item of selection){const object=objects.find(o=>o.id===item.id);if(!object)continue;const world=item.matrix.clone().premultiply(delta),parent=objects.find(o=>o.id===object.parent);if(parent)world.premultiply(sceneWorldMatrix(parent,objects).invert());setObjectMatrix(object,world);}}
@@ -22,7 +23,7 @@ export function pasteSceneObjects(objects,copied,{offset=[0,0,0],newId=()=>crypt
   const pasted=copied.map(original=>{const object=remap(copy(original));let name=original.name,index=1;while(names.has(name))name=original.name+' '+index++;names.add(name);object.name=name;
     if(object.parent&&!ids.has(original.parent))delete object.parent;
     if(!object.parent)object.position=object.position.map((value,i)=>value+offset[i]);
-    for(const component of object.components||[])component.id=newId();return object;});
+    if(!object.prefabRoot)for(const component of object.components||[])component.id=newId();return object;});
   for(const object of pasted)objects.push(object);return pasted;
 }
 export function removeSceneObjects(objects,ids){const removed=sceneDescendants(objects,ids),set=new Set(removed.map(o=>o.id));const kept=objects.filter(o=>!set.has(o.id));objects.splice(0);for(const object of kept)objects.push(object);return removed;}
@@ -34,7 +35,9 @@ export function sceneMatches(object,query){
     else if(key==='tag'&&term)match=(object.tags||[]).some(tag=>tag.toLowerCase()===term);
     else match=token.startsWith('+')?all.split(/\s+/).includes(token.slice(1)):all.includes(token);return exclude?!match:match;});
 }
+export const isSceneActor=object=>!['component','widget'].includes(object.kind);
 export function sceneRows(objects,query='',collapsed=new Set()){
+  objects=objects.filter(isSceneActor);
   const byId=new Map(objects.map(o=>[o.id,o])),children=new Map(),matches=new Set(objects.filter(o=>sceneMatches(o,query)).map(o=>o.id));
   for(const o of objects){const parent=o.parent||null;if(!children.has(parent))children.set(parent,[]);children.get(parent).push(o);}
   if(query)for(const o of objects.filter(o=>matches.has(o.id))){const seen=new Set([o.id]);for(let parent=o.parent;parent&&!seen.has(parent);parent=byId.get(parent)?.parent){seen.add(parent);matches.add(parent);}}

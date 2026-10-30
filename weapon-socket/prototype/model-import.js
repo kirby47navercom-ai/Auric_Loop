@@ -1,0 +1,29 @@
+import {Group,Quaternion,Euler,Vector3} from 'three';
+export const modelImportDefaults={scale:1,convertUnits:false,sourceUnit:'auto',sourceUp:'loader',flipForward:false,translation:[0,0,0],rotation:[0,0,0]};
+export const modelUnitChoices=[['auto','파일 단위'],['m','미터'],['cm','센티미터'],['mm','밀리미터'],['inch','인치'],['foot','피트']];
+export const modelUpChoices=[['loader','로더 원본'],['y','Y 위'],['z','Z 위'],['x','X 위']];
+export function normalizeModelImport(data){if(data?.version===1&&data.subassets?.some(row=>row.kind==='meshe'))return{...data,subassets:data.subassets.map(row=>row.kind==='meshe'?{...row,kind:'mesh'}:row)};return data;}
+const vector=(v,limit)=>Array.isArray(v)&&v.length===3&&v.every(n=>Number.isFinite(n)&&Math.abs(n)<=limit);
+export function validModelImportSettings(p){return !!p&&typeof p==='object'&&!Array.isArray(p)&&Object.keys(p).every(k=>Object.hasOwn(modelImportDefaults,k))&&Number.isFinite(p.scale)&&p.scale>=.000001&&p.scale<=1000000&&typeof p.convertUnits==='boolean'&&modelUnitChoices.some(([key])=>key===p.sourceUnit)&&modelUpChoices.some(([key])=>key===p.sourceUp)&&typeof p.flipForward==='boolean'&&vector(p.translation,1000000)&&vector(p.rotation,360000);}
+const safeSource=p=>typeof p==='string'&&p.length>0&&p.length<=1000&&!/^(?:[a-z][a-z0-9+.-]*:|[\/])/i.test(p)&&!/[\\\x00-\x1f]/.test(p)&&!p.split('/').some(v=>v==='.'||v==='..')&&/\.(gltf|glb|obj|fbx)$/i.test(p);
+export function validModelImport(data){
+ data=normalizeModelImport(data);
+ if(!data||![1,2].includes(data.version)||!safeSource(data.source)||data.settings!==undefined&&!validModelImportSettings(data.settings)||data.sourceHash!==undefined&&!/^[a-f0-9]{64}$/.test(data.sourceHash)||data.sourceId!==undefined&&(typeof data.sourceId!=='string'||!data.sourceId||data.sourceId.length>160)||data.name!==undefined&&(typeof data.name!=='string'||!data.name||data.name.length>200))return false;
+ const ids=new Set();for(const rows of [data.subassets,data.unresolvedSubassets||[]]){if(!Array.isArray(rows)||rows.length>100000)return false;for(const row of rows){if(!row||typeof row.id!=='string'||!/^[-A-Za-z0-9_]{1,160}$/.test(row.id)||ids.has(row.id)||!['mesh','material','animation','skin'].includes(row.kind)||typeof row.name!=='string'||row.name.length>1000||typeof row.sourceKey!=='string'||row.sourceKey.length>12000||row.sourceIndex!==undefined&&(!Number.isInteger(row.sourceIndex)||row.sourceIndex<0||row.sourceIndex>100000)||row.sourceObjectId!==undefined&&(typeof row.sourceObjectId!=='string'||!/^-?\d{1,31}$/.test(row.sourceObjectId))||row.fingerprint!==undefined&&!/^[a-f0-9]{64}$/.test(row.fingerprint)||row.identity!==undefined&&!['explicit','name','content','ambiguous'].includes(row.identity)||!row.overrides||typeof row.overrides!=='object'||Array.isArray(row.overrides)||Object.entries(row.overrides).some(([k,v])=>!['visible','castShadow','receiveShadow'].includes(k)||typeof v!=='boolean'))return false;ids.add(row.id);}}
+ return data.warnings===undefined||Array.isArray(data.warnings)&&data.warnings.length<=100000&&data.warnings.every(w=>w&&typeof w.reason==='string'&&w.reason.length<=1000);
+}
+export function applyModelImportTransform(result,metadata,{format}={}){
+ metadata=normalizeModelImport(metadata);if(!validModelImport(metadata))throw Error('모델 가져오기 설정을 확인하세요.');const p={...structuredClone(modelImportDefaults),...metadata.settings};let unit=1;
+ if(p.convertUnits){unit={m:1,cm:.01,mm:.001,inch:.0254,foot:.3048}[p.sourceUnit]??(format==='fbx'?(result.object.userData.unitScaleFactor??100)/100:1);if(!Number.isFinite(unit)||unit<=0||unit>1000000)throw Error('모델 파일 단위를 확인하세요.');}
+ const rotation=new Quaternion().setFromEuler(new Euler(...p.rotation.map(v=>v*Math.PI/180)));if(p.flipForward)rotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(0,1,0),Math.PI));if(p.sourceUp==='z')rotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(1,0,0),-Math.PI/2));if(p.sourceUp==='x')rotation.multiply(new Quaternion().setFromAxisAngle(new Vector3(0,0,1),Math.PI/2));
+ const scale=p.scale*unit;if(!Number.isFinite(scale)||scale<=0)throw Error('모델 배율을 확인하세요.');if(scale===1&&p.translation.every(v=>v===0)&&rotation.angleTo(new Quaternion())<1e-12)return result;
+ // A container converts coordinates without rewriting geometry, bones or animation targets.
+ const source=result.object,root=new Group();root.name='HBImportRoot';root.position.fromArray(p.translation);root.quaternion.copy(rotation);root.scale.setScalar(scale);root.add(source);root.animations=result.animations||source.animations||[];root.userData.hbModelImport={settings:p,unit};if(source.userData.headlessResources)root.userData.headlessResources=source.userData.headlessResources;return{...result,object:root};
+}
+export function tagModelSubassets(group,{format,associations,json}={}){const meshes=[];group.traverse(object=>{if(!object.isMesh&&!object.isLine&&!object.isPoints)return;const mapping=associations?.get(object);if(format==='gltf'&&Number.isInteger(mapping?.meshes))object.userData.hbModelSource={format,index:mapping.meshes,name:json?.meshes?.[mapping.meshes]?.name||''};else if(format==='fbx'&&Number.isSafeInteger(object.ID))object.userData.hbModelSource={format,objectId:String(object.ID),name:object.name};else if(format==='obj')object.userData.hbModelSource={format,index:meshes.length,name:object.name};meshes.push(object);});return meshes;}
+export function remapModelOverrides(data,from,to){
+ const next=structuredClone(data),source=next.unresolvedSubassets?.find(row=>row.id===from),target=next.subassets.find(row=>row.id===to);
+ if(!source||source.kind!=='mesh'||target?.kind!=='mesh')throw Error('미연결 메시와 새 대상 메시를 선택하세요.');
+ target.overrides={...target.overrides,...source.overrides};next.unresolvedSubassets=next.unresolvedSubassets.filter(row=>row.id!==from);
+ if(!validModelImport(next))throw Error('모델 연결 설정 검증 실패');return next;
+}

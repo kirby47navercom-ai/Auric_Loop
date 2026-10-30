@@ -25,6 +25,15 @@ class TopDownShooter;
 
 #include "Dungeon.h"
 
+// 물리 속도 쓰기를 프레임 끝에 한 번에 보냄: 엔진은 연속된 물리 쓰기만 묶고, 쓰기·조회마다 장면 전체(500여 개)를 물리와 다시 맞춘다.
+// 그림·위치 명령 사이사이에 속도를 쓰면 그때마다 전체 동기화가 일어나 휴대폰에서 프레임의 3할을 먹었음. 같은 액터는 마지막 값만
+namespace PhysicsQueue {
+inline std::vector<std::pair<hb::Actor*,hb::Vec3>> writes;
+inline void Velocity(hb::Actor* a,const hb::Vec3& v){for(auto& w:writes)if(w.first==a){w.second=v;return;}writes.push_back({a,v});}
+inline void Drop(hb::Actor* a){for(size_t i=writes.size();i-->0;)if(writes[i].first==a)writes.erase(writes.begin()+i);}  // 지우기 전에 (지운 액터에 쓰면 오류)
+inline void Flush(){if(writes.empty())return;auto list=std::move(writes);writes.clear();for(auto& [a,v]:list)hb::Physics::SetVelocity(a,v);}
+}
+
 HB_CLASS(Blueprintable)
 class Enemy : public hb::Actor {
 public:
@@ -183,10 +192,11 @@ public:
 private:
   hb::Vec3 ToPlayer(float& distance) const;
   enum class Mode{Halt,Chase,Range,Stagger,Dash,Prowl,Jump,Spin};
-  float spinTick=0,rainTime=0,roarTime=0,ghostTick=0,spinAngle=0;std::vector<hb::Vec3> rainSpots;hb::Vec3 quakeDir{0,-1,0};  // 보스 회전 베기·금화 비·포효
+  float spinTick=0,rainTime=0,roarTime=0,ghostTick=0,spinTurn=0;bool turning=false;std::vector<hb::Vec3> rainSpots;hb::Vec3 quakeDir{0,-1,0};  // 보스 회전 베기·금화 비·포효
   int NextAfter(int current) const;  // 보스 패턴 순서
-  void Glint(const std::string& spec,bool left);  // 공격 직전 눈·무기 끝 반짝임 (몸을 붉게 물들이는 대신)
-  int dashCount=0;bool phase2=false;     // 보스: 연속 돌진 횟수, 체력 절반 아래 분노
+  void Glint(const std::string& spec,bool left);
+  hb::Vec3 TipOf(const std::string& spec,bool left) const;  // 같은 자리 정보의 무기 끝 (몸 원점에서)  // 공격 직전 눈·무기 끝 반짝임 (몸을 붉게 물들이는 대신)
+  int dashCount=0;bool phase2=false,enrageWait=false;float flipTick=0;     // 보스: 연속 돌진 횟수, 체력 절반 아래 분노
   hb::Vec3 jumpTarget{0,0,0};
   void NextPattern(int next);
   Mode mode=Mode::Halt;
@@ -205,7 +215,7 @@ private:
   hb::Vec3 atkDir{1,0,0},atkTarget{0,0,0};
   bool UpdateMelee(float delta,const hb::Vec3& dir,float distance,bool frozen);
   void EndAttack();
-  void Move(hb::Vec3 v){v=v+sep;if(Length3(v-sentVelocity)<0.05f)return;sentVelocity=v;velocityAge=0;hb::Physics::SetVelocity(this,v);}
+  void Move(hb::Vec3 v){v=v+sep;if(Length3(v-sentVelocity)<0.05f)return;sentVelocity=v;velocityAge=0;PhysicsQueue::Velocity(this,v);}
   static float Length3(const hb::Vec3& v){return std::sqrt(v.x*v.x+v.y*v.y+v.z*v.z);}
 };
 
@@ -414,11 +424,11 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   std::vector<std::string> Sounds;           // "이름=오디오 에셋 경로". 효과음 Slash·Arrow·… / 배경음 Hub·Dungeon·Boss·Return
   HB_PROPERTY(BlueprintReadWrite)
-  std::string ArrowClip = "Assets/Animations/SA_Arrow.hbspriteanimation.json";      // 셰리 화살 (날아가는 동안 반복)
+  std::string ArrowClip = "Assets/Animations/SA_SherryArrow.hbspriteanimation.json";      // 셰리 화살 (날아가는 동안 반복)
   HB_PROPERTY(BlueprintReadWrite)
-  std::string CardClip = "Assets/Animations/SA_Card.hbspriteanimation.json";        // 알레아 마탄 카드
+  std::string CardClip = "Assets/Animations/SA_AleaBolt.hbspriteanimation.json";        // 알레아 마탄 카드
   HB_PROPERTY(BlueprintReadWrite)
-  std::string BoomClip = "Assets/Animations/SA_Boom.hbspriteanimation.json";        // 마탄 폭발
+  std::string BoomClip = "Assets/Animations/SA_AleaImpact.hbspriteanimation.json";        // 마탄 폭발
   HB_PROPERTY(BlueprintReadWrite)
   std::string EnemyShotClip = "Assets/Animations/SA_EnemyOrb.hbspriteanimation.json";  // 적 탄 (적마다 Enemy.ShotClip으로 바꿀 수 있음)
   HB_PROPERTY(BlueprintReadWrite)
@@ -535,6 +545,8 @@ public:
   int HomeLevel = 1;
   HB_PROPERTY(BlueprintReadWrite)
   int Phase = 0;                 // 0 로딩, 1 타이틀·캐릭터 선택, 2 게임
+  float loadLeft = 0;            // 캐릭터 선택 뒤 로딩 화면이 남은 시간
+  bool padHidden = false;        // 대화 중 휴대폰 조작 버튼 그림을 감춤 (UpdateDialog)
   HB_PROPERTY(BlueprintReadWrite)
   int Character = 0;             // 0 발렌(검), 1 셰리(활), 2 알레아(마탄)
   HB_PROPERTY(BlueprintReadWrite)
@@ -557,8 +569,9 @@ public:
   void WarnCircle(const hb::Vec3& at,float radius,float seconds);  // 원형 공격 범위 예고 (at은 바닥 높이)   // 공격 예고 붉은 띠 (풀 3개, 다 쓰면 생략)
   void BossSlam(const hb::Vec3& at,int bullets,float speed,const std::string& clip); // 내려찍기 충격파·탄·흔들림
   void BossEnraged(Enemy* e);                                                        // 2페이즈 포효
-  void Effect(const std::string& name,const hb::Vec3& at,float angle=0,float glow=0,bool flip=false);  // Assets/Animations/SA_<name> 한 번 재생
+  void Effect(const std::string& name,const hb::Vec3& at,float angle=0,float glow=0,bool flip=false,float scale=1);  // Assets/Animations/SA_<name> 한 번 재생
   void BossGhost(Enemy* e);       // 보스 돌진 잔상 (Combat.cpp)
+  void Whirl(const hb::Vec3& at,float radius,float turn);  // 보스 회전 베기: 맞는 범위 원을 도는 대검 궤적 (turn: 보스 몸이 돈 각도. 이펙트 풀에서 빌려 보스를 따라감, 안 부른 프레임에 돌려줌)
   void BossImpact(float slow){HitStop(slow,0.2f);punch=1;hb::Camera::Flash(hb::Color{1,0.9f,0.6f,0.18f},0.15f);}  // 보스 큰 공격이 땅에 닿는 순간: 잠깐 느려지고 화면이 살짝 당겨지고 번쩍
   void Shake(float seconds,float power){shake=std::max(shake,seconds);shakePower=std::max(shakePower,power);}  // 화면 흔들림 (seconds 동안, power 세기 배율)
   std::string Sound(const std::string& name) const;  // Sounds에서 이름으로 찾은 경로 (없으면 "")
@@ -569,7 +582,7 @@ public:
   // 반복 오디오 에셋(loop)을 일반 소리로 틀고 핸들로 끄고 다시 틂 → 크기가 실제로 바뀌고 겹치지 않음
   void ShotSfx(){if(shotSfxFrame!=frame){shotSfxFrame=frame;Sfx("Shot",0.9f+float(std::rand()%20)/100);}}  // 적 탄: 한 프레임에 한 번 (보스 원형 탄막이 소리를 쌓지 않게)
   int shotSfxFrame=-1,spawnSfxFrame=-1;float stepTime=0;bool swordHeld=false;
-  std::string BgmName() const{return Sound(Returning?"Return":area<0?"Hub":roomKind=="Boss"?"Boss":"Dungeon");}
+  std::string BgmName() const{return Sound(Phase<2?"Title":Returning?"Return":area<0?"Hub":roomKind=="Boss"?"Boss":"Dungeon");}
   void PlayBgm(const std::string& m){if(!musicHandle.empty())hb::Audio::Stop(musicHandle);musicHandle.clear();currentMusic=m;if(MusicLevel>0&&!m.empty())musicHandle=hb::Audio::Play(m,MusicVolume(),1,"master");}
   void Sfx(const std::string& name,float pitch=1.f){  // Sounds 값은 "wav 경로|볼륨". 첫 입력 전 효과음은 엔진이 버림
     const auto s=Sound(name);if(s.empty()||SfxLevel<=0)return;const auto bar=s.find('|');const float v=SfxLevel/8.f;
@@ -608,9 +621,18 @@ private:
   void AreaBanner(float delta,bool show);  // 도착한 곳 이름을 가운데에 크게 (Screen.inl)
   void SettleFill(float t){char n[48];std::snprintf(n,sizeof n,"Assets/UI/Art/coin_fill_%02d.png",int(std::clamp(t,0.f,1.f)*20+0.5f));UiTexture("SettleCoinBack",n);}  // 정산 동전이 아래부터 차오름 (tools/make_coin_fill.py)
   void Notify(const std::string& text){hint=text;hintTime=2.5f;Hud();}
-  void HitStop(float seconds,float scale=0.06f){if(Paused)return;hitStopLeft=std::max(hitStopLeft,seconds);hb::Clock::SetTimeScale(scale);}  // 타격감: 맞은 순간 멈칫 (scale>0.06이면 슬로모션)  // 물체와 상관없는 알림 (위 가운데, 잠깐)
+  void HitStop(float seconds,float scale=0.06f){if(Paused)return;hitStopLeft=std::max(hitStopLeft,seconds);hb::Clock::SetTimeScale(scale);}
+  void SlowMo(float seconds,float scale){if(Paused)return;slowLeft=std::max(slowLeft,seconds);slowScale=scale;if(hitStopLeft<=0)hb::Clock::SetTimeScale(scale);}  // 멈칫이 끝난 뒤 이어지는 슬로모션 (실제 시간)
+  float slowLeft=0,slowScale=1;
+  // 처치 임팩트 프레임 (애니 기법): 장면 전체가 순간 강한 흑백으로 바뀜 (후처리 색 보정: 채도 0·대비·명부/암부로 거의 두 색). stages 1~3번 깜빡임 (Combat.cpp)
+  struct Impact{float t=-1,total=0;int stages=0,stage=-1;bool wasOn=true;} impact;hb::Actor* postFx=nullptr;
+  void ImpactFrame(int stages);void UpdateImpact(float realDelta);void EndImpact();void ImpactGrade(int look);  // look 0 원래 색, 1 흑백, 2 더 어두운 흑백
+  hb::Actor* whirl=nullptr;bool whirlSeen=false;int whirlFrame=-1;
+  float deathCam=0;hb::Vec3 deathAt{0,0,0};  // 보스 처치: 쓰러지는 동안 카메라가 보스를 잡고 당김
+  float killChainTime=0;int killChain=0;  // 0.4초 안에 연달아 잡으면 연속 처치  // 타격감: 맞은 순간 멈칫 (scale>0.06이면 슬로모션)  // 물체와 상관없는 알림 (위 가운데, 잠깐)
   bool NewSheet() const{return Character<(int)rules->AnimSets.size()&&rules->AnimSets[Character]==1;}
-  void AnimateSheet(float delta,bool moving,const char* dir);  // 새 시트 (Screen.inl)
+  void AnimateMotion(float delta,bool moving);  // 셰리·알레아 모션 팩 4방향 (Screen.inl, tools/make_hero_motion.py)
+  int MotionRow() const;hb::Actor* chargeFx=nullptr;std::string chargeShown;  // 셰리 차징 빛 (이펙트 풀에서 빌림)
   void AnimateSocket(float delta,bool moving);  // 발렌 손 소켓 무기: v14 몸 + 손에 단 검이 조준 쪽으로 돎 (Screen.inl)
   hb::Actor* grip=nullptr;std::string gripShown;hb::Vec3 gripAt{0,0,0};  // 검 손잡이 위 손가락 (PlayerGrip)
   hb::Actor* weapon=nullptr;std::string weaponShown;hb::Vec3 weaponAt{0,0,0};float swingT=-1;hb::Actor* slashFx=nullptr;std::string slashShown;bool vsPreloaded=false;  // 손에 단 검 (PlayerWeapon, 매 프레임 손 위치로), 휘두르기 시간·방향
@@ -653,7 +675,7 @@ private:
   void Debris(const hb::Vec3& at,const hb::Vec3& dir,const std::string& who);  // 처치: 뼈·천·금 조각이 튀어 흩어짐
   hb::Vec3 kick{0,0,0};float punch=0,lastOrtho=0;int hitChain=0;float chainTime=0;  // 타격감: 때린 방향으로 화면 밀림, 처치 확대, 연타 음높이
   std::vector<Fx> fxs;
-  void PlayFx(const std::string& clip,float length,const hb::Vec3& at,float angle,float glow,bool flipX,bool flipY=false);  // glow: 블룸용 발광  // clip: 스프라이트 애니메이션, length초 뒤 풀로
+  void PlayFx(const std::string& clip,float length,const hb::Vec3& at,float angle,float glow,bool flipX,bool flipY=false,float scale=1);  // glow: 블룸용 발광  // clip: 스프라이트 애니메이션, length초 뒤 풀로
   void UpdateFx(float delta);
   void UpdateAmbient(float delta,const hb::Vec3& player,bool attacking);  // 새·나비·구름 그늘·박쥐·쥐 (World.cpp)
   float WeaponDamage() const;
@@ -700,7 +722,7 @@ private:
   void UiColor(const std::string& n,const hb::Color& c){if(UiChanged("c"+n,UiNum(c.r,c.g)+UiNum(c.b,c.a)))hb::UI::SetColor(UiOwnerOf(n),UiInstance(n),n,c);}
   void UiScale(const std::string& n,float v){v=std::round(v*100)/100;if(UiChanged("k"+n,std::to_string(v)))hb::UI::SetScale(UiOwnerOf(n),UiInstance(n),n,hb::Vec2{v,v});}
   hb::Vec3 playerAt{0,0,0},facing{1,0,0},cameraAt{0,0,0};
-  hb::Vec3 spawnAt{0,0,0};float spawnHold=0;bool moveLock=false;float moveLockTime=0;  // 도착 지점(장면 인자 spawn)에 잠깐 붙잡아 둠: 웹·모바일에서 이전 장면 위치가 늦게 덮어쓰는 경우
+  hb::Vec3 spawnAt{0,0,0};float spawnHold=0;bool moveLock=false;float moveLockTime=0;int moveLockKeys=0;  // 도착 지점(장면 인자 spawn)에 잠깐 붙잡아 둠: 웹·모바일에서 이전 장면 위치가 늦게 덮어쓰는 경우
   bool playerFlipped=false,blinkShown=false;
   hb::Vec3 knock{0,0,0};
   bool cameraReady=false,started=false,leaving=false,hudDirty=true,introHidden=false;
@@ -726,7 +748,7 @@ private:
   // 공격 범위 예고: 테두리 + 안쪽 채움 (시간에 따라 차오르고 다 차면 맞는 순간). 띠(돌진·베기)·원(도약·회전·금화 비)
   std::vector<hb::Actor*> warnPool,warnFillPool,circlePool,circleFillPool;
   struct WarnLine{hb::Actor* actor;hb::Actor* fill;float left,total;bool circle;hb::Vec3 from,dir;float length,width;};std::vector<WarnLine> warns;
-  float attackAnim=0,walkTime=0,breathTime=0,shake=0,aimHold=0,sentSpeed=0,knockTimer=0,idleTime=0,runTime=0,typeTime=0,phaseTime=0;
+  float motionTime=0,attackAnim=0,walkTime=0,breathTime=0,shake=0,aimHold=0,sentSpeed=0,knockTimer=0,idleTime=0,runTime=0,typeTime=0,phaseTime=0;
   std::string currentSprite,currentMusic,musicHandle,hint,shownWho;
   // 적 탄은 엔진 탄막 시스템(hb::Projectiles)이 오브젝트 없이 한꺼번에 움직이고 그린다.
   // 탄 주인은 발사한 액터라서 적 함수(적 맥락)에서 바로 쏘지 않고 모았다가 Director Tick에서 쏜다 (충돌 묶음을 Director가 받음)

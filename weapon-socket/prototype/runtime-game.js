@@ -2,7 +2,7 @@ import {createBlueprintResolver} from './blueprint-inheritance.js';
 import {derivesFrom} from './class-types.js';
 import {sceneWorldPosition,sceneWorldMatrix,setSceneWorldPosition} from './scene-runtime.js';
 import {Quaternion,Vector3,Euler,MathUtils} from 'three';
-import {parseNativeHeader,canonicalNativeText} from './native-model.js';
+import {readNativeHeader,canonicalNativeText} from './native-model.js';
 import {createAsset} from './asset-documents.js';
 
 const copy=value=>structuredClone(value);
@@ -13,7 +13,7 @@ export async function gameInstanceBlueprint(path,{readAsset,readText}){
   if(typeof path!=='string'||path.length>1000||/[\\:\x00-\x1f]/.test(path)||path.split('/').some(p=>!p||p==='.'||p==='..'))throw Error('GameInstance 경로 오류');
   if(!path.startsWith('Source/'))return {root:await createBlueprintResolver(readAsset,readText)(path),asset:path};
   const [headerPath,requested,...extra]=path.split('#');if(extra.length||!/^Source\/.+\.(?:h|hpp)$/.test(headerPath)||requested!==undefined&&!/^[A-Za-z_]\w{0,79}$/.test(requested))throw Error('GameInstance C++ 경로·클래스 오류');
-  const sourcePath=headerPath.replace(/\.(h|hpp)$/,'.cpp'),header=canonicalNativeText(await readText(headerPath)),source=canonicalNativeText(await readText(sourcePath)),metadata=parseNativeHeader(header);
+  const sourcePath=headerPath.replace(/\.(h|hpp)$/,'.cpp'),header=canonicalNativeText(await readText(headerPath)),source=canonicalNativeText(await readText(sourcePath)),metadata=await readNativeHeader(header,{sourcePath:headerPath,readText});
   const gameClass=c=>{const seen=new Set();while(c){if(c.base==='GameInstance')return true;if(seen.has(c.name))return false;seen.add(c.name);c=metadata.classes.find(item=>item.name===c.base);}return false;};
   const candidates=metadata.classes.filter(gameClass),selected=requested?candidates.find(c=>c.name===requested):candidates.length===1?candidates[0]:null;if(!selected)throw Error('GameInstance 파생 C++ 클래스 이름을 #클래스명으로 지정하세요.');
   const root=createAsset('blueprint','BP_'+selected.name,'GameInstance');root.settings.parentClass=selected.name;root.native={...metadata,headerPath,sourcePath,header,source};return {root,asset:'Assets/__HBGameInstance_'+selected.name+'.hbblueprint.json'};

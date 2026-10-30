@@ -1,9 +1,10 @@
+import {spriteToneMapped} from './sprite-color-policy.js';
 import {gpuLight2DUniforms} from './gpu-2d-lighting.js';
 import {MeshBasicNodeMaterial,MeshStandardNodeMaterial,SpriteNodeMaterial,DataTexture,DoubleSide,Color,Vector2,Vector4,AdditiveBlending,NormalBlending,RenderTarget} from 'three/webgpu';
 import {Fn,If,uniform,texture,vec3,vec4,positionLocal,normalWorld,modelViewMatrix,modelWorldMatrixInverse,cameraWorldMatrix,screenUV,diffuseColor,mix,float,materialReference,attribute,positionGeometry,uv,smoothstep} from 'three/tsl';
 
 export function createGPUViewportMaterial(original,mode){
-  const lit=mode==='lighting'||mode==='detailLighting',Type=original.isSpriteNodeMaterial?SpriteNodeMaterial:lit?MeshStandardNodeMaterial:MeshBasicNodeMaterial,m=new Type({color:mode==='unlit'?original.color||0xffffff:mode==='wireframe'?0xb7c5d5:0xbfbfbf,side:mode==='wireframe'?DoubleSide:original.side,transparent:original.transparent,opacity:original.opacity,alphaTest:original.alphaTest,depthWrite:original.depthWrite,blending:original.blending,wireframe:mode==='wireframe'});
+  const lit=mode==='lighting'||mode==='detailLighting',Type=original.isSpriteNodeMaterial?SpriteNodeMaterial:lit?MeshStandardNodeMaterial:MeshBasicNodeMaterial,m=new Type({color:mode==='unlit'?original.color||0xffffff:mode==='wireframe'?0xb7c5d5:0xbfbfbf,side:mode==='wireframe'?DoubleSide:original.side,transparent:original.transparent,opacity:original.opacity,toneMapped:original.toneMapped,alphaTest:original.alphaTest,depthWrite:original.depthWrite,blending:original.blending,wireframe:mode==='wireframe'});
   for(const key of ['positionNode','scaleNode','rotationNode','opacityNode','alphaTestNode','maskNode'])if(original[key])m[key]=original[key];
   if(mode==='normals'){m.colorNode=normalWorld.mul(.5).add(.5);m.toneMapped=false;}else if(mode==='unlit'){m.map=original.map||null;m.colorNode=original.colorNode;}if(mode==='detailLighting'||mode==='normals'){m.normalNode=original.normalNode;m.normalMap=original.normalMap;m.bumpMap=original.bumpMap;m.bumpScale=original.bumpScale;if(original.normalScale)m.normalScale?.copy(original.normalScale);}
   // Diagnostic materials borrow source textures/nodes; the source object remains their owner.
@@ -21,7 +22,7 @@ export function gpuSpriteMask(material){
 
 export function createGPUSpriteMaterial(map,p,normalMap,lightingTextures){
   const tint=p.color||[1,1,1,1],mode=p.blendMode||'translucent',lit=['lit','lit2d'].includes(p.shading);
-  const material=new (lit?MeshStandardNodeMaterial:MeshBasicNodeMaterial)({map,color:new Color(...tint.slice(0,3)),opacity:tint[3],transparent:['translucent','additive'].includes(mode),blending:mode==='additive'?AdditiveBlending:NormalBlending,alphaTest:mode==='masked'?(p.alphaCutoff??.5):0,side:DoubleSide,depthWrite:!['translucent','additive'].includes(mode)});
+  const material=new (lit?MeshStandardNodeMaterial:MeshBasicNodeMaterial)({map,toneMapped:spriteToneMapped(p),color:new Color(...tint.slice(0,3)),opacity:tint[3],transparent:['translucent','additive'].includes(mode),blending:mode==='additive'?AdditiveBlending:NormalBlending,alphaTest:mode==='masked'?(p.alphaCutoff??.5):0,side:DoubleSide,depthWrite:!['translucent','additive'].includes(mode)});
   if(lit&&normalMap){material.normalMap=normalMap;const strength=p.normalStrength??1;material.normalScale.set(strength,p.normalFlipY?-strength:strength);}
   const ppu=uniform(0),flash=uniform(0),emission=uniform(p.emissiveIntensity||0);
   material.positionNode=Fn(()=>{const local=positionLocal.toVar(),view=modelViewMatrix.mul(vec4(local,1)).toVar();If(ppu.greaterThan(0),()=>{const snapped=vec4(view.xy.mul(ppu).add(.5).floor().div(ppu),view.zw);local.assign(modelWorldMatrixInverse.mul(cameraWorldMatrix).mul(snapped).xyz);});return local;})();
@@ -29,7 +30,7 @@ export function createGPUSpriteMaterial(map,p,normalMap,lightingTextures){
   material.userData.hbGPU=true;material.userData.hbSpriteEffectsOwner=material.uuid;material.userData.hbSpriteEffects={hbPixelPPU:ppu,hbSpriteFlash:flash,hbSpriteEmission:emission};
   if(p.shading==='lit2d')gpuLight2DUniforms(material,lightingTextures);
   if(['inside','outside'].includes(p.maskInteraction))gpuSpriteMask(material);
-  material.clone=()=>{const clone=createGPUSpriteMaterial(material.map,p,material.normalMap,lightingTextures);clone.hbLight2DMaskTexture=material.hbLight2DMaskTexture;return clone;};return material;
+  material.clone=()=>{const clone=createGPUSpriteMaterial(material.map,p,material.normalMap,lightingTextures);clone.hbLight2DMaskTexture=material.hbLight2DMaskTexture;clone.toneMapped=material.toneMapped;return clone;};return material;
 }
 
 export function createGPUMaskMaterial(map,alphaCutoff){

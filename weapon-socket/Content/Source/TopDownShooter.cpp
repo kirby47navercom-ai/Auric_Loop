@@ -39,8 +39,12 @@ void TopDownShooter::MoveCamera(const hb::Vec3& position,const hb::Vec3& aim,boo
 
 void TopDownShooter::Update(float delta){
   Current=this;
-  if(hitStopLeft>0){hitStopLeft-=delta/std::max(0.0001f,hb::Clock::TimeScale());  // 히트스톱은 실제 시간으로 셈 (게임 시간은 느려져 있으므로)
-    if(hitStopLeft<=0&&!Paused)hb::Clock::SetTimeScale(1.f);}
+  struct FlushAtEnd{~FlushAtEnd(){PhysicsQueue::Flush();}} flushAtEnd;  // 이 프레임의 물리 속도 쓰기를 끝에서 한 번에 (중간 return 포함)
+  const float realDelta=delta/std::max(0.0001f,hb::Clock::TimeScale());  // 히트스톱·슬로모션·임팩트 프레임은 실제 시간으로 셈 (게임 시간은 느려져 있으므로)
+  if(hitStopLeft>0){hitStopLeft-=realDelta;if(hitStopLeft<=0&&!Paused)hb::Clock::SetTimeScale(slowLeft>0?slowScale:1.f);}
+  else if(slowLeft>0){slowLeft-=realDelta;if(slowLeft<=0&&!Paused)hb::Clock::SetTimeScale(1.f);}
+  if(killChainTime>0)killChainTime-=realDelta;
+  UpdateImpact(realDelta);
   player=hb::Gameplay::GetPlayerPawn();if(!player)return;
   frame++;
   if(frame==15||frame==45){uiSent.clear();hudDirty=true;}  // 웹·모바일은 위젯이 늦게 생겨 장면 첫 HUD 값이 사라짐 (정산 뒤 골드·빚이 이전 값으로 남던 문제): 한 번 더 보냄
@@ -56,15 +60,18 @@ void TopDownShooter::Update(float delta){
   if(leaving)return;
   playerAt=hb::Scene::GetPosition(player);
   if(spawnHold>0){spawnHold-=delta;  // 도착 직후 이전 장면 위치로 튀었으면 도착 지점으로 되돌림 (걸어서는 0.6초에 3m를 못 감)
-    if(std::hypot(playerAt.x-spawnAt.x,playerAt.y-spawnAt.y)>3.f){hb::Scene::SetPosition(player,spawnAt);hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});playerAt=spawnAt;}}
-  if(moveLock){  // 문·계단으로 막 넘어왔으면 0.5초 서 있고, 그때까지 누르고 있던 방향은 한 번 손을 뗄 때까지 무시 (누른 채로 산 벽에 붙거나 던전에 되돌아가던 문제)
-    moveLockTime+=delta;const bool held=std::fabs(hb::Input::GetAxis("d")-hb::Input::GetAxis("a"))+std::fabs(hb::Input::GetAxis("w")-hb::Input::GetAxis("s"))>.1f;
-    if(!held&&moveLockTime>0.5f){moveLock=false;sentSpeed=-1;}  // 이동 코드가 속도를 되돌림
+    if(std::hypot(playerAt.x-spawnAt.x,playerAt.y-spawnAt.y)>3.f){hb::Scene::SetPosition(player,spawnAt);PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});playerAt=spawnAt;}}
+  if(moveLock){  // 문·계단으로 막 넘어왔으면 잠깐 서 있고, 넘어올 때 누르고 있던 방향은 손을 뗄 때까지 무시 (누른 채로 산 벽에 붙거나 던전에 되돌아가던 문제)
+    // 새로 누른 방향은 0.3초 뒤 바로 움직임: 예전엔 키를 전부 뗐다 눌러야 풀려서, W를 누른 채 A로 바꾸는 식이면 계속 못 움직였음
+    moveLockTime+=delta;const float ax=hb::Input::GetAxis("d")-hb::Input::GetAxis("a"),ay=hb::Input::GetAxis("w")-hb::Input::GetAxis("s");
+    const int mask=(ay>.1f?1:0)|(ay<-.1f?2:0)|(ax>.1f?4:0)|(ax<-.1f?8:0);
+    moveLockKeys=moveLockTime<=delta?mask:moveLockKeys&mask;  // 넘어올 때 누르던 방향 (뗀 방향은 빠짐)
+    if(moveLockTime>0.3f&&(mask&~moveLockKeys||(!mask&&moveLockTime>0.5f))){moveLock=false;sentSpeed=-1;}  // 이동 코드가 속도를 되돌림
     else if(sentSpeed!=0){sentSpeed=0;hb::Movement2D::SetSpeed(player,0);}}  // 이동은 엔진 이동 컴포넌트가 입력으로 직접 함 (대화 등으로 아래 이동 코드에 안 닿아도 막히게 여기서)
   const auto position=playerAt;
-  {// 배경음: 거점·던전·보스방·귀환
+  {// 배경음: 타이틀·캐릭터 선택·거점·던전·보스방·귀환
    const std::string music=BgmName();
-   if((Phase>=2||selecting)&&music!=currentMusic)PlayBgm(music);}  // 첫 입력 전이면 엔진이 기다렸다 틂
+   if(Phase>=1&&music!=currentMusic)PlayBgm(music);}  // 첫 입력 전이면 엔진이 기다렸다 틂
   {// 부스 운영 (기획서 10장): F12 바로 처음으로, 엔딩 카드에서 아무 키나 누르면 처음으로 (무입력 자동 복귀는 테스트에 불편해서 뺌)
    bool any=hb::VectorMath::Vector2Length(hb::Input::GetMouseDelta())>0;
    for(auto* k:{"w","a","s","d","e","q","space","enter","tab","LeftMouseButton","1","2","3","4","5"})any=any||hb::Input::IsKeyDown(k);
@@ -84,11 +91,12 @@ void TopDownShooter::Update(float delta){
   if(cutscene>0){  // 보스 등장 컷신: 카메라가 보스(나타나기 전엔 나올 자리)를 빠르게 잡고 살짝 확대
     hb::Vec3 at=cutsceneAt;for(auto* e:Enemies())if(e->Boss){at=hb::Scene::GetPosition(e);at.y+=0.6f;}
     MoveCamera(at,at,false,delta);cutZoom=std::max(0.72f,cutZoom-delta*0.8f);}
+  else if(deathCam>0){deathCam-=realDelta;MoveCamera(deathAt,deathAt,false,realDelta);cutZoom=std::max(0.7f,cutZoom-realDelta*0.5f);}  // 보스가 쓰러지는 동안: 보스를 잡고 천천히 당김 (실제 시간)
   else if(cutZoom<1)cutZoom=std::min(1.f,cutZoom+delta*1.5f);  // 끝나면 원래 크기로
-  {punch=std::max(0.f,punch-delta*4);const float ortho=rules->CameraSize*cutZoom*(1-0.05f*punch);  // 처치·크리티컬 순간 살짝 확대
+  {punch=std::max(0.f,punch-delta*4);const float ortho=rules->CameraSize*cutZoom*(1-0.05f*std::min(punch,2.2f));  // 처치·크리티컬 순간 살짝 확대
    if(camera&&std::abs(ortho-lastOrtho)>0.001f){lastOrtho=ortho;hb::Components::SetFloat(camera,"Camera","orthographicSize",ortho);}}
   if(chainTime>0)chainTime-=delta;
-  else if(cutscene<=0)MoveCamera(position,touchMode?position+facing*(rules->CameraLeadMax/rules->CameraLead*0.5f):aim,(hasAim||touchMode)&&Phase>=2,delta);  // 컷신 중엔 위에서 보스를 비춘 카메라를 다시 플레이어 쪽으로 끌지 않게 (둘 사이 빈 바닥만 보였음)
+  else if(cutscene<=0&&deathCam<=0)MoveCamera(position,touchMode?position+facing*(rules->CameraLeadMax/rules->CameraLead*0.5f):aim,(hasAim||touchMode)&&Phase>=2,delta);  // 컷신 중엔 위에서 보스를 비춘 카메라를 다시 플레이어 쪽으로 끌지 않게 (둘 사이 빈 바닥만 보였음)
   if(!Paused)UpdateAmbient(delta,position,Phase>=2&&hb::Input::IsKeyDown("LeftMouseButton"));
   {const bool adv=hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("space");
    const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
@@ -102,11 +110,11 @@ void TopDownShooter::Update(float delta){
     if(Paused){if(!leaving)UpdateMenu();return;}}
    if(tipTime>0&&(tipTime-=delta)<=0){UiVisible("TipBack",false);UiVisible("Tip",false);}
    if(cutscene>0){  // 보스 등장: 1초 마법진 → 보스 → 1.3초 포효(흔들림)·이름 자막 → 끝나면 대사
-     cutscene-=delta;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
+     cutscene-=delta;PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});
      if(sentSpeed!=0){sentSpeed=0;hb::Movement2D::SetSpeed(player,0);}  // 이동 컴포넌트가 키로 움직이지 않게 (컷신 동안 모든 조작 막음)
      UpdateFx(delta);  // 등장 마법진 등 이펙트도 제때 사라지게 (안 그러면 컷신 내내 보스 몸 위에서 빛남)
      if(inDungeon)UpdateWaves(delta);  // 보스는 컷신 0.5초 만에 나와야 함 (아래 return 때문에 컷신이 끝나야 나와서 빈 방만 비췄음)
-     if(!roared&&cutscene<1.9f){roared=true;Shake(0.7f,1.8f);Sfx("BossCharge");hb::Camera::Flash(hb::Color{1,0.85f,0.4f,0.12f},0.2f);  // 번쩍임은 약하게 (보스가 묻히지 않게)
+     if(!roared&&cutscene<1.9f){roared=true;Shake(0.7f,1.8f);Sfx("BossRoar");hb::Camera::Flash(hb::Color{1,0.85f,0.4f,0.12f},0.2f);  // 번쩍임은 약하게 (보스가 묻히지 않게)
        for(auto* e:Enemies())if(e->Boss){UiText("BossName",e->DisplayName);UiText("BossSub","황금에 잠식된 1층의 문지기");e->Roar(1.6f);}
        for(auto* n:{"BossName","BossSub"})UiVisible(n,true);}
      if(cutscene<=0){for(auto* n:{"CineTop","CineBottom","BossName","BossSub"})UiVisible(n,false);
@@ -119,8 +127,8 @@ void TopDownShooter::Update(float delta){
     if(toggle&&inDungeon){mapOpen=!mapOpen;DrawMap(mapOpen);Sfx("Select");}  // 던전: M·미니맵을 누르면 큰 지도 + 지역 이름 (다시 누르면 닫힘)
     AreaBanner(delta,(toggle&&!inDungeon)||arrive);if(arrive)bannerPending=false;  // 도착하면 한 번 (거점엔 지도가 없어 M이면 이름만)
     UpdateMapLayer();}
-   if(UpdateSettle(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});if(sentSpeed!=0){sentSpeed=0;hb::Movement2D::SetSpeed(player,0);}return;}
-   if(UpdateDialog(delta,pressed||AnyPressed(false))){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});if(sentSpeed!=0){sentSpeed=0;hb::Movement2D::SetSpeed(player,0);}return;}}  // 대화 중엔 행동·이동 막음
+   if(UpdateSettle(delta,pressed)){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});if(sentSpeed!=0){sentSpeed=0;hb::Movement2D::SetSpeed(player,0);}return;}
+   if(UpdateDialog(delta,pressed||AnyPressed(false))){flashHeld=true;dodgeHeld=true;attackCooldown=0.2f;PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});if(sentSpeed!=0){sentSpeed=0;hb::Movement2D::SetSpeed(player,0);}return;}}  // 대화 중엔 행동·이동 막음
   if(!inDungeon&&!inHome&&Phase>=2&&settleTime<0)Tip(0);  // 거점: 북쪽 계단으로 (오프닝 대화가 끝난 뒤)
   if(inHome){if(position.y<exitY){Leave(-1,"HomeDoor");return;}}  // 원룸 문 → 거점 집 앞
   else if(!inDungeon){  // 거점 계단 끝 → 던전 (들어갈 때마다 새 층). 계단에 막 도착했으면 한 번 내려와야 다시 들어감 (W를 누른 채 왔다 갔다 방지)
@@ -141,16 +149,18 @@ void TopDownShooter::Update(float delta){
 
   std::vector<Enemy*> enemies;
   {const auto all=Enemies();Separate(all,position);  // 겹침은 속도로 벌린다 (위치를 직접 옮기면 매 프레임 엔진 명령이 늘어 느려짐)
+  whirlSeen=false;
   for(auto* e:all){e->Tick(delta);KeepInside(e);  // 적 이동은 여기서 한 번에 (상태 머신은 상태가 바뀔 때만 C++를 부름)
     if(e->burnedOut){e->burnedOut=false;KillEnemy(e);}else enemies.push_back(e);}  // 화상으로 쓰러짐
   }
+  if(whirl&&!whirlSeen){hb::Scene::SetScale(whirl,hb::Vec3{1,1,1});hb::Sprites::PlayAnimation(whirl,"Assets/Animations/SA_Hit.hbspriteanimation.json",false);hb::Sprites::SetSorting(whirl,"default",4);Give(fxPool,whirl);whirl=nullptr;}  // 회전 베기가 끝나면 치움. 회전 그림을 짧은 그림으로 바꿔 두고 돌려줌 (그대로 두면 다음에 이 오브젝트를 빌린 타격 이펙트 자리에 회전 궤적이 보였음)
   boss=nullptr;for(auto* e:enemies)if(e->Boss)boss=e;
   bossSeen=boss!=nullptr;if(boss)bossAt=hb::Scene::GetPosition(boss);  // 적 포인터는 프레임을 넘겨 들고 있지 않는다 (엔진이 다시 만들 수 있음)
   UpdateBullets(delta,position);
   UpdateFx(delta);
   if(inDungeon)UpdateWaves(delta);
   if(Hp<=0){  // 쓰러짐 (기획서 2장): "빈손으로 끌려 나왔다" → 소재를 잃고 거점에서 정산
-    hb::Physics::SetVelocity(player,hb::Vec3{0,0,0});
+    PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});
     ClearBullets();
     if(gameOver==rules->RespawnDelay){
       UiText("KoTitle",Fatigue>=FatigueMax?"지쳐 쓰러졌다":"쓰러졌다");
@@ -198,8 +208,8 @@ void TopDownShooter::Update(float delta){
     Blink(position);}
   dodgeHeld=dodgeDown;
   if(dodgeTimer>0)dodgeTimer-=delta;  // 순간이동 뒤 잠깐 무적
-  else if(NewSheet()&&Character==0&&attackAnim>0.12f&&attackAnim<=0.22f)hb::Physics::SetVelocity(player,facing*(rules->SlashStep/0.1f));  // 베기 프레임 동안 한 발 내딛음
-  else if(knockTimer>0){knockTimer-=delta;hb::Physics::SetVelocity(player,knock);}
+  else if(NewSheet()&&Character==0&&attackAnim>0.12f&&attackAnim<=0.22f)PhysicsQueue::Velocity(player,facing*(rules->SlashStep/0.1f));  // 베기 프레임 동안 한 발 내딛음
+  else if(knockTimer>0){knockTimer-=delta;PhysicsQueue::Velocity(player,knock);}
   {const bool blink=invulnerable>0&&int(invulnerable*12)%2==0;  // 무적 시간 깜빡임
    if(blink!=blinkShown){blinkShown=blink;const float v=blink?0.4f:1.f;hb::Sprites::SetColor(player,hb::Color{v,v,v,1});}}  // 투명도를 바꾸면 렌더 재질을 다시 만들어 끊김
 
@@ -223,7 +233,7 @@ void TopDownShooter::Update(float delta){
     if(attackDown&&attackCooldown<=0){const bool full=charge>=rules->ArrowCharge;charge=std::min(charge+delta,rules->ArrowCharge);
       if(!full&&charge>=rules->ArrowCharge){hb::Sprites::Flash(player,0.08f,0.5f);Sfx("Select");}}
     else if(!attackDown&&charge>0){  // 떼는 순간 발사: 당긴 정도(0~1)에 따라 피해·속도·문 타격이 커짐. 너무 짧게 떼면 취소
-      if(charge>=rules->ArrowMinCharge){const float power=std::min(1.f,charge/rules->ArrowCharge);Shoot(position,power);attackAnim=0.1f;
+      if(charge>=rules->ArrowMinCharge){const float power=std::min(1.f,charge/rules->ArrowCharge);Shoot(position,power);attackAnim=0.44f;
         attackCooldown=0.15f+(power<1?rules->ArrowPartialCooldown*(1-power*0.5f):0.f);}  // 다 당기지 않았으면 쉬는 시간 (연타 방지)
       charge=0;}}
   else if(Character==2&&attackDown&&attackCooldown<=0){attackCooldown=rules->BoltInterval;attackAnim=0.2f;Shoot(position);}

@@ -1,7 +1,9 @@
+import {nativeEntryPaths} from './native-entry.js';
+import {nativeLiveQueryKeys} from './native-live-query.js';
 import {createPersistentQueries,persistentQueryKeys} from './runtime-storage.js';
 import {NativeProtocol,nativeParticleQuery} from './native-protocol.js';
 import {spawnQueryRequest} from './native-spawn.js';
-import {NativePhysicsQueries} from './native-physics-query.js';
+import {NativePhysicsQueries,NativePhysicsQueryPool} from './native-physics-query.js';
 import {worldPatch,commitNativeWorld} from './native-transport.js';
 import {canonicalWorld} from './native-protocol.js';
 import {resolveBuildPath,kioskSettings,validKioskSettings,frameSettings,validFrameSettings} from './build-profile.js';
@@ -11,7 +13,7 @@ export function mobileBackend(manifest,{read,request,rendererQuery,mobile=true,b
   if(!validKioskSettings(manifest)||!validFrameSettings(manifest))throw Error('키오스크 패키지 설정 오류');
   if(manifest.version!==1||!Array.isArray(manifest.entries)||!Array.isArray(manifest.nativeModules)||!safe(manifest.startupScene))throw Error('모바일 패키지 형식 오류');
   const session={id:manifest.id,name:manifest.name,projectFile:'game.hbpack.json',startupScene:manifest.startupScene,startupBlueprint:manifest.startupBlueprint,gameInstance:manifest.gameInstance||'',legacyStorage:false,player:true};
-  const entries=new Set(manifest.entries.map(e=>e.path)),protocol=new NativeProtocol(),modules=new Map();let report=null;
+  const entries=new Set(manifest.entries.map(e=>e.path)),protocol=new NativeProtocol(),modules=new Map(),physicsQueryPool=new NativePhysicsQueryPool();let disposed=false;let report=null;
   const resolve=name=>{if(!safe(name))throw Error('모바일 에셋 경로 오류');const resolved=resolveBuildPath(name,manifest.redirects);return entries.has(resolved)?resolved:null;};
   const saveKey=slot=>'hbengine.savegame.json.'+slot+'.project.'+encodeURIComponent(manifest.id),persistentQueries=createPersistentQueries({readAsset:async name=>{const resolved=resolve(name);if(!resolved)throw Error('쿠킹된 데이터 에셋이 없어요.');const data=await read('Content/'+resolved);if(data instanceof Response){if(!data.ok)throw Error('데이터 에셋 요청 실패: '+data.status);return data.json();}return JSON.parse(data);},readSave:async slot=>(await request('storageRead',{})).items[saveKey(slot)]??null,writeSave:(slot,json)=>request('storageWrite',{[saveKey(slot)]:json}),deleteSave:slot=>request('storageWrite',{[saveKey(slot)]:null})});let gameSessionId;
   for(const [index,module] of manifest.nativeModules.entries())modules.set(module.signature,{...module,index,token:module.signature,queue:Promise.resolve()});
@@ -21,10 +23,10 @@ export function mobileBackend(manifest,{read,request,rendererQuery,mobile=true,b
     const module=modules.get(data.token);if(!module)throw Error('패키지에 등록되지 않은 C++ 모듈');
     const job=module.queue.then(async()=>{
       let queries;try{
-        const started=performance.now(),decoded=protocol.decodeRequest(module,data.request),decodedAt=performance.now();protocol.validate(module,decoded);if(decoded.moduleFrames!==undefined)protocol.frameModules(data.token,decoded.moduleFrames);if(decoded.gameSession&&gameSessionId!==decoded.gameSession.id){gameSessionId=decoded.gameSession.id;persistentQueries.clear();}if(decoded.spawnTemplates){module.spawnContexts??=new Map();module.spawnContexts.set(decoded.spawnPrefix,decoded.spawnTemplates);if(module.spawnContexts.size>8)module.spawnContexts.delete(module.spawnContexts.keys().next().value);}else if(decoded.spawnPrefix&&module.workerSpawnPrefix!==decoded.spawnPrefix&&module.spawnContexts?.has(decoded.spawnPrefix))decoded.spawnTemplates=module.spawnContexts.get(decoded.spawnPrefix);const validatedAt=performance.now();queries=new NativePhysicsQueries(decoded.objects,{authorizeWorld:query=>spawnQueryRequest(decoded,query,module.metadata,decoded.spawnTemplates||module.spawnContexts?.get(decoded.spawnPrefix))});let queryMs=0,queryCount=0;
+        const started=performance.now(),decoded=protocol.decodeRequest(module,data.request),decodedAt=performance.now();protocol.validate(module,decoded);if(decoded.moduleFrames!==undefined)protocol.frameModules(data.token,decoded.moduleFrames);if(decoded.gameSession&&gameSessionId!==decoded.gameSession.id){gameSessionId=decoded.gameSession.id;persistentQueries.clear();}if(decoded.spawnTemplates){module.spawnContexts??=new Map();module.spawnContexts.set(decoded.spawnPrefix,decoded.spawnTemplates);if(module.spawnContexts.size>8)module.spawnContexts.delete(module.spawnContexts.keys().next().value);}else if(decoded.spawnPrefix&&module.workerSpawnPrefix!==decoded.spawnPrefix&&module.spawnContexts?.has(decoded.spawnPrefix))decoded.spawnTemplates=module.spawnContexts.get(decoded.spawnPrefix);const validatedAt=performance.now();if(decoded.command==='reset')physicsQueryPool.invalidate(decoded.gameSession?.id);queries=new NativePhysicsQueries(decoded.objects,{liveQuery:(query,snapshot)=>nativeParticleQuery(query,snapshot,rendererQuery),lease:decoded.command==='reset'?null:physicsQueryPool.acquire(decoded.gameSession?.id),authorizeWorld:query=>spawnQueryRequest(decoded,query,module.metadata,decoded.spawnTemplates||module.spawnContexts?.get(decoded.spawnPrefix))});let queryMs=0,queryCount=0;
         const clockOnly=['frame','frames','reset'].includes(decoded.command),patch=!clockOnly&&module.metadata.workerProtocol>=2&&module.transportWorld?(decoded[canonicalWorld]?.patch&&module.transportWorld===decoded[canonicalWorld].base?decoded[canonicalWorld].patch:worldPatch(module.transportWorld,decoded.objects)):null,packet=clockOnly?{...decoded,objects:[]}:patch?{...decoded,objects:undefined,objectPatch:patch}:decoded;if(decoded.command==='reset')module.transportWorld=null;
-        const rpcStarted=performance.now(),reply=await request('native',{module:module.index,request:packet},async query=>{const at=performance.now();queryCount++;try{if(['particleCount','particlePlay','particleStop','particlePause','particleEmit'].includes(query.key)){if(queryCount>128)throw Error('GPU 파티클 질의 개수 오류');return await nativeParticleQuery(query,decoded.objects.length?decoded.objects:module.transportWorld||[],rendererQuery);}return persistentQueryKeys.has(query.key)?await persistentQueries(query.key,query.args):await queries.query(query);}finally{queryMs+=performance.now()-at;}}),repliedAt=performance.now();
-        if(!reply.ok)throw Error(reply.error||'모바일 C++ 실행 실패');if(decoded.spawnTemplates)module.workerSpawnPrefix=decoded.spawnPrefix;const result=protocol.validateReply(module,decoded,reply);result.transport={...result.transport,...reply.hostTiming,decodeMs:decodedAt-started,validateMs:validatedAt-decodedAt,rpcMs:repliedAt-rpcStarted,replyValidationMs:performance.now()-repliedAt,queryMs,queryCount};
+        const rpcStarted=performance.now(),reply=await request('native',{module:module.index,request:packet},async query=>{const at=performance.now();queryCount++;try{if(nativeLiveQueryKeys.has(query.key)){if(queryCount>128)throw Error('GPU 파티클 질의 개수 오류');return await nativeParticleQuery(query,decoded.objects.length?decoded.objects:module.transportWorld||[],rendererQuery);}return persistentQueryKeys.has(query.key)?await persistentQueries(query.key,query.args):await queries.query(query);}finally{queryMs+=performance.now()-at;}}),repliedAt=performance.now();
+        if(disposed)throw Error('종료된 게임 백엔드의 C++ 응답이에요.');if(!reply.ok)throw Error(reply.error||'모바일 C++ 실행 실패');if(decoded.spawnTemplates)module.workerSpawnPrefix=decoded.spawnPrefix;const result=protocol.validateReply(module,decoded,reply);result.transport={...result.transport,...reply.hostTiming,decodeMs:decodedAt-started,validateMs:validatedAt-decodedAt,rpcMs:repliedAt-rpcStarted,replyValidationMs:performance.now()-repliedAt,queryMs,queryCount,physicsQueryMs:queries.queryMs,physicsQueryCount:queries.count,physicsCacheReused:!!queries.lease?.reused};
         const committed=data.request.worldTransport===1?commitNativeWorld(decoded.objects,result):undefined;
         if(!clockOnly)module.transportWorld=committed||commitNativeWorld(decoded.objects,result);
         const invalidateForeign=reply=>{for(const foreign of reply.foreign||[]){const target=modules.get(foreign.token);if(target)target.transportWorld=null;invalidateForeign(foreign.result);}};invalidateForeign(result);
@@ -34,11 +36,12 @@ export function mobileBackend(manifest,{read,request,rendererQuery,mobile=true,b
     });module.queue=job.catch(()=>{});return job;
   }
   const backend=async function fetchMobile(input,options={}){
+    if(disposed)throw Error('종료된 게임 백엔드예요.');
     const url=new URL(typeof input==='string'?input:input.url,'https://hbengine.local'),method=options.method||input.method||'GET';
     const body=()=>{const raw=options.body||'{}';if(typeof raw!=='string'||raw.length>8388608)throw Error('모바일 요청 크기 오류');return JSON.parse(raw);};
     try{
       if(url.pathname==='/api/session'&&method==='GET')return json(session);
-      if(url.pathname==='/api/player'&&method==='GET')return json({name:manifest.name,...frameSettings({...manifest,mobile}),kiosk:kioskSettings(manifest),configuration:manifest.configuration,redirects:manifest.redirects,width:manifest.width,height:manifest.height,scene:manifest.startupScene,mobile});
+      if(url.pathname==='/api/player'&&method==='GET')return json({name:manifest.name,...frameSettings({...manifest,mobile}),kiosk:kioskSettings(manifest),configuration:manifest.configuration,redirects:manifest.redirects,width:manifest.width,height:manifest.height,distanceFields:manifest.distanceFields||'',scene:manifest.startupScene,mobile});
       if(url.pathname==='/api/project'&&method==='GET')return json({entries:manifest.entries});
       if(url.pathname==='/api/file'&&method==='GET'){const resolved=resolve(url.searchParams.get('path'));if(!resolved)return json({error:'게임 파일이 없어요.'},404);return read('Content/'+resolved);}
       if(url.pathname==='/api/game-data'&&method==='POST'){const data=body();return json({value:await persistentQueries(data.key,data.args)});}
@@ -46,7 +49,7 @@ export function mobileBackend(manifest,{read,request,rendererQuery,mobile=true,b
         if(method==='GET'){if(url.searchParams.get('project')!==manifest.id)throw Error('프로젝트 ID 오류');const saved=await request('storageRead',{});if(saved?.version!==1||!saved.items||typeof saved.items!=='object'||Array.isArray(saved.items))throw Error('게임 저장 형식 오류');const suffix='.project.'+encodeURIComponent(manifest.id);return json({version:1,items:Object.fromEntries(Object.entries(saved.items).filter(([key])=>key.endsWith(suffix)))});}
         if(method==='PUT'){const data=body(),suffix='.project.'+encodeURIComponent(manifest.id);if(data.id!==manifest.id||!data.items||Array.isArray(data.items)||typeof data.items!=='object'||Object.entries(data.items).some(([key,value])=>key.length>1000||!key.endsWith(suffix)||!key.startsWith('hbengine.savegame.')&&!key.startsWith('hbengine.storage-migrated.v1.')||value!==null&&typeof value!=='string')||JSON.stringify(data.items).length>4194304)throw Error('게임 저장 범위 오류');return json(await request('storageWrite',data.items));}
       }
-      if(url.pathname==='/api/native/build'&&method==='POST'){const data=body(),module=[...modules.values()].find(m=>m.header===data.header&&m.source===data.source);if(!module)throw Error('패키지에 등록되지 않은 C++ 코드');return json({token:module.token,metadata:module.metadata,diagnostics:'모바일 사전 빌드 로드'});}
+      if(url.pathname==='/api/native/build'&&method==='POST'){const data=body(),entry=nativeEntryPaths(data),candidates=[...modules.values()].filter(m=>m.header===data.header&&m.source===data.source),module=entry.headerPath?candidates.find(m=>m.headerPath?.toLowerCase()===entry.headerPath.toLowerCase()&&m.sourcePath?.toLowerCase()===entry.sourcePath.toLowerCase())||(candidates.length===1&&!candidates[0].headerPath?candidates[0]:null):candidates.length===1?candidates[0]:null;if(!module)throw Error('패키지에 등록되지 않은 C++ 코드');return json({token:module.token,metadata:module.metadata,diagnostics:'모바일 사전 빌드 로드'});}
       if(url.pathname==='/api/native/call'&&method==='POST')return json(await nativeCall(body()));
       if(url.pathname==='/api/player/report'){
         if(method==='POST'){report=body();if(manifest.configuration==='development')await request('report',report);return json({ok:true});}
@@ -57,6 +60,8 @@ export function mobileBackend(manifest,{read,request,rendererQuery,mobile=true,b
   };
   backend.setRendererQuery=handler=>{if(handler!==undefined&&typeof handler!=='function')throw Error('렌더러 질의 연결 오류');rendererQuery=handler;};
   backend.fileUrl=name=>{const resolved=resolve(name);if(!resolved)throw Error('게임 파일이 없어요: '+name);return baseURL+'Content/'+resolved.split('/').map(encodeURIComponent).join('/');};
+  backend.physicsResources=()=>physicsQueryPool.inspect();
+  backend.dispose=()=>{if(disposed)return;disposed=true;rendererQuery=undefined;physicsQueryPool.dispose();persistentQueries.clear();for(const module of modules.values()){module.requestWorld=null;module.transportWorld=null;module.spawnContexts?.clear();}modules.clear();};
   return backend;
 }
 
@@ -95,6 +100,7 @@ export async function startMobilePlayer(){
   const bridge=platformBridge(send,{nativeJSON:true});window.hbMobileReply=bridge.receive;window.hbMobileQuery=bridge.query;window.hbMobileHostLifecycle=bridge.setActive;
   if(window.HBMobile){const connected=await connectAndroidChannel(bridge,window);messagePort=connected.port;if(manifest.configuration==='development')window.hbMobileChannel=connected.info;}
   const backend=mobileBackend(manifest,{read:name=>original('/'+name),request:bridge.request});
+  window.addEventListener('pagehide',event=>{if(!event.persisted)backend.dispose();});
   window.hbMobileFileUrl=backend.fileUrl;window.hbMobileSetRendererQuery=backend.setRendererQuery;
   window.hbMobileTarget=manifest.target;
   window.fetch=(input,options)=>{const url=new URL(typeof input==='string'?input:input.url,location.href);return url.origin===location.origin&&url.pathname.startsWith('/api/')?backend(input,options):original(input,options);};

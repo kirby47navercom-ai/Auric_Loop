@@ -2007,7 +2007,13 @@ export const coreApi = [
         "array": false
       }
     ],
-    "defaults": {}
+    "defaults": {
+      "value": [
+        1,
+        1,
+        1
+      ]
+    }
   },
   {
     "key": "getTransform",
@@ -9178,6 +9184,381 @@ export const serviceApi = [
     "defaults": {}
   },
   {
+    "key": "netConnect",
+    "title": "Connect",
+    "ko": "네트워크 연결",
+    "group": "네트워크",
+    "keywords": "netConnect Connect 네트워크 연결 네트워크 c++ cpp",
+    "cppName": "hb::Network::Connect",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "endpoint",
+        "label": "endpoint",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "accessKey",
+        "label": "accessKey",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "authority",
+        "label": "authority",
+        "type": "bool",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "netDisconnect",
+    "title": "Disconnect",
+    "ko": "네트워크 연결 종료",
+    "group": "네트워크",
+    "keywords": "netDisconnect Disconnect 네트워크 연결 종료 네트워크 c++ cpp",
+    "cppName": "hb::Network::Disconnect",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "netRPC",
+    "title": "Send RPC",
+    "ko": "네트워크 RPC 전송",
+    "group": "네트워크",
+    "keywords": "netRPC SendRPC 네트워크 RPC 전송 네트워크 c++ cpp",
+    "cppName": "hb::Network::SendRPC",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "event",
+        "label": "event",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "json",
+        "label": "json",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "multicast",
+        "label": "multicast",
+        "type": "bool",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "netSetOwner",
+    "title": "Set Owner",
+    "ko": "네트워크 소유권 지정",
+    "group": "네트워크",
+    "keywords": "netSetOwner SetOwner 네트워크 소유권 지정 네트워크 c++ cpp",
+    "cppName": "hb::Network::SetOwner",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "peer",
+        "label": "peer",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "netInfo",
+    "title": "Get State Text",
+    "ko": "네트워크 상태 JSON",
+    "group": "네트워크",
+    "keywords": "netInfo GetStateText 네트워크 상태 JSON 네트워크 c++ cpp",
+    "cppName": "hb::Network::GetStateText",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "netAuthority",
+    "title": "Has Authority",
+    "ko": "네트워크 권한 확인",
+    "group": "네트워크",
+    "keywords": "netAuthority HasAuthority 네트워크 권한 확인 네트워크 c++ cpp",
+    "cppName": "hb::Network::HasAuthority",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "bool",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "audioVoiceBudget",
+    "title": "Set Voice Budget",
+    "ko": "음성 예산 설정",
+    "group": "오디오",
+    "keywords": "audioVoiceBudget SetVoiceBudget 음성 예산 설정 오디오 c++ cpp",
+    "cppName": "hb::Audio::SetVoiceBudget",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "real",
+        "label": "real",
+        "type": "int",
+        "array": false
+      },
+      {
+        "id": "tracked",
+        "label": "tracked",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "audioVoicePriority",
+    "title": "Set Priority",
+    "ko": "음성 우선순위 지정",
+    "group": "오디오",
+    "keywords": "audioVoicePriority SetPriority 음성 우선순위 지정 오디오 c++ cpp",
+    "cppName": "hb::Audio::SetPriority",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "handle",
+        "label": "handle",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "priority",
+        "label": "priority",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "audioRealVoices",
+    "title": "Get Real Voice Count",
+    "ko": "실제 재생 음성 수",
+    "group": "오디오",
+    "keywords": "audioRealVoices GetRealVoiceCount 실제 재생 음성 수 오디오 c++ cpp",
+    "cppName": "hb::Audio::GetRealVoiceCount",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "audioVirtualVoices",
+    "title": "Get Virtual Voice Count",
+    "ko": "가상 재생 음성 수",
+    "group": "오디오",
+    "keywords": "audioVirtualVoices GetVirtualVoiceCount 가상 재생 음성 수 오디오 c++ cpp",
+    "cppName": "hb::Audio::GetVirtualVoiceCount",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
     "key": "audioPlay",
     "title": "Play",
     "ko": "소리 재생",
@@ -9203,13 +9584,15 @@ export const serviceApi = [
         "id": "volume",
         "label": "volume",
         "type": "float",
-        "array": false
+        "array": false,
+        "default": 1
       },
       {
         "id": "pitch",
         "label": "pitch",
         "type": "float",
-        "array": false
+        "array": false,
+        "default": 1
       },
       {
         "id": "bus",
@@ -9234,6 +9617,8 @@ export const serviceApi = [
       }
     ],
     "defaults": {
+      "volume": 1,
+      "pitch": 1,
       "bus": "sfx"
     }
   },
@@ -9296,7 +9681,8 @@ export const serviceApi = [
         "id": "fadeSeconds",
         "label": "fadeSeconds",
         "type": "float",
-        "array": false
+        "array": false,
+        "default": 0
       }
     ],
     "outputs": [
@@ -9307,7 +9693,9 @@ export const serviceApi = [
         "array": false
       }
     ],
-    "defaults": {}
+    "defaults": {
+      "fadeSeconds": 0
+    }
   },
   {
     "key": "audioStopMusic",
@@ -9329,7 +9717,8 @@ export const serviceApi = [
         "id": "fadeSeconds",
         "label": "fadeSeconds",
         "type": "float",
-        "array": false
+        "array": false,
+        "default": 0
       }
     ],
     "outputs": [
@@ -9340,7 +9729,9 @@ export const serviceApi = [
         "array": false
       }
     ],
-    "defaults": {}
+    "defaults": {
+      "fadeSeconds": 0
+    }
   },
   {
     "key": "audioPlayAt",
@@ -9374,13 +9765,15 @@ export const serviceApi = [
         "id": "volume",
         "label": "volume",
         "type": "float",
-        "array": false
+        "array": false,
+        "default": 1
       },
       {
         "id": "pitch",
         "label": "pitch",
         "type": "float",
-        "array": false
+        "array": false,
+        "default": 1
       },
       {
         "id": "bus",
@@ -9405,6 +9798,8 @@ export const serviceApi = [
       }
     ],
     "defaults": {
+      "volume": 1,
+      "pitch": 1,
       "bus": "sfx"
     }
   },
@@ -9961,6 +10356,729 @@ export const serviceApi = [
     "defaults": {}
   },
   {
+    "key": "reflectionProbeAdvancedBlend",
+    "title": "Set Advanced Blend",
+    "ko": "반사 고급 경계 혼합",
+    "group": "렌더링",
+    "keywords": "reflectionProbeAdvancedBlend SetAdvancedBlend 반사 고급 경계 혼합 렌더링 c++ cpp",
+    "cppName": "hb::ReflectionProbes::SetAdvancedBlend",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "bool",
+        "array": false,
+        "default": true
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false,
+        "default": "ReflectionProbe"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "value": true,
+      "component": "ReflectionProbe"
+    }
+  },
+  {
+    "key": "reflectionProbeBlendFaces",
+    "title": "Set Blend Faces",
+    "ko": "반사 면별 혼합 거리",
+    "group": "렌더링",
+    "keywords": "reflectionProbeBlendFaces SetBlendFaces 반사 면별 혼합 거리 렌더링 c++ cpp",
+    "cppName": "hb::ReflectionProbes::SetBlendFaces",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "positive",
+        "label": "positive",
+        "type": "vec3",
+        "array": false
+      },
+      {
+        "id": "negative",
+        "label": "negative",
+        "type": "vec3",
+        "array": false
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false,
+        "default": "ReflectionProbe"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "component": "ReflectionProbe"
+    }
+  },
+  {
+    "key": "reflectionProbeFaceFade",
+    "title": "Set Face Fade",
+    "ko": "반사 방향별 가중치",
+    "group": "렌더링",
+    "keywords": "reflectionProbeFaceFade SetFaceFade 반사 방향별 가중치 렌더링 c++ cpp",
+    "cppName": "hb::ReflectionProbes::SetFaceFade",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "positive",
+        "label": "positive",
+        "type": "vec3",
+        "array": false
+      },
+      {
+        "id": "negative",
+        "label": "negative",
+        "type": "vec3",
+        "array": false
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false,
+        "default": "ReflectionProbe"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "component": "ReflectionProbe"
+    }
+  },
+  {
+    "key": "reflectionProbeNormalBlend",
+    "title": "Set Normal Blend Distance",
+    "ko": "반사 바깥 노멀 억제 거리",
+    "group": "렌더링",
+    "keywords": "reflectionProbeNormalBlend SetNormalBlendDistance 반사 바깥 노멀 억제 거리 렌더링 c++ cpp",
+    "cppName": "hb::ReflectionProbes::SetNormalBlendDistance",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "float",
+        "array": false,
+        "default": 0
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false,
+        "default": "ReflectionProbe"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "value": 0,
+      "component": "ReflectionProbe"
+    }
+  },
+  {
+    "key": "reflectionProbeNormalFaces",
+    "title": "Set Normal Blend Faces",
+    "ko": "반사 면별 노멀 억제 거리",
+    "group": "렌더링",
+    "keywords": "reflectionProbeNormalFaces SetNormalBlendFaces 반사 면별 노멀 억제 거리 렌더링 c++ cpp",
+    "cppName": "hb::ReflectionProbes::SetNormalBlendFaces",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "positive",
+        "label": "positive",
+        "type": "vec3",
+        "array": false
+      },
+      {
+        "id": "negative",
+        "label": "negative",
+        "type": "vec3",
+        "array": false
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false,
+        "default": "ReflectionProbe"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "component": "ReflectionProbe"
+    }
+  },
+  {
+    "key": "reflectionProbeProxy",
+    "title": "Set Proxy Volume",
+    "ko": "반사 투영 프록시 지정",
+    "group": "렌더링",
+    "keywords": "reflectionProbeProxy SetProxyVolume 반사 투영 프록시 지정 렌더링 c++ cpp",
+    "cppName": "hb::ReflectionProbes::SetProxyVolume",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "proxy",
+        "label": "proxy",
+        "type": "object",
+        "array": false,
+        "className": "Actor",
+        "default": null
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false,
+        "default": "ReflectionProbe"
+      },
+      {
+        "id": "proxyComponent",
+        "label": "proxyComponent",
+        "type": "string",
+        "array": false,
+        "default": "ReflectionProxyVolume"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "proxy": null,
+      "component": "ReflectionProbe",
+      "proxyComponent": "ReflectionProxyVolume"
+    }
+  },
+  {
+    "key": "reflectionProbeInfluenceProxy",
+    "title": "Set Use Influence Volume",
+    "ko": "반사 영향 영역 투영 사용",
+    "group": "렌더링",
+    "keywords": "reflectionProbeInfluenceProxy SetUseInfluenceVolume 반사 영향 영역 투영 사용 렌더링 c++ cpp",
+    "cppName": "hb::ReflectionProbes::SetUseInfluenceVolume",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "bool",
+        "array": false,
+        "default": true
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false,
+        "default": "ReflectionProbe"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "value": true,
+      "component": "ReflectionProbe"
+    }
+  },
+  {
+    "key": "reflectionProbePriorityBlend",
+    "title": "Set Priority Blend",
+    "ko": "반사 우선 캡처 덮어쓰기",
+    "group": "렌더링",
+    "keywords": "reflectionProbePriorityBlend SetPriorityBlend 반사 우선 캡처 덮어쓰기 렌더링 c++ cpp",
+    "cppName": "hb::ReflectionProbes::SetPriorityBlend",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "bool",
+        "array": false,
+        "default": true
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false,
+        "default": "ReflectionProbe"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "value": true,
+      "component": "ReflectionProbe"
+    }
+  },
+  {
+    "key": "reflectionProbeSphere",
+    "title": "Set Sphere",
+    "ko": "반사 구형 영역 지정",
+    "group": "렌더링",
+    "keywords": "reflectionProbeSphere SetSphere 반사 구형 영역 지정 렌더링 c++ cpp",
+    "cppName": "hb::ReflectionProbes::SetSphere",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "float",
+        "array": false,
+        "default": 5
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false,
+        "default": "ReflectionProbe"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "value": 5,
+      "component": "ReflectionProbe"
+    }
+  },
+  {
+    "key": "reflectionProbeShape",
+    "title": "Set Shape",
+    "ko": "반사 영역 모양 지정",
+    "group": "렌더링",
+    "keywords": "reflectionProbeShape SetShape 반사 영역 모양 지정 렌더링 c++ cpp",
+    "cppName": "hb::ReflectionProbes::SetShape",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "string",
+        "array": false,
+        "default": "box"
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false,
+        "default": "ReflectionProbe"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "value": "box",
+      "component": "ReflectionProbe"
+    }
+  },
+  {
+    "key": "reflectionProbeRadius",
+    "title": "Set Radius",
+    "ko": "반사 영역 반경 지정",
+    "group": "렌더링",
+    "keywords": "reflectionProbeRadius SetRadius 반사 영역 반경 지정 렌더링 c++ cpp",
+    "cppName": "hb::ReflectionProbes::SetRadius",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "float",
+        "array": false,
+        "default": 5
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false,
+        "default": "ReflectionProbe"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "value": 5,
+      "component": "ReflectionProbe"
+    }
+  },
+  {
+    "key": "reflectionProbeRefresh",
+    "title": "Refresh",
+    "ko": "반사 프로브 갱신",
+    "group": "렌더링",
+    "keywords": "reflectionProbeRefresh Refresh 반사 프로브 갱신 렌더링 c++ cpp",
+    "cppName": "hb::ReflectionProbes::Refresh",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false,
+        "default": "ReflectionProbe"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "component": "ReflectionProbe"
+    }
+  },
+  {
+    "key": "reflectionProbeIntensity",
+    "title": "Set Intensity",
+    "ko": "반사 강도 지정",
+    "group": "렌더링",
+    "keywords": "reflectionProbeIntensity SetIntensity 반사 강도 지정 렌더링 c++ cpp",
+    "cppName": "hb::ReflectionProbes::SetIntensity",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false,
+        "default": "ReflectionProbe"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "component": "ReflectionProbe"
+    }
+  },
+  {
+    "key": "reflectionProbeDiffuse",
+    "title": "Set Diffuse Intensity",
+    "ko": "간접광 강도 지정",
+    "group": "렌더링",
+    "keywords": "reflectionProbeDiffuse SetDiffuseIntensity 간접광 강도 지정 렌더링 c++ cpp",
+    "cppName": "hb::ReflectionProbes::SetDiffuseIntensity",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false,
+        "default": "ReflectionProbe"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "component": "ReflectionProbe"
+    }
+  },
+  {
     "key": "movement2dSpeed",
     "title": "Set Speed",
     "ko": "2D 이동 속도 지정",
@@ -10302,6 +11420,485 @@ export const serviceApi = [
     ],
     "defaults": {
       "duration": 1
+    }
+  },
+  {
+    "key": "uiSetSlotContent",
+    "title": "Set Slot Content",
+    "ko": "명명 슬롯 내용 교체",
+    "group": "UI|위젯",
+    "keywords": "uiSetSlotContent SetSlotContent 명명 슬롯 내용 교체 UI|위젯 c++ cpp",
+    "cppName": "hb::UI::SetSlotContent",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "instance",
+        "label": "instance",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "element",
+        "label": "element",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "uiGetListItems",
+    "title": "Get List Items",
+    "ko": "목록 데이터 가져오기",
+    "group": "UI|목록",
+    "keywords": "uiGetListItems GetListItems 목록 데이터 가져오기 UI|목록 c++ cpp",
+    "cppName": "hb::UI::GetListItems",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "instance",
+        "label": "instance",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "element",
+        "label": "element",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "uiMoveListItems",
+    "title": "Move List Items",
+    "ko": "목록 항목 이동",
+    "group": "UI|목록",
+    "keywords": "uiMoveListItems MoveListItems 목록 항목 이동 UI|목록 c++ cpp",
+    "cppName": "hb::UI::MoveListItems",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "instance",
+        "label": "instance",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "element",
+        "label": "element",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "indices",
+        "label": "indices",
+        "type": "int",
+        "array": true
+      },
+      {
+        "id": "destination",
+        "label": "destination",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "uiReparentTreeItems",
+    "title": "Reparent Tree Items",
+    "ko": "트리 항목 부모 변경",
+    "group": "UI|목록",
+    "keywords": "uiReparentTreeItems ReparentTreeItems 트리 항목 부모 변경 UI|목록 c++ cpp",
+    "cppName": "hb::UI::ReparentTreeItems",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "instance",
+        "label": "instance",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "element",
+        "label": "element",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "ids",
+        "label": "ids",
+        "type": "string",
+        "array": true
+      },
+      {
+        "id": "parent",
+        "label": "parent",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "destination",
+        "label": "destination",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "uiTransferListItems",
+    "title": "Transfer List Items",
+    "ko": "다른 목록으로 항목 이동",
+    "group": "UI|목록",
+    "keywords": "uiTransferListItems TransferListItems 다른 목록으로 항목 이동 UI|목록 c++ cpp",
+    "cppName": "hb::UI::TransferListItems",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "instance",
+        "label": "instance",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "element",
+        "label": "element",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "indices",
+        "label": "indices",
+        "type": "int",
+        "array": true
+      },
+      {
+        "id": "destinationInstance",
+        "label": "destinationInstance",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "destinationElement",
+        "label": "destinationElement",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "destination",
+        "label": "destination",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "uiTransferTreeItems",
+    "title": "Transfer Tree Items",
+    "ko": "다른 트리로 항목 이동",
+    "group": "UI|목록",
+    "keywords": "uiTransferTreeItems TransferTreeItems 다른 트리로 항목 이동 UI|목록 c++ cpp",
+    "cppName": "hb::UI::TransferTreeItems",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "instance",
+        "label": "instance",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "element",
+        "label": "element",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "ids",
+        "label": "ids",
+        "type": "string",
+        "array": true
+      },
+      {
+        "id": "destinationInstance",
+        "label": "destinationInstance",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "destinationElement",
+        "label": "destinationElement",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "parent",
+        "label": "parent",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "destination",
+        "label": "destination",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "uiSetListItems",
+    "title": "Set List Items",
+    "ko": "가상 목록 데이터 지정",
+    "group": "UI|목록",
+    "keywords": "uiSetListItems SetListItems 가상 목록 데이터 지정 UI|목록 c++ cpp",
+    "cppName": "hb::UI::SetListItems",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "instance",
+        "label": "instance",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "element",
+        "label": "element",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "json",
+        "label": "json",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "uiSetLocalizedText",
+    "title": "Set Localized Text",
+    "ko": "지역화 텍스트 지정",
+    "group": "UI|지역화",
+    "keywords": "uiSetLocalizedText SetLocalizedText 지역화 텍스트 지정 UI|지역화 c++ cpp",
+    "cppName": "hb::UI::SetLocalizedText",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "instance",
+        "label": "instance",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "element",
+        "label": "element",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "table",
+        "label": "table",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "key",
+        "label": "key",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "json",
+        "label": "json",
+        "type": "string",
+        "array": false,
+        "default": "{}"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "json": "{}"
     }
   },
   {
@@ -10983,7 +12580,10 @@ export const serviceApi = [
       }
     ],
     "defaults": {
-      "scale": 1
+      "scale": [
+        1,
+        1
+      ]
     }
   },
   {
@@ -11313,6 +12913,168 @@ export const serviceApi = [
     }
   },
   {
+    "key": "mixerDuckingSet",
+    "title": "Set Ducking",
+    "ko": "믹서 사이드체인 지정",
+    "group": "오디오",
+    "keywords": "mixerDuckingSet SetDucking 믹서 사이드체인 지정 오디오 c++ cpp",
+    "cppName": "hb::AudioMixer::SetDucking",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "bus",
+        "label": "bus",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "source",
+        "label": "source",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "threshold",
+        "label": "threshold",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "ratio",
+        "label": "ratio",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "attack",
+        "label": "attack",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "release",
+        "label": "release",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "mixerDuckingClear",
+    "title": "Clear Ducking",
+    "ko": "믹서 사이드체인 해제",
+    "group": "오디오",
+    "keywords": "mixerDuckingClear ClearDucking 믹서 사이드체인 해제 오디오 c++ cpp",
+    "cppName": "hb::AudioMixer::ClearDucking",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "bus",
+        "label": "bus",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "mixerDuckingGain",
+    "title": "Get Ducking Gain",
+    "ko": "믹서 사이드체인 게인",
+    "group": "오디오",
+    "keywords": "mixerDuckingGain GetDuckingGain 믹서 사이드체인 게인 오디오 c++ cpp",
+    "cppName": "hb::AudioMixer::GetDuckingGain",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "bus",
+        "label": "bus",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
     "key": "mixerSet",
     "title": "Set Float",
     "ko": "믹서 파라미터 지정",
@@ -11490,6 +13252,13 @@ export const serviceApi = [
         "label": "duration",
         "type": "float",
         "array": false
+      },
+      {
+        "id": "curve",
+        "label": "curve",
+        "type": "string",
+        "array": false,
+        "default": "linear"
       }
     ],
     "outputs": [
@@ -11501,8 +13270,199 @@ export const serviceApi = [
       }
     ],
     "defaults": {
-      "duration": 1
+      "duration": 1,
+      "curve": "linear"
     }
+  },
+  {
+    "key": "mixerSnapshots",
+    "title": "Transition To Snapshots",
+    "ko": "믹서 스냅샷 가중 혼합 전환",
+    "group": "오디오",
+    "keywords": "mixerSnapshots TransitionToSnapshots 믹서 스냅샷 가중 혼합 전환 오디오 c++ cpp",
+    "cppName": "hb::AudioMixer::TransitionToSnapshots",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "snapshots",
+        "label": "snapshots",
+        "type": "string",
+        "array": true
+      },
+      {
+        "id": "weights",
+        "label": "weights",
+        "type": "float",
+        "array": true
+      },
+      {
+        "id": "duration",
+        "label": "duration",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "curve",
+        "label": "curve",
+        "type": "string",
+        "array": false,
+        "default": "linear"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "duration": 1,
+      "curve": "linear"
+    }
+  },
+  {
+    "key": "mixerSetTransition",
+    "title": "Set Snapshot Transition",
+    "ko": "스냅샷 파라미터 전환 지정",
+    "group": "오디오",
+    "keywords": "mixerSetTransition SetSnapshotTransition 스냅샷 파라미터 전환 지정 오디오 c++ cpp",
+    "cppName": "hb::AudioMixer::SetSnapshotTransition",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "snapshot",
+        "label": "snapshot",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "bus",
+        "label": "bus",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "parameter",
+        "label": "parameter",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "curve",
+        "label": "curve",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "mixerClearTransition",
+    "title": "Clear Snapshot Transition",
+    "ko": "스냅샷 파라미터 전환 해제",
+    "group": "오디오",
+    "keywords": "mixerClearTransition ClearSnapshotTransition 스냅샷 파라미터 전환 해제 오디오 c++ cpp",
+    "cppName": "hb::AudioMixer::ClearSnapshotTransition",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "snapshot",
+        "label": "snapshot",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "bus",
+        "label": "bus",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "parameter",
+        "label": "parameter",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
   },
   {
     "key": "getGameMode",
@@ -13071,7 +15031,8 @@ export const serviceApi = [
         "id": "alphaCutoff",
         "label": "alphaCutoff",
         "type": "float",
-        "array": false
+        "array": false,
+        "default": 0.5
       }
     ],
     "outputs": [
@@ -13082,7 +15043,9 @@ export const serviceApi = [
         "array": false
       }
     ],
-    "defaults": {}
+    "defaults": {
+      "alphaCutoff": 0.5
+    }
   },
   {
     "key": "spriteGetBlend",
@@ -13173,7 +15136,8 @@ export const serviceApi = [
         "id": "strength",
         "label": "strength",
         "type": "float",
-        "array": false
+        "array": false,
+        "default": 1
       },
       {
         "id": "flipY",
@@ -13192,6 +15156,7 @@ export const serviceApi = [
       }
     ],
     "defaults": {
+      "strength": 1,
       "flipY": false
     }
   },
@@ -13986,13 +15951,15 @@ export const serviceApi = [
         "id": "strength",
         "label": "strength",
         "type": "float",
-        "array": false
+        "array": false,
+        "default": 1
       },
       {
         "id": "softness",
         "label": "softness",
         "type": "float",
-        "array": false
+        "array": false,
+        "default": 0
       },
       {
         "id": "resolution",
@@ -14011,6 +15978,8 @@ export const serviceApi = [
       }
     ],
     "defaults": {
+      "strength": 1,
+      "softness": 0,
       "resolution": 128
     }
   },
@@ -14093,7 +16062,8 @@ export const serviceApi = [
         "id": "falloffDistance",
         "label": "falloffDistance",
         "type": "float",
-        "array": false
+        "array": false,
+        "default": 0.5
       }
     ],
     "outputs": [
@@ -14104,7 +16074,9 @@ export const serviceApi = [
         "array": false
       }
     ],
-    "defaults": {}
+    "defaults": {
+      "falloffDistance": 0.5
+    }
   },
   {
     "key": "light2dGetShape",
@@ -14473,7 +16445,8 @@ export const serviceApi = [
         "id": "falloff",
         "label": "falloff",
         "type": "float",
-        "array": false
+        "array": false,
+        "default": 1
       }
     ],
     "outputs": [
@@ -14484,7 +16457,9 @@ export const serviceApi = [
         "array": false
       }
     ],
-    "defaults": {}
+    "defaults": {
+      "falloff": 1
+    }
   },
   {
     "key": "light2dGetRange",
@@ -14639,7 +16614,8 @@ export const serviceApi = [
         "id": "distance",
         "label": "distance",
         "type": "float",
-        "array": false
+        "array": false,
+        "default": 1
       }
     ],
     "outputs": [
@@ -14650,7 +16626,9 @@ export const serviceApi = [
         "array": false
       }
     ],
-    "defaults": {}
+    "defaults": {
+      "distance": 1
+    }
   },
   {
     "key": "light2dGetNormal",
@@ -15768,6 +17746,512 @@ export const serviceApi = [
     "defaults": {}
   },
   {
+    "key": "physicsClothParticle",
+    "title": "Get Cloth Particle",
+    "ko": "천 입자 상태",
+    "group": "물리 천",
+    "keywords": "physicsClothParticle GetClothParticle 천 입자 상태 물리 천 c++ cpp",
+    "cppName": "hb::Physics::GetClothParticle",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "index",
+        "label": "index",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "position",
+        "label": "position",
+        "type": "vec3",
+        "array": false
+      },
+      {
+        "id": "velocity",
+        "label": "velocity",
+        "type": "vec3",
+        "array": false
+      },
+      {
+        "id": "pinned",
+        "label": "pinned",
+        "type": "bool",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "physicsRopeParticle",
+    "title": "Get Rope Particle",
+    "ko": "2D 로프 입자 상태",
+    "group": "물리 2D 로프",
+    "keywords": "physicsRopeParticle GetRopeParticle 2D 로프 입자 상태 물리 2D 로프 c++ cpp",
+    "cppName": "hb::Physics::GetRopeParticle",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "index",
+        "label": "index",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "position",
+        "label": "position",
+        "type": "vec2",
+        "array": false
+      },
+      {
+        "id": "velocity",
+        "label": "velocity",
+        "type": "vec2",
+        "array": false
+      },
+      {
+        "id": "pinned",
+        "label": "pinned",
+        "type": "bool",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "physicsRopePin",
+    "title": "Pin Rope Particle",
+    "ko": "2D 로프 입자 고정",
+    "group": "물리 2D 로프",
+    "keywords": "physicsRopePin PinRopeParticle 2D 로프 입자 고정 물리 2D 로프 c++ cpp",
+    "cppName": "hb::Physics::PinRopeParticle",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "index",
+        "label": "index",
+        "type": "int",
+        "array": false
+      },
+      {
+        "id": "pinned",
+        "label": "pinned",
+        "type": "bool",
+        "array": false,
+        "default": true
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "pinned": true
+    }
+  },
+  {
+    "key": "physicsRopeImpulse",
+    "title": "Add Rope Impulse",
+    "ko": "2D 로프 충격량",
+    "group": "물리 2D 로프",
+    "keywords": "physicsRopeImpulse AddRopeImpulse 2D 로프 충격량 물리 2D 로프 c++ cpp",
+    "cppName": "hb::Physics::AddRopeImpulse",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "impulse",
+        "label": "impulse",
+        "type": "vec2",
+        "array": false
+      },
+      {
+        "id": "index",
+        "label": "index",
+        "type": "int",
+        "array": false,
+        "default": -1
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "index": -1
+    }
+  },
+  {
+    "key": "physicsRopeAttach",
+    "title": "Attach Rope Particle",
+    "ko": "2D 로프 강체 연결",
+    "group": "물리 2D 로프",
+    "keywords": "physicsRopeAttach AttachRopeParticle 2D 로프 강체 연결 물리 2D 로프 c++ cpp",
+    "cppName": "hb::Physics::AttachRopeParticle",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "index",
+        "label": "index",
+        "type": "int",
+        "array": false
+      },
+      {
+        "id": "body",
+        "label": "body",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "physicsRopeReset",
+    "title": "Reset Rope",
+    "ko": "2D 로프 초기화",
+    "group": "물리 2D 로프",
+    "keywords": "physicsRopeReset ResetRope 2D 로프 초기화 물리 2D 로프 c++ cpp",
+    "cppName": "hb::Physics::ResetRope",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "physicsRopeCount",
+    "title": "Get Rope Particle Count",
+    "ko": "2D 로프 입자 수",
+    "group": "물리 2D 로프",
+    "keywords": "physicsRopeCount GetRopeParticleCount 2D 로프 입자 수 물리 2D 로프 c++ cpp",
+    "cppName": "hb::Physics::GetRopeParticleCount",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "physicsClothPin",
+    "title": "Pin Cloth Particle",
+    "ko": "천 입자 고정",
+    "group": "물리 천",
+    "keywords": "physicsClothPin PinClothParticle 천 입자 고정 물리 천 c++ cpp",
+    "cppName": "hb::Physics::PinClothParticle",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "index",
+        "label": "index",
+        "type": "int",
+        "array": false
+      },
+      {
+        "id": "pinned",
+        "label": "pinned",
+        "type": "bool",
+        "array": false,
+        "default": true
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "pinned": true
+    }
+  },
+  {
+    "key": "physicsClothImpulse",
+    "title": "Add Cloth Impulse",
+    "ko": "천 충격량",
+    "group": "물리 천",
+    "keywords": "physicsClothImpulse AddClothImpulse 천 충격량 물리 천 c++ cpp",
+    "cppName": "hb::Physics::AddClothImpulse",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "impulse",
+        "label": "impulse",
+        "type": "vec3",
+        "array": false
+      },
+      {
+        "id": "index",
+        "label": "index",
+        "type": "int",
+        "array": false,
+        "default": -1
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "index": -1
+    }
+  },
+  {
+    "key": "physicsClothAttach",
+    "title": "Attach Cloth Particle",
+    "ko": "천 입자 강체 연결",
+    "group": "물리 천",
+    "keywords": "physicsClothAttach AttachClothParticle 천 입자 강체 연결 물리 천 c++ cpp",
+    "cppName": "hb::Physics::AttachClothParticle",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "index",
+        "label": "index",
+        "type": "int",
+        "array": false
+      },
+      {
+        "id": "body",
+        "label": "body",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "physicsClothReset",
+    "title": "Reset Cloth",
+    "ko": "천 초기화",
+    "group": "물리 천",
+    "keywords": "physicsClothReset ResetCloth 천 초기화 물리 천 c++ cpp",
+    "cppName": "hb::Physics::ResetCloth",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "physicsClothCount",
+    "title": "Get Cloth Particle Count",
+    "ko": "천 입자 수",
+    "group": "물리 천",
+    "keywords": "physicsClothCount GetClothParticleCount 천 입자 수 물리 천 c++ cpp",
+    "cppName": "hb::Physics::GetClothParticleCount",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
     "key": "getVelocity",
     "title": "Get Velocity",
     "ko": "속도 가져오기",
@@ -16018,6 +18502,562 @@ export const serviceApi = [
         "id": "then",
         "label": "다음",
         "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "physicsJointAxis",
+    "title": "Set Joint Axis",
+    "ko": "관절 축 운동 지정",
+    "group": "물리 관절",
+    "keywords": "physicsJointAxis SetJointAxis 관절 축 운동 지정 물리 관절 c++ cpp",
+    "cppName": "hb::Physics::SetJointAxis",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "axis",
+        "label": "axis",
+        "type": "int",
+        "array": false
+      },
+      {
+        "id": "mode",
+        "label": "mode",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "lower",
+        "label": "lower",
+        "type": "float",
+        "array": false,
+        "default": 0
+      },
+      {
+        "id": "upper",
+        "label": "upper",
+        "type": "float",
+        "array": false,
+        "default": 0
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "lower": 0,
+      "upper": 0,
+      "mode": "force"
+    }
+  },
+  {
+    "key": "physicsJointAxisMotor",
+    "title": "Set Joint Axis Motor",
+    "ko": "관절 축 모터 지정",
+    "group": "물리 관절",
+    "keywords": "physicsJointAxisMotor SetJointAxisMotor 관절 축 모터 지정 물리 관절 c++ cpp",
+    "cppName": "hb::Physics::SetJointAxisMotor",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "axis",
+        "label": "axis",
+        "type": "int",
+        "array": false
+      },
+      {
+        "id": "enabled",
+        "label": "enabled",
+        "type": "bool",
+        "array": false
+      },
+      {
+        "id": "position",
+        "label": "position",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "velocity",
+        "label": "velocity",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "stiffness",
+        "label": "stiffness",
+        "type": "float",
+        "array": false,
+        "default": 100
+      },
+      {
+        "id": "damping",
+        "label": "damping",
+        "type": "float",
+        "array": false,
+        "default": 10
+      },
+      {
+        "id": "maxForce",
+        "label": "maxForce",
+        "type": "float",
+        "array": false,
+        "default": 0
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "stiffness": 100,
+      "damping": 10,
+      "maxForce": 0
+    }
+  },
+  {
+    "key": "physicsJointFrames",
+    "title": "Set Joint Frames",
+    "ko": "관절 양쪽 프레임 설정",
+    "group": "물리 관절",
+    "keywords": "physicsJointFrames SetJointFrames 관절 양쪽 프레임 설정 물리 관절 c++ cpp",
+    "cppName": "hb::Physics::SetJointFrames",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "ownerRotation",
+        "label": "ownerRotation",
+        "type": "vec3",
+        "array": false
+      },
+      {
+        "id": "connectedRotation",
+        "label": "connectedRotation",
+        "type": "vec3",
+        "array": false
+      },
+      {
+        "id": "autoConnected",
+        "label": "autoConnected",
+        "type": "bool",
+        "array": false,
+        "default": true
+      },
+      {
+        "id": "referenceAngle",
+        "label": "referenceAngle",
+        "type": "float",
+        "array": false,
+        "default": 0
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "autoConnected": true,
+      "referenceAngle": 0
+    }
+  },
+  {
+    "key": "physicsJointMotor",
+    "title": "Set Joint Motor",
+    "ko": "관절 모터 설정",
+    "group": "물리 관절",
+    "keywords": "physicsJointMotor SetJointMotor 관절 모터 설정 물리 관절 c++ cpp",
+    "cppName": "hb::Physics::SetJointMotor",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "enabled",
+        "label": "enabled",
+        "type": "bool",
+        "array": false
+      },
+      {
+        "id": "position",
+        "label": "position",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "velocity",
+        "label": "velocity",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "stiffness",
+        "label": "stiffness",
+        "type": "float",
+        "array": false,
+        "default": 100
+      },
+      {
+        "id": "damping",
+        "label": "damping",
+        "type": "float",
+        "array": false,
+        "default": 10
+      },
+      {
+        "id": "maxForce",
+        "label": "maxForce",
+        "type": "float",
+        "array": false,
+        "default": 0
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "stiffness": 100,
+      "damping": 10,
+      "maxForce": 0
+    }
+  },
+  {
+    "key": "physicsJointLimits",
+    "title": "Set Joint Limits",
+    "ko": "관절 한계 설정",
+    "group": "물리 관절",
+    "keywords": "physicsJointLimits SetJointLimits 관절 한계 설정 물리 관절 c++ cpp",
+    "cppName": "hb::Physics::SetJointLimits",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "component",
+        "label": "component",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "enabled",
+        "label": "enabled",
+        "type": "bool",
+        "array": false
+      },
+      {
+        "id": "lower",
+        "label": "lower",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "upper",
+        "label": "upper",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "physicsVehicleInput",
+    "title": "Set Vehicle Input",
+    "ko": "차량 조종 입력",
+    "group": "물리 차량",
+    "keywords": "physicsVehicleInput SetVehicleInput 차량 조종 입력 물리 차량 c++ cpp",
+    "cppName": "hb::Physics::SetVehicleInput",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "throttle",
+        "label": "throttle",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "steering",
+        "label": "steering",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "brake",
+        "label": "brake",
+        "type": "float",
+        "array": false,
+        "default": 0
+      },
+      {
+        "id": "handbrake",
+        "label": "handbrake",
+        "type": "float",
+        "array": false,
+        "default": 0
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "brake": 0,
+      "handbrake": 0
+    }
+  },
+  {
+    "key": "physicsVehicleGear",
+    "title": "Set Vehicle Gear",
+    "ko": "차량 기어 지정",
+    "group": "물리 차량",
+    "keywords": "physicsVehicleGear SetVehicleGear 차량 기어 지정 물리 차량 c++ cpp",
+    "cppName": "hb::Physics::SetVehicleGear",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "gear",
+        "label": "gear",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "physicsVehicleRPM",
+    "title": "Get Vehicle RPM",
+    "ko": "차량 엔진 RPM",
+    "group": "물리 차량",
+    "keywords": "physicsVehicleRPM GetVehicleRPM 차량 엔진 RPM 물리 차량 c++ cpp",
+    "cppName": "hb::Physics::GetVehicleRPM",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "physicsVehicleCurrentGear",
+    "title": "Get Vehicle Gear",
+    "ko": "차량 현재 기어",
+    "group": "물리 차량",
+    "keywords": "physicsVehicleCurrentGear GetVehicleGear 차량 현재 기어 물리 차량 c++ cpp",
+    "cppName": "hb::Physics::GetVehicleGear",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "physicsVehicleSpeed",
+    "title": "Get Vehicle Speed",
+    "ko": "차량 속도 가져오기",
+    "group": "물리 차량",
+    "keywords": "physicsVehicleSpeed GetVehicleSpeed 차량 속도 가져오기 물리 차량 c++ cpp",
+    "cppName": "hb::Physics::GetVehicleSpeed",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "float",
         "array": false
       }
     ],
@@ -17889,6 +20929,411 @@ export const serviceApi = [
     "defaults": {}
   },
   {
+    "key": "morphNames",
+    "title": "Get Names",
+    "ko": "모프 이름 목록",
+    "group": "메시 모프",
+    "keywords": "morphNames GetNames 모프 이름 목록 메시 모프 c++ cpp",
+    "cppName": "hb::Morphs::GetNames",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "mesh",
+        "label": "mesh",
+        "type": "string",
+        "array": false,
+        "default": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "string",
+        "array": true
+      }
+    ],
+    "defaults": {
+      "mesh": ""
+    }
+  },
+  {
+    "key": "morphWeight",
+    "title": "Get Weight",
+    "ko": "모프 가중치 가져오기",
+    "group": "메시 모프",
+    "keywords": "morphWeight GetWeight 모프 가중치 가져오기 메시 모프 c++ cpp",
+    "cppName": "hb::Morphs::GetWeight",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "name",
+        "label": "name",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "mesh",
+        "label": "mesh",
+        "type": "string",
+        "array": false,
+        "default": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "mesh": ""
+    }
+  },
+  {
+    "key": "morphSetWeight",
+    "title": "Set Weight",
+    "ko": "모프 가중치 지정",
+    "group": "메시 모프",
+    "keywords": "morphSetWeight SetWeight 모프 가중치 지정 메시 모프 c++ cpp",
+    "cppName": "hb::Morphs::SetWeight",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "name",
+        "label": "name",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "mesh",
+        "label": "mesh",
+        "type": "string",
+        "array": false,
+        "default": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "mesh": ""
+    }
+  },
+  {
+    "key": "skeletonCount",
+    "title": "Get Bone Count",
+    "ko": "골격 뼈 개수",
+    "group": "3D 골격 조회",
+    "keywords": "skeletonCount GetBoneCount 골격 뼈 개수 3D 골격 조회 c++ cpp",
+    "cppName": "hb::Skeleton::GetBoneCount",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "skeletonNames",
+    "title": "Get Bone Names",
+    "ko": "골격 뼈 이름 페이지",
+    "group": "3D 골격 조회",
+    "keywords": "skeletonNames GetBoneNames 골격 뼈 이름 페이지 3D 골격 조회 c++ cpp",
+    "cppName": "hb::Skeleton::GetBoneNames",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "offset",
+        "label": "offset",
+        "type": "int",
+        "array": false,
+        "default": 0
+      },
+      {
+        "id": "limit",
+        "label": "limit",
+        "type": "int",
+        "array": false,
+        "default": 64
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "string",
+        "array": true
+      }
+    ],
+    "defaults": {
+      "offset": 0,
+      "limit": 64
+    }
+  },
+  {
+    "key": "skeletonHasBone",
+    "title": "Has Bone",
+    "ko": "골격 뼈 존재 확인",
+    "group": "3D 골격 조회",
+    "keywords": "skeletonHasBone HasBone 골격 뼈 존재 확인 3D 골격 조회 c++ cpp",
+    "cppName": "hb::Skeleton::HasBone",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "bone",
+        "label": "bone",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "bool",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "skeletonPosition",
+    "title": "Get Bone Position",
+    "ko": "골격 뼈 위치 조회",
+    "group": "3D 골격 조회",
+    "keywords": "skeletonPosition GetBonePosition 골격 뼈 위치 조회 3D 골격 조회 c++ cpp",
+    "cppName": "hb::Skeleton::GetBonePosition",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "bone",
+        "label": "bone",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "world",
+        "label": "world",
+        "type": "bool",
+        "array": false,
+        "default": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "vec3",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "world": false
+    }
+  },
+  {
+    "key": "skeletonRotation",
+    "title": "Get Bone Rotation",
+    "ko": "골격 뼈 회전 조회",
+    "group": "3D 골격 조회",
+    "keywords": "skeletonRotation GetBoneRotation 골격 뼈 회전 조회 3D 골격 조회 c++ cpp",
+    "cppName": "hb::Skeleton::GetBoneRotation",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "bone",
+        "label": "bone",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "world",
+        "label": "world",
+        "type": "bool",
+        "array": false,
+        "default": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "vec3",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "world": false
+    }
+  },
+  {
+    "key": "skeletonScale",
+    "title": "Get Bone Scale",
+    "ko": "골격 뼈 크기 조회",
+    "group": "3D 골격 조회",
+    "keywords": "skeletonScale GetBoneScale 골격 뼈 크기 조회 3D 골격 조회 c++ cpp",
+    "cppName": "hb::Skeleton::GetBoneScale",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "bone",
+        "label": "bone",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "world",
+        "label": "world",
+        "type": "bool",
+        "array": false,
+        "default": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "vec3",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "world": false
+    }
+  },
+  {
+    "key": "animGraphGetCurve",
+    "title": "Get Curve",
+    "ko": "애니메이션 커브 값",
+    "group": "애니메이션 그래프",
+    "keywords": "animGraphGetCurve GetCurve 애니메이션 커브 값 애니메이션 그래프 c++ cpp",
+    "cppName": "hb::AnimationGraph::GetCurve",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "key",
+        "label": "key",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
     "key": "animGraphRetargetSource",
     "title": "Set Retarget Source",
     "ko": "리타게팅 원본 골격 지정",
@@ -18134,6 +21579,110 @@ export const serviceApi = [
         "id": "value",
         "label": "value",
         "type": "float",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "animGraphIKJointLimit",
+    "title": "Set IKJoint Limit",
+    "ko": "IK 기준 포즈 XYZ 회전 제한",
+    "group": "애니메이션 그래프",
+    "keywords": "animGraphIKJointLimit SetIKJointLimit IK 기준 포즈 XYZ 회전 제한 애니메이션 그래프 c++ cpp",
+    "cppName": "hb::AnimationGraph::SetIKJointLimit",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "node",
+        "label": "node",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "bone",
+        "label": "bone",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "minimum",
+        "label": "minimum",
+        "type": "vec3",
+        "array": false
+      },
+      {
+        "id": "maximum",
+        "label": "maximum",
+        "type": "vec3",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "animGraphIKClearJointLimit",
+    "title": "Clear IKJoint Limit",
+    "ko": "IK 기준 포즈 XYZ 회전 제한 해제",
+    "group": "애니메이션 그래프",
+    "keywords": "animGraphIKClearJointLimit ClearIKJointLimit IK 기준 포즈 XYZ 회전 제한 해제 애니메이션 그래프 c++ cpp",
+    "cppName": "hb::AnimationGraph::ClearIKJointLimit",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "node",
+        "label": "node",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "bone",
+        "label": "bone",
+        "type": "string",
         "array": false
       }
     ],
@@ -18420,6 +21969,365 @@ export const serviceApi = [
         "id": "then",
         "label": "다음",
         "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "animGraphIKEffectorTarget",
+    "title": "Set IKEffector Target",
+    "ko": "다중 IK 목표 위치 지정",
+    "group": "애니메이션 그래프",
+    "keywords": "animGraphIKEffectorTarget SetIKEffectorTarget 다중 IK 목표 위치 지정 애니메이션 그래프 c++ cpp",
+    "cppName": "hb::AnimationGraph::SetIKEffectorTarget",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "node",
+        "label": "node",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "goal",
+        "label": "goal",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "vec3",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "animGraphIKEffectorActor",
+    "title": "Set IKEffector Actor",
+    "ko": "다중 IK 목표 오브젝트 지정",
+    "group": "애니메이션 그래프",
+    "keywords": "animGraphIKEffectorActor SetIKEffectorActor 다중 IK 목표 오브젝트 지정 애니메이션 그래프 c++ cpp",
+    "cppName": "hb::AnimationGraph::SetIKEffectorActor",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "node",
+        "label": "node",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "goal",
+        "label": "goal",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "effector",
+        "label": "effector",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "animGraphIKEffectorWeight",
+    "title": "Set IKEffector Weight",
+    "ko": "다중 IK 목표 가중치 지정",
+    "group": "애니메이션 그래프",
+    "keywords": "animGraphIKEffectorWeight SetIKEffectorWeight 다중 IK 목표 가중치 지정 애니메이션 그래프 c++ cpp",
+    "cppName": "hb::AnimationGraph::SetIKEffectorWeight",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "node",
+        "label": "node",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "goal",
+        "label": "goal",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "animGraphIKEffectorRotation",
+    "title": "Set IKEffector Rotation",
+    "ko": "다중 IK 목표 회전 지정",
+    "group": "애니메이션 그래프",
+    "keywords": "animGraphIKEffectorRotation SetIKEffectorRotation 다중 IK 목표 회전 지정 애니메이션 그래프 c++ cpp",
+    "cppName": "hb::AnimationGraph::SetIKEffectorRotation",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "node",
+        "label": "node",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "goal",
+        "label": "goal",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "vec3",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "animGraphIKEffectorRotationWeight",
+    "title": "Set IKEffector Rotation Weight",
+    "ko": "다중 IK 회전 가중치 지정",
+    "group": "애니메이션 그래프",
+    "keywords": "animGraphIKEffectorRotationWeight SetIKEffectorRotationWeight 다중 IK 회전 가중치 지정 애니메이션 그래프 c++ cpp",
+    "cppName": "hb::AnimationGraph::SetIKEffectorRotationWeight",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "node",
+        "label": "node",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "goal",
+        "label": "goal",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "animGraphIKRootSettings",
+    "title": "Set IKRoot Settings",
+    "ko": "다중 IK 루트 설정",
+    "group": "애니메이션 그래프",
+    "keywords": "animGraphIKRootSettings SetIKRootSettings 다중 IK 루트 설정 애니메이션 그래프 c++ cpp",
+    "cppName": "hb::AnimationGraph::SetIKRootSettings",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "node",
+        "label": "node",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "mode",
+        "label": "mode",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "pull",
+        "label": "pull",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "maxDistance",
+        "label": "maxDistance",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "animGraphIKEffectorError",
+    "title": "Get IKEffector Error",
+    "ko": "다중 IK 목표 오차",
+    "group": "애니메이션 그래프",
+    "keywords": "animGraphIKEffectorError GetIKEffectorError 다중 IK 목표 오차 애니메이션 그래프 c++ cpp",
+    "cppName": "hb::AnimationGraph::GetIKEffectorError",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "node",
+        "label": "node",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "goal",
+        "label": "goal",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "float",
         "array": false
       }
     ],
@@ -19713,7 +23621,12 @@ export const serviceApi = [
         "array": false
       }
     ],
-    "defaults": {}
+    "defaults": {
+      "value": [
+        1,
+        1
+      ]
+    }
   },
   {
     "key": "skinGetScale",
@@ -20895,6 +24808,358 @@ export const serviceApi = [
     "defaults": {}
   },
   {
+    "key": "animationBudgetSet",
+    "title": "Set Budget",
+    "ko": "애니메이션 포즈 예산 지정",
+    "group": "애니메이션 최적화",
+    "keywords": "animationBudgetSet SetBudget 애니메이션 포즈 예산 지정 애니메이션 최적화 c++ cpp",
+    "cppName": "hb::AnimationBudget::SetBudget",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "budgetMS",
+        "label": "budgetMS",
+        "type": "float",
+        "array": false,
+        "default": 2
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "budgetMS": 2
+    }
+  },
+  {
+    "key": "animationBudgetEnable",
+    "title": "Set Enabled",
+    "ko": "애니메이션 포즈 예산 사용",
+    "group": "애니메이션 최적화",
+    "keywords": "animationBudgetEnable SetEnabled 애니메이션 포즈 예산 사용 애니메이션 최적화 c++ cpp",
+    "cppName": "hb::AnimationBudget::SetEnabled",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "enabled",
+        "label": "enabled",
+        "type": "bool",
+        "array": false,
+        "default": true
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "enabled": true
+    }
+  },
+  {
+    "key": "animationBudgetObserved",
+    "title": "Get Observed MS",
+    "ko": "관측 애니메이션 갱신 시간",
+    "group": "애니메이션 최적화",
+    "keywords": "animationBudgetObserved GetObservedMS 관측 애니메이션 갱신 시간 애니메이션 최적화 c++ cpp",
+    "cppName": "hb::AnimationBudget::GetObservedMS",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "animationBudgetThrottled",
+    "title": "Get Throttled Count",
+    "ko": "생략한 시각 포즈 수",
+    "group": "애니메이션 최적화",
+    "keywords": "animationBudgetThrottled GetThrottledCount 생략한 시각 포즈 수 애니메이션 최적화 c++ cpp",
+    "cppName": "hb::AnimationBudget::GetThrottledCount",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sequenceSetWeight",
+    "title": "Set Weight",
+    "ko": "시퀀스 가중치 설정",
+    "group": "시퀀스",
+    "keywords": "sequenceSetWeight SetWeight 시퀀스 가중치 설정 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::SetWeight",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "대상",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "weight",
+        "label": "가중치",
+        "type": "float",
+        "array": false,
+        "default": 1
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "weight": 1
+    }
+  },
+  {
+    "key": "sequenceWeight",
+    "title": "Get Weight",
+    "ko": "시퀀스 가중치",
+    "group": "시퀀스",
+    "keywords": "sequenceWeight GetWeight 시퀀스 가중치 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::GetWeight",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sequenceSetBlendMode",
+    "title": "Set Blend Mode",
+    "ko": "시퀀스 혼합 방식 설정",
+    "group": "시퀀스",
+    "keywords": "sequenceSetBlendMode SetBlendMode 시퀀스 혼합 방식 설정 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::SetBlendMode",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "대상",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "mode",
+        "label": "혼합 방식",
+        "type": "string",
+        "array": false,
+        "default": "override"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "mode": "override"
+    }
+  },
+  {
+    "key": "sequenceBlendMode",
+    "title": "Get Blend Mode",
+    "ko": "시퀀스 혼합 방식",
+    "group": "시퀀스",
+    "keywords": "sequenceBlendMode GetBlendMode 시퀀스 혼합 방식 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::GetBlendMode",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sequenceSetPriority",
+    "title": "Set Priority",
+    "ko": "시퀀스 우선순위 설정",
+    "group": "시퀀스",
+    "keywords": "sequenceSetPriority SetPriority 시퀀스 우선순위 설정 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::SetPriority",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "priority",
+        "label": "priority",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sequencePriority",
+    "title": "Get Priority",
+    "ko": "시퀀스 우선순위",
+    "group": "시퀀스",
+    "keywords": "sequencePriority GetPriority 시퀀스 우선순위 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::GetPriority",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
     "key": "playSequence",
     "title": "Play",
     "ko": "레벨 시퀀스 재생",
@@ -21077,6 +25342,531 @@ export const serviceApi = [
     "defaults": {}
   },
   {
+    "key": "sequenceSetClockSource",
+    "title": "Set Clock Source",
+    "ko": "시퀀스 시간 기준 설정",
+    "group": "시퀀스",
+    "keywords": "sequenceSetClockSource SetClockSource 시퀀스 시간 기준 설정 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::SetClockSource",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "source",
+        "label": "source",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "source": "game"
+    }
+  },
+  {
+    "key": "sequenceClockSource",
+    "title": "Get Clock Source",
+    "ko": "시퀀스 시간 기준",
+    "group": "시퀀스",
+    "keywords": "sequenceClockSource GetClockSource 시퀀스 시간 기준 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::GetClockSource",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sequenceAdvance",
+    "title": "Advance",
+    "ko": "시퀀스 수동 진행",
+    "group": "시퀀스",
+    "keywords": "sequenceAdvance Advance 시퀀스 수동 진행 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::Advance",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "delta",
+        "label": "delta",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "delta": 0.016666666666666666
+    }
+  },
+  {
+    "key": "sequenceEvaluate",
+    "title": "Evaluate",
+    "ko": "시퀀스 현재 시간 평가",
+    "group": "시퀀스",
+    "keywords": "sequenceEvaluate Evaluate 시퀀스 현재 시간 평가 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::Evaluate",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sequenceSetSecondsPerFrame",
+    "title": "Set Seconds Per Frame",
+    "ko": "시퀀스 프레임 유지 시간 설정",
+    "group": "시퀀스",
+    "keywords": "sequenceSetSecondsPerFrame SetSecondsPerFrame 시퀀스 프레임 유지 시간 설정 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::SetSecondsPerFrame",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "seconds",
+        "label": "seconds",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sequenceSecondsPerFrame",
+    "title": "Get Seconds Per Frame",
+    "ko": "시퀀스 프레임 유지 시간",
+    "group": "시퀀스",
+    "keywords": "sequenceSecondsPerFrame GetSecondsPerFrame 시퀀스 프레임 유지 시간 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::GetSecondsPerFrame",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sequenceSetExternalTime",
+    "title": "Set External Time",
+    "ko": "시퀀스 외부 시간 공급",
+    "group": "시퀀스",
+    "keywords": "sequenceSetExternalTime SetExternalTime 시퀀스 외부 시간 공급 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::SetExternalTime",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "대상",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "seconds",
+        "label": "외부 시각 · 초",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sequenceSetExternalFrame",
+    "title": "Set External Frame",
+    "ko": "시퀀스 외부 프레임 공급",
+    "group": "시퀀스",
+    "keywords": "sequenceSetExternalFrame SetExternalFrame 시퀀스 외부 프레임 공급 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::SetExternalFrame",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "대상",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "frame",
+        "label": "외부 프레임",
+        "type": "int",
+        "array": false
+      },
+      {
+        "id": "numerator",
+        "label": "초당 프레임 분자",
+        "type": "int",
+        "array": false,
+        "default": 30
+      },
+      {
+        "id": "denominator",
+        "label": "초당 프레임 분모",
+        "type": "int",
+        "array": false,
+        "default": 1
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "numerator": 30,
+      "denominator": 1
+    }
+  },
+  {
+    "key": "sequenceResetExternalTime",
+    "title": "Reset External Time",
+    "ko": "시퀀스 외부 시간 초기화",
+    "group": "시퀀스",
+    "keywords": "sequenceResetExternalTime ResetExternalTime 시퀀스 외부 시간 초기화 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::ResetExternalTime",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sequenceExternalTime",
+    "title": "Get External Time",
+    "ko": "시퀀스 외부 시간",
+    "group": "시퀀스",
+    "keywords": "sequenceExternalTime GetExternalTime 시퀀스 외부 시간 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::GetExternalTime",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sequenceHasExternalTime",
+    "title": "Has External Time",
+    "ko": "시퀀스 외부 시간 동기화",
+    "group": "시퀀스",
+    "keywords": "sequenceHasExternalTime HasExternalTime 시퀀스 외부 시간 동기화 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::HasExternalTime",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "bool",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sequenceSeekFrame",
+    "title": "Seek Frame",
+    "ko": "시퀀스 프레임 이동",
+    "group": "시퀀스",
+    "keywords": "sequenceSeekFrame SeekFrame 시퀀스 프레임 이동 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::SeekFrame",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "frame",
+        "label": "frame",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sequenceFrame",
+    "title": "Get Frame",
+    "ko": "시퀀스 현재 프레임",
+    "group": "시퀀스",
+    "keywords": "sequenceFrame GetFrame 시퀀스 현재 프레임 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::GetFrame",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sequenceFrameRateNumerator",
+    "title": "Get Frame Rate Numerator",
+    "ko": "시퀀스 프레임률 분자",
+    "group": "시퀀스",
+    "keywords": "sequenceFrameRateNumerator GetFrameRateNumerator 시퀀스 프레임률 분자 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::GetFrameRateNumerator",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sequenceFrameRateDenominator",
+    "title": "Get Frame Rate Denominator",
+    "ko": "시퀀스 프레임률 분모",
+    "group": "시퀀스",
+    "keywords": "sequenceFrameRateDenominator GetFrameRateDenominator 시퀀스 프레임률 분모 시퀀스 c++ cpp",
+    "cppName": "hb::LevelSequence::GetFrameRateDenominator",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
     "key": "navigationMove",
     "title": "Move To",
     "ko": "경로를 따라 이동",
@@ -21202,6 +25992,137 @@ export const serviceApi = [
         "label": "Return value",
         "type": "vec3",
         "array": true
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "navigationAvoidance",
+    "title": "Configure Avoidance",
+    "ko": "군중 회피 설정",
+    "group": "AI 내비게이션",
+    "keywords": "navigationAvoidance ConfigureAvoidance 군중 회피 설정 AI 내비게이션 c++ cpp",
+    "cppName": "hb::Navigation::ConfigureAvoidance",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "대상",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "mode",
+        "label": "회피 방식",
+        "type": "string",
+        "array": false,
+        "default": "orca"
+      },
+      {
+        "id": "horizon",
+        "label": "예측 시간",
+        "type": "float",
+        "array": false,
+        "default": 2
+      },
+      {
+        "id": "neighborDistance",
+        "label": "이웃 거리",
+        "type": "float",
+        "array": false,
+        "default": 5
+      },
+      {
+        "id": "maxNeighbors",
+        "label": "최대 이웃 · 0 전체",
+        "type": "int",
+        "array": false,
+        "default": 16
+      },
+      {
+        "id": "priority",
+        "label": "우선순위",
+        "type": "int",
+        "array": false,
+        "default": 50
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "mode": "orca",
+      "horizon": 2,
+      "neighborDistance": 5,
+      "maxNeighbors": 16,
+      "priority": 50
+    }
+  },
+  {
+    "key": "navigationVelocity",
+    "title": "Get Steering Velocity",
+    "ko": "회피 이동 속도",
+    "group": "AI 내비게이션",
+    "keywords": "navigationVelocity GetSteeringVelocity 회피 이동 속도 AI 내비게이션 c++ cpp",
+    "cppName": "hb::Navigation::GetSteeringVelocity",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "vec3",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "navigationPreferred",
+    "title": "Get Preferred Velocity",
+    "ko": "희망 이동 속도",
+    "group": "AI 내비게이션",
+    "keywords": "navigationPreferred GetPreferredVelocity 희망 이동 속도 AI 내비게이션 c++ cpp",
+    "cppName": "hb::Navigation::GetPreferredVelocity",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "vec3",
+        "array": false
       }
     ],
     "defaults": {}
@@ -21465,6 +26386,208 @@ export const serviceApi = [
     "defaults": {}
   },
   {
+    "key": "materialResidentMip",
+    "title": "Set Resident Mip",
+    "ko": "텍스처 상주 시작 밉 설정",
+    "group": "머테리얼",
+    "keywords": "materialResidentMip SetResidentMip 텍스처 상주 시작 밉 설정 머테리얼 c++ cpp",
+    "cppName": "hb::Materials::SetResidentMip",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "parameter",
+        "label": "parameter",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "level",
+        "label": "level",
+        "type": "int",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "materialTextureRegion",
+    "title": "Set Texture Region",
+    "ko": "텍스처 밉 영역 픽셀 지정",
+    "group": "머테리얼",
+    "keywords": "materialTextureRegion SetTextureRegion 텍스처 밉 영역 픽셀 지정 머테리얼 c++ cpp",
+    "cppName": "hb::Materials::SetTextureRegion",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "parameter",
+        "label": "parameter",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "level",
+        "label": "level",
+        "type": "int",
+        "array": false
+      },
+      {
+        "id": "origin",
+        "label": "origin",
+        "type": "vec3",
+        "array": false
+      },
+      {
+        "id": "size",
+        "label": "size",
+        "type": "vec3",
+        "array": false
+      },
+      {
+        "id": "pixels",
+        "label": "pixels",
+        "type": "color",
+        "array": true
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "materialVector",
+    "title": "Set Vector",
+    "ko": "머테리얼 벡터 설정",
+    "group": "머테리얼",
+    "keywords": "materialVector SetVector 머테리얼 벡터 설정 머테리얼 c++ cpp",
+    "cppName": "hb::Materials::SetVector",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "parameter",
+        "label": "parameter",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "vec3",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "materialColor",
+    "title": "Set Color",
+    "ko": "머테리얼 색상 설정",
+    "group": "머테리얼",
+    "keywords": "materialColor SetColor 머테리얼 색상 설정 머테리얼 c++ cpp",
+    "cppName": "hb::Materials::SetColor",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "parameter",
+        "label": "parameter",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "color",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
     "key": "materialFloat",
     "title": "Set Float",
     "ko": "머테리얼 실수 설정",
@@ -21687,6 +26810,961 @@ export const serviceApi = [
         "id": "return",
         "label": "Return value",
         "type": "int",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "attributeDefine",
+    "title": "Define Attribute",
+    "ko": "속성 등록",
+    "group": "능력|속성",
+    "keywords": "attributeDefine DefineAttribute 속성 등록 능력|속성 c++ cpp",
+    "cppName": "hb::Abilities::DefineAttribute",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "attribute",
+        "label": "attribute",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "float",
+        "array": false
+      },
+      {
+        "id": "min",
+        "label": "min",
+        "type": "float",
+        "array": false,
+        "default": 0
+      },
+      {
+        "id": "max",
+        "label": "max",
+        "type": "float",
+        "array": false,
+        "default": 100
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "min": 0,
+      "max": 100
+    }
+  },
+  {
+    "key": "attributeSet",
+    "title": "Set Attribute",
+    "ko": "속성 기본값 지정",
+    "group": "능력|속성",
+    "keywords": "attributeSet SetAttribute 속성 기본값 지정 능력|속성 c++ cpp",
+    "cppName": "hb::Abilities::SetAttribute",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "attribute",
+        "label": "attribute",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "attributeGet",
+    "title": "Get Attribute",
+    "ko": "속성 현재값",
+    "group": "능력|속성",
+    "keywords": "attributeGet GetAttribute 속성 현재값 능력|속성 c++ cpp",
+    "cppName": "hb::Abilities::GetAttribute",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "attribute",
+        "label": "attribute",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "abilitySetApply",
+    "title": "Apply Set",
+    "ko": "능력 세트 재적용",
+    "group": "능력|세트",
+    "keywords": "abilitySetApply ApplySet 능력 세트 재적용 능력|세트 c++ cpp",
+    "cppName": "hb::Abilities::ApplySet",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "preserveBase",
+        "label": "preserveBase",
+        "type": "bool",
+        "array": false,
+        "default": true
+      },
+      {
+        "id": "retainEffects",
+        "label": "retainEffects",
+        "type": "bool",
+        "array": false,
+        "default": true
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "preserveBase": true,
+      "retainEffects": true
+    }
+  },
+  {
+    "key": "abilityGrant",
+    "title": "Grant",
+    "ko": "능력 부여",
+    "group": "능력",
+    "keywords": "abilityGrant Grant 능력 부여 능력 c++ cpp",
+    "cppName": "hb::Abilities::Grant",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "abilityActivate",
+    "title": "Activate",
+    "ko": "능력 활성화",
+    "group": "능력",
+    "keywords": "abilityActivate Activate 능력 활성화 능력 c++ cpp",
+    "cppName": "hb::Abilities::Activate",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "abilityCancel",
+    "title": "Cancel",
+    "ko": "능력 취소",
+    "group": "능력",
+    "keywords": "abilityCancel Cancel 능력 취소 능력 c++ cpp",
+    "cppName": "hb::Abilities::Cancel",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "abilityRemove",
+    "title": "Remove",
+    "ko": "능력 제거",
+    "group": "능력",
+    "keywords": "abilityRemove Remove 능력 제거 능력 c++ cpp",
+    "cppName": "hb::Abilities::Remove",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "abilityCooldown",
+    "title": "Cooldown",
+    "ko": "능력 쿨다운",
+    "group": "능력",
+    "keywords": "abilityCooldown Cooldown 능력 쿨다운 능력 c++ cpp",
+    "cppName": "hb::Abilities::Cooldown",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "abilityActive",
+    "title": "Is Active",
+    "ko": "능력 활성 상태",
+    "group": "능력",
+    "keywords": "abilityActive IsActive 능력 활성 상태 능력 c++ cpp",
+    "cppName": "hb::Abilities::IsActive",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "bool",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "effectApply",
+    "title": "Apply Effect",
+    "ko": "게임플레이 효과 적용",
+    "group": "능력|효과",
+    "keywords": "effectApply ApplyEffect 게임플레이 효과 적용 능력|효과 c++ cpp",
+    "cppName": "hb::Abilities::ApplyEffect",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "effectApplyLevel",
+    "title": "Apply Effect At Level",
+    "ko": "레벨로 효과 적용",
+    "group": "능력|효과",
+    "keywords": "effectApplyLevel ApplyEffectAtLevel 레벨로 효과 적용 능력|효과 c++ cpp",
+    "cppName": "hb::Abilities::ApplyEffectAtLevel",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "level",
+        "label": "level",
+        "type": "float",
+        "array": false,
+        "default": 1
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "level": 1
+    }
+  },
+  {
+    "key": "effectApplySpec",
+    "title": "Apply Effect Spec",
+    "ko": "출처와 인자로 효과 적용",
+    "group": "능력|효과",
+    "keywords": "effectApplySpec ApplyEffectSpec 출처와 인자로 효과 적용 능력|효과 c++ cpp",
+    "cppName": "hb::Abilities::ApplyEffectSpec",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "source",
+        "label": "source",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "level",
+        "label": "level",
+        "type": "float",
+        "array": false,
+        "default": 1
+      },
+      {
+        "id": "parameters",
+        "label": "parameters",
+        "type": "string",
+        "array": false,
+        "default": "{}"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "level": 1,
+      "parameters": "{}"
+    }
+  },
+  {
+    "key": "effectSetParameter",
+    "title": "Set Effect Parameter",
+    "ko": "활성 효과 호출 인자 지정",
+    "group": "능력|효과",
+    "keywords": "effectSetParameter SetEffectParameter 활성 효과 호출 인자 지정 능력|효과 c++ cpp",
+    "cppName": "hb::Abilities::SetEffectParameter",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "handle",
+        "label": "handle",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "name",
+        "label": "name",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "value",
+        "label": "value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "effectSetLevel",
+    "title": "Set Effect Level",
+    "ko": "활성 효과 레벨 지정",
+    "group": "능력|효과",
+    "keywords": "effectSetLevel SetEffectLevel 활성 효과 레벨 지정 능력|효과 c++ cpp",
+    "cppName": "hb::Abilities::SetEffectLevel",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "handle",
+        "label": "handle",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "level",
+        "label": "level",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "effectGetLevel",
+    "title": "Get Effect Level",
+    "ko": "활성 효과 레벨",
+    "group": "능력|효과",
+    "keywords": "effectGetLevel GetEffectLevel 활성 효과 레벨 능력|효과 c++ cpp",
+    "cppName": "hb::Abilities::GetEffectLevel",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "handle",
+        "label": "handle",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "effectFind",
+    "title": "Find Effect Handle",
+    "ko": "효과 핸들 찾기",
+    "group": "능력|효과",
+    "keywords": "effectFind FindEffectHandle 효과 핸들 찾기 능력|효과 c++ cpp",
+    "cppName": "hb::Abilities::FindEffectHandle",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "index",
+        "label": "index",
+        "type": "int",
+        "array": false,
+        "default": 0
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "index": 0
+    }
+  },
+  {
+    "key": "effectRemove",
+    "title": "Remove Effect",
+    "ko": "게임플레이 효과 제거",
+    "group": "능력|효과",
+    "keywords": "effectRemove RemoveEffect 게임플레이 효과 제거 능력|효과 c++ cpp",
+    "cppName": "hb::Abilities::RemoveEffect",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "handle",
+        "label": "handle",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "effectList",
+    "title": "Effects",
+    "ko": "효과 핸들 목록",
+    "group": "능력|효과",
+    "keywords": "effectList Effects 효과 핸들 목록 능력|효과 c++ cpp",
+    "cppName": "hb::Abilities::Effects",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "eqsRun",
+    "title": "Run",
+    "ko": "환경 질의 실행",
+    "group": "AI|EQS",
+    "keywords": "eqsRun Run 환경 질의 실행 AI|EQS c++ cpp",
+    "cppName": "hb::EnvironmentQuery::Run",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "asset",
+        "label": "asset",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "context",
+        "label": "context",
+        "type": "object",
+        "array": false,
+        "className": "Actor",
+        "default": null
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {
+      "context": null
+    }
+  },
+  {
+    "key": "eqsResults",
+    "title": "Results",
+    "ko": "환경 질의 결과",
+    "group": "AI|EQS",
+    "keywords": "eqsResults Results 환경 질의 결과 AI|EQS c++ cpp",
+    "cppName": "hb::EnvironmentQuery::Results",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "localeSet",
+    "title": "Set Culture",
+    "ko": "문화권 변경",
+    "group": "UI|지역화",
+    "keywords": "localeSet SetCulture 문화권 변경 UI|지역화 c++ cpp",
+    "cppName": "hb::Localization::SetCulture",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "culture",
+        "label": "culture",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "localeGet",
+    "title": "Culture",
+    "ko": "현재 문화권",
+    "group": "UI|지역화",
+    "keywords": "localeGet Culture 현재 문화권 UI|지역화 c++ cpp",
+    "cppName": "hb::Localization::Culture",
+    "pure": true,
+    "service": true,
+    "inputs": [],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "string",
         "array": false
       }
     ],
@@ -21955,10 +28033,344 @@ export const serviceApi = [
     "defaults": {}
   },
   {
+    "key": "levelLoad",
+    "title": "Load",
+    "ko": "추가 레벨 불러오기",
+    "group": "월드 스트리밍",
+    "keywords": "levelLoad Load 추가 레벨 불러오기 월드 스트리밍 c++ cpp",
+    "cppName": "hb::Levels::Load",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "scene",
+        "label": "scene",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "instance",
+        "label": "instance",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "transform",
+        "label": "transform",
+        "type": "transform",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "levelUnload",
+    "title": "Unload",
+    "ko": "추가 레벨 내리기",
+    "group": "월드 스트리밍",
+    "keywords": "levelUnload Unload 추가 레벨 내리기 월드 스트리밍 c++ cpp",
+    "cppName": "hb::Levels::Unload",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "instance",
+        "label": "instance",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "levelLoaded",
+    "title": "Is Loaded",
+    "ko": "추가 레벨 로드됨",
+    "group": "월드 스트리밍",
+    "keywords": "levelLoaded IsLoaded 추가 레벨 로드됨 월드 스트리밍 c++ cpp",
+    "cppName": "hb::Levels::IsLoaded",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "instance",
+        "label": "instance",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "bool",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "levelActor",
+    "title": "Get Actor",
+    "ko": "추가 레벨 액터",
+    "group": "월드 스트리밍",
+    "keywords": "levelActor GetActor 추가 레벨 액터 월드 스트리밍 c++ cpp",
+    "cppName": "hb::Levels::GetActor",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "instance",
+        "label": "instance",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "localId",
+        "label": "localId",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "levelInstances",
+    "title": "Get Instances",
+    "ko": "불러온 레벨 목록",
+    "group": "월드 스트리밍",
+    "keywords": "levelInstances GetInstances 불러온 레벨 목록 월드 스트리밍 c++ cpp",
+    "cppName": "hb::Levels::GetInstances",
+    "pure": true,
+    "service": true,
+    "inputs": [],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "string",
+        "array": true
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "levelVisible",
+    "title": "Set Visible",
+    "ko": "추가 레벨 표시",
+    "group": "월드 스트리밍",
+    "keywords": "levelVisible SetVisible 추가 레벨 표시 월드 스트리밍 c++ cpp",
+    "cppName": "hb::Levels::SetVisible",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "instance",
+        "label": "instance",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "visible",
+        "label": "visible",
+        "type": "bool",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sceneSetTickEnabled",
+    "title": "Set Tick Enabled",
+    "ko": "액터 Tick 활성화 설정",
+    "group": "오브젝트|Tick",
+    "keywords": "sceneSetTickEnabled SetTickEnabled 액터 Tick 활성화 설정 오브젝트|Tick c++ cpp",
+    "cppName": "hb::Scene::SetTickEnabled",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "enabled",
+        "label": "enabled",
+        "type": "bool",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sceneTickEnabled",
+    "title": "Is Tick Enabled",
+    "ko": "액터 Tick 활성화",
+    "group": "오브젝트|Tick",
+    "keywords": "sceneTickEnabled IsTickEnabled 액터 Tick 활성화 오브젝트|Tick c++ cpp",
+    "cppName": "hb::Scene::IsTickEnabled",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "bool",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sceneSetTickInterval",
+    "title": "Set Tick Interval",
+    "ko": "액터 Tick 간격 설정",
+    "group": "오브젝트|Tick",
+    "keywords": "sceneSetTickInterval SetTickInterval 액터 Tick 간격 설정 오브젝트|Tick c++ cpp",
+    "cppName": "hb::Scene::SetTickInterval",
+    "pure": false,
+    "service": true,
+    "inputs": [
+      {
+        "id": "exec",
+        "label": "실행",
+        "type": "exec",
+        "array": false
+      },
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "seconds",
+        "label": "seconds",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "then",
+        "label": "다음",
+        "type": "exec",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
+    "key": "sceneTickInterval",
+    "title": "Get Tick Interval",
+    "ko": "액터 Tick 간격",
+    "group": "오브젝트|Tick",
+    "keywords": "sceneTickInterval GetTickInterval 액터 Tick 간격 오브젝트|Tick c++ cpp",
+    "cppName": "hb::Scene::GetTickInterval",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "target",
+        "label": "target",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "float",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
     "key": "sceneSpawn",
     "title": "Spawn",
     "ko": "에셋/클래스 생성",
-    "group": "변환",
+    "group": "오브젝트",
     "keywords": "sceneSpawn Spawn 에셋/클래스 생성 오브젝트 c++ cpp",
     "cppName": "hb::Scene::Spawn",
     "pure": false,
@@ -22013,7 +28425,7 @@ export const serviceApi = [
     "key": "sceneDestroy",
     "title": "Destroy",
     "ko": "생성 액터 제거/풀 반환",
-    "group": "변환",
+    "group": "오브젝트",
     "keywords": "sceneDestroy Destroy 생성 액터 제거/풀 반환 오브젝트 c++ cpp",
     "cppName": "hb::Scene::Destroy",
     "pure": false,
@@ -22047,7 +28459,7 @@ export const serviceApi = [
     "key": "sceneFindClass",
     "title": "Get All Actors Of Class",
     "ko": "클래스로 액터 찾기",
-    "group": "변환",
+    "group": "오브젝트",
     "keywords": "sceneFindClass GetAllActorsOfClass 클래스로 액터 찾기 오브젝트 c++ cpp",
     "cppName": "hb::Scene::GetAllActorsOfClass",
     "pure": true,
@@ -22084,7 +28496,7 @@ export const serviceApi = [
     "key": "sceneFindTag",
     "title": "Get Actors With Tag",
     "ko": "태그로 액터 찾기",
-    "group": "변환",
+    "group": "오브젝트",
     "keywords": "sceneFindTag GetActorsWithTag 태그로 액터 찾기 오브젝트 c++ cpp",
     "cppName": "hb::Scene::GetActorsWithTag",
     "pure": true,
@@ -22121,7 +28533,7 @@ export const serviceApi = [
     "key": "sceneFindId",
     "title": "Find Actor By Id",
     "ko": "ID로 액터 찾기",
-    "group": "변환",
+    "group": "오브젝트",
     "keywords": "sceneFindId FindActorById ID로 액터 찾기 오브젝트 c++ cpp",
     "cppName": "hb::Scene::FindActorById",
     "pure": true,
@@ -22155,10 +28567,120 @@ export const serviceApi = [
     }
   },
   {
+    "key": "sceneInstanceActor",
+    "title": "Get Instance Actor",
+    "ko": "인스턴스 로컬 ID로 액터 찾기",
+    "group": "오브젝트",
+    "keywords": "sceneInstanceActor GetInstanceActor 인스턴스 로컬 ID로 액터 찾기 오브젝트 c++ cpp",
+    "cppName": "hb::Scene::GetInstanceActor",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "instance",
+        "label": "인스턴스",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "localId",
+        "label": "로컬 ID",
+        "type": "string",
+        "array": false
+      },
+      {
+        "id": "includeInactive",
+        "label": "비활성 포함",
+        "type": "bool",
+        "array": false,
+        "default": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "defaults": {
+      "includeInactive": false
+    }
+  },
+  {
+    "key": "sceneInstanceActors",
+    "title": "Get Instance Actors",
+    "ko": "인스턴스 액터 목록",
+    "group": "오브젝트",
+    "keywords": "sceneInstanceActors GetInstanceActors 인스턴스 액터 목록 오브젝트 c++ cpp",
+    "cppName": "hb::Scene::GetInstanceActors",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "instance",
+        "label": "인스턴스",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      },
+      {
+        "id": "includeInactive",
+        "label": "비활성 포함",
+        "type": "bool",
+        "array": false,
+        "default": false
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "object",
+        "array": true,
+        "className": "Actor"
+      }
+    ],
+    "defaults": {
+      "includeInactive": false
+    }
+  },
+  {
+    "key": "sceneInstanceLocalId",
+    "title": "Get Instance Local Id",
+    "ko": "인스턴스 로컬 ID",
+    "group": "오브젝트",
+    "keywords": "sceneInstanceLocalId GetInstanceLocalId 인스턴스 로컬 ID 오브젝트 c++ cpp",
+    "cppName": "hb::Scene::GetInstanceLocalId",
+    "pure": true,
+    "service": true,
+    "inputs": [
+      {
+        "id": "instance",
+        "label": "인스턴스",
+        "type": "object",
+        "array": false,
+        "className": "Actor"
+      }
+    ],
+    "outputs": [
+      {
+        "id": "return",
+        "label": "Return value",
+        "type": "string",
+        "array": false
+      }
+    ],
+    "defaults": {}
+  },
+  {
     "key": "openScene",
     "title": "Open",
     "ko": "장면 열기",
-    "group": "변환",
+    "group": "장면",
     "keywords": "openScene Open 장면 열기 장면 c++ cpp",
     "cppName": "hb::Scene::Open",
     "pure": false,
@@ -22191,7 +28713,7 @@ export const serviceApi = [
     "key": "openSceneArgs",
     "title": "Open With Arguments",
     "ko": "장면 열기와 인자",
-    "group": "변환",
+    "group": "장면",
     "keywords": "openSceneArgs OpenWithArguments 장면 열기와 인자 장면 c++ cpp",
     "cppName": "hb::Scene::OpenWithArguments",
     "pure": false,

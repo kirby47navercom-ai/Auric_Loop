@@ -15,13 +15,13 @@ function updateSelection(owner,node,context,step){
 export function planAnimationPose(owner,delta){
   const memo=new Map(),policy=owner.hasNotifyPolicy;
   const visit=(id,context=owner.mainContext,step=delta,group='')=>{
-    if(!id)return new Map();const key=context.key+'|'+id+'|'+group;if(memo.has(key))return memo.get(key);const node=owner.nodes.get(id),p=node.properties,result=new Map();if(policy)result.notifyWeights=new Map();memo.set(key,result);
+    if(!id)return new Map();const key=context.key+'|'+id+'|'+group;if(memo.has(key))return memo.get(key);const node=owner.nodes.get(id),p=node.properties,result=new Map();if(policy)result.notifyWeights=new Map();memo.set(key,result);if(owner.planningOnly)owner.active.add(id);
     const merge=(input,weight=1,ctx=context,childStep=step,childGroup=group,notify=true)=>{const source=visit(node.inputs[input],ctx,childStep,childGroup);for(const [record,value] of source)result.set(record,(result.get(record)||0)+value*weight);if(policy&&notify)for(const [record,value] of source.notifyWeights||[])result.notifyWeights.set(record,(result.notifyWeights.get(record)||0)+value*weight);};
     if(node.type==='clip'){
       const record=context.clipRecords.get(id),effective=record.sync.method==='group'?record.sync.group:record.sync.method==='graph'?group:'';
       if(record.sync.method==='graph'&&!effective)throw Error('Graph 동기화 클립에 Sync 포즈 노드를 연결하세요.');
       if(record.frame===owner.frame&&record.group!==effective)throw Error('공유 클립을 서로 다른 Sync 그룹에 연결할 수 없어요.');
-      if(record.frame!==owner.frame){record.frame=owner.frame;record.previous=(context.elapsed.get(id)||0)+p.offset;record.absolute=record.previous+step*p.rate;context.elapsed.set(id,record.absolute-p.offset);record.group=effective;}result.set(record,1);if(policy)result.notifyWeights.set(record,1);
+      if(record.frame!==owner.frame){record.frame=owner.frame;record.previous=(context.elapsed.get(id)||0)+p.offset;record.absolute=record.previous+step*p.rate;context.elapsed.set(id,record.absolute-p.offset);record.group=effective;}result.set(record,1);if(owner.planningOnly)owner.weights.set(id,1);if(policy)result.notifyWeights.set(record,1);
     }else if(node.type==='stateMachine'){
       const machine=context.machines.get(id);machine.prepare(step);const t=machine.transition;
       if(t){if(!t.frozen){const s=machine.states.get(t.from);merge(s.input,1-t.weight,machine.stateContext(s.id),step*s.speed);}const s=machine.states.get(t.to);merge(s.input,t.weight,machine.stateContext(s.id),step*s.speed);}

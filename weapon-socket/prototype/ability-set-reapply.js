@@ -1,0 +1,14 @@
+export async function reapplyAbilitySet(system,state,asset,{preserveBase=true,retainEffects=true}={},vm){
+ if(typeof preserveBase!=='boolean'||typeof retainEffects!=='boolean')throw Error('세트 재적용 옵션을 확인하세요.');
+ const owner=state.object,request=(state.setRequest||0)+1;state.setRequest=request;system.setLibrary.remove(asset);const template=await system.setLibrary.load(asset,system.refreshRead),data=template.data,paths=[...new Set([state.startingAbility,...data.abilities].filter(Boolean))],definitions=await Promise.all(paths.map(async path=>[path,await system.load(path,'ability',system.refreshRead)]));
+ if(vm.active===false||vm.object(owner.id)!==owner||owner.poolActive===false||system.owners.get(owner.id)!==state||state.setRequest!==request)return false;
+ const attributes=new Map([...state.defaultAttributes].map(([name,row])=>[name,{...row}]));for(const[name,row]of state.attributes)if(!state.setAttributeNames.has(name))attributes.set(name,{...row});for(const row of data.attributes)attributes.set(row.name,{...row});
+ if(preserveBase)for(const[name,row]of attributes){const old=state.attributes.get(name);if(old&&!old.calculation&&!row.calculation)row.base=Math.max(row.min,Math.min(row.max,old.base));}
+ const abilities=new Map([...state.abilities].filter(([path])=>!state.setAbilityPaths.has(path)||state.runtimeGranted.has(path)));for(const[path,data]of definitions){const old=state.abilities.get(path);abilities.set(path,old?{...old,data}:{asset:path,data,ready:0,active:false,end:0});}
+ const baseTags=new Set([...state.initialTags,...data.grantedTags]);for(const[tag,add]of state.manualTags)if(add)baseTags.add(tag);else baseTags.delete(tag);
+ const candidate={...state,attributes,abilities,baseTags,effects:retainEffects?state.effects:new Map(),calculationOrder:template.attributeOrder,curves:template.curves,calculated:data.attributes.some(a=>a.calculation),values:null,setAsset:asset,setGeneration:(state.setGeneration||0)+1,setAttributeNames:new Set(data.attributes.map(a=>a.name)),setAbilityPaths:new Set(paths)};
+ for(const effect of candidate.effects.values())system.validateModifiers(candidate,effect.data);if(candidate.calculated)system.aggregate(candidate);else for(const name of attributes.keys())if(!Number.isFinite(system.value(candidate,name)))throw Error('능력 속성 계산 범위 초과');
+ // Commit after every asynchronous read and validation. Timers and handles of
+ // retained entries stay intact; removal notifications occur only on success.
+ const removedEffects=retainEffects?[]:[...state.effects.values()],removedAbilities=[...state.abilities].filter(([path])=>!abilities.has(path)).map(([,a])=>a);Object.assign(state,candidate);system.sync(state);for(const e of removedEffects)system.cue(state,e.data,'remove',{effect:e.asset,handle:e.handle,reason:'setReapplied'});for(const a of removedAbilities)system.end(state,a,'setReapplied');return true;
+}

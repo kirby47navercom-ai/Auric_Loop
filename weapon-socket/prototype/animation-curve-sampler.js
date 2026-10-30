@@ -1,0 +1,2 @@
+import {sampleCurveSegment,sampleCurveOutside} from './curve-sampling.js';
+export function animationCurveSampler(keys,settings={}){const result=new Float64Array(1);return {evaluate(time){if(!keys.length){result[0]=0;return result;}const outside=sampleCurveOutside(keys,time,settings);if(outside!==undefined){result[0]=outside;return result;}let low=0,high=keys.length;while(low<high){const mid=(low+high)>>>1;if(keys[mid].time<=time)low=mid+1;else high=mid;}result[0]=sampleCurveSegment(keys,Math.max(0,low-1),time);return result;}};}

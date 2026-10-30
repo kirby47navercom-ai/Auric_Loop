@@ -1,0 +1,47 @@
+import {Matrix4,Vector3} from 'three';
+import {updatedBVH} from './geometry-bvh.js';
+import {primitiveSignedDistance} from './mesh-distance-primitives.js';
+
+const affine=values=>values?.length===16&&Array.from(values).every(Number.isFinite)&&values[3]===0&&values[7]===0&&values[11]===0&&values[15]===1;
+const finiteFloat=values=>values.every(v=>Number.isFinite(Math.fround(v)));
+const roundingBits=new Uint32Array(1),roundingFloat=new Float32Array(roundingBits.buffer);
+function outwardFloat(value,upper){roundingFloat[0]=value;const rounded=roundingFloat[0];if(upper?rounded<value:rounded>value){if(rounded===0)return upper?2**-149:-(2**-149);roundingBits[0]+=(rounded>0)===upper?1:-1;}return roundingFloat[0];}
+const validated=new WeakSet();
+function validateField(field){
+ if(validated.has(field))return;const dims=field?.dimensions,analytic=['box','rectangle'].includes(field?.kind),cells=analytic?0:dims?.reduce((n,v)=>n*v,1),bounds=[field?.center,field?.min,field?.max].every(v=>v?.length===3&&finiteFloat(v));if(field?.version!==1||field.kind!==undefined&&!analytic||!Array.isArray(dims)||dims.length!==3||dims.some(v=>!Number.isInteger(v)||(analytic?v!==0:v<2))||!Number.isSafeInteger(cells)||!(field.data instanceof Float32Array)||field.data.length!==cells||typeof field.signed!=='boolean'||!Number.isFinite(field.interpolationErrorBound)||field.interpolationErrorBound<0||analytic&&(field.interpolationErrorBound!==0||field.signed!==(field.kind==='box'))||!bounds||field.max.some((v,i)=>analytic?v<field.min[i]:v<=field.min[i])||analytic&&field.max.filter((v,i)=>v>field.min[i]).length!==(field.kind==='box'?3:2)||!field.data.every(Number.isFinite))throw Error('거리장 볼륨의 크기·자료·좌표를 확인하세요.');validated.add(field);
+}
+function objectRecord(source,scratch){
+ const {field,id}=source,values=source.matrixWorld?.elements||source.matrixWorld;validateField(field);if(typeof id!=='string'||!id||!affine(values))throw Error('거리장 오브젝트 ID와 affine 변환을 확인하세요.');const matrix=scratch.matrix.fromArray(values),det=matrix.determinant();if(!Number.isFinite(det)||det===0)throw Error('거리장 오브젝트 변환이 역변환되지 않아요.');const inverse=scratch.inverse.copy(matrix).invert(),e=inverse.elements,columns=[[values[0],values[1],values[2]],[values[4],values[5],values[6]],[values[8],values[9],values[10]]],lengths=columns.map(v=>Math.hypot(...v)),dot=(a,b)=>a.reduce((n,v,i)=>n+v*b[i],0),orthogonal=[[0,1],[0,2],[1,2]].every(([a,b])=>Math.abs(dot(columns[a],columns[b]))<=lengths[a]*lengths[b]*1e-8),scale=orthogonal?Math.min(...lengths):1/Math.hypot(e[0],e[1],e[2],e[4],e[5],e[6],e[8],e[9],e[10]);if(!(Math.fround(scale)>0))throw Error('거리장 거리 배율이 GPU 범위를 넘었어요.');
+ const min=[Infinity,Infinity,Infinity],max=[-Infinity,-Infinity,-Infinity];for(let bits=0;bits<8;bits++){scratch.point.set(...field.center.map((v,i)=>v+((bits>>i)&1?field.max[i]:field.min[i]))).applyMatrix4(matrix);for(let i=0;i<3;i++){const v=scratch.point.getComponent(i);min[i]=Math.min(min[i],v);max[i]=Math.max(max[i],v);}}
+ for(let i=0;i<3;i++){min[i]=outwardFloat(min[i],false);max[i]=outwardFloat(max[i],true);}const row=[...min,0,...max,scale,e[0],e[4],e[8],e[12]-field.center[0],e[1],e[5],e[9],e[13]-field.center[1],e[2],e[6],e[10],e[14]-field.center[2],field.interpolationErrorBound*scale,0,0,0];if(!finiteFloat(row))throw Error('거리장 오브젝트 포장이 GPU float 범위를 넘었어요.');return {id,sourceID:id,field,stamp:Float64Array.from(values),row:Float32Array.from(row),min,max,points:[min,max],center:min.map((v,i)=>(v+max[i])*.5)};
+}
+// Scalar distances share RGBA lanes; offsets below are texel-relative to this
+// atlas root. Static volumes are copied only when the layout changes.
+export class MeshDistanceFieldAtlas{
+ constructor(){this.objects=new Map();this.fields=[];this.packed=null;this.bvh=null;this.scratch={matrix:new Matrix4(),inverse:new Matrix4(),point:new Vector3()};}
+ prepare(sources,{byteBudget=64*1024*1024,maxWidth=4096}={}){
+  if(!Array.isArray(sources)||!Number.isSafeInteger(byteBudget)||byteBudget<16||!Number.isInteger(maxWidth)||maxWidth<1||maxWidth>4096)throw Error('거리장 atlas 예산과 크기를 확인하세요.');const next=new Map(),fields=[],fieldSet=new Set();let changed=sources.length!==this.objects.size;
+  for(const source of sources){if(next.has(source.id))throw Error('거리장 오브젝트 ID가 겹쳐요.');const old=this.objects.get(source.id),values=source.matrixWorld?.elements||source.matrixWorld,same=old?.field===source.field&&values?.length===16&&old.stamp.every((v,i)=>Object.is(v,values[i])),record=same?old:objectRecord(source,this.scratch);if(!same)changed=true;next.set(source.id,record);if(!fieldSet.has(record.field)){fieldSet.add(record.field);fields.push(record.field);}}
+  const sameFields=fields.length===this.fields.length&&fields.every((v,i)=>v===this.fields[i]),sameOrder=this.packed&&[...next.keys()].every((v,i)=>v===this.packed.objectIds[i]);if(!changed&&sameFields&&sameOrder&&this.packed&&this.packed.data.byteLength<=byteBudget&&this.packed.width<=maxWidth){const work={reusedAtlas:true,poseChanged:false,volumeFloatsWritten:0,prefixFloatsWritten:0,atlasBytes:this.packed.data.byteLength};this.packed={...this.packed,changedRows:[],work};return this.packed;}
+  const bvh=updatedBVH([...next.values()],sameOrder?this.bvh:null),nodes=bvh.tree.nodes,objects=bvh.tree.triangles,nodeOffset=1,objectOffset=nodeOffset+nodes.length*3,fieldOffset=objectOffset+objects.length*6,offsets=new Map();let texels=fieldOffset;for(const field of fields){offsets.set(field,texels);texels+=3+Math.ceil(field.data.length/4);}const width=Math.min(maxWidth,Math.max(1,texels)),height=Math.max(1,Math.ceil(texels/width)),bytes=width*height*16,encodedSize=(width===4096?0:width)+height*4096;if(height>16384||texels>=2**24||bytes>byteBudget||Math.fround(encodedSize)!==encodedSize)throw Error('거리장 atlas 페이로드가 예산이나 주소 범위를 넘었어요.');
+  const reuse=!!(this.packed&&sameFields&&sameOrder&&this.packed.width===width&&this.packed.height===height&&this.packed.fieldOffset===fieldOffset),data=reuse?this.packed.data:new Float32Array(width*height*4),rows=new Set();let prefixWritten=0,volumeWritten=0;
+  // Validate all prepared bounds before mutating an atlas retained by rendering.
+  for(const node of nodes)if(!finiteFloat([...node.min,...node.max,node.start,node.count,node.skip]))throw Error('거리장 BVH가 GPU float 범위를 넘었어요.');
+  const write=(values,start,volume=false)=>{for(let i=0;i<values.length;i++){const value=Math.fround(values[i]);if(!reuse||data[start+i]!==value){data[start+i]=value;rows.add(Math.floor((start+i)/(width*4)));if(volume)volumeWritten++;else prefixWritten++;}}};write([nodes.length,nodeOffset,objectOffset,objects.length],0);
+  nodes.forEach((node,i)=>write([...node.min,node.skip,...node.max,node.start,node.count,0,0,0],(nodeOffset+i*3)*4));objects.forEach((o,i)=>{o.row[3]=offsets.get(o.field);write(o.row,(objectOffset+i*6)*4);});
+  if(!reuse)for(const field of fields){const at=offsets.get(field)*4;write([...field.min,field.interpolationErrorBound,...field.max,field.signed?1:0,...field.dimensions,field.kind?1:0],at,true);write(field.data,at+12,true);}
+  const packed={version:1,width,height,encodedSize,data,fieldOffset,objectIds:[...next.keys()],objectCount:objects.length,nodeCount:nodes.length,fieldCount:fields.length,changedRows:reuse?[...rows]:null,work:{reusedAtlas:reuse,poseChanged:changed,refittedBVH:bvh.refit,volumeFloatsWritten:volumeWritten,prefixFloatsWritten:prefixWritten,atlasBytes:bytes}};this.objects=next;this.fields=fields;this.bvh=bvh.cache;this.packed=packed;return packed;
+ }
+ dispose(){this.objects.clear();this.fields=[];this.packed=null;this.bvh=null;}
+}
+const boxDistance=(p,min,max)=>Math.hypot(...p.map((v,i)=>Math.max(min[i]-v,0,v-max[i])));
+function packedFieldValue(load,field,local,min,max,dims){
+ if(dims[3]===1)return primitiveSignedDistance(min.subarray(0,3),max.subarray(0,3),local);
+ const coord=local.map((v,i)=>Math.max(0,Math.min(dims[i]-1,(v-min[i])/(max[i]-min[i])*(dims[i]-1)))),base=coord.map(Math.floor),fraction=coord.map((v,i)=>v-base[i]);let value=0;
+ for(let z=0;z<2;z++)for(let y=0;y<2;y++)for(let x=0;x<2;x++){const p=[x,y,z].map((v,i)=>Math.min(dims[i]-1,base[i]+v)),index=p[0]+(p[1]+p[2]*dims[1])*dims[0],rgba=load(field+3+Math.floor(index/4)),weight=[x,y,z].reduce((n,v,i)=>n*(v?fraction[i]:1-fraction[i]),1);value+=rgba[index%4]*weight;}return value;
+}
+export function samplePackedDistanceFieldScene(packed,point,maxDistance,margin=true){
+ if(point?.length!==3||!point.every(Number.isFinite)||!Number.isFinite(maxDistance)||maxDistance<=0)throw Error('거리장 표본과 최대 거리를 확인하세요.');const d=packed.data,load=at=>d.subarray(at*4,at*4+4),header=load(0);let node=0,best=maxDistance,error=0,object=-1,visited=0;
+ while(node<header[0]){if(best<=0)break;visited++;const a=load(header[1]+node*3),b=load(header[1]+node*3+1),meta=load(header[1]+node*3+2);if(boxDistance(point,a,b)>=best){node=a[3];continue;}for(let n=0;n<meta[0];n++){if(best<=0)break;const at=header[2]+(b[3]+n)*6,lo=load(at),hi=load(at+1),minimum=boxDistance(point,lo,hi);if(minimum>=best)continue;const local=[2,3,4].map(row=>{const r=load(at+row);return r[0]*point[0]+r[1]*point[1]+r[2]*point[2]+r[3];}),info=load(at+5),field=lo[3],min=load(field),max=load(field+1),dims=load(field+2);const value=packedFieldValue(load,field,local,min,max,dims);const distance=Math.max(minimum,(value-(margin?min[3]:0))*hi[3]);if(distance<best){best=distance;error=info[0];object=b[3]+n;}}node++;}
+ return {distance:best,error,object,visited};
+}

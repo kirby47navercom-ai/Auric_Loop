@@ -1,7 +1,8 @@
 import {OrthographicCamera,PerspectiveCamera,Vector3,Vector4,Color} from 'three';
 import {enabledComponent} from './scene-components.js';
 
-export function createGameCamera(p){const camera=p.projection==='orthographic'?new OrthographicCamera(-p.orthographicSize,p.orthographicSize,p.orthographicSize,-p.orthographicSize,p.near,p.far):new PerspectiveCamera(p.fieldOfView,1,p.near,p.far);camera.userData.cameraProperties=p;return camera;}
+export function cameraFieldOfView(p){return p.physicalLens?2*Math.atan((p.sensorHeight??24)/(2*(p.focalLength??50)))*180/Math.PI:p.fieldOfView;}
+export function createGameCamera(p){const camera=p.projection==='orthographic'?new OrthographicCamera(-p.orthographicSize,p.orthographicSize,p.orthographicSize,-p.orthographicSize,p.near,p.far):new PerspectiveCamera(cameraFieldOfView(p),1,p.near,p.far);camera.userData.cameraProperties=p;return camera;}
 export function pixelPerfectViewport(width,height,p,pixelRatio=1){
   const cssWidth=width,cssHeight=height;width=Math.round(width*pixelRatio);height=Math.round(height*pixelRatio);
   const ppu=p.pixelPixelsPerUnit||32,reference=[p.pixelReferenceWidth||640,p.pixelReferenceHeight||360],nativeHeight=Math.max(1,Math.round(2*p.orthographicSize*ppu)),nativeWidth=Math.max(1,Math.round(nativeHeight*reference[0]/reference[1]));
@@ -20,7 +21,7 @@ export function selectGameCamera(objects,size,override,current){
   }if(!selected)return null;
   let c=selected.camera;const p=selected.properties;
   if(Boolean(c.isOrthographicCamera)!==(p.projection==='orthographic')){const previous=c,parent=c.parent;c=createGameCamera(p);c.position.copy(previous.userData.basePosition||previous.position);c.quaternion.copy(previous.quaternion);c.scale.copy(previous.scale);previous.removeFromParent();parent.add(c);parent.userData.gameCamera=c;}
-  c.userData.cameraProperties=p;c.near=p.near;c.far=p.far;if(c.isPerspectiveCamera)c.fov=p.fieldOfView;
+  c.userData.cameraProperties=p;c.near=p.near;c.far=p.far;if(c.isPerspectiveCamera)c.fov=cameraFieldOfView(p);
   c.userData.pixelViewport=c.isOrthographicCamera&&p.pixelPerfect&&typeof size==='object'?pixelPerfectViewport(size.width,size.height,p):null;
   const ratio=c.userData.pixelViewport?.aspect||aspect;
   if(c.isOrthographicCamera){c.top=p.orthographicSize;c.bottom=-p.orthographicSize;c.left=-p.orthographicSize*ratio;c.right=p.orthographicSize*ratio;}else c.aspect=aspect;

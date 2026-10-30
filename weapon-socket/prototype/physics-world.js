@@ -1,3 +1,8 @@
+import {validActorScale} from './transform-scale.js';
+import {DeformableWorld} from './deformable-physics.js';
+import {jointLockedAxes,configureJointDOFs} from './joint-dofs.js';
+import {RaycastVehicles} from './vehicle-physics.js';
+import {jointFrames,applyJointFrames} from './joint-frames.js';
 import {valid2DAsset} from './two-d-assets.js';
 import {Vector3,Quaternion,Euler} from 'three';
 import {componentDefaultValues,objectComponents,enabledComponent,validComponentProperties} from './scene-components.js';
@@ -6,7 +11,7 @@ import {geometryColliderTypes,geometryDescriptor,colliderGeometryRadius,geometry
 
 export const colliderTypes=new Set(['BoxCollider','SphereCollider','CapsuleCollider','BoxCollider2D','CircleCollider2D','CapsuleCollider2D',...geometryColliderTypes]);
 export const physicsQueryKeys=new Set(['physicsRaycast','physicsRaycastAll','physicsSphereCast','physicsBoxCast','physicsOverlapSphere','physicsOverlapBox','physicsClosestPoint']);
-export const physicsContract={backend:'rapier',version:'0.21.0',dimensions:[2,3],geometry:geometryContract,units:{distance:'m',mass:'kg',transformRotation:'degree',jointAngle:'degree',jointAngularSpeed:'degree/s',angularVelocity:'rad/s',force:'N',torque:'N*m'},forceModes:['force','acceleration','impulse','velocityChange'],massBehavior:'automatic density mass with active shapes; configured mass without colliders; no shape-free inertia editing',queryKeys:[...physicsQueryKeys],queryDefaults:{dimension:3,mask:-1,includeTriggers:false,ignore:null},queryBehavior:{geometry:'exact primitive, convex/triangle mesh, concave 2D polygons and open edges',algorithm:'linear collider candidates, exact narrow phase',results:'HitResult or HitResult[]; overlaps deduplicate actor IDs',closestPointNormal:[0,0,0],teleports:'visible before next step',crossDimension:false},limits:{collidersPerDimension:null,querySnapshotColliders:null,querySnapshotObjects:null,jointsPerDimension:null,queryResults:null,cppQueriesPerCall:128,cppQueryBytes:4000000},cpp:{queries:'synchronous read-only world, current C++ transforms/collision flags',writes:'queued and applied by VM after function returns'},jointAxes:'positive relative owner movement; 2D Z rotation, XY translation',jointLimitations:['slider requires aligned local body frames','2D ball is an unconstrained revolute joint','no break force, plasticity, multi-body articulation or generic 6-DOF UI']};
+export const physicsContract={backend:'rapier',version:'0.21.0',dimensions:[2,3],geometry:geometryContract,units:{distance:'m',mass:'kg',transformRotation:'degree',jointAngle:'degree',jointAngularSpeed:'degree/s',angularVelocity:'rad/s',force:'N',torque:'N*m'},forceModes:['force','acceleration','impulse','velocityChange'],massBehavior:'automatic density mass with active shapes; configured mass without colliders; no shape-free inertia editing',queryKeys:[...physicsQueryKeys],queryDefaults:{dimension:3,mask:-1,includeTriggers:false,ignore:null},queryBehavior:{geometry:'exact primitive, convex/triangle mesh, concave 2D polygons and open edges',algorithm:'linear collider candidates, exact narrow phase',results:'HitResult or HitResult[]; overlaps deduplicate actor IDs',closestPointNormal:[0,0,0],teleports:'visible before next step',crossDimension:false},limits:{collidersPerDimension:null,querySnapshotColliders:null,querySnapshotObjects:null,jointsPerDimension:null,queryResults:null,cppQueriesPerCall:128,cppQueryBytes:4000000},cpp:{softQueries:{geometry:'current live cloth/rope shapes merged with immutable per-call rigid snapshot; no particle arrays copied',filter:'matching dimension/mask/ignore and snapshot collisionEnabled; retained disabled soft shape may be queried after a local C++ enable',transforms:'local C++ rigid transforms apply immediately; soft particles remain at their actual physical positions until queued changes/simulation run',transport:'one live callback only when matching soft actors exist; no extra IPC for rigid-only or excluded masks',lifetime:'authorized actor IDs and finite typed results; closed query scope rejects late callback; missing live channel rejects explicitly'},queries:'synchronous read-only world, current C++ transforms/collision flags',writes:'queued and applied by VM after function returns'},rope2D:{dimension:2,plane:'XY; world Z kept for drawing',particles:'2..4096 per rope; no rope actor count cap',pins:'none/start/end/both plus per-index overrides; same mouse/keyboard pin editor',render:'reused triangle ribbon, material assignment, dynamic vertex stream',limitations:['no tearing/plasticity, skinned tube or GPU solver','C++ surface queries use live shape callback; particle arrays are not in snapshots']},cloth:{dimension:3,index:'u*rows+v',pins:'preset plus per-index overrides; moving owner follows pinned local points',force:'world total N; impulses N*s, per-particle index or -1 whole',collision:'same Rapier world and symmetric layer/mask filters; self contacts optional',diagnostics:'summary in gameplayDebug.cloth; runtime.cloth reads at most256 requested particles',limits:['rectangular 2..256 grid per axis; no cloth actor count cap','property/topology/scale changes rebuild rest state; external force does not','no skinned clothing, painted distance tether, tearing, GPU cloth']},jointAxes:'positive relative owner movement; 2D Z rotation, XY translation',jointLimitations:['legacy slider requires aligned frames; independent local frames are opt-in','2D ball is an unconstrained revolute joint','no break force, plasticity or multi-body articulation']};
 const copy=structuredClone,rad=Math.PI/180,vector=v=>Array.isArray(v)&&v.length===3&&v.every(Number.isFinite);
 const xyz=v=>({x:v[0],y:v[1],z:v[2]}),array=v=>[v.x,v.y,v.z??0],emptyHit=()=>({hit:false,position:[0,0,0],normal:[0,0,0],actor:null});
 const qValue=q=>({x:q.x,y:q.y,z:q.z,w:q.w});
@@ -56,10 +61,10 @@ export function createRigidPhysics(objects,options={}){
   function sync(){
     alive();if(!spaces.size)return;
     for(const [dim,space] of spaces){
-      const {R,world}=space,active=new Set();
+      const {R,world}=space,active=new Set(),deformableObjects=[],deformableType=dim===2?'Rope2D':'Cloth';
       for(const o of objects){
-        if(['component','widget'].includes(o.kind)||o.poolActive===false)continue;
-        const p=properties(o,dim),components=[...objectComponents(o),...(o.tileColliders||[])].filter(c=>colliderTypes.has(c.type)&&c.type.endsWith('2D')===(dim===2)&&c.properties?.enabled!==false&&c.properties?.collisionMode!=='none'&&o.collisionEnabled!==false);
+        if(o.poolActive===false)continue;const authoredComponents=objectComponents(o);if(!options.queryOnly&&authoredComponents.some(c=>c.type===deformableType))deformableObjects.push(o);if(['component','widget'].includes(o.kind))continue;
+        const p=properties(o,dim),components=[...authoredComponents,...(o.tileColliders||[])].filter(c=>colliderTypes.has(c.type)&&c.type.endsWith('2D')===(dim===2)&&c.properties?.enabled!==false&&c.properties?.collisionMode!=='none'&&o.collisionEnabled!==false);
         if(!p&&!components.length)continue;active.add(o.id);
         let r=space.bodies.get(o.id);const root=!o.parentId&&!o.parent,cached=root&&r?.poseInput?.every((v,i)=>v===(i<3?o.position[i]:i<6?o.rotation[i-3]:o.scale[i-6])),transform=cached?r.pose:pose(o,objects),transformKey=cached?r.poseKey:JSON.stringify([transform.position.toArray(),transform.rotation.toArray()]);
         if(!r){const desc=R.RigidBodyDesc.fixed();r={object:o,p,body:world.createRigidBody(desc),colliders:new Map(),dim,nonce:++nonce};space.bodies.set(o.id,r);setPose(r,transform);r.lastPose=transformKey;}
@@ -106,8 +111,8 @@ export function createRigidPhysics(objects,options={}){
           if(JSON.stringify(angular)!==r.lastAngular){r.body.setAngvel(dim===2?angular[2]:xyz(angular),true);r.lastAngular=JSON.stringify(angular);}
         }
       }
-      for(const [id,r] of space.bodies)if(!active.has(id)){for(const c of r.colliders.values())space.colliders.delete(c.collider.handle);world.removeRigidBody(r.body);space.bodies.delete(id);}
-      world.propagateModifiedBodyPositionsToColliders();if(!options.queryOnly)syncJoints(space,dim);for(const r of space.bodies.values())mirror(r);
+      for(const [id,r] of space.bodies)if(!active.has(id)){for(const c of r.colliders.values())space.colliders.delete(c.collider.handle);space.vehicles?.remove(id);world.removeRigidBody(r.body);space.bodies.delete(id);}
+      world.propagateModifiedBodyPositionsToColliders();if(!options.queryOnly)syncJoints(space,dim);space.vehicles?.sync();space.deformables?.sync(deformableObjects);for(const r of space.bodies.values())mirror(r);
     }
   }
   function syncJoints(space,dim){
@@ -116,24 +121,26 @@ export function createRigidPhysics(objects,options={}){
       const p={...componentDefaultValues(component.type),...component.properties},a=space.bodies.get(o.id),b=p.connectedBody?space.bodies.get(p.connectedBody):null,key=o.id+':'+component.id;
       if(!a||p.connectedBody&&!b)continue;
       if(a===b)throw Error('관절을 자기 자신에게 연결할 수 없어요.');
-      active.add(key);const signature=JSON.stringify([p,a.nonce,b?.nonce]);const previous=space.joints.get(key);if(previous?.signature===signature&&previous.joint.isValid())continue;
-      if(previous?.joint.isValid())world.removeImpulseJoint(previous.joint,true);
+      active.add(key);const signature=JSON.stringify([p,a.nonce,b?.nonce,p.useFrames?[o.scale,b?.object.scale]:null]);const previous=space.joints.get(key);if(previous?.signature===signature&&previous.joint.isValid())continue;
       const pa=pose(o,objects),pb=b?pose(b.object,objects):{position:new Vector3(),rotation:new Quaternion(),scale:new Vector3(1,1,1)},anchorA=new Vector3(...p.anchor).multiply(pa.scale),worldAnchor=anchorA.clone().applyQuaternion(pa.rotation).add(pa.position),anchorB=p.autoConnectedAnchor?worldAnchor.clone().sub(pb.position).applyQuaternion(pb.rotation.clone().invert()):new Vector3(...p.connectedAnchor).multiply(pb.scale);
       const vA=xyz(anchorA.toArray()),vB=xyz(anchorB.toArray()),axis=new Vector3(...p.axis).normalize(),relative=pb.rotation.clone().invert().multiply(pa.rotation);
+      // Motor/limit edits retain the captured zero. Round decompose noise below solver precision.
+      let baseFrames,basisSignature;if(p.useFrames){basisSignature=JSON.stringify([p.jointType,p.connectedBody,p.anchor,p.connectedAnchor,p.autoConnectedAnchor,p.axis,p.connectedAxis,p.frameRotation,p.connectedFrameRotation,p.autoConnectedFrame,a.nonce,b?.nonce,pa.scale.toArray().map(v=>Math.round(v*1e8)/1e8),pb.scale.toArray().map(v=>Math.round(v*1e8)/1e8)]);baseFrames=previous?.basisSignature===basisSignature?previous.baseFrames:jointFrames({...p,referenceAngle:0},pa,pb,dim);}
       let data;
       if(p.jointType==='fixed')data=R.JointData.fixed(vA,dim===2?0:qValue(new Quaternion()),vB,dim===2?new Euler().setFromQuaternion(relative).z:qValue(relative));
       else if(p.jointType==='hinge')data=dim===2?R.JointData.revolute(vA,vB):R.JointData.revoluteWithAxes(vA,vB,xyz(axis.toArray()),xyz(axis.clone().applyQuaternion(relative).toArray()));
       else if(p.jointType==='slider')data=R.JointData.prismatic(vA,vB,xyz(axis.toArray()));
       else if(p.jointType==='spring')data=R.JointData.spring(p.distance,p.stiffness,p.damping,vA,vB);
       else if(p.jointType==='rope')data=R.JointData.rope(p.distance,vA,vB);
+      else if(p.jointType==='generic'&&dim===3)data=R.JointData.generic(vA,vB,xyz(axis.toArray()),jointLockedAxes(p.jointDOFs));
       else if(p.jointType==='ball')data=dim===2?R.JointData.revolute(vA,vB):R.JointData.spherical(vA,vB);
       else throw Error('지원하지 않는 관절 형식이에요.');
-      const joint=world.createImpulseJoint(data,a.body,b?.body||space.anchorBody,true);joint.setContactsEnabled(p.enableCollision);
+      const joint=world.createImpulseJoint(data,a.body,b?.body||space.anchorBody,true);try{if(p.useFrames&&['fixed','hinge','slider','generic'].includes(p.jointType)){const frames={...baseFrames,second:baseFrames.second.clone()};if(p.jointType==='hinge'&&p.referenceAngle)frames.second.multiply(new Quaternion().setFromAxisAngle(dim===2?new Vector3(0,0,1):new Vector3(1,0,0),p.referenceAngle*rad));applyJointFrames(R,joint,frames,dim);}joint.setContactsEnabled(p.enableCollision);if(p.jointType==='generic')configureJointDOFs(joint,p.jointDOFs);
       const factor=p.jointType==='hinge'?rad:1;
       // Rapier measures body 2 relative to body 1. Expose owner-positive axes.
       if(p.enableLimit&&joint.setLimits)joint.setLimits(-p.upperLimit*factor,-p.lowerLimit*factor);
-      if(p.useMotor&&joint.configureMotor)joint.configureMotor(-p.motorPosition*factor,-p.motorVelocity*factor,p.motorStiffness,p.motorDamping);
-      space.joints.set(key,{signature,joint,object:o,component});
+      if(p.useMotor&&joint.configureMotor){joint.configureMotor(-p.motorPosition*factor,-p.motorVelocity*factor,p.motorStiffness,p.motorDamping);if(p.motorMaxForce>0)joint.setMotorMaxForce(p.motorMaxForce);}
+      if(previous?.joint.isValid())world.removeImpulseJoint(previous.joint,true);space.joints.set(key,{signature,joint,object:o,component,baseFrames,basisSignature});}catch(error){if(joint.isValid())world.removeImpulseJoint(joint,true);throw error;}
     }
     for(const [key,j] of space.joints)if(!active.has(key)||!j.joint.isValid()){if(j.joint.isValid())world.removeImpulseJoint(j.joint,true);space.joints.delete(key);}
   }
@@ -141,7 +148,7 @@ export function createRigidPhysics(objects,options={}){
   function fixedContacts(space,dim){
     // Rapier skips fixed/fixed event pairs. Preserve editor-authored static
     // trigger/hit events with cached exact tests, using a conservative sweep.
-    const fixed=[...space.colliders.values()].filter(c=>c.collider.parent().isFixed()),signature=JSON.stringify(fixed.map(c=>[c.collider.handle,c.signature,array(c.collider.translation()),c.collider.rotation()]));
+    const fixed=[...space.colliders.values()].filter(c=>!c.softBody&&c.collider.parent()?.isFixed()),signature=JSON.stringify(fixed.map(c=>[c.collider.handle,c.signature,array(c.collider.translation()),c.collider.rotation()]));
     if(signature===space.fixedSignature)return space.fixedContacts;space.fixedSignature=signature;
     const bounds=fixed.map(c=>{const p=c.collider.translation(),shape=c.collider.shape,radius=c.radius??(shape.radius!==undefined?shape.radius+(shape.halfHeight||0):Math.hypot(...array(shape.halfExtents).slice(0,dim)));return {c,position:array(p),radius,min:p.x-radius,max:p.x+radius};}).sort((a,b)=>a.min-b.min),contacts=[];
     for(let i=0;i<bounds.length;i++)for(let j=i+1;j<bounds.length&&bounds[j].min<=bounds[i].max;j++){
@@ -200,18 +207,21 @@ export function createRigidPhysics(objects,options={}){
     let changedPose=rootMotionStep(step);
     for(const o of objects){if(o.poolActive===false||rootDriven.has(o))continue;const move=enabledComponent(o,'TopDownMovement2D')||enabledComponent(o,'CharacterMovement2D')||enabledComponent(o,'CharacterMovement')||enabledComponent(o,'PawnMovement');if(!move)continue;
       const r=record(o,2)?.p?record(o,2):record(o,3),top=!!enabledComponent(o,'TopDownMovement2D'),controller=objects.find(v=>v.id===state.gameplay?.controller),control=controller&&enabledComponent(controller,'PlayerController'),allow=!control||control.inputEnabled,controlled=state.gameplay?.pawn===o.id||move.autoPossess;
-      const keyboard=controlled&&allow?[(keys.get('d')||keys.get('arrowright')||0)-(keys.get('a')||keys.get('arrowleft')||0),top?(keys.get('w')||keys.get('arrowup')||0)-(keys.get('s')||keys.get('arrowdown')||0):0,top?0:(keys.get('s')||keys.get('arrowdown')||0)-(keys.get('w')||keys.get('arrowup')||0)]:[0,0,0],direction=o.navigationControl?.direction||new Vector3(...(inputs.get(o.id)||[0,0,0])).add(new Vector3(...keyboard)).toArray(),length=Math.hypot(...direction),target=direction.map(v=>v/Math.max(1,length)*(o.navigationControl?.speed??move.speed)),velocity=r?.p?array(r.body.linvel()):o.velocity??[0,0,0],blend=Math.min(1,move.acceleration*step);
+      const keyboard=controlled&&allow?[(keys.get('d')||keys.get('arrowright')||0)-(keys.get('a')||keys.get('arrowleft')||0),top?(keys.get('w')||keys.get('arrowup')||0)-(keys.get('s')||keys.get('arrowdown')||0):0,top?0:(keys.get('s')||keys.get('arrowdown')||0)-(keys.get('w')||keys.get('arrowup')||0)]:[0,0,0],direction=o.navigationControl?.direction||new Vector3(...(inputs.get(o.id)||[0,0,0])).add(new Vector3(...keyboard)).toArray(),length=Math.hypot(...direction),target=direction.map(v=>v/Math.max(1,length)*(o.navigationControl?.speed??move.speed)),velocity=r?.p?array(r.body.linvel()):o.velocity??[0,0,0],blend=o.navigationControl?.instant?1:Math.min(1,move.acceleration*step);
       for(const i of top||o.navigationControl&&r?.dim===2?[0,1]:r?.dim===2?[0]:[0,2])velocity[i]+=(target[i]-velocity[i])*blend;
       if(jumps.has(o.id)&&move.jumpSpeed!==undefined&&o.grounded)velocity[1]=move.jumpSpeed;
       if(r?.body.isDynamic())r.body.setLinvel(xyz(constrained(r,velocity)),true);else if(!r?.p){setSceneWorldPosition(o,sceneWorldPosition(o,objects).map((v,i)=>v+velocity[i]*step),objects);o.velocity=velocity;options.update?.(o);changedPose=true;}
     }
     return changedPose;
   }
-  function query(key,args){
+  function query(key,args,{softOnly=false,allowed,withFraction=false,allowDisabledSoft=false}={}){
+    const output=(value,fraction=0)=>withFraction?{value,fraction}:value;
     alive();sync();const dim=args.dimension??3;if(![2,3].includes(dim))throw Error('물리 질의 차원은 2 또는 3이에요.');const space=spaces.get(dim);if(!space)throw Error('물리 월드를 먼저 준비하세요.');
     if(!physicsQueryKeys.has(key))throw Error('등록되지 않은 물리 질의예요.');
     const {R}=space,mask=args.mask??-1;if(!Number.isInteger(mask)||mask< -2147483648||mask>4294967295)throw Error('질의 레이어 마스크를 확인하세요.');
-    const predicate=collider=>{const c=space.colliders.get(collider.handle);return !!c&&c.p.collisionMode!=='physics'&&((mask>>>0)&(1<<c.p.layer))!==0&&(args.includeTriggers||!c.collider.isSensor())&&c.object.id!==args.ignore;};
+    // The native adapter already selected enabled snapshot IDs. A C++ enable
+    // can query a retained soft shape without changing the live collision flag.
+    const predicate=collider=>{const c=space.colliders.get(collider.handle);return !!c&&(!softOnly||c.softBody)&&(!allowed||allowed.has(c.object.id))&&(softOnly&&allowDisabledSoft&&allowed?.has(c.object.id)||c.object.collisionEnabled!==false)&&c.p.collisionMode!=='physics'&&((mask>>>0)&(1<<c.p.layer))!==0&&(args.includeTriggers||!c.collider.isSensor())&&c.object.id!==args.ignore;};
     const checked=(v,label)=>{if(!vector(v)||v.some(x=>Math.abs(x)>1000000))throw Error(label+' 좌표를 확인하세요.');return xyz(v);};
     const size=(n,label)=>{if(!Number.isFinite(n)||n<=0||n>10000)throw Error(label+' 크기를 확인하세요.');return n;};
     // Direct collider queries use the exact narrow-phase geometry. They also
@@ -219,49 +229,63 @@ export function createRigidPhysics(objects,options={}){
     const candidates=[...space.colliders.values()].filter(c=>predicate(c.collider));
     const hit=(h,c,start,direction)=>({hit:true,position:start.map((v,i)=>v+direction[i]*h.timeOfImpact),normal:array(h.normal),actor:c.object.id});
     if(key==='physicsRaycast'||key==='physicsRaycastAll'){
-      const start=checked(args.start,'시작'),end=checked(args.end,'끝'),direction=[end.x-start.x,end.y-start.y,dim===2?0:end.z-start.z];if(!Math.hypot(...direction))return key==='physicsRaycastAll'?[]:emptyHit();
-      const ray=new R.Ray(start,xyz(direction)),hits=[];for(const c of candidates){const h=c.collider.castRayAndGetNormal(ray,1,true);if(h)hits.push({...hit(h,c,args.start,direction),toi:h.timeOfImpact});}hits.sort((a,b)=>a.toi-b.toi||a.actor.localeCompare(b.actor));if(key==='physicsRaycast'){if(!hits.length)return emptyHit();const {toi,...value}=hits[0];return value;}return hits.map(({toi,...h})=>h);
+      const start=checked(args.start,'시작'),end=checked(args.end,'끝'),direction=[end.x-start.x,end.y-start.y,dim===2?0:end.z-start.z];if(!Math.hypot(...direction))return output(key==='physicsRaycastAll'?[]:emptyHit());
+      const ray=new R.Ray(start,xyz(direction)),hits=[];for(const c of candidates){const h=c.collider.castRayAndGetNormal(ray,1,true);if(h)hits.push({...hit(h,c,args.start,direction),toi:h.timeOfImpact});}hits.sort((a,b)=>a.toi-b.toi||a.actor.localeCompare(b.actor));if(key==='physicsRaycast'){if(!hits.length)return output(emptyHit());const {toi,...value}=hits[0];return output(value,toi);}return output(hits.map(({toi,...h})=>h));
     }
     if(args.rotation&&!vector(args.rotation))throw Error('질의 회전을 확인하세요.');
     const position=checked(args.center||args.point||args.start,'질의'),rotation=dim===2?(args.rotation?.[2]??0)*rad:qValue(new Quaternion().setFromEuler(new Euler(...(args.rotation||[0,0,0]).map(v=>v*rad))));
-    if(key==='physicsClosestPoint'){let best;for(const c of candidates){const p=c.collider.projectPoint(position,true);if(!p)continue;const distance=Math.hypot(...array(p.point).slice(0,dim).map((v,i)=>v-array(position)[i]));if(!best||distance<best.distance)best={distance,p,c};}return best?{hit:true,position:array(best.p.point),normal:[0,0,0],actor:best.c.object.id}:emptyHit();}
+    if(key==='physicsClosestPoint'){let best;for(const c of candidates){const p=c.collider.projectPoint(position,true);if(!p)continue;const distance=Math.hypot(...array(p.point).slice(0,dim).map((v,i)=>v-array(position)[i]));if(!best||distance<best.distance)best={distance,p,c};}return output(best?{hit:true,position:array(best.p.point),normal:[0,0,0],actor:best.c.object.id}:emptyHit(),best?.distance||0);}
     const sphere=key.includes('Sphere'),extent=args.extent||[.5,.5,.5];if(!sphere&&(!vector(extent)||extent.some(v=>v<=0||v>10000)))throw Error('상자 반 크기를 확인하세요.');
     const shape=sphere?new R.Ball(size(args.radius,'반지름')):dim===2?new R.Cuboid(extent[0],extent[1]):new R.Cuboid(...extent);
-    if(key.startsWith('physicsOverlap'))return [...new Set(candidates.filter(c=>c.collider.intersectsShape(shape,position,rotation)).map(c=>c.object.id))].sort();
+    if(key.startsWith('physicsOverlap'))return output([...new Set(candidates.filter(c=>c.collider.intersectsShape(shape,position,rotation)).map(c=>c.object.id))].sort());
     const end=checked(args.end,'끝'),direction=[end.x-position.x,end.y-position.y,dim===2?0:end.z-position.z];let best;
     for(const c of candidates){const h=c.collider.castShape(xyz([0,0,0]),shape,position,rotation,xyz(direction),0,1,true);if(h&&(!best||h.time_of_impact<best.h.time_of_impact))best={h,c};}
-    if(!best)return emptyHit();const {h,c}=best,rotationQ=dim===2?new Quaternion().setFromAxisAngle(new Vector3(0,0,1),c.collider.rotation()):new Quaternion().copy(c.collider.rotation());
-    return {hit:true,position:new Vector3(...array(h.witness1)).applyQuaternion(rotationQ).add(new Vector3(...array(c.collider.translation()))).toArray(),normal:new Vector3(...array(h.normal1)).applyQuaternion(rotationQ).toArray(),actor:c.object.id};
+    if(!best)return output(emptyHit());const {h,c}=best,rotationQ=dim===2?new Quaternion().setFromAxisAngle(new Vector3(0,0,1),c.collider.rotation()):new Quaternion().copy(c.collider.rotation());
+    return output({hit:true,position:new Vector3(...array(h.witness1)).applyQuaternion(rotationQ).add(new Vector3(...array(c.collider.translation()))).toArray(),normal:new Vector3(...array(h.normal1)).applyQuaternion(rotationQ).toArray(),actor:c.object.id},h.time_of_impact);
   }
   const state={backend:'rapier',objects,gameplay:options.gameplay||null,
     // Only consecutive synchronous velocity/force/sleep writes share a sync.
     // Scene edits and queries remain outside this scope and synchronize normally.
     writeBatch(callback){alive();if(writingBatch)throw Error('물리 쓰기 묶음 중첩');sync();writingBatch=true;try{return callback();}finally{writingBatch=false;}},
-    async ready(){alive();readyPromise??=loadPhysicsLibraries().then(modules=>{alive();for(let i=0;i<modules.length;i++){const R=modules[i],dim=i+2,world=new R.World(xyz(gravity));world.timestep=dt;world.numSolverIterations=options.solverIterations??8;const space={R,world,bodies:new Map(),colliders:new Map(),joints:new Map(),eventQueue:new R.EventQueue(true),anchorBody:world.createRigidBody(R.RigidBodyDesc.fixed())};space.hooks={filterContactPair:(a,b)=>pairAllowed(space,a,b)?R.SolverFlags.COMPUTE_IMPULSE:null,filterIntersectionPair:(a,b)=>pairAllowed(space,a,b)};spaces.set(dim,space);}sync();return state;}).catch(error=>{state.dispose();throw error;});return readyPromise;},
+    async ready(){alive();readyPromise??=loadPhysicsLibraries().then(modules=>{alive();for(let i=0;i<modules.length;i++){const R=modules[i],dim=i+2,world=new R.World(xyz(gravity));world.timestep=dt;world.numSolverIterations=options.solverIterations??8;const space={R,world,bodies:new Map(),colliders:new Map(),joints:new Map(),eventQueue:new R.EventQueue(true),anchorBody:world.createRigidBody(R.RigidBodyDesc.fixed())};if(dim===3)space.vehicles=new RaycastVehicles(space,objects,{queryOnly:options.queryOnly,frame:options.vehicleFrame});space.deformables=new DeformableWorld(space,objects,{queryOnly:options.queryOnly,type:dim===2?'Rope2D':'Cloth',frame:dim===2?options.ropeFrame:options.clothFrame});space.hooks={filterContactPair:(a,b)=>pairAllowed(space,a,b)?R.SolverFlags.COMPUTE_IMPULSE:null,filterIntersectionPair:(a,b)=>pairAllowed(space,a,b)};spaces.set(dim,space);}sync();return state;}).catch(error=>{state.dispose();throw error;});return readyPromise;},
     async loadMaterials(read){for(const o of objects)for(const c of objectComponents(o)){const path=c.properties?.physicalMaterial;if(!path||materials.has(path))continue;const data=await read(path);if(data?.version!==1||!['friction','restitution','density'].every(k=>Number.isFinite(data[k]))||data.friction<0||data.friction>10||data.restitution<0||data.restitution>1||data.density<=0)throw Error('물리 머테리얼 검증 실패: '+path);materials.set(path,data);}return state.ready();},
     input(key,value){keys.set(key.toLowerCase(),value);if(key===' '&&value&&state.gameplay?.pawn)jumps.add(state.gameplay.pawn);},releaseInput(){keys.clear();inputs.clear();jumps.clear();},
     rootMotion(o,motion,duration){alive();if(options.queryOnly||!objects.includes(o)||o.poolActive===false)return;if(!Number.isFinite(duration)||duration<0||duration>86400||!motion||motion.length!==7||!Array.from(motion).every(Number.isFinite)||Array.from(motion.slice(0,3)).some(v=>Math.abs(v)>1000000)||Math.abs(Math.hypot(...motion.slice(3))-1)>.001)throw Error('루트 모션 이동량·시간 오류');if(!duration)return;let state=rootMotions.get(o);if(!state){state={segments:[]};rootMotions.set(o,state);}const pending=state.segments.reduce((v,s)=>v+s.remaining,0),accepted=Math.max(0,Math.min(duration,dt*maxSubsteps-pending));if(!accepted)return;const transform=pose(o,objects),position=new Vector3(...motion.slice(0,3)).multiply(transform.scale).applyQuaternion(transform.rotation),rotation=new Quaternion().fromArray(motion,3).premultiply(transform.rotation).multiply(transform.rotation.clone().invert());state.segments.push({position,rotation,duration,remaining:accepted});},
     clearRootMotion(o){if(!rootMotions.has(o))return;rootMotions.delete(o);const r=record(o,2)?.p?record(o,2):record(o,3);if(r?.body.isDynamic()){const v=array(r.body.linvel()),move=enabledComponent(o,'CharacterMovement2D')||enabledComponent(o,'CharacterMovement'),axes=r.dim===2?[0,1]:[0,1,2];for(const i of axes)if(i!==1||!move||move.movementMode==='flying'||enabledComponent(o,'TopDownMovement2D'))v[i]=0;r.body.setLinvel(xyz(v),true);}else if(!r?.p)o.velocity=[0,0,0];},
     movement(o,direction,value=1){if(!vector(direction)||!Number.isFinite(value))throw Error('이동 입력을 확인하세요.');inputs.set(o.id,new Vector3(...(inputs.get(o.id)||[0,0,0])).addScaledVector(new Vector3(...direction),value).toArray());},jump(o){jumps.add(o.id);},
+    ropePin(o,index,pinned){alive();sync();spaces.get(2)?.deformables.pin(o,index,pinned);},
+    ropeImpulse(o,impulse,index=-1){alive();sync();spaces.get(2)?.deformables.impulse(o,impulse,index);},
+    ropeAttach(o,index,target){alive();sync();spaces.get(2)?.deformables.attach(o,index,target);},
+    ropeReset(o){alive();sync();spaces.get(2)?.deformables.reset(o);},
+    ropePage(o,params){alive();sync();const ropes=spaces.get(2)?.deformables;if(!ropes)throw Error('2D 물리 월드를 준비하세요.');return ropes.page(o,params);},
+    clothPin(o,index,pinned){alive();sync();spaces.get(3)?.deformables.pin(o,index,pinned);},
+    clothImpulse(o,impulse,index=-1){alive();sync();spaces.get(3)?.deformables.impulse(o,impulse,index);},
+    clothAttach(o,index,target){alive();sync();spaces.get(3)?.deformables.attach(o,index,target);},
+    clothReset(o){alive();sync();spaces.get(3)?.deformables.reset(o);},
+    clothPage(o,params){alive();sync();const cloths=spaces.get(3)?.deformables;if(!cloths)throw Error('3D 물리 월드를 준비하세요.');return cloths.page(o,params);},
+    vehicleInput(o,throttle,steering,brake=0,handbrake=0){alive();sync();spaces.get(3)?.vehicles.input(o,throttle,steering,brake,handbrake);},
+    vehicleGear(o,gear){alive();sync();const vehicles=spaces.get(3)?.vehicles;if(!vehicles)throw Error('활성 3D 차량이 필요해요.');vehicles.gear(o,gear);},
     velocity(o,v){if(!vector(v))throw Error('속도를 확인하세요.');const r=dynamic(o);r.body.setLinvel(xyz(constrained(r,v)),true);mirror(r);},
     angularVelocity(o,v){if(!vector(v))throw Error('각속도를 확인하세요.');const r=dynamic(o),angular=constrained(r,v,true);r.body.setAngvel(r.dim===2?angular[2]:xyz(angular),true);mirror(r);},
     impulse(o,v){return state.applyForce(o,v,'impulse');},force(o,v){return state.applyForce(o,v,'force');},
     applyForce(o,v,mode='force',point){if(!vector(v)||point&&!vector(point)||!['force','acceleration','impulse','velocityChange'].includes(mode))throw Error('힘·모드·작용점을 확인하세요.');const r=dynamic(o),mass=['acceleration','velocityChange'].includes(mode)?r.body.mass():1,force=xyz(v.map(x=>x*mass)),impulse=['impulse','velocityChange'].includes(mode),wake=v.some(x=>x!==0);if(point)r.body[impulse?'applyImpulseAtPoint':'addForceAtPoint'](force,xyz(point),wake);else r.body[impulse?'applyImpulse':'addForce'](force,wake);mirror(r);},
     torque(o,v,impulse=false){if(!vector(v))throw Error('토크를 확인하세요.');const r=dynamic(o);r.body[impulse?'applyTorqueImpulse':'addTorque'](r.dim===2?v[2]:xyz(v),v.some(x=>x!==0));mirror(r);},
     sleeping(o,value){const r=dynamic(o);value?r.body.sleep():r.body.wakeUp();mirror(r);},
+    synchronize(){alive();sync();},
     query,contacts(){return lastContacts;},
     debug(){alive();return [...spaces].map(([dimension,s])=>{const data=s.world.debugRender();if(dimension===3)return {dimension,...data};const vertices=new Float32Array(data.vertices.length/2*3);for(let i=0;i<data.vertices.length/2;i++)vertices.set([data.vertices[i*2],data.vertices[i*2+1],0],i*3);return {dimension,vertices,colors:data.colors};});},
+    jointPage({target,offset=0,limit=64}={}){alive();if(target!==undefined&&typeof target!=='string'||!Number.isInteger(offset)||offset<0||!Number.isInteger(limit)||limit<1||limit>256)throw Error('관절 조회 대상·페이지를 확인하세요.');sync();const items=[];let total=0;for(const[dimension,space]of spaces)for(const j of space.joints.values()){if(target&&j.object.id!==target)continue;const index=total++;if(index>=offset&&items.length<limit){const p=j.component.properties;items.push({owner:j.object.id,component:j.component.id,dimension,type:p.jointType,connectedBody:p.connectedBody||null,...(p.jointType==='generic'?{axes:structuredClone(p.jointDOFs)}:{})});}}return{offset,total,items,nextOffset:offset+limit<total?offset+limit:null};},
     inspect(){alive();sync();return {backend:'rapier',fixedStep:dt,elapsed,dimensions:[...spaces].map(([dimension,s])=>({dimension,bodies:[...s.bodies.values()].map(r=>({id:r.object.id,bodyType:typeOf(r.p),position:array(r.body.translation()),velocity:array(r.body.linvel()),angularVelocity:dimension===2?[0,0,r.body.angvel()]:array(r.body.angvel()),mass:r.body.mass(),sleeping:r.body.isSleeping(),colliders:r.colliders.size})),joints:[...s.joints.values()].map(j=>({owner:j.object.id,component:j.component.id,type:j.component.properties.jointType,connectedBody:j.component.properties.connectedBody||null}))}))};},
     step(delta,limit=maxSubsteps){alive();if(!spaces.size)throw Error('물리 월드를 먼저 준비하세요.');if(!Number.isFinite(delta)||delta<0)throw Error('물리 시간을 확인하세요.');accumulator=Math.min(accumulator+delta,dt*maxSubsteps);let count=0;
       while(accumulator+1e-9>=dt&&count<limit){sync();if(movement(dt))sync();for(const o of objects)for(const c of objectComponents(o).filter(c=>['ConstantForce','ConstantForce2D'].includes(c.type)&&c.properties?.enabled!==false)){const p={...componentDefaultValues(c.type),...c.properties},r=record(o,c.type.endsWith('2D')?2:3);if(!r?.body.isDynamic())continue;r.body.addForce(xyz(p.force),p.force.some(v=>v!==0));r.body.addTorque(r.dim===2?p.torque[2]:xyz(p.torque),p.torque.some(v=>v!==0));}
-        for(const s of spaces.values())s.world.step(s.eventQueue,s.hooks);updateObjects();collectContacts();elapsed+=dt;accumulator=Math.max(0,accumulator-dt);count++;jumps.clear();
+        for(const s of spaces.values()){s.vehicles?.step(dt);s.deformables?.step(dt);s.world.step(s.eventQueue,s.hooks);}updateObjects();for(const s of spaces.values()){s.vehicles?.publish();s.deformables?.publish();}collectContacts();elapsed+=dt;accumulator=Math.max(0,accumulator-dt);count++;jumps.clear();
         inputs.clear();for(const s of spaces.values())for(const r of s.bodies.values())if(r.p){r.body.resetForces(false);r.body.resetTorques(false);}
       }
       if(count){inputs.clear();for(const s of spaces.values())for(const r of s.bodies.values())if(r.p){r.body.resetForces(false);r.body.resetTorques(false);}}
       if(state.gameplay){state.gameplay.elapsed=elapsed;for(const type of ['GameMode','GameState']){const o=objects.find(o=>o.id===state.gameplay[type==='GameMode'?'gameMode':'gameState']),c=o&&objectComponents(o).find(c=>c.type===type);if(c){c.properties.elapsed=elapsed;c.properties.matchState=state.gameplay.matchState;}}}return count;
     },
     async advance(delta,before,after){await state.ready();if(!Number.isFinite(delta)||delta<0)throw Error('물리 시간을 확인하세요.');accumulator=Math.min(accumulator+delta,dt*maxSubsteps);let count=0;while(accumulator+1e-9>=dt&&count<maxSubsteps){await before?.(dt);state.step(0,1);await after?.(dt);count++;}return count;},
-    dispose(){if(disposed)return;disposed=true;state.releaseInput();rootMotions.clear();rootDriven.clear();for(const s of spaces.values()){if(s.rootController)s.world.removeCharacterController(s.rootController);s.world.free();s.eventQueue.free();}spaces.clear();lastContacts=[];}
+    dispose(){if(disposed)return;disposed=true;state.releaseInput();rootMotions.clear();rootDriven.clear();for(const s of spaces.values()){s.vehicles?.dispose();s.deformables?.dispose();if(s.rootController)s.world.removeCharacterController(s.rootController);s.world.free();s.eventQueue.free();}spaces.clear();lastContacts=[];}
   };return state;
 }
 
@@ -269,9 +293,9 @@ export function validPhysicsSnapshot(objects){
   if(!Array.isArray(objects)||new Set(objects.map(o=>o?.id)).size!==objects.length)return false;
   const byId=new Map(objects.map(o=>[o?.id,o]));
   for(const o of objects){
-    if(!o||o.runtimeTilemap!==undefined&&!valid2DAsset('tilemap',o.runtimeTilemap)||o.tilemapDirty!==undefined&&typeof o.tilemapDirty!=='boolean'||typeof o.id!=='string'||!o.id.length||o.id.length>160||!['position','rotation','scale'].every(k=>vector(o[k])&&o[k].every(v=>Math.abs(v)<=10000))||!o.scale.every(v=>v>=.01)||o.components!==undefined&&(!Array.isArray(o.components)||o.components.length>100)||o.tileColliders!==undefined&&!Array.isArray(o.tileColliders))return false;
-    const components=[...(o.components||[]),...(o.tileColliders||[])];if(new Set(components.map(c=>c?.id)).size!==components.length)return false;
-    for(const c of components){if(!c||typeof c.type!=='string'||typeof c.id!=='string'||!c.id.length||c.id.length>160)return false;if((colliderTypes.has(c.type)||['Rigidbody','Rigidbody2D','CharacterMovement','CharacterMovement2D'].includes(c.type))&&!validComponentProperties(c.type,c.properties||{}))return false;}
+    if(!o||o.runtimeTilemap!==undefined&&!valid2DAsset('tilemap',o.runtimeTilemap)||o.tilemapDirty!==undefined&&typeof o.tilemapDirty!=='boolean'||typeof o.id!=='string'||!o.id.length||o.id.length>160||!['position','rotation','scale'].every(k=>vector(o[k])&&o[k].every(v=>Math.abs(v)<=10000))||!validActorScale(o.scale)||o.components!==undefined&&(!Array.isArray(o.components)||o.components.length>100)||o.tileColliders!==undefined&&!Array.isArray(o.tileColliders))return false;
+    const generatedTiles=o.runtimeTilemap&&o.tileColliders?.length?new Set(o.tileColliders):null;const components=[...(o.components||[]),...(o.tileColliders||[])];if(new Set(components.map(c=>c?.id)).size!==components.length)return false;
+    for(const c of components){if(!c||typeof c.type!=='string'||typeof c.id!=='string'||!c.id.length||c.id.length>160)return false;if((colliderTypes.has(c.type)||['Rigidbody','Rigidbody2D','CharacterMovement','CharacterMovement2D','PhysicsConstraint','PhysicsConstraint2D','RaycastVehicle','Cloth','Rope2D'].includes(c.type))&&!validComponentProperties(c.type,generatedTiles?.has(c)&&/^tile_/.test(c.id)&&['BoxCollider2D','PolygonCollider2D'].includes(c.type)&&vector(c.properties?.center)&&c.properties.center[2]===0&&c.properties.center.every(v=>Math.abs(v)<=1000000)?{...c.properties,center:[0,0,0]}:c.properties||{}))return false;}
     const seen=new Set([o.id]);let parent=o.parentId||o.parent,depth=0;while(parent){if(typeof parent!=='string'||seen.has(parent)||!byId.has(parent)||++depth>64)return false;seen.add(parent);parent=byId.get(parent).parentId||byId.get(parent).parent;}
   }return true;
 }

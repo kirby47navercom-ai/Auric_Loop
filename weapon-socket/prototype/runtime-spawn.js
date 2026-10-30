@@ -1,3 +1,6 @@
+import {blueprintClassComponents,blueprintClassKind} from './blueprint-class-defaults.js';
+import {validActorScale} from './transform-scale.js';
+import {resolvePrefab} from './prefab-variants.js';
 import {validValue,defaultsFor,graphContext} from './blueprint-model.js';
 import {assetTitle,validAsset} from './asset-documents.js';
 import {prepareActorBindings} from './play-world.js';
@@ -6,22 +9,22 @@ import {actorClassNames} from './runtime-actors.js';
 import {componentDefinitions} from './scene-components.js';
 
 const copy=v=>structuredClone(v);
-const basicKinds={Actor:'empty',Pawn:'character',Character:'character',Cube:'cube',Sphere:'sphere',Cylinder:'cylinder',Plane:'plane'};
-export const spawnTransformValid=t=>validValue('transform',t)&&t.scale.every(n=>n>=.01)&&['position','rotation','scale'].every(k=>t[k].every(n=>Math.abs(n)<=(k==='position'?1000000:10000)));
+const basicKinds={Actor:'empty',Pawn:'character',Character:'character',SpriteActor:'sprite',Pawn2D:'sprite',Character2D:'character2d',TopDownCharacter2D:'character2d',Cube:'cube',Sphere:'sphere',Cylinder:'cylinder',Plane:'plane'};
+export const spawnTransformValid=t=>validValue('transform',t)&&validActorScale(t.scale)&&['position','rotation','scale'].every(k=>t[k].every(n=>Math.abs(n)<=(k==='position'?1000000:10000)));
 const actor=(name,kind='empty')=>({id:'root',name,kind,group:'WORLD',visible:true,position:[0,0,0],rotation:[0,0,0],scale:[1,1,1],components:[]});
-export function spawnRequested(bindings){return bindings.some(b=>/\bScene\s*::\s*Spawn\s*\(/.test(b.root.native?.source||'')||JSON.stringify(b.root).match(/"key":"(?:sceneSpawn|spawn)"/));}
+export function spawnRequested(bindings,objects=[]){return objects.some(o=>o.components?.some(c=>c.type==='NetworkSession'&&c.properties?.enabled!==false))||bindings.some(b=>/\bNetwork\s*::\s*Connect\s*\(/.test(b.root.native?.source||'')||JSON.stringify(b.root).includes('"key":"netConnect"'))||objects.some(o=>o.components?.some(c=>c.type==='ParticleSystem'&&c.properties?.enabled!==false&&c.properties?.subEmitter))||bindings.some(b=>/\bScene\s*::\s*Spawn\s*\(/.test(b.root.native?.source||'')||JSON.stringify(b.root).match(/"key":"(?:sceneSpawn|spawn)"/));}
 export async function prepareSpawnCatalog(files,hooks){
   const templates=new Map(),byName=new Map(),bindings=new Map(),inputAssets={contexts:new Map(),actions:new Map()};
   const add=(key,value)=>{if(templates.has(key))throw Error('생성 클래스 이름 중복: '+key);templates.set(key,value);};
-  for(const [name,kind] of Object.entries(basicKinds))add(name,{key:name,root:'root',objects:[actor(name,kind)],pool:{enabled:false,maxInactive:0}});
+  for(const [name,kind] of Object.entries(basicKinds)){const object=actor(name,kind);if(blueprintClasses[name]?.dimension==='2d'){object.components=blueprintClassComponents(name);object.actorClasses=actorClassNames(object,{name,settings:{parentClass:name}});}add(name,{key:name,root:'root',objects:[object],pool:{enabled:false,maxInactive:0}});}
   for(const file of files.filter(f=>['blueprint','prefab'].includes(f.kind))){
     const path=file.path,data=await hooks.readAsset(path);if(!validAsset(file.kind,data))throw Error('생성 에셋 검증 실패: '+path);
     let objects,root;
     if(file.kind==='blueprint'){root='root';objects=[{...actor(data.name),blueprintAsset:path}];}
-    else{root=data.root;objects=copy(data.objects);}
+    else{const resolved=await resolvePrefab(path,hooks.readAsset,{validate:d=>validAsset('prefab',d)});root=resolved.root;objects=copy(resolved.objects);}
     const loaded=await prepareActorBindings(objects,hooks),first=objects.find(o=>o.id===root);
     if(first.parent||first.parentId)throw Error('프리팹 루트에 외부 부모가 있어요: '+path);
-    for(const o of objects){if(o.components?.some(c=>c.type==='SpriteRenderer'&&c.properties?.enabled!==false))o.kind='sprite';else if(o.kind==='empty'&&o.components?.some(c=>c.type==='MeshRenderer'&&c.properties?.enabled!==false))o.kind='model';}
+    for(const o of objects){const binding=loaded.bindings.find(b=>b.self===o.id);if(binding&&blueprintClasses[binding.root.settings?.parentClass]?.dimension==='2d'){o.kind=blueprintClassKind(binding.root.settings.parentClass,o.components,binding.root.native);continue;}if(o.components?.some(c=>c.type==='SpriteRenderer'&&c.properties?.enabled!==false))o.kind='sprite';else if(o.kind==='empty'&&o.components?.some(c=>c.type==='MeshRenderer'&&c.properties?.enabled!==false))o.kind='model';}
     const poolComponent=first.components?.find(c=>c.type==='PooledActor'&&c.properties?.enabled!==false),pool={enabled:!!poolComponent,maxInactive:poolComponent?.properties?.maxInactive??128};
     const references=Object.fromEntries(loaded.bindings.map(b=>[b.self,b.root.native?.classes.find(c=>c.name===objects.find(o=>o.id===b.self)?.nativeClass)?.properties.filter(p=>p.type==='object').map(p=>p.name)||[]]));
     const componentReferences=Object.fromEntries(objects.map(o=>[o.id,Object.fromEntries((o.components||[]).map(c=>[c.id,Object.entries(componentDefinitions[c.type]?.properties||{}).filter(([,p])=>p.objectReference).map(([name])=>name)]))]));
@@ -38,7 +41,7 @@ export async function prepareSpawnCatalog(files,hooks){
     if(templates.has(c.name))throw Error('생성 클래스 이름 중복: '+c.name);
     const nativeProperties=Object.fromEntries(c.properties.map(p=>[p.name,copy(p.value??(p.array?[]:defaultsFor(p.type)))]));
     const nativeBuildAsset='@native/'+c.name;hooks.builds.set(nativeBuildAsset,build);
-    const object={...actor(c.name,basicKinds[c.base]||'empty'),nativeClass:c.name,nativeBuildAsset,nativeProperties};
+    const object={...actor(c.name,basicKinds[c.base]||'empty'),...(blueprintClasses[c.base]?.dimension==='2d'?{components:blueprintClassComponents(c.base)}:{}),nativeClass:c.name,nativeBuildAsset,nativeProperties};
     object.actorClasses=actorClassNames(object,{name:c.name,settings:{parentClass:c.name},native:build.metadata});
     add(c.name,{key:c.name,root:'root',objects:[object],pool:{enabled:false,maxInactive:0}});
   }
@@ -57,8 +60,8 @@ export function instantiateSpawn(template,transform,rootId=crypto.randomUUID(),e
   return {rootId,objects,ids};
 }
 export function spawnBindings(catalog,template,instance){return (catalog.bindings.get(template.key)||[]).map(b=>({...b,self:instance.ids.get(b.self),variableValues:Object.fromEntries(Object.entries(b.variableValues||{}).map(([id,value])=>{const d=b.root.variables.find(v=>v.id===id);const remap=v=>typeof v==='string'?instance.ids.get(v)||v:v;return [id,d?.type==='object'?Array.isArray(value)?value.map(remap):remap(value):copy(value)];}))}));}
-export async function initializeSpawn(vm,bindings,services,objects,{reused=false}={}){
-  const generation=vm.generation,current=()=>vm.active&&!vm.stopping&&vm.generation===generation;
+export async function initializeSpawn(vm,bindings,services,objects,{reused=false,isCurrent=()=>true}={}){
+  const generation=vm.generation,current=()=>vm.active&&!vm.stopping&&vm.generation===generation&&isCurrent();
   for(const b of bindings)if(current()&&vm.object(b.self)?.poolActive!==false&&vm.object(b.self))await vm.emit(b,'construction',{},graphContext(b.root,'construction'));
   for(const o of objects)if(current()&&vm.object(o.id)===o&&o.poolActive!==false)await services.startActor(o,vm);
   for(const o of objects)if(current()&&vm.object(o.id)===o&&o.poolActive!==false)await services.startSystems(vm,o.id);

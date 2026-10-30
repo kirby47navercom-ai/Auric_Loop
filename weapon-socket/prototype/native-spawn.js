@@ -1,3 +1,4 @@
+import {validActorScale} from './transform-scale.js';
 import {validValue} from './blueprint-model.js';
 import {validateNativeBindings} from './native-module-query.js';
 import {validComponents,componentDefinitions} from './scene-components.js';
@@ -45,7 +46,7 @@ export function spawnReplyObjects(request,result,metadata,context){
     if(metadata.nativeSpawn!==1||!t||!a||!validValue('transform',a.transform)||!Array.isArray(a.spawnStates)||a.spawnStates.length!==t.objects.length||typeof a.spawnId!=='string'||a.spawnId.length>160)throw Error('C++ 생성 결과 형식 오류');
     const existing=objects.get(a.spawnId);if(existing?!(t.pool.enabled&&existing.spawnAsset===key&&existing.spawnRoot===existing.id&&existing.poolActive===false):!(a.actorId?a.spawnId===a.actorId: a.spawnId.startsWith('spawn_'+request.spawnPrefix+'_')))throw Error('C++ 생성 객체 ID 오류');
     const ids=new Map(t.objects.map((o,i)=>[o.id,o.id===t.root?a.spawnId:a.spawnId+'_'+i]));
-    for(const source of t.objects){const id=ids.get(source.id),state=a.spawnStates.find(o=>o?.id===id);if(!state||!validValue('transform',state)||!state.scale.every(v=>v>=.01)||!['position','rotation','scale'].every(k=>state[k].every(v=>Math.abs(v)<=(k==='position'?1000000:10000))))throw Error('C++ 생성 객체 변환 오류');
+    for(const source of t.objects){const id=ids.get(source.id),state=a.spawnStates.find(o=>o?.id===id);if(!state||!validValue('transform',state)||!validActorScale(state.scale)||!['position','rotation','scale'].every(k=>state[k].every(v=>Math.abs(v)<=(k==='position'?1000000:10000))))throw Error('C++ 생성 객체 변환 오류');
       const expected={...source,id,spawnAsset:key,spawnRoot:a.spawnId,spawnLocalId:source.id,spawnPool:t.pool,poolActive:true};delete expected.destroying;
       for(const field of ['parent','parentId','owner','pawn','controller'])if(ids.has(expected[field]))expected[field]=ids.get(expected[field]);
       expected.components=source.components&&structuredClone(source.components);for(const c of expected.components||[])for(const key of t.componentReferences?.[source.id]?.[c.id]||[])if(ids.has(c.properties[key]))c.properties[key]=ids.get(c.properties[key]);if(expected.components===undefined)delete expected.components;

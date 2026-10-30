@@ -1,0 +1,28 @@
+import {validSectionWeightCurve,sampleSectionWeightCurve,prepareSectionWeightCurve} from './sequence-weight-curve.js';
+const prepared=new WeakMap(),admitted=new WeakSet(),constantPlans=new WeakMap(),unit=v=>Number.isFinite(v)&&v>=0&&v<=1;
+export function validSequenceAudioEnvelope(clip,audio=true){return ['volume','fadeIn','fadeOut'].every(field=>clip[field]===undefined||audio&&(field==='volume'?unit(clip[field]):Number.isFinite(clip[field])&&clip[field]>=0&&clip[field]<=clip.duration))&&(clip.volumeCurve===undefined||audio&&validSectionWeightCurve(clip.volumeCurve));}
+export function sequenceAudioGain(clip,time){const local=Math.max(0,Math.min(clip.duration,time-clip.start)),fadeIn=clip.fadeIn??0,fadeOut=clip.fadeOut??0;return (clip.volume??1)*Math.min(1,fadeIn?local/fadeIn:1,fadeOut?(clip.duration-local)/fadeOut:1)*sampleSectionWeightCurve(curveView(clip),time);}
+const curveViews=new WeakMap();function curveView(clip){let view=curveViews.get(clip);if(!view){view={start:clip.start,weightCurve:clip.volumeCurve};curveViews.set(clip,view);}return view;}
+function knots(clip){let result=prepared.get(clip);if(result)return result;const d=clip.duration,a=clip.fadeIn??0,b=clip.fadeOut??0;result=[0,d];if(a)result.push(a);if(b)result.push(d-b);if(a&&b&&a+b>d)result.push(d*a/(a+b));result=[...new Set(result)].sort((a,b)=>a-b);prepared.set(clip,result);return result;}
+export function sequenceAudioEnvelope(clip,time,clockRate=1){
+ if(!Number.isFinite(time)||!Number.isFinite(clockRate))throw Error('오디오 클립 평가 시각·속도를 확인하세요.');if(!admitted.has(clip)){if(!validSequenceAudioEnvelope(clip))throw Error('오디오 클립 음량·페이드를 확인하세요.');admitted.add(clip);}
+ const value=sequenceAudioGain(clip,time);if(!unit(value))throw Error('오디오 클립 음량을 확인하세요.');
+ if(time<clip.start||time>clip.start+clip.duration)return {value,endValue:value,seconds:0};
+ if(!clip.volumeCurve&&!clip.fadeIn&&!clip.fadeOut){let plan=constantPlans.get(clip);if(!plan){plan=Object.freeze({value,endValue:value,seconds:0});constantPlans.set(clip,plan);}return plan;}
+ if(!clockRate)return {value,endValue:value,seconds:0};
+ if(clip.volumeCurve){
+  if(clip.fadeIn||clip.fadeOut)return {value,endValue:value,seconds:0};
+  const keys=clip.volumeCurve,upper=prepareSectionWeightCurve(keys).upper(time,clip.start),exact=upper>0&&time===clip.start+keys[upper-1].time,index=clockRate<0&&exact?upper-2:upper-1,a=keys[Math.max(0,index)],b=keys[Math.min(keys.length-1,index+1)];if(!a||!b||a===b||a.interpolation==='step')return {value,endValue:value,seconds:0};
+  const next=clockRate>0?b.time:a.time,seconds=Math.min(60,Math.max(0,(clip.start+next-time)/clockRate)),endValue=sequenceAudioGain(clip,time+clockRate*seconds);return {value,endValue,seconds:value===endValue?0:seconds};
+ }
+ const local=Math.max(0,Math.min(clip.duration,time-clip.start)),points=knots(clip);let next=clockRate>0?clip.duration:0;if(clockRate>0){for(const point of points)if(point>local){next=point;break;}}else for(let i=points.length-1;i>=0;i--)if(points[i]<local){next=points[i];break;}
+ // Bound only the scheduling horizon; long authored fades keep their full slope.
+ const seconds=Math.min(60,Math.max(0,(next-local)/clockRate)),endValue=sequenceAudioGain(clip,clip.start+local+clockRate*seconds);return {value,endValue,seconds:value===endValue?0:seconds};
+}
+export function applySequenceAudioEnvelope(player,envelope){
+ if(envelope===undefined)return;const {value,endValue,seconds}=envelope;if(!unit(value)||!unit(endValue)||!Number.isFinite(seconds)||seconds<0||seconds>60)throw Error('오디오 음량 자동화 값을 확인하세요.');
+ const gain=player.output?.gain;if(!gain)throw Error('시퀀스 음량에는 PCM 오디오 출력이 필요해요.');
+ if(!seconds&&(player.hbSequenceEnvelope?.seconds??0)===0&&(player.hbSequenceGain??1)===value)return;
+ const now=player.context.currentTime;gain.cancelScheduledValues(now);gain.setValueAtTime(value,now);if(seconds&&endValue!==value)gain.linearRampToValueAtTime(endValue,now+seconds);player.hbSequenceGain=value;player.hbSequenceEnvelope={value,endValue,seconds};
+}
+export const sequenceAudioEnvelopeContract={clip:'optional audio-only volume0..1, fadeIn/fadeOut0..clip.duration, volumeCurve unit linear/step keys using the existing section weight curve schema; absent=volume1/no fade; overlapping fades use the minimum of their linear ramps',clock:'gain follows the owning sequence clock and clip start/duration independently of sourceStart, reverse and PCM pitch; negative parent clocks reverse the envelope; holds/pause/manual clocks park scheduled ramps',scheduling:'one output GainNode already owned by the PCM voice; cancel and anchor at evaluated gain, ramp only to the next fade knot, at most60 seconds lookahead; long fades retain slope; constant/no-fade gain avoids redundant AudioParam writes; standalone linear gain curves also schedule to the next knot; step and combined fade×curve evaluate at VM samples',composition:'clip gain multiplies existing audio-asset volume, routing, ducking and spatial attenuation; sequence layer weight remains separate; voice budget observes actual output gain',take:'frame-observed clip gain retained in reduced linear volumeCurve keys; constant gain uses volume; reverse/loop transport splits slice the original gain curve without source mutation; existing Take key budget includes volumeCurve keys',precision:'sample-scheduled linear fades or standalone linear gain curves at constant parent clock velocity; nonlinear time maps, step keys and fade×curve products re-anchor on VM samples, not general sample-accurate scheduling or genlock',remaining:['nonlinear time-map, step and combined-envelope sample-accurate scheduling','pitch-preserving stretch and streaming reverse']};

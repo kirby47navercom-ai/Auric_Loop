@@ -1,0 +1,14 @@
+// Linear sRGB of the existing e9b18b/596487 presets; module Workers have no renderer import map.
+const sunsetHorizon=[0.8148465722120952,0.4396571738310091,0.25818285291079235],sunsetTop=[0.09989872823822872,0.12743768042608497,0.24228112245478564],unit=v=>{const length=Math.hypot(...v);return length>1e-20?v.map(n=>n/length):[0,-1,0];};
+// Shared linear dome parameters; exposure/fog and realtime cloud geometry are separate.
+export function skyRadianceParameters(resolved,tint=[1,1,1]){
+ const {sky,suns=[]}=resolved||{};if(!sky)return null;let top=sky.topColor.slice(0,3),horizon=sky.horizonColor.slice(0,3);
+ if(sky.sunHeightTint&&suns[0]){const t=Math.max(0,Math.min(1,suns[0].direction[1]/.45)),sunset=1-t*t*(3-2*t);horizon=horizon.map((v,i)=>v+(sunsetHorizon[i]-v)*sunset*.55);top=top.map((v,i)=>v+(sunsetTop[i]-v)*sunset*.3);}
+ const p={topColor:top.map((v,i)=>v*tint[i]),horizonColor:horizon.map((v,i)=>v*tint[i]),sunDiskPower:350/Math.max(.05,sky.sunDiskScale||.05)};
+ for(let i=0;i<2;i++){const light=suns.find(s=>s.index===i),prefix=i?'moon':'sun';p[prefix+'Direction']=(light?.direction||[0,-1,0]).slice();p[prefix+'Color']=light&&sky.sunDiskScale?light.color.slice(0,3).map((v,k)=>v*Math.min(1,light.intensity)*tint[k]):[0,0,0];}return p;
+}
+export function skyRadiance(parameters,direction){
+ const d=unit(direction),t=Math.max(0,Math.min(1,(d[1]+.12)/.97)),height=t*t*(3-2*t),color=parameters.horizonColor.map((v,i)=>v+(parameters.topColor[i]-v)*height);
+ for(const prefix of ['sun','moon']){const axis=unit(parameters[prefix+'Direction']),disk=Math.max(0,d.reduce((sum,v,i)=>sum+v*axis[i],0))**parameters.sunDiskPower*.55;for(let i=0;i<3;i++)color[i]+=parameters[prefix+'Color'][i]*disk;}return color;
+}
+export const skyBakeContract=Object.freeze({version:1,source:'shared realtime dome linear parameters, including sunset tint and independent sun/moon disks; SkyLight tint and indirect intensity',selection:'selected HDRI takes precedence; procedural dome only when no HDRI is selected; no tone mapping/exposure/fog in radiance',lifecycle:'immutable worker snapshot per explicit bake; no GPU capture, persistent texture or steady-frame readback',hdrFilter:'float HDRI: shared solid-angle mips, trilinear angular LOD and polar-row averages; diffuse spread 0.5; rotation/flipY preserved',scratch:'bake-local queried mip levels; original base pixels reused; stats.environmentFilter exposes retained typed storage and generated texels; no global mip cache',sampling:'after diffuse bounce: single-sample cosine/sun/moon power-lobe or filtered-HDRI luminance/solid-angle 2D CDF balance mixture; directional probability at most 0.5 and matching PDF correction; same ray budget; HDRI table at most 16648 bytes, prepared only if used; stats.environmentSampling reports active contract',remaining:'realtime cloud geometry capture; additional low-sample HDRI variance reduction and material/camera/anisotropic gather footprints'});

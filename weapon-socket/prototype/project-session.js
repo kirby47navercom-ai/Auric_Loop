@@ -12,15 +12,22 @@ export function migrateLegacyStorage(storage,project){
 }
 // Browser storage is a synchronous cache backed by project-owned disk data; the
 // qualified localStorage keys remain a backup of this origin's last editor state.
-export async function createProjectStorage(project,{backup,request=globalThis.fetch,debounce=350,onError=()=>{}}={}){
+export async function createProjectStorage(project,{backup,request=globalThis.fetch,debounce=350,onError=()=>{},onBackupError=()=>{},backupBytes=256*1024}={}){
   const suffix='.project.'+encodeURIComponent(project.id),bases=new Set(['hbengine-ui-scene-v1','hbengine.documents.v2','hbengine.docks.v2','hbengine.detached.windows','hbengine.viewport.presentation','hbengine.viewport.camera','hbengine.project.folder','hbengine.project.view','hbengine.project.browsers','hbengine.editor.preferences','hbengine.editor.shortcuts','hbengine.storage-migrated.v1']);
   const owns=key=>{if(typeof key!=='string'||key.length>1000||!key.endsWith(suffix))return false;const base=key.slice(0,-suffix.length);return bases.has(base)||base.startsWith('hbengine.savegame.')&&base.length>18&&!/[\x00-\x1f]/.test(base);};
   const response=await request('/api/storage?project='+encodeURIComponent(project.id),{cache:'no-store'});
   if(!response.ok)throw Error('프로젝트 복구 저장소를 읽을 수 없어요.');
   const saved=await response.json();if(saved?.version!==1||!saved.items||typeof saved.items!=='object'||Array.isArray(saved.items)||!Object.entries(saved.items).every(([key,value])=>owns(key)&&typeof value==='string'))throw Error('프로젝트 복구 저장소 검증 실패');
   const values=new Map(Object.entries(saved.items)),pending=new Map(),marker=storageKey('hbengine.storage-migrated.v1',project);let timer,inFlight;
+  if(!Number.isSafeInteger(backupBytes)||backupBytes<0)throw Error('브라우저 백업 예산을 확인하세요.');
+  let backupSkipped=0,lastBackupError=null;
   const error=issue=>{onError(issue);return issue;};
-  const saveBackup=(key,value)=>{try{if(value===null)backup?.removeItem(key);else backup?.setItem(key,value);}catch(issue){error(issue);}};
+  const saveBackup=(key,value)=>{
+    if(!backup)return;
+    if(value!==null&&2*(key.length+value.length)>backupBytes){backupSkipped++;try{backup.removeItem(key);}catch{}return;}
+    try{if(value===null)backup.removeItem(key);else backup.setItem(key,value);}
+    catch(issue){backupSkipped++;lastBackupError=issue.message;try{backup.removeItem(key);}catch{}onBackupError(issue);}
+  };
   if(!values.has(marker)){
     for(let i=0;i<(backup?.length||0);i++){const key=backup.key(i);if(owns(key)&&!values.has(key)){const value=backup.getItem(key);if(value!==null){values.set(key,value);pending.set(key,value);}}}
     if(backup&&project.legacyStorage===true&&!backup.getItem(marker))for(const key of legacyKeys(backup)){const next=storageKey(key,project),value=backup.getItem(key);if(owns(next)&&value!==null&&!values.has(next)){values.set(next,value);pending.set(next,value);}}
@@ -28,6 +35,7 @@ export async function createProjectStorage(project,{backup,request=globalThis.fe
   }
   for(const [key,value] of values)saveBackup(key,value);
   const adapter={
+    diagnostics:()=>({pending:pending.size,backupSkipped,lastBackupError,backupBytes}),
     get length(){return values.size;},key:index=>[...values.keys()][index]??null,getItem:key=>values.get(key)??null,
     setItem(key,value){if(!owns(key))throw Error('다른 프로젝트 저장 키는 쓸 수 없어요.');value=String(value);if(values.get(key)===value)return;values.set(key,value);pending.set(key,value);saveBackup(key,value);queue();},
     removeItem(key){if(!owns(key))throw Error('다른 프로젝트 저장 키는 쓸 수 없어요.');values.delete(key);pending.set(key,null);saveBackup(key,null);queue();},

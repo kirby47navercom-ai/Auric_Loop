@@ -1,21 +1,34 @@
-// A source node can start only once; resume/seek creates a new node over the same PCM.
+// Weak references share reverse PCM across active voices without retaining a
+// second decoded cache. Virtual voices never request the reverse allocation.
+const reversedPCM=new WeakMap();
+export function reverseAudioBuffer(context,buffer){
+  const cached=reversedPCM.get(buffer)?.deref();if(cached)return cached;
+  const reversed=context.createBuffer(buffer.numberOfChannels,buffer.length,buffer.sampleRate);
+  for(let channel=0;channel<buffer.numberOfChannels;channel++){const source=buffer.getChannelData(channel),out=reversed.getChannelData(channel);for(let i=0,j=source.length-1;i<out.length;i++,j--)out[i]=source[j];}
+  reversedPCM.set(buffer,new WeakRef(reversed));return reversed;
+}
+// A source node can start only once; resume/seek creates a new node over shared PCM.
 export class BufferedAudioPlayer extends EventTarget {
-  constructor(context,buffer){super();this.context=context;this.buffer=buffer;this.output=context.createGain();this.offset=0;this.started=0;this.rate=1;this.repeating=false;this.source=null;this.paused=true;this.disposed=false;this.readyState=4;this.networkState=1;this.error=null;this.volume=1;}
+  constructor(context,buffer){super();this.context=context;this.buffer=buffer;this.output=context.createGain();this.offset=0;this.started=0;this.rate=1;this.repeating=false;this.source=null;this.paused=true;this.disposed=false;this.readyState=4;this.networkState=1;this.error=null;this.volume=1;this.playSerial=0;}
   get duration(){return this.buffer.duration;}
-  get currentTime(){const time=this.offset+(this.paused?0:(this.context.currentTime-this.started)*this.rate);return this.repeating?time%this.duration:Math.min(this.duration,time);}
+  get currentTime(){const time=this.offset+(this.paused?0:(this.context.currentTime-this.started)*this.rate);return this.repeating?((time%this.duration)+this.duration)%this.duration:Math.max(0,Math.min(this.duration,time));}
   set currentTime(value){if(!Number.isFinite(value)||value<0)throw Error('오디오 탐색 시간을 확인하세요.');const playing=!this.paused;this.pause();this.offset=Math.min(value,this.duration);if(playing)this.start();}
   get playbackRate(){return this.rate;}
-  set playbackRate(value){if(!Number.isFinite(value)||value<=0)throw Error('오디오 재생 속도를 확인하세요.');if(value===this.rate)return;this.offset=this.currentTime;this.started=this.context.currentTime;this.rate=value;if(this.source)this.source.playbackRate.value=value;}
+  set playbackRate(value){if(!Number.isFinite(value)||!Number.isFinite(Math.fround(value))||Math.fround(value)===0)throw Error('오디오 재생 속도를 확인하세요.');if(value===this.rate)return;const flip=Math.sign(value)!==Math.sign(this.rate);this.offset=this.currentTime;this.started=this.context.currentTime;this.rate=value;if(this.source){if(flip){this.stopSource();this.start();}else this.source.playbackRate.value=Math.abs(value);}}
   get loop(){return this.repeating;}
   set loop(value){value=Boolean(value);if(value===this.repeating)return;this.offset=this.currentTime;this.started=this.context.currentTime;this.repeating=value;if(this.source)this.source.loop=value;}
   start(){
     if(this.disposed)throw Error('오디오 실행이 종료됐어요.');
-    const source=this.context.createBufferSource();source.buffer=this.buffer;source.loop=this.repeating;source.playbackRate.value=this.rate;source.connect(this.output);this.source=source;this.started=this.context.currentTime;this.paused=false;
-    source.onended=()=>{source.disconnect();if(this.source!==source)return;this.source=null;this.offset=this.duration;this.paused=true;this.dispatchEvent(new Event('ended'));};
-    try{source.start(0,this.offset);}catch(error){this.source=null;this.paused=true;source.disconnect();throw error;}
+    if(this.virtual){this.started=this.context.currentTime;this.paused=false;return;}
+    const buffer=this.rate<0?reverseAudioBuffer(this.context,this.buffer):this.buffer,source=this.context.createBufferSource();source.buffer=buffer;source.loop=this.repeating;source.playbackRate.value=Math.abs(this.rate);source.connect(this.output);this.source=source;this.started=this.context.currentTime;this.paused=false;
+    source.onended=()=>{source.disconnect();if(this.source!==source)return;this.source=null;this.offset=this.rate<0?0:this.duration;this.paused=true;this.dispatchEvent(new Event('ended'));};
+    try{source.start(0,this.rate<0?this.duration-this.offset:this.offset);}catch(error){this.source=null;this.paused=true;source.disconnect();throw error;}
   }
-  async play(){if(!this.paused)return;if(this.context.state==='suspended')await this.context.resume();if(this.paused){if(this.offset>=this.duration)this.offset=0;this.start();}}
-  pause(){if(this.paused)return;this.offset=this.currentTime;this.paused=true;const source=this.source;this.source=null;source.onended=null;source.stop();source.disconnect();}
+  async play(){if(this.disposed)throw Error('오디오 실행이 종료됐어요.');if(!this.paused)return;const serial=++this.playSerial;if(this.context.state==='suspended'&&!this.virtual)await this.context.resume();if(this.disposed)throw Error('오디오 실행이 종료됐어요.');if(serial!==this.playSerial)return;if(this.paused){if(this.rate>0&&this.offset>=this.duration)this.offset=0;else if(this.rate<0&&this.offset<=0)this.offset=this.duration;this.start();}}
+  stopSource(){const source=this.source;this.source=null;if(source){source.onended=null;source.stop();source.disconnect();}}
+  setVirtual(value){value=Boolean(value);if(value===Boolean(this.virtual))return;this.offset=this.currentTime;this.started=this.context.currentTime;this.stopSource();this.virtual=value;if(!this.paused&&!value)this.start();}
+  tick(){if(!this.paused&&!this.repeating&&(this.rate<0?this.currentTime<=0:this.currentTime>=this.duration)){this.stopSource();this.offset=this.rate<0?0:this.duration;this.paused=true;this.dispatchEvent(new Event('ended'));}}
+  pause(){++this.playSerial;if(this.paused)return;this.offset=this.currentTime;this.paused=true;this.stopSource();}
   dispose(){this.pause();this.disposed=true;this.output.disconnect();}
 }
 

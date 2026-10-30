@@ -1,0 +1,34 @@
+import {bridgeBoundaries} from './mesh-boundaries.js';
+const edgeKey=(a,b)=>a<b?a+':'+b:b+':'+a;
+export function meshEdges(data){const edges=new Map();for(let i=0;i<data.indices.length;i+=3)for(let k=0;k<3;k++){const a=data.indices[i+k],b=data.indices[i+(k+1)%3];edges.set(edgeKey(a,b),[a,b]);}return edges;}
+const normal=(a,b,c)=>{const u=b.map((x,i)=>x-a[i]),v=c.map((x,i)=>x-a[i]),n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]],l=Math.hypot(...n);return l?n.map(x=>x/l):[0,1,0];};
+export function editMeshTopology(data,{operation,vertices=[],faces=[],edges=[],tolerance=.001,preserveUV=true,normal:custom=[0,1,0],padding=.04,distance=.1,bridgeOffset=0}={}){
+ if(operation==='bridge')return bridgeBoundaries(data,edges,{bridgeOffset});
+ const d=structuredClone(data),selected=new Set(vertices),selectedFaces=new Set(faces);
+ if(operation==='weld'){
+  if(!Number.isFinite(tolerance)||tolerance<=0||tolerance>100000||typeof preserveUV!=='boolean')throw Error('용접 허용 오차를 확인하세요.');
+  const grid=new Map(),remap=d.vertices.map((_,i)=>i),cell=p=>p.map(v=>Math.floor(v/tolerance)),key=p=>p.join(':');
+  for(let i=0;i<d.vertices.length;i++){if(selected.size&&!selected.has(i))continue;const v=d.vertices[i],c=cell(v);let match;
+   for(let z=-1;z<=1;z++)for(let y=-1;y<=1;y++)for(let x=-1;x<=1;x++)for(const j of grid.get(key([c[0]+x,c[1]+y,c[2]+z]))||[]){if(Math.hypot(...v.map((n,k)=>n-d.vertices[j][k]))<=tolerance&&(!preserveUV||Math.hypot(...d.uvs[i].map((n,k)=>n-d.uvs[j][k]))<=tolerance&&(!d.uvs1||Math.hypot(...d.uvs1[i].map((n,k)=>n-d.uvs1[j][k]))<=tolerance)))match=match===undefined?j:Math.min(match,j);}
+   if(match!==undefined)remap[i]=match;else{const k=key(c);if(!grid.has(k))grid.set(k,[]);grid.get(k).push(i);}
+  }
+  const indices=[];for(let i=0;i<d.indices.length;i+=3){const t=d.indices.slice(i,i+3).map(v=>remap[v]);if(new Set(t).size===3)indices.push(...t);}const used=[...new Set(indices)],compact=new Map(used.map((v,i)=>[v,i]));d.vertices=used.map(i=>d.vertices[i]);d.uvs=used.map(i=>d.uvs[i]);if(d.uvs1)d.uvs1=used.map(i=>d.uvs1[i]);if(d.colors)d.colors=used.map(i=>d.colors[i]);d.indices=indices.map(i=>compact.get(i));delete d.normals;
+ }else if(operation==='insetFaces'){
+  if(!selectedFaces.size||!Number.isFinite(distance)||distance<=0)throw Error('인셋할 면과 양의 거리를 지정하세요.');const indices=[];for(let f=0;f<data.indices.length/3;f++){const ids=data.indices.slice(f*3,f*3+3);if(!selectedFaces.has(f)){indices.push(...ids);continue;}const points=ids.map(i=>data.vertices[i]),lengths=points.map((p,i)=>Math.hypot(...p.map((v,j)=>v-points[(i+1)%3][j]))),perimeter=lengths.reduce((s,v)=>s+v,0),n=normal(...points),area=Math.hypot(...points[1].map((v,j)=>v-points[0][j]))*Math.hypot(...points[2].map((v,j)=>v-points[0][j]));const u=points[1].map((v,j)=>v-points[0][j]),v=points[2].map((v,j)=>v-points[0][j]),cross=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]],inradius=Math.hypot(...cross)/perimeter;if(!area||distance>=inradius)throw Error('인셋 거리가 면의 내접 반지름보다 커요.');const weights=[lengths[1],lengths[2],lengths[0]].map(v=>v/perimeter),center=[0,1,2].map(k=>points.reduce((s,p,i)=>s+p[k]*weights[i],0)),uv=[0,1].map(k=>ids.reduce((s,id,i)=>s+data.uvs[id][k]*weights[i],0)),alpha=distance/inradius,inner=[];for(let i=0;i<3;i++){inner.push(d.vertices.length);d.vertices.push(points[i].map((v,k)=>v+(center[k]-v)*alpha));d.uvs.push(data.uvs[ids[i]].map((v,k)=>v+(uv[k]-v)*alpha));if(d.uvs1)d.uvs1.push(data.uvs1[ids[i]].map((v,k)=>v+(ids.reduce((s,id,j)=>s+data.uvs1[id][k]*weights[j],0)-v)*alpha));if(d.colors){const color=[0,1,2].map(k=>ids.reduce((s,id,j)=>s+data.colors[id][k]*weights[j],0));d.colors.push(data.colors[ids[i]].map((v,k)=>v+(color[k]-v)*alpha));}}indices.push(...inner);for(let i=0;i<3;i++){const a=ids[i],b=ids[(i+1)%3],x=inner[i],y=inner[(i+1)%3];indices.push(a,b,y,a,y,x);}}d.indices=indices;delete d.normals;
+ }else if(operation==='splitEdges'){
+  const all=meshEdges(data);if(!edges.length||edges.some(e=>!Array.isArray(e)||e.length!==2||!all.has(edgeKey(...e))))throw Error('분할할 간선을 선택하세요.');
+  for(const [a,b] of new Map(edges.map(e=>[edgeKey(...e),e])).values()){const mid=d.vertices.length;d.vertices.push(d.vertices[a].map((v,i)=>(v+d.vertices[b][i])/2));d.uvs.push(d.uvs[a].map((v,i)=>(v+d.uvs[b][i])/2));if(d.uvs1)d.uvs1.push(d.uvs1[a].map((v,i)=>(v+d.uvs1[b][i])/2));if(d.colors)d.colors.push(d.colors[a].map((v,i)=>(v+d.colors[b][i])/2));const next=[];for(let i=0;i<d.indices.length;i+=3){const t=d.indices.slice(i,i+3);let split=false;for(let k=0;k<3;k++)if(edgeKey(t[k],t[(k+1)%3])===edgeKey(a,b)){next.push(t[k],mid,t[(k+2)%3],mid,t[(k+1)%3],t[(k+2)%3]);split=true;break;}if(!split)next.push(...t);}d.indices=next;}delete d.normals;
+ }else if(operation==='flatNormals'||operation==='uvPack'){
+  if(!Number.isFinite(padding)||padding<0||padding>=.45)throw Error('UV 여백을 확인하세요.');
+  const old=structuredClone(d),count=d.indices.length/3,side=Math.ceil(Math.sqrt(count));d.vertices=[];d.uvs=[];d.indices=[];d.normals=[];if(old.uvs1)d.uvs1=[];if(old.colors)d.colors=[];
+  for(let f=0;f<count;f++){const ids=old.indices.slice(f*3,f*3+3),points=ids.map(i=>old.vertices[i]),n=normal(...points),u=points[1].map((v,i)=>v-points[0][i]),length=Math.hypot(...u)||1,axis=u.map(v=>v/length),v=[n[1]*axis[2]-n[2]*axis[1],n[2]*axis[0]-n[0]*axis[2],n[0]*axis[1]-n[1]*axis[0]],p=points[2].map((v,i)=>v-points[0][i]),px=p.reduce((s,x,i)=>s+x*axis[i],0),py=p.reduce((s,x,i)=>s+x*v[i],0),lo=Math.min(0,px),hi=Math.max(length,px),span=Math.max(hi-lo,Math.abs(py),1e-8),uv=[[0,0],[length,0],[px,py]];
+   for(let k=0;k<3;k++){d.indices.push(d.vertices.length);d.vertices.push([...points[k]]);d.normals.push([...n]);d.uvs.push(operation==='uvPack'?[(f%side+padding+(uv[k][0]-lo)/span*(1-padding*2))/side,(Math.floor(f/side)+padding+uv[k][1]/span*(1-padding*2))/side]:[...old.uvs[ids[k]]]);if(old.uvs1)d.uvs1.push([...old.uvs1[ids[k]]]);if(old.colors)d.colors.push([...old.colors[ids[k]]]);}
+  }
+ }else if(operation==='setNormals'){
+  if(!Array.isArray(custom)||custom.length!==3||!custom.every(Number.isFinite)||Math.hypot(...custom)<1e-8)throw Error('노멀 방향을 확인하세요.');const length=Math.hypot(...custom);d.normals??=d.vertices.map(()=>[0,1,0]);for(let i=0;i<d.vertices.length;i++)if(!selected.size||selected.has(i))d.normals[i]=custom.map(v=>v/length);
+ }else if(operation==='smoothNormals'){delete d.normals;
+ }else if(operation==='duplicateFaces'){
+  if(!selectedFaces.size)throw Error('복제할 면을 선택하세요.');const remap=new Map();for(const f of selectedFaces)for(const i of data.indices.slice(f*3,f*3+3)){if(!remap.has(i)){remap.set(i,d.vertices.length);d.vertices.push([...data.vertices[i]]);d.uvs.push([...data.uvs[i]]);if(d.uvs1)d.uvs1.push([...data.uvs1[i]]);if(d.colors)d.colors.push([...data.colors[i]]);}d.indices.push(remap.get(i));}delete d.normals;
+ }else return null;
+ return d;
+}

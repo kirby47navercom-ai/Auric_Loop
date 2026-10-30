@@ -25,7 +25,7 @@ function plant(group, x, z, scale = 1, seed = 0) {
 }
 function buildObject(object) {
   const g = new THREE.Group();g.name = object.name;g.userData.objectId = object.id;
-  switch (object.kind) {
+  if(!(object.asset||object.components?.some(c=>c.type==='MeshRenderer'&&c.properties?.mesh)))switch (object.kind) {
     case 'arch': {
       for (const x of [-1.4, 1.4]) for (let j = 0; j < 4; j++) box(g, [.76, .48, .8], j === 3 ? surfaceMaterial : stoneMaterial, [x, .24 + j * .5, 0], [0, (j % 2 ? .015 : -.025), 0]);
       mesh(g, new THREE.TorusGeometry(1.4, .39, 4, 12, Math.PI), surfaceMaterial, [0, 1.78, 0]);
@@ -70,7 +70,7 @@ function buildObject(object) {
     case 'plane': box(g,[1.5,.08,1.5],surfaceMaterial,[0,.04,0]); break;
     case 'character': mesh(g,new THREE.CapsuleGeometry(.35,1.1,8,16),surfaceMaterial,[0,.9,0]);break;
   }
-  if(object.materialSurface&&validSurface(object.materialSurface)){const m=new THREE.MeshStandardMaterial({color:object.materialSurface.color,roughness:object.materialSurface.roughness,metalness:object.materialSurface.metalness});(g.userData.resources??=new Set()).add(m);g.traverse(child=>{if(child.isMesh)child.material=m;});}
+  if(g.children.length&&object.materialSurface&&validSurface(object.materialSurface)){const m=new THREE.MeshStandardMaterial({color:object.materialSurface.color,roughness:object.materialSurface.roughness,metalness:object.materialSurface.metalness});(g.userData.resources??=new Set()).add(m);g.traverse(child=>{if(child.isMesh)child.material=m;});}
   g.traverse(child => child.userData.objectId = object.id);
   return g;
 }

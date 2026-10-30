@@ -43,17 +43,18 @@ export function commitNativeWorld(world,result){
 }
 // Engine-owned UI snapshots are immutable. Cache their JSON without hiding any
 // UI fields from C++; ordinary mutable actor data is serialized on every call.
-const immutableJSON=new WeakMap();
-export function immutableNativeSnapshot(value){
-  const snapshot=structuredClone(value),freeze=value=>{if(value&&typeof value==='object'){for(const child of Object.values(value))freeze(child);Object.freeze(value);}return value;};freeze(snapshot);const text=JSON.stringify(snapshot);immutableJSON.set(snapshot,{text,value:freeze(JSON.parse(text))});return snapshot;
+const immutableJSON=new WeakMap(),immutableNodes=new WeakSet();
+export function immutableNativeSnapshot(value,{clone=true}={}){
+  const text=clone?JSON.stringify(value):null,snapshot=clone?JSON.parse(text):value,freeze=value=>{if(value&&typeof value==='object'&&!immutableNodes.has(value)){for(const child of Object.values(value))freeze(child);Object.freeze(value);immutableNodes.add(value);}return value;};freeze(snapshot);immutableJSON.set(snapshot,{text,value:snapshot});return snapshot;
 }
+const encodedSnapshot=entry=>entry.text??=JSON.stringify(entry.value);
 function withJSONField(object,key,value){const text=JSON.stringify({...object,[key]:undefined});return text.slice(0,-1)+(text.length>2?',':'')+JSON.stringify(key)+':'+value+'}';}
+function cachedNativeFields(object){const tile=object.runtimeTilemap&&immutableJSON.get(object.runtimeTilemap),ui=object.gameplayDebug?.ui&&immutableJSON.get(object.gameplayDebug.ui);return {tile,ui};}
 function nativeRowJSON(object){
-  const debug=object.gameplayDebug,ui=debug?.ui,encoded=ui&&immutableJSON.get(ui);return encoded===undefined?JSON.stringify(object):withJSONField(object,'gameplayDebug',withJSONField(debug,'ui',encoded.text));
+  const {tile,ui}=cachedNativeFields(object);if(!tile&&!ui)return JSON.stringify(object);const fields=[],plain={...object};if(tile){delete plain.runtimeTilemap;fields.push(['runtimeTilemap',encodedSnapshot(tile)]);}if(ui){delete plain.gameplayDebug;fields.push(['gameplayDebug',withJSONField(object.gameplayDebug,'ui',encodedSnapshot(ui))]);}const text=JSON.stringify(plain);return text.slice(0,-1)+(text.length>2?',':'')+fields.map(([key,value])=>JSON.stringify(key)+':'+value).join(',')+'}';
 }
 function detachedNativeRow(object,row){
-  const debug=object.gameplayDebug,encoded=debug?.ui&&immutableJSON.get(debug.ui);if(!encoded)return JSON.parse(row);
-  const value=JSON.parse(withJSONField(object,'gameplayDebug',withJSONField(debug,'ui','null')));value.gameplayDebug.ui=encoded.value;return value;
+  const {tile,ui}=cachedNativeFields(object);if(!tile&&!ui)return JSON.parse(row);const plain={...object};if(tile)delete plain.runtimeTilemap;if(ui)plain.gameplayDebug={...object.gameplayDebug,ui:null};const value=JSON.parse(JSON.stringify(plain));if(tile)value.runtimeTilemap=tile.value;if(ui)value.gameplayDebug.ui=ui.value;return value;
 }
 // Compiled templates without an actor cannot receive a foreign actor call.
 // Keep the boundary if even an inactive actor belongs to another module.

@@ -1,13 +1,14 @@
 import * as THREE from 'three';
+import {resolveSprite} from './sprite-import.js';
+import {spriteImage} from './two-d-assets.js';
 
 export function projectileRenderer({scene,fileUrl,readAsset,error=console.error,createMaterial}){
   const batches=new Map();let disposed=false;
   const release=batch=>{batch.disposed=true;batch.mesh.removeFromParent();batch.geometry.dispose();batch.material.uniforms.map.value?.dispose();batch.material.dispose();};
   async function texture(style,batch){const material=batch.material;
     if(!style.texture)return;let path=style.texture;
-    try{let rect=null;if(/\.hbsprite\.json$/i.test(path)){const sprite=await readAsset(path);path=sprite.texture;rect=sprite.rect;}
-
-      const map=await new THREE.TextureLoader().loadAsync(fileUrl(path));if(disposed||batch.disposed){map.dispose();return;}if(rect){const [x,y,w,h]=rect;material.uniforms.uvRect.value.set(x/map.image.width,1-(y+h)/map.image.height,w/map.image.width,h/map.image.height);material.uniforms.shape.value.set(w/Math.max(w,h),h/Math.max(w,h));}map.colorSpace=THREE.SRGBColorSpace;map.minFilter=map.magFilter=THREE.NearestFilter;map.generateMipmaps=false;material.uniforms.map.value=map;material.uniforms.hasMap.value=true;
+    try{let sprite=null;if(/\.hbsprite\.json$/i.test(path)){sprite=await resolveSprite(await readAsset(path),readAsset);path=sprite.texture;}
+      const map=await new THREE.TextureLoader().loadAsync(fileUrl(path));if(disposed||batch.disposed){map.dispose();return;}if(sprite){const layout=spriteImage(sprite,map.image);if(!layout){map.dispose();throw Error('스프라이트 영역을 확인하세요.');}const [x,y,w,h]=layout.rect;material.uniforms.uvRect.value.set(x/map.image.width,1-(y+h)/map.image.height,w/map.image.width,h/map.image.height);material.uniforms.shape.value.set(w/Math.max(w,h),h/Math.max(w,h));}map.colorSpace=THREE.SRGBColorSpace;map.minFilter=map.magFilter=THREE.NearestFilter;map.generateMipmaps=false;material.uniforms.map.value=map;material.uniforms.hasMap.value=true;
     }catch(problem){error('투사체 텍스처: '+problem.message);}
   }
   const update=world=>{if(disposed)return;const active=new Map([...world.styles.values()].map(style=>[style.id,style]));for(const [id,batch] of batches)if(!active.has(id)||batch.style!==active.get(id)){release(batch);batches.delete(id);}for(const style of world.styles.values()){

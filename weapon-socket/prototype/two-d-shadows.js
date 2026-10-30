@@ -103,8 +103,8 @@ export class TwoDShadows{
     const target=renderer.getRenderTarget(),clear=renderer.getClearColor(new THREE.Color()),alpha=renderer.getClearAlpha(),autoClear=renderer.autoClear,viewport=renderer.getViewport(new THREE.Vector4()),scissor=renderer.getScissor(new THREE.Vector4()),scissorTest=renderer.getScissorTest(),xr=renderer.xr.enabled;
     try{renderer.xr.enabled=false;renderer.autoClear=false;renderer.setClearColor(0,0);
       // WebGPU loadOp clear ignores scissor; clear the atlas once before drawing all cells.
-      if(renderer.hbBackend==='webgpu'){this.atlas.scissorTest=false;renderer.setRenderTarget(this.atlas);renderer.clear(true,true,true);}
-      for(let index=0;index<cells.length;index++){const cell=cells[index],x=index%columns*resolution,y=Math.floor(index/columns)*resolution;this.atlas.viewport.set(x,y,resolution,resolution);this.atlas.scissor.set(x,y,resolution,resolution);this.atlas.scissorTest=true;renderer.setRenderTarget(this.atlas);if(renderer.hbBackend!=='webgpu')renderer.clear(true,true,true);
+      if(['webgpu','d3d11'].includes(renderer.hbBackend)){this.atlas.scissorTest=false;renderer.setRenderTarget(this.atlas);renderer.clear(true,true,true);}
+      for(let index=0;index<cells.length;index++){const cell=cells[index],x=index%columns*resolution,y=Math.floor(index/columns)*resolution;this.atlas.viewport.set(x,y,resolution,resolution);this.atlas.scissor.set(x,y,resolution,resolution);this.atlas.scissorTest=true;renderer.setRenderTarget(this.atlas);if(!['webgpu','d3d11'].includes(renderer.hbBackend))renderer.clear(true,true,true);
         const l=cell.light;this.camera.left=l.x-l.radius;this.camera.right=l.x+l.radius;this.camera.top=l.y+l.radius;this.camera.bottom=l.y-l.radius;this.camera.updateProjectionMatrix();
         const composites=new Map();for(const item of cell.items){const root=shadowCompositeRoot(item.group);if(!composites.has(root))composites.set(root,[]);composites.get(root).push(item);}
         const order=g=>g.userData.spriteMesh?.userData.draw2d?.sortingOrder||0;const sorted=[...composites].sort(([a],[b])=>order(a)-order(b)||a.uuid.localeCompare(b.uuid));

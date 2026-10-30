@@ -1,0 +1,22 @@
+import {transferListItems,transferTreeItems} from './list-transfer.js';
+// A live, same-document drag only. Untrusted text/HTML/DataTransfer payloads do
+// not identify lists or carry mutable game data. No document listeners/timers.
+const active=new WeakMap();
+export function listDrag(element,options){
+ const document=element.ownerDocument;let disposed=false;
+ const clear=()=>{const drag=active.get(document);drag?.marker?.removeAttribute('data-list-drop');if(drag)drag.marker=null;};
+ const finish=()=>{clear();active.delete(document);};
+ const current=()=>{const d=active.get(document);if(!d||d.owner.disposed()||d.source!==d.owner.items()){finish();return null;}return d;};
+ const accepts=drag=>!!drag&&!disposed&&options.accept()&&options.reorderable()&&drag.owner.accept()&&drag.owner.reorderable()&&options.tree===drag.owner.tree&&(drag.owner===owner||drag.source!==options.items()&&!!options.group()&&options.group()===drag.owner.group());
+ function location(row,event){if(!row)return {parent:'',destination:options.items().length,marker:'end'};const r=options.rows()[Number(row.dataset.index)];if(!r)return null;const b=row.getBoundingClientRect(),fraction=(event.clientY-b.top)/Math.max(1,b.height);if(options.tree&&fraction>=.25&&fraction<.75)return {parent:r.key,destination:r.item.children?.length||0,marker:'inside'};return {parent:options.tree?r.parent:'',destination:(options.tree?r.position-1:Number(row.dataset.index))+(fraction>=.5?1:0),marker:fraction>=.5?'after':'before'};}
+ function allowed(drag,drop){return accepts(drag)&&drop&&!(drag.owner===owner&&options.tree&&drag.blocked.has(drop.parent));}
+ function over(event,row){const drag=current(),drop=location(row,event);clear();if(row&&drag)event.stopPropagation();if(!allowed(drag,drop))return;event.preventDefault();event.stopPropagation();if(event.dataTransfer)event.dataTransfer.dropEffect='move';drag.marker=row||element;drag.marker.setAttribute('data-list-drop',drop.marker);}
+ function drop(event,row){const drag=current(),at=location(row,event);finish();if(row&&drag)event.stopPropagation();if(!allowed(drag,at))return;event.preventDefault();event.stopPropagation();try{
+  if(drag.owner===owner){options.local(drag,at);return;}
+  const result=options.tree?transferTreeItems(drag.source,drag.keys,options.items(),at.parent,at.destination):transferListItems(drag.source,drag.indices,options.items(),at.destination),from=drag.owner.prepare(result.sourceItems,{kind:'transferOut',other:options.name(),positions:result.positions,from:result.from,parent:at.parent,destination:at.destination}),to=options.prepare(result.targetItems,{kind:'transferIn',other:drag.owner.name(),keys:result.keys,indices:result.indices,parent:at.parent,destination:at.destination,from:result.from});
+  if(!from||!to)return;from.commit();to.commit();from.apply();to.apply();from.notify();to.notify();
+ }catch(error){options.error?.(error);}}
+ const backgroundOver=event=>over(event,null),backgroundDrop=event=>drop(event,null);element.addEventListener('dragover',backgroundOver);element.addEventListener('drop',backgroundDrop);
+ const owner={...options,disposed:()=>disposed};
+ return {row(row){row.ondragstart=event=>{if(!options.reorderable()||!options.accept()||event.target.closest('input,textarea,select,[contenteditable=true]')){event.preventDefault();return;}finish();event.stopPropagation();const index=Number(row.dataset.index);options.ensure(index);const indices=options.indices(),keys=options.keys(),r=options.rows()[index],selectedKeys=keys.length?keys:[r.key],blocked=new Set();if(options.tree){const chosen=new Set(selectedKeys),visit=(items,included=false)=>{for(const item of items){const inside=included||chosen.has(item.id);if(inside)blocked.add(item.id);if(item.children)visit(item.children,inside);}};visit(options.items());}active.set(document,{owner,source:options.items(),indices:indices.length?indices:[index],keys:selectedKeys,blocked});if(event.dataTransfer){event.dataTransfer.effectAllowed='move';event.dataTransfer.setData('text/plain','');}};row.ondragover=event=>over(event,row);row.ondrop=event=>drop(event,row);row.ondragend=()=>{if(active.get(document)?.owner===owner)finish();};row.ondragleave=()=>row.removeAttribute('data-list-drop');},cancel(){if(active.get(document)?.owner===owner)finish();},dispose(){disposed=true;if(active.get(document)?.owner===owner)finish();element.removeAttribute('data-list-drop');element.removeEventListener('dragover',backgroundOver);element.removeEventListener('drop',backgroundDrop);}};
+}

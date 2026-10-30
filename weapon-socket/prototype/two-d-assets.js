@@ -1,9 +1,14 @@
+import {validTileDimensions,tileEditBudget,sparseTileRectangles,clipTileLine} from './tilemap-editing.js';
+import {validAutoTileRules,resolveAutoTiles} from './auto-tiles.js';
 import {validSpriteSlices} from './sprite-import.js';
 export const twoDSuffix={sprite:'.hbsprite.json',tilemap:'.hbtilemap.json',spriteanimation:'.hbspriteanimation.json'};
 export const twoDTypes={sprite:{label:'스프라이트',prefix:'S_',group:'2D'},tilemap:{label:'타일맵',prefix:'TM_',group:'2D'},spriteanimation:{label:'스프라이트 애니메이션',prefix:'SA_',group:'2D'}};
 const finite=(value,min,max)=>typeof value==='number'&&Number.isFinite(value)&&value>=min&&value<=max;
 const integer=(value,min,max)=>Number.isInteger(value)&&finite(value,min,max);
 const vector=(value,size,min,max)=>Array.isArray(value)&&value.length===size&&value.every(n=>finite(n,min,max));
+// Runtime snapshots share unchanged, frozen JSON tile arrays. Keep only the
+// bounds of their last successful validation; never retain a scene or history.
+const validatedTileArrays=new WeakMap();
 const reference=value=>typeof value==='string'&&value.length<=2000&&!/^(?:[A-Za-z]:|[\\/])/.test(value)&&!value.replaceAll('\\','/').split('/').includes('..')&&!/[\x00-\x1f]/.test(value);
 const name=value=>typeof value==='string'&&value.trim().length>0&&value.length<=120;
 export function create2DAsset(kind,title){
@@ -13,16 +18,18 @@ export function create2DAsset(kind,title){
   if(kind==='spriteanimation')return {version:1,name:title,frames:[],loop:true,playRate:1};
   throw Error('2D 에셋 종류를 확인하세요.');
 }
-export function valid2DAsset(kind,data){
+const hbValidAssets=new WeakMap();export function valid2DAsset(kind,data){if(!data||typeof data!=="object")return hbValid2DAsset(kind,data);if(hbValidAssets.get(data)===kind)return true;const ok=hbValid2DAsset(kind,data);if(ok)hbValidAssets.set(data,kind);return ok;}function hbValid2DAsset(kind,data){
   if(!data||data.version!==1||!name(data.name)||data.normalTexture!==undefined&&!reference(data.normalTexture))return false;
   if(kind==='sprite')return (data.slices===undefined||validSpriteSlices(data.slices))&&(data.sheet===undefined||reference(data.sheet)&&typeof data.sliceId==='string'&&/^[\w-]{1,80}$/.test(data.sliceId))&&reference(data.texture)&&finite(data.pixelsPerUnit,.01,100000)&&vector(data.rect,4,0,32768)&&data.rect.every(Number.isInteger)&&vector(data.pivot,2,0,1)&&['nearest','linear'].includes(data.filter)&&(data.border===undefined||vector(data.border,4,0,32768)&&data.border.every(Number.isInteger));
   if(kind==='spriteanimation')return typeof data.loop==='boolean'&&finite(data.playRate,.01,100)&&Array.isArray(data.frames)&&data.frames.length<=1000&&data.frames.every(frame=>frame&&reference(frame.sprite)&&frame.sprite.length>0&&finite(frame.duration,.001,3600));
-  if(kind!=='tilemap'||data.layout!==undefined&&!['rectangular','isometric'].includes(data.layout)||!reference(data.tileset)||!vector(data.tileSize,2,1,4096)||!data.tileSize.every(Number.isInteger)||!vector(data.cellSize,2,.001,10000)||!integer(data.width,1,256)||!integer(data.height,1,256)||!Array.isArray(data.layers)||!data.layers.length||data.layers.length>32)return false;
+  if(!validAutoTileRules(data.autoTileRules))return false;
+  if(kind!=='tilemap'||data.layout!==undefined&&!['rectangular','isometric'].includes(data.layout)||!reference(data.tileset)||!vector(data.tileSize,2,1,4096)||!data.tileSize.every(Number.isInteger)||!vector(data.cellSize,2,.001,10000)||!validTileDimensions(data.width,data.height)||!Array.isArray(data.layers)||!data.layers.length||data.layers.length>32)return false;
   const ids=new Set();
   return data.layers.every(layer=>{
     if(!layer||!name(layer.id)||ids.has(layer.id)||!name(layer.name)||typeof layer.visible!=='boolean'||typeof layer.collision!=='boolean'||!Array.isArray(layer.tiles)||layer.tiles.length>data.width*data.height)return false;
-    ids.add(layer.id);const cells=new Set();
-    return layer.tiles.every(tile=>{if(!tile||!integer(tile.x,0,data.width-1)||!integer(tile.y,0,data.height-1)||!integer(tile.index,0,1048575))return false;const key=tile.x+','+tile.y;if(cells.has(key))return false;cells.add(key);return true;});
+    ids.add(layer.id);const known=validatedTileArrays.get(layer.tiles);if(known?.width===data.width&&known.height===data.height)return true;const cells=new Set();let immutable=Object.isFrozen(layer.tiles);
+    const valid=layer.tiles.every((tile,index)=>{if(!tile||!integer(tile.x,0,data.width-1)||!integer(tile.y,0,data.height-1)||!integer(tile.index,0,1048575)||tile.sourceIndex!==undefined&&!integer(tile.sourceIndex,0,1048575)||tile.rotation!==undefined&&(!Number.isSafeInteger(tile.rotation)||tile.rotation<0)||['flipX','flipY','autoCollision'].some(k=>tile[k]!==undefined&&typeof tile[k]!=='boolean'))return false;const key=tile.x+','+tile.y;if(cells.has(key))return false;cells.add(key);if(immutable)immutable=Object.isFrozen(tile)&&[Object.prototype,null].includes(Object.getPrototypeOf(tile))&&['x','y','index','sourceIndex','rotation','flipX','flipY','autoCollision'].every(k=>!(k in tile)||Object.hasOwn(tile,k))&&Object.hasOwn(Object.getOwnPropertyDescriptor(layer.tiles,index),'value')&&Object.values(Object.getOwnPropertyDescriptors(tile)).every(d=>Object.hasOwn(d,'value'));return true;});
+    if(valid&&immutable)validatedTileArrays.set(layer.tiles,{width:data.width,height:data.height});return valid;
   });
 }
 /** Image rectangles use top-left pixel coordinates; UVs use bottom-left origin. */
@@ -70,7 +77,7 @@ export function tileAtlasRect(map,index,image){
   return {rect:[x,y,width,height],uv:{offset:[x/image.width,1-(y+height)/image.height],repeat:[width/image.width,height/image.height]},columns,rows};
 }
 export function tileLine(from,to){
-  if(!from||!to||![from.x,from.y,to.x,to.y].every(Number.isInteger)||Math.max(Math.abs(to.x-from.x),Math.abs(to.y-from.y))>65536)return [];
+  if(!from||!to||![from.x,from.y,to.x,to.y].every(Number.isSafeInteger)||Math.max(Math.abs(to.x-from.x),Math.abs(to.y-from.y))>65536)return [];
   const cells=[];let x=from.x,y=from.y;const dx=Math.abs(to.x-x),sx=x<to.x?1:-1,dy=-Math.abs(to.y-y),sy=y<to.y?1:-1;let error=dx+dy;
   for(;;){cells.push({x,y});if(x===to.x&&y===to.y)break;const twice=2*error;if(twice>=dy){error+=dy;x+=sx;}if(twice<=dx){error+=dx;y+=sy;}}
   return cells;
@@ -80,27 +87,21 @@ export function applyTileTool(map,layerId,tool,from,to=from,index=0){
   if(!valid2DAsset('tilemap',map)||!['brush','erase','rectangle','fill'].includes(tool)||!from||!to||![from.x,from.y,to.x,to.y].every(Number.isInteger)||!integer(index,-1,1048575))return {data:map,changed:false};
   const layerIndex=map.layers.findIndex(layer=>layer.id===layerId);if(layerIndex<0)return {data:map,changed:false};
   const inside=({x,y})=>x>=0&&y>=0&&x<map.width&&y<map.height,key=({x,y})=>x+','+y,tiles=new Map(map.layers[layerIndex].tiles.map(tile=>[key(tile),tile]));let cells=[];
-  if(tool==='rectangle')for(let y=Math.max(0,Math.min(from.y,to.y));y<=Math.min(map.height-1,Math.max(from.y,to.y));y++)for(let x=Math.max(0,Math.min(from.x,to.x));x<=Math.min(map.width-1,Math.max(from.x,to.x));x++)cells.push({x,y});
+  if(tool==='rectangle'){const left=Math.max(0,Math.min(from.x,to.x)),right=Math.min(map.width-1,Math.max(from.x,to.x)),top=Math.max(0,Math.min(from.y,to.y)),bottom=Math.min(map.height-1,Math.max(from.y,to.y));if(left>right||top>bottom)return {data:map,changed:false};tileEditBudget((right-left+1)*(bottom-top+1));for(let y=top;y<=bottom;y++)for(let x=left;x<=right;x++)cells.push({x,y});}
   else if(tool==='fill'){
-    if(!inside(from))return {data:map,changed:false};const source=tiles.get(key(from))?.index;if(source===index)return {data:map,changed:false};
-    const visited=new Uint8Array(map.width*map.height),queue=[from];visited[from.y*map.width+from.x]=1;
-    for(let cursor=0;cursor<queue.length;cursor++){const cell=queue[cursor];if(tiles.get(key(cell))?.index!==source)continue;cells.push(cell);for(const adjacent of [{x:cell.x-1,y:cell.y},{x:cell.x+1,y:cell.y},{x:cell.x,y:cell.y-1},{x:cell.x,y:cell.y+1}])if(inside(adjacent)&&!visited[adjacent.y*map.width+adjacent.x]){visited[adjacent.y*map.width+adjacent.x]=1;queue.push(adjacent);}}
-  }else cells=tileLine(from,to).filter(inside);
+    if(!inside(from))return {data:map,changed:false};const source=tiles.get(key(from))?.index;if((source??-1)===index)return {data:map,changed:false};
+    const visited=new Set([key(from)]),queue=[from];
+    for(let cursor=0;cursor<queue.length;cursor++){const cell=queue[cursor];if(tiles.get(key(cell))?.index!==source)continue;cells.push(cell);tileEditBudget(cells.length);for(const adjacent of [{x:cell.x-1,y:cell.y},{x:cell.x+1,y:cell.y},{x:cell.x,y:cell.y-1},{x:cell.x,y:cell.y+1}])if(inside(adjacent)&&!visited.has(key(adjacent))){visited.add(key(adjacent));queue.push(adjacent);}}
+  }else{const clipped=clipTileLine(from,to,map.width,map.height);if(!clipped)return {data:map,changed:false};tileEditBudget(Math.max(Math.abs(clipped[1].x-clipped[0].x),Math.abs(clipped[1].y-clipped[0].y))+1);cells=tileLine(...clipped).filter(inside);}
   let changed=false;
   for(const cell of cells){const previous=tiles.get(key(cell));if(tool==='erase'||index===-1){if(previous){tiles.delete(key(cell));changed=true;}}else if(previous?.index!==index){tiles.set(key(cell),{...cell,index});changed=true;}}
   if(!changed)return {data:map,changed:false};
-  const layers=[...map.layers];layers[layerIndex]={...layers[layerIndex],tiles:[...tiles.values()].sort((a,b)=>a.y-b.y||a.x-b.x)};return {data:{...map,layers},changed:true};
+  const layers=[...map.layers];layers[layerIndex]={...layers[layerIndex],tiles:[...tiles.values()].sort((a,b)=>a.y-b.y||a.x-b.x)};return {data:resolveAutoTiles({...map,layers},{layerId,cells:cells.map(c=>[c.x,c.y])}),changed:true,cells:cells.map(c=>[c.x,c.y])};
 }
 /** Collision rectangles merge contiguous cells, across layers marked for collision. */
 export function tileCollisionBoxes(map,depth=.1){
   if(!valid2DAsset('tilemap',map)||!finite(depth,.001,1000))return [];
-  const filled=new Set(map.layers.filter(layer=>layer.collision).flatMap(layer=>layer.tiles.map(tile=>tile.y*map.width+tile.x))),rectangles=[],active=new Map();
-  for(let y=0;y<map.height;y++){
-    const next=new Map();
-    for(let x=0;x<map.width;){if(!filled.has(y*map.width+x)){x++;continue;}const start=x;while(x<map.width&&filled.has(y*map.width+x))x++;const key=start+':'+(x-start),existing=active.get(key),rect=existing?{...existing,height:existing.height+1}:{x:start,y,width:x-start,height:1};next.set(key,rect);}
-    for(const [key,rect] of active)if(!next.has(key))rectangles.push(rect);active.clear();for(const [key,rect] of next)active.set(key,rect);
-  }
-  rectangles.push(...active.values());
+  const rectangles=sparseTileRectangles(map.layers);
   return rectangles.map(rect=>({...rect,center:[(rect.x+rect.width/2)*map.cellSize[0],-(rect.y+rect.height/2)*map.cellSize[1],0],size:[rect.width*map.cellSize[0],rect.height*map.cellSize[1],depth]}));
 }
 

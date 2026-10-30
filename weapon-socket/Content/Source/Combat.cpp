@@ -17,7 +17,10 @@ std::vector<Enemy*> TopDownShooter::Enemies() const{
 }
 
 // 적도 탄처럼 장면(Dungeon)에 화면 밖으로 세워 둔 것을 꺼내 쓴다 (태그 Enemy.S·M·C). Scene::Spawn은 한 마리에 수십 ms라 웨이브마다 끊김
-Enemy* TopDownShooter::SpawnEnemy(const std::string& blueprint,const hb::Vec3& at,bool invulnerable){
+Enemy* TopDownShooter::SpawnEnemy(const std::string& blueprint,const hb::Vec3& where,bool invulnerable){
+  hb::Vec3 at=where;  // 싸우는 방 안으로 (보스가 벽 가까이에서 졸개를 부르면 좌우 2.5m 자리가 벽 속이었음)
+  if(inDungeon&&fightingRoom>=0&&fightingRoom<int(map.rooms.size())){const auto& r=map.rooms[fightingRoom];const float m=1.f;
+    at.x=std::clamp(at.x,r.cx-r.hw+m,r.cx+r.hw-m);at.y=std::clamp(at.y,r.cy-r.hh+m,r.cy+r.hh-m);}
   std::string code;for(const auto& entry:rules->Enemies){const auto eq=entry.find('=');if(eq!=std::string::npos&&entry.substr(eq+1)==blueprint)code=entry.substr(0,eq);}
   Enemy* e=nullptr;
   if(!code.empty())for(auto* a:hb::Scene::GetActorsWithTag("Enemy."+code))if(auto* p=dynamic_cast<Enemy*>(a))if(p->Parked){e=p;break;}
@@ -29,9 +32,9 @@ Enemy* TopDownShooter::SpawnEnemy(const std::string& blueprint,const hb::Vec3& a
 void TopDownShooter::ParkEnemy(Enemy* e){
   e->CancelAttack();
   const bool pooled=hb::Tags::Has(e,"Enemy.S",true)||hb::Tags::Has(e,"Enemy.M",true)||hb::Tags::Has(e,"Enemy.C",true)||hb::Tags::Has(e,"Enemy.E",true);
-  if(!pooled){hb::Scene::Destroy(e);return;}
+  if(!pooled){PhysicsQueue::Drop(e);hb::Scene::Destroy(e);return;}
   if(e->brainRunning){hb::States::Stop(e);e->brainRunning=false;}
-  hb::Physics::SetVelocity(e,hb::Vec3{0,0,0});e->Parked=true;e->burnLeft=0;
+  PhysicsQueue::Velocity(e,hb::Vec3{0,0,0});e->Parked=true;e->burnLeft=0;
   e->squash=0;hb::Scene::SetScale(e,hb::Vec3{1,1,1});  // 찌그러진 채로 풀에 들어가지 않게
   hb::Scene::SetPosition(e,hb::Vec3{-60.f+float(std::rand()%120),-300.f-float(std::rand()%20),0});
 }
@@ -124,19 +127,22 @@ void TopDownShooter::StunAll(float seconds){for(auto* e:Enemies())e->Stun(second
 // 실행 중 생성(Scene::Spawn)과 엔진 풀(ActorPool)은 부를 때마다 컴포넌트를 다시 시작해 수 ms~수십 ms가 걸려 프레임이 끊긴다
 
 hb::Actor* TopDownShooter::Take(std::vector<hb::Actor*>& pool,const std::string& prefab,const hb::Transform& at){
-  if(!pool.empty()){auto* a=pool.back();pool.pop_back();hb::Scene::SetTransform(a,at);return a;}
+  if(!pool.empty()){auto* a=pool.back();pool.pop_back();hb::Scene::SetTransform(a,at);
+    if(&pool==&fxPool)hb::Sprites::SetFlip(a,false,false);  // 이펙트는 지난번 쓴 쪽의 좌우 반전이 남아 있음 (왼쪽 베기·흙먼지 뒤에 빌린 발렌 검기·회전 궤적이 거꾸로 나갔음). 반전이 필요하면 빌린 쪽이 다시 정함
+    return a;}
   (void)prefab;return nullptr;  // 다 쓰고 있으면 이번 것은 건너뛴다. 게임 중 새로 만들면(Spawn) 에디터에서 하나에 수백 ms씩 멈춤
 }
 
 void TopDownShooter::Give(std::vector<hb::Actor*>& pool,hb::Actor* actor){
-  if(&pool==&bulletPool||&pool==&shotPool)hb::Physics::SetVelocity(actor,hb::Vec3{0,0,0});  // 골드·이펙트는 물리 몸체가 없다
+  if(&pool==&bulletPool||&pool==&shotPool)PhysicsQueue::Velocity(actor,hb::Vec3{0,0,0});  // 골드·이펙트는 물리 몸체가 없다
   hb::Scene::SetPosition(actor,parked);pool.push_back(actor);
 }
 
-void TopDownShooter::PlayFx(const std::string& clip,float length,const hb::Vec3& at,float angle,float glow,bool flipX,bool flipY){
+void TopDownShooter::PlayFx(const std::string& clip,float length,const hb::Vec3& at,float angle,float glow,bool flipX,bool flipY,float scale){
   hb::Transform t;t.position=at;t.rotation=hb::Vec3{0,0,angle};
   auto* a=Take(fxPool,rules->FxPrefab,t);if(!a)return;
   hb::Components::SetFloat(a,"SpriteRenderer","emissiveIntensity",glow);hb::Sprites::SetFlip(a,flipX,flipY);hb::Sprites::PlayAnimation(a,clip,false);
+  if(scale!=1)hb::Scene::SetScale(a,hb::Vec3{scale,scale,1});  // 돌려놓을 때 1로 (UpdateFx)
   fxs.push_back(Fx{a,length});
 }
 
@@ -168,12 +174,12 @@ void TopDownShooter::Blink(const hb::Vec3& position){
   Effect("Dust",hb::Vec3{position.x,position.y-0.8f,0.03f},0,0,dir.x>0);Effect("Dust",hb::Vec3{to.x,to.y-0.8f,0.03f},0,0,dir.x<0);
 }
 
-void TopDownShooter::Effect(const std::string& name,const hb::Vec3& at,float angle,float glow,bool flip){
-  static const std::map<std::string,float> length={{"Dust",0.24f},{"BoneBurst",0.24f},{"Shockwave",0.26f},{"Muzzle",0.12f},{"CardCast",0.15f},
+void TopDownShooter::Effect(const std::string& name,const hb::Vec3& at,float angle,float glow,bool flip,float scale){
+  static const std::map<std::string,float> length={{"Dust",0.24f},{"BoneBurst",0.24f},{"Shockwave",0.26f},{"SherryRelease",0.12f},{"AleaCast",0.18f},
     {"HurtClaw",0.15f},{"CoinSparkle",0.18f},{"Spawn",0.9f},{"Hit",0.16f},{"Alert",0.6f},{"EnemySlash",0.16f},{"BossSlash",0.2f},
-    {"Impact",0.17f},{"ImpactRed",0.17f},{"GoldDrop",0.36f},{"GlintEye",0.32f},{"GlintTip",0.32f}};
+    {"Impact",0.17f},{"GroundRing",0.32f},{"BurstRing",0.32f},{"ImpactRed",0.17f},{"GoldDrop",0.36f},{"GlintEye",0.32f},{"GlintTip",0.32f}};
   const auto it=length.find(name);
-  PlayFx("Assets/Animations/SA_"+name+".hbspriteanimation.json",it!=length.end()?it->second:0.3f,at,angle,glow,flip);
+  PlayFx("Assets/Animations/SA_"+name+".hbspriteanimation.json",it!=length.end()?it->second:0.3f,at,angle,glow,flip,false,scale);
 }
 
 float TopDownShooter::LaserLength(const hb::Vec3& from,const hb::Vec3& dir,float max) const{
@@ -225,9 +231,12 @@ void TopDownShooter::WarnCircle(const hb::Vec3& at,float radius,float seconds){
 
 void TopDownShooter::BossSlam(const hb::Vec3& at,int count,float speed,const std::string& clip){
   // 내려찍기: 충격파·흙먼지, 원형 탄, 크게 흔들림. 가까이 있으면 맞음
-  Effect("Shockwave",hb::Vec3{at.x,at.y-0.8f,0.03f},0,0.4f);Effect("Dust",hb::Vec3{at.x-1,at.y-1,0.03f});Effect("Dust",hb::Vec3{at.x+1,at.y-1,0.03f},0,0,true);
-  shake=0.45f;Sfx("Boom");BossImpact(0.12f);
-  FireRing(at,count,0,speed,clip);
+  // 대검이 땅에 닿는 자리(발밑)에서: 큰 충격파 두 겹·불꽃·사방 흙먼지, 탄도 거기서 퍼짐 (몸 한가운데서 나오면 대검과 따로 놂)
+  const hb::Vec3 ground{at.x,at.y-0.85f,0.03f};
+  Effect("GroundRing",ground,0,1.6f,false,2.f);Effect("GroundRing",ground,0,0.8f,false,1.2f);Effect("Impact",ground+hb::Vec3{0,0.3f,0.3f},0,2.5f,false,1.5f);
+  for(int i=0;i<4;++i){const hb::Vec3 o=Rotate(hb::Vec3{1.6f,0,0},45.f+i*90.f);Effect("Dust",ground+hb::Vec3{o.x,o.y*0.6f,0},0,0,o.x<0,1.7f);}
+  Shake(0.6f,3.2f);Sfx("BossSlam");Sfx("Boom",0.8f);BossImpact(0.14f);hb::Camera::Flash(hb::Color{1,0.75f,0.35f,0.35f},0.22f);
+  FireRing(ground,count,0,speed,clip);
   if(Length(playerAt-at)<3.0f)DamagePlayer(1,at);
 }
 
@@ -235,7 +244,7 @@ void TopDownShooter::BossEnraged(Enemy* e){
   // 2페이즈: 짧은 컷신 (조작·적 멈춤, 카메라가 보스를 당겨 잡고 화면 위아래 검은 띠, 탄막 지움) + 포효·붉은 번쩍·자막
   cutscene=1.6f;cutsceneAt=hb::Scene::GetPosition(e);roared=true;ClearBullets();for(auto* n:{"CineTop","CineBottom"})UiVisible(n,true);
   UiText("BossName",e->DisplayName);UiVisible("BossName",true);
-  shake=0.6f;hb::Camera::Flash(hb::Color{0.8f,0.1f,0.05f,0.45f},0.5f);Sfx("BossCharge");
+  shake=0.6f;hb::Camera::Flash(hb::Color{0.8f,0.1f,0.05f,0.45f},0.5f);Sfx("BossRoar",0.9f);Sfx("BossCharge");
   UiText("BossSub",e->DisplayName+"이 분노했다!");UiVisible("BossSub",true);bannerTime=1.8f;
 }
 
@@ -277,6 +286,56 @@ void TopDownShooter::Prewarm(){
   for(auto* tag:{"Enemy.S","Enemy.M","Enemy.C","Enemy.E"})for(auto* a:hb::Scene::GetActorsWithTag(tag))if(auto* e=dynamic_cast<Enemy*>(a))ParkEnemy(e);
 }
 
+void TopDownShooter::Whirl(const hb::Vec3& at,float radius,float turn){
+  // 보스 회전 베기: 맞는 범위 원(발밑, 반지름 radius) 둘레를 대검 한 자루가 보스 몸과 같이 돌며 칼끝 자국을 남김 (tools/make_impact_frame.py SpinSlash)
+  // 처음 부를 때 이펙트 풀에서 하나 빌림, 매 프레임 보스 발밑을 따라감. 바닥 그림이라 몸 뒤(순서 -1)
+  // 그림 12장(30도씩)은 애니메이션으로 틀지 않고 보스 몸이 돈 각도(turn)로 고름 → 칼 그림과 칼끝 궤적이 항상 같은 쪽
+  whirlSeen=true;
+  if(!whirl){hb::Transform t;t.position=at;whirl=Take(fxPool,rules->FxPrefab,t);if(!whirl)return;
+    hb::Components::SetFloat(whirl,"SpriteRenderer","emissiveIntensity",0.25f);hb::Sprites::SetSorting(whirl,"default",-1);
+    hb::Scene::SetScale(whirl,hb::Vec3{radius/3,radius/3,1});whirlFrame=-1;}  // 그림 원 반지름 3m
+  const int k=int(turn/30)%12;
+  if(k!=whirlFrame){whirlFrame=k;hb::Sprites::SetSprite(whirl,"Assets/Sprites/FX/S_SpinSlash_"+std::to_string(k)+".hbsprite.json");}
+  hb::Scene::SetPosition(whirl,at+hb::Vec3{0,-0.9f,0.02f});
+}
+
+void TopDownShooter::ImpactFrame(int stages){
+  // 애니메이션의 임팩트 프레임: 맞는 순간 장면 전체가 몇 프레임 동안 강한 흑백(거의 검정·흰색 두 색)으로 바뀌었다 돌아옴. 그동안 게임은 거의 멈춤
+  // 장면의 후처리 볼륨(PostFX) 색 보정으로: 채도 -100, 대비 +100, 명부 3배·암부 -0.9 → 밝은 곳은 흰색, 어두운 곳은 검정. 휴대폰은 평소 꺼 둔 볼륨을 이때만 켬
+  if(!postFx)postFx=hb::Scene::FindActorById("PostFX");if(!postFx)return;
+  if(impact.t<0)impact.wasOn=hb::Components::GetBool(postFx,"PostProcessVolume","enabled");
+  impact.stages=stages;impact.stage=-1;impact.t=0;impact.total=stages==3?0.24f:stages==2?0.16f:0.09f;
+  HitStop(impact.total+0.03f,0.02f);
+  UpdateImpact(0);
+}
+
+void TopDownShooter::ImpactGrade(int look){
+  if(!postFx)return;
+  if(look&&!impact.wasOn)hb::Components::SetBool(postFx,"PostProcessVolume","enabled",true);
+  hb::Components::SetBool(postFx,"PostProcessVolume","colorGradingEnabled",look!=0);
+  if(look){const float g=look==1?3.f:2.2f,l=look==1?-0.9f:-1.f;
+    hb::Components::SetFloat(postFx,"PostProcessVolume","saturation",-100);hb::Components::SetFloat(postFx,"PostProcessVolume","contrast",100);
+    hb::Components::SetVector(postFx,"PostProcessVolume","gain",hb::Vec3{g,g,g});hb::Components::SetVector(postFx,"PostProcessVolume","lift",hb::Vec3{l,l,l});}
+  else if(!impact.wasOn)hb::Components::SetBool(postFx,"PostProcessVolume","enabled",false);
+}
+
+void TopDownShooter::UpdateImpact(float realDelta){
+  if(impact.t<0)return;
+  impact.t+=realDelta;
+  if(impact.t>=impact.total){EndImpact();return;}
+  // 1번: 흑백 0.09초 / 2번: 흑백 → 원래 색 0.03 → 어두운 흑백 / 3번(보스): 흑백·원래·어두운 흑백·원래·흑백
+  static const float kSteps[]={0.09f,0.12f,0.16f,0.19f,0.24f};
+  int stage=0;while(stage<4&&impact.t>=kSteps[stage])stage++;
+  if(stage==impact.stage)return;
+  impact.stage=stage;ImpactGrade(stage%2?0:stage==2?2:1);
+  if(stage%2==0&&player)hb::Sprites::Flash(player,0.08f,1.f);  // 흑백에선 어두운 옷이 검게 묻혀 플레이어가 안 보임 → 하얗게 띄움
+}
+
+void TopDownShooter::EndImpact(){
+  if(impact.t>=0)ImpactGrade(0);
+  impact=Impact{};
+}
+
 void TopDownShooter::KillEnemy(Enemy* e){
   const auto at=hb::Scene::GetPosition(e);Kills++;Sfx("Kill");if(waveAlive>0)waveAlive--;
   DropCoin(at,e->GoldMin+Kills%std::max(1,e->GoldMax-e->GoldMin+1));
@@ -288,8 +347,14 @@ void TopDownShooter::KillEnemy(Enemy* e){
   if(!fxs.empty()&&fxs.back().left==0.9f){auto& f=fxs.back();f.moving=true;f.ground=at;f.vel=dir*(e->Boss?2.f:7.f);f.vh=e->Boss?0.f:3.f;}
   Effect("BoneBurst",hb::Vec3{at.x,at.y+0.2f,0.3f});Shake(rules->ShakeTime*2,1.6f);
   Debris(at,dir,e->Boss?"Boss":e->Laser?"Eye":e->KeepDistance>0?"Mage":"Skeleton");
-  Sfx("Crack",0.9f+float(std::rand()%20)/100);punch=1;kick=kick+dir*0.35f;
-  if(e->Boss){HitStop(0.9f,0.15f);shake=0.8f;punch=1;hb::Camera::Flash(hb::Color{1,0.95f,0.8f,0.5f},0.4f);Sfx("Boom");}else HitStop(0.14f,0.22f);  // 보스 마지막 일격: 길게 느려지고 하얗게 번쩍  // 처치 순간 잠깐 느려짐 (마지막 일격을 크게)
+  Sfx("Crack",0.9f+float(std::rand()%20)/100);Sfx("KillImpact",0.92f+float(std::rand()%16)/100);kick=kick+dir*0.5f;
+  // 연출 세기: 보스 > 방 마지막 적·3연속 처치 > 보통. 멈칫(거의 정지) 뒤 슬로모션, 화면 확대, 처치 자리에 큰 불꽃
+  killChain=killChainTime>0?killChain+1:1;killChainTime=0.4f;
+  const bool last=!e->Boss&&fightingRoom>=0&&pending.empty()&&wave+1>=waves.size()&&Enemies().size()<=1;
+  Effect("Impact",hb::Vec3{at.x,at.y+0.2f,0.35f},float(std::rand()%360),e->Boss?1.f:2.f,false,1.5f);Effect("BurstRing",hb::Vec3{at.x,at.y+0.2f,0.36f},0,e->Boss?0.2f:0.6f,false,e->Boss?1.2f:0.8f);if(e->Boss)Effect("GroundRing",hb::Vec3{at.x,at.y-0.6f,0.04f},0,0.3f,false,1.8f);  // 보스는 슬로모션 동안 이펙트가 오래 남아 쓰러지는 몸을 가리지 않게 약하게
+  if(e->Boss){ImpactFrame(3);SlowMo(3.4f,0.28f);deathCam=3.4f;deathAt=at;shake=0.9f;punch=2.2f;Sfx("Finisher");Sfx("Boom",0.7f);}  // 보스 마지막 일격: 흑백 세 번, 쓰러지는 그림(0.9초)이 끝날 때까지 슬로모션, 카메라가 보스를 잡고 당김
+  else if(last||killChain>=3){ImpactFrame(2);SlowMo(0.6f,0.28f);punch=1.8f;Sfx("Finisher",1.25f);}  // 방 마지막 적·연속 처치: 흑백 두 번
+  else{HitStop(0.08f,0.03f);SlowMo(0.24f,0.35f);punch=1.5f;}  // 보통: 멈칫 뒤 잠깐 느려짐
   ParkEnemy(e);
 }
 
@@ -351,12 +416,14 @@ void TopDownShooter::SlashHit(const hb::Vec3& position,const std::vector<Enemy*>
 }
 
 void TopDownShooter::Shoot(const hb::Vec3& from,float power){
-  hb::Transform t;t.position=from+facing*0.8f;t.position.z=0.2f;t.rotation=hb::Vec3{0,0,Angle(facing)};
+  // 화살 받침·지팡이 보석에서 나감 (tools/make_hero_motion.py). 다 당긴 화살은 따뜻한 심이 있는 그림
+  const hb::Vec3 muzzle=Muzzle(from);
+  hb::Transform t;t.position=muzzle;t.position.z=0.2f;t.rotation=hb::Vec3{0,0,Angle(facing)};
   auto* s=Take(shotPool,rules->PlayerShotPrefab,t);if(!s)return;
-  hb::Sprites::PlayAnimation(s,Character==1?rules->ArrowClip:rules->CardClip,true);
-  Effect(Character==1?"Muzzle":"CardCast",Muzzle(from),Angle(facing),1.f);Sfx(Character==1?"Arrow":"Bolt");
+  hb::Sprites::PlayAnimation(s,Character!=1?rules->CardClip:power>=1?"Assets/Animations/SA_SherryArrowFull.hbspriteanimation.json":rules->ArrowClip,true);
+  Effect(Character==1?"SherryRelease":"AleaCast",muzzle,Angle(facing),1.f);Sfx(Character==1?"Arrow":"Bolt");
   const float speed=Character==1?rules->ArrowMinSpeed+(rules->ArrowSpeed-rules->ArrowMinSpeed)*power:rules->BoltSpeed;
-  hb::Physics::SetVelocity(s,facing*speed);
+  PhysicsQueue::Velocity(s,facing*speed);
   shots[s]=rules->PlayerShotLife;shotBoom[s]=false;Swings++;
   shotPower[s]=Character==1?rules->ArrowMinPower+(1-rules->ArrowMinPower)*power*power:1.f;  // 끝까지 당길수록 많이 세짐 (제곱)
 }
@@ -375,7 +442,7 @@ void TopDownShooter::UpdateShots(float delta,const std::vector<Enemy*>& enemies)
     if(!wall&&!(hit&&Enchant!=3)&&life>0)continue;  // 각인 관통(3)이면 적을 뚫고 벽·문·보스에서 멈춤
     if(Character!=2){done.push_back(s);continue;}
     // 알레아 마탄: 작은 폭발로 주변 적에게 피해
-    hb::Physics::SetVelocity(s,hb::Vec3{0,0,0});hb::Sprites::PlayAnimation(s,rules->BoomClip,false);Sfx("Boom");shotBoom[s]=true;life=0.25f;
+    PhysicsQueue::Velocity(s,hb::Vec3{0,0,0});hb::Sprites::PlayAnimation(s,rules->BoomClip,false);Sfx("Boom");shotBoom[s]=true;life=0.25f;
     for(auto* e:Enemies()){const auto d=hb::Scene::GetPosition(e)-p;const float len=Length(d);
       if(len<rules->BoomRadius&&len>0.05f)HitEnemy(e,d*(1/len),rules->BoomDamage*WeaponDamage()/rules->BoltDamage);}
   }

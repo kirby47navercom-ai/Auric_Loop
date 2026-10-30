@@ -16,8 +16,8 @@ static int EyeRow(const hb::Vec3& d);
 void Enemy::Awake(){
   // 풀에서 다시 꺼낼 때도 불린다. 생성한 쪽이 먼저 정한 무적·경직(귀환 해골)은 지우지 않는다
   Hp=MaxHp;flash=0;burnLeft=0;ring=0;pattern=0;shotTimer=ShotInterval*0.5f;mode=Mode::Halt;burnedOut=false;
-  sentStunned=sentReady=sentNear=flipped=false;eyeAnim="Idle";eyeShown.clear();dashCount=0;phase2=false;sentVelocity={9e9f,0,0};
-  tint=-1;Tint(false);
+  sentStunned=sentReady=sentNear=flipped=false;hb::Sprites::SetFlip(this,false,false);eyeAnim="Idle";eyeShown.clear();dashCount=0;phase2=enrageWait=false;flipTick=0;sentVelocity={9e9f,0,0};
+  tint=-1;Tint(false);  // 뒤집기도 실제로 풀어 둠: 풀에서 다시 꺼낸 적이 지난번 뒤집힌 채로 남으면 기억(flipped)과 달라 플레이어 반대쪽을 봄
   if(Parked)return;  // 화면 밖 대기 중이면 상태 머신을 켜지 않음 (꺼낼 때 다시 Awake)
   hb::States::Start(this,Brain);brainRunning=true;
 }
@@ -45,23 +45,30 @@ void Enemy::Tick(float delta){
     const bool aiming=eyeAnim=="Charge"||eyeAnim=="Fire"||eyeAnim=="Recover";
     const std::string want="Assets/Animations/SA_Eyeball_"+eyeAnim+"_"+"FBLR"[EyeRow(aiming?laserDir:dir)]+".hbspriteanimation.json";
     if(want!=eyeShown){eyeShown=want;hb::Sprites::PlayAnimation(this,want,eyeAnim=="Idle"||eyeAnim=="Move");}}
-  else if(flip!=flipped){flipped=flip;hb::Sprites::SetFlip(this,flip,false);}
+  else if(mode!=Mode::Spin&&(flip!=flipped||(flipTick-=delta)<=0)){flipped=flip;flipTick=Boss?0.05f:0.25f;hb::Sprites::SetFlip(this,flip,false);}  // 회전 베기 중엔 8방향 그림이 직접 돎
+  // 바뀔 때만 보내면, 상태 머신이 그림(클립)을 바꿀 때 엔진 쪽 반전이 풀린 채 기억(flipped)만 남아 플레이어 반대쪽을 볼 때가 있어 주기적으로 다시 보냄 (보스는 자주)
   const bool frozen=!game||game->Frozen();
   // 닿기만 해서는 맞지 않는다. 보스 돌진(붉은 띠로 예고)에 부딪힐 때만 피해, 근접 공격은 UpdateMelee
   if(!frozen&&Boss&&mode==Mode::Dash&&distance<Radius+0.35f)game->DamagePlayer(ContactDamage,hb::Scene::GetPosition(this));
+  if(enrageWait&&!frozen){enrageWait=false;hb::States::Start(this,Brain);brainRunning=true;}  // 분노 컷신이 끝나면 패턴을 처음부터 다시
   if(Boss&&game&&!frozen){
     if(mode==Mode::Dash&&(ghostTick-=delta)<=0){ghostTick=0.05f;game->BossGhost(this);}  // 돌진 잔상
     if(rainTime>0&&(rainTime-=delta)<=0){  // 금화 비 떨어짐: 자리마다 금화 줄기·불꽃, 그 자리에 서 있으면 맞음
-      for(const auto& s:rainSpots){game->Effect("GoldDrop",hb::Vec3{s.x,s.y+1.1f,0.35f});if(Length(game->PlayerPosition()+hb::Vec3{0,-0.9f,0}-s)<1.2f)game->DamagePlayer(1,s);}
-      game->Shake(0.25f,1.6f);game->Sfx("Coin");game->Sfx("Impact");rainSpots.clear();}
+      for(const auto& s:rainSpots){game->Effect("GoldDrop",hb::Vec3{s.x,s.y+1.1f,0.35f},0,1.f,false,1.4f);game->Effect("GroundRing",hb::Vec3{s.x,s.y,0.03f},0,1.f,false,0.7f);
+        if(Length(game->PlayerPosition()+hb::Vec3{0,-0.9f,0}-s)<1.2f)game->DamagePlayer(1,s);}
+      game->Shake(0.35f,2.2f);game->Sfx("CoinRain");game->Sfx("Impact");rainSpots.clear();}
     if(roarTime>0&&(roarTime-=delta)<=0&&(mode==Mode::Prowl||mode==Mode::Halt))hb::Sprites::PlayAnimation(this,WalkClip,true);  // 포효 끝: 패턴 자세 중이면 그대로
-    if(mode==Mode::Spin){  // 회전 베기: 천천히 다가오며 0.25초마다 둘레를 벰
-      Move(dir*(Speed*0.7f));
-      if((spinTick-=delta)<=0){spinTick=0.25f;const auto at=hb::Scene::GetPosition(this);game->Sfx("Swing");
-        spinAngle+=110;const hb::Vec3 out=Rotate(hb::Vec3{1,0,0},spinAngle);  // 몸 둘레를 돌며 바깥쪽에 (몸 한가운데서 나오면 어색함)
-        game->Effect("BossSlash",at+out*(Radius+1.1f)+hb::Vec3{0,-0.5f,0.35f},spinAngle,1.4f,out.x<0);
+    if(mode==Mode::Spin){  // 회전 베기: 대검을 뻗고 제자리에서 빙글빙글 돌며 천천히 다가옴. 0.25초마다 둘레(반지름+1.5m)를 벰
+      Move(dir*(Speed*0.7f));const auto at=hb::Scene::GetPosition(this);
+      // 몸이 돈 각도: 회전 그림 8장(SA_SkeletonCaptain_Spin, 45도씩 0.06초 = 초당 750도, 화면 시계 방향)과 같은 빠르기
+      if(!turning){turning=true;spinTurn=0;}
+      spinTurn=std::fmod(spinTurn+750*delta,360.f);const bool left=spinTurn>90&&spinTurn<270;
+      game->Whirl(at,Radius+1.5f,spinTurn);  // 맞는 범위 원을 칼끝 궤적이 몸과 같은 각도로 돎 (매 프레임 따라감)
+      if((spinTick-=delta)<=0){spinTick=0.25f;game->Sfx("BossSwing",0.9f+float(std::rand()%20)/100);
+        game->Effect("Dust",at+Rotate(hb::Vec3{Radius+1.2f,0,0},-spinTurn)+hb::Vec3{0,-0.9f,0.03f},0,0,left,1.4f);game->Shake(0.08f,1.f);  // 칼끝이 지나는 바닥 흙먼지
         if(distance<Radius+1.5f)game->DamagePlayer(1,at);}
       return;}
+    if(turning){turning=false;flipped=!flip;}  // 다 돌면 보는 쪽을 다음 프레임에 다시 맞춤
   }
   if(KeepDistance<=0&&UpdateMelee(delta,dir,distance,frozen))return;
   if(mode==Mode::Dash||mode==Mode::Stagger||mode==Mode::Jump)return;  // 돌진·점프 속도·밀려남은 그대로 둔다
@@ -73,7 +80,7 @@ void Enemy::Tick(float delta){
     else if(mode==Mode::Range){const float side=distance>KeepDistance+1?1.f:distance<KeepDistance-1?-1.f:0.f;v=dir*(Speed*side);}
   }
   v=v+sep;
-  if(Length(v-sentVelocity)>0.05f||++velocityAge>=10){sentVelocity=v;velocityAge=0;hb::Physics::SetVelocity(this,v);}  // 벽에 막혀 줄어든 속도도 가끔 다시 맞춘다
+  if(Length(v-sentVelocity)>0.05f||++velocityAge>=10){sentVelocity=v;velocityAge=0;PhysicsQueue::Velocity(this,v);}  // 벽에 막혀 줄어든 속도도 가끔 다시 맞춘다
   // 막힘 확인 (0.2초마다): 가려는데 거의 못 움직였으면 0.7초 동안 왼쪽이나 오른쪽으로 비켜 돈다
   if(detour>0)detour-=delta;
   if(++stuckAge>=12){stuckAge=0;
@@ -81,7 +88,7 @@ void Enemy::Tick(float delta){
 }
 
 // 대기 중(화면 밖, 상태 머신 멈춤)이면 늦게 들어온 상태 이벤트는 무시
-void Enemy::Halt(){if(Parked)return;mode=Mode::Halt;eyeAnim="Idle";sentVelocity={0,0,0};hb::Physics::SetVelocity(this,hb::Vec3{0,0,0});}
+void Enemy::Halt(){if(Parked)return;mode=Mode::Halt;eyeAnim="Idle";sentVelocity={0,0,0};PhysicsQueue::Velocity(this,hb::Vec3{0,0,0});}
 void Enemy::Chase(){if(Parked)return;mode=Mode::Chase;Tint(false);}
 void Enemy::Range(){if(Parked)return;mode=Mode::Range;eyeAnim="Move";}
 void Enemy::Stagger(){if(Parked)return;mode=Mode::Stagger;}
@@ -123,6 +130,11 @@ void Enemy::Glint(const std::string& spec,bool left){
   game->Effect("GlintEye",at+hb::Vec3{ex*s,ey,0.45f},0,2.f);game->Effect("GlintTip",at+hb::Vec3{tx*s,ty,0.45f},0,2.f);
 }
 
+hb::Vec3 Enemy::TipOf(const std::string& spec,bool left) const{
+  float ex=0,ey=0,tx=0,ty=0;if(std::sscanf(spec.c_str(),"%f,%f;%f,%f",&ex,&ey,&tx,&ty)!=4)return hb::Vec3{0,0,0};
+  return hb::Vec3{left?-tx:tx,ty,0};
+}
+
 int Enemy::NextAfter(int current) const{
   // 보스 패턴 순서: 돌진(0) → 회전 베기(4) → 나선 탄막(1) → 충격파(5) → 점프 내려찍기(2) → [분노: 금화 비(6)] → 졸개 소환(3) → 처음으로
   switch(current){case 0:return 4;case 4:return 1;case 1:return 5;case 5:return 2;case 2:return phase2?6:3;case 6:return 3;default:return 0;}
@@ -137,6 +149,7 @@ void Enemy::SpinWindup(){if(Parked)return;
 void Enemy::Spin(){if(Parked)return;
   // 회전 베기: 대검을 뻗고 돌며 천천히 다가옴. 0.25초마다 둘레를 벰 (Tick)
   mode=Mode::Spin;Tint(false);spinTick=0;NextPattern(NextAfter(4));
+  flipped=false;hb::Sprites::SetFlip(this,false,false);  // 회전 그림은 오른쪽부터 시작하는 8방향이라 뒤집지 않음
 }
 
 void Enemy::QuakeWindup(){if(Parked)return;
@@ -152,7 +165,10 @@ void Enemy::Quake(){if(Parked)return;
   const std::string clip="Assets/Animations/SA_Crack.hbspriteanimation.json";
   const hb::Vec3 hit=at+quakeDir*1.6f+hb::Vec3{0,-0.9f,0};  // 대검이 꽂히는 앞쪽 바닥에서 파편이 퍼짐
   game->FireBullets(hit,quakeDir,phase2?9:7,70,ShotSpeed*1.1f,clip);game->FireBullets(hit,quakeDir,phase2?8:6,60,ShotSpeed*0.75f,clip);
-  game->Effect("Shockwave",hit+hb::Vec3{0,0,0.05f},0,1.f);game->Shake(0.35f,2.f);game->Sfx("Boom");game->BossImpact(0.1f);
+  game->Effect("GroundRing",hit+hb::Vec3{0,0,0.05f},0,1.6f,false,1.6f);game->Effect("Impact",hit+hb::Vec3{0,0.3f,0.3f},0,2.2f,false,1.5f);
+  for(float a:{-25.f,0.f,25.f})for(int k=1;k<=3;++k){const hb::Vec3 p=hit+Rotate(quakeDir,a)*(2.2f*k);  // 예고한 세 줄을 따라 바닥이 터짐
+    game->Effect("Dust",p,0,0,a<0,1.2f+0.15f*k);if(k%2)game->Effect("GroundRing",p+hb::Vec3{0,0,0.04f},0,0.8f,false,0.8f);}
+  game->Shake(0.55f,3.f);game->Sfx("BossQuake");game->Sfx("Boom",0.85f);game->BossImpact(0.12f);
   NextPattern(NextAfter(5));
 }
 
@@ -176,8 +192,8 @@ void Enemy::JumpWindup(){if(Parked)return;
 
 void Enemy::Jump(){if(Parked)return;if(TopDownShooter::Current&&TopDownShooter::Current->Frozen()){Halt();return;}
   // 뛰어오름: 흙먼지, 0.6초에 착지 자리로 (공중에선 몸통 박치기 없음)
-  mode=Mode::Jump;if(auto* game=TopDownShooter::Current)game->Effect("Dust",hb::Scene::GetPosition(this)+hb::Vec3{0,-1.2f,0});
-  sentVelocity=(jumpTarget-hb::Scene::GetPosition(this))*(1/0.6f);sentVelocity.z=0;hb::Physics::SetVelocity(this,sentVelocity);
+  mode=Mode::Jump;if(auto* game=TopDownShooter::Current){const auto at=hb::Scene::GetPosition(this);game->Effect("Dust",at+hb::Vec3{-0.8f,-1.2f,0},0,0,false,1.8f);game->Effect("Dust",at+hb::Vec3{0.8f,-1.2f,0},0,0,true,1.8f);game->Sfx("BossDash",0.8f);}
+  sentVelocity=(jumpTarget-hb::Scene::GetPosition(this))*(1/0.6f);sentVelocity.z=0;PhysicsQueue::Velocity(this,sentVelocity);
 }
 
 void Enemy::Slam(){if(Parked)return;
@@ -196,19 +212,23 @@ void Enemy::Fire(){if(Parked)return;
 
 void Enemy::Dash(){if(Parked)return;if(TopDownShooter::Current&&TopDownShooter::Current->Frozen()){Halt();return;}
   mode=Mode::Dash;Tint(false);
-  sentVelocity=dashDir*DashSpeed;hb::Physics::SetVelocity(this,sentVelocity);
+  sentVelocity=dashDir*DashSpeed;PhysicsQueue::Velocity(this,sentVelocity);
   // 보스는 연속 돌진 (2번, 분노하면 3번) 뒤 다음 패턴
   const bool again=Boss&&++dashCount<(phase2?3:2);hb::States::SetBool(this,"Again",again);
   if(!again){dashCount=0;NextPattern(NextAfter(0));}
   ghostTick=0;
   if(auto* game=TopDownShooter::Current){const auto at=hb::Scene::GetPosition(this);game->Effect("Dust",at+hb::Vec3{0,-1,0},0,0,dashDir.x<0);game->Effect("Dust",at+hb::Vec3{-dashDir.x,-1-dashDir.y,0},0,0,dashDir.x>0);
-    if(Boss){game->Shake(0.18f,1.3f);game->Sfx("Swing",0.7f);}}  // 박차고 나가는 먼지·흔들림
+    if(Boss){game->Shake(0.25f,1.8f);game->Sfx("BossDash");game->Effect("GroundRing",at+hb::Vec3{-dashDir.x*0.8f,-1-dashDir.y*0.8f,0.03f},0,0.8f,false,0.8f);}}  // 박차고 나가는 먼지·흔들림
 }
 
 void Enemy::Ring(){if(Parked)return;
   // 나선 탄막: 세 번 쏘며 매번 12도씩 돌려서 소용돌이처럼 (분노하면 더 촘촘히)
   Halt();auto* game=TopDownShooter::Current;
-  if(game&&!game->Frozen())game->FireRing(hb::Scene::GetPosition(this),RingCount,ring*12.f,ShotSpeed,ShotClip);
+  if(game&&!game->Frozen()){  // 치켜든 대검 끝에서 터져 나감 (몸 한가운데서 나오면 대검과 따로 놂): 불꽃·충격파 고리·흔들림
+    float d;const auto from=hb::Scene::GetPosition(this)+TipOf(GlintCast,ToPlayer(d).x<0)*0.85f;
+    game->Effect("Impact",from+hb::Vec3{0,0,0.4f},float(ring*40),2.2f,false,1.4f);game->Effect("BurstRing",from+hb::Vec3{0,0,0.35f},0,1.4f,false,1.3f);
+    game->Shake(0.15f,1.2f);game->Sfx("BossSwing",1.15f);
+    game->FireRing(from,RingCount,ring*12.f,ShotSpeed,ShotClip);}
   if(++ring%3==0)NextPattern(NextAfter(1));
 }
 
@@ -253,7 +273,8 @@ bool Enemy::UpdateMelee(float delta,const hb::Vec3& dir,float distance,bool froz
     Move(atk!=3&&atkTime>full*0.5f?atkDir*-0.9f:hb::Vec3{0,0,0});if(atkTime>0)return true;
     atkPhase=1;game->Sfx("Swing");
     if(atk==1){atkTime=0.16f;hb::Sprites::PlayAnimation(this,AttackClip,false);
-      game->Effect(Boss?"BossSlash":"EnemySlash",Boss?at+atkDir*(reach*0.85f)+hb::Vec3{0,-0.5f,0.35f}:at+atkDir*(reach*0.5f)+hb::Vec3{0,0.3f,0.35f},Angle(atkDir),1.4f,atkDir.x<0);  // 붉은 베기 궤적 (보스는 몸이 커서 칼끝 쪽 허리 높이에)
+      game->Effect(Boss?"BossSlash":"EnemySlash",Boss?at+atkDir*(reach*0.85f)+hb::Vec3{0,-0.5f,0.35f}:at+atkDir*(reach*0.5f)+hb::Vec3{0,0.3f,0.35f},atkDir.x<0?Angle(atkDir)-180:Angle(atkDir),Boss?2.f:1.4f,atkDir.x<0,Boss?1.8f:1.f);  // 궤적 그림은 오른쪽을 향함: 왼쪽은 좌우 반전만 (180도까지 돌리면 두 번 뒤집혀 보스 쪽으로 나갔음)
+      if(Boss){game->Effect("Impact",at+atkDir*(reach*1.1f)+hb::Vec3{0,-0.4f,0.4f},Angle(atkDir),2.f,false,1.3f);game->Shake(0.2f,2.f);game->Sfx("BossSwing");}  // 붉은 베기 궤적 (보스는 몸이 커서 칼끝 쪽 허리 높이에)
       if(distance<reach+0.3f&&hb::VectorMath::DotProduct(dir,atkDir)>0.35f)game->DamagePlayer(1,at);}  // 예고한 방향 앞쪽만
     else if(atk==2){atkTime=lungeTime;Move(atkDir*LungeSpeed);game->Effect("Dust",at+hb::Vec3{0,-0.6f,0});
       if(!LungeSprite.empty())hb::Sprites::SetSprite(this,LungeSprite);else hb::Sprites::PlayAnimation(this,AttackClip,false);}
@@ -284,16 +305,20 @@ void Enemy::EndAttack(){
   hb::Sprites::PlayAnimation(this,WalkClip,true);
 }
 
-void Enemy::Stun(float seconds){stun=std::max(stun,seconds);sentVelocity={0,0,0};hb::Physics::SetVelocity(this,hb::Vec3{0,0,0});}
+void Enemy::Stun(float seconds){stun=std::max(stun,seconds);sentVelocity={0,0,0};PhysicsQueue::Velocity(this,hb::Vec3{0,0,0});}
 
 bool Enemy::TakeHit(float damage,const hb::Vec3& push,float stunSeconds,float burnSeconds){
   if(!Invulnerable){Hp-=damage;if(burnSeconds>0){burnLeft=burnSeconds;}}
   lastPush=push;squash=Boss?0.09f:0.14f;  // 맞으면 몸이 납작해졌다가 튀어 돌아옴 (Tick)
   // 맞은 순간 하얗게 번쩍, 보스가 아니면 밀려나며 잠깐 경직(상태 머신이 맞는 그림)
   if(flash<=0){hb::Sprites::Flash(this,0.08f,Boss?0.12f:0.65f);flash=Boss?0.2f:0.1f;}  // 연타 중엔 번쩍임을 띄엄띄엄 (계속 하얗게 덮이지 않게)
-  if(!Boss){stun=std::max(stun,stunSeconds);sentVelocity=push;hb::Physics::SetVelocity(this,sentVelocity);}
+  if(!Boss){stun=std::max(stun,stunSeconds);sentVelocity=push;PhysicsQueue::Velocity(this,sentVelocity);}
   else if(!phase2&&Hp<=MaxHp*0.5f&&Hp>0.001f){  // 보스 2페이즈: 체력 절반 아래면 분노 (빨라지고 탄이 늘어남)
     phase2=true;Speed*=1.25f;DashSpeed*=1.15f;RingCount+=4;if(auto* game=TopDownShooter::Current)game->BossEnraged(this);
-    Roar(1.0f);}  // 분노: 잠깐 포효 자세
+    // 분노: 하던 패턴(돌진·점프·회전·베기)을 끊고 제자리에 멈춰 컷신 동안 포효. 상태 머신도 멈췄다가 컷신이 끝나면 다시 (Tick)
+    // (예전엔 컷신 중에도 상태 머신·돌진 속도가 살아 있어 보스가 계속 돌아다녔음)
+    Halt();atk=0;turning=false;rainSpots.clear();rainTime=0;
+    if(brainRunning){hb::States::Stop(this);brainRunning=false;}enrageWait=true;
+    Roar(0.1f);}  // 포효 자세는 컷신 내내 유지 (roarTime은 멈춰 있지 않을 때만 줄어듦)
   return Hp<=0.001f;  // 소수 오차로 0에 못 닿는 경우
 }

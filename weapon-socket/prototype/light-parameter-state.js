@@ -1,0 +1,19 @@
+import {objectComponents,componentDefaults,validComponentProperties} from './scene-components.js';
+import {visualComponentSignature} from './scene-component-signature.js';
+export const sequenceLightTypes=new Set(['Light2D','DirectionalLight','PointLight','SpotLight']);
+export function primaryLightComponent(object,group){if(!object)return null;const components=objectComponents(object),twoD=components.filter(c=>c.type==='Light2D');if(twoD.length)return twoD.find(c=>c.id===group?.userData?.light2dComponent)||twoD.filter(c=>c.properties?.enabled!==false).at(-1)||twoD[0];const light=primaryOwnedLight(group),id=light?.userData.hbLightComponent;if(id)return components.find(c=>c.id===id&&sequenceLightTypes.has(c.type));const candidates=components.filter(c=>sequenceLightTypes.has(c.type)&&c.properties?.enabled!==false);return candidates.length===1?candidates[0]:null;}
+export function ownedLight(group,node){const id=group?.userData?.objectId;for(let at=node;at;at=at.parent){if(at===group)return true;if(id&&at.userData?.objectId&&at.userData.objectId!==id)return false;}return false;}
+export function registerLightComponent(group,object,node){if(!node.isLight||!ownedLight(group,node))return;let component=objectComponents(object).find(c=>c.id===node.userData.hbLightComponent&&sequenceLightTypes.has(c.type));if(!component&&object.kind==='light')component=objectComponents(object).find(c=>c.type===node.type&&c.properties?.enabled!==false)||(node.isPointLight?objectComponents(object).find(c=>c.type==='DirectionalLight'&&c.properties?.enabled!==false):null);if(component){node.userData.hbLightComponent=component.id;group.userData.lightComponents??=new Map();group.userData.lightComponents.set(component.id,node);}group.userData.primaryLight=node;}
+export function primaryOwnedLight(group){const saved=group?.userData?.primaryLight;if(saved?.isLight&&ownedLight(group,saved))return saved;let light;group?.traverse(node=>{if(node.isLight&&ownedLight(group,node))light=node;});return light;}
+export function readLightIntensity(object,group){const component=primaryLightComponent(object,group);if(component)return component.properties?.intensity??componentDefaults(component.type).intensity;return primaryOwnedLight(group)?.intensity;}
+// Accept only intensity deltas whose complete visual signature matches. Other
+// pending changes take the existing rebuild path; resources are never discarded.
+export function syncLightIntensityProperties(group,object,changes){
+ if(!group||group.userData.disposed||!group.userData.componentSignature||!changes.length||changes.some(c=>!sequenceLightTypes.has(c.componentType)||c.property!=='intensity'))return false;
+ const expected=JSON.parse(group.userData.componentSignature),next=visualComponentSignature(object),writes=[];
+ for(const change of changes){const current=objectComponents(object).find(c=>c.id===change.component&&c.type===change.componentType),old=expected.find(c=>c.id===change.component&&c.type===change.componentType);if(!current||!old||!validComponentProperties(current.type,{intensity:current.properties?.intensity}))return false;old.properties={...old.properties,intensity:current.properties.intensity};
+  if(current.type==='Light2D'){const active=objectComponents(object).filter(c=>c.type==='Light2D'&&c.properties?.enabled!==false).at(-1);if(active?.id===current.id){if(!group.userData.light2d)return false;writes.push([group.userData.light2d,current.properties.intensity]);}}
+  else if(current.properties?.enabled!==false){const node=group.userData.lightComponents?.get(current.id);if(!node?.isLight||!ownedLight(group,node))return false;writes.push([node,current.properties.intensity]);}
+ }
+ if(JSON.stringify(expected)!==next)return false;for(const [target,value]of writes)target.intensity=value;group.userData.componentSignature=next;return true;
+}
