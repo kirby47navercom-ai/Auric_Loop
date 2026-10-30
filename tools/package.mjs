@@ -26,10 +26,10 @@ const record = await readProjectManifest(project);
 const profile = (await readBuildProfiles(record)).profiles.find(p => p.id === id);
 if (!profile) throw Error(`빌드 프로필 없음: ${id}`);
 // 내장 그래픽(Intel UHD 620)·램 8GB 노트북에서도 돌게: 초당 60프레임(엔진 기본 120), 저사양 장면 설정(tools/light_scene.mjs, 물리는 60Hz 유지)
-const lightScenes = id === 'windows' ? hookLightScenes(path.dirname(project), 60, {pc: true}) : null;
+const lightScenes = ['windows', 'perf'].includes(id) ? hookLightScenes(path.dirname(project), 60, {pc: true}) : null;
 // 엔진 467f512부터 Windows 기본 실행기는 WebView2 없는 네이티브(Win32·DirectX 11·Skia UI): 램·그래픽을 훨씬 덜 씀.
 // 네이티브는 화면 주사율 동기화(framePacing display)를 거절하므로 고정 60
-if (id === 'windows') Object.assign(profile, {targetFrameRate: 60, framePacing: 'fixed'});
+if (['windows', 'perf'].includes(id)) Object.assign(profile, {targetFrameRate: 60, framePacing: 'fixed'});  // perf(보스방 시작 측정용)도 배포와 같은 설정
 const build = await buildGame(record, profile, {onProgress: s => console.log(s)});
 if (lightScenes && !lightScenes()) throw Error('저사양 장면 설정이 안 들어감 (엔진이 장면 읽는 방식이 바뀜)');
 
