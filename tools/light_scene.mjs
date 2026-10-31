@@ -8,11 +8,11 @@ import fs from 'node:fs/promises';
 import fsSync from 'node:fs';
 import path from 'node:path';
 
-export function lightScene(text, physicsHz) {
+export function lightScene(text, physicsHz, {effects = false} = {}) {  // effects: PC는 빛 번짐·장식 흔들림을 그대로 (끄면 어제 행사판과 화면이 달라 보였음, 2026-10-31)
   const scene = JSON.parse(text);
   Object.assign(scene.runtime ??= {}, {fixedDeltaTime: 1 / physicsHz, maxSubsteps: 2});
-  for (const o of scene.objects || []) for (const c of o.components || []) if (c.type === 'PostProcessVolume') Object.assign(c.properties, {enabled: false, bloomEnabled: false, bloomStrength: 0});
-  for (const o of scene.objects || []) if (/^(Decor|Edge|EdgeBush)\d/.test(o.id)) for (const c of o.components || []) if (c.type === 'Animator') c.properties.enabled = false;
+  if (!effects) for (const o of scene.objects || []) for (const c of o.components || []) if (c.type === 'PostProcessVolume') Object.assign(c.properties, {enabled: false, bloomEnabled: false, bloomStrength: 0});
+  if (!effects) for (const o of scene.objects || []) if (/^(Decor|Edge|EdgeBush)\d/.test(o.id)) for (const c of o.components || []) if (c.type === 'Animator') c.properties.enabled = false;
   for (const o of scene.objects || []) if (/^Edge\d/.test(o.id)) o.components = (o.components || []).filter(c => c.type !== 'BoxCollider2D');
   return JSON.stringify(scene);
 }
@@ -38,7 +38,7 @@ export function hookLightScenes(projectDir, physicsHz, {pc = false} = {}) {
     const scene = name.endsWith('.hbscene.json'), widget = pc && name.endsWith('.hbwidget.json');
     if (!(scene || widget) || !path.resolve(name).startsWith(root)) return result;
     if (scene) count++;
-    const source = Buffer.isBuffer(result) ? result.toString('utf8') : result, text = scene ? lightScene(source, physicsHz) : hideTouchWidgets(source, projectDir);
+    const source = Buffer.isBuffer(result) ? result.toString('utf8') : result, text = scene ? lightScene(source, physicsHz, {effects: pc}) : hideTouchWidgets(source, projectDir);
     return Buffer.isBuffer(result) ? Buffer.from(text) : text;
   };
   return () => count;
