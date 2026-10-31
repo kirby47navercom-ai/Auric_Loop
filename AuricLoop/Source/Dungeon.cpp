@@ -111,7 +111,13 @@ void Dungeon::Put(std::vector<Piece>& out,const char* tag,float x0,float y0,floa
 
 void Dungeon::Move(std::vector<Piece>& out,const char* tag,float x,float y,float z){
   auto& pool=pools[tag];if(pool.empty()){shortages++;return;}
-  auto* a=pool.back();pool.pop_back();out.push_back({&pool,a});hb::Scene::SetPosition(a,hb::Vec3{x,y,z});
+  auto* a=pool.back();pool.pop_back();out.push_back({&pool,a});hb::Scene::SetPosition(a,hb::Vec3{x,y,z});Live(&pool,a,true);
+}
+
+void Dungeon::Live(const std::vector<hb::Actor*>* pool,hb::Actor* a,bool on){
+  // 화면 밖에 세워 둔 조각도 불꽃·애니메이션이 돌면 매 프레임 물체 전체가 바뀐 것으로 C++에 다시 전송됨 (보스방 프레임 계산의 큰 몫)
+  if(pool==&pools["Dungeon.Torch"]||pool==&pools["Dungeon.Gold"])hb::Components::SetBool(a,"ParticleSystem","enabled",on);  // hb::Particles::Play·Stop은 네이티브 패키지에서 실행 질의 채널이 없어 실패
+  else if(pool==&pools["Dungeon.Glow"]||pool==&pools["Dungeon.Banner"])hb::Components::SetBool(a,"Animator","enabled",on);
 }
 
 void Dungeon::Build(){
@@ -119,6 +125,7 @@ void Dungeon::Build(){
   for(auto* tag:{"Dungeon.Floor","Dungeon.Cap","Dungeon.Face","Dungeon.Lintel","Dungeon.Arch","Dungeon.Torch","Dungeon.Glow","Dungeon.Banner","Dungeon.Pillar",
                  "Dungeon.Crate","Dungeon.Barrel","Dungeon.LowWall","Dungeon.Statue","Dungeon.Chest","Dungeon.Rubble","Dungeon.Bones","Dungeon.Gold"})
     pools[tag]=hb::Scene::GetActorsWithTag(tag);
+  for(auto* tag:{"Dungeon.Torch","Dungeon.Gold","Dungeon.Glow","Dungeon.Banner"})for(auto* a:pools[tag])Live(&pools[tag],a,false);
   gateFree=hb::Scene::GetActorsWithTag("Dungeon.Gate");sideFree=hb::Scene::GetActorsWithTag("Dungeon.GateSide");
   {auto s=hb::Scene::GetActorsWithTag("Dungeon.Stairs");stairs=s.empty()?nullptr:s.front();}
   signs=hb::Scene::GetActorsWithTag("Dungeon.Sign");
@@ -200,7 +207,7 @@ void Dungeon::Show(int center){
   std::set<int> want(near.begin(),near.end());
   for(int i=0;i<int(rooms.size());++i)for(int d:{0,1})if(rooms[i].link[d]>=0&&(near.count(i)||near.count(rooms[i].link[d])))want.insert(1000+i*4+d);
   for(auto it=placed.begin();it!=placed.end();)
-    if(!want.count(it->first)){for(auto& p:it->second){hb::Scene::SetPosition(p.actor,hb::Vec3{0,-200,0});p.pool->push_back(p.actor);}it=placed.erase(it);}else ++it;
+    if(!want.count(it->first)){for(auto& p:it->second){hb::Scene::SetPosition(p.actor,hb::Vec3{0,-200,0});Live(p.pool,p.actor,false);p.pool->push_back(p.actor);}it=placed.erase(it);}else ++it;
   for(int u:want)if(!placed.count(u)){if(u<1000)PlaceRoom(u);else PlaceCorridor((u-1000)/4,(u-1000)%4);}
 }
 

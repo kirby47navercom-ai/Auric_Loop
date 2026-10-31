@@ -56,6 +56,7 @@ private:
   int shortages=0;                                           // 풀이 모자라 못 깐 조각 (Describe → 검사)
   void Put(std::vector<Piece>& out,const char* tag,float x0,float y0,float x1,float y1,int collider,float z);
   void Move(std::vector<Piece>& out,const char* tag,float x,float y,float z=0.05f);
+  void Live(const std::vector<hb::Actor*>* pool,hb::Actor* a,bool on);  // 횃불·금더미 불꽃(파티클), 불빛·깃발 애니메이션은 깔린 동안만
   void PlaceRoom(int i);
   void PlaceCorridor(int i,int d);
   hb::Actor* backdrop=nullptr;hb::Vec3 backdropAt{1e9f,0,0};  // 맵 밖 어두운 바탕 (화면 크기, 카메라를 따라감)

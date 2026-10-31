@@ -58,6 +58,15 @@ export async function playerPatches(projectDir) {
         'const key=hbTexKey(texture,allowUV1),hbVer=texture.userData.hbSpriteClone?texture.source.version:texture.version;if(textures.get(key)!==hbVer){'],
       ["track(texture,'textures',key,textures);", "if(key===texture.uuid)track(texture,'textures',key,textures);"],
       ['textures.set(key,texture.version);', 'textures.set(key,hbVer);']],
+    // 13) 네이티브: UI(체력·글자·배너)가 바뀔 때마다 화면 크기 UI 전체를 PNG로 압축해 보냄. 기본 압축이 1280x720에 23ms → 보스전 프레임 튐의 주원인
+    //     (지역 이름 배너가 사라지는 1초 동안 매 프레임). 같은 PNG를 가장 빠른 압축(zlib 1)으로 만들어 3ms
+    'tools/native-widget-layer.mjs': [["import path from 'node:path';", "import path from 'node:path';"+FAST_PNG],
+      ["png:(await canvas.encode('png')).toString('base64')", "png:hbFastPng(canvas).toString('base64')"]],
+    // 14) 네이티브: UI를 가진 물체(UI_HUD 등, 한 줄 128KB)는 UI가 한 번 바뀌면 전송 기록의 UI가 복사본이 되어 '안 바뀜' 판정이 매 프레임 실패
+    //     → 매 프레임 128KB 줄을 다시 만들고 비교. 전송 기록에도 원래의 바뀌지 않는 UI 스냅샷을 다시 연결 (내용은 같은 JSON에서 나와 동일)
+    'prototype/native-transport.js': [['if(!packet){next=current;sequence=1;packet={...request,objects:next,worldTransport:1,worldId:this.id,baseSequence:0,worldSequence:sequence};}',
+      'if(!packet){next=current;sequence=1;packet={...request,objects:next,worldTransport:1,worldId:this.id,baseSequence:0,worldSequence:sequence};}'
+      + 'for(let i=0;i<next.length;i++){const u=request.objects[i]?.gameplayDebug?.ui,g=next[i]?.gameplayDebug;if(u&&g&&g.ui!==u&&rows[i]!=="null"&&immutableNodes.has(u)&&!Object.isFrozen(g))g.ui=u;}']],
     // 11) 네이티브(엔진 a471833): C++가 물체를 움직일 때마다(위치만 바뀌어도) 스프라이트 상태 전체를 JSON으로 만들어 비교 → 보스전 프레임 계산 2배
     //     반복 타일 갱신이 필요한 건 컴포넌트(크기·모드)가 바뀔 때뿐이라 그때만 맞춤
     'tools/run-project.mjs': [
@@ -67,6 +76,12 @@ export async function playerPatches(projectDir) {
     ],
   };
 }
+// 13) 표준 PNG(RGBA 8비트, 필터 없음)를 zlib 1단계로: 투명한 곳이 많은 UI라 크기도 작음 (1280x720 약 23KB)
+const FAST_PNG = "import hbZlib from 'node:zlib';const hbCrcT=new Int32Array(256).map((_,n)=>{let c=n;for(let k=0;k<8;k++)c=c&1?0xedb88320^(c>>>1):c>>>1;return c;});"
+  + "const hbCrc=b=>{let c=-1;for(let i=0;i<b.length;i++)c=hbCrcT[(c^b[i])&255]^(c>>>8);return (c^-1)>>>0;};"
+  + "const hbChunk=(t,d)=>{const l=Buffer.alloc(4);l.writeUInt32BE(d.length);const td=Buffer.concat([Buffer.from(t,'latin1'),d]);const c=Buffer.alloc(4);c.writeUInt32BE(hbCrc(td));return Buffer.concat([l,td,c]);};"
+  + "function hbFastPng(canvas){const w=canvas.width,h=canvas.height,img=canvas.getContext('2d').getImageData(0,0,w,h).data,raw=Buffer.alloc((w*4+1)*h);for(let y=0;y<h;y++)raw.set(img.subarray(y*w*4,(y+1)*w*4),y*(w*4+1)+1);"
+  + "const ih=Buffer.alloc(13);ih.writeUInt32BE(w,0);ih.writeUInt32BE(h,4);ih[8]=8;ih[9]=6;return Buffer.concat([Buffer.from([137,80,78,71,13,10,26,10]),hbChunk('IHDR',ih),hbChunk('IDAT',hbZlib.deflateSync(raw,{level:1})),hbChunk('IEND',Buffer.alloc(0))]);}";
 const RENDERER = 'new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));';
 const RENDERER_LIGHT = 'new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:"high-performance"});renderer.setPixelRatio(1);';
 
