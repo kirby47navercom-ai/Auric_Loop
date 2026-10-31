@@ -57,6 +57,17 @@ const exeName = (await fs.readdir(build.output)).find(n => /^(HBGame_.+|Game)\.e
  const bytes = await fs.readFile(exe), entry = pack.files.find(f => f.path === exeName);
  if (entry) Object.assign(entry, {bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')});}
 
+// 소리 모듈(node-web-audio-api)이 vcruntime140.dll(Visual C++ 런타임)을 쓰는데 패키지에 없음
+// → 런타임이 설치 안 된 PC에서는 스크립트가 시작하자마자 죽어 "게임 실행 중 오류". 이 PC의 64비트 런타임을 함께 넣는다 (앱 동봉 허용 파일)
+for (const dll of ['vcruntime140.dll', 'vcruntime140_1.dll'])
+  for (const dir of ['runtime', 'node_modules/node-web-audio-api']) {
+    const name = `${dir}/${dll}`, bytes = await fs.readFile(path.join(process.env.WINDIR || 'C:/Windows', 'System32', dll));
+    await fs.writeFile(path.join(build.output, name), bytes);
+    const entry = {path: name, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')};
+    const old = pack.files.find(f => f.path === name);
+    if (old) Object.assign(old, entry); else pack.files.push(entry);
+  }
+
 await fs.writeFile(packFile, JSON.stringify(pack, null, 2) + '\n');
 await retainBuilds(record.root, build.output).catch(error => console.warn('빌드 보관 정리 실패:', error.message));
 await fs.rm(dest, {recursive: true, force: true});  // 이전 패키지 교체 (게임이 켜져 있으면 여기서 실패)
