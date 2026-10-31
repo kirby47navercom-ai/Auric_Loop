@@ -6,6 +6,7 @@
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import fs from 'node:fs/promises';
+import fsSync from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
@@ -71,13 +72,26 @@ await fs.copyFile(path.join(path.dirname(fileURLToPath(import.meta.url)), 'packa
 // 소리 모듈(node-web-audio-api)이 vcruntime140.dll(Visual C++ 런타임)을 쓰는데 패키지에 없음
 // → 런타임이 설치 안 된 PC에서는 스크립트가 시작하자마자 죽어 "게임 실행 중 오류". 이 PC의 64비트 런타임을 함께 넣는다 (앱 동봉 허용 파일)
 for (const dll of ['vcruntime140.dll', 'vcruntime140_1.dll'])
-  for (const dir of ['runtime', 'node_modules/node-web-audio-api']) {
+  for (const dir of ['runtime', 'node_modules/node-web-audio-api'].filter(d => fsSync.existsSync(path.join(build.output, d)))) {  // WebView 패키지엔 없는 폴더
     const name = `${dir}/${dll}`, bytes = await fs.readFile(path.join(process.env.WINDIR || 'C:/Windows', 'System32', dll));
     await fs.writeFile(path.join(build.output, name), bytes);
     const entry = {path: name, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')};
     const old = pack.files.find(f => f.path === name);
     if (old) Object.assign(old, entry); else pack.files.push(entry);
   }
+
+// 실행 파일마다 버전 정보(회사·제품·설명) 리소스: 엔진이 만든 C++ 작업 exe(Binaries/*.exe)는 정보·서명이 없어
+// Windows 보안이 기계학습 판정(Program:Win32/Contebrew.A!ml)으로 다른 PC에서 지움 → 흰 화면 뒤 꺼짐 (tools/set_exe_info.ps1, 2026-10-31)
+const binaries = fsSync.existsSync(path.join(build.output, 'Binaries')) ? (await fs.readdir(path.join(build.output, 'Binaries'))).filter(n => n.endsWith('.exe')).map(n => 'Binaries/' + n) : [];
+const scripts = fsSync.existsSync(path.join(build.output, 'runtime')) ? (await fs.readdir(path.join(build.output, 'runtime'))).filter(n => /^HBScript_.*[.]exe$/i.test(n)).map(n => 'runtime/' + n) : [];
+for (const [rel, description] of [[exeName, 'Auric Loop'], ...scripts.map(r => [r, 'Auric Loop script']), ...binaries.map(r => [r, 'Auric Loop game logic'])]) {
+  const file = path.join(build.output, rel);
+  execFileSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(path.dirname(fileURLToPath(import.meta.url)), 'set_exe_info.ps1'), file, description], {stdio: 'inherit'});
+  if (rel.startsWith('Binaries/'))  // 버전 정보만으로는 판정이 왔다갔다해서 아이콘까지 (Defender 검사로 확인)
+    execFileSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(path.dirname(fileURLToPath(import.meta.url)), 'set_exe_icon.ps1'), file, path.join(path.dirname(project), 'Assets/UI/Kit/app_icon.ico')], {stdio: 'inherit'});
+  const bytes = await fs.readFile(file), entry = pack.files.find(f => f.path === rel);
+  if (entry) Object.assign(entry, {bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')});
+}
 
 await fs.writeFile(packFile, JSON.stringify(pack, null, 2) + '\n');
 await retainBuilds(record.root, build.output).catch(error => console.warn('빌드 보관 정리 실패:', error.message));
