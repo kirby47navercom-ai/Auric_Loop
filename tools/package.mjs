@@ -65,6 +65,9 @@ if (!webview) {
   if (old) Object.assign(old, entry); else pack.files.push(entry);
 }
 
+// 안 켜질 때 더블클릭하는 진단 (zip을 안 풀고 실행, 백신이 지운 파일, 오래된 Windows, 엔진 기록을 한 파일로). 게임 파일 목록에는 넣지 않음
+await fs.copyFile(path.join(path.dirname(fileURLToPath(import.meta.url)), 'package_extra/문제확인.bat'), path.join(build.output, '문제확인.bat'));
+
 // 소리 모듈(node-web-audio-api)이 vcruntime140.dll(Visual C++ 런타임)을 쓰는데 패키지에 없음
 // → 런타임이 설치 안 된 PC에서는 스크립트가 시작하자마자 죽어 "게임 실행 중 오류". 이 PC의 64비트 런타임을 함께 넣는다 (앱 동봉 허용 파일)
 for (const dll of ['vcruntime140.dll', 'vcruntime140_1.dll'])
