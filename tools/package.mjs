@@ -57,6 +57,14 @@ const exeName = (await fs.readdir(build.output)).find(n => /^(HBGame_.+|Game)\.e
  const bytes = await fs.readFile(exe), entry = pack.files.find(f => f.path === exeName);
  if (entry) Object.assign(entry, {bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')});}
 
+// 오류 기록·오류 창 모듈 (tools/player_patches.mjs 16번이 게임 스크립트 맨 앞에서 불러옴). 네이티브 패키지에만
+if (!webview) {
+  const name = 'tools/hb-crash-log.mjs', bytes = await fs.readFile(path.join(path.dirname(fileURLToPath(import.meta.url)), 'package_extra/hb-crash-log.mjs'));
+  await fs.writeFile(path.join(build.output, name), bytes);
+  const entry = {path: name, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')}, old = pack.files.find(f => f.path === name);
+  if (old) Object.assign(old, entry); else pack.files.push(entry);
+}
+
 // 소리 모듈(node-web-audio-api)이 vcruntime140.dll(Visual C++ 런타임)을 쓰는데 패키지에 없음
 // → 런타임이 설치 안 된 PC에서는 스크립트가 시작하자마자 죽어 "게임 실행 중 오류". 이 PC의 64비트 런타임을 함께 넣는다 (앱 동봉 허용 파일)
 for (const dll of ['vcruntime140.dll', 'vcruntime140_1.dll'])
