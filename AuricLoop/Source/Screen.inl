@@ -223,10 +223,11 @@ void TopDownShooter::UpdatePrompt(float delta){
   const bool on=promptTarget&&!promptText.empty()&&!Paused&&dialogIndex>=dialog.size()&&!bagOpen&&!craftOpen&&settleTime<0&&!ending;  // 다른 창이 열리면 숨김 (말풍선 위젯이 따로라 HUD 창 위에 그려짐)
   for(auto* n:parts)UiVisible(n,on);
   if(!on)return;
-  const bool key=promptText.rfind("E: ",0)==0;
-  const std::string label=key?promptText.substr(3):promptText;
-  size_t chars=0;for(unsigned char ch:label)chars+=(ch&0xC0)!=0x80;
-  const float w=std::min(860.f,chars*19.f+(key?74.f:48.f)),h=40;  // 글자 양옆에 명패 테두리만큼 여백
+  const std::string shown=Tr(promptText);  // 영어도 "E: "로 시작하게 번역해 둠
+  const bool key=shown.rfind("E: ",0)==0;
+  const std::string label=key?shown.substr(3):shown;
+  float textW=0;for(unsigned char ch:label)if((ch&0xC0)!=0x80)textW+=ch<0x80?10.f:19.f;  // 한글은 넓고 영문은 좁음
+  const float w=std::min(860.f,textW+(key?74.f:48.f)),h=40;  // 글자 양옆에 명패 테두리만큼 여백
   // 대상 그림의 위쪽 끝 (그림자 여백 0.25m 빼고) → 화면 좌표 (1m = 화면 높이 720 / (2 × 카메라 크기))
   static Interactable* sized=nullptr;static float top=1.0f;  // 그림 크기는 엔진에 묻는 값이라 대상이 바뀔 때만 읽음
   if(sized!=promptTarget){sized=promptTarget;top=std::max(1.0f,hb::Sprites::GetSize(promptTarget).y*0.5f-0.25f);}
@@ -297,6 +298,7 @@ bool TopDownShooter::UpdateIntro(float delta,bool anyKey){
   if(Phase==0&&phaseTime>=rules->LoadingTime){Phase=1;phaseTime=0;
     for(auto* n:{"LoadingBack","LoadingLogo","LoadingFade"})UiVisible(n,false);}
   TitleFx(delta,Phase==1&&!selecting);
+  if(UpdateSettings(Phase==1&&!selecting&&titleTime>=TitleDone()))return true;  // 설정 창이 열려 있거나 방금 누른 프레임엔 타이틀 키를 받지 않음
   if(Phase==1&&!selecting&&anyKey&&titleTime<TitleDone())titleTime=TitleDone();  // 연출 중 키: 끝 화면으로 건너뜀 (게임 시작은 다음 키)
   else if(Phase==1&&!selecting&&anyKey&&phaseTime>0.3f){selecting=true;phaseTime=0;
     for(auto* n:{"TitleBack","TitleScreen"})UiVisible(n,false);TitleFx(0,false);introHidden=true;confirmHeld=true;ShowSelect(true);}
@@ -317,4 +319,27 @@ bool TopDownShooter::UpdateIntro(float delta,bool anyKey){
     loadLeft=0.9f;for(auto* n:{"LoadingBack","LoadingLogo"}){UiVisible(n,true);UiOpacity(n,1);}UiScale("LoadingLogo",1);
   }
   return Phase<2;
+}
+
+void TopDownShooter::ApplyLanguage(){
+  // 위젯에 박힌 고정 문구(조작 안내·선택 카드·메뉴 등)를 고른 언어로. 그때그때 바뀌는 문구는 다음에 UiText로 쓸 때 번역됨
+  for(const auto& t:kStaticTexts)UiText(t[0],t[1]);
+  UiPosition("TitleLangMark",hb::Vec2{0.f,Language?26.f:-40.f});
+  hudDirty=true;Hud();langApplied=true;
+}
+
+bool TopDownShooter::UpdateSettings(bool shown){
+  // 타이틀 오른쪽 위 설정 탭: 누르면 언어 창 (한국어 / English). 고른 언어는 저장해 다음 실행에도 씀
+  if(!langApplied&&frame>=2)ApplyLanguage();
+  if(!shown&&settingsOpen)settingsOpen=false;
+  const int keys=(hb::Input::IsKeyDown("uisettings")?1:0)|(hb::Input::IsKeyDown("uilangko")?2:0)|(hb::Input::IsKeyDown("uilangen")?4:0);
+  const int fresh=keys&~settingsHeld;settingsHeld=keys;
+  bool used=fresh!=0;
+  if(shown&&(fresh&1)){settingsOpen=!settingsOpen;Sfx("Select");}
+  if(settingsOpen&&(fresh&6)){const int lang=(fresh&4)?1:0;
+    if(lang!=Language){Language=lang;hb::Save::Write("Auric.settings",{{"lang",Language}});ApplyLanguage();}Sfx("Select");}
+  if(settingsOpen&&hb::Input::WasPressedThisFrame("escape")){settingsOpen=false;used=true;}
+  UiVisible("TitleSettings",shown);
+  for(auto* n:{"TitleLangShade","TitleLangPanel","TitleLangTitle","TitleLangKo","TitleLangEn","TitleLangMark","TitleLangClose"})UiVisible(n,shown&&settingsOpen);
+  return settingsOpen||used;
 }

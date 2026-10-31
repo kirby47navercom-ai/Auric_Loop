@@ -264,15 +264,18 @@ def keycap(name, label, x, y, w_):
 
 
 kw_of = lambda k: 26 if len(k) == 1 else 14 + sum(16 if ord(ch) > 0x3000 else 9 for ch in k)  # noqa: E731  한글은 글자가 넓음
-widths = [sum(kw_of(k) for k in keys) + 4 * (len(keys) - 1) + 8 + 16 * len(label) for keys, label in KEYS]
+EN = json.loads((Path(__file__).resolve().parent / "lang_en.json").read_text(encoding="utf-8"))  # 영어로 바꿔도 안 잘리게 둘 중 넓은 쪽 (tools/lang_build.py)
+lw_of = lambda label: max(16 * len(label), 9 * len(EN.get(label, label))) + 4  # noqa: E731
+kc_of = lambda k: max(kw_of(k), kw_of(EN.get(k, k)))  # noqa: E731  키 상자 (좌클릭 → L-Click)
+widths = [sum(kc_of(k) for k in keys) + 4 * (len(keys) - 1) + 8 + lw_of(label) for keys, label in KEYS]
 x = -(sum(widths) + 28 * (len(KEYS) - 1)) / 2
 for g, ((keys, label), gw) in enumerate(zip(KEYS, widths)):
     cx = x
     for k, key in enumerate(keys):
-        kw = kw_of(key)
+        kw = kc_of(key)
         keycap(f"TitleKey{g}_{k}", key, cx + kw / 2, 26, kw)
         cx += kw + 4
-    node(f"TitleKeyName{g}", "Text", "b", cx + 4 + 8 * len(label), 30, 16 * len(label) + 4, 22, 94, text=label, fontSize=14, color=SAND, align="left")
+    node(f"TitleKeyName{g}", "Text", "b", cx + 4 + lw_of(label) / 2, 30, lw_of(label), 22, 94, text=label, fontSize=14, color=SAND, align="left")
     x += gw + 28
 for n in nodes:  # "b" 기준 x는 가운데에서의 거리
     if n["id"].startswith("TitleKey"):
@@ -282,6 +285,22 @@ full("LoadingBack", "Panel", 95, background="#0b0e12ff")  # 하얀 바탕이 번
 n = node("LoadingLogo", "Image", "c", 0, 0, 380, 328, 96, texture=KIT + "mastiff_logo_dark.png", opacity=0, imageRendering="auto")
 n["slot"]["alignment"] = [0.5, 0.5]
 full("LoadingFade", "Panel", 97, background="#05090aff")
+
+# ---- 타이틀 오른쪽 위 설정 탭 (언어: 한국어 / English). 누르면 가짜 키 uisettings·uilangko·uilangen (C++ TopDownShooter::UpdateSettings)
+# 9분할 그림을 쓰지 않음: PC 네이티브는 9분할을 몰라 크기마다 미리 늘린 그림(Baked9)이 필요해서 단색 상자로
+BUTTON = dict(background="#2a2112f2", borderColor=GOLD, borderWidth=2, radius=8, pressed="#ffd56a44", hover="#ffd56a22")
+node("TitleSettings", "TouchButton", "tr", 24, 24, 150, 48, 97, text="설정", fontSize=18, color=GOLD, align="center",
+     inputKey="uisettings", inputMode="keys", visible=False, **BUTTON)
+full("TitleLangShade", "Panel", 97, background="#05090acc", visible=False)
+node("TitleLangPanel", "Panel", "c", 0, 0, 420, 300, 98, background="#14100bf8", borderColor=GOLD, borderWidth=3, radius=12, visible=False)
+node("TitleLangTitle", "Text", "c", 0, -105, 380, 36, 98, text="언어", fontSize=24, color=GOLD, align="center", visible=False)
+for i, (key, label) in enumerate([("uilangko", "한국어"), ("uilangen", "English")]):
+    node("TitleLang" + ("Ko" if i == 0 else "En"), "TouchButton", "c", 0, -40 + i * 66, 300, 52, 99, text=label, fontSize=20, color=INK,
+         align="center", inputKey=key, inputMode="keys", visible=False, **BUTTON)
+node("TitleLangMark", "Panel", "c", 0, -40, 312, 64, 98, background="#00000000", borderColor="#fff3c4", borderWidth=3, radius=10, visible=False)
+node("TitleLangClose", "TouchButton", "c", 0, 105, 160, 44, 99, text="닫기", fontSize=16, color=SAND, align="center",
+     inputKey="uisettings", inputMode="keys", visible=False, background="#00000000", borderColor=SAND, borderWidth=1, radius=8,
+     pressed="#ffd56a44", hover="#ffd56a22")
 
 # ---- 캐릭터 선택 (기획서 2장 흐름 2): 타이틀 다음. 카드를 누르면 1·2·3 키, 결정은 Enter ----
 CARDS = [("valen", "발렌", "검 · 부채꼴 베기, 적 탄환을 지움", 9800),

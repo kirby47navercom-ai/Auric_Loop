@@ -60,6 +60,7 @@ void TopDownShooter::Begin(){
   started=true;Hp=MaxHp;bannerPending=true;  // 도착한 곳 이름을 가운데에
   rules=&fallbackRules;for(auto* a:hb::Scene::GetAllActorsOfClass("AuricRules"))if(auto* r=dynamic_cast<AuricRules*>(a))rules=r;
   Lines("");  // 대사표 미리 읽기 (로딩 화면 동안)
+  {const auto s=hb::Save::Read("Auric.settings");if(s.is_object())Language=s.value("lang",0)==1?1:0;}langApplied=false;  // 언어 (타이틀 설정 탭)
   for(auto* a:hb::Scene::GetAllActorsOfClass("RoomInfo"))if(auto* r=dynamic_cast<RoomInfo*>(a)){
     area=r->Index;roomKind=r->Kind;exitY=r->ExitY;camMin={r->CamMinX,r->CamMinY,0};camMax={r->CamMaxX,r->CamMaxY,0};inDungeon=r->Kind=="Dungeon";inHome=r->Kind=="Home";}
   for(auto* a:hb::Scene::GetAllActorsOfClass("Interactable"))if(auto* i=dynamic_cast<Interactable*>(a))interactables.push_back(i);
@@ -420,7 +421,7 @@ void TopDownShooter::Talk(const std::string& id,const std::map<std::string,std::
   auto fill=[&](std::string s){for(auto& [k,v]:vars){const std::string key="{"+k+"}";for(size_t p;(p=s.find(key))!=std::string::npos;)s.replace(p,key.size(),v);}return s;};
   for(const auto& l:lines){std::string who=l.value("who",std::string("collector")),name=l.value("name",std::string(""));
     if(who=="$me")who=faces[Character];if(name=="$me")name=koreanNames[Character];
-    Say(who,fill(name),fill(l.value("text",std::string(""))));}
+    Say(who,fill(Tr(name)),fill(Tr(l.value("text",std::string("")))));}  // 번역은 {변수}를 채우기 전에 (번역표는 {debt} 그대로인 문장)
 }
 
 std::string TopDownShooter::Sound(const std::string& name) const{

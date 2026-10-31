@@ -6,6 +6,7 @@
 #include <vector>
 #include <cstdlib>
 #include <cmath>
+#include "Lang.h"  // 한국어/영어 (tools/lang_build.py가 만듦)
 
 // Auric Loop 게임 규칙. 언리얼처럼 C++는 계산만 맡고, 수치·그림·소리·배치는 BP 기본값과 장면에서 고친다.
 //   TopDownShooter (BP_TopDownShooter): 플레이어·전투·정산·UI 흐름 (게임 모드 역할, 장면마다 Director 하나)
@@ -587,7 +588,7 @@ public:
   void Sfx(const std::string& name,float pitch=1.f){  // Sounds 값은 "wav 경로|볼륨". 첫 입력 전 효과음은 엔진이 버림
     const auto s=Sound(name);if(s.empty()||SfxLevel<=0)return;const auto bar=s.find('|');const float v=SfxLevel/8.f;
     if(bar==std::string::npos)hb::Audio::Play(s,v,pitch);else hb::Audio::Play(s.substr(0,bar),std::stof(s.substr(bar+1))*v,pitch,"master");}
-  void Say(const std::string& who,const std::string& name,const std::string& text){dialog.push_back({who,name,text});}
+  void Say(const std::string& who,const std::string& name,const std::string& text){dialog.push_back({who,Tr(name),Tr(text)});}
   void Talk(const std::string& row,const std::map<std::string,std::string>& vars={});  // DT_Dialogue 행의 대사를 차례로
   bool Frozen() const{return Hp<=0||dialogIndex<dialog.size()||Phase<2||cutscene>0||Paused;}
   void Tip(int id);              // 안내 문구 (한 번만, 화면 위 띠). 문구는 DT_Dialogue의 Tip<id> (모바일은 TipTouch<id>가 있으면 그것)  // 쓰러짐·대화·타이틀 중엔 적도 멈춤
@@ -688,6 +689,8 @@ private:
   void Animate(float delta,bool moving);
   bool UpdateDialog(float delta,bool advance);
   bool UpdateIntro(float delta,bool anyKey);
+  void ApplyLanguage();             // 위젯 고정 문구를 고른 언어로 다시 쓰고 HUD를 새로 그림
+  bool UpdateSettings(bool shown);  // 타이틀 오른쪽 위 설정 탭 (언어). 창이 열려 있으면 true (타이틀 키 입력을 막음)
   void ShowSelect(bool visible);
   void MoveCamera(const hb::Vec3& position,const hb::Vec3& aim,bool hasAim,float delta);
 
@@ -712,7 +715,7 @@ private:
   hb::Actor* uiHosts[4]={nullptr,nullptr,nullptr,nullptr};  // HUD·Front·Fast·Map 위젯을 붙인 빈 액터 (gen_scene.py UI_*, Begin에서 찾음)
   hb::Actor* UiOwnerOf(const std::string& n){const char* i=UiInstance(n);hb::Actor* a=uiHosts[i[0]=='H'?0:i[0]=='M'?3:i[1]=='r'?1:2];return a?a:player;}
   void UiVisible(const std::string& n,bool v){if(UiChanged("v"+n,v?"1":"0"))hb::UI::SetVisible(UiOwnerOf(n),UiInstance(n),n,v);}
-  void UiText(const std::string& n,const std::string& v){if(UiChanged("t"+n,v))hb::UI::SetText(UiOwnerOf(n),UiInstance(n),n,v);}
+  void UiText(const std::string& n,const std::string& v0){const std::string v=Tr(v0);if(UiChanged("t"+n,v))hb::UI::SetText(UiOwnerOf(n),UiInstance(n),n,v);}  // 화면 글자는 모두 여기서 고른 언어로
   void UiTexture(const std::string& n,const std::string& v){if(UiChanged("x"+n,v))hb::UI::SetTexture(UiOwnerOf(n),UiInstance(n),n,v);}
   void UiValue(const std::string& n,float v){if(UiChanged("f"+n,std::to_string(v)))hb::UI::SetValue(UiOwnerOf(n),UiInstance(n),n,v);}
   // 위치는 1px, 투명도는 1/40, 배율은 1/100 단위로 반올림: 같은 값이면 캐시가 걸러 엔진 명령을 줄임 (매 프레임 움직이는 화면 연출이 많으면 끊김)
@@ -771,6 +774,7 @@ private:
   float hitStopLeft=0,shakePower=1,cutZoom=1;  // 맞는 순간 아주 잠깐 느려짐(남은 실제 시간), 흔들림 세기 배율
   int titleBeat=0;  // 시작 연출에서 지난 단계 (글자 수 + 땅 + 끝)
   void Splash();  // 회사 로고 화면 (Screen.inl)
+  bool settingsOpen=false,langApplied=false;int settingsHeld=0;
   float tipTime=0,titleTime=0;bool pauseHeld=false,bagOpen=false;int menuPick=0,menuHeld=0;
   std::map<hb::Actor*,hb::Vec3> frozenVelocity;   // 일시정지 동안 멈춘 탄의 속도
   // 정산 화면: 줄이 하나씩 나타나고 남은 빚이 줄어드는 숫자 연출

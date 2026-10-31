@@ -1435,7 +1435,7 @@
           1
         ],
         "offset": [
-          -532.5,
+          -609.5,
           -26,
           26,
           28
@@ -1505,7 +1505,7 @@
           1
         ],
         "offset": [
-          -502.5,
+          -579.5,
           -26,
           26,
           28
@@ -1575,7 +1575,7 @@
           1
         ],
         "offset": [
-          -472.5,
+          -549.5,
           -26,
           26,
           28
@@ -1645,7 +1645,7 @@
           1
         ],
         "offset": [
-          -442.5,
+          -519.5,
           -26,
           26,
           28
@@ -1715,9 +1715,9 @@
           1
         ],
         "offset": [
-          -405.5,
+          -478.5,
           -30,
-          36,
+          40,
           22
         ],
         "alignment": [
@@ -1785,9 +1785,9 @@
           1
         ],
         "offset": [
-          -330.5,
+          -392.0,
           -26,
-          62,
+          77,
           28
         ],
         "alignment": [
@@ -1855,9 +1855,9 @@
           1
         ],
         "offset": [
-          -275.5,
+          -316.5,
           -30,
-          36,
+          58,
           22
         ],
         "alignment": [
@@ -1925,7 +1925,7 @@
           1
         ],
         "offset": [
-          -202.0,
+          -230.0,
           -26,
           59,
           28
@@ -1995,9 +1995,9 @@
           1
         ],
         "offset": [
-          -148.5,
+          -172.5,
           -30,
-          36,
+          40,
           22
         ],
         "alignment": [
@@ -2065,9 +2065,9 @@
           1
         ],
         "offset": [
-          -73.5,
+          -86.0,
           -26,
-          62,
+          77,
           28
         ],
         "alignment": [
@@ -2135,9 +2135,9 @@
           1
         ],
         "offset": [
-          -10.5,
+          3.0,
           -30,
-          52,
+          85,
           22
         ],
         "alignment": [
@@ -2205,7 +2205,7 @@
           1
         ],
         "offset": [
-          54.5,
+          86.5,
           -26,
           26,
           28
@@ -2275,9 +2275,9 @@
           1
         ],
         "offset": [
-          107.5,
+          145.5,
           -30,
-          68,
+          76,
           22
         ],
         "alignment": [
@@ -2345,7 +2345,7 @@
           1
         ],
         "offset": [
-          188.0,
+          232.0,
           -26,
           41,
           28
@@ -2415,7 +2415,7 @@
           1
         ],
         "offset": [
-          232.5,
+          278.5,
           -30,
           36,
           22
@@ -2485,7 +2485,7 @@
           1
         ],
         "offset": [
-          289.5,
+          337.5,
           -26,
           26,
           28
@@ -2555,9 +2555,9 @@
           1
         ],
         "offset": [
-          326.5,
+          383.0,
           -30,
-          36,
+          49,
           22
         ],
         "alignment": [
@@ -2625,7 +2625,7 @@
           1
         ],
         "offset": [
-          383.5,
+          448.5,
           -26,
           26,
           28
@@ -2695,7 +2695,7 @@
           1
         ],
         "offset": [
-          420.5,
+          487.5,
           -30,
           36,
           22
@@ -2765,7 +2765,7 @@
           1
         ],
         "offset": [
-          485.0,
+          554.0,
           -26,
           41,
           28
@@ -2835,9 +2835,9 @@
           1
         ],
         "offset": [
-          529.5,
+          602.5,
           -30,
-          36,
+          40,
           22
         ],
         "alignment": [
@@ -3083,6 +3083,566 @@
         "radius": 0,
         "opacity": 1,
         "visible": true,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "TitleSettings",
+      "name": "TitleSettings",
+      "parent": "root",
+      "type": "TouchButton",
+      "slot": {
+        "anchors": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "offset": [
+          -24,
+          24,
+          150,
+          48
+        ],
+        "alignment": [
+          1,
+          0
+        ],
+        "zIndex": 97,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "uisettings",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "설정",
+        "texture": "",
+        "fontSize": 20,
+        "color": "#ffd56a",
+        "background": "#2a2112f2",
+        "accent": "#589ad6",
+        "hover": "#ffd56a22",
+        "pressed": "#ffd56a44",
+        "borderColor": "#ffd56a",
+        "borderWidth": 2,
+        "radius": 8,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "TitleLangShade",
+      "name": "TitleLangShade",
+      "parent": "root",
+      "type": "Panel",
+      "slot": {
+        "anchors": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "offset": [
+          -240,
+          -240,
+          -240,
+          -240
+        ],
+        "alignment": [
+          0,
+          0
+        ],
+        "zIndex": 97,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#05090acc",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "TitleLangPanel",
+      "name": "TitleLangPanel",
+      "parent": "root",
+      "type": "Panel",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          0,
+          420,
+          300
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 98,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#14100bf8",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#ffd56a",
+        "borderWidth": 3,
+        "radius": 12,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "TitleLangTitle",
+      "name": "TitleLangTitle",
+      "parent": "root",
+      "type": "Text",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          -105,
+          380,
+          36
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 98,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "언어",
+        "texture": "",
+        "fontSize": 28,
+        "color": "#ffd56a",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#4a5f73",
+        "borderWidth": 0,
+        "radius": 0,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "TitleLangKo",
+      "name": "TitleLangKo",
+      "parent": "root",
+      "type": "TouchButton",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          -40,
+          300,
+          52
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 99,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "uilangko",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "한국어",
+        "texture": "",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#2a2112f2",
+        "accent": "#589ad6",
+        "hover": "#ffd56a22",
+        "pressed": "#ffd56a44",
+        "borderColor": "#ffd56a",
+        "borderWidth": 2,
+        "radius": 8,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "TitleLangEn",
+      "name": "TitleLangEn",
+      "parent": "root",
+      "type": "TouchButton",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          26,
+          300,
+          52
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 99,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "uilangen",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "English",
+        "texture": "",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#2a2112f2",
+        "accent": "#589ad6",
+        "hover": "#ffd56a22",
+        "pressed": "#ffd56a44",
+        "borderColor": "#ffd56a",
+        "borderWidth": 2,
+        "radius": 8,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "TitleLangMark",
+      "name": "TitleLangMark",
+      "parent": "root",
+      "type": "Panel",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          -40,
+          312,
+          64
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 98,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "space",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "",
+        "texture": "",
+        "fontSize": 22,
+        "color": "#f6ecd8",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#365778",
+        "pressed": "#1e4061",
+        "borderColor": "#fff3c4",
+        "borderWidth": 3,
+        "radius": 10,
+        "opacity": 1,
+        "visible": false,
+        "enabled": true,
+        "focusable": true,
+        "tooltip": "",
+        "align": "center",
+        "value": 0,
+        "min": 0,
+        "max": 1,
+        "step": 0.01,
+        "padding": 8,
+        "gap": 8,
+        "columns": 2,
+        "checked": false,
+        "placeholder": "",
+        "maxLength": 256,
+        "wrap": true,
+        "font": "Assets/Fonts/DungGeunMo.ttf"
+      },
+      "events": {},
+      "bindings": {}
+    },
+    {
+      "id": "TitleLangClose",
+      "name": "TitleLangClose",
+      "parent": "root",
+      "type": "TouchButton",
+      "slot": {
+        "anchors": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          105,
+          160,
+          44
+        ],
+        "alignment": [
+          0.5,
+          0.5
+        ],
+        "zIndex": 99,
+        "fill": 0
+      },
+      "properties": {
+        "inputKey": "uisettings",
+        "inputMode": "keys",
+        "axisX": "MoveX",
+        "axisY": "MoveY",
+        "keyUp": "w",
+        "keyDown": "s",
+        "keyLeft": "a",
+        "keyRight": "d",
+        "deadZone": 0.15,
+        "floating": false,
+        "deviceVisibility": "all",
+        "text": "닫기",
+        "texture": "",
+        "fontSize": 18,
+        "color": "#c9b48a",
+        "background": "#00000000",
+        "accent": "#589ad6",
+        "hover": "#ffd56a22",
+        "pressed": "#ffd56a44",
+        "borderColor": "#c9b48a",
+        "borderWidth": 1,
+        "radius": 8,
+        "opacity": 1,
+        "visible": false,
         "enabled": true,
         "focusable": true,
         "tooltip": "",

@@ -100,6 +100,7 @@ void TopDownShooter::Update(float delta){
   if(!Paused)UpdateAmbient(delta,position,Phase>=2&&hb::Input::IsKeyDown("LeftMouseButton"));
   {const bool adv=hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("space");
    const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
+   if(frame>=2&&!langApplied)ApplyLanguage();  // 장면마다 위젯이 새로 생기므로 고정 문구를 고른 언어로
    if(frame>=2&&UpdateIntro(delta,pressed||AnyPressed(true)))return;
    {const bool p=hb::Input::IsKeyDown("escape")||hb::Input::IsKeyDown("p");  // 일시정지 (Esc·P)
     if(p&&!pauseHeld&&Phase>=2&&settleTime<0&&!ending&&cutscene<=0){
