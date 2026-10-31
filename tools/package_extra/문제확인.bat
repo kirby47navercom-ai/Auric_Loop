@@ -11,6 +11,10 @@ echo [게임 파일]
 if exist "HBGame_*.exe" (echo 게임 실행 파일 있음) else (echo 게임 실행 파일 없음 - zip을 먼저 풀었는지 확인)
 if exist "runtime\HBScript_*.exe" (echo 스크립트 실행 파일 있음) else (echo 스크립트 실행 파일 없음 - 백신이 지웠거나 zip 안에서 바로 실행함)
 if exist "game.hbpack.json" (echo 게임 데이터 있음) else (echo 게임 데이터 없음 - zip 안에서 바로 실행함)
+for %%f in (Binaries\*.exe) do echo 게임 로직 파일 있음: %%~nxf
+if not exist "Binaries\*.exe" echo 게임 로직 파일 없음 - Windows 보안·백신이 지움. 보호 기록에서 허용하고 이 폴더를 제외에 추가
+echo [Windows 보안 최근 차단]
+powershell -NoProfile -Command "Get-MpThreatDetection -ErrorAction SilentlyContinue | Select-Object -First 5 InitialDetectionTime,@{n='File';e={$_.Resources -join ' '}} | Format-List | Out-String -Width 300"
 echo [스크립트 시작 시험]
 for %%f in (runtime\HBScript_*.exe) do "%%f" -e "console.log('스크립트 정상 '+process.version)" 2>&1
 echo 종료 코드 %errorlevel%
