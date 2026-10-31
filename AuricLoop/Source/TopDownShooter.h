@@ -689,6 +689,7 @@ private:
   void Animate(float delta,bool moving);
   bool UpdateDialog(float delta,bool advance);
   bool UpdateIntro(float delta,bool anyKey);
+  static hb::Color UpgradeTint(){return hb::Color{1.f,0.78f,0.25f,1.f};}  // 무기 강화 색 (금빛, 투명도는 그대로라 재질을 다시 만들지 않음)
   void ApplyLanguage();             // 위젯 고정 문구를 고른 언어로 다시 쓰고 HUD를 새로 그림
   bool UpdateSettings(bool shown);  // 타이틀 오른쪽 위 설정 탭 (언어). 창이 열려 있으면 true (타이틀 키 입력을 막음)
   void ShowSelect(bool visible);
@@ -775,6 +776,7 @@ private:
   int titleBeat=0;  // 시작 연출에서 지난 단계 (글자 수 + 땅 + 끝)
   void Splash();  // 회사 로고 화면 (Screen.inl)
   bool settingsOpen=false,langApplied=false;int settingsHeld=0;
+  hb::Vec3 aimAt{0,0,0};bool aimValid=false;  // 이번 프레임 마우스가 가리키는 땅 (화살·마탄을 쏘는 자리에서 겨눔)
   float tipTime=0,titleTime=0;bool pauseHeld=false,bagOpen=false;int menuPick=0,menuHeld=0;
   std::map<hb::Actor*,hb::Vec3> frozenVelocity;   // 일시정지 동안 멈춘 탄의 속도
   // 정산 화면: 줄이 하나씩 나타나고 남은 빚이 줄어드는 숫자 연출

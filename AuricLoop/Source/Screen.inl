@@ -92,12 +92,15 @@ void TopDownShooter::AnimateSocket(float delta,bool moving){
   // 검기: 몸 뒤(순서 -1)에 발끝 12px 위를 가운데로, 1.8배 (호가 칼끝 바로 너머 약 2m, 판정 SwordRange 2.6m)
   {const bool show=frame>=2&&frame<=4;
    if(show&&!slashFx){hb::Transform t;t.position=at;slashFx=Take(fxPool,rules->FxPrefab,t);
-     if(slashFx){hb::Sprites::SetSorting(slashFx,"default",-1);hb::Scene::SetScale(slashFx,hb::Vec3{1.8f,1.8f,1});}}
+     if(slashFx){const float k=WeaponLevel?2.3f:1.8f;hb::Sprites::SetSorting(slashFx,"default",-1);hb::Scene::SetScale(slashFx,hb::Vec3{k,k,1});
+       if(WeaponLevel)hb::Sprites::SetColor(slashFx,UpgradeTint());}}  // 강화하면 검기가 크고 금빛 (강화했는지 눈에 보이게)
    if(slashFx){
      if(show){const std::string ss="S_VS_Slash_"+std::to_string(aimIdx)+"_"+std::to_string(frame);
        if(ss!=slashShown){slashShown=ss;hb::Sprites::SetSprite(slashFx,dir+ss+".hbsprite.json");}
-       hb::Scene::SetPosition(slashFx,lead+hb::Vec3{0,-0.95f+12/kVsPPU,0.2f});}
-     else{hb::Scene::SetScale(slashFx,hb::Vec3{1,1,1});hb::Sprites::SetSorting(slashFx,"default",4);Give(fxPool,slashFx);slashFx=nullptr;slashShown.clear();}}}
+       hb::Scene::SetPosition(slashFx,lead+hb::Vec3{0,-0.95f+12/kVsPPU,0.2f});
+       // 검기 그림은 22.5도 16방향이라 마우스와 최대 11도 어긋남 → 남은 각도만큼 돌려 마우스 쪽에 정확히 맞춤
+       const float rest=std::fmod(aim-(360.f-aimIdx*22.5f)+540.f,360.f)-180.f;hb::Scene::SetRotation(slashFx,hb::Vec3{0,0,rest});}
+     else{hb::Scene::SetScale(slashFx,hb::Vec3{1,1,1});hb::Scene::SetRotation(slashFx,hb::Vec3{0,0,0});if(WeaponLevel)hb::Sprites::SetColor(slashFx,hb::Color{1,1,1,1});hb::Sprites::SetSorting(slashFx,"default",4);Give(fxPool,slashFx);slashFx=nullptr;slashShown.clear();}}}
   if(!weapon)return;
   const bool rear=row==1||(aim>=45&&aim<=135);  // 왼쪽을 보면 검 든 손이 먼 쪽, 위를 겨누면 등 뒤
   const int* hand=frame>=0?kVsAttackHands[gait][row][phase][frame]:kVsHands[gait][row][phase];

@@ -419,12 +419,16 @@ void TopDownShooter::SlashHit(const hb::Vec3& position,const std::vector<Enemy*>
 void TopDownShooter::Shoot(const hb::Vec3& from,float power){
   // 화살 받침·지팡이 보석에서 나감 (tools/make_hero_motion.py). 다 당긴 화살은 따뜻한 심이 있는 그림
   const hb::Vec3 muzzle=Muzzle(from);
-  hb::Transform t;t.position=muzzle;t.position.z=0.2f;t.rotation=hb::Vec3{0,0,Angle(facing)};
+  // 화살 받침·지팡이 끝은 몸 가운데에서 떨어져 있어 바라보는 방향(몸→마우스)으로 쏘면 마우스 옆으로 비껴감 → 쏘는 자리에서 마우스로
+  const hb::Vec3 dir=aimValid&&!touchMode&&Length(aimAt-muzzle)>0.6f?Normal(hb::Vec3{aimAt.x-muzzle.x,aimAt.y-muzzle.y,0},facing):facing;
+  hb::Transform t;t.position=muzzle;t.position.z=0.2f;t.rotation=hb::Vec3{0,0,Angle(dir)};
+  if(WeaponLevel)t.scale=hb::Vec3{1.4f,1.4f,1};  // 강화하면 화살·마탄이 크고 금빛
   auto* s=Take(shotPool,rules->PlayerShotPrefab,t);if(!s)return;
+  hb::Sprites::SetColor(s,WeaponLevel?UpgradeTint():hb::Color{1,1,1,1});
   hb::Sprites::PlayAnimation(s,Character!=1?rules->CardClip:power>=1?"Assets/Animations/SA_SherryArrowFull.hbspriteanimation.json":rules->ArrowClip,true);
-  Effect(Character==1?"SherryRelease":"AleaCast",muzzle,Angle(facing),1.f);Sfx(Character==1?"Arrow":"Bolt");
+  Effect(Character==1?"SherryRelease":"AleaCast",muzzle,Angle(dir),1.f);Sfx(Character==1?"Arrow":"Bolt");
   const float speed=Character==1?rules->ArrowMinSpeed+(rules->ArrowSpeed-rules->ArrowMinSpeed)*power:rules->BoltSpeed;
-  PhysicsQueue::Velocity(s,facing*speed);
+  PhysicsQueue::Velocity(s,dir*speed);
   shots[s]=rules->PlayerShotLife;shotBoom[s]=false;Swings++;
   shotPower[s]=Character==1?rules->ArrowMinPower+(1-rules->ArrowMinPower)*power*power:1.f;  // 끝까지 당길수록 많이 세짐 (제곱)
 }
