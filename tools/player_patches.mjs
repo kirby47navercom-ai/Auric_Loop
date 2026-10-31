@@ -67,6 +67,10 @@ export async function playerPatches(projectDir) {
     'prototype/native-transport.js': [['if(!packet){next=current;sequence=1;packet={...request,objects:next,worldTransport:1,worldId:this.id,baseSequence:0,worldSequence:sequence};}',
       'if(!packet){next=current;sequence=1;packet={...request,objects:next,worldTransport:1,worldId:this.id,baseSequence:0,worldSequence:sequence};}'
       + 'for(let i=0;i<next.length;i++){const u=request.objects[i]?.gameplayDebug?.ui,g=next[i]?.gameplayDebug;if(u&&g&&g.ui!==u&&rows[i]!=="null"&&immutableNodes.has(u)&&!Object.isFrozen(g))g.ui=u;}']],
+    // 15) 네이티브: 소리 출력 장치가 없는 PC(스피커·이어폰 없음, 원격 접속)에서 AudioContext 생성이 실패하면 게임이 바로 꺼짐 (빨간 오류 창)
+    //     → 실패하면 소리 없이(sinkId none) 시작
+    'tools/native-game-runner.mjs': [["const createContext=()=>new AudioContext({sampleRate:48000,latencyHint:'interactive',...(options.silent?{sinkId:{type:'none'}}:{})});",
+      "const createContext=()=>{try{return new AudioContext({sampleRate:48000,latencyHint:'interactive',...(options.silent?{sinkId:{type:'none'}}:{})});}catch(error){console.error('소리 장치 없음, 소리 없이 시작:',error?.message);return new AudioContext({sampleRate:48000,latencyHint:'interactive',sinkId:{type:'none'}});}};"]],
     // 11) 네이티브(엔진 a471833): C++가 물체를 움직일 때마다(위치만 바뀌어도) 스프라이트 상태 전체를 JSON으로 만들어 비교 → 보스전 프레임 계산 2배
     //     반복 타일 갱신이 필요한 건 컴포넌트(크기·모드)가 바뀔 때뿐이라 그때만 맞춤
     'tools/run-project.mjs': [
