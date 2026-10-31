@@ -32,7 +32,7 @@ void TopDownShooter::Hud(){
   UiText("Hint",hint);UiVisible("HintBack",!hint.empty());UiVisible("MapTouch",inDungeon);  // 알림 받침은 문구 있을 때만, 미니맵은 던전에서만
   UiValue("Fatigue",FatigueMax>0?std::min(1.f,float(Fatigue)/FatigueMax):1.f);
   // 위 가운데 칸은 진행 상태가 있을 때만 (지역 이름은 도착할 때 가운데에 크게: AreaBanner)
-  const std::string status=Hp<=0?"":ReturnSuccess?"귀환 성공 - 정산 "+std::to_string(LastRepaid)+" G 상환"
+  const std::string status=Hp<=0?"":ReturnSuccess?std::string(LastKo?"쓰러져 돌아옴":"귀환 성공")+" - 정산 "+std::to_string(LastRepaid)+" G 상환"
     :Returning?"귀환 - 문 "+std::to_string(DoorHits)+"/"+std::to_string(rules->DoorHitsToOpen)+"  섬광탄 "+(Flashbangs?std::to_string(Flashbangs):std::to_string(rules->FlashPrice)+"G")
     :HasReturnItem?"[귀환] 획득 - Tab으로 사용":"";
   UiText("Title",status);UiVisible("Title",!status.empty());UiVisible("AreaBack",!status.empty());
@@ -234,7 +234,7 @@ void TopDownShooter::UpdatePrompt(float delta){
   const float ppm=360.f/rules->CameraSize;
   float x=(at.x-cameraAt.x)*ppm,y=-(at.y+top+0.35f-cameraAt.y)*ppm-h/2;
   const bool status=Hp>0&&(ReturnSuccess||Returning||HasReturnItem);  // 위 가운데 진행 칸(AreaBack, 위에서 62~106px)이 떠 있으면 그 아래로
-  x=std::clamp(x,-640+w/2+8,640-w/2-8);y=std::clamp(y,-360+h/2+(status?116:90),360-h/2-8);  // 화면 밖으로 나가지 않게 (위쪽은 HUD 아래까지)
+  x=std::clamp(x,-640+w/2+8,640-w/2-8);y=std::clamp(y,-360+h/2+(status?160:90),360-h/2-8);  // 화면 밖으로 나가지 않게 (위쪽은 HUD 아래까지)
   UiSize("PromptBack",hb::Vec2{w,h});UiPosition("PromptBack",hb::Vec2{x,y});
   UiVisible("PromptKey",key);UiPosition("PromptKey",hb::Vec2{x-w/2+30,y});
   UiText("PromptText",label);UiPosition("PromptText",hb::Vec2{x-w/2+(key?54.f:24.f)+300,y});  // 왼쪽 정렬 600px 상자의 왼쪽 끝을 맞춤

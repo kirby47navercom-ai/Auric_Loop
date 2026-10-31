@@ -14,7 +14,7 @@ static AuricRules fallbackRules;  // 장면에 BP_AuricRules가 없을 때
 
 #define AURIC_RUN_INTS(X) X(TipsShown) X(FatigueMax) X(Fatigue) X(Hp) X(MaxHp) X(Kills) X(RoomClears) X(Swings) X(Hits) X(Shots) X(Flashbangs) X(Gold) X(Ore) X(Herb) \
   X(Monster) X(Bottle) X(WeaponLevel) X(Debt) X(LastRepaid) X(Enchant) X(Crafted) X(SofaLevel) X(HomeLevel) X(Phase) X(Character)
-#define AURIC_RUN_BOOLS(X) X(HasReturnItem) X(Returning) X(ReturnSuccess) X(KnockedOut) X(gatherTold)
+#define AURIC_RUN_BOOLS(X) X(HasReturnItem) X(Returning) X(ReturnSuccess) X(KnockedOut) X(gatherTold) X(LastKo)
 
 void TopDownShooter::SaveRun(){
   // 장면을 넘어도 이어지는 진행: GameInstance(AuricSession)의 JSON에 둔다
@@ -45,7 +45,7 @@ void TopDownShooter::Leave(int to,const std::string& spawn){
   // 바닥에 남은 골드는 들고 간다. 전투 중엔 문이 잠겨 있어 적·탄 상태는 넘기지 않는다
   for(auto& [c,value]:coins){Gold+=value;Give(coinPool,c);}coins.clear();
   // 던전에 새로 들어가면 지난 원정 상태를 비움: 귀환 성공(ReturnSuccess)이 남아 있으면 방에 들어가도 전투가 안 시작돼 몬스터가 안 나왔고, 피로도도 쌓인 채였음
-  if(to==0){ReturnSuccess=Returning=HasReturnItem=KnockedOut=false;Fatigue=0;DoorHits=0;}
+  if(to==0){ReturnSuccess=Returning=HasReturnItem=KnockedOut=LastKo=false;Fatigue=0;DoorHits=0;}
   SaveRun();leaving=true;PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});
   if(to<0)taken.clear();  // 던전은 들어갈 때마다 새로 만들어짐
   std::string scene=to>=0?rules->DungeonScene:rules->HubScene;
@@ -84,7 +84,7 @@ void TopDownShooter::Begin(){
   // 던전: 층 만들기(StartFloor)가 한 번 0.5초쯤 멈추므로 그동안 검은 화면에서 밝아지게 가림
   if(inDungeon){hb::Camera::Flash(hb::Color{0,0,0,1},0.8f);Prewarm();StartFloor();}
   if(inHome)ShowSofa();
-  else if(Returning||KnockedOut){Returning=false;ReturnSuccess=true;Settle();}  // 거점에 닿으면 귀환 성공 (쓰러졌으면 소재 없이 정산)
+  else if(Returning||KnockedOut){LastKo=KnockedOut;Returning=false;ReturnSuccess=true;Settle();}  // 거점에 닿으면 귀환 성공 (쓰러졌으면 소재 없이 정산)
   Hud();
 }
 

@@ -218,14 +218,15 @@ void TopDownShooter::Warn(const hb::Vec3& from,const hb::Vec3& dir,float length,
   if(warnPool.empty())return;auto* a=warnPool.back();warnPool.pop_back();
   hb::Actor* fill=nullptr;if(!warnFillPool.empty()){fill=warnFillPool.back();warnFillPool.pop_back();}
   hb::Transform t;t.position=from+dir*(length/2);t.position.z=0.02f;t.rotation=hb::Vec3{0,0,Angle(dir)};hb::Scene::SetTransform(a,t);
-  hb::Sprites::SetSize(a,hb::Vec2{length,width});warns.push_back({a,fill,seconds,seconds,false,from,dir,length,width});
+  hb::Sprites::SetSize(a,hb::Vec2{length,width});if(fill)hb::Sprites::SetSize(fill,hb::Vec2{length,width});  // 차오름은 매 프레임 크기 대신 배율로 (크기를 바꾸면 엔진이 그림을 다시 만들어 무거움)
+  warns.push_back({a,fill,seconds,seconds,false,from,dir,length,width});
 }
 
 void TopDownShooter::WarnCircle(const hb::Vec3& at,float radius,float seconds){
   // 원형 범위: 실제 맞는 반경 크기의 붉은 원, 안쪽이 가운데부터 차오름
   if(circlePool.empty())return;auto* a=circlePool.back();circlePool.pop_back();
   hb::Actor* fill=nullptr;if(!circleFillPool.empty()){fill=circleFillPool.back();circleFillPool.pop_back();}
-  hb::Scene::SetPosition(a,hb::Vec3{at.x,at.y,0.02f});hb::Sprites::SetSize(a,hb::Vec2{radius*2,radius*2});
+  hb::Scene::SetPosition(a,hb::Vec3{at.x,at.y,0.02f});hb::Sprites::SetSize(a,hb::Vec2{radius*2,radius*2});if(fill)hb::Sprites::SetSize(fill,hb::Vec2{radius*2,radius*2});
   warns.push_back({a,fill,seconds,seconds,true,at,{1,0,0},radius,radius});
 }
 
@@ -253,12 +254,12 @@ void TopDownShooter::UpdateFx(float delta){
   for(auto it=warns.begin();it!=warns.end();){
     if((it->left-=delta)<=0){
       hb::Scene::SetPosition(it->actor,hb::Vec3{0,-200,0});(it->circle?circlePool:warnPool).push_back(it->actor);
-      if(it->fill){hb::Scene::SetPosition(it->fill,hb::Vec3{0,-200,0});(it->circle?circleFillPool:warnFillPool).push_back(it->fill);}
+      if(it->fill){hb::Scene::SetScale(it->fill,hb::Vec3{1,1,1});hb::Scene::SetPosition(it->fill,hb::Vec3{0,-200,0});(it->circle?circleFillPool:warnFillPool).push_back(it->fill);}
       it=warns.erase(it);continue;}
     if(it->fill){const float k=std::clamp(1-it->left/it->total,0.02f,1.f);  // 차오름: 띠는 시작점에서 앞으로, 원은 가운데에서 바깥으로
-      if(it->circle){hb::Scene::SetPosition(it->fill,hb::Vec3{it->from.x,it->from.y,0.025f});hb::Sprites::SetSize(it->fill,hb::Vec2{it->length*2*k,it->length*2*k});}
+      if(it->circle){hb::Transform t;t.position=hb::Vec3{it->from.x,it->from.y,0.025f};t.scale=hb::Vec3{k,k,1};hb::Scene::SetTransform(it->fill,t);}
       else{hb::Transform t;t.position=it->from+it->dir*(it->length*k/2);t.position.z=0.025f;t.rotation=hb::Vec3{0,0,Angle(it->dir)};
-        hb::Scene::SetTransform(it->fill,t);hb::Sprites::SetSize(it->fill,hb::Vec2{it->length*k,it->width});}}
+        t.scale=hb::Vec3{k,1,1};hb::Scene::SetTransform(it->fill,t);}}
     ++it;}
   for(auto it=fxs.begin();it!=fxs.end();){
     if((it->left-=delta)<=0){hb::Scene::SetScale(it->actor,hb::Vec3{1,1,1});if(it->ghost)hb::Sprites::SetSorting(it->actor,"default",4);
