@@ -49,6 +49,22 @@ export async function playerPatches(projectDir) {
       ['function release(group,resource){if(group.userData.resources?.delete(resource))resource.dispose();}',
         'function release(group,resource){if(resource?.userData?.hbSpriteClone&&group.userData.resources?.has(resource)){const kept=group.userData.hbKeptClone;group.userData.hbKeptClone=resource;if(kept&&kept!==resource&&group.userData.resources.delete(kept))kept.dispose();return;}if(group.userData.resources?.delete(resource))resource.dispose();}'],
     ],
+    // 12) 네이티브: 그래픽카드 텍스처를 텍스처 객체(uuid)마다 따로 올림 → 그림이 바뀔 때마다 생기는 복제(8번)가 그림 모음 전체를 새로 인코딩·업로드(보스방 1800프레임에 3033번, 이게 프레임 튐의 주원인). 복제는 원본 이미지(source)·설정이 같으면 한 텍스처를 같이 씀
+    //     ponytail: 같이 쓰는 텍스처는 게임 끝날 때까지 안 지움 (그림 모음 수만큼만, 장면마다 몇 MB). 메모리가 문제면 복제 수를 세서 해제
+    'prototype/native-scene-renderer.js': [['function textureResource(texture,resources,allowUV1=false){',
+      'function hbTexKey(t,u){return t.userData.hbSpriteClone?["hbs",t.source.uuid,t.colorSpace,t.flipY,t.generateMipmaps,t.format,t.type,t.channel,t.wrapS,t.wrapT,t.magFilter,t.minFilter,u?1:0].join(":"):t.uuid;}'
+      + 'function textureResource(texture,resources,allowUV1=false){'],
+      ['const key=texture.uuid;if(textures.get(key)!==texture.version){',
+        'const key=hbTexKey(texture,allowUV1),hbVer=texture.userData.hbSpriteClone?texture.source.version:texture.version;if(textures.get(key)!==hbVer){'],
+      ["track(texture,'textures',key,textures);", "if(key===texture.uuid)track(texture,'textures',key,textures);"],
+      ['textures.set(key,texture.version);', 'textures.set(key,hbVer);']],
+    // 11) 네이티브(엔진 a471833): C++가 물체를 움직일 때마다(위치만 바뀌어도) 스프라이트 상태 전체를 JSON으로 만들어 비교 → 보스전 프레임 계산 2배
+    //     반복 타일 갱신이 필요한 건 컴포넌트(크기·모드)가 바뀔 때뿐이라 그때만 맞춤
+    'tools/run-project.mjs': [
+      ['const update=object=>{const mesh=meshes.get(object.id);if(mesh){', 'const update=(object,sync=true)=>{const mesh=meshes.get(object.id);if(mesh){', 'optional'],
+      ['return presentation?.update?.(object,mesh);}};', 'return sync?presentation?.update?.(object,mesh):undefined;}};', 'optional'],
+      ['if(state.position!==undefined||state.components!==undefined){const pending=update(object);', 'if(state.position!==undefined||state.components!==undefined){const pending=update(object,state.components!==undefined);', 'optional'],
+    ],
   };
 }
 const RENDERER = 'new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));';

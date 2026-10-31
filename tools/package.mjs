@@ -38,11 +38,12 @@ if (lightScenes && !lightScenes()) throw Error('저사양 장면 설정이 안 �
 // 플레이어는 시작할 때 game.hbpack.json의 크기·sha256으로 파일을 검사하므로 고친 파일의 값도 바꾼다
 const packFile = path.join(build.output, 'game.hbpack.json'), pack = JSON.parse(await fs.readFile(packFile, 'utf8'));
 const patches = await playerPatches(path.dirname(project));
-// WebView 플레이어(prototype/player.js)가 없는 네이티브 패키지엔 플레이어 수정이 필요 없음
+// WebView 플레이어(prototype/player.js)가 없는 네이티브 패키지엔 플레이어 수정 대신 네이티브 실행 수정(tools/run-project.mjs)만
 const webview = pack.files.some(f => f.path === 'prototype/player.js');
-for (const name of webview ? Object.keys(patches) : []) {
+const webviewOnly = ['prototype/player.js', 'prototype/player.html', 'prototype/ui-runtime.css', 'prototype/ui-runtime.js'];
+for (const name of Object.keys(patches).filter(n => webview ? !n.startsWith('tools/') : !webviewOnly.includes(n))) {
   const entry = pack.files.find(f => f.path === name);
-  if (!entry) { if (name === 'prototype/game-renderer.js') continue; throw Error(`패키지 목록에 없음: ${name}`); }  // 렌더러 파일은 엔진 dcc7dfb부터 있음
+  if (!entry) { if (!webview || name === 'prototype/game-renderer.js') continue; throw Error(`패키지 목록에 없음: ${name}`); }  // 렌더러 파일은 엔진 dcc7dfb부터 있음, 네이티브엔 없는 파일도 있음
   const file = path.join(build.output, name), bytes = Buffer.from(applyPatches(name, await fs.readFile(file, 'utf8'), patches));
   await fs.writeFile(file, bytes);
   Object.assign(entry, {bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')});

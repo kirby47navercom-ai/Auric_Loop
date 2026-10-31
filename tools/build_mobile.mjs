@@ -101,7 +101,8 @@ const profile = target === 'android'
 Object.assign(profile, {targetFrameRate: phone ? 30 : 60, framePacing: 'display'});  // 웹도 60 (엔진 기본 120은 내장 그래픽 노트북에서 못 따라감)
 if (target === 'web' && (phone || process.argv.includes('tests'))) profile.scenes = [...base.scenes, ...['Valen', 'Sherry', 'Alea', 'Boss'].map(w => ({path: `Assets/Scenes/Test_${w}.hbscene.json`, enabled: true}))];  // 측정용: 검사 장면도 넣음
 const result = await buildGame(record, profile, {onProgress: m => console.error(new Date().toISOString().slice(11, 19), m)});
-const want = [...Object.keys(patches).filter(n => target === 'android' ? n !== 'prototype/player.html' : !n.startsWith('native/')), ...(target === 'android' ? ['icon'] : []), 'mobile-scene'];
+const nativeOnly = n => n.startsWith('tools/') || n === 'prototype/native-scene-renderer.js';  // PC 네이티브 실행기 전용 수정
+const want = [...Object.keys(patches).filter(n => !nativeOnly(n)).filter(n => target === 'android' ? n !== 'prototype/player.html' : !n.startsWith('native/')), ...(target === 'android' ? ['icon'] : []), 'mobile-scene'];
 const missed = want.filter(n => !hit.has(n));
 if (missed.length) throw Error('수정이 안 들어감: ' + missed.join(', '));
 await retainBuilds(record.root, result.output).catch(error => console.warn('빌드 보관 정리 실패:', error.message));
