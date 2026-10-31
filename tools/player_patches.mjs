@@ -61,7 +61,15 @@ export async function playerPatches(projectDir) {
     // 13) 네이티브: UI(체력·글자·배너)가 바뀔 때마다 화면 크기 UI 전체를 PNG로 압축해 보냄. 기본 압축이 1280x720에 23ms → 보스전 프레임 튐의 주원인
     //     (지역 이름 배너가 사라지는 1초 동안 매 프레임). 같은 PNG를 가장 빠른 압축(zlib 1)으로 만들어 3ms
     'tools/native-widget-layer.mjs': [["import path from 'node:path';", "import path from 'node:path';"+FAST_PNG],
-      ["png:(await canvas.encode('png')).toString('base64')", "png:hbFastPng(canvas).toString('base64')"]],
+      ["png:(await canvas.encode('png')).toString('base64')", "png:hbFastPng(canvas).toString('base64')"],
+      // 17) 글씨를 웹뷰(어제 행사판)와 같게: 웹뷰는 칸보다 긴 글을 다음 줄로 넘기고(pre-wrap) 칸 밖으로도 그리는데, 네이티브는 한 줄에 우겨 넣어
+      //     글자가 납작해지고 칸에서 잘렸음. 대화창 본문은 웹뷰처럼 위에서부터 (tools/player_patches.mjs 1번 CSS의 DialogText)
+      ["ctx.save();ctx.beginPath();ctx.rect(0,0,w,h);ctx.clip();const lines=String(p.text||(node.type==='TextInput'?p.placeholder:'')).split('\\n');for(let i=0;i<lines.length;i++)ctx.fillText(lines[i],tx,h/2+(i-(lines.length-1)/2)*p.fontSize*scale*1.2,Math.max(1,w-offset*2));ctx.restore();",
+        "ctx.save();const hbMax=Math.max(1,w-offset*2),hbLh=p.fontSize*scale*1.2,lines=[];"
+        + "for(const raw of String(p.text||(node.type==='TextInput'?p.placeholder:'')).split('\\n')){if(p.wrap===false){lines.push(raw);continue;}let line='';"
+        + "for(const tok of raw.match(/\\s+|[\\uac00-\\ud7a3\\u3130-\\u318f]|[^\\s\\uac00-\\ud7a3\\u3130-\\u318f]+/g)||['']){const next=line+tok;if(line.trim()&&ctx.measureText(next).width>hbMax){lines.push(line.trimEnd());line=tok.trimStart();}else line=next;}lines.push(line);}"
+        + "const hbTop=node.name==='DialogText'?p.padding*scale+hbLh/2:h/2-(lines.length-1)/2*hbLh;"
+        + "for(let i=0;i<lines.length;i++)ctx.fillText(lines[i],tx,hbTop+i*hbLh);ctx.restore();"]],
     // 14) 네이티브: UI를 가진 물체(UI_HUD 등, 한 줄 128KB)는 UI가 한 번 바뀌면 전송 기록의 UI가 복사본이 되어 '안 바뀜' 판정이 매 프레임 실패
     //     → 매 프레임 128KB 줄을 다시 만들고 비교. 전송 기록에도 원래의 바뀌지 않는 UI 스냅샷을 다시 연결 (내용은 같은 JSON에서 나와 동일)
     'prototype/native-transport.js': [['if(!packet){next=current;sequence=1;packet={...request,objects:next,worldTransport:1,worldId:this.id,baseSequence:0,worldSequence:sequence};}',
