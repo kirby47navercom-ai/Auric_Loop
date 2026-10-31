@@ -53,6 +53,14 @@ for (const name of Object.keys(patches).filter(n => webview ? !n.startsWith('too
 // 실행 파일 아이콘: 엔진 플레이어엔 게임 아이콘을 넣는 기능이 없어 리소스를 직접 바꾼다 (tools/make_app_icon.py → Kit/app_icon.ico)
 // 실행 파일 이름: 엔진 fc0a71a부터 HBGame_<프로젝트 UUID>.exe (게임별 윈도우 볼륨 믹서 항목), 그 전엔 Game.exe
 const exeName = (await fs.readdir(build.output)).find(n => /^(HBGame_.+|Game)\.exe$/i.test(n));
+// 네이티브 실행기를 화면 배율을 따르는 판으로 바꾼다 (엔진 git/engineCreate native/desktop/HBNativePlayer.cpp: DPI 인식 → 배율 따름).
+// 배율 인식이면 125·150% 노트북에서 1280x720 창·UI·글씨가 작게 보였음. 렌더 해상도는 그대로라 내장 그래픽 부담은 같음
+// 엔진 a471833 소스로 빌드한 것: tools/native/player/HBNativePlayer.exe (엔진을 바꾸면 다시 빌드)
+if (!webview) {
+  const player = path.join(path.dirname(fileURLToPath(import.meta.url)), 'native/player/HBNativePlayer.exe'), exe = path.join(build.output, exeName);
+  await fs.copyFile(player, exe);
+  execFileSync(player, ['--stamp-game', exe, profile.productName || pack.name || 'Auric Loop'], {stdio: 'inherit'});
+}
 {const exe = path.join(build.output, exeName);
  execFileSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(path.dirname(fileURLToPath(import.meta.url)), 'set_exe_icon.ps1'), exe, path.join(path.dirname(project), 'Assets/UI/Kit/app_icon.ico')], {stdio: 'inherit'});
  const bytes = await fs.readFile(exe), entry = pack.files.find(f => f.path === exeName);
