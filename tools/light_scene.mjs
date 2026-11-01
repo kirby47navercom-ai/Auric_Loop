@@ -38,7 +38,7 @@ export function hookLightScenes(projectDir, physicsHz, {pc = false} = {}) {
     const scene = name.endsWith('.hbscene.json'), widget = pc && name.endsWith('.hbwidget.json');
     if (!(scene || widget) || !path.resolve(name).startsWith(root)) return result;
     if (scene) count++;
-    const source = Buffer.isBuffer(result) ? result.toString('utf8') : result, text = scene ? lightScene(source, physicsHz, {effects: pc}) : hideTouchWidgets(source, projectDir);
+    const source = Buffer.isBuffer(result) ? result.toString('utf8') : result, text = scene ? lightScene(source, physicsHz) : hideTouchWidgets(source, projectDir);
     return Buffer.isBuffer(result) ? Buffer.from(text) : text;
   };
   return () => count;

@@ -26,9 +26,10 @@ const project = path.join(path.dirname(fileURLToPath(import.meta.url)), '../Auri
 const record = await readProjectManifest(project);
 const profile = (await readBuildProfiles(record)).profiles.find(p => p.id === id);
 if (!profile) throw Error(`빌드 프로필 없음: ${id}`);
-// 실행기: 기본은 10/30 행사판과 같은 WebView2 실행기 (화면·UI·글씨·캐릭터가 행사판과 같고, 노트북에서도 행사판처럼 돌았음. 2026-11-01 주인님 확인)
-// AURIC_RUNTIME=native: 엔진 467f512부터의 네이티브(Win32·DirectX 11·Skia UI) 실행기. 그리는 방식이 달라 UI·글씨·무기 표시가 행사판과 달라 보였고 노트북에서 더 무거웠음
-const webviewRuntime = process.env.AURIC_RUNTIME !== 'native';
+// 실행기: 기본은 네이티브(Win32·DirectX 11·Skia UI, 엔진 467f512부터). 10/30 행사판(WebView2)과 화면이 같도록 맞춤:
+//   글씨 줄바꿈(player_patches 17), 움직이는 타이틀 그림(18, tools/extract_ui_anim.py), 칼 앞뒤 정렬(Screen.inl), 화면 배율(tools/native/player)
+// AURIC_RUNTIME=webview: 행사판과 같은 WebView2 실행기
+const webviewRuntime = process.env.AURIC_RUNTIME === 'webview';
 // 내장 그래픽(Intel UHD 620)·램 8GB 노트북에서도 돌게: 초당 60프레임(엔진 기본 120), 저사양 장면 설정(tools/light_scene.mjs, 물리는 60Hz 유지). 행사판과 같은 설정
 // pc: 네이티브 전용 (터치 그림 숨김·9분할 미리 늘리기·효과 유지)
 const lightScenes = ['windows', 'perf'].includes(id) ? hookLightScenes(path.dirname(project), 60, {pc: !webviewRuntime}) : null;
@@ -73,6 +74,9 @@ if (!webview) {
   const entry = {path: name, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')}, old = pack.files.find(f => f.path === name);
   if (old) Object.assign(old, entry); else pack.files.push(entry);
 }
+
+// 움직이는 UI 그림(타이틀 WebP)을 장면 PNG로 풀어 둠: 네이티브 UI가 첫 장만 그렸음 (player_patches 18번이 읽음). 게임 파일 목록에는 넣지 않음
+if (!webview) execFileSync('python', [path.join(path.dirname(fileURLToPath(import.meta.url)), 'extract_ui_anim.py'), path.join(build.output, 'ui-anim')], {stdio: 'inherit'});
 
 // 안 켜질 때 더블클릭하는 진단 (zip을 안 풀고 실행, 백신이 지운 파일, 오래된 Windows, 엔진 기록을 한 파일로). 게임 파일 목록에는 넣지 않음
 await fs.copyFile(path.join(path.dirname(fileURLToPath(import.meta.url)), 'package_extra/문제확인.bat'), path.join(build.output, '문제확인.bat'));

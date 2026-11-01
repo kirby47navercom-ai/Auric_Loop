@@ -107,6 +107,8 @@ void TopDownShooter::AnimateSocket(float delta,bool moving){
   const hb::Vec3 to=lead+hb::Vec3{(hand[0]+0.5f-32)/kVsPPU,(kVsOriginTop-hand[1]-0.5f)/kVsPPU,0};  // 손 픽셀 가운데
   if(Length(to-weaponAt)>0.001f){weaponAt=to;hb::Scene::SetPosition(weapon,to);}
   const std::string side=rear?"R":"F";
+  // 등 뒤(R)·앞(F) 칼은 정렬 순서로도 확실히: 네이티브 실행기는 반투명 그림끼리 깊이로 가리지 않아 위를 볼 때 칼이 몸 앞에 그려졌음 (웹뷰는 몸 뒤)
+  if(rear!=weaponRear){weaponRear=rear;hb::Sprites::SetSorting(weapon,"default",rear?-1:1);}
   // 베는 동안 칼: 아트팀 칼 그림은 준비 자세에서 마우스 반대쪽을 가리켜 반대로 휘두르는 것처럼 보였음 →
   // 돌린 칼 그림으로 마우스 쪽 +75도(준비) → 검기가 나오는 동안 -75도까지 쓸고 → 그대로 (늘 마우스 쪽 반원 안)
   float swing=0;

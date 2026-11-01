@@ -66,10 +66,26 @@ export async function playerPatches(projectDir) {
       //     글자가 납작해지고 칸에서 잘렸음. 대화창 본문은 웹뷰처럼 위에서부터 (tools/player_patches.mjs 1번 CSS의 DialogText)
       ["ctx.save();ctx.beginPath();ctx.rect(0,0,w,h);ctx.clip();const lines=String(p.text||(node.type==='TextInput'?p.placeholder:'')).split('\\n');for(let i=0;i<lines.length;i++)ctx.fillText(lines[i],tx,h/2+(i-(lines.length-1)/2)*p.fontSize*scale*1.2,Math.max(1,w-offset*2));ctx.restore();",
         "ctx.save();const hbMax=Math.max(1,w-offset*2),hbLh=p.fontSize*scale*1.2,lines=[];"
-        + "for(const raw of String(p.text||(node.type==='TextInput'?p.placeholder:'')).split('\\n')){if(p.wrap===false){lines.push(raw);continue;}let line='';"
+        // 띄어쓰기 없는 짧은 낱말(조작 안내 "이동"·"가방" 등)은 꺾지 않음: 네이티브 글자 폭이 웹뷰보다 조금 넓어 칸이 딱 맞는 낱말이 두 줄이 됐음
+        + "for(const raw of String(p.text||(node.type==='TextInput'?p.placeholder:'')).split('\\n')){if(p.wrap===false||!/\\s/.test(raw)&&[...raw].length<=6){lines.push(raw);continue;}let line='';"
         + "for(const tok of raw.match(/\\s+|[\\uac00-\\ud7a3\\u3130-\\u318f]|[^\\s\\uac00-\\ud7a3\\u3130-\\u318f]+/g)||['']){const next=line+tok;if(line.trim()&&ctx.measureText(next).width>hbMax){lines.push(line.trimEnd());line=tok.trimStart();}else line=next;}lines.push(line);}"
         + "const hbTop=node.name==='DialogText'?p.padding*scale+hbLh/2:h/2-(lines.length-1)/2*hbLh;"
-        + "for(let i=0;i<lines.length;i++)ctx.fillText(lines[i],tx,hbTop+i*hbLh);ctx.restore();"]],
+        + "for(let i=0;i<lines.length;i++)ctx.fillText(lines[i],tx,hbTop+i*hbLh);ctx.restore();"],
+      // 18) 움직이는 UI 그림(WebP 애니메이션): 네이티브 UI는 첫 장만 그려 타이틀 동전 고리·Tap To Start·횃불·안개·반짝임이 멈추거나 안 보였음.
+      //     package.mjs가 tools/extract_ui_anim.py로 풀어 둔 <패키지>/ui-anim/<이름>/의 장을 시간에 맞춰 그리고, 움직이는 동안 초당 20번 다시 그림
+      ["import fs from 'node:fs/promises';", "import fs from 'node:fs/promises';import {fileURLToPath as hbFileURL} from 'node:url';"
+        + "const hbAnimRoot=path.join(path.dirname(path.dirname(hbFileURL(import.meta.url))),'ui-anim');"
+        + "async function hbLoadAnim(name){if(!/\\.webp$/i.test(name))return null;const dir=path.join(hbAnimRoot,path.basename(name).replace(/\\.webp$/i,''));let meta;"
+        + "try{meta=JSON.parse(await fs.readFile(path.join(dir,'frames.json'),'utf8'));}catch{return null;}const frames=[];let total=0;"
+        + "for(const f of meta.frames)frames.push({img:await loadImage(await fs.readFile(path.join(dir,f.file))),end:total+=f.ms});return {hbAnim:true,frames,total,loop:meta.loop};}"
+        + "function hbFrame(layer,name){const v=layer.images.get(name);if(!v?.hbAnim)return v;layer.hbAnimated=true;layer.hbSeen.add(name);const now=performance.now();"
+        + "let start=layer.hbStarts.get(name);if(start===undefined){start=now;layer.hbStarts.set(name,start);}let t=now-start;t=v.loop?t%v.total:Math.min(t,v.total-1);"
+        + "return (v.frames.find(f=>t<f.end)||v.frames[v.frames.length-1]).img;}"],
+      ['this.images.set(name,await loadImage(await fs.readFile(await this.pack.resolve(name))))', 'this.images.set(name,await hbLoadAnim(name)??await loadImage(await fs.readFile(await this.pack.resolve(name))))'],
+      ['const image=name=>this.images.get(name);', 'const image=name=>hbFrame(this,name);'],
+      ["const stamp=width+':'+height+':'+this.revision;if(stamp===this.stamp)return;",
+        "const stamp=width+':'+height+':'+this.revision+':'+(this.hbAnimated?Math.floor(performance.now()/50):0);if(stamp===this.stamp)return;this.hbAnimated=false;this.hbSeen=new Set();this.hbStarts??=new Map();"],
+      ['for(const flash of this.flashes||[])', 'for(const n of [...this.hbStarts.keys()])if(!this.hbSeen.has(n))this.hbStarts.delete(n);for(const flash of this.flashes||[])']],
     // 14) 네이티브: UI를 가진 물체(UI_HUD 등, 한 줄 128KB)는 UI가 한 번 바뀌면 전송 기록의 UI가 복사본이 되어 '안 바뀜' 판정이 매 프레임 실패
     //     → 매 프레임 128KB 줄을 다시 만들고 비교. 전송 기록에도 원래의 바뀌지 않는 UI 스냅샷을 다시 연결 (내용은 같은 JSON에서 나와 동일)
     'prototype/native-transport.js': [['if(!packet){next=current;sequence=1;packet={...request,objects:next,worldTransport:1,worldId:this.id,baseSequence:0,worldSequence:sequence};}',

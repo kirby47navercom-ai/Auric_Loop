@@ -776,6 +776,7 @@ private:
   int titleBeat=0;  // 시작 연출에서 지난 단계 (글자 수 + 땅 + 끝)
   void Splash();  // 회사 로고 화면 (Screen.inl)
   bool settingsOpen=false,langApplied=false;int settingsHeld=0;
+  int weaponRear=-1;  // 발렌 칼이 지금 몸 뒤(1)·앞(0)으로 정렬돼 있는지 (-1: 아직)
   hb::Vec3 aimAt{0,0,0};bool aimValid=false;  // 이번 프레임 마우스가 가리키는 땅 (화살·마탄을 쏘는 자리에서 겨눔)
   float tipTime=0,titleTime=0;bool pauseHeld=false,bagOpen=false;int menuPick=0,menuHeld=0;
   std::map<hb::Actor*,hb::Vec3> frozenVelocity;   // 일시정지 동안 멈춘 탄의 속도
