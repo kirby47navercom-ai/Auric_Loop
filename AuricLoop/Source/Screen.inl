@@ -14,7 +14,7 @@ void TopDownShooter::Hud(){
   if(frame<2||!player){hudDirty=true;return;}
   hudDirty=false;
   if(Phase>=2&&!introHidden){introHidden=true;
-    for(auto* n:{"LoadingBack","LoadingLogo","LoadingFade","TitleBack","TitleScreen"})UiVisible(n,false);TitleFx(0,false);}
+    for(auto* n:{"LoadingBack","LoadingLogo","LoadingFade","TitleBack","TitleScreen"})UiVisible(n,false);titleTime=0;TitleFx(0,false);}  // 새 장면의 위젯은 타이틀 그림이 켜진 채 생김: titleTime을 0으로 두어 TitleFx가 늘 숨기게 (움직이는 WebP가 보이면 네이티브 UI가 매 프레임 다시 그려 마을에서 100ms씩 걸렸음)
   const int hp=std::max(0,Hp);
   const bool rot=Returning;const int fill=hp<=0?0:std::max(1,(hp*3+MaxHp-1)/MaxHp);  // 귀환 중엔 황금 침식 테마
   UiVisible("HpBack",!rot);

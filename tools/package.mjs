@@ -67,6 +67,9 @@ if (!webview) {
   if (old) Object.assign(old, entry); else pack.files.push(entry);
 }
 
+// 타이틀 움직이는 그림(WebP)을 미리 장면 PNG로 풀어 둠 (player_patches 18번이 읽음). 엔진은 매 장 압축 해제라 타이틀이 초당 9장이었음. 게임 파일 목록에는 넣지 않음
+if (!webview) execFileSync('python', [path.join(path.dirname(fileURLToPath(import.meta.url)), 'extract_ui_anim.py'), path.join(build.output, 'ui-anim')], {stdio: 'inherit', env: {...process.env, PYTHONIOENCODING: 'utf8'}});
+
 // 안 켜질 때 더블클릭하는 진단 (zip을 안 풀고 실행, 백신이 지운 파일, 오래된 Windows, 엔진 기록을 한 파일로). 게임 파일 목록에는 넣지 않음
 await fs.copyFile(path.join(path.dirname(fileURLToPath(import.meta.url)), 'package_extra/문제확인.bat'), path.join(build.output, '문제확인.bat'));
 
