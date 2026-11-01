@@ -222,7 +222,7 @@ dialog("DialogPortrait", "Image", 26 + (120 - iw) // 2, 25 + (120 - ih) // 2, iw
 dialog("DialogNameTail", "Image", 122, -28, 276, 60, 49, texture=ART + "ribbon_tails.png")  # 접힌 꼬리: 대화창(50)보다 뒤라 아래가 창 테두리 뒤로 숨음
 dialog("DialogNameTag", "Image", 150, -26, 220, 52, 53, texture=ART + "ribbon_band.png")  # 앞 띠 (불투명, 창 윗변을 덮음)
 dialog("DialogName", "Text", 150, -16, 220, 30, 54, text="수금원", fontSize=19, color="#fff3e5", align="center")  # 리본 띠(그림 위 54/68) 가운데에 글자 가운데
-dialog("DialogText", "Text", 176, 34, 780, 110, 52, text="", fontSize=18, color=INK, wrap=True, align="left")
+dialog("DialogText", "Text", 176, 34, 780, 110, 52, text="", fontSize=18, color=INK, wrap=True, align="left", verticalAlign="top")  # 글 칸은 세로 가운데가 기본(player_patches 17), 대화 본문은 위에서부터
 dialog("DialogNext", "Text", DW - 56, DH - 46, 40, 30, 52, text="▼", fontSize=18, color=GOLD)
 dialog("DialogTouch", "TouchButton", 0, 0, DW, DH, 53, inputKey="e", inputMode="keys",
        background="#00000000", pressed="#ffffff11", hover="#00000000")
@@ -389,7 +389,7 @@ for i, (name, label, key) in enumerate(MENU):
              background="#00000000", pressed="#ffd56a33", hover="#ffd56a18", visible=False)
 for row, y, (down, up) in (("Mus", -9, ("-", "=")), ("Vol", 57, ("[", "]"))):  # 배경음·효과음 크기 ◀ ▶
     for side, key, dx in (("Down", down, -140), ("Up", up, 140)):
-        node(f"Menu{row}{side}", "TouchButton", "c", dx, y, 52, 52, 88, inputKey=key, inputMode="keys", text="◀" if side == "Down" else "▶",
+        node(f"Menu{row}{side}", "TouchButton", "c", dx, y, 52, 52, 88, inputKey=key, inputMode="keys", text="<" if side == "Down" else ">",  # ◀▶는 픽셀 글꼴에 없어 네이티브 UI에서 안 보였음
              fontSize=18, color=GOLD, background="#00000000", pressed="#ffd56a33", hover="#ffd56a18", visible=False)
 node("MenuSelect", "Panel", "c", 0, -75, 348, 60, 86, background="#00000000", borderColor=GOLD, borderWidth=3, radius=10, visible=False)  # 고른 줄 테두리
 node("MenuHelp", "Text", "c", 0, 178, 400, 22, 86, text="W·S 고르기  ·  A·D 크기  ·  Enter 결정", fontSize=13, color=SAND, align="center", visible=False)

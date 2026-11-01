@@ -27,7 +27,7 @@ const record = await readProjectManifest(project);
 const profile = (await readBuildProfiles(record)).profiles.find(p => p.id === id);
 if (!profile) throw Error(`빌드 프로필 없음: ${id}`);
 // 실행기: 기본은 네이티브(Win32·DirectX 11·Skia UI, 엔진 467f512부터). 10/30 행사판(WebView2)과 화면이 같도록 맞춤:
-//   글씨 줄바꿈(player_patches 17), 움직이는 타이틀 그림(18, tools/extract_ui_anim.py), 칼 앞뒤 정렬(Screen.inl), 화면 배율(tools/native/player)
+//   글씨 줄바꿈(player_patches 17), 칼 앞뒤 정렬(Screen.inl). 엔진 3b0ed24부터 화면 배율·9분할·움직이는 WebP·VC 런타임·실행 파일 정보는 엔진이 처리
 // AURIC_RUNTIME=webview: 행사판과 같은 WebView2 실행기
 const webviewRuntime = process.env.AURIC_RUNTIME === 'webview';
 // 내장 그래픽(Intel UHD 620)·램 8GB 노트북에서도 돌게: 초당 60프레임(엔진 기본 120), 저사양 장면 설정(tools/light_scene.mjs, 물리는 60Hz 유지). 행사판과 같은 설정
@@ -54,14 +54,6 @@ for (const name of Object.keys(patches).filter(n => webview ? !n.startsWith('too
 // 실행 파일 아이콘: 엔진 플레이어엔 게임 아이콘을 넣는 기능이 없어 리소스를 직접 바꾼다 (tools/make_app_icon.py → Kit/app_icon.ico)
 // 실행 파일 이름: 엔진 fc0a71a부터 HBGame_<프로젝트 UUID>.exe (게임별 윈도우 볼륨 믹서 항목), 그 전엔 Game.exe
 const exeName = (await fs.readdir(build.output)).find(n => /^(HBGame_.+|Game)\.exe$/i.test(n));
-// 네이티브 실행기를 화면 배율을 따르는 판으로 바꾼다 (엔진 git/engineCreate native/desktop/HBNativePlayer.cpp: DPI 인식 → 배율 따름).
-// 배율 인식이면 125·150% 노트북에서 1280x720 창·UI·글씨가 작게 보였음. 렌더 해상도는 그대로라 내장 그래픽 부담은 같음
-// 엔진 a471833 소스로 빌드한 것: tools/native/player/HBNativePlayer.exe (엔진을 바꾸면 다시 빌드)
-if (!webview) {
-  const player = path.join(path.dirname(fileURLToPath(import.meta.url)), 'native/player/HBNativePlayer.exe'), exe = path.join(build.output, exeName);
-  await fs.copyFile(player, exe);
-  execFileSync(player, ['--stamp-game', exe, profile.productName || pack.name || 'Auric Loop'], {stdio: 'inherit'});
-}
 {const exe = path.join(build.output, exeName);
  execFileSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(path.dirname(fileURLToPath(import.meta.url)), 'set_exe_icon.ps1'), exe, path.join(path.dirname(project), 'Assets/UI/Kit/app_icon.ico')], {stdio: 'inherit'});
  const bytes = await fs.readFile(exe), entry = pack.files.find(f => f.path === exeName);
@@ -75,35 +67,8 @@ if (!webview) {
   if (old) Object.assign(old, entry); else pack.files.push(entry);
 }
 
-// 움직이는 UI 그림(타이틀 WebP)을 장면 PNG로 풀어 둠: 네이티브 UI가 첫 장만 그렸음 (player_patches 18번이 읽음). 게임 파일 목록에는 넣지 않음
-if (!webview) execFileSync('python', [path.join(path.dirname(fileURLToPath(import.meta.url)), 'extract_ui_anim.py'), path.join(build.output, 'ui-anim')], {stdio: 'inherit'});
-
 // 안 켜질 때 더블클릭하는 진단 (zip을 안 풀고 실행, 백신이 지운 파일, 오래된 Windows, 엔진 기록을 한 파일로). 게임 파일 목록에는 넣지 않음
 await fs.copyFile(path.join(path.dirname(fileURLToPath(import.meta.url)), 'package_extra/문제확인.bat'), path.join(build.output, '문제확인.bat'));
-
-// 소리 모듈(node-web-audio-api)이 vcruntime140.dll(Visual C++ 런타임)을 쓰는데 패키지에 없음
-// → 런타임이 설치 안 된 PC에서는 스크립트가 시작하자마자 죽어 "게임 실행 중 오류". 이 PC의 64비트 런타임을 함께 넣는다 (앱 동봉 허용 파일)
-for (const dll of ['vcruntime140.dll', 'vcruntime140_1.dll'])
-  for (const dir of ['runtime', 'node_modules/node-web-audio-api'].filter(d => fsSync.existsSync(path.join(build.output, d)))) {  // WebView 패키지엔 없는 폴더
-    const name = `${dir}/${dll}`, bytes = await fs.readFile(path.join(process.env.WINDIR || 'C:/Windows', 'System32', dll));
-    await fs.writeFile(path.join(build.output, name), bytes);
-    const entry = {path: name, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')};
-    const old = pack.files.find(f => f.path === name);
-    if (old) Object.assign(old, entry); else pack.files.push(entry);
-  }
-
-// 실행 파일마다 버전 정보(회사·제품·설명) 리소스: 엔진이 만든 C++ 작업 exe(Binaries/*.exe)는 정보·서명이 없어
-// Windows 보안이 기계학습 판정(Program:Win32/Contebrew.A!ml)으로 다른 PC에서 지움 → 흰 화면 뒤 꺼짐 (tools/set_exe_info.ps1, 2026-10-31)
-const binaries = fsSync.existsSync(path.join(build.output, 'Binaries')) ? (await fs.readdir(path.join(build.output, 'Binaries'))).filter(n => n.endsWith('.exe')).map(n => 'Binaries/' + n) : [];
-const scripts = fsSync.existsSync(path.join(build.output, 'runtime')) ? (await fs.readdir(path.join(build.output, 'runtime'))).filter(n => /^HBScript_.*[.]exe$/i.test(n)).map(n => 'runtime/' + n) : [];
-for (const [rel, description] of [[exeName, 'Auric Loop'], ...scripts.map(r => [r, 'Auric Loop script']), ...binaries.map(r => [r, 'Auric Loop game logic'])]) {
-  const file = path.join(build.output, rel);
-  execFileSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(path.dirname(fileURLToPath(import.meta.url)), 'set_exe_info.ps1'), file, description], {stdio: 'inherit'});
-  if (rel.startsWith('Binaries/'))  // 버전 정보만으로는 판정이 왔다갔다해서 아이콘까지 (Defender 검사로 확인)
-    execFileSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(path.dirname(fileURLToPath(import.meta.url)), 'set_exe_icon.ps1'), file, path.join(path.dirname(project), 'Assets/UI/Kit/app_icon.ico')], {stdio: 'inherit'});
-  const bytes = await fs.readFile(file), entry = pack.files.find(f => f.path === rel);
-  if (entry) Object.assign(entry, {bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex')});
-}
 
 await fs.writeFile(packFile, JSON.stringify(pack, null, 2) + '\n');
 await retainBuilds(record.root, build.output).catch(error => console.warn('빌드 보관 정리 실패:', error.message));

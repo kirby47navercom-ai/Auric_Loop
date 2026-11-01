@@ -5769,7 +5769,8 @@
         "placeholder": "",
         "maxLength": 256,
         "wrap": true,
-        "font": "Assets/Fonts/DungGeunMo.ttf"
+        "font": "Assets/Fonts/DungGeunMo.ttf",
+        "verticalAlign": "top"
       },
       "events": {},
       "bindings": {}
