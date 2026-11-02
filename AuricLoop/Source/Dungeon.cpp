@@ -103,7 +103,7 @@ hb::Vec3 Dungeon::DoorPosition(int room,int dir) const{
 void Dungeon::Put(std::vector<Piece>& out,const char* tag,float x0,float y0,float x1,float y1,int collider,float z){
   if(x1-x0<0.05f||y1-y0<0.05f)return;
   auto& pool=pools[tag];if(pool.empty()){shortages++;return;}
-  auto* a=pool.back();pool.pop_back();out.push_back({&pool,a});const float w=x1-x0,h=y1-y0;
+  auto* a=pool.back();pool.pop_back();out.push_back({&pool,a});Live(&pool,a,true);const float w=x1-x0,h=y1-y0;
   hb::Scene::SetPosition(a,hb::Vec3{(x0+x1)/2,(y0+y1)/2,z});hb::Sprites::SetSize(a,hb::Vec2{w,h});
   if(collider==1){hb::Components::SetVector(a,"BoxCollider2D","extent",hb::Vec3{w/2,h/2,0.5f});hb::Components::SetVector(a,"BoxCollider2D","center",hb::Vec3{0,0,0});}
   if(collider==2){hb::Components::SetVector(a,"BoxCollider2D","extent",hb::Vec3{w/2,0.5f,0.5f});hb::Components::SetVector(a,"BoxCollider2D","center",hb::Vec3{0,-h/2+0.5f,0});}
@@ -118,6 +118,7 @@ void Dungeon::Live(const std::vector<hb::Actor*>* pool,hb::Actor* a,bool on){
   // 화면 밖에 세워 둔 조각도 불꽃·애니메이션이 돌면 매 프레임 물체 전체가 바뀐 것으로 C++에 다시 전송됨 (보스방 프레임 계산의 큰 몫)
   if(pool==&pools["Dungeon.Torch"]||pool==&pools["Dungeon.Gold"])hb::Components::SetBool(a,"ParticleSystem","enabled",on);  // hb::Particles::Play·Stop은 네이티브 패키지에서 실행 질의 채널이 없어 실패
   else if(pool==&pools["Dungeon.Glow"]||pool==&pools["Dungeon.Banner"])hb::Components::SetBool(a,"Animator","enabled",on);
+  hb::Physics::SetCollisionEnabled(a,on);  // 화면 밖에 세워 둔 조각의 충돌체도 물리 세계에 남아 매 프레임 물리 동기화 대상이었음
 }
 
 void Dungeon::Build(){
@@ -125,7 +126,7 @@ void Dungeon::Build(){
   for(auto* tag:{"Dungeon.Floor","Dungeon.Cap","Dungeon.Face","Dungeon.Lintel","Dungeon.Arch","Dungeon.Torch","Dungeon.Glow","Dungeon.Banner","Dungeon.Pillar",
                  "Dungeon.Crate","Dungeon.Barrel","Dungeon.LowWall","Dungeon.Statue","Dungeon.Chest","Dungeon.Rubble","Dungeon.Bones","Dungeon.Gold"})
     pools[tag]=hb::Scene::GetActorsWithTag(tag);
-  for(auto* tag:{"Dungeon.Torch","Dungeon.Gold","Dungeon.Glow","Dungeon.Banner"})for(auto* a:pools[tag])Live(&pools[tag],a,false);
+  for(auto& [tag,pool]:pools)for(auto* a:pool)Live(&pool,a,false);  // 깔기 전 조각은 모두 꺼 둠 (불꽃·애니메이션·충돌)
   gateFree=hb::Scene::GetActorsWithTag("Dungeon.Gate");sideFree=hb::Scene::GetActorsWithTag("Dungeon.GateSide");
   {auto s=hb::Scene::GetActorsWithTag("Dungeon.Stairs");stairs=s.empty()?nullptr:s.front();}
   signs=hb::Scene::GetActorsWithTag("Dungeon.Sign");

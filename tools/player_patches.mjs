@@ -58,27 +58,12 @@ export async function playerPatches(projectDir) {
         'const key=hbTexKey(texture,allowUV1),hbVer=texture.userData.hbSpriteClone?texture.source.version:texture.version;if(textures.get(key)!==hbVer){'],
       ["track(texture,'textures',key,textures);", "if(key===texture.uuid)track(texture,'textures',key,textures);"],
       ['textures.set(key,texture.version);', 'textures.set(key,hbVer);']],
-    // 13) 네이티브: UI(체력·글자·배너)가 바뀔 때마다 화면 크기 UI 전체를 PNG로 압축해 보냄. 기본 압축이 1280x720에 23ms → 보스전 프레임 튐의 주원인
-    //     (지역 이름 배너가 사라지는 1초 동안 매 프레임). 같은 PNG를 가장 빠른 압축(zlib 1)으로 만들어 3ms
-    'tools/native-widget-layer.mjs': [["import path from 'node:path';", "import path from 'node:path';"+FAST_PNG],
-      ["png:(await canvas.encode('png')).toString('base64')", "png:hbFastPng(canvas).toString('base64')"],
-      // 18) 타이틀의 움직이는 그림(WebP 5개): 엔진(3b0ed24)은 매 장을 그때그때 압축 해제·합성해 타이틀에서 UI 그리기가 한 프레임 100ms(초당 9장)였음.
-      //     package.mjs가 tools/extract_ui_anim.py로 미리 풀어 둔 <패키지>/ui-anim/<이름>/ 장을 씀. 움직이게 하면 UI 전체(타이틀은 화면 전체 그림)를 매번
-      //     PNG로 만들어 보내 한 번에 90ms(압축 50ms·전송 40ms) → 기본은 멈춘 장면(반복 그림은 첫 장, 동전 터짐은 마지막 장: 동전 고리·Tap To Start)
-      //     ponytail: 움직임은 globalThis.HB_UI_ANIM=true일 때만. 엔진이 UI를 그림 단위로 보내거나 타이틀 바탕을 월드로 옮기면 켤 것
-      ["import fs from 'node:fs/promises';", "import fs from 'node:fs/promises';import {fileURLToPath as hbFileURL} from 'node:url';import {loadImage as hbLoadImage} from '@napi-rs/canvas';"
-        + "const hbAnimRoot=path.join(path.dirname(path.dirname(hbFileURL(import.meta.url))),'ui-anim');"
-        + "async function hbLoadAnim(name){if(!/\\.webp$/i.test(name))return null;const dir=path.join(hbAnimRoot,path.basename(name).replace(/\\.webp$/i,''));let meta;"
-        + "try{meta=JSON.parse(await fs.readFile(path.join(dir,'frames.json'),'utf8'));}catch{return null;}const frames=[];let total=0;"
-        + "for(const f of meta.frames)frames.push({img:await hbLoadImage(await fs.readFile(path.join(dir,f.file))),end:total+=f.ms});return {hbAnim:true,frames,total,loop:meta.loop};}"
-        + "function hbFrame(layer,name){const v=layer.images.get(name);if(!globalThis.HB_UI_ANIM)return v.loop?v.frames[0].img:v.frames[v.frames.length-1].img;layer.hbAnimated=true;layer.hbSeen.add(name);const now=performance.now();"
-        + "let start=layer.hbStarts.get(name);if(start===undefined){start=now;layer.hbStarts.set(name,start);}let t=now-start;t=v.loop?t%v.total:Math.min(t,v.total-1);"
-        + "return (v.frames.find(f=>t<f.end)||v.frames[v.frames.length-1]).img;}"],
-      ['this.images.set(name,await nativeWidgetImage(await fs.readFile(await this.pack.resolve(name))))', 'this.images.set(name,await hbLoadAnim(name)??await nativeWidgetImage(await fs.readFile(await this.pack.resolve(name))))'],
-      ['const image=name=>{const value=this.images.get(name);', 'const image=name=>{const value=this.images.get(name);if(value?.hbAnim)return hbFrame(this,name);'],
-      ["const stamp=width+':'+height+':'+pixelRatio+':'+this.revision;if(stamp===this.stamp)return;",
-        "const stamp=width+':'+height+':'+pixelRatio+':'+this.revision+':'+(this.hbAnimated?Math.floor(performance.now()/50):0);if(stamp===this.stamp)return;this.hbAnimated=false;this.hbSeen=new Set();this.hbStarts??=new Map();"],
-      ['for(const flash of this.flashes||[])', 'for(const n of [...this.hbStarts.keys()])if(!this.hbSeen.has(n))this.hbStarts.delete(n);for(const flash of this.flashes||[])']],
+    // 13·18) UI 전송(PNG 압축)·움직이는 타이틀 그림 수정은 엔진 3dcb5bd부터 엔진이 바뀐 영역만 보내므로 뺌
+    // 19) 대기 중인 적(화면 밖 예비 해골·눈알 30여 마리)의 게임플레이 기록에 값이 undefined인 칸(blackboard·parameters)이 있어
+    //     전송 기록(JSON 사본엔 그 칸이 없음)과 칸 수가 달라 '안 바뀜' 판정이 늘 실패 → 매 프레임 그대로 다시 직렬화 (보스방 바뀐 줄의 절반)
+    //     없는 값은 null로 (JSON으로는 같은 값)
+    'prototype/gameplay-runtime.js': [['blackboard:brains.get(id)?.board.snapshot(),blackboardAsset:brains.get(id)?.asset.blackboard,', 'blackboard:brains.get(id)?.board.snapshot()??null,blackboardAsset:brains.get(id)?.asset.blackboard??null,'],
+      ['parameters:machines.get(id)?.board.snapshot(),', 'parameters:machines.get(id)?.board.snapshot()??null,']],
     // 17) 엔진 3b0ed24부터 글씨 줄바꿈은 엔진(widget-visual-contract)이 함. 행사판처럼 글 칸(Text)은 세로 가운데에 (웹뷰 CSS 1번과 같음),
     //     대화창 본문처럼 위에서부터 쓸 칸은 위젯 속성 verticalAlign: "top" (tools/gen_hud.py가 넣음)
     'tools/native-widget-paint.mjs': [["const centered=['Button','TouchButton','CheckBox','TextInput'].includes(type)", "const centered=['Button','TouchButton','CheckBox','TextInput'].includes(type)||type==='Text'&&p.verticalAlign!=='top'"]],
@@ -103,12 +88,6 @@ export async function playerPatches(projectDir) {
     ],
   };
 }
-// 13) 표준 PNG(RGBA 8비트, 필터 없음)를 zlib 1단계로: 투명한 곳이 많은 UI라 크기도 작음 (1280x720 약 23KB)
-const FAST_PNG = "import hbZlib from 'node:zlib';const hbCrcT=new Int32Array(256).map((_,n)=>{let c=n;for(let k=0;k<8;k++)c=c&1?0xedb88320^(c>>>1):c>>>1;return c;});"
-  + "const hbCrc=b=>{let c=-1;for(let i=0;i<b.length;i++)c=hbCrcT[(c^b[i])&255]^(c>>>8);return (c^-1)>>>0;};"
-  + "const hbChunk=(t,d)=>{const l=Buffer.alloc(4);l.writeUInt32BE(d.length);const td=Buffer.concat([Buffer.from(t,'latin1'),d]);const c=Buffer.alloc(4);c.writeUInt32BE(hbCrc(td));return Buffer.concat([l,td,c]);};"
-  + "function hbFastPng(canvas){const w=canvas.width,h=canvas.height,img=canvas.getContext('2d').getImageData(0,0,w,h).data,raw=Buffer.alloc((w*4+1)*h);for(let y=0;y<h;y++)raw.set(img.subarray(y*w*4,(y+1)*w*4),y*(w*4+1)+1);"
-  + "const ih=Buffer.alloc(13);ih.writeUInt32BE(w,0);ih.writeUInt32BE(h,4);ih[8]=8;ih[9]=6;return Buffer.concat([Buffer.from([137,80,78,71,13,10,26,10]),hbChunk('IHDR',ih),hbChunk('IDAT',hbZlib.deflateSync(raw,{level:1})),hbChunk('IEND',Buffer.alloc(0))]);}";
 const RENDERER = 'new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));';
 const RENDERER_LIGHT = 'new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:"high-performance"});renderer.setPixelRatio(1);';
 

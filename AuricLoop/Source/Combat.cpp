@@ -24,7 +24,7 @@ Enemy* TopDownShooter::SpawnEnemy(const std::string& blueprint,const hb::Vec3& w
   std::string code;for(const auto& entry:rules->Enemies){const auto eq=entry.find('=');if(eq!=std::string::npos&&entry.substr(eq+1)==blueprint)code=entry.substr(0,eq);}
   Enemy* e=nullptr;
   if(!code.empty())for(auto* a:hb::Scene::GetActorsWithTag("Enemy."+code))if(auto* p=dynamic_cast<Enemy*>(a))if(p->Parked){e=p;break;}
-  if(e){hb::Transform t;t.position=at;hb::Scene::SetTransform(e,t);e->Parked=false;e->Invulnerable=invulnerable;e->Awake();}
+  if(e){hb::Transform t;t.position=at;hb::Scene::SetTransform(e,t);hb::Physics::SetCollisionEnabled(e,true);e->Parked=false;e->Invulnerable=invulnerable;e->Awake();}
   else{hb::Transform t;t.position=at;e=dynamic_cast<Enemy*>(hb::Scene::Spawn(blueprint,t));if(e)e->Invulnerable=invulnerable;}  // 모자랄 때만 (끊김 감수)
   return e;
 }
@@ -34,7 +34,7 @@ void TopDownShooter::ParkEnemy(Enemy* e){
   const bool pooled=hb::Tags::Has(e,"Enemy.S",true)||hb::Tags::Has(e,"Enemy.M",true)||hb::Tags::Has(e,"Enemy.C",true)||hb::Tags::Has(e,"Enemy.E",true);
   if(!pooled){PhysicsQueue::Drop(e);hb::Scene::Destroy(e);return;}
   if(e->brainRunning){hb::States::Stop(e);e->brainRunning=false;}
-  PhysicsQueue::Velocity(e,hb::Vec3{0,0,0});e->Parked=true;e->burnLeft=0;
+  PhysicsQueue::Velocity(e,hb::Vec3{0,0,0});hb::Physics::SetCollisionEnabled(e,false);e->Parked=true;e->burnLeft=0;  // 대기 중엔 물리 세계에서 빼 둠 (물리 동기화 줄이기)
   e->squash=0;hb::Scene::SetScale(e,hb::Vec3{1,1,1});  // 찌그러진 채로 풀에 들어가지 않게
   hb::Scene::SetPosition(e,hb::Vec3{-60.f+float(std::rand()%120),-300.f-float(std::rand()%20),0});
 }
@@ -128,13 +128,14 @@ void TopDownShooter::StunAll(float seconds){for(auto* e:Enemies())e->Stun(second
 
 hb::Actor* TopDownShooter::Take(std::vector<hb::Actor*>& pool,const std::string& prefab,const hb::Transform& at){
   if(!pool.empty()){auto* a=pool.back();pool.pop_back();hb::Scene::SetTransform(a,at);
+    if(&pool==&bulletPool||&pool==&shotPool)hb::Physics::SetCollisionEnabled(a,true);  // 대기 중엔 꺼 둔 물리 몸체를 켬
     if(&pool==&fxPool)hb::Sprites::SetFlip(a,false,false);  // 이펙트는 지난번 쓴 쪽의 좌우 반전이 남아 있음 (왼쪽 베기·흙먼지 뒤에 빌린 발렌 검기·회전 궤적이 거꾸로 나갔음). 반전이 필요하면 빌린 쪽이 다시 정함
     return a;}
   (void)prefab;return nullptr;  // 다 쓰고 있으면 이번 것은 건너뛴다. 게임 중 새로 만들면(Spawn) 에디터에서 하나에 수백 ms씩 멈춤
 }
 
 void TopDownShooter::Give(std::vector<hb::Actor*>& pool,hb::Actor* actor){
-  if(&pool==&bulletPool||&pool==&shotPool)PhysicsQueue::Velocity(actor,hb::Vec3{0,0,0});  // 골드·이펙트는 물리 몸체가 없다
+  if(&pool==&bulletPool||&pool==&shotPool){PhysicsQueue::Velocity(actor,hb::Vec3{0,0,0});hb::Physics::SetCollisionEnabled(actor,false);}  // 골드·이펙트는 물리 몸체가 없다. 탄은 대기 중 물리 세계에서 뺌
   hb::Scene::SetPosition(actor,parked);pool.push_back(actor);
 }
 
@@ -280,6 +281,7 @@ void TopDownShooter::Prewarm(){
   // 발렌 베기용 탄 지우개: 플레이어 탄 하나를 빌려 투명하게 (투명도는 렌더 재질을 다시 만들어서 로딩 중 한 번만)
   if(!shotGuard&&!shotPool.empty()){shotGuard=shotPool.back();shotPool.pop_back();hb::Tags::Add(shotGuard,"ShotGuard");
     hb::Sprites::SetColor(shotGuard,hb::Color{1,1,1,0});hb::Scene::SetPosition(shotGuard,hb::Vec3{-500,-500,0});}
+  for(auto* a:shotPool)hb::Physics::SetCollisionEnabled(a,false);for(auto* a:bulletPool)hb::Physics::SetCollisionEnabled(a,false);
   coinPool=hb::Scene::GetActorsWithTag("Pool.Coin");
   fxPool=hb::Scene::GetActorsWithTag("Pool.Fx");warnPool=hb::Scene::GetActorsWithTag("Pool.Warn");
   warnFillPool=hb::Scene::GetActorsWithTag("Pool.WarnFill");circlePool=hb::Scene::GetActorsWithTag("Pool.WarnCircle");circleFillPool=hb::Scene::GetActorsWithTag("Pool.WarnCircleFill");
