@@ -25,6 +25,8 @@ void TopDownShooter::SaveRun(){
 #undef AURIC_PUT
   run["taken"]=std::vector<std::string>(taken.begin(),taken.end());
   run["facing"]={facing.x,facing.y};
+  if(settlePending){hb::Json items=hb::Json::array();for(const auto& it:settleItems)items.push_back({it.count,it.value});
+    run["settle"]={{"items",items},{"total",settleTotal},{"from",debtFrom},{"to",debtTo}};}  // 던전에서 정한 정산 값을 거점 연출로 넘김
   game->state["run"]=run;
   if(KeepProgress)hb::Save::Write("Auric.progress",{{"debt",Debt},{"sofa",SofaLevel},{"home",HomeLevel},{"character",Character}});
 }
@@ -38,6 +40,9 @@ bool TopDownShooter::LoadRun(){
   const hb::Json done=run.value("taken",hb::Json::array());
   for(auto& t:done)taken.insert(t.get<std::string>());
   if(run.contains("facing"))facing=hb::Vec3{run["facing"][0].get<float>(),run["facing"][1].get<float>(),0};
+  if(run.contains("settle")){const auto& s=run["settle"];settleItems.clear();
+    for(const auto& it:s.value("items",hb::Json::array()))settleItems.push_back({it[0].get<int>(),it[1].get<int>()});
+    settleItems.resize(4,SettleItem{0,0});settleTotal=s.value("total",0);debtFrom=s.value("from",Debt);debtTo=s.value("to",Debt);settlePending=true;}
   return true;
 }
 
@@ -57,7 +62,7 @@ void TopDownShooter::Begin(){
   PhysicsQueue::writes.clear();  // 이전 장면 액터를 가리키는 쓰기가 남지 않게
   {int k=0;for(auto* tag:{"UI.HUD","UI.Front","UI.Fast","UI.Map"}){const auto a=hb::Scene::GetActorsWithTag(tag);uiHosts[k++]=a.empty()?nullptr:a.front();}uiSent.clear();}
   // 장면 첫 프레임: 이 장면의 구역(RoomInfo), 상호작용 대상, 카메라를 찾고 진행을 이어받는다
-  started=true;Hp=MaxHp;bannerPending=true;  // 도착한 곳 이름을 가운데에
+  started=true;Hp=MaxHp;bannerPending=true;hb::Clock::SetTimeScale(1.f);  // 멈칫·슬로모션 중에 장면을 넘어와도 정상 속도로  // 도착한 곳 이름을 가운데에
   rules=&fallbackRules;for(auto* a:hb::Scene::GetAllActorsOfClass("AuricRules"))if(auto* r=dynamic_cast<AuricRules*>(a))rules=r;
   Lines("");  // 대사표 미리 읽기 (로딩 화면 동안)
   {const auto s=hb::Save::Read("Auric.settings");if(s.is_object())Language=s.value("lang",0)==1?1:0;}langApplied=false;  // 언어 (타이틀 설정 탭)
@@ -85,7 +90,9 @@ void TopDownShooter::Begin(){
   // 던전: 층 만들기(StartFloor)가 한 번 0.5초쯤 멈추므로 그동안 검은 화면에서 밝아지게 가림
   if(inDungeon){hb::Camera::Flash(hb::Color{0,0,0,1},0.8f);Prewarm();StartFloor();}
   if(inHome)ShowSofa();
-  else if(Returning||KnockedOut){LastKo=KnockedOut;Returning=false;ReturnSuccess=true;Settle();}  // 거점에 닿으면 귀환 성공 (쓰러졌으면 소재 없이 정산)
+  else if(!inDungeon&&settlePending){  // 귀환·쓰러짐으로 거점에 오면 던전에서 정해 둔 정산 값으로 연출만 (쓰러졌으면 소재 없이)
+    LastKo=KnockedOut;Returning=false;ReturnSuccess=true;settlePending=false;
+    settleTime=0;settleShown=0;debtShown=-1;settleDone=false;SaveRun();}
   Hud();
 }
 
@@ -235,35 +242,37 @@ void TopDownShooter::ClearRoom(){
   if(RoomClears>=1&&!(TipsShown&(1<<7)))Tip(3);
 }
 
-void TopDownShooter::StartReturnRoom(int room){
-  // 귀환 페이즈 (기획서 6-3): 지나온 주 경로를 거꾸로. 방에 들어서면 무적 해골이 한꺼번에 나오고,
-  // 시작 방 쪽 문은 10번 때려야 열린다. 들어설 때마다 피로도 +1 (보스방은 [귀환]을 쓴 자리라 적 없음)
-  auto& r=map.rooms[room];if(r.returned||r.path<0)return;
-  r.returned=true;DoorHits=0;returnRoom=-1;
-  const int prev=map.PathRoom(r.path-1);
-  for(int d=0;d<4;++d)if(prev>=0&&r.link[d]==prev){returnRoom=room;returnDir=d;map.Lock(room,true,d);}
-  if(r.kind=="Boss")return;
-  Fatigue++;if(Fatigue>=FatigueMax){Hp=0;gameOver=rules->RespawnDelay;}
-  const hb::Json row=roomTable.contains("Return")?roomTable.at("Return"):hb::Json::object();
-  SpawnWave(row.value("waves",std::string("S,S,M,M,M")),true);
-}
-
-void TopDownShooter::HitReturnGate(const hb::Vec3& at,float reach,int hits){
-  // 귀환 중 잠긴 문 때리기: 10번이면 열리고 방의 적 전체 1초 경직
-  if(!Returning||returnRoom<0||!map.Locked(returnRoom,returnDir)||Length(map.DoorPosition(returnRoom,returnDir)-at)>=reach)return;
-  DoorHits+=hits;Sfx("DoorHit");
-  if(DoorHits>=rules->DoorHitsToOpen){map.Lock(returnRoom,false,returnDir);StunAll(rules->DoorStun);Sfx("DoorOpen");}
-  Hud();
-}
-
 void TopDownShooter::Settle(){
   // 정산 (기획서 6-4): 소재를 골드로 바꾸고 일부를 빚에서 자동 상환, 강화는 초기화. 연출은 UpdateSettle (동전이 차오름)
   settleItems={{Ore,Ore*rules->OrePrice},{Herb,Herb*rules->HerbPrice},{Monster,Monster*rules->MonsterPrice},{Gold,Gold}};
   settleTotal=Gold+Ore*rules->OrePrice+Herb*rules->HerbPrice+Monster*rules->MonsterPrice;
   LastRepaid=int(settleTotal*rules->RepayRate);debtFrom=Debt;Debt=std::max(0,Debt-LastRepaid);debtTo=Debt;
   Gold=settleTotal-LastRepaid;Ore=Herb=Monster=0;WeaponLevel=0;Enchant=0;
-  settleTime=0;settleShown=0;debtShown=-1;settleDone=false;
-  SaveRun();Hud();
+  settlePending=true;  // 연출은 거점 Begin에서 (이 장면의 정산 UI는 곧 사라짐)
+}
+
+bool TopDownShooter::CanReturn() const{
+  return HasReturnItem&&inDungeon&&area>=0&&!leaving&&Hp>0&&fightingRoom<0&&pending.empty()&&waveAlive<=0&&Enemies().empty();
+}
+
+void TopDownShooter::ReturnHome(){
+  // 귀환 (기획 변경 2026-11-11: 귀환 페이즈 없이 바로 거점). 순서를 고정: 입력 정지 → 정리 → 정산 값 확정 → 장면 전환
+  // 1) 입력 정지: 창을 닫고 이동·공격·대시가 더 일어나지 않게
+  if(bagOpen)Bag(true,false);if(craftOpen)Craft(true,0,false);if(mapOpen){mapOpen=false;DrawMap(false);}
+  moveLock=true;sentSpeed=0;hb::Movement2D::SetSpeed(player,0);PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});
+  charge=0;slashPending=-1;attackCooldown=99;dodgeTimer=0;knockTimer=0;invulnerable=99;
+  // 2) 도트·투사체·타이머 정리: 남은 적(화상 포함)·예고·적 탄·내 화살·이펙트·느려짐/흑백 효과를 이 장면에서 끝냄
+  for(auto* e:Enemies()){e->burnLeft=0;ParkEnemy(e);}pending.clear();waves.clear();waveAlive=0;
+  ClearBullets();
+  for(auto& [s,life]:shots)Give(shotPool,s);shots.clear();shotBoom.clear();shotPower.clear();shotHits.clear();
+  for(auto& f:fxs)Give(fxPool,f.actor);fxs.clear();for(auto& t:tosses)Give(fxPool,t.actor);tosses.clear();
+  if(whirl){Give(fxPool,whirl);whirl=nullptr;}
+  hitStopLeft=slowLeft=0;deathCam=0;cutscene=0;gameOver=0;EndImpact();hb::Clock::SetTimeScale(1.f);
+  for(auto& [c,value]:coins){Gold+=value<0?0:value;if(value<0)Monster++;Give(coinPool,c);}coins.clear();coinAge.clear();  // 바닥에 남은 골드·소재도 챙김
+  // 3) 정산 값 확정
+  HasReturnItem=false;Returning=true;Settle();
+  // 4) 장면 전환
+  Sfx("Clear");Leave(-1,"StairTop");
 }
 
 void TopDownShooter::ShowSettle(bool visible){
@@ -387,7 +396,7 @@ void TopDownShooter::Bag(bool toggle,bool use){
     return v;}();
   if(toggle){bagOpen=!bagOpen;Sfx("Open",bagOpen?1.f:0.85f);if(bagOpen&&craftOpen)Craft(true,0,false);
     for(const auto& n:parts)UiVisible(n,bagOpen);UiVisible("BagUseTouch",bagOpen&&HasReturnItem);}
-  const bool canReturn=HasReturnItem&&!Returning&&!ReturnSuccess&&inDungeon&&area>=0;
+  const bool canReturn=CanReturn();
   if(bagOpen){
     const int counts[]={Ore,Herb,Monster,Bottle,Flashbangs,Gold};
     for(int i=0;i<6;++i){const auto k=std::to_string(i);UiText("BagCount"+k,std::to_string(counts[i]));UiOpacity("BagIcon"+k,counts[i]>0?1.f:0.3f);}  // 없는 건 흐리게
@@ -397,13 +406,16 @@ void TopDownShooter::Bag(bool toggle,bool use){
     UiText("BagGearBadge0",WeaponLevel?"+"+std::to_string(WeaponLevel):"");UiText("BagGearName0",weapons[Character]);
     UiVisible("BagGearIcon1",Enchant>0);if(Enchant>0)UiTexture("BagGearIcon1",std::string("Assets/UI/Items/")+crystals[Enchant]+".png");
     UiText("BagGearName1",Enchant==3?(Character?"관통":"검기"):enchantNames[Enchant]);
-    UiVisible("BagGearIcon2",HasReturnItem);UiOpacity("BagGearIcon2",canReturn?1.f:0.45f);UiText("BagGearName2",HasReturnItem?"[귀환]":"없음");
+    // [귀환]: 던전에선 늘 보이고, 쓸 수 없을 때(보스 전·전투 중)는 회색
+    UiVisible("BagGearIcon2",HasReturnItem||inDungeon);UiColor("BagGearIcon2",canReturn?hb::Color{1,1,1,1}:hb::Color{0.4f,0.4f,0.4f,1});
+    UiOpacity("BagGearIcon2",canReturn?1.f:0.6f);UiText("BagGearName2",HasReturnItem||inDungeon?"[귀환]":"없음");
     const bool heavy=Weight()>rules->WeightLimit;
     UiText("BagWeightText","적재량 "+std::to_string(Weight())+" / "+std::to_string(rules->WeightLimit)+(heavy?"  무거워서 느림":""));
     UiColor("BagWeightText",heavy?hb::Color{1,0.54f,0.48f,1}:hb::Color{0.96f,0.93f,0.85f,1});
     UiValue("BagWeight",std::min(1.f,float(Weight())/std::max(1,rules->WeightLimit)));
-    UiText("BagUseText",HasReturnItem?(canReturn?"Enter·[귀환] 누르기: 집으로":"[귀환]은 던전 안에서 써"):"");}
-  if(use&&bagOpen&&canReturn){HasReturnItem=false;Returning=true;Bag(true,false);StartReturnRoom(area);Hud();Talk("ReturnStart");}
+    UiText("BagUseText",canReturn?"Enter·[귀환] 누르기: 집으로":!inDungeon?(HasReturnItem?"[귀환]은 던전 안에서 써":"")
+      :HasReturnItem?"[귀환]은 전투가 끝난 뒤에 써":"[귀환]은 보스를 쓰러뜨려야 쓸 수 있어");}
+  if(use&&bagOpen&&canReturn)ReturnHome();
 }
 
 hb::Json TopDownShooter::Lines(const std::string& id){

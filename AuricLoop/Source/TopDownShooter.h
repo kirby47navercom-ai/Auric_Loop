@@ -611,10 +611,16 @@ private:
   void SpawnWave(const std::string& wave,bool invulnerable);
   void UpdateWaves(float delta);
   void Warp(int room);           // 그 방 가운데로 (지나친 경로 방은 클리어 처리). 부스 F9·F10, 검사용
-  void StartReturnRoom(int room);
-  void HitReturnGate(const hb::Vec3& at,float reach,int hits);
   void ClearRoom();
-  void Settle();
+  void Settle();                  // 정산 값 확정 (던전을 떠나기 전). 연출은 거점에서 (settlePending)
+  bool CanReturn() const;         // [귀환]: 보스를 쓰러뜨렸고 지금 싸우는 중이 아닐 때만
+  void ReturnHome();              // 귀환: 입력 정지 → 도트·탄·이펙트·시간 정리 → 정산 값 확정 → 거점으로
+  bool settlePending=false;       // 정산 값은 정했고 거점에서 연출을 보여 줄 차례
+  // 자동 검사 (환경 변수 AURIC_AUTOTEST, tools/measure_native.mjs): 창에 키를 보내지 않고 C++ 안에서
+  // 보스전(관통 화살·화상) → 피격 중 귀환 → 거점 정산 → 일반 방 전투 → 보스… 를 반복하고 프레임 간격을 파일로 남김 (AutoTest.inl)
+  void AutoTest(float delta,const hb::Vec3& position,const std::vector<Enemy*>& enemies);
+  bool AutoPress();               // 매 프레임: 프레임 간격 기록 + 대화·정산 넘기기 누름
+  struct AutoState{float t=0,shot=0,fight=0,wait=0;int step=0;bool hit=false;} autoState;
   void SetPaused(bool paused);
   void UpdateMenu();              // Esc 메뉴: 계속하기 / 효과음 크기 / 메인 화면으로
   void TitleFx(float delta,bool visible);
@@ -745,7 +751,7 @@ private:
   int waveAlive=0;                       // 이번 웨이브에서 나와 아직 살아 있는 적 (생성 직후 한 프레임은 적 목록에 안 잡혀서 직접 셈)
   struct Pending{hb::Vec3 at;std::string blueprint;float left;bool invulnerable;};
   std::vector<Pending> pending;          // 예고 중인 적
-  int returnRoom=-1,returnDir=-1;        // 귀환 중 때려 열어야 하는 문
+  float stairsNotice=0;                  // 던전 입구 계단은 잠김 ([귀환]으로만 나감): 안내를 다시 띄우기까지
   std::set<std::string> taken;     // 채집한 것 ("방번호:Kind")
   std::vector<Interactable*> interactables;
   float attackCooldown=0,dodgeTimer=0,dodgeCooldownLeft=0,invulnerable=0,gameOver=0,charge=0;
@@ -763,6 +769,7 @@ private:
   std::map<hb::Actor*,float> shots;        // 플레이어 탄
   std::map<hb::Actor*,bool> shotBoom;
   std::map<hb::Actor*,float> shotPower;  // 화살마다 당긴 정도 (피해 배율)
+  std::map<hb::Actor*,std::vector<Enemy*>> shotHits;  // 관통 화살·마탄이 이미 맞힌 적 (한 발은 적 하나를 한 번만: 겹친 매 프레임 다시 맞아 멈칫·이펙트가 쌓이던 렉)
   std::map<hb::Actor*,int> coins;
   Enemy* boss=nullptr;hb::Vec3 bossAt{0,0,0};bool bossSeen=false;  // 카메라가 보스전에서 보스 쪽도 잡게 (포인터는 프레임을 넘겨 들지 않음)
   std::vector<Line> dialog;

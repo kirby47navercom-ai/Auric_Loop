@@ -99,7 +99,7 @@ void TopDownShooter::Update(float delta){
   else if(cutscene<=0&&deathCam<=0)MoveCamera(position,touchMode?position+facing*(rules->CameraLeadMax/rules->CameraLead*0.5f):aim,(hasAim||touchMode)&&Phase>=2,delta);  // 컷신 중엔 위에서 보스를 비춘 카메라를 다시 플레이어 쪽으로 끌지 않게 (둘 사이 빈 바닥만 보였음)
   if(!Paused)UpdateAmbient(delta,position,Phase>=2&&hb::Input::IsKeyDown("LeftMouseButton"));
   {const bool adv=hb::Input::IsKeyDown("e")||hb::Input::IsKeyDown("LeftMouseButton")||hb::Input::IsKeyDown("enter")||hb::Input::IsKeyDown("space");
-   const bool pressed=adv&&!advanceHeld;advanceHeld=adv;
+   const bool pressed=(adv&&!advanceHeld)||AutoPress();advanceHeld=adv;
    if(frame>=2&&!langApplied)ApplyLanguage();  // 장면마다 위젯이 새로 생기므로 고정 문구를 고른 언어로
    if(frame>=2&&UpdateIntro(delta,pressed||AnyPressed(true)))return;
    {const bool p=hb::Input::IsKeyDown("escape")||hb::Input::IsKeyDown("p");  // 일시정지 (Esc·P)
@@ -136,16 +136,17 @@ void TopDownShooter::Update(float delta){
     if(position.y<exitY-2)exitArmed=true;
     if(exitArmed&&position.y>exitY){Leave(0,"");return;}}
   else{
-    // 시작 방 계단에 닿으면 거점으로 (귀환 중이면 귀환 성공)
-    if(map.stairs&&fightingRoom<0){const auto s=hb::Scene::GetPosition(map.stairs);  // 계단 아랫변(벽 밑) 앞에 서면 거점으로
-      if(std::fabs(s.x-position.x)<1.2f&&position.y-0.95f>s.y-2-0.7f&&position.y-0.95f<s.y){Leave(-1,"StairTop");return;}}
+    // 시작 방 계단(입구)은 잠김: 던전에서는 [귀환]으로만 나간다 (기획 변경 2026-11-11). 계단 앞에 서면 안내만
+    if(stairsNotice>0)stairsNotice-=delta;
+    if(map.stairs){const auto s=hb::Scene::GetPosition(map.stairs);
+      if(std::fabs(s.x-position.x)<1.2f&&position.y-0.95f>s.y-2-0.7f&&position.y-0.95f<s.y&&stairsNotice<=0){stairsNotice=4;Notify(Tr("입구가 잠겼다 - 보스를 쓰러뜨리고 [귀환]으로 나가자"));Sfx("Lock");}}
     const int at=map.RoomAt(position);
     if(at>=0&&at!=area){area=at;RoomIndex=at;roomKind=map.rooms[at].kind;
       map.Show(at);Layout=map.Describe().dump();  // 내 주변 방만 깔기
       auto& r=map.rooms[at];r.visited=r.seen=true;for(int d=0;d<4;++d)if(r.link[d]>=0)map.rooms[r.link[d]].seen=true;
       UpdateMinimap();Hud();}
     if(at>=0&&map.rooms[at].Inside(position,rules->EnterDepth)){
-      if(Returning)StartReturnRoom(at);else if(!ReturnSuccess)EnterRoom(at);}
+      if(!ReturnSuccess)EnterRoom(at);}
   }
 
   std::vector<Enemy*> enemies;
@@ -157,6 +158,7 @@ void TopDownShooter::Update(float delta){
   if(whirl&&!whirlSeen){hb::Scene::SetScale(whirl,hb::Vec3{1,1,1});hb::Sprites::PlayAnimation(whirl,"Assets/Animations/SA_Hit.hbspriteanimation.json",false);hb::Sprites::SetSorting(whirl,"default",4);Give(fxPool,whirl);whirl=nullptr;}  // 회전 베기가 끝나면 치움. 회전 그림을 짧은 그림으로 바꿔 두고 돌려줌 (그대로 두면 다음에 이 오브젝트를 빌린 타격 이펙트 자리에 회전 궤적이 보였음)
   boss=nullptr;for(auto* e:enemies)if(e->Boss)boss=e;
   bossSeen=boss!=nullptr;if(boss)bossAt=hb::Scene::GetPosition(boss);  // 적 포인터는 프레임을 넘겨 들고 있지 않는다 (엔진이 다시 만들 수 있음)
+  AutoTest(delta,position,enemies);if(leaving)return;
   UpdateBullets(delta,position);
   UpdateFx(delta);
   if(inDungeon)UpdateWaves(delta);
@@ -170,7 +172,7 @@ void TopDownShooter::Update(float delta){
       hb::Camera::Flash(hb::Color{0.6f,0,0,0.6f},0.6f);}
     if((gameOver-=delta)<=0){
       for(auto* n:{"KoBack","KoTitle","KoSub"})UiVisible(n,false);
-      Ore=Herb=Monster=0;KnockedOut=true;Returning=false;HasReturnItem=false;Hp=MaxHp;Leave(-1,"StairTop");}
+      Ore=Herb=Monster=0;KnockedOut=true;Returning=false;HasReturnItem=false;Hp=MaxHp;hb::Clock::SetTimeScale(1.f);Settle();Leave(-1,"StairTop");}
     return;
   }
 
@@ -219,10 +221,7 @@ void TopDownShooter::Update(float delta){
   {const bool enter=hb::Input::IsKeyDown("enter");Bag(tab&&!returnHeld,enter&&!confirmHeld&&bagOpen);}
   returnHeld=tab;
   const bool flash=hb::Input::IsKeyDown("e");
-  if(!Returning){const bool use=flash&&!flashHeld;Interact(position,use);if(use)hudDirty=true;}  // 수금원 상환·회복·원룸 공사로 골드·빚·HP가 바뀌어도 위 HUD가 그대로였음
-  else{promptTarget=nullptr;
-    if(flash&&!flashHeld&&(Flashbangs>0||Gold>=rules->FlashPrice)){if(Flashbangs>0)Flashbangs--;else Gold-=rules->FlashPrice;StunAll(rules->FlashStun);Sfx("Flash");
-      ClearBullets();Hud();}}
+  {const bool use=flash&&!flashHeld;Interact(position,use);if(use)hudDirty=true;}  // 수금원 상환·회복·원룸 공사로 골드·빚·HP가 바뀌어도 위 HUD가 그대로였음
   UpdatePrompt(delta);
   flashHeld=flash;
   {const bool q=hb::Input::IsKeyDown("q"),enter=hb::Input::IsKeyDown("enter");int which=0;
@@ -263,3 +262,4 @@ void TopDownShooter::Update(float delta){
      bossBarShown=ratio;}}
 }
 
+#include "AutoTest.inl"  // 자동 검사 (AURIC_AUTOTEST가 없으면 아무것도 안 함)

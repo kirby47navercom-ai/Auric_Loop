@@ -36,28 +36,12 @@ export async function playerPatches(projectDir) {
     // 7) 엔진 dcc7dfb부터는 렌더러를 이 파일에서 만듦 (웹·APK)
     'prototype/game-renderer.js': [['new THREE.WebGLRenderer({canvas,antialias:true})', 'new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:"high-performance"})'],
       ['renderer.setPixelRatio(Math.min(devicePixelRatio,2));', 'renderer.setPixelRatio(1);', 'all']],  // 엔진 fc0a71a부터 d3d11·WebGL 두 경로 → 둘 다 (휴대폰은 WebGL)
-    // 8) 그림(스프라이트)이 바뀔 때마다 그림 파일 전체를 그래픽카드로 다시 올림 (휴대폰 측정에서 CPU의 7~8%, 1280x512 모음은 한 번에 2.6MB)
-    //    엔진은 그림을 바꿀 때 원본 텍스처를 복제하는데, three.js 복제(copy)와 needsUpdate가 원본 이미지 버전을 올려 다시 올리게 함 → 복제가 올린 버전을 되돌림
-    //    그리고 바로 앞 복제를 한 장 더 붙잡아 둬 그래픽카드 쪽 텍스처가 0번 쓰임이 되어 지워졌다 다시 올라가지 않게 함 (물체가 사라질 때 같이 지움)
     // 10) 소리 하나마다 음량계가 4096개 표본을 자바스크립트로 훑음 (휴대폰 측정 1.3%). 최고 음량만 보므로 256개로 (약 5ms 구간)
     'prototype/audio-mixer.js': [['meter.fftSize=4096;', 'meter.fftSize=256;', 'optional']],
     // 9) 스프라이트 애니메이션·타일맵 자료를 매 물리 단계마다 처음부터 다시 검사 (휴대폰 측정 4~5%). 같은 자료 객체는 한 번 통과하면 기억
     'prototype/two-d-assets.js': [['export function valid2DAsset(kind,data){',
       'const hbValidAssets=new WeakMap();export function valid2DAsset(kind,data){if(!data||typeof data!=="object")return hbValid2DAsset(kind,data);if(hbValidAssets.get(data)===kind)return true;const ok=hbValid2DAsset(kind,data);if(ok)hbValidAssets.set(data,kind);return ok;}function hbValid2DAsset(kind,data){']],
-    'prototype/scene-rendering.js': [
-      ['const map=base.clone();map.needsUpdate=true;', 'const map=base.clone();map.source.version--;map.userData.hbSpriteClone=true;'],
-      ['function release(group,resource){if(group.userData.resources?.delete(resource))resource.dispose();}',
-        'function release(group,resource){if(resource?.userData?.hbSpriteClone&&group.userData.resources?.has(resource)){const kept=group.userData.hbKeptClone;group.userData.hbKeptClone=resource;if(kept&&kept!==resource&&group.userData.resources.delete(kept))kept.dispose();return;}if(group.userData.resources?.delete(resource))resource.dispose();}'],
-    ],
-    // 12) 네이티브: 그래픽카드 텍스처를 텍스처 객체(uuid)마다 따로 올림 → 그림이 바뀔 때마다 생기는 복제(8번)가 그림 모음 전체를 새로 인코딩·업로드(보스방 1800프레임에 3033번, 이게 프레임 튐의 주원인). 복제는 원본 이미지(source)·설정이 같으면 한 텍스처를 같이 씀
-    //     ponytail: 같이 쓰는 텍스처는 게임 끝날 때까지 안 지움 (그림 모음 수만큼만, 장면마다 몇 MB). 메모리가 문제면 복제 수를 세서 해제
-    'prototype/native-scene-renderer.js': [['function textureResource(texture,resources,allowUV1=false){',
-      'function hbTexKey(t,u){return t.userData.hbSpriteClone?["hbs",t.source.uuid,t.colorSpace,t.flipY,t.generateMipmaps,t.format,t.type,t.channel,t.wrapS,t.wrapT,t.magFilter,t.minFilter,u?1:0].join(":"):t.uuid;}'
-      + 'function textureResource(texture,resources,allowUV1=false){'],
-      ['const key=texture.uuid;if(textures.get(key)!==texture.version){',
-        'const key=hbTexKey(texture,allowUV1),hbVer=texture.userData.hbSpriteClone?texture.source.version:texture.version;if(textures.get(key)!==hbVer){'],
-      ["track(texture,'textures',key,textures);", "if(key===texture.uuid)track(texture,'textures',key,textures);"],
-      ['textures.set(key,texture.version);', 'textures.set(key,hbVer);']],
+    // 8·11·12·15) 스프라이트 복제 텍스처 재업로드·위치만 바뀐 물체의 스프라이트 재비교·소리 장치 없는 PC는 엔진 9790ee7(11/10)부터 엔진이 직접 처리하므로 뺌
     // 13·18) UI 전송(PNG 압축)·움직이는 타이틀 그림 수정은 엔진 3dcb5bd부터 엔진이 바뀐 영역만 보내므로 뺌
     // 19) 대기 중인 적(화면 밖 예비 해골·눈알 30여 마리)의 게임플레이 기록에 값이 undefined인 칸(blackboard·parameters)이 있어
     //     전송 기록(JSON 사본엔 그 칸이 없음)과 칸 수가 달라 '안 바뀜' 판정이 늘 실패 → 매 프레임 그대로 다시 직렬화 (보스방 바뀐 줄의 절반)
@@ -73,19 +57,9 @@ export async function playerPatches(projectDir) {
     'prototype/native-transport.js': [['if(!packet){next=current;sequence=1;packet={...request,objects:next,worldTransport:1,worldId:this.id,baseSequence:0,worldSequence:sequence};}',
       'if(!packet){next=current;sequence=1;packet={...request,objects:next,worldTransport:1,worldId:this.id,baseSequence:0,worldSequence:sequence};}'
       + 'for(let i=0;i<next.length;i++){const u=request.objects[i]?.gameplayDebug?.ui,g=next[i]?.gameplayDebug;if(u&&g&&g.ui!==u&&rows[i]!=="null"&&immutableNodes.has(u)&&!Object.isFrozen(g))g.ui=u;}']],
-    // 15) 네이티브: 소리 출력 장치가 없는 PC(스피커·이어폰 없음, 원격 접속)에서 AudioContext 생성이 실패하면 게임이 바로 꺼짐 (빨간 오류 창)
-    //     → 실패하면 소리 없이(sinkId none) 시작
-    'tools/native-game-runner.mjs': [["const createContext=()=>new AudioContext({sampleRate:48000,latencyHint:'interactive',...(options.silent?{sinkId:{type:'none'}}:{})});",
-      "const createContext=()=>{try{return new AudioContext({sampleRate:48000,latencyHint:'interactive',...(options.silent?{sinkId:{type:'none'}}:{})});}catch(error){console.error('소리 장치 없음, 소리 없이 시작:',error?.message);return new AudioContext({sampleRate:48000,latencyHint:'interactive',sinkId:{type:'none'}});}};"],
+    'tools/native-game-runner.mjs': [
       // 16) 오류 기록·오류 창 (tools/package_extra/hb-crash-log.mjs, package.mjs가 패키지에 넣음). 다른 모듈보다 먼저 읽혀야 함
       ["import readline from 'node:readline';", "import './hb-crash-log.mjs';import readline from 'node:readline';"]],
-    // 11) 네이티브(엔진 a471833): C++가 물체를 움직일 때마다(위치만 바뀌어도) 스프라이트 상태 전체를 JSON으로 만들어 비교 → 보스전 프레임 계산 2배
-    //     반복 타일 갱신이 필요한 건 컴포넌트(크기·모드)가 바뀔 때뿐이라 그때만 맞춤
-    'tools/run-project.mjs': [
-      ['const update=object=>{const mesh=meshes.get(object.id);if(mesh){', 'const update=(object,sync=true)=>{const mesh=meshes.get(object.id);if(mesh){', 'optional'],
-      ['return presentation?.update?.(object,mesh);}};', 'return sync?presentation?.update?.(object,mesh):undefined;}};', 'optional'],
-      ['if(state.position!==undefined||state.components!==undefined){const pending=update(object);', 'if(state.position!==undefined||state.components!==undefined){const pending=update(object,state.components!==undefined);', 'optional'],
-    ],
   };
 }
 const RENDERER = 'new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));';

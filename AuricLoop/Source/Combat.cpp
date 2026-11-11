@@ -412,7 +412,6 @@ void TopDownShooter::SlashHit(const hb::Vec3& position,const std::vector<Enemy*>
     return len<=reach+radius&&(len<=radius+0.75f||hb::VectorMath::DotProduct(d*(1/len),facing)>=minDot);};  // 바로 붙은 적은 방향과 관계없이 맞음
   for(auto* e:enemies){const auto at=hb::Scene::GetPosition(e);if(!inFan(at,e->Boss?e->Radius:0))continue;
     HitEnemy(e,Normal(at-position,facing),WeaponDamage());}
-  HitReturnGate(position,rules->DoorReach,1);
   // 앞쪽 부채꼴을 덮는 투명 상자를 잠깐 놓아 그 안의 적 탄을 지운다 (탄막 시스템이 상자를 맞은 것으로 치고 없앰)
   if(shotGuard){hb::Transform t;t.position=position+facing*(reach*0.5f);t.position.z=0.15f;t.rotation=hb::Vec3{0,0,Angle(facing)};
     t.scale=hb::Vec3{(reach*0.5f+0.3f)/0.07f,(reach*0.75f)/0.07f,1};hb::Scene::SetTransform(shotGuard,t);guardTime=0.12f;}
@@ -442,10 +441,10 @@ void TopDownShooter::UpdateShots(float delta,const std::vector<Enemy*>& enemies)
     const auto p=hb::Scene::GetPosition(s);const auto dir=Normal(hb::Physics::GetVelocity(s),facing);
     const int in=fightingRoom>=0?fightingRoom:area;  // 싸우는 방(문이 잠김) 벽에 막힘
     bool wall=inDungeon&&in>=0&&!map.rooms[in].Inside(p,0.2f),hit=false;
-    if(Returning&&returnRoom>=0&&map.Locked(returnRoom,returnDir)&&Length(map.DoorPosition(returnRoom,returnDir)-p)<1.5f){
-      HitReturnGate(p,1.5f,Character==1?std::max(1,int(std::lround(rules->ArrowDoorHits*shotPower[s]))):1);wall=true;}
+    auto& already=shotHits[s];  // 관통: 화살이 적 몸을 지나는 동안(여러 프레임) 같은 적을 다시 맞히지 않음
     for(auto* e:enemies){if(wall||(hit&&Enchant!=3))break;
-      if(Length(hb::Scene::GetPosition(e)-p)<rules->PlayerShotHit+(e->Boss?e->Radius:0)){HitEnemy(e,dir,WeaponDamage()*shotPower[s]);hit=true;if(e->Boss)wall=true;}}
+      if(std::find(already.begin(),already.end(),e)!=already.end())continue;
+      if(Length(hb::Scene::GetPosition(e)-p)<rules->PlayerShotHit+(e->Boss?e->Radius:0)){already.push_back(e);HitEnemy(e,dir,WeaponDamage()*shotPower[s]);hit=true;if(e->Boss)wall=true;}}
     if(!wall&&!(hit&&Enchant!=3)&&life>0)continue;  // 각인 관통(3)이면 적을 뚫고 벽·문·보스에서 멈춤
     if(Character!=2){done.push_back(s);continue;}
     // 알레아 마탄: 작은 폭발로 주변 적에게 피해
@@ -453,7 +452,7 @@ void TopDownShooter::UpdateShots(float delta,const std::vector<Enemy*>& enemies)
     for(auto* e:Enemies()){const auto d=hb::Scene::GetPosition(e)-p;const float len=Length(d);
       if(len<rules->BoomRadius&&len>0.05f)HitEnemy(e,d*(1/len),rules->BoomDamage*WeaponDamage()/rules->BoltDamage);}
   }
-  for(auto* s:done){Give(shotPool,s);shots.erase(s);shotBoom.erase(s);shotPower.erase(s);}
+  for(auto* s:done){Give(shotPool,s);shots.erase(s);shotBoom.erase(s);shotPower.erase(s);shotHits.erase(s);}
 }
 
 void TopDownShooter::Separate(const std::vector<Enemy*>& list,const hb::Vec3& player){
