@@ -18,7 +18,7 @@ void TopDownShooter::Interact(const hb::Vec3& position,bool pressed){
   if(kind=="Ore"||kind=="Herb"){
     const bool ore=kind=="Ore";next=text.empty()?(ore?"E: 광물 채집 (30kg)":"E: 약초 채집 (3개)"):text;
     if(pressed){if(ore&&!gatherTold){gatherTold=true;}  // 첫 채집 안내 대사는 뺌
-      if(ore)Ore++;else Herb+=3;Fatigue++;Sfx("Gather");taken.insert(std::to_string(area)+":"+kind);
+      if(ore)Ore++;else Herb+=3;Fatigue++;Sfx("Gather");hudDirty=true;if(Fatigue>=FatigueMax){Hp=0;gameOver=rules->RespawnDelay;}  // 채집으로 피로도가 가득 차도 쓰러지지 않고 넘쳐 있었음 (방 클리어 때만 확인)taken.insert(std::to_string(area)+":"+kind);
       interactables.erase(std::find(interactables.begin(),interactables.end(),best));hb::Scene::SetPosition(best,hb::Vec3{0,-240,0});next="";}  // 지우지 않고 치움 (장면 액터를 지우면 같은 판에서 다시 들어온 던전에 안 생길 수 있음)
   }else if(kind=="Smith"){
     next=WeaponLevel?"대장장이: 이번 층 강화는 끝났어":"E: "+std::string(weapons[Character])+" 강화 +1 ("+std::to_string(price)+" G)";

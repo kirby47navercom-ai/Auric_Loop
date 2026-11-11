@@ -234,11 +234,11 @@ void TopDownShooter::UpdatePrompt(float delta){
   float textW=0;for(unsigned char ch:label)if((ch&0xC0)!=0x80)textW+=ch<0x80?10.f:19.f;  // 한글은 넓고 영문은 좁음
   const float w=std::min(860.f,textW+(key?74.f:48.f)),h=40;  // 글자 양옆에 명패 테두리만큼 여백
   // 대상 그림의 위쪽 끝 (그림자 여백 0.25m 빼고) → 화면 좌표 (1m = 화면 높이 720 / (2 × 카메라 크기))
-  static Interactable* sized=nullptr;static float top=1.0f;  // 그림 크기는 엔진에 묻는 값이라 대상이 바뀔 때만 읽음
-  if(sized!=promptTarget){sized=promptTarget;top=std::max(1.0f,hb::Sprites::GetSize(promptTarget).y*0.5f-0.25f);}
+  // 그림 크기는 엔진에 묻는 값이라 대상이 바뀔 때만 읽음 (장면마다 새로: 정적 변수면 이전 장면 대상 주소와 겹쳐 높이가 틀렸음)
+  if(promptSized!=promptTarget){promptSized=promptTarget;promptTop=std::max(1.0f,hb::Sprites::GetSize(promptTarget).y*0.5f-0.25f);}
   const auto at=hb::Scene::GetPosition(promptTarget);
   const float ppm=360.f/rules->CameraSize;
-  float x=(at.x-cameraAt.x)*ppm,y=-(at.y+top+0.35f-cameraAt.y)*ppm-h/2;
+  float x=(at.x-cameraAt.x)*ppm,y=-(at.y+promptTop+0.35f-cameraAt.y)*ppm-h/2;
   const bool status=Hp>0&&(ReturnSuccess||Returning||HasReturnItem);  // 위 가운데 진행 칸(AreaBack, 위에서 62~106px)이 떠 있으면 그 아래로
   x=std::clamp(x,-640+w/2+8,640-w/2-8);y=std::clamp(y,-360+h/2+(status?160:90),360-h/2-8);  // 화면 밖으로 나가지 않게 (위쪽은 HUD 아래까지)
   UiSize("PromptBack",hb::Vec2{w,h});UiPosition("PromptBack",hb::Vec2{x,y});

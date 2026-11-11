@@ -32,7 +32,7 @@ plan.push({kind: 'go', to: [-24, 0.3], where: '집 문 앞'}, {kind: 'press', ke
 for (let k = 0; k < 4; k++) plan.push({kind: 'roam', where: `집 안 돌아다니기 ${k + 1}`});
 plan.push({kind: 'go', to: [0, -2.4], where: '집 문 쪽'}, {kind: 'hold', key: 's', scene: 'hub', where: '집 나오기'}, {kind: 'escape', where: '집에서 나와 거점 도착'},
   {kind: 'go', to: [0, 15], where: '거점 계단 아래'}, {kind: 'hold', key: 'w', scene: 'dungeon', where: '거점 계단으로 던전'}, {kind: 'escape', where: '던전 시작 방 도착'},
-  {kind: 'stairs', where: '시작 방 계단 앞'}, {kind: 'hold', key: 'w', scene: 'hub', where: '시작 방 계단으로 거점'}, {kind: 'escape', where: '던전에서 거점 도착'});
+  {kind: 'stairs', where: '시작 방 계단 앞'}, {kind: 'stay', key: 'w', scene: 'dungeon', where: '시작 방 계단은 잠김 (2026-11-11: [귀환]으로만 나감)'});
 
 let step = 0, t = 0, grid = null, gridScene = '', best = Infinity, still = 0, finished = false;
 await runProject(project, {scene: 'Assets/Scenes/Hub.hbscene.json', frames: 20000, delta: 1 / 30, nativeDefaults: {Director: {Phase: 2}},
@@ -51,6 +51,8 @@ await runProject(project, {scene: 'Assets/Scenes/Hub.hbscene.json', frames: 2000
       if (s.kind === 'hold') want.add(s.key);
       if (scene === s.scene) { next(); want = new Set(); }
       else if (t > 240) { issue('장면 안 바뀜', s.where, f, `8초 안에 ${s.scene}로 못 감`); finished = true; }
+    } else if (s.kind === 'stay') {  // 누르고 있어도 장면이 안 바뀌어야 함
+      want.add(s.key); if (scene !== s.scene) { issue('잠긴 곳으로 나감', s.where, f); finished = true; } else if (t > 120) next();
     } else if (s.kind === 'escape') {  // 손을 0.3초 뗀 뒤 네 방향을 쉬지 않고 0.4초씩 바꿔 누름: 그쪽이 비어 있는데 못 움직이면 문제
       const dir = Math.floor((t - 11) / 12), keys = ['w', 'd', 's', 'a'], vec = [[0, 1], [1, 0], [0, -1], [-1, 0]];
       if (t <= 10) want = new Set();

@@ -11,7 +11,7 @@ const scenes = {0: 'Test_Valen', 1: 'Test_Sherry', 2: 'Test_Alea'};
 let failed = false;
 for (const mode of ['die', 'return']) for (const [want, scene] of Object.entries(scenes)) {
   if (mode === 'return') process.env.AURIC_AUTOTEST = '1'; else delete process.env.AURIC_AUTOTEST;
-  let arrived = null, sprite = '', frames = 0;
+  let arrived = null, sprite = '', frames = 0, sword = null;
   await runProject(project, {scene: `Assets/Scenes/${scene}.hbscene.json`, frames: 2400, delta: 1 / 60,
     nativeDefaults: {Director: {StartRoom: 'Boss', MaxHp: mode === 'die' ? 1 : 30}},
     onFrame: (frame, vm) => {
@@ -21,11 +21,13 @@ for (const mode of ['die', 'return']) for (const [want, scene] of Object.entries
         frames = s.Character;
         const p = vm.objects.find(o => (o.tags || []).includes('Player') || o.id === 'Player');
         sprite = JSON.stringify(p?.components?.find(c => c.type === 'SpriteRenderer')?.properties?.sprite ?? p?.components?.find(c => c.type === 'SpriteRenderer')?.properties?.texture ?? '');
+        const w = vm.objects.find(o => (o.tags || []).includes('PlayerWeapon')), pl = p?.position;
+        sword = w && pl ? Math.hypot(w.position[0] - pl[0], w.position[1] - pl[1]) < 3 : null;  // 발렌 검이 플레이어 곁에 있음
         return {stop: true};
       }
     }});
-  const ok = arrived !== null && String(frames) === want && sprite.includes(['ValenSocket', 'SherryMotion', 'AleaMotion'][want]);  // 그림도 그 캐릭터 것
+  const ok = arrived !== null && String(frames) === want && sprite.includes(['ValenSocket', 'SherryMotion', 'AleaMotion'][want]) && sword === (want === '0');  // 검은 발렌만  // 그림도 그 캐릭터 것
   if (!ok) failed = true;
-  console.log(`${ok ? 'OK  ' : 'FAIL'} ${mode.padEnd(6)} ${scene.padEnd(11)} 거점 도착 ${arrived ?? '없음'} 캐릭터 ${frames} 그림 ${sprite}`);
+  console.log(`${ok ? 'OK  ' : 'FAIL'} ${mode.padEnd(6)} ${scene.padEnd(11)} 거점 도착 ${arrived ?? '없음'} 캐릭터 ${frames} 그림 ${sprite} 검 ${sword ? '보임' : '숨김'}`);
 }
 if (failed) process.exitCode = 1;

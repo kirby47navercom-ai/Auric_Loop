@@ -124,30 +124,37 @@ void TopDownShooter::DrawMap(bool big){
   // 미니맵: 오른쪽 위 틀(160x128) 안 144x108 / 크게: 화면 가운데 720x420 + 지역 이름
   if(!inDungeon||frame<2)return;
   const float C=4.f/3;  // Dungeon.cpp CORRIDOR
-  float minX=1e9f,maxX=-1e9f,minY=1e9f,maxY=-1e9f;
-  for(auto& r:map.rooms)if(r.seen){minX=std::min(minX,r.cx-r.hw);maxX=std::max(maxX,r.cx+r.hw);minY=std::min(minY,r.cy-r.hh);maxY=std::max(maxY,r.cy+r.hh);}
-  if(minX>maxX){minX=-10;maxX=10;minY=-10;maxY=10;}
+  // 배율은 고정 (미니맵 1m=1.6px, 큰 지도 1m=6px): 아는 방이 늘어도 칸 크기가 그대로. 지금 방을 가운데에 두고 틀 밖은 잘라 냄
+  // (예전엔 아는 방 전체를 틀에 맞추느라 방을 찾을수록 지도가 점점 작아졌음)
   const float L=big?-1000.f:-176.f,T=big?200.f:118.f,W=big?720.f:144.f,H=big?390.f:108.f;  // 큰 지도: 제목·부제(위) 와 닫기 안내(아래) 사이
-  // 아는 방들만 틀에 맞춤 (처음엔 크게, 많이 알수록 작게). 너무 확대되지 않게 최소 폭 큰 지도 120m·미니맵 90m
-  {const float span=big?120.f:90.f,cx=(minX+maxX)/2,cy=(minY+maxY)/2;
-   if(maxX-minX<span){minX=cx-span/2;maxX=cx+span/2;}if(maxY-minY<span*H/W){minY=cy-span*H/W/2;maxY=cy+span*H/W/2;}}
-  const float s=std::min(W/(maxX-minX),H/(maxY-minY));
-  mapScale=s;mapLeft=L+(W-(maxX-minX)*s)/2;mapTop=T+(H-(maxY-minY)*s)/2;mapMinX=minX;mapMaxY=maxY;
+  const float s=big?6.f:1.6f;
+  float cx=0,cy=0;
+  if(area>=0&&area<int(map.rooms.size())){cx=map.rooms[area].cx;cy=map.rooms[area].cy;}
+  {float minX=1e9f,maxX=-1e9f,minY=1e9f,maxY=-1e9f;  // 아는 방이 틀 안에 다 들어가면 가운데 정렬 (안 움직이게)
+   for(auto& r:map.rooms)if(r.seen){minX=std::min(minX,r.cx-r.hw);maxX=std::max(maxX,r.cx+r.hw);minY=std::min(minY,r.cy-r.hh);maxY=std::max(maxY,r.cy+r.hh);}
+   if(minX<=maxX&&(maxX-minX)*s<=W&&(maxY-minY)*s<=H){cx=(minX+maxX)/2;cy=(minY+maxY)/2;}}
+  const float minX=cx-W/2/s,maxY=cy+H/2/s;
+  mapScale=s;mapLeft=L;mapTop=T;mapMinX=minX;mapMaxY=maxY;
   auto px=[&](float x){return mapLeft+(x-minX)*s;};auto py=[&](float y){return mapTop+(maxY-y)*s;};
+  // 틀에 잘라 그림. 틀 밖이면 false
   auto rect=[&](const std::string& n,float x0,float y0,float x1,float y1){
-    UiPosition(n,hb::Vec2{px(x0),py(y1)});UiSize(n,hb::Vec2{std::max(2.f,(x1-x0)*s),std::max(2.f,(y1-y0)*s)});};
-  int links=0;
+    float l=std::max(px(x0),L),t=std::max(py(y1),T),r=std::min(px(x1),L+W),b=std::min(py(y0),T+H);
+    if(r-l<1||b-t<1)return false;
+    UiPosition(n,hb::Vec2{l,t});UiSize(n,hb::Vec2{std::max(2.f,r-l),std::max(2.f,b-t)});return true;};
+  auto inside=[&](float x,float y){return px(x)>=L&&px(x)<=L+W&&py(y)>=T&&py(y)<=T+H;};
+  int links=0;MapCells.clear();
   for(int i=0;i<int(map.rooms.size())&&i<16;++i){
     const auto& r=map.rooms[i];const std::string id=std::to_string(i);
-    rect("MapRoom"+id,r.cx-r.hw,r.cy-r.hh,r.cx+r.hw,r.cy+r.hh);UiVisible("MapRoom"+id,r.seen);
+    const bool shown=rect("MapRoom"+id,r.cx-r.hw,r.cy-r.hh,r.cx+r.hw,r.cy+r.hh)&&r.seen;UiVisible("MapRoom"+id,shown);
+    if(shown&&!big){char c[64];std::snprintf(c,sizeof c,"%d:%.1f,%.1f,%.1f,%.1f;",i,px(r.cx-r.hw),py(r.cy+r.hh),2*r.hw*s,2*r.hh*s);MapCells+=c;}
     if(r.seen)UiTexture("MapRoom"+id,std::string("Assets/UI/Map/cell_")+(i==area?"current":r.kind=="Boss"?"boss":r.visited?"visited":"seen")+".png");
     const char* icon=r.kind=="Boss"?"boss":r.kind=="Shop"?"shop":r.kind=="Gather"?"gather":r.kind=="Start"?"start":nullptr;
-    UiVisible("MapIcon"+id,r.seen&&icon);
-    if(r.seen&&icon){const float k=big?28:std::min(12.f,std::min(r.hw,r.hh)*2*s);UiTexture("MapIcon"+id,std::string("Assets/UI/Map/icon_")+icon+".png");
+    const bool iconOn=shown&&icon&&inside(r.cx,r.cy);UiVisible("MapIcon"+id,iconOn);
+    if(iconOn){const float k=big?28:std::min(12.f,std::min(r.hw,r.hh)*2*s);UiTexture("MapIcon"+id,std::string("Assets/UI/Map/icon_")+icon+".png");
       UiPosition("MapIcon"+id,hb::Vec2{px(r.cx),py(r.cy)});UiSize("MapIcon"+id,hb::Vec2{k,k});}
     for(int d:{0,1}){const int j=r.link[d];if(j<0||links>=24)continue;const auto& o=map.rooms[j];const std::string ln="MapLink"+std::to_string(links++);
-      if(d==0)rect(ln,r.cx-C,r.cy+r.hh,r.cx+C,o.cy-o.hh);else rect(ln,r.cx+r.hw,r.cy-C,o.cx-o.hw,r.cy+C);
-      UiVisible(ln,r.seen&&o.seen);}
+      const bool on=d==0?rect(ln,r.cx-C,r.cy+r.hh,r.cx+C,o.cy-o.hh):rect(ln,r.cx+r.hw,r.cy-C,o.cx-o.hw,r.cy+C);
+      UiVisible(ln,on&&r.seen&&o.seen);}
   }
   for(int k=links;k<24;++k)UiVisible("MapLink"+std::to_string(k),false);
   for(int i=int(map.rooms.size());i<16;++i){UiVisible("MapRoom"+std::to_string(i),false);UiVisible("MapIcon"+std::to_string(i),false);}
@@ -162,8 +169,10 @@ void TopDownShooter::UpdateMapLayer(){
   if(show!=mapShown&&uiHosts[3]){mapShown=show;hb::UI::SetVisible(uiHosts[3],"Map","Root",show);}
   UiVisible("Minimap",show&&!mapOpen);  // 미니맵 틀(HUD)도 지도와 같이: 창이 열리거나 큰 지도면 숨김
   if(!show)return;
-  UiVisible("MapHere",true);
-  UiPosition("MapHere",hb::Vec2{mapLeft+(playerAt.x-mapMinX)*mapScale,mapTop+(mapMaxY-(playerAt.y-0.95f))*mapScale});
+  const float W=mapOpen?720.f:144.f,H=mapOpen?390.f:108.f;  // DrawMap과 같은 틀: 점이 틀 밖이면 숨김
+  const float x=mapLeft+(playerAt.x-mapMinX)*mapScale,y=mapTop+(mapMaxY-(playerAt.y-0.95f))*mapScale;
+  UiVisible("MapHere",x>=mapLeft&&x<=mapLeft+W&&y>=mapTop&&y<=mapTop+H);
+  UiPosition("MapHere",hb::Vec2{x,y});
 }
 
 void TopDownShooter::ShowSofa(){

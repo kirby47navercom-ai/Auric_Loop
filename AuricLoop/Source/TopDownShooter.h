@@ -472,6 +472,7 @@ public:
   HB_FUNCTION(BlueprintCallable, KoreanName="게임 규칙 한 프레임", Category="탑다운 슈터")
   void Update(float delta);
   static TopDownShooter* Current;  // 같은 장면의 적이 플레이어·탄·피해를 쓰려고 찾는다
+  ~TopDownShooter() override{if(Current==this)Current=nullptr;}  // 장면이 바뀌면 지워진 규칙을 가리키지 않게: 새 장면 적의 상태 머신이 규칙의 첫 프레임보다 먼저 불리면 지워진 객체를 썼음 (재진입 크래시 후보)
 
   // ---- 진행 상태 (검사·편집기 확인용으로 공개) ----
   HB_PROPERTY(BlueprintReadWrite)
@@ -498,6 +499,8 @@ public:
   int Seed = 0;                  // 던전 배치 씨앗. 0이면 들어갈 때마다 무작위 (검사용 BP는 고정)
   HB_PROPERTY(BlueprintReadWrite)
   std::string Layout = "";       // 지금 던전 방 목록 (검사·디버그용 JSON)
+  HB_PROPERTY(BlueprintReadWrite)
+  std::string MapCells = "";     // 검사용: 지도에 그린 방 칸 "번호:x,y,w,h;" (tools/check_map.mjs)
   HB_PROPERTY(BlueprintReadWrite)
   std::string StartRoom = "";
   HB_PROPERTY(BlueprintReadWrite)
@@ -778,7 +781,7 @@ private:
   struct Critter{hb::Actor* a=nullptr;int kind=0,state=0;hb::Vec3 home,at,vel;float t=0,timer=0;bool flip=false;};
   std::vector<Critter> critters;bool ambientReady=false;hb::Vec3 camMin{0,0,0},camMax{0,0,0};
   float walkDist=0,stillTime=0,fidgetTime=0;int fidget=0,lastFidget=0;bool slashB=false;hb::Vec3 animPos{0,0,0};  // 새 시트 애니메이션 상태
-  Interactable* promptTarget=nullptr;std::string promptText;float hintTime=0,areaBannerTime=0;bool bannerPending=false,mapHeld=false;  // 상호작용 말풍선·알림·지역 이름
+  Interactable* promptTarget=nullptr;Interactable* promptSized=nullptr;float promptTop=1.0f;std::string promptText;float hintTime=0,areaBannerTime=0;bool bannerPending=false,mapHeld=false;  // 상호작용 말풍선·알림·지역 이름
   float hitStopLeft=0,shakePower=1,cutZoom=1;  // 맞는 순간 아주 잠깐 느려짐(남은 실제 시간), 흔들림 세기 배율
   int titleBeat=0;  // 시작 연출에서 지난 단계 (글자 수 + 땅 + 끝)
   void Splash();  // 회사 로고 화면 (Screen.inl)

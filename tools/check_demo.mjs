@@ -92,9 +92,8 @@ const rooms = layout.filter(r => r.kind !== 'Shortage');
   const s = director(r);
   assert.ok(s.Shots >= 12, '해골 대장이 원형 탄막을 쏨');
   assert.ok(s.BossHp <= 0 && s.Kills >= 1, '해골 대장 처치');
-  assert.ok(s.Returning, '가방에서 [귀환] 사용 → 귀환 페이즈');
-  assert.ok(returnGates >= 1, '귀환 중 들어선 방은 시작 방 쪽 문이 잠김');
-  assert.equal(s.RoomIndex, prev, '잠긴 문을 10번 때려 열고 시작 쪽 방으로 되돌아감');
+  // 2026-11-11 규칙: 귀환 페이즈 없이 보스 처치·방 정리 뒤 [귀환]이면 바로 거점 정산
+  assert.ok(s.ReturnSuccess && s.RoomIndex < 0, '가방에서 [귀환] 사용 → 바로 거점 정산');
   console.log('보스·귀환 검사 통과', 'shots', s.Shots, 'room', s.RoomIndex, 'fatigue', s.Fatigue);
 }
 
@@ -115,17 +114,15 @@ for (const [name, label, minSwings] of [['Test_Sherry', '셰리', 4], ['Test_Ale
   console.log('F12 검사 통과');
 }
 
-// 거점 계단 끝 → 던전 시작 방, 시작 방 북쪽 벽 왼쪽 계단 → 거점
+// 거점 계단 끝 → 던전 시작 방, 시작 방 북쪽 벽 왼쪽 계단은 잠김
 {
   const h = await runProject(project, {scene: scene('Hub'), frames: 420, delta: 1 / 60, nativeDefaults: {Director: {Phase: 2}},  // 타이틀 건너뜀
     inputs: [{frame: 2, key: 'a', value: 1}, {frame: 20, key: 'a', value: 0}, {frame: 2, key: 'w', value: 1}]});  // 부채 전광판 옆으로 돌아 계단으로
   assert.equal(h.sceneHistory.at(-1).scene, scene('Dungeon'), '거점 계단 끝 → 던전');
   const back = await runProject(project, {scene: scene('Test_Valen'), frames: 200, delta: 1 / 60, inputs: [  // 시작 방이 16m라 더 걸음
     {frame: 5, key: 'a', value: 1}, {frame: 71, key: 'a', value: 0}, {frame: 5, key: 'w', value: 1}, {frame: 190, key: 'w', value: 0}]});  // 계단은 북쪽 벽 왼쪽(가운데에서 4.7m). 거점에 도착해도 W가 눌린 채라 계단 위에 머묾
-  const hp = back.objects.find(o => o.id === 'Player').position;
-  assert.equal(back.sceneHistory.at(-1).scene, scene('Hub'), '시작 방 계단 → 거점');
-  assert.ok(hp[1] > 15 && hp[1] < 24, '거점 계단 끝에 섬 (W를 누른 채여도 바로 던전으로 돌아가지 않음)');
-  console.log('거점·던전 이동 검사 통과', 'y', hp[1].toFixed(1));
+  assert.equal(back.sceneHistory.at(-1).scene, scene('Test_Valen'), '시작 방 계단은 잠김 (2026-11-11: 던전에선 [귀환]으로만 나감)');
+  console.log('거점·던전 이동 검사 통과');
 }
 
 // 게임 오버: 체력 1로 전투방에 들어가 가만히 맞음 → "빈손으로 끌려 나왔다" → 소재(광물 2)를 잃고 거점에서 정산
