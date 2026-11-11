@@ -8464,5 +8464,2006 @@
   },
   "Source/World.cpp": {
     "id": "0e069f8e-58ac-462d-acd5-b0f0e447ed21"
+  },
+  "Source/HeroMotion.inl": {
+    "id": "852690cb-8757-40fc-9ab3-efa2afe16ca7"
+  },
+  "Source/Lang.h": {
+    "id": "0a48a5a6-4ebc-42f3-8c5f-a9b4f09269e5"
+  },
+  "Assets/UI/Kit/mastiff_logo_dark.png": {
+    "id": "e0a42fc1-5fda-42c2-b512-820574d055af"
+  },
+  "Assets/UI/Baked9/frame_button_84x84.png": {
+    "id": "5ba24061-6317-454e-aede-e70aad2d6d03"
+  },
+  "Assets/UI/Baked9/frame_button_88x88.png": {
+    "id": "befc76a5-c626-48a4-aab8-925137cfe896"
+  },
+  "Assets/UI/Baked9/frame_gold_1000x170.png": {
+    "id": "a994b9e2-6f48-4cf2-b501-60c793ff7bf6"
+  },
+  "Assets/UI/Baked9/frame_gold_300x420.png": {
+    "id": "e5f85427-a9de-4c2f-90c3-045d14dfeae1"
+  },
+  "Assets/UI/Baked9/frame_gold_380x64.png": {
+    "id": "bbf9f6f2-86c5-434a-9c88-db576228dd1e"
+  },
+  "Assets/UI/Baked9/frame_gold_440x420.png": {
+    "id": "2667b054-717b-48f4-a5d7-d74c3773805f"
+  },
+  "Assets/UI/Baked9/frame_gold_640x48.png": {
+    "id": "a14e6c48-d444-4b9b-80d1-a901ecc66b64"
+  },
+  "Assets/UI/Baked9/frame_gold_680x400.png": {
+    "id": "562f9756-1634-4d2f-9e04-fa21470f0112"
+  },
+  "Assets/UI/Baked9/frame_gold_800x56.png": {
+    "id": "5e294dd0-0e60-43ff-9fd7-a00ccd50db15"
+  },
+  "Assets/UI/Baked9/frame_gold_820x540.png": {
+    "id": "7946ae95-cb35-4dd0-a693-08781eafad3e"
+  },
+  "Assets/UI/Baked9/plaque_176x56.png": {
+    "id": "69d8b47e-ac1a-4bc4-b98c-085d56658da8"
+  },
+  "Assets/UI/Baked9/plaque_190x40.png": {
+    "id": "99b04651-9751-43f1-8e2e-2a7f5b42eea3"
+  },
+  "Assets/UI/Baked9/plaque_200x40.png": {
+    "id": "2c29ff1e-3df7-44bf-b523-2014405ff886"
+  },
+  "Assets/UI/Baked9/plaque_200x44.png": {
+    "id": "e80805fc-5fd4-4cc8-8991-97a98ee7486d"
+  },
+  "Assets/UI/Baked9/plaque_340x52.png": {
+    "id": "6b103dab-3afc-4643-a5fd-3b1c2eb6a82a"
+  },
+  "Assets/UI/Baked9/plaque_460x44.png": {
+    "id": "d153fb87-fcc0-4434-a810-a99ded42d831"
+  },
+  "Assets/Sprites/SherryMotion/body.png": {
+    "id": "ba0bc378-7630-428c-a75d-c5505427b074"
+  },
+  "Assets/Sprites/SherryMotion/SherryArrowFull_0.png": {
+    "id": "05f6273f-e4cd-463b-88e3-effdec04b81a"
+  },
+  "Assets/Sprites/SherryMotion/SherryArrow_0.png": {
+    "id": "5254d3a3-b6b7-48e9-a4d4-5fb1088bf370"
+  },
+  "Assets/Sprites/SherryMotion/SherryCharge_0.png": {
+    "id": "823e58f9-904c-48bb-9988-929570e166a2"
+  },
+  "Assets/Sprites/SherryMotion/SherryCharge_1.png": {
+    "id": "283c633e-f9eb-42b3-9d0f-5727448c8015"
+  },
+  "Assets/Sprites/SherryMotion/SherryCharge_10.png": {
+    "id": "e4ec073e-35c9-4f83-adc8-15be68bf6fd8"
+  },
+  "Assets/Sprites/SherryMotion/SherryCharge_11.png": {
+    "id": "4f45cc19-0a2c-4f89-8603-d6aebf27a3f7"
+  },
+  "Assets/Sprites/SherryMotion/SherryCharge_2.png": {
+    "id": "a702271d-527f-401a-b3e9-0af3b5e3b5da"
+  },
+  "Assets/Sprites/SherryMotion/SherryCharge_3.png": {
+    "id": "03587f52-e160-4d7a-851e-830ec9aea755"
+  },
+  "Assets/Sprites/SherryMotion/SherryCharge_4.png": {
+    "id": "c3c5aa5b-e50c-4d27-85d2-a9b3a9ff33ba"
+  },
+  "Assets/Sprites/SherryMotion/SherryCharge_5.png": {
+    "id": "0c8dda7b-56e9-4a10-89ca-b93d0ff3620a"
+  },
+  "Assets/Sprites/SherryMotion/SherryCharge_6.png": {
+    "id": "e4e81b81-5d6f-4121-8da8-43b837483e08"
+  },
+  "Assets/Sprites/SherryMotion/SherryCharge_7.png": {
+    "id": "08381482-b34a-4ce6-9a72-26a937509976"
+  },
+  "Assets/Sprites/SherryMotion/SherryCharge_8.png": {
+    "id": "5cd9c9ff-b4f7-4657-a65d-e5d13bcddbae"
+  },
+  "Assets/Sprites/SherryMotion/SherryCharge_9.png": {
+    "id": "a6d8dbc6-ddc8-4796-989d-b3f0574f9fe1"
+  },
+  "Assets/Sprites/SherryMotion/SherryReady_0.png": {
+    "id": "8d68fe63-64aa-4bf5-9950-e44a82f0517d"
+  },
+  "Assets/Sprites/SherryMotion/SherryReady_1.png": {
+    "id": "92631538-0ca3-44ea-b969-ad0d4530af79"
+  },
+  "Assets/Sprites/SherryMotion/SherryReady_2.png": {
+    "id": "639e8fd2-8cdd-4294-b444-28f38eecf32f"
+  },
+  "Assets/Sprites/SherryMotion/SherryReady_3.png": {
+    "id": "6eba3637-7c8c-4383-b465-745a7fe30a25"
+  },
+  "Assets/Sprites/SherryMotion/SherryRelease_0.png": {
+    "id": "3a275140-e3db-4b03-8f8f-77cd3f525b8f"
+  },
+  "Assets/Sprites/SherryMotion/SherryRelease_1.png": {
+    "id": "9fc10af9-4891-4a37-a98b-81b539a803e1"
+  },
+  "Assets/Sprites/SherryMotion/SherryRelease_2.png": {
+    "id": "af5b2c0a-352a-4947-9018-694f4fba0435"
+  },
+  "Assets/Sprites/SherryMotion/SherryRelease_3.png": {
+    "id": "16773ac2-04fc-4b57-80ff-9b6708628e8d"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryArrowFull_0.hbsprite.json": {
+    "id": "1ab1c960-04ab-427d-b266-6b6be71fdf32"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryArrow_0.hbsprite.json": {
+    "id": "440afd0f-5bbf-4867-93c0-2a24bd6f4ceb"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryCharge_0.hbsprite.json": {
+    "id": "880139e8-e22a-41b7-ac02-310a34aaad76"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryCharge_1.hbsprite.json": {
+    "id": "8a24344d-9acd-4041-8e27-cd1b2a72034f"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryCharge_10.hbsprite.json": {
+    "id": "b11d7dfc-4b2a-4ec6-99c2-279ff872b652"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryCharge_11.hbsprite.json": {
+    "id": "0d260e64-150e-4e21-a4e0-f2fed18ccac5"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryCharge_2.hbsprite.json": {
+    "id": "9637c7df-a448-44a7-bebc-325f049c9d8c"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryCharge_3.hbsprite.json": {
+    "id": "0dc183c2-3548-448b-b27b-f5472ed8895f"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryCharge_4.hbsprite.json": {
+    "id": "1897a963-4732-4350-9d8b-ad4a9024ea4a"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryCharge_5.hbsprite.json": {
+    "id": "bc7b2466-485d-422d-b896-4552cc75eda7"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryCharge_6.hbsprite.json": {
+    "id": "de83e923-9c0b-4824-887d-a149251999e9"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryCharge_7.hbsprite.json": {
+    "id": "91afd360-7bb1-435b-9f3b-daea67ad1fcb"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryCharge_8.hbsprite.json": {
+    "id": "d545ac3f-a326-448d-ba27-19022efcc07a"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryCharge_9.hbsprite.json": {
+    "id": "a3b44ee9-982c-46d1-a489-f5a94611a92f"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryReady_0.hbsprite.json": {
+    "id": "841de411-cb67-4bcb-9b4d-d3687c9cdc16"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryReady_1.hbsprite.json": {
+    "id": "2aa16630-dbdd-40dc-a39e-33208413e939"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryReady_2.hbsprite.json": {
+    "id": "c3daa1aa-c0fd-4c6b-b478-2e64f5a6aacb"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryReady_3.hbsprite.json": {
+    "id": "9084c18f-cbc8-41d1-9b58-fd27a0126056"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryRelease_0.hbsprite.json": {
+    "id": "305400c2-cc3f-406c-b812-1dfc184a4c02"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryRelease_1.hbsprite.json": {
+    "id": "e544377d-3830-409a-ab39-e5ab69b0d0e8"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryRelease_2.hbsprite.json": {
+    "id": "77dc4136-95d2-4109-bff7-d4ea04ab56b8"
+  },
+  "Assets/Sprites/SherryMotion/S_SherryRelease_3.hbsprite.json": {
+    "id": "b7fbe215-a772-4a29-81d4-01093f2a7125"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_0.hbsprite.json": {
+    "id": "341241e1-4704-421a-97dc-e7b407f1be51"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_0_W0.hbsprite.json": {
+    "id": "e477fec3-a533-4d30-9725-babc7bb809a4"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_0_W1.hbsprite.json": {
+    "id": "0391ad09-f96a-40b4-b254-8f36aec2df0b"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_0_W2.hbsprite.json": {
+    "id": "d9471247-2729-410f-9767-0121fe13e0ab"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_0_W3.hbsprite.json": {
+    "id": "ab1fd4b4-fb0a-4be8-871c-0228f55b4e4f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_1.hbsprite.json": {
+    "id": "23e64bce-cf5e-4fd6-aa30-9a729ff43d22"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_1_W0.hbsprite.json": {
+    "id": "c9db7fe0-2ad7-4c1a-a163-cc352b731a92"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_1_W1.hbsprite.json": {
+    "id": "fcd76c37-bfd4-4913-9209-baf49ba4a26d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_1_W2.hbsprite.json": {
+    "id": "3d33aa1b-99f0-4dff-9142-d4d3e3e0b818"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_1_W3.hbsprite.json": {
+    "id": "9fc7c703-c1d1-4e52-a941-7fd40cbc5563"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_2.hbsprite.json": {
+    "id": "b05e287c-f131-472a-bd81-d8f84b16536d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_2_W0.hbsprite.json": {
+    "id": "593a42ea-6cf6-494e-a1ae-59a290f78229"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_2_W1.hbsprite.json": {
+    "id": "3c1beed5-7c83-45f9-8c92-e3a5c1df6513"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_2_W2.hbsprite.json": {
+    "id": "075a9116-c95d-4e46-90f7-b8762aa4098f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_2_W3.hbsprite.json": {
+    "id": "7e9fb9ec-00e3-472a-b824-5de2522b2776"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_3.hbsprite.json": {
+    "id": "8f2b9805-f003-4f7a-b6c5-48887bc7c75f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_3_W0.hbsprite.json": {
+    "id": "1e81a1be-f09b-4a34-a00f-01a3fdb39dcf"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_3_W1.hbsprite.json": {
+    "id": "3e9268b6-1078-4421-96ad-86a51745d935"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_3_W2.hbsprite.json": {
+    "id": "9a7eef53-978e-4b64-a673-ec3ed8309acf"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_3_W3.hbsprite.json": {
+    "id": "c2ba06d7-93f0-4305-9571-263da521f00b"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_4.hbsprite.json": {
+    "id": "0e6e7c90-076c-46de-8f44-4f1b374ddaf5"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_4_W0.hbsprite.json": {
+    "id": "8d200cf2-4279-418b-9b33-f522153e037d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_4_W1.hbsprite.json": {
+    "id": "59958653-8b53-4cd6-8072-beb2748ba4a0"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_4_W2.hbsprite.json": {
+    "id": "f27c0f12-deb0-43a4-a3cc-8b37c3847244"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_4_W3.hbsprite.json": {
+    "id": "207989d8-0469-4c48-bf8e-4eb2eba74c38"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_5.hbsprite.json": {
+    "id": "364ae7cc-b018-4e21-bf9a-48f9b8e9adcf"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_5_W0.hbsprite.json": {
+    "id": "b29fb4c3-2ab3-4e0b-a4af-d85c12480819"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_5_W1.hbsprite.json": {
+    "id": "8ec88217-fb78-4b12-9f43-aa27aa977634"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_5_W2.hbsprite.json": {
+    "id": "c49ec74f-af56-48c0-9f2e-982bcb89e40d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_0_5_W3.hbsprite.json": {
+    "id": "15dc1c0d-6ae0-469b-8bf3-9c14bcd6fb5d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_0.hbsprite.json": {
+    "id": "fc2f637b-5dd4-4a12-a4a8-9d97a0fff6a8"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_0_W0.hbsprite.json": {
+    "id": "cdaeb662-b3f3-4bbc-ba37-6af897ae6c4e"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_0_W1.hbsprite.json": {
+    "id": "54f272d7-29b0-4ec0-bc5b-84f692f7417e"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_0_W2.hbsprite.json": {
+    "id": "1a5843bb-28ec-4977-8686-317e5cafeb37"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_0_W3.hbsprite.json": {
+    "id": "b60ee525-1ffc-43b2-9b49-779d2c02cdab"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_1.hbsprite.json": {
+    "id": "8a264630-8ff3-43ee-8272-f6a700b67192"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_1_W0.hbsprite.json": {
+    "id": "ad00f0b0-0a25-46dd-a0d3-1e9714f9a4e3"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_1_W1.hbsprite.json": {
+    "id": "fb86cfc5-88b0-4867-afd7-1d7e03279792"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_1_W2.hbsprite.json": {
+    "id": "5191318b-0ec4-4743-be17-b612dda3a071"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_1_W3.hbsprite.json": {
+    "id": "beb6021c-3ff5-40df-8bb6-989be9c64448"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_2.hbsprite.json": {
+    "id": "8e764dfd-9e74-442f-8015-2ffc6b6767dd"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_2_W0.hbsprite.json": {
+    "id": "a56ce48b-afe1-4c51-99ac-a301be392209"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_2_W1.hbsprite.json": {
+    "id": "3d0303a3-4b38-423c-be1e-a2ec13612f14"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_2_W2.hbsprite.json": {
+    "id": "b77170a6-b715-4d70-a517-98dc4f2055c8"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_2_W3.hbsprite.json": {
+    "id": "595c33dd-680d-4054-8ef6-836b307e1f8f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_3.hbsprite.json": {
+    "id": "8cd409ad-7e9b-4812-a40f-02f7dd043601"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_3_W0.hbsprite.json": {
+    "id": "a8767fbb-e920-469a-8c2d-f051f1129ba0"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_3_W1.hbsprite.json": {
+    "id": "35ce4303-1694-4151-a6ff-546f3896e799"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_3_W2.hbsprite.json": {
+    "id": "ca0b5362-33a5-415b-96d4-3bce67e1f78f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_3_W3.hbsprite.json": {
+    "id": "68accef1-78b4-4249-83b9-70f8eeea9960"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_4.hbsprite.json": {
+    "id": "2ce9dfcc-f4cf-482c-9453-6f7287454625"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_4_W0.hbsprite.json": {
+    "id": "6492bd87-89ec-4ff3-b894-0394195059b8"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_4_W1.hbsprite.json": {
+    "id": "1576a640-3970-4330-af5c-1b2d17f6c0ee"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_4_W2.hbsprite.json": {
+    "id": "1a0db017-37ce-44ef-ae89-3892c3cbb6be"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_4_W3.hbsprite.json": {
+    "id": "fca7c218-5d61-456f-aff3-2a58085fb72f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_5.hbsprite.json": {
+    "id": "c3499fe6-3878-4e61-ac14-f67ee5e0666d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_5_W0.hbsprite.json": {
+    "id": "8dc6ed91-8a67-48cc-9889-1424f0fd22a6"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_5_W1.hbsprite.json": {
+    "id": "d80b191d-c497-4a10-8e4e-5ef0706c5949"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_5_W2.hbsprite.json": {
+    "id": "d390997f-bde6-4cfb-8adb-601baaf0c8dd"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_1_5_W3.hbsprite.json": {
+    "id": "482b80ce-e0a2-4960-bb99-c4b6b468545b"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_0.hbsprite.json": {
+    "id": "16aba088-b985-47cc-acde-37fa5d85c285"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_0_W0.hbsprite.json": {
+    "id": "9f85df4d-ef92-4da1-9308-42a89e82b2fe"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_0_W1.hbsprite.json": {
+    "id": "592d52f9-0e2e-4524-8a78-734e919f64c4"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_0_W2.hbsprite.json": {
+    "id": "d04be5c3-7761-476f-9da7-ef3c04ef47b9"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_0_W3.hbsprite.json": {
+    "id": "f5c0c76a-de2e-4e32-9fb3-95a4b2d451bb"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_1.hbsprite.json": {
+    "id": "1fa78590-15fc-4c14-8232-31ca29cd85ad"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_1_W0.hbsprite.json": {
+    "id": "cfa0038b-7aea-487a-9e9f-64f694628c85"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_1_W1.hbsprite.json": {
+    "id": "343a1e7a-8e36-4f4e-96ee-33614a7e36e6"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_1_W2.hbsprite.json": {
+    "id": "a3db4013-2a6a-4ca1-9801-cac3fa66a666"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_1_W3.hbsprite.json": {
+    "id": "12b7f304-f64b-4e7f-a15b-afaf5dc4e03e"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_2.hbsprite.json": {
+    "id": "a56ed2f8-d242-41e1-a760-cb49ef623765"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_2_W0.hbsprite.json": {
+    "id": "d89097f6-73bb-45ee-bf93-33408337422e"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_2_W1.hbsprite.json": {
+    "id": "e0926f35-f01c-4ce8-85a5-101c2882cd8c"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_2_W2.hbsprite.json": {
+    "id": "60dda4b7-b0a6-4293-a3d2-f0b978400d87"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_2_W3.hbsprite.json": {
+    "id": "97941d12-fc90-4b5d-8dd4-2a0452216a35"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_3.hbsprite.json": {
+    "id": "5806b8b8-063e-40be-896e-2595ba2ec49b"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_3_W0.hbsprite.json": {
+    "id": "81037d90-e5c5-4818-8432-11a2a0818ed9"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_3_W1.hbsprite.json": {
+    "id": "646732e6-a16e-4b11-a11d-ec056ccfaef2"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_3_W2.hbsprite.json": {
+    "id": "c8fc730b-7e12-4b11-a899-f94f2e0f9863"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_3_W3.hbsprite.json": {
+    "id": "317b58e4-1e23-48f6-96b8-adfe0d72ac75"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_4.hbsprite.json": {
+    "id": "1e26bc65-1547-4806-bd1f-05d569872bbb"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_4_W0.hbsprite.json": {
+    "id": "fd534133-30eb-45fd-90c1-d28e73d0e24f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_4_W1.hbsprite.json": {
+    "id": "f04c4e70-b141-4734-86e4-0a6183464f69"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_4_W2.hbsprite.json": {
+    "id": "29516342-5a06-4090-9ce6-dd254303203d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_4_W3.hbsprite.json": {
+    "id": "2d1b75ac-3bcd-4e52-a4e5-9c67c81e13c4"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_5.hbsprite.json": {
+    "id": "3a8447ba-8080-4661-b272-117c0032baea"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_5_W0.hbsprite.json": {
+    "id": "302a8c07-236d-4128-b5ad-66f852cc513d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_5_W1.hbsprite.json": {
+    "id": "56d47f34-ad7f-4967-8bdd-ec929ecc2d60"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_5_W2.hbsprite.json": {
+    "id": "63d32402-e35b-40ac-bd75-5b93ab334a17"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_2_5_W3.hbsprite.json": {
+    "id": "893b3609-a8fb-4fe3-8ae7-eeaf63ac8a74"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_0.hbsprite.json": {
+    "id": "bb01b309-a03c-43b3-8088-91ca317e217a"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_0_W0.hbsprite.json": {
+    "id": "eda6084e-f9bd-4706-a59c-a7f8b773d041"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_0_W1.hbsprite.json": {
+    "id": "59dfc2a6-1075-4715-b296-c02ffad0e977"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_0_W2.hbsprite.json": {
+    "id": "46e35e49-eefd-4406-8e32-d712f7365097"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_0_W3.hbsprite.json": {
+    "id": "8d3100a7-ce9c-4484-9df5-2d649d5b3983"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_1.hbsprite.json": {
+    "id": "c34c2f93-9866-4d02-966d-f02c27b9900c"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_1_W0.hbsprite.json": {
+    "id": "7d67fc73-f2bb-4922-9ee6-c624a403ec4d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_1_W1.hbsprite.json": {
+    "id": "75c832bc-ef02-4f70-80d5-08866554c89d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_1_W2.hbsprite.json": {
+    "id": "964ab4fc-5d17-49de-88ff-73d4cec1bda0"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_1_W3.hbsprite.json": {
+    "id": "9c84825d-66b1-4dcd-985f-e0635fd7aa3e"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_2.hbsprite.json": {
+    "id": "3f522d1f-528f-4a52-98fc-9b39ea5f0b62"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_2_W0.hbsprite.json": {
+    "id": "d7d43222-3f8e-49d9-ac9c-18c3f5beaa62"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_2_W1.hbsprite.json": {
+    "id": "d5b8a902-bae1-4496-801a-20f3b6c4f077"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_2_W2.hbsprite.json": {
+    "id": "c6ca05e3-ba89-4575-8370-f16d9c1dd725"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_2_W3.hbsprite.json": {
+    "id": "0573689e-3f83-4816-9272-728911ac6aa5"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_3.hbsprite.json": {
+    "id": "5a38762d-dfc5-4b0f-8a7d-ea73a3fb0abd"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_3_W0.hbsprite.json": {
+    "id": "63ef7ec5-07cd-4092-9dc4-6538b5e9c3b4"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_3_W1.hbsprite.json": {
+    "id": "db5d4899-b30a-4f19-80bd-2ad9c42c9293"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_3_W2.hbsprite.json": {
+    "id": "0c4a53c6-67f1-441a-b407-116fea04f658"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_3_W3.hbsprite.json": {
+    "id": "88969a7a-520e-4c2a-b9c7-1febace27de7"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_4.hbsprite.json": {
+    "id": "b025f7cd-76e5-40ea-88c8-8d4615c609f6"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_4_W0.hbsprite.json": {
+    "id": "916916cf-9aed-4069-b9fe-3fb99bcb7ff3"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_4_W1.hbsprite.json": {
+    "id": "21447ab9-188d-460a-9b59-c91f051533dc"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_4_W2.hbsprite.json": {
+    "id": "d447629d-bfd0-4e51-81a7-e56de2cbd130"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_4_W3.hbsprite.json": {
+    "id": "d93b11e3-c2ce-4fac-9d14-efabcea1eb7c"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_5.hbsprite.json": {
+    "id": "b3359e40-1fe2-4447-9e12-5d29739f7d95"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_5_W0.hbsprite.json": {
+    "id": "f501e2a4-2c1d-47f5-ab26-f142376ea85c"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_5_W1.hbsprite.json": {
+    "id": "90dd9d2c-4a07-4d4e-8ddf-369d812d35e2"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_5_W2.hbsprite.json": {
+    "id": "ac47f175-8e3e-43a4-95f8-001620edb897"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Charge_3_5_W3.hbsprite.json": {
+    "id": "f918ae22-4262-4be1-932b-20d75ce718fa"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_0.hbsprite.json": {
+    "id": "ed257133-da17-47b8-bd13-1528e489218d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_0_W0.hbsprite.json": {
+    "id": "d5af8c6f-347b-4943-8f7e-587d2ecc1a4b"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_0_W1.hbsprite.json": {
+    "id": "dae505ef-4526-4eb8-8fbe-d7a55802fdfe"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_0_W2.hbsprite.json": {
+    "id": "900b3693-09ce-4e73-b7d1-18be74f10901"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_0_W3.hbsprite.json": {
+    "id": "d8948957-9005-4b13-af6d-3850c02ef499"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_1.hbsprite.json": {
+    "id": "4dca66a8-2671-4c11-9f47-fdd395e01910"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_1_W0.hbsprite.json": {
+    "id": "fdef0b30-7e64-4c51-b720-337b37eca5da"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_1_W1.hbsprite.json": {
+    "id": "7d48e0ff-33a8-4e33-bc68-0db0d571f9dc"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_1_W2.hbsprite.json": {
+    "id": "7c923b59-d0d2-48d5-a0c4-b6d9ccc69cb9"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_1_W3.hbsprite.json": {
+    "id": "90bb507c-7830-4920-a4ba-8bcd515e4244"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_2.hbsprite.json": {
+    "id": "56eb580f-b560-46d1-bef9-771af93696a5"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_2_W0.hbsprite.json": {
+    "id": "6bff16ad-4d5e-42d3-bafe-6a9880b9eb74"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_2_W1.hbsprite.json": {
+    "id": "58084050-77dd-4828-9865-b951f76785da"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_2_W2.hbsprite.json": {
+    "id": "fa88822d-9b4d-4a02-8761-0dfe22e7f29e"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_2_W3.hbsprite.json": {
+    "id": "1587f599-21a8-46f9-bddc-3fab43028500"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_3.hbsprite.json": {
+    "id": "f12c156b-bc17-4900-8fca-02d95e17ce72"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_3_W0.hbsprite.json": {
+    "id": "260f6546-4af5-45d6-bb1a-5d3e6d0d11b7"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_3_W1.hbsprite.json": {
+    "id": "0807c2dc-5565-4ba6-b0a3-68681fcfb9ae"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_3_W2.hbsprite.json": {
+    "id": "0215fe3d-3cf3-4b15-ae1b-518f75fe85ee"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_0_3_W3.hbsprite.json": {
+    "id": "397c4e1f-f2a3-47ab-a0ec-45572bba822a"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_0.hbsprite.json": {
+    "id": "3f5b02c1-90ba-4e3e-96fc-24ad54caced0"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_0_W0.hbsprite.json": {
+    "id": "b1eec61c-5c70-42c2-b501-9c4f3b25dedb"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_0_W1.hbsprite.json": {
+    "id": "54c7a001-a2fd-4027-b7b4-bd9feb099c02"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_0_W2.hbsprite.json": {
+    "id": "185f2783-299c-4d63-9152-3370c528679f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_0_W3.hbsprite.json": {
+    "id": "c80f6a1a-3e8b-48ef-9bc0-4f5cbe461ebe"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_1.hbsprite.json": {
+    "id": "93bf048d-4b7e-4676-bc00-8b28528911db"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_1_W0.hbsprite.json": {
+    "id": "f1d74b05-d87c-4b9a-8669-acfcfe34be35"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_1_W1.hbsprite.json": {
+    "id": "98d4cc10-59a2-4086-b019-48df7e2ff164"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_1_W2.hbsprite.json": {
+    "id": "a786b435-7b6d-463f-8ef3-d4469147b4f5"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_1_W3.hbsprite.json": {
+    "id": "5a588d6f-61d5-44da-b34b-51d9f027fb3f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_2.hbsprite.json": {
+    "id": "79a6e071-66b7-4249-89b8-0eecb6b577a0"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_2_W0.hbsprite.json": {
+    "id": "0bf7125d-1878-4974-a6b0-0a699a327981"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_2_W1.hbsprite.json": {
+    "id": "48ac39c5-05e9-43d6-a482-de7b3191fed3"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_2_W2.hbsprite.json": {
+    "id": "7ee3a4f8-1e61-4483-ad7f-aff46f6f0f89"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_2_W3.hbsprite.json": {
+    "id": "4d3f125b-16ec-4018-a385-eb69a74e523f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_3.hbsprite.json": {
+    "id": "782a8696-0a35-4036-933a-da1be6c335b2"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_3_W0.hbsprite.json": {
+    "id": "d3fc8f9d-7838-4032-bb70-22d7a6842e9a"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_3_W1.hbsprite.json": {
+    "id": "8d68acb2-6a89-4aed-bda1-4286219249a6"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_3_W2.hbsprite.json": {
+    "id": "2d4dba38-39d9-4f44-9691-c538d5753247"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_1_3_W3.hbsprite.json": {
+    "id": "1fdc4fd4-8e9b-44e9-9743-6ef9500a041f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_0.hbsprite.json": {
+    "id": "391fd42e-7f62-419b-85b4-15e0687ae187"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_0_W0.hbsprite.json": {
+    "id": "d3785e91-15bb-4396-a791-0b114c0fbb67"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_0_W1.hbsprite.json": {
+    "id": "babec6d9-0f08-459e-b7d7-13ee9bce66cc"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_0_W2.hbsprite.json": {
+    "id": "d9e4044d-0d0d-4284-ba46-d7da1b3ccf4b"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_0_W3.hbsprite.json": {
+    "id": "2322517e-296c-4c20-8654-48c47850df7e"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_1.hbsprite.json": {
+    "id": "82477326-8b85-4634-b7e1-cb7b28f60500"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_1_W0.hbsprite.json": {
+    "id": "949137d9-a08c-427e-86d3-61e94ded48fd"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_1_W1.hbsprite.json": {
+    "id": "55d10828-504a-4d15-b278-d85ce56828dd"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_1_W2.hbsprite.json": {
+    "id": "6b9e9dbc-b10c-4f03-98c2-4dffd62db084"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_1_W3.hbsprite.json": {
+    "id": "b84419f9-78f2-412d-b8fe-8199ddcf93c3"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_2.hbsprite.json": {
+    "id": "2630bd52-fb91-4038-838f-fbdaafbc224f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_2_W0.hbsprite.json": {
+    "id": "850e88c2-1d78-4a80-b750-02006ac17801"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_2_W1.hbsprite.json": {
+    "id": "6e6df818-1222-4bbe-b8ef-63dd833900f0"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_2_W2.hbsprite.json": {
+    "id": "f8ea1a36-73b5-4c54-b1c5-167f3448b85b"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_2_W3.hbsprite.json": {
+    "id": "dc8373a4-848a-4c0f-b838-b838acf9f5e3"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_3.hbsprite.json": {
+    "id": "7ce30cf1-9d00-4e18-af5d-a834a6601d37"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_3_W0.hbsprite.json": {
+    "id": "8d611291-7196-4209-b108-ac7b8efcfccf"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_3_W1.hbsprite.json": {
+    "id": "10b06696-4b73-48ea-8962-838289c0c9b0"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_3_W2.hbsprite.json": {
+    "id": "2fd445af-8fd0-4919-b78e-a39d355ddd14"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_2_3_W3.hbsprite.json": {
+    "id": "a403c2f5-accf-488a-942b-d148e06bd791"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_0.hbsprite.json": {
+    "id": "62af7103-c4d2-4b25-b134-9b1582e74ebd"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_0_W0.hbsprite.json": {
+    "id": "f17cb635-5422-47eb-b139-c1a3443767e6"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_0_W1.hbsprite.json": {
+    "id": "7519a35d-611a-4d79-b911-e811456db5d0"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_0_W2.hbsprite.json": {
+    "id": "cf133c90-0554-47cb-882f-0b2fc348a5b7"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_0_W3.hbsprite.json": {
+    "id": "1c700c98-0231-42f0-a4ed-dae5d37f4583"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_1.hbsprite.json": {
+    "id": "535c8502-18e7-43fa-adbe-351e8758bc77"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_1_W0.hbsprite.json": {
+    "id": "7faf1f4f-92b9-4e31-9052-903ce5097798"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_1_W1.hbsprite.json": {
+    "id": "f44c0649-cee0-4a3b-ba46-4cf95a3d4cdf"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_1_W2.hbsprite.json": {
+    "id": "de857610-826b-4dc1-963a-2f2e7d2be3c2"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_1_W3.hbsprite.json": {
+    "id": "73fe9721-a347-4c8e-9ba7-b7c3f71dc906"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_2.hbsprite.json": {
+    "id": "75a8343c-4c2b-4f29-9416-5028319f195f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_2_W0.hbsprite.json": {
+    "id": "d16ab02b-49da-4de1-a325-673ec18b92c6"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_2_W1.hbsprite.json": {
+    "id": "dc160b3e-6f9c-41b9-bd63-048dc2f75f80"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_2_W2.hbsprite.json": {
+    "id": "afae862f-66df-4661-b0f9-63cc1e310bfa"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_2_W3.hbsprite.json": {
+    "id": "ec961984-f4d0-4885-81cc-be31545acfad"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_3.hbsprite.json": {
+    "id": "da11242b-4ee3-48c2-8e4e-9a03839dbbcc"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_3_W0.hbsprite.json": {
+    "id": "5cb717db-b3f7-4faa-a18c-d39044a1054f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_3_W1.hbsprite.json": {
+    "id": "63afe9c6-7d7d-4b30-ab89-8037e78a8af8"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_3_W2.hbsprite.json": {
+    "id": "763ee36b-2882-4b74-b013-881850f4a3d1"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Hold_3_3_W3.hbsprite.json": {
+    "id": "1c317867-1793-4f98-b5c8-477c5a2e9925"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Idle_0_0.hbsprite.json": {
+    "id": "6d3b426d-6a09-40ce-a00c-cc9b4ebf4c2c"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Idle_1_0.hbsprite.json": {
+    "id": "553e0c61-aa0b-4844-b8ee-7bdebc142c13"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Idle_2_0.hbsprite.json": {
+    "id": "5bd404e5-583d-42f2-8ac3-f51368b19841"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Idle_3_0.hbsprite.json": {
+    "id": "02bbbf3f-98b4-4c9e-8178-b9be1f84b24b"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_0.hbsprite.json": {
+    "id": "e2812e14-5451-4fe3-86f7-9521b768036e"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_0_W0.hbsprite.json": {
+    "id": "6c53b41a-8a5b-4182-a4d0-b7cd0b39b1ee"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_0_W1.hbsprite.json": {
+    "id": "1a5c0241-bbae-464f-9cd7-f1a84f0775a1"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_0_W2.hbsprite.json": {
+    "id": "34a71e9c-6ba7-48e3-9f21-ec7a146dab69"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_0_W3.hbsprite.json": {
+    "id": "2ae0c498-0747-4738-b091-bbc9b94311b3"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_1.hbsprite.json": {
+    "id": "82b43da3-3580-461d-ba2e-fd5064a2e311"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_1_W0.hbsprite.json": {
+    "id": "a3f0175c-9ec3-4004-8e17-e14395f8eca0"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_1_W1.hbsprite.json": {
+    "id": "bd331bb5-7787-47b6-addd-cad301731fb5"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_1_W2.hbsprite.json": {
+    "id": "57a1a149-fd04-4c55-8fb5-939ee78b71a0"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_1_W3.hbsprite.json": {
+    "id": "d3a6fd52-bfc7-4186-96bb-36cea78799ea"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_2.hbsprite.json": {
+    "id": "8c131bf5-e676-4419-b1a7-1d2e7711c576"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_2_W0.hbsprite.json": {
+    "id": "7c1c85d6-330b-48f5-88d7-f9638a28c736"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_2_W1.hbsprite.json": {
+    "id": "9a1212ae-8ecb-4cf2-a289-dc04ffc1262d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_2_W2.hbsprite.json": {
+    "id": "ee749c3e-0842-4dcb-bcc9-ae0ce94bcffb"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_2_W3.hbsprite.json": {
+    "id": "a9d3fc40-2b66-4723-a17d-1d249b5ab0f9"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_3.hbsprite.json": {
+    "id": "e53f9336-2f5a-4ff9-b01c-9049f02d9475"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_3_W0.hbsprite.json": {
+    "id": "bdb963b2-3d15-419b-a9c1-c0a854c8fdee"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_3_W1.hbsprite.json": {
+    "id": "6eaaca29-7158-47fa-a023-dd4d41f624e6"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_3_W2.hbsprite.json": {
+    "id": "d439eb26-dabc-47fe-9591-c0d9d052cbba"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_0_3_W3.hbsprite.json": {
+    "id": "f4ec1a11-880c-4843-8b76-ca26cb15ce52"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_0.hbsprite.json": {
+    "id": "2ea1565f-7266-4bd1-9d39-63954abdb076"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_0_W0.hbsprite.json": {
+    "id": "4960670a-bc16-47e9-a0b3-f6ee5e5440aa"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_0_W1.hbsprite.json": {
+    "id": "eaabf2cf-add8-4741-b83c-65987df6280f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_0_W2.hbsprite.json": {
+    "id": "c916333c-3153-4785-879e-a6e8a93d808e"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_0_W3.hbsprite.json": {
+    "id": "50cdf7c9-ddb3-4474-a58a-2a8c79e6544c"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_1.hbsprite.json": {
+    "id": "f8afc268-4064-4558-bdc7-284f00097897"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_1_W0.hbsprite.json": {
+    "id": "d60d6b89-2f80-4f0c-ab3d-ca98c71134e6"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_1_W1.hbsprite.json": {
+    "id": "ac9e2ce3-5a68-4e73-89ca-05c16d9bb83c"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_1_W2.hbsprite.json": {
+    "id": "aabcefbb-d07c-477b-811f-91981a757dd0"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_1_W3.hbsprite.json": {
+    "id": "367785f1-98f9-4ea2-a143-8c2aed3dd363"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_2.hbsprite.json": {
+    "id": "0f67abf3-b990-4b7b-9ed1-a641791963fb"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_2_W0.hbsprite.json": {
+    "id": "4db58bd2-553f-4ffa-8b89-62aa9f7ae7db"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_2_W1.hbsprite.json": {
+    "id": "2e44083d-c730-40ed-88a7-8e6eba70f2a4"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_2_W2.hbsprite.json": {
+    "id": "f30f0579-f012-4e72-93f6-db9c679ce828"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_2_W3.hbsprite.json": {
+    "id": "b3d0a3d9-9f34-4674-9202-6c41e8f535dd"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_3.hbsprite.json": {
+    "id": "987d2f38-9c99-4438-8554-30979d12db4a"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_3_W0.hbsprite.json": {
+    "id": "a8f09e69-f7ab-4d4f-97ea-a88ac486c278"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_3_W1.hbsprite.json": {
+    "id": "1f4e76cd-2344-4148-9209-cde8aca99004"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_3_W2.hbsprite.json": {
+    "id": "d1f27812-85bb-49c8-90f2-c4b3c48bb47d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_1_3_W3.hbsprite.json": {
+    "id": "efecdc33-12ef-4806-acdf-9f81e0fee612"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_0.hbsprite.json": {
+    "id": "3de4e5ff-9f20-4071-96b4-fea0044191db"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_0_W0.hbsprite.json": {
+    "id": "cefb611e-7ec4-4a9b-832a-a603a7ca6694"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_0_W1.hbsprite.json": {
+    "id": "98287b68-a1b8-4efe-9152-9e36307095d1"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_0_W2.hbsprite.json": {
+    "id": "7c8fb6fc-3df7-4e97-aa3c-13d3baa6de63"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_0_W3.hbsprite.json": {
+    "id": "6c2c17ed-65bf-4dea-9517-f1b30a4f86c5"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_1.hbsprite.json": {
+    "id": "6a1450df-4071-4022-9705-bb3ecf624c03"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_1_W0.hbsprite.json": {
+    "id": "5a1b8c0b-62e0-479c-b263-1b4e7caa6fba"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_1_W1.hbsprite.json": {
+    "id": "456ae5b5-ec32-4813-b006-4858ca8f427d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_1_W2.hbsprite.json": {
+    "id": "8a88d94f-7101-4a3f-940c-ea4272f1ec39"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_1_W3.hbsprite.json": {
+    "id": "f8284ef2-8dfa-4831-9a41-d3052a977915"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_2.hbsprite.json": {
+    "id": "ca7d66bb-1fb8-4b9c-af74-e58f77bc3551"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_2_W0.hbsprite.json": {
+    "id": "82f0da3d-bf44-4d8c-a242-e1f64bb1d037"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_2_W1.hbsprite.json": {
+    "id": "2c3e953f-5bba-4bfe-99f7-30f6f595d3e1"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_2_W2.hbsprite.json": {
+    "id": "593cb8e0-ac77-49ac-993b-c9dae7fa93b0"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_2_W3.hbsprite.json": {
+    "id": "054c4e04-b039-4147-bbda-3a2189b390b0"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_3.hbsprite.json": {
+    "id": "0b6c5582-554d-4ef0-99f9-2b5d5e008e11"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_3_W0.hbsprite.json": {
+    "id": "a66261d3-ab95-4422-b7ef-d4835fa53422"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_3_W1.hbsprite.json": {
+    "id": "3546b01f-e71e-40cc-a11a-edb4413f982a"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_3_W2.hbsprite.json": {
+    "id": "d79916eb-0bc9-49bc-9a1d-1ee66e3a0480"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_2_3_W3.hbsprite.json": {
+    "id": "1c70a16a-7edd-48b3-865b-169e8e4df272"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_0.hbsprite.json": {
+    "id": "1c01ef46-1fed-4c4a-963a-7d06f3e75e39"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_0_W0.hbsprite.json": {
+    "id": "d40d34c2-514b-42a8-830f-3381d3f00b3b"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_0_W1.hbsprite.json": {
+    "id": "1aca2eea-d75f-41e3-901e-339ae4d8006e"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_0_W2.hbsprite.json": {
+    "id": "5a249b49-b693-44ba-9c8f-84425304c88b"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_0_W3.hbsprite.json": {
+    "id": "17e12bf2-9391-47c5-8656-f5811773c3cc"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_1.hbsprite.json": {
+    "id": "22eb89c3-aa39-4c77-a257-76140582d8cd"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_1_W0.hbsprite.json": {
+    "id": "0a88260c-3671-49ed-ac58-3aec2bd58f21"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_1_W1.hbsprite.json": {
+    "id": "852085c8-2703-45de-b105-05c844ef06be"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_1_W2.hbsprite.json": {
+    "id": "8414212a-d2a8-41e4-b9ab-36d48c6ab6e7"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_1_W3.hbsprite.json": {
+    "id": "f80752a9-fff1-4619-8956-ba19b6db3f49"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_2.hbsprite.json": {
+    "id": "24bdd4b7-1953-42e1-aecc-6edfdced3f4c"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_2_W0.hbsprite.json": {
+    "id": "d23a3893-83fd-4d50-8101-8dc7a0a2be29"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_2_W1.hbsprite.json": {
+    "id": "ce25382a-ef10-4e05-a27b-78921884d4d7"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_2_W2.hbsprite.json": {
+    "id": "0c670fea-fcf6-4994-a1c0-1aeba129e9f1"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_2_W3.hbsprite.json": {
+    "id": "7c24908c-f3d3-425e-82bf-e7c98f1062ad"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_3.hbsprite.json": {
+    "id": "8757a4fc-4dbd-489f-b5e5-56288c09a7b4"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_3_W0.hbsprite.json": {
+    "id": "ef478b03-e46e-412c-8baa-59f1aab007aa"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_3_W1.hbsprite.json": {
+    "id": "59ce3398-b879-4797-895f-451bb65f67be"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_3_W2.hbsprite.json": {
+    "id": "6205bb13-0966-44ce-ad63-9a7eeca85d94"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Ready_3_3_W3.hbsprite.json": {
+    "id": "bf10b20c-283e-4f80-8d63-d4bced49a081"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_0_0.hbsprite.json": {
+    "id": "7e35d523-c3b3-46af-b345-54d18a646753"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_0_1.hbsprite.json": {
+    "id": "0d77c519-1d68-44ef-833e-8384cf0fc90a"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_0_2.hbsprite.json": {
+    "id": "99fcd684-3ec0-49af-b060-b6c067ab4644"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_0_3.hbsprite.json": {
+    "id": "f3446d48-9d61-4369-9f18-94dd056dfaf3"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_1_0.hbsprite.json": {
+    "id": "b90fadd0-24f2-4b91-aa21-53a3815010c2"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_1_1.hbsprite.json": {
+    "id": "0913b9a0-f8ff-4474-97a8-8c0b48550e7d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_1_2.hbsprite.json": {
+    "id": "60c4c979-833c-48b6-a47c-981530de222d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_1_3.hbsprite.json": {
+    "id": "73a5a839-0e65-4524-bb51-43cdd49a111f"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_2_0.hbsprite.json": {
+    "id": "9dde3120-d907-4506-8a9b-f1453e2f1624"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_2_1.hbsprite.json": {
+    "id": "e3c6f0ce-a184-4244-bdeb-e8c7e14cbaf9"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_2_2.hbsprite.json": {
+    "id": "de04bfe5-d1f9-47b2-99f8-464c0c11a209"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_2_3.hbsprite.json": {
+    "id": "34800ea0-c1ad-49f7-aa17-2ecc040eb71d"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_3_0.hbsprite.json": {
+    "id": "c1172db3-0228-4bfc-a362-bc732eee3f8a"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_3_1.hbsprite.json": {
+    "id": "0cb98d4c-a79c-4307-9ba7-647bec7c3129"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_3_2.hbsprite.json": {
+    "id": "b6e15679-9205-44a0-92d0-e759fff6e1ce"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Run_3_3.hbsprite.json": {
+    "id": "df9875b4-812b-40c9-980b-080c536af1ea"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_0_0.hbsprite.json": {
+    "id": "db616489-3dcc-47c2-bfb0-ac54c1291665"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_0_1.hbsprite.json": {
+    "id": "470feaa0-cabb-468c-bf97-7d4497891dd2"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_0_2.hbsprite.json": {
+    "id": "f41ab1c9-d30a-4e71-a0d6-2fc7ce40b6f3"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_0_3.hbsprite.json": {
+    "id": "dce274bb-b18d-4c4f-b34b-b844493ef716"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_1_0.hbsprite.json": {
+    "id": "f0712192-d4ea-4ded-b144-5061ca24c009"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_1_1.hbsprite.json": {
+    "id": "6dfaa750-7831-4c3a-ae5b-4686b56f4b97"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_1_2.hbsprite.json": {
+    "id": "ccdd6377-a352-4240-abd4-d0990724b227"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_1_3.hbsprite.json": {
+    "id": "7d0d3d30-69c4-48cb-86f2-2e61b79c4ae5"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_2_0.hbsprite.json": {
+    "id": "2a4daa6f-81d1-4190-ad7e-45d934272ad3"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_2_1.hbsprite.json": {
+    "id": "5d300ab9-cd90-4cad-97f3-ddf3a87322a1"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_2_2.hbsprite.json": {
+    "id": "79def47a-41e5-4878-8be2-f16d9548418b"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_2_3.hbsprite.json": {
+    "id": "14724116-62f3-4438-8424-710fd3a61a7b"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_3_0.hbsprite.json": {
+    "id": "14191151-cbfe-4745-8976-25d052693cf5"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_3_1.hbsprite.json": {
+    "id": "8e6cb5a6-6782-4e72-ae2f-b0dd0db52c44"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_3_2.hbsprite.json": {
+    "id": "100b6745-4c4d-4b87-b23e-7196199dfc81"
+  },
+  "Assets/Sprites/SherryMotion/S_SM_Walk_3_3.hbsprite.json": {
+    "id": "60ef1004-bd6f-4100-a59b-4cf033016465"
+  },
+  "Assets/Sprites/FX/BurstRing_0.png": {
+    "id": "90b33dd3-8af3-43af-b35e-7213d8fef500"
+  },
+  "Assets/Sprites/FX/BurstRing_1.png": {
+    "id": "9e6456a1-8ca7-49d0-9478-8ecce378d751"
+  },
+  "Assets/Sprites/FX/BurstRing_2.png": {
+    "id": "40c7da66-6e3a-4c05-9533-e7a8ba74c24e"
+  },
+  "Assets/Sprites/FX/BurstRing_3.png": {
+    "id": "0f49bc46-02b7-440b-b058-873fe3f79e3f"
+  },
+  "Assets/Sprites/FX/BurstRing_4.png": {
+    "id": "6693d861-b6fb-4d11-b168-b7c069f0faf3"
+  },
+  "Assets/Sprites/FX/BurstRing_5.png": {
+    "id": "1a68f001-3937-45a1-8c00-7f0cd80f436d"
+  },
+  "Assets/Sprites/FX/BurstRing_6.png": {
+    "id": "90e8b97c-e7d2-432c-aea8-c09045c8d187"
+  },
+  "Assets/Sprites/FX/BurstRing_7.png": {
+    "id": "2aadde46-1124-4b96-b536-e130b8c53e10"
+  },
+  "Assets/Sprites/FX/GroundRing_0.png": {
+    "id": "a42c8e55-f1e4-44b7-862c-56e3be5f19a5"
+  },
+  "Assets/Sprites/FX/GroundRing_1.png": {
+    "id": "a9d5f236-233e-42a2-af70-a312aee3c70e"
+  },
+  "Assets/Sprites/FX/GroundRing_2.png": {
+    "id": "8f786c8b-c980-434c-849e-9dc9da9ae4af"
+  },
+  "Assets/Sprites/FX/GroundRing_3.png": {
+    "id": "76cd5311-7566-4d77-ac5d-75a494266bc5"
+  },
+  "Assets/Sprites/FX/GroundRing_4.png": {
+    "id": "c95c2baa-0838-4a4e-9c14-786f8e721bd9"
+  },
+  "Assets/Sprites/FX/GroundRing_5.png": {
+    "id": "a31a0d39-c40d-47f4-84f7-68c22377b621"
+  },
+  "Assets/Sprites/FX/GroundRing_6.png": {
+    "id": "42e6d086-c260-440c-9fb5-5b5847f810a7"
+  },
+  "Assets/Sprites/FX/GroundRing_7.png": {
+    "id": "a5f47b1f-a043-4b6e-8e15-6b22ca02950a"
+  },
+  "Assets/Sprites/FX/SpinSlash_0.png": {
+    "id": "4481f3fd-915d-46d7-bc37-654de4a5bb5a"
+  },
+  "Assets/Sprites/FX/SpinSlash_1.png": {
+    "id": "3f213554-573c-44ae-bfd3-225d5b676add"
+  },
+  "Assets/Sprites/FX/SpinSlash_10.png": {
+    "id": "6c44eb68-9bde-42da-aa89-1734252aff2d"
+  },
+  "Assets/Sprites/FX/SpinSlash_11.png": {
+    "id": "8171b123-5302-440c-b396-3d57fb746b85"
+  },
+  "Assets/Sprites/FX/SpinSlash_2.png": {
+    "id": "dfa34430-add9-49d1-8296-4b143989175d"
+  },
+  "Assets/Sprites/FX/SpinSlash_3.png": {
+    "id": "28fe6cf8-6bfb-4aeb-b94e-f2a3cabe7649"
+  },
+  "Assets/Sprites/FX/SpinSlash_4.png": {
+    "id": "b9fb4fea-a5dc-46e3-9fd7-dddab5072329"
+  },
+  "Assets/Sprites/FX/SpinSlash_5.png": {
+    "id": "7e154946-5f1d-4c7b-a008-ce7dbd1de9a2"
+  },
+  "Assets/Sprites/FX/SpinSlash_6.png": {
+    "id": "8fd3f2ca-991c-4334-9327-653272753102"
+  },
+  "Assets/Sprites/FX/SpinSlash_7.png": {
+    "id": "a63c6479-55ae-4e67-b5ab-3cf1673d3e7f"
+  },
+  "Assets/Sprites/FX/SpinSlash_8.png": {
+    "id": "15f9f31f-a670-481d-8c17-b08cee69ff58"
+  },
+  "Assets/Sprites/FX/SpinSlash_9.png": {
+    "id": "4767a4e4-e628-4f75-a0d8-ba1b84de16e5"
+  },
+  "Assets/Sprites/FX/S_BurstRing_0.hbsprite.json": {
+    "id": "7b70a5e1-31ae-4b3d-a340-07d5f5a6211d"
+  },
+  "Assets/Sprites/FX/S_BurstRing_1.hbsprite.json": {
+    "id": "235f420c-7e35-4e8f-9e63-d97592a5e711"
+  },
+  "Assets/Sprites/FX/S_BurstRing_2.hbsprite.json": {
+    "id": "abdc793e-a189-49b0-9e46-cd682da4bdeb"
+  },
+  "Assets/Sprites/FX/S_BurstRing_3.hbsprite.json": {
+    "id": "480525b4-dc02-46f9-a800-7a71e978a10e"
+  },
+  "Assets/Sprites/FX/S_BurstRing_4.hbsprite.json": {
+    "id": "ade59ed9-452b-4253-97c8-ef9be52b33c6"
+  },
+  "Assets/Sprites/FX/S_BurstRing_5.hbsprite.json": {
+    "id": "82f1c5e4-aba7-480f-8cdb-5c227b51ec40"
+  },
+  "Assets/Sprites/FX/S_BurstRing_6.hbsprite.json": {
+    "id": "c5586eed-7a99-4fcb-b8e6-e85265cd0508"
+  },
+  "Assets/Sprites/FX/S_BurstRing_7.hbsprite.json": {
+    "id": "cc470b53-72e8-44bf-bf81-6b017eaebb89"
+  },
+  "Assets/Sprites/FX/S_GroundRing_0.hbsprite.json": {
+    "id": "e37f9a3f-4803-42e3-8971-a30d777437ef"
+  },
+  "Assets/Sprites/FX/S_GroundRing_1.hbsprite.json": {
+    "id": "9b916359-5a42-42d8-bf85-72cc8524410f"
+  },
+  "Assets/Sprites/FX/S_GroundRing_2.hbsprite.json": {
+    "id": "6dad42b2-95c7-439b-ac06-3dc82fb74a63"
+  },
+  "Assets/Sprites/FX/S_GroundRing_3.hbsprite.json": {
+    "id": "8e3a3c48-d1e3-4494-9aa8-961ce8b566ae"
+  },
+  "Assets/Sprites/FX/S_GroundRing_4.hbsprite.json": {
+    "id": "137e4e5d-ac3b-4169-b868-3a9ebcc5ac76"
+  },
+  "Assets/Sprites/FX/S_GroundRing_5.hbsprite.json": {
+    "id": "6b8a645a-4ad1-4e9a-83b6-747bc9bdf3f5"
+  },
+  "Assets/Sprites/FX/S_GroundRing_6.hbsprite.json": {
+    "id": "6420d874-e3fc-4ec3-91f4-613ac46ec854"
+  },
+  "Assets/Sprites/FX/S_GroundRing_7.hbsprite.json": {
+    "id": "4bf0e307-691e-45c9-a248-cc9fbee6cf19"
+  },
+  "Assets/Sprites/FX/S_SpinSlash_0.hbsprite.json": {
+    "id": "442c45b1-00c1-492a-9adf-4d3244c38833"
+  },
+  "Assets/Sprites/FX/S_SpinSlash_1.hbsprite.json": {
+    "id": "e7e2ba24-837f-44c6-8b5e-8d89e806ed0a"
+  },
+  "Assets/Sprites/FX/S_SpinSlash_10.hbsprite.json": {
+    "id": "eca4e6ed-e0b6-443b-85e9-a755d69eebcc"
+  },
+  "Assets/Sprites/FX/S_SpinSlash_11.hbsprite.json": {
+    "id": "526dc6db-22ca-4b36-9bd9-550ccb643b18"
+  },
+  "Assets/Sprites/FX/S_SpinSlash_2.hbsprite.json": {
+    "id": "4c83dede-80df-4ff0-9185-9508ab472804"
+  },
+  "Assets/Sprites/FX/S_SpinSlash_3.hbsprite.json": {
+    "id": "469e2566-859c-4a74-9880-5bb55cbb491d"
+  },
+  "Assets/Sprites/FX/S_SpinSlash_4.hbsprite.json": {
+    "id": "bbeffcbe-6623-41af-a4db-80bfbb29bf48"
+  },
+  "Assets/Sprites/FX/S_SpinSlash_5.hbsprite.json": {
+    "id": "7c8caafa-e41f-46d8-8728-910aaabc48de"
+  },
+  "Assets/Sprites/FX/S_SpinSlash_6.hbsprite.json": {
+    "id": "388ca163-1c43-4f94-86a8-b60c34928fd4"
+  },
+  "Assets/Sprites/FX/S_SpinSlash_7.hbsprite.json": {
+    "id": "1cff3df9-2ed6-4a83-9ab7-b0e74df6697c"
+  },
+  "Assets/Sprites/FX/S_SpinSlash_8.hbsprite.json": {
+    "id": "ce55a855-c204-4b57-8eda-7b310aed323d"
+  },
+  "Assets/Sprites/FX/S_SpinSlash_9.hbsprite.json": {
+    "id": "dc99c167-d411-47e3-9ad6-2bb28bc53e92"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Spin_3.png": {
+    "id": "524aa7e4-fb5d-48f0-a845-0c52f9c626f5"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Spin_4.png": {
+    "id": "230b459c-d42f-4bbb-8706-2564dad96fb7"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Spin_5.png": {
+    "id": "ef078ae8-9cf7-43a3-8533-fa02043a70a4"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Spin_6.png": {
+    "id": "5df66272-7972-4a14-8d35-b3a6c96abd61"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/SkeletonCaptain_Spin_7.png": {
+    "id": "de9c2cda-283e-462e-b743-d4414fdddd3e"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Spin_3.hbsprite.json": {
+    "id": "395181fb-cc4e-4ff9-a158-94cf0e710c2d"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Spin_4.hbsprite.json": {
+    "id": "4f934951-060a-4891-9d6b-9be522368323"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Spin_5.hbsprite.json": {
+    "id": "092d60ef-62b4-4c65-ab80-40ca6f89119b"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Spin_6.hbsprite.json": {
+    "id": "fce61300-785d-4463-a4fa-88307b626de9"
+  },
+  "Assets/Sprites/Enemies/SkeletonCaptain/S_SkeletonCaptain_Spin_7.hbsprite.json": {
+    "id": "01a91fac-ea72-4b64-8bb7-a765043dddf4"
+  },
+  "Assets/Sprites/AleaMotion/AleaBolt_0.png": {
+    "id": "edaaa9e5-a1e1-451b-8d09-0708c333fc1c"
+  },
+  "Assets/Sprites/AleaMotion/AleaBolt_1.png": {
+    "id": "7fee3967-c227-4542-b5b5-c7e655a07a5e"
+  },
+  "Assets/Sprites/AleaMotion/AleaBolt_2.png": {
+    "id": "4d9a7d40-4d44-41a1-8a5f-17012f4a1ca7"
+  },
+  "Assets/Sprites/AleaMotion/AleaBolt_3.png": {
+    "id": "b7936f15-316e-415c-8e81-3020c35e8ac2"
+  },
+  "Assets/Sprites/AleaMotion/AleaCast_0.png": {
+    "id": "dc089149-91e6-4cd0-82e9-cec1fc4f2069"
+  },
+  "Assets/Sprites/AleaMotion/AleaCast_1.png": {
+    "id": "e373fee3-b18b-4240-b7bf-156bbe0a007f"
+  },
+  "Assets/Sprites/AleaMotion/AleaCast_2.png": {
+    "id": "b6ff2611-6bca-4b49-8f8b-1d5965748507"
+  },
+  "Assets/Sprites/AleaMotion/AleaCast_3.png": {
+    "id": "a085ff2f-dc21-40b0-be3e-b356d1b7b6b4"
+  },
+  "Assets/Sprites/AleaMotion/AleaImpact_0.png": {
+    "id": "d78d2d30-0adb-4120-8ac4-1f473de70cc4"
+  },
+  "Assets/Sprites/AleaMotion/AleaImpact_1.png": {
+    "id": "b80339d0-86ab-4f35-9d65-c22841ab4c13"
+  },
+  "Assets/Sprites/AleaMotion/AleaImpact_2.png": {
+    "id": "2ba879fb-a87a-4f31-9253-a66483dfde8b"
+  },
+  "Assets/Sprites/AleaMotion/AleaImpact_3.png": {
+    "id": "d044289b-23a2-4a1d-8304-24b3a22772d3"
+  },
+  "Assets/Sprites/AleaMotion/AleaImpact_4.png": {
+    "id": "33f41575-d876-48ed-8ce0-b3d72df96a30"
+  },
+  "Assets/Sprites/AleaMotion/AleaImpact_5.png": {
+    "id": "8928c75e-050f-4626-ba74-108350072516"
+  },
+  "Assets/Sprites/AleaMotion/AleaImpact_6.png": {
+    "id": "b1086af0-c482-40c0-bdbb-2409efa8a55d"
+  },
+  "Assets/Sprites/AleaMotion/AleaImpact_7.png": {
+    "id": "4c2b70e1-fea3-47e8-8c72-54040eb7764d"
+  },
+  "Assets/Sprites/AleaMotion/body.png": {
+    "id": "620141db-8dd1-4cca-9cf8-0ecd976e45ba"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaBolt_0.hbsprite.json": {
+    "id": "77a08d0b-5562-429f-a98a-8bc2405a6ba5"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaBolt_1.hbsprite.json": {
+    "id": "51b05da0-83d7-4af8-9b66-075a20626245"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaBolt_2.hbsprite.json": {
+    "id": "3a94c961-0bb0-4da5-878e-b21c1d453ac1"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaBolt_3.hbsprite.json": {
+    "id": "5913881d-abdb-4dee-ae7a-1ce361dcc0f5"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaCast_0.hbsprite.json": {
+    "id": "8daf7e62-21e1-45d8-9793-6135aa20a4fd"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaCast_1.hbsprite.json": {
+    "id": "4374c5e8-d75d-47d4-b224-cc01bcb2d1e4"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaCast_2.hbsprite.json": {
+    "id": "8cc727e4-6433-4899-98d6-cb12163fdfb3"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaCast_3.hbsprite.json": {
+    "id": "1bf28f82-c2fc-451f-81f5-646137b729f9"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaImpact_0.hbsprite.json": {
+    "id": "4967192e-501d-404b-85a9-1ded3bff2889"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaImpact_1.hbsprite.json": {
+    "id": "b136a09b-f3b8-4c11-b6d3-593dad5c8844"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaImpact_2.hbsprite.json": {
+    "id": "16266a36-a3d7-4f0d-a19a-72535b2fb688"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaImpact_3.hbsprite.json": {
+    "id": "a69295d2-3299-438f-98cc-4980560d2aea"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaImpact_4.hbsprite.json": {
+    "id": "f978a7c0-84c0-44e6-a404-813ee2eb431f"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaImpact_5.hbsprite.json": {
+    "id": "f782a2df-415c-4708-999b-32eb709647fa"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaImpact_6.hbsprite.json": {
+    "id": "b4a7b348-b0a0-434d-a37f-2cbf16ee783f"
+  },
+  "Assets/Sprites/AleaMotion/S_AleaImpact_7.hbsprite.json": {
+    "id": "4d03659a-211d-4d1a-96b7-c4d5bf55d45f"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_0.hbsprite.json": {
+    "id": "970c781e-5b66-4be7-b00a-fac4d8007b0e"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_0_W0.hbsprite.json": {
+    "id": "3aac661c-c08d-409d-82b2-2fa19c96e453"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_0_W1.hbsprite.json": {
+    "id": "9834366d-4a2b-4804-8968-c4c6743f5742"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_0_W2.hbsprite.json": {
+    "id": "7da28375-6a38-40c7-8ed6-8e3e43297d61"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_0_W3.hbsprite.json": {
+    "id": "98238949-07e5-4daf-87d7-f8f0121aa4ed"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_1.hbsprite.json": {
+    "id": "1919dd62-31bd-4b49-81e8-301ea208a6ee"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_1_W0.hbsprite.json": {
+    "id": "5dcb2763-243b-4837-b520-c8a94135633b"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_1_W1.hbsprite.json": {
+    "id": "d47b5b09-1531-4b88-b166-44a486102db8"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_1_W2.hbsprite.json": {
+    "id": "eed778c4-b1a3-4267-8d0c-85e3fec86f0e"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_1_W3.hbsprite.json": {
+    "id": "486b0e18-fc61-480e-8f23-2f317694b85c"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_2.hbsprite.json": {
+    "id": "51a27b47-b729-40b3-a816-d23d234e745d"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_2_W0.hbsprite.json": {
+    "id": "74c8bb51-9fab-4b9f-acb1-9ef6c714913c"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_2_W1.hbsprite.json": {
+    "id": "3220fdd0-251c-4abf-bc7a-2d05e07130d4"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_2_W2.hbsprite.json": {
+    "id": "0a007648-d72f-4040-ac75-c936c48ac0ca"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_2_W3.hbsprite.json": {
+    "id": "f48f44d1-c388-40f6-b1a3-6b666b5f090a"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_3.hbsprite.json": {
+    "id": "21b1db94-8bd1-4e86-b2eb-9b1e5dbeaadb"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_3_W0.hbsprite.json": {
+    "id": "ea9279e4-dd3c-48ff-88d7-d8a49e5750a8"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_3_W1.hbsprite.json": {
+    "id": "cac16c37-ba80-4753-ad76-c7ee7bdb4dca"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_3_W2.hbsprite.json": {
+    "id": "1503d4b8-6a34-4d1d-97ce-d64e7d43c98b"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_3_W3.hbsprite.json": {
+    "id": "301d2198-c0ef-4290-90ee-fd8431afc6d0"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_4.hbsprite.json": {
+    "id": "eaa759bc-1cdb-4537-ba8e-16773d146695"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_4_W0.hbsprite.json": {
+    "id": "87b1ef9b-0600-4b6b-b16d-d6a332f680f6"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_4_W1.hbsprite.json": {
+    "id": "4a622b82-80fd-4aa5-bc85-0d7996c92a3f"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_4_W2.hbsprite.json": {
+    "id": "cb86825d-00be-4e2d-a042-336a6f985b01"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_4_W3.hbsprite.json": {
+    "id": "4a5e9dfd-a813-4b1e-81f7-08691ed9c65d"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_5.hbsprite.json": {
+    "id": "047c0c23-fea1-497b-8522-b512e2ed9c1a"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_5_W0.hbsprite.json": {
+    "id": "6ff0c16a-9719-44a6-ad25-d7bcf3e18ff8"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_5_W1.hbsprite.json": {
+    "id": "8c07ea0a-d4a2-4045-ac67-8b48d2645b39"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_5_W2.hbsprite.json": {
+    "id": "485ad68a-83d4-4494-ab70-e797e2aabb14"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_0_5_W3.hbsprite.json": {
+    "id": "50b6f3dd-fc39-4778-b039-692e68277329"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_0.hbsprite.json": {
+    "id": "02437d25-d9fc-49d8-ae1a-5ebc45093de0"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_0_W0.hbsprite.json": {
+    "id": "c4b6a7b8-36ca-4e67-8bf6-5ea5e57620d7"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_0_W1.hbsprite.json": {
+    "id": "deae6174-4c83-4668-adff-c3da8d02a45f"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_0_W2.hbsprite.json": {
+    "id": "483ff713-4794-430e-a363-e02b13153ca9"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_0_W3.hbsprite.json": {
+    "id": "436c5d14-3f36-4659-a1ca-81f10fcbc542"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_1.hbsprite.json": {
+    "id": "212a50e1-1689-4953-a7eb-251c02a47767"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_1_W0.hbsprite.json": {
+    "id": "96544ecb-1d15-46a4-8410-ea7938aa6809"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_1_W1.hbsprite.json": {
+    "id": "e48910d0-6e7d-4a01-aaa0-c59557f58923"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_1_W2.hbsprite.json": {
+    "id": "1f2db574-6fdb-4356-b724-5b201773aecc"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_1_W3.hbsprite.json": {
+    "id": "1a815d8b-cb2f-4cd7-ba4a-8a99718aceb4"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_2.hbsprite.json": {
+    "id": "5d090abe-c3ec-4d21-8685-d1d01d64f974"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_2_W0.hbsprite.json": {
+    "id": "b41b8940-fb39-4f0c-b47a-cb6efa2c0256"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_2_W1.hbsprite.json": {
+    "id": "71d6d97c-e211-4d50-a0c0-463193de9d69"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_2_W2.hbsprite.json": {
+    "id": "fa02b7dc-ef32-423c-97f8-d66f2b504549"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_2_W3.hbsprite.json": {
+    "id": "42813bd9-a03d-4e08-8f72-207567c45429"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_3.hbsprite.json": {
+    "id": "756f3681-f52f-44dd-a8a3-faaddefee4db"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_3_W0.hbsprite.json": {
+    "id": "576b6d96-c8df-4d0b-ab42-c0ba85d318e6"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_3_W1.hbsprite.json": {
+    "id": "8e4089f6-3e50-4583-b2e9-494b2cc1cdc2"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_3_W2.hbsprite.json": {
+    "id": "b5da265d-8026-4e61-b669-8a900a28dad4"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_3_W3.hbsprite.json": {
+    "id": "73a3df29-7f1b-4140-b4fd-9879cd37da38"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_4.hbsprite.json": {
+    "id": "d20a57e7-2d1f-4be3-803b-ccc2d5fb260d"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_4_W0.hbsprite.json": {
+    "id": "2baeac84-1dd8-4151-87e4-430094f4cd31"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_4_W1.hbsprite.json": {
+    "id": "57b9f7a6-712a-47e1-a268-3524d23193df"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_4_W2.hbsprite.json": {
+    "id": "31708706-8166-49e8-9b47-64af2478c70d"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_4_W3.hbsprite.json": {
+    "id": "cba44753-aa18-4711-8018-82feea6db98c"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_5.hbsprite.json": {
+    "id": "717f3845-2797-4a85-8fdd-ae8160a50f7e"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_5_W0.hbsprite.json": {
+    "id": "d52e96a3-d035-4888-90ab-13f15daf5be6"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_5_W1.hbsprite.json": {
+    "id": "11cde96c-888d-4fc0-a6c1-7d24c8177ed1"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_5_W2.hbsprite.json": {
+    "id": "68280f19-5621-4030-93df-cc32bccdf5d3"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_1_5_W3.hbsprite.json": {
+    "id": "c45595c3-c560-44e8-ae79-3ddb9c0169de"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_0.hbsprite.json": {
+    "id": "a3b0087c-f6bb-4dae-9a2c-89decea0da4e"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_0_W0.hbsprite.json": {
+    "id": "237fd875-a386-473a-9a83-a6ae8a1323d5"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_0_W1.hbsprite.json": {
+    "id": "26830955-91b2-4536-b4bd-ee33e19311b6"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_0_W2.hbsprite.json": {
+    "id": "dff7b79f-3c71-4cf7-9caf-bfeaafa62bf5"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_0_W3.hbsprite.json": {
+    "id": "ff00d67c-ab79-4f10-b944-44a6b4a8ab2c"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_1.hbsprite.json": {
+    "id": "65450c71-d859-4902-8fe7-536e73b252e0"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_1_W0.hbsprite.json": {
+    "id": "c38469a2-7c5c-4a71-abae-095b0d51c4a4"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_1_W1.hbsprite.json": {
+    "id": "c8958d4d-37d4-4ec2-b89a-8488a6adecbf"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_1_W2.hbsprite.json": {
+    "id": "bbd45558-4048-4d59-9253-53d052d0bdcd"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_1_W3.hbsprite.json": {
+    "id": "1c8be165-730f-4b6a-b107-f37dab128e8b"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_2.hbsprite.json": {
+    "id": "65c3fda1-777f-4684-9838-2232141129aa"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_2_W0.hbsprite.json": {
+    "id": "64acb5d1-957d-4046-ac04-c0bb276f5ff5"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_2_W1.hbsprite.json": {
+    "id": "329ac228-0a9a-4792-ad11-cb9d7fe08236"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_2_W2.hbsprite.json": {
+    "id": "f0a76753-03e4-49b8-819a-520fca4a4e90"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_2_W3.hbsprite.json": {
+    "id": "9705224c-75e3-4b13-b771-30502823cc4d"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_3.hbsprite.json": {
+    "id": "fda98d1e-7277-438b-ab16-f29420c17691"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_3_W0.hbsprite.json": {
+    "id": "3ba4fb92-6680-478b-80b6-4fdecd22b58a"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_3_W1.hbsprite.json": {
+    "id": "9f801231-7759-4bbf-a929-7c8c08575479"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_3_W2.hbsprite.json": {
+    "id": "dbe64acc-9352-480b-8a76-5e0ee981c2bb"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_3_W3.hbsprite.json": {
+    "id": "0678ceca-279b-4c1b-87e6-d5ef365f8baa"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_4.hbsprite.json": {
+    "id": "8b04da30-cac4-4b7c-99be-efc38afa9867"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_4_W0.hbsprite.json": {
+    "id": "15f6fa4f-096a-402b-b895-cff3d5020fa8"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_4_W1.hbsprite.json": {
+    "id": "9e962d13-61ab-42dc-937a-4e86c85169fa"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_4_W2.hbsprite.json": {
+    "id": "57efbe92-d356-4dc8-b3b4-dedf7e6e982d"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_4_W3.hbsprite.json": {
+    "id": "e0780f0b-1830-4de3-ba68-44f8e3601ad2"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_5.hbsprite.json": {
+    "id": "7487c768-1d59-4e3f-a2ec-24c340e1317f"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_5_W0.hbsprite.json": {
+    "id": "3013d9a8-c260-43b5-99fb-51d83c25db82"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_5_W1.hbsprite.json": {
+    "id": "9a4e5059-a7dc-4180-bec2-e8f71d0892b9"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_5_W2.hbsprite.json": {
+    "id": "b939c3dd-9e78-4045-b11d-ea3fc310581b"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_2_5_W3.hbsprite.json": {
+    "id": "518dfc5e-a475-42c1-8fa1-6ed0dea382fb"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_0.hbsprite.json": {
+    "id": "812e3eed-b233-41ad-ac8b-c34179f501cf"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_0_W0.hbsprite.json": {
+    "id": "54a645a6-0842-4377-9f7a-edb3fa47ea68"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_0_W1.hbsprite.json": {
+    "id": "af0371f3-b171-4f04-8ec1-79cd293c3b09"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_0_W2.hbsprite.json": {
+    "id": "4d1cde0e-fa74-4df2-8bcd-7243b96d74e2"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_0_W3.hbsprite.json": {
+    "id": "f90789f9-398b-447d-8250-d0f4895c30f3"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_1.hbsprite.json": {
+    "id": "8cb62188-69a1-4278-aeb6-e3d182a7031c"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_1_W0.hbsprite.json": {
+    "id": "53d5b745-873d-45d7-bbcc-decd6faabff5"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_1_W1.hbsprite.json": {
+    "id": "d47f3ed9-073b-46ab-9862-808b774536bd"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_1_W2.hbsprite.json": {
+    "id": "fcd1c95c-ea74-499e-a0ef-8b65ba9e0303"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_1_W3.hbsprite.json": {
+    "id": "744ce60d-8ab9-41c2-ad62-e836f998579c"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_2.hbsprite.json": {
+    "id": "42e11b36-2412-4b1b-b131-52d9f2a74870"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_2_W0.hbsprite.json": {
+    "id": "25f5f325-4906-4cd3-95e9-f7cb0994b528"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_2_W1.hbsprite.json": {
+    "id": "6d1b1915-fbdf-4c62-9d59-7d961c274948"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_2_W2.hbsprite.json": {
+    "id": "260af2a1-1e8a-474b-9001-199cbb56c208"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_2_W3.hbsprite.json": {
+    "id": "a8b6ed81-8840-4174-8cff-bc47657b4ff5"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_3.hbsprite.json": {
+    "id": "25e1f58e-4cd5-4bae-8ef9-161d16d5554f"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_3_W0.hbsprite.json": {
+    "id": "02f3182b-083d-44d3-9806-94c237efc72e"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_3_W1.hbsprite.json": {
+    "id": "c53b6a6f-6c35-43a5-8aa7-160593ebd0e5"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_3_W2.hbsprite.json": {
+    "id": "826f4012-c022-4b7b-9861-611f6d01134b"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_3_W3.hbsprite.json": {
+    "id": "f39b687d-5cd1-4559-bffb-71056eebb838"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_4.hbsprite.json": {
+    "id": "6fc19226-e2c7-464c-9240-a796700ad007"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_4_W0.hbsprite.json": {
+    "id": "e354407f-2a4f-4ea2-9af4-749d5079a67e"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_4_W1.hbsprite.json": {
+    "id": "b9e22d26-39f8-4ddb-8c68-d3e2bcaeb2f5"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_4_W2.hbsprite.json": {
+    "id": "e2ff1537-5c1c-4cce-a6c5-5371224099bd"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_4_W3.hbsprite.json": {
+    "id": "667d8ebc-ac5a-4387-8979-9ce0515c002e"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_5.hbsprite.json": {
+    "id": "af1f6b1e-a5f7-4230-a201-42d21683df16"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_5_W0.hbsprite.json": {
+    "id": "93efd55b-5cea-4fdd-826c-315711894438"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_5_W1.hbsprite.json": {
+    "id": "222f1170-f070-43f5-9835-e2bbd5014015"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_5_W2.hbsprite.json": {
+    "id": "234ffba8-fc49-47db-857f-bae5d243da8f"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Attack_3_5_W3.hbsprite.json": {
+    "id": "9b3f5fa7-f5eb-4c6d-8cf6-2709a9c4a879"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Idle_0_0.hbsprite.json": {
+    "id": "b3e4623d-a7a9-4a50-83af-5589dcd5071c"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Idle_1_0.hbsprite.json": {
+    "id": "bcd28b68-58eb-4c70-91eb-d5fdca99a498"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Idle_2_0.hbsprite.json": {
+    "id": "02483b3b-52eb-444d-8c0b-a7e950e72c9b"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Idle_3_0.hbsprite.json": {
+    "id": "a91e0f16-c594-48ee-a2b9-c16eea2bef85"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_0_0.hbsprite.json": {
+    "id": "4890f172-2fe4-45e9-8ace-43677c62902d"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_0_1.hbsprite.json": {
+    "id": "b38ca6d7-551c-437b-8e8b-53a7e72440cb"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_0_2.hbsprite.json": {
+    "id": "4aba5b3e-7c50-499f-83eb-002e5ed423a7"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_0_3.hbsprite.json": {
+    "id": "df526ef0-8d55-4e96-bb13-ede44c17c21b"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_1_0.hbsprite.json": {
+    "id": "7726ccc4-482c-4722-94a8-309603e5e91e"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_1_1.hbsprite.json": {
+    "id": "4bc4b61d-af7a-4b01-960c-8ee2e382dfbb"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_1_2.hbsprite.json": {
+    "id": "01cc42e6-72bd-4eb9-8bce-9aee916f4a52"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_1_3.hbsprite.json": {
+    "id": "e5718e14-f293-44b7-a573-83e9428bbd3b"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_2_0.hbsprite.json": {
+    "id": "1717bb19-95f2-4794-9400-c643cf4ea512"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_2_1.hbsprite.json": {
+    "id": "01ad5a05-d48f-4fe4-b7ee-cd3603bed738"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_2_2.hbsprite.json": {
+    "id": "117b96bb-8af9-474a-b737-dab75efa7dbb"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_2_3.hbsprite.json": {
+    "id": "8ec0d204-0685-4ae0-bc36-64bab5b0ba82"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_3_0.hbsprite.json": {
+    "id": "bd0d70ef-837f-484c-9e2d-a7ab350c4e39"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_3_1.hbsprite.json": {
+    "id": "3c4b9c83-0897-4685-be7e-360b87156333"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_3_2.hbsprite.json": {
+    "id": "d6571508-1617-4aaf-a9f7-a116ff92218c"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Run_3_3.hbsprite.json": {
+    "id": "f21e5884-d0d2-468b-be4a-24c5f44091c9"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_0_0.hbsprite.json": {
+    "id": "8c5ae192-d9bf-49ce-9217-98cb30e97990"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_0_1.hbsprite.json": {
+    "id": "4ebf6af1-6620-4d62-a46b-b5d77c71904c"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_0_2.hbsprite.json": {
+    "id": "3d901024-571b-4c9f-b5aa-14657a7f359c"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_0_3.hbsprite.json": {
+    "id": "d979fa33-22c7-4df0-899d-08883d5bb30b"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_1_0.hbsprite.json": {
+    "id": "bf920af0-05ed-4d5e-a150-9e3d82c081b4"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_1_1.hbsprite.json": {
+    "id": "e8ce594a-babe-498d-bd7d-4e3d167b7c31"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_1_2.hbsprite.json": {
+    "id": "42ac0e9f-643d-4ad1-b120-68e998046fc5"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_1_3.hbsprite.json": {
+    "id": "8ceeada1-b69f-47f7-aff0-f02025ce2439"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_2_0.hbsprite.json": {
+    "id": "e7c07d1c-1910-4d87-a0d5-432f5a1ddc30"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_2_1.hbsprite.json": {
+    "id": "5dbe9c21-7f4f-459c-b7e4-42bbf9c0d933"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_2_2.hbsprite.json": {
+    "id": "d048a3b7-9acd-408e-9f1a-4afa66cbdd49"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_2_3.hbsprite.json": {
+    "id": "1fb50121-43bf-4d7f-9f1d-4587115c060f"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_3_0.hbsprite.json": {
+    "id": "0d84a83f-9f8f-49f2-95fb-a4b1090e309d"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_3_1.hbsprite.json": {
+    "id": "92833d34-9327-4d69-b7c5-4701d7160418"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_3_2.hbsprite.json": {
+    "id": "5672d72b-6003-4a18-863b-2188efb0cbf1"
+  },
+  "Assets/Sprites/AleaMotion/S_AM_Walk_3_3.hbsprite.json": {
+    "id": "3a7b4e65-2645-4d56-99ac-5967378c0e07"
+  },
+  "Assets/Audio/BGM_Boss.ogg": {
+    "id": "8ec5bffb-c82e-44e3-b2b4-96945f485f25"
+  },
+  "Assets/Audio/BGM_Dungeon.ogg": {
+    "id": "38ad0977-b196-4cef-834c-f198319b7dcb"
+  },
+  "Assets/Audio/BGM_Hub.ogg": {
+    "id": "ad752928-bd1c-4c95-84a5-336c73ea6c58"
+  },
+  "Assets/Audio/BGM_Return.ogg": {
+    "id": "6a6cfc69-38f8-40f4-9087-46d25d1228f1"
+  },
+  "Assets/Audio/BGM_Title.ogg": {
+    "id": "7b4541df-d81b-490c-8110-d4e8d88afc29"
+  },
+  "Assets/Audio/BossDash.wav": {
+    "id": "e2b72be6-23fa-4586-8fca-4707e84187c1"
+  },
+  "Assets/Audio/BossQuake.wav": {
+    "id": "8d4841c1-9c40-4451-901e-d50bce226b5d"
+  },
+  "Assets/Audio/BossRoar.wav": {
+    "id": "f4fe63fc-1321-48cd-a1c0-3b7dedb74050"
+  },
+  "Assets/Audio/BossSlam.wav": {
+    "id": "4d3ee453-36d1-470e-b793-e95443a4de51"
+  },
+  "Assets/Audio/BossSwing.wav": {
+    "id": "b3a8e038-6af6-4587-b28e-d5428ee78986"
+  },
+  "Assets/Audio/CoinRain.wav": {
+    "id": "1f29ab28-b816-4bc4-b261-f3c4bdc2c2e8"
+  },
+  "Assets/Audio/Finisher.wav": {
+    "id": "6ede643f-0976-455f-825e-6774c8cc9c56"
+  },
+  "Assets/Audio/KillImpact.wav": {
+    "id": "c423ef29-d7ae-4827-b8a4-6e9bdb75bc6e"
+  },
+  "Assets/Audio/S_BGM_Title.hbaudioasset.json": {
+    "id": "7d723c59-d215-4f5e-a61a-042c2c72955d"
+  },
+  "Assets/Audio/S_BossDash.hbaudioasset.json": {
+    "id": "cfed813e-1755-4d35-9098-e75fd26e6cd9"
+  },
+  "Assets/Audio/S_BossQuake.hbaudioasset.json": {
+    "id": "c89625d7-5826-428d-9f06-196b4b6c4544"
+  },
+  "Assets/Audio/S_BossRoar.hbaudioasset.json": {
+    "id": "4ae40374-a734-4000-a3e6-40535994f413"
+  },
+  "Assets/Audio/S_BossSlam.hbaudioasset.json": {
+    "id": "3ba93351-4e88-4305-bb4f-603f5ad56053"
+  },
+  "Assets/Audio/S_BossSwing.hbaudioasset.json": {
+    "id": "86efb5a8-b94b-4224-8b7a-f4f5f50d22a2"
+  },
+  "Assets/Audio/S_CoinRain.hbaudioasset.json": {
+    "id": "cc734936-fde7-462b-ab6f-3a883d64a506"
+  },
+  "Assets/Audio/S_Finisher.hbaudioasset.json": {
+    "id": "38f6d936-a4a5-4a8d-b162-fca680a9b5ab"
+  },
+  "Assets/Audio/S_KillImpact.hbaudioasset.json": {
+    "id": "e5f6d872-42cc-4d97-aa30-fa6b7e7a8506"
+  },
+  "Assets/Animations/SA_AleaBolt.hbspriteanimation.json": {
+    "id": "f81c817c-151c-47d1-9a05-277bb7b93044"
+  },
+  "Assets/Animations/SA_AleaCast.hbspriteanimation.json": {
+    "id": "5552d018-edc5-46a5-8388-2dbab09b7497"
+  },
+  "Assets/Animations/SA_AleaImpact.hbspriteanimation.json": {
+    "id": "bd127cf5-0b9d-4eaa-85d1-bccb3f429323"
+  },
+  "Assets/Animations/SA_BurstRing.hbspriteanimation.json": {
+    "id": "c7b6fa49-198a-4c7c-98bf-c16ed96547a8"
+  },
+  "Assets/Animations/SA_GroundRing.hbspriteanimation.json": {
+    "id": "8188f5fe-42bf-40a1-8afb-4c120c8337ac"
+  },
+  "Assets/Animations/SA_SherryArrow.hbspriteanimation.json": {
+    "id": "bdeef053-eb62-43d2-b6a2-a1524afec9f2"
+  },
+  "Assets/Animations/SA_SherryArrowFull.hbspriteanimation.json": {
+    "id": "4b98bee6-2068-48bd-bf62-40da83e27489"
+  },
+  "Assets/Animations/SA_SherryCharge.hbspriteanimation.json": {
+    "id": "2cd2503c-63cc-4fa5-a7cd-188408697ee2"
+  },
+  "Assets/Animations/SA_SherryReady.hbspriteanimation.json": {
+    "id": "53790fdb-db5d-49ca-a017-947ac675c3bb"
+  },
+  "Assets/Animations/SA_SherryRelease.hbspriteanimation.json": {
+    "id": "355405ea-d493-41c2-8ad3-cba775e1b51f"
   }
 }
