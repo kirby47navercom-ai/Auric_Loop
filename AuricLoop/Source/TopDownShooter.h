@@ -500,6 +500,14 @@ public:
   HB_PROPERTY(BlueprintReadWrite)
   std::string Layout = "";       // 지금 던전 방 목록 (검사·디버그용 JSON)
   HB_PROPERTY(BlueprintReadWrite)
+  int LeaveValue = 0;            // 검사용: 던전을 떠나는 순간 들고 있던 값 (골드 + 바닥 골드 + 소재 값, 쓰러지면 골드만). 정산 합계와 같아야 함
+  HB_PROPERTY(BlueprintReadWrite)
+  int SettleTotal = 0;           // 검사용: 정산 합계
+  HB_PROPERTY(BlueprintReadWrite)
+  int FloorGold = 0;             // 검사용: 바닥에 떨어져 아직 안 주운 골드 합 (tools/check_loot.mjs)
+  HB_PROPERTY(BlueprintReadWrite)
+  int FloorDrops = 0;            // 검사용: 바닥에 떨어져 아직 안 주운 마물 소재 수
+  HB_PROPERTY(BlueprintReadWrite)
   std::string MapCells = "";     // 검사용: 지도에 그린 방 칸 "번호:x,y,w,h;" (tools/check_map.mjs)
   HB_PROPERTY(BlueprintReadWrite)
   std::string StartRoom = "";
@@ -774,6 +782,8 @@ private:
   std::map<hb::Actor*,float> shotPower;  // 화살마다 당긴 정도 (피해 배율)
   std::map<hb::Actor*,std::vector<Enemy*>> shotHits;  // 관통 화살·마탄이 이미 맞힌 적 (한 발은 적 하나를 한 번만: 겹친 매 프레임 다시 맞아 멈칫·이펙트가 쌓이던 렉)
   std::map<hb::Actor*,int> coins;
+  float vacuumTime=0;               // 방 클리어: 바닥의 골드·소재가 플레이어에게 빨려 옴 (남은 시간, 끝나면 남은 것도 바로 획득)
+  void CollectDrops(bool materials); // 바닥 골드·소재를 바로 획득 (materials=false면 소재는 버림: 쓰러짐)
   Enemy* boss=nullptr;hb::Vec3 bossAt{0,0,0};bool bossSeen=false;  // 카메라가 보스전에서 보스 쪽도 잡게 (포인터는 프레임을 넘겨 들지 않음)
   std::vector<Line> dialog;
   size_t dialogIndex=0,shownChars=0;

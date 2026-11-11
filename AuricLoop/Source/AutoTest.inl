@@ -50,5 +50,7 @@ void TopDownShooter::AutoTest(float delta,const hb::Vec3& position,const std::ve
   if(a.t<1.5f)return;
   // 시작 방 → 첫 전투방 → 보스방
   if(a.step==0){a.step=1;a.fight=0;for(int i=0;i<int(map.rooms.size());++i)if(map.rooms[i].kind=="Combat"&&map.rooms[i].path>=0){autotest::Event("warp room");Warp(i);break;}a.wait=1;return;}
+  if(a.step==1&&std::getenv("AURIC_AUTOTEST_DIE")){autotest::Event("die after clear");Hp=0;gameOver=rules->RespawnDelay;a.step=2;return;}  // 방 클리어 직후 쓰러짐 (check_loot)
+  if(vacuumTime>0)return;  // 클리어 보상이 다 들어올 때까지
   if(a.step==1){a.step=2;a.fight=0;{char line[64];std::snprintf(line,sizeof line,"warp boss (room hits %d shots %d)",Hits,Swings);autotest::Event(line);}Warp(map.boss);a.wait=1;}
 }

@@ -13,7 +13,7 @@ static AuricRules fallbackRules;  // 장면에 BP_AuricRules가 없을 때
 // ---- 구역·장면 전환 ----------------------------------------------------------------
 
 #define AURIC_RUN_INTS(X) X(TipsShown) X(FatigueMax) X(Fatigue) X(Hp) X(MaxHp) X(Kills) X(RoomClears) X(Swings) X(Hits) X(Shots) X(Flashbangs) X(Gold) X(Ore) X(Herb) \
-  X(Monster) X(Bottle) X(WeaponLevel) X(Debt) X(LastRepaid) X(Enchant) X(Crafted) X(SofaLevel) X(HomeLevel) X(Phase) X(Character)
+  X(Monster) X(Bottle) X(WeaponLevel) X(Debt) X(LastRepaid) X(Enchant) X(Crafted) X(SofaLevel) X(HomeLevel) X(Phase) X(Character) X(LeaveValue) X(SettleTotal)
 #define AURIC_RUN_BOOLS(X) X(HasReturnItem) X(Returning) X(ReturnSuccess) X(KnockedOut) X(gatherTold) X(LastKo)
 
 void TopDownShooter::SaveRun(){
@@ -48,7 +48,7 @@ bool TopDownShooter::LoadRun(){
 
 void TopDownShooter::Leave(int to,const std::string& spawn){
   // 바닥에 남은 골드는 들고 간다. 전투 중엔 문이 잠겨 있어 적·탄 상태는 넘기지 않는다
-  for(auto& [c,value]:coins){Gold+=value;Give(coinPool,c);}coins.clear();
+  CollectDrops(true);
   // 던전에 새로 들어가면 지난 원정 상태를 비움: 귀환 성공(ReturnSuccess)이 남아 있으면 방에 들어가도 전투가 안 시작돼 몬스터가 안 나왔고, 피로도도 쌓인 채였음
   if(to==0){ReturnSuccess=Returning=HasReturnItem=KnockedOut=LastKo=false;Fatigue=0;DoorHits=0;}
   SaveRun();leaving=true;PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});
@@ -245,6 +245,12 @@ void TopDownShooter::ClearRoom(){
   // 방 클리어: 문이 열리고 피로도 +1 (기획), 피로도가 가득 차면 쓰러짐
   const int fightingRoomCleared=fightingRoom;
   map.rooms[fightingRoom].state=2;map.Lock(fightingRoom,false);fightingRoom=-1;waves.clear();Sfx("Clear");
+  // 방 클리어 보상 줍기 (행사 피드백 15): 바닥의 골드·소재는 1.2초 동안 플레이어에게 빨려 오고, 이 방의 금 더미도 바로 획득. 채집 지점은 그대로 직접
+  vacuumTime=1.2f;
+  {const auto& r=map.rooms[fightingRoomCleared];
+   for(auto* g:goldPiles){const auto at=hb::Scene::GetPosition(g);if(at.y<-150||!r.Inside(at,0))continue;
+     const std::string key=std::to_string(int(std::round(at.x*2)))+":"+std::to_string(int(std::round(at.y*2)));if(goldTaken.count(key))continue;
+     goldTaken.insert(key);Gold+=4+std::rand()%5;Effect("CoinSparkle",at+hb::Vec3{0,0.3f,0.3f},0,1.5f);hb::Scene::SetPosition(g,parked);}}
   // 피로도 (기획서 4-1): 방 클리어 +1, 보스 +2, 무게가 넘치면 +1 더
   const bool bossRoom=map.rooms[fightingRoomCleared].kind=="Boss";
   RoomClears++;Fatigue+=1+(bossRoom?1:0)+(Weight()>rules->WeightLimit?1:0);if(Fatigue>=FatigueMax){Hp=0;gameOver=rules->RespawnDelay;}Hud();
@@ -257,7 +263,7 @@ void TopDownShooter::Settle(){
   settleTotal=Gold+Ore*rules->OrePrice+Herb*rules->HerbPrice+Monster*rules->MonsterPrice;
   LastRepaid=int(settleTotal*rules->RepayRate);debtFrom=Debt;Debt=std::max(0,Debt-LastRepaid);debtTo=Debt;
   Gold=settleTotal-LastRepaid;Ore=Herb=Monster=0;WeaponLevel=0;Enchant=0;
-  settlePending=true;  // 연출은 거점 Begin에서 (이 장면의 정산 UI는 곧 사라짐)
+  SettleTotal=settleTotal;settlePending=true;  // 연출은 거점 Begin에서 (이 장면의 정산 UI는 곧 사라짐)
 }
 
 bool TopDownShooter::CanReturn() const{
@@ -277,7 +283,8 @@ void TopDownShooter::ReturnHome(){
   for(auto& f:fxs)Give(fxPool,f.actor);fxs.clear();for(auto& t:tosses)Give(fxPool,t.actor);tosses.clear();
   if(whirl){Give(fxPool,whirl);whirl=nullptr;}
   hitStopLeft=slowLeft=0;deathCam=0;cutscene=0;gameOver=0;EndImpact();hb::Clock::SetTimeScale(1.f);
-  for(auto& [c,value]:coins){Gold+=value<0?0:value;if(value<0)Monster++;Give(coinPool,c);}coins.clear();coinAge.clear();  // 바닥에 남은 골드·소재도 챙김
+  {int floor=0,mats=0;for(auto& [c,v]:coins)if(v>0)floor+=v;else mats++;LeaveValue=Gold+floor+Ore*rules->OrePrice+Herb*rules->HerbPrice+(Monster+mats)*rules->MonsterPrice;}
+  CollectDrops(true);  // 바닥에 남은 골드·소재도 챙김
   // 3) 정산 값 확정
   HasReturnItem=false;Returning=true;Settle();
   // 4) 장면 전환

@@ -173,7 +173,8 @@ void TopDownShooter::Update(float delta){
       hb::Camera::Flash(hb::Color{0.6f,0,0,0.6f},0.6f);}
     if((gameOver-=delta)<=0){
       for(auto* n:{"KoBack","KoTitle","KoSub"})UiVisible(n,false);
-      Ore=Herb=Monster=0;KnockedOut=true;Returning=false;HasReturnItem=false;Hp=MaxHp;hb::Clock::SetTimeScale(1.f);Settle();Leave(-1,"StairTop");}
+      {int floor=0;for(auto& [c,v]:coins)if(v>0)floor+=v;LeaveValue=Gold+floor;}
+      CollectDrops(false);Ore=Herb=Monster=0;KnockedOut=true;Returning=false;HasReturnItem=false;Hp=MaxHp;hb::Clock::SetTimeScale(1.f);Settle();Leave(-1,"StairTop");}  // 바닥 골드는 정산에 넣음 (소재는 잃음)
     return;
   }
 
@@ -253,8 +254,10 @@ void TopDownShooter::Update(float delta){
     float& age=coinAge[c];age+=delta;const bool fresh=age<0.6f;  // 떨어진 직후는 그 자리에 보이게
     if(!fresh&&len<rules->CoinPickup){if(it->second<0){Monster++;Sfx("Pickup");}else{Gold+=it->second;Sfx("Coin");}
       Effect("CoinSparkle",hb::Scene::GetPosition(c)+hb::Vec3{0,0.3f,0.3f},0,1.f);coinAge.erase(c);Give(coinPool,c);it=coins.erase(it);Hud();continue;}
-    if(!fresh&&len<rules->CoinMagnet)hb::Scene::SetPosition(c,hb::Scene::GetPosition(c)+d*(std::min(1.f,delta*8)));
+    if(!fresh&&(len<rules->CoinMagnet||vacuumTime>0))hb::Scene::SetPosition(c,hb::Scene::GetPosition(c)+d*(std::min(1.f,delta*(vacuumTime>0?10.f:8.f))));  // 방 클리어 흡수 중엔 거리와 관계없이
     ++it;}
+  if(vacuumTime>0&&(vacuumTime-=delta)<=0&&!coins.empty()){CollectDrops(true);Sfx("Coin");Hud();}  // 흡수 끝: 벽 너머 등으로 못 온 것도 획득
+  FloorDrops=FloorGold=0;for(auto& [c,v]:coins)if(v>0)FloorGold+=v;else FloorDrops++;
   if(boss)BossHp=boss->Hp;
   {// 보스 체력 막대 (화면 위)
    const float ratio=boss&&boss->MaxHp>0?std::max(0.f,boss->Hp/boss->MaxHp):-1.f;

@@ -92,6 +92,12 @@ void TopDownShooter::DropMaterial(const hb::Vec3& at){
   else Monster++;
 }
 
+void TopDownShooter::CollectDrops(bool materials){
+  // 장면을 떠나기 전·흡수 끝: 남은 골드·소재를 한 번에 (값 -1은 마물 소재. 예전엔 Leave가 이 -1까지 골드에 더해 골드가 줄었음)
+  for(auto& [c,value]:coins){if(value<0){if(materials)Monster++;}else Gold+=value;Give(coinPool,c);}
+  coins.clear();coinAge.clear();FloorGold=FloorDrops=0;
+}
+
 void TopDownShooter::ThrowFlash(const hb::Vec3& from,const hb::Vec3& to){
   hb::Transform t;t.position=from;auto* a=Take(fxPool,rules->FxPrefab,t);
   Flashbangs--;Sfx("Swing",1.3f);Hud();
