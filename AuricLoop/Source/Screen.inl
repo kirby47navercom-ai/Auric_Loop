@@ -120,8 +120,8 @@ void TopDownShooter::AnimateSocket(float delta,bool moving){
 void TopDownShooter::AnimateMotion(float delta,bool moving){
   // 셰리·알레아 (아트팀 모션 팩 셰리 v11·알레아 v3, tools/make_hero_motion.py). 4방향 반전 없음, 걸음 위상은 움직인 거리로 (뒷걸음질이면 거꾸로)
   // 걸으며 공격하면 윗몸은 공격 자세, 다리는 걷기 위상 그대로 (_W위상 합성 그림). 대시는 뛰기 그림
-  if(weapon&&!weaponShown.empty()){weaponShown.clear();hb::Scene::SetPosition(weapon,hb::Vec3{0,-500,0});}  // 발렌 검·손가락 치움
-  if(grip&&!gripShown.empty()){gripShown.clear();hb::Scene::SetPosition(grip,hb::Vec3{0,-500,0});}
+  if(weapon&&weaponShown!="-"){weaponShown="-";hb::Scene::SetPosition(weapon,hb::Vec3{0,-500,0});}  // 발렌 검·손가락 치움 (장면마다 처음 한 번은 꼭: 장면에 놓인 검이 셰리·알레아 손에 보이지 않게)
+  if(grip&&gripShown!="-"){gripShown="-";hb::Scene::SetPosition(grip,hb::Vec3{0,-500,0});}
   if(playerFlipped){playerFlipped=false;hb::Sprites::SetFlip(player,false,false);}
   const auto at=hb::Scene::GetPosition(player);auto step=at-animPos;step.z=0;animPos=at;
   const float moved=Length(step)<1.f?Length(step):0.f;

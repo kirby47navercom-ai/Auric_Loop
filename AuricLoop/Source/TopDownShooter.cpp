@@ -58,6 +58,7 @@ void TopDownShooter::Update(float delta){
   if(minimapDirty&&frame>=2){minimapDirty=false;UpdateMinimap();}  // 위젯은 첫 프레임 뒤에 생김
   if(!started)Begin();
   if(leaving)return;
+  if(frame<=3&&Phase>=2)Animate(0,false);  // 장면 첫 프레임에 고른 캐릭터 그림으로: 쓰러져 거점에 오면 정산·대화 동안 아래 Animate까지 안 와서 장면 기본 그림(발렌)이 보였음
   playerAt=hb::Scene::GetPosition(player);
   if(spawnHold>0){spawnHold-=delta;  // 도착 직후 이전 장면 위치로 튀었으면 도착 지점으로 되돌림 (걸어서는 0.6초에 3m를 못 감)
     if(std::hypot(playerAt.x-spawnAt.x,playerAt.y-spawnAt.y)>3.f){hb::Scene::SetPosition(player,spawnAt);PhysicsQueue::Velocity(player,hb::Vec3{0,0,0});playerAt=spawnAt;}}
